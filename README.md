@@ -51,7 +51,7 @@ Nexus supplies strategy simulations and stored engine outputs. Repository engine
 |---|---|---|---|---|---|---|
 | [EXP001](reports/EXP001_final_report.md) | Complete historical evaluation | Five candidates; SMA20/50 selected / SPY | 2015-01-01 to 2021-12-31 | 2022-01-01 to 2024-12-31 | 2025-01-01 to 2026-10-08 | Lower risk, lower out-of-sample return than SPY |
 | [EXP003](experiments/EXP003/README.md) | Closed; source feasibility blocked | Momentum + qualifying insider purchases / source-covered historical CS universe | Joint inception unresolved; end 2020-12-31 | Designated 2021–2023; unopened | Designated 2024; unopened | Economic hypothesis never tested; original draft preserved |
-| [EXP004](experiments/EXP004/README.md) | Draft; ready for freeze review | Cross-sectional price momentum / historical source-defined CS universe | 2015-01-02–2020-12-31 | 2021–2023; inaccessible during design | 2024; sealed | Four fixed cells; no performance or freeze |
+| [EXP004](experiments/EXP004/README.md) | Hypothesis frozen; input QA blocked | Cross-sectional price momentum / historical source-defined CS universe | 2015-01-02–2020-12-31 | 2021–2023; inaccessible during design | 2024; sealed | Four fixed cells; no performance; numeric inputs pending |
 
 
 The manifest retains its historical `SEALED` marker. The final report records the subsequent authorized Test opening once, after the strategy and processing methodology were frozen. No Experiment 002 or forward trading result is reported.
@@ -170,7 +170,7 @@ EXP002 closed as a [negative research-design feasibility result](experiments/EXP
 
 [EXP003](experiments/EXP003/README.md) is now closed as source-feasibility-blocked: complete insider window/identity evidence was unavailable. Its economic hypothesis was never tested. The [external disposition](experiments/dispositions.json) records the owner closure while preserving its original draft and audits unchanged.
 
-[EXP004](experiments/EXP004/README.md) is an independent price-only momentum draft ready for human freeze review. It reuses the passed historical identity/price machinery, fixes exactly four horizon/holding cells, and tests ranking against monthly equal-weight ownership of the same source universe plus explicit SPY. Existing price warmup supports January 2, 2015 inception and four chronological Development folds. No Nexus calls, performance queries, spending or automatic freeze occurred in this design pass.
+[EXP004](experiments/EXP004/README.md) is an independent price-only momentum experiment with an owner-approved frozen hypothesis. It reuses the passed historical identity/price machinery, fixes exactly four horizon/holding cells, and tests ranking against monthly equal-weight ownership of the same source universe plus explicit SPY. Existing price warmup supports January 2, 2015 inception and four chronological Development folds. The approved freeze is recorded before Development preparation. Numeric production price/split inputs are missing, so all affected runs remain withheld; see the [Development report](reports/EXP004_development_report.md). No Nexus calls, performance queries or spending occurred.
 
 Future research could investigate richer cross-sectional signals, fundamentals and insider/institutional data; regime-aware models and systematic optimization; walk-forward and bootstrap robustness checks; multi-strategy ensembles; and eventually forward paper testing. These are proposals, not completed capabilities or authorized new experiments.
 

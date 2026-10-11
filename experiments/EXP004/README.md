@@ -4,7 +4,7 @@
 
 Does medium-term cross-sectional price momentum produce robust out-of-sample excess performance in our historically auditable source-defined common-equity universe?
 
-| Component | Predeclared proposal |
+| Component | Frozen design |
 |---|---|
 | Universe | Historically effective unique source-covered CS stable identities, positive completed nominal prices, unambiguous prior-session/execution identity, maximum-365-day completed history. Retain later-ended histories while eligible. No claim of complete US exchange coverage. |
 | Signal | Split-safe price momentum over 180 or 365 **elapsed calendar days**, completed information only. No cash dividends in the price ratio. |
@@ -17,7 +17,7 @@ Does medium-term cross-sectional price momentum produce robust out-of-sample exc
 | Expanding folds | Train 2015–2016/evaluate 2017; expand through 2017/evaluate 2018, through 2018/evaluate 2019, through 2019/evaluate 2020. |
 | Outer Validation | 2021-01-01–2023-12-31; inaccessible during design/Development. |
 | Sealed historical Test | 2024-01-01–2024-12-31; requires separate owner opening. Workflow-held-out, not genuinely unseen. |
-| Planned evaluations | **59** including 20 failed/unresolved reserve; 12 separate local cost sensitivities. Zero runs authorized now. |
+| Planned evaluations | **59** including 20 failed/unresolved reserve; 12 separate local cost sensitivities. Development execution authorized; input QA must pass before submission. |
 
 No insider, institutional, fundamental, cap, ADV, exchange/index-membership or prospective rebalance signal/filter is included. No extra price floor is added: inherited positivity is supported, a separate nominal threshold was not certified for this population. Both horizons and the equal-weight benchmark use the same maximum-horizon eligible population, so changing the signal does not silently change the comparator.
 
