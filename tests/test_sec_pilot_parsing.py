@@ -19,5 +19,8 @@ class OfflineParserTests(unittest.TestCase):
     def test_conflicting_facts_retained(self):
         self.run_isolated("sources['instance']=INSTANCE.replace(b'</xbrl>',b'<s:Revenue contextRef=\"flow\" unitRef=\"USD\" decimals=\"0\">5</s:Revenue></xbrl>')\na=parse(FIXTURE,sources,code_git_sha='synthetic')\nassert len(a['facts'])==3\nassert sum(f['status']=='AMBIGUOUS' for f in a['facts'])==2")
 
+    def test_fiscal_period_nil_and_missing_are_not_calendar_or_zero(self):
+        self.run_isolated("sources['instance']=INSTANCE.replace(b'2019-01-01',b'2018-10-01').replace(b'2019-12-31',b'2019-09-28')\nsources['instance']=sources['instance'].replace(b'</xbrl>',b'<s:Missing contextRef=\"flow\" unitRef=\"USD\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:nil=\"true\"/></xbrl>')\na=parse(FIXTURE,sources,code_git_sha='synthetic')\nassert a['facts'][0]['context']['period']['endDate']=='2019-09-28'\nassert a['facts'][-1]['status']=='UNAVAILABLE' and a['facts'][-1]['numeric_value'] is None\nassert all(f['concept']!='AbsentTag' for f in a['facts'])")
+
     def test_malformed_future_and_external_entity_rejected(self):
         self.run_isolated("for value in (INSTANCE[:-8],b'<!DOCTYPE x [<!ENTITY y SYSTEM \"https://example.invalid/x\">]>'+INSTANCE):\n sources['instance']=value\n try:parse(FIXTURE,sources,code_git_sha='synthetic')\n except Exception:pass\n else:raise AssertionError('Malformed source accepted')\nsources['instance']=INSTANCE\nsources['submission']=SUBMISSION.replace(b'20200309183000',b'20210309183000')\ntry:parse(FIXTURE,sources,code_git_sha='synthetic')\nexcept ValueError:pass\nelse:raise AssertionError('Future source accepted')")

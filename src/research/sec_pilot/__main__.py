@@ -1,6 +1,7 @@
 """Pilot-only plan/acquire/parse/replay/audit/report. No experiment CLI calls."""
 import argparse
 from html.parser import HTMLParser
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -104,25 +105,36 @@ def process(*, replay=False):
             continue
         job = json.loads((directory/'job.json').read_bytes())
         for record in job['sources'].values(): archive.read(record['body'])
-        output = directory/'parsed.json'
-        result = subprocess.run([str(PYTHON), '-m', 'src.research.sec_pilot.parsing', str(directory/'job.json'), str(output)],
+        parser_hash = hashlib.sha256((Path(__file__).with_name('parsing.py')).read_bytes()).hexdigest()
+        run = directory/'parsers'/parser_hash; run.mkdir(parents=True, exist_ok=True)
+        if not (run/'job.json').exists():
+            if replay: raise ValueError('This parser version has no recorded ingestion; replay cannot create one')
+            job = dict(job, code_git_sha=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip())
+            archive.receipts.write((run/'job.json').relative_to(RAW).as_posix(), job)
+        else: job = json.loads((run/'job.json').read_bytes())
+        output = run/'parsed.json'
+        result = subprocess.run([str(PYTHON), '-m', 'src.research.sec_pilot.parsing', str(run/'job.json'), str(output)],
                                 cwd=ROOT, capture_output=True, text=True)
         if result.returncode:
             archive.receipts.write(accession+'/parser_failure_'+uuid.uuid4().hex+'.json',
                                     {'time_utc': now(), 'status': 'BLOCKED_PINNED_OFFLINE_PARSER', 'stderr': result.stderr})
             raise ValueError('Pinned offline parser failed for '+accession+'; private failure receipt retained')
         snapshot = json.loads(output.read_bytes())
-        if not (directory/'ingestion.json').exists() and not replay:
-            archive.receipts.write(accession+'/ingestion.json', {'ingested_at_utc': now(), 'snapshot_sha256': snapshot['snapshot_sha256']})
+        if not (run/'ingestion.json').exists() and not replay:
+            archive.receipts.write((run/'ingestion.json').relative_to(RAW).as_posix(), {'ingested_at_utc': now(), 'snapshot_sha256': snapshot['snapshot_sha256']})
         else:
-            ingestion = json.loads((directory/'ingestion.json').read_bytes())
+            ingestion = json.loads((run/'ingestion.json').read_bytes())
             if ingestion['snapshot_sha256'] != snapshot['snapshot_sha256']: raise ValueError('Ingestion snapshot mismatch')
-        checks = reconcile(snapshot, job, directory/'tables')
+        checks = reconcile(snapshot, job, run/'tables')
         view = asof(snapshot, '2020-12-31T23:59:59Z', snapshot_sha256=snapshot['snapshot_sha256'])
         summary.append({'accession': accession, 'acquisition': 'PASS', 'parsing': 'PASS_OFFLINE',
                         'source_documents': [{ 'role': role, 'sha256': record['body']['sha256'], 'bytes': record['body']['bytes']}
                                              for role, record in sorted(job['sources'].items())],
                         'snapshot_sha256': snapshot['snapshot_sha256'], 'facts': len(snapshot['facts']),
+                        'parser_source_sha256': parser_hash, 'code_git_sha': snapshot['code_git_sha'],
+                        'retrieved_at_utc': job['retrieved_at_utc'],
+                        'ingested_at_utc': json.loads((run/'ingestion.json').read_bytes())['ingested_at_utc'],
+                        'normalized_text_sha256': snapshot['text_sections'][0]['normalized_text_sha256'],
                         'reconciliation': checks, 'accepted_raw': snapshot['acceptance_raw'],
                         'accepted_at_utc': snapshot['accepted_at_utc'], 'public_availability': 'UNKNOWN',
                         'identity': 'UNRESOLVED', 'trading_eligible_facts': len(view['usable']),

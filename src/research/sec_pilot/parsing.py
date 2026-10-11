@@ -11,7 +11,6 @@ from pathlib import Path
 import re
 import socket
 from unittest.mock import patch
-from zoneinfo import ZoneInfo
 
 
 def canonical(value):
@@ -38,6 +37,7 @@ def parse(fixture, sources, *, code_git_sha):
         from lxml import etree as ET
         from edgar.sgml.sgml_common import FilingSGML
         from edgar.xbrl import XBRL
+        from edgar.documents import parse_html
         if importlib.metadata.version('edgartools') != '5.62.0': raise ValueError('Pinned parser version required')
         sgml = FilingSGML.from_text(sources['submission'].decode('utf-8', errors='strict'))
         if (sgml.header.accession_number != fixture['accession'] or sgml.header.form != fixture['form']
@@ -110,17 +110,21 @@ def parse(fixture, sources, *, code_git_sha):
                    'security_id': None, 'historically_reconstructed': True}
             rows.append(row); groups[(namespace, concept, context, unit)].append(row)
         # Independently enumerate original elements; do not certify convenience aggregates.
-        expected = Counter((r['concept'], r['context_ref'], r['exact_value'].strip(), r['unit_ref']) for r in rows)
-        observed = Counter((f.element_id.split(':')[-1], f.context_ref, f.value, f.unit_ref) for f in x.parser.facts.values())
+        expected = Counter((r['namespace'], r['concept'], r['context_ref'], r['exact_value'].strip(), r['unit_ref']) for r in rows)
+        observed = Counter((root.nsmap.get(f.element_id.split(':')[0], '') if ':' in f.element_id else '',
+                            f.element_id.split(':')[-1], f.context_ref, f.value, f.unit_ref) for f in x.parser.facts.values())
         if expected != observed: raise ValueError('Original element / EdgarTools fact mismatch')
         for group in groups.values():
             if len({(r['exact_value'], r['decimals'], r['nil']) for r in group}) > 1:
                 for r in group: r['status'] = 'AMBIGUOUS'
+        primary_text = parse_html(sources['primary'].decode('utf-8', errors='strict')).text(
+            include_tables=True, table_max_col_width=None)
         period = re.search(r'CONFORMED PERIOD OF REPORT:\s*(\d{8})', text)
         filed = re.search(r'FILED AS OF DATE:\s*(\d{8})', text)
         result = {'fixture': fixture, 'parser_version': '5.62.0', 'code_git_sha': code_git_sha,
                   'parser_source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-                  'config': {'encoding': 'utf-8-strict', 'xml_recovery': False, 'external_network': False},
+                  'config': {'encoding': 'utf-8-strict', 'xml_recovery': False, 'external_network': False,
+                             'primary_text': 'edgartools.parse_html/full-document-tables-untruncated'},
                   'source_hashes': {k: hashlib.sha256(v).hexdigest() for k, v in sorted(sources.items())},
                   'acceptance_raw': acceptance_raw, 'accepted_at_utc': None,
                   'acceptance_timezone_status': 'UNRESOLVED_HEADER_INDEX_TIMEZONE',
@@ -131,7 +135,8 @@ def parse(fixture, sources, *, code_git_sha):
                   'security_bindings': [], 'asof_views': [],
                   'text_sections': [{'label': 'Full primary document; item segmentation not certified',
                     'source_sha256': hashlib.sha256(sources['primary']).hexdigest(), 'source_locator': 'entire_document',
-                    'text_status': 'UNAVAILABLE_ITEM_SEGMENTATION_NOT_IMPLEMENTED'}]}
+                    'text_status': 'EXTRACTED_FULL_DOCUMENT', 'text': primary_text,
+                    'normalized_text_sha256': hashlib.sha256(primary_text.encode()).hexdigest()}]}
         result['config_sha256'] = digest(result['config'])
         result['snapshot_sha256'] = digest(result)
         return result

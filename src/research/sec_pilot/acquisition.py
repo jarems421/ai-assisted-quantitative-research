@@ -30,6 +30,12 @@ def fixtures():
     rows = json.loads(MANIFEST.read_bytes())['fixtures']
     if {r['accession'] for r in rows} != {'0000320193-19-000119', '0000320193-20-000096', '0001326801-20-000013'}:
         raise ValueError('Frozen fixture set changed')
+    if len(rows) != 3: raise ValueError('Duplicate fixture')
+    for r in rows:
+        cik = '1326801' if r['accession'].startswith('0001326801') else '320193'
+        expected = f"https://www.sec.gov/Archives/edgar/data/{cik}/{r['accession'].replace('-', '')}/{r['accession']}-index.htm"
+        if r['index_url'] != expected or int(r['issuer_cik']) != int(cik) or r['form'] != '10-K':
+            raise ValueError('Frozen issuer/document contract changed')
     return rows
 
 
