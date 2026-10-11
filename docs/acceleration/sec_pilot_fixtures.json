@@ -1,0 +1,30 @@
+{
+  "status": "PLANNED_NOT_ACQUIRED",
+  "selected_on": "2026-10-11",
+  "cutoff": "2020-12-31",
+  "selection_rule": "Fixed Apple consecutive annual filings and Facebook annual filing; parsing, chronology and historical issuer naming only; no strategy returns inspected",
+  "source_bytes_sha256": null,
+  "fixtures": [
+    {
+      "issuer_cik": "0000320193",
+      "accession": "0000320193-19-000119",
+      "form": "10-K",
+      "historical_issuer": "Apple Inc.",
+      "index_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019319000119/0000320193-19-000119-index.htm"
+    },
+    {
+      "issuer_cik": "0000320193",
+      "accession": "0000320193-20-000096",
+      "form": "10-K",
+      "historical_issuer": "Apple Inc.",
+      "index_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019320000096/0000320193-20-000096-index.htm"
+    },
+    {
+      "issuer_cik": "0001326801",
+      "accession": "0001326801-20-000013",
+      "form": "10-K",
+      "historical_issuer": "Facebook Inc.",
+      "index_url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680120000013/0001326801-20-000013-index.htm"
+    }
+  ]
+}

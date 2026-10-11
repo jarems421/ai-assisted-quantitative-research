@@ -103,7 +103,11 @@ A reproducible research framework for generating and evaluating systematic tradi
 
 ## Research OS v1
 
-Reusable infrastructure now supports validated experiment specifications, frozen hashes, sequential stage gates, bounded job planning, durable submission/trial journals, resumable raw extraction, parameter stability, paired resampling, and generated experiment cards. No new research experiment has been run.
+Reusable infrastructure now supports validated experiment specifications, frozen hashes, sequential stage gates, bounded job planning, durable submission/trial journals, resumable raw extraction, parameter stability, paired resampling, and generated experiment cards. EXP001 remains the only completed economic evaluation; later experiments record feasibility and execution limits.
+
+The [Phase 1 acceleration audit](docs/acceleration/phase1.md) prioritizes certified data and execution, economically motivated forecasts, independent incremental-alpha evidence, risk-aware construction, then forward paper evidence. Existing infrastructure is reused. EXP004 is operationally paused under the latest owner instruction; its scientific freeze and historical records remain unchanged. The [historical-symbol support case](docs/acceleration/nexus_support/README.md) is prepared but unsent. The next proposed milestone is a [three-filing SEC provenance pilot](docs/acceleration/sec_pilot.md), without backfill, EXP005 freeze or performance execution.
+
+EdgarTools and compatible PyArrow dependencies are prepared in an isolated environment with a [version/hash lock](docs/acceleration/sec_pilot_requirements.lock); existing research dependency pins remain unchanged. No SEC filing corpus has been acquired.
 
 ```mermaid
 flowchart LR
@@ -145,7 +149,7 @@ Nexus supplies strategy simulations and stored engine outputs. Repository engine
 |---|---|---|---|---|---|---|
 | [EXP001](reports/EXP001_final_report.md) | Complete historical evaluation | Five candidates; SMA20/50 selected / SPY | {windows['development']} | {windows['validation']} | {windows['test']} | Lower risk, lower out-of-sample return than SPY |
 | [EXP003](experiments/EXP003/README.md) | Closed; source feasibility blocked | Momentum + qualifying insider purchases / source-covered historical CS universe | Joint inception unresolved; end 2020-12-31 | Designated 2021–2023; unopened | Designated 2024; unopened | Economic hypothesis never tested; original draft preserved |
-| [EXP004](experiments/EXP004/README.md) | Amended freeze; historical-symbol runtime blocked | Cross-sectional price momentum / historical source-defined CS universe | 2015-01-02–2020-12-31 | 2021–2023; inaccessible during design | 2024; sealed | All 72 numeric panels pass; no candidate results; native population preservation failed |
+| [EXP004](experiments/EXP004/README.md) | Operationally paused; amended freeze preserved | Cross-sectional price momentum / historical source-defined CS universe | 2015-01-02–2020-12-31 | 2021–2023; inaccessible during design | 2024; sealed | All 72 numeric panels pass; no candidate results; native population preservation failed |
 {chr(10).join(registry_rows)}
 
 The manifest retains its historical `SEALED` marker. The final report records the subsequent authorized Test opening once, after the strategy and processing methodology were frozen. No Experiment 002 or forward trading result is reported.

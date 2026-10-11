@@ -1,0 +1,299 @@
+{
+  "audit_sha256": "db2c50f700308ae774f13d530d93fe31eb5d3e51d7cc31ff95c4b12189c0a265",
+  "certification": "FAIL_POPULATION_PRUNING",
+  "dataset_promotion_fixture": {
+    "custom_indicator_id": "6acbf200edda2368845aa439",
+    "dataset_id": "6acbf1ffedda2368845aa437",
+    "points": 4,
+    "ready": true,
+    "result": "Stored original symbols, but engine omitted three of four requested assets"
+  },
+  "event_pages": 1,
+  "event_rows": 6,
+  "evidence": "Derived allowlisted summary; private originals unchanged",
+  "execution_authorized": false,
+  "requested_symbols": [
+    "ADS",
+    "AHS",
+    "BBRY",
+    "AAPL"
+  ],
+  "run_id": "6acbf2738c2f7fb888b4df99",
+  "runtime_observations": [
+    {
+      "passed_symbols": [
+        "AAPL"
+      ],
+      "universe_size": 1
+    },
+    {
+      "passed_symbols": [
+        "AAPL"
+      ],
+      "universe_size": 1
+    },
+    {
+      "passed_symbols": [
+        "AAPL"
+      ],
+      "universe_size": 1
+    },
+    {
+      "passed_symbols": [
+        "AAPL"
+      ],
+      "universe_size": 1
+    }
+  ],
+  "source_receipts": [
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_diagnostic/mcp_response.json",
+      "sha256": "d4bef0bfd4af31f0d7714c6ea2d46a45070b1797f0654ccc0c73c5880ca5c288"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/events_00001.json",
+      "sha256": "ed3cd4698511a7968c777f52fa3d4632aa73fc1250c23bc960380131c54d453f"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/request.json",
+      "sha256": "4fa1019b63d6310471f48a87e2053a827b11fc497e09ef5d474ab900340500ed"
+    }
+  ],
+  "synthetic_points": [
+    {
+      "availableAt": "2015-01-02T02:00:00Z",
+      "ticker": "ADS",
+      "timestamp": "2015-01-02T02:00:00Z",
+      "value": 1
+    },
+    {
+      "availableAt": "2015-01-02T02:00:00Z",
+      "ticker": "AHS",
+      "timestamp": "2015-01-02T02:00:00Z",
+      "value": 1
+    },
+    {
+      "availableAt": "2015-01-02T02:00:00Z",
+      "ticker": "BBRY",
+      "timestamp": "2015-01-02T02:00:00Z",
+      "value": 1
+    },
+    {
+      "availableAt": "2015-01-02T02:00:00Z",
+      "ticker": "AAPL",
+      "timestamp": "2015-01-02T02:00:00Z",
+      "value": 1
+    }
+  ],
+  "synthetic_reproduction_request": {
+    "args": {
+      "dividend_policy": "cash",
+      "end_date": "2015-01-02",
+      "fee_config": {
+        "Stock": {
+          "amount": 0.1,
+          "type": "percent"
+        }
+      },
+      "generate_events": true,
+      "initial_value": 25000,
+      "interval": "Day",
+      "start_date": "2015-01-02"
+    },
+    "portfolio": {
+      "buyingPower": 25000,
+      "cash": 25000,
+      "dividendPolicy": "cash",
+      "initialValue": 25000,
+      "name": "EXP004 synthetic historical transport diagnostic",
+      "strategies": [
+        {
+          "action": {
+            "allowShorts": false,
+            "deploymentPercent": {
+              "type": "Value",
+              "value": 1
+            },
+            "pipeline": [
+              {
+                "condition": {
+                  "comparison": "equal",
+                  "lhs": {
+                    "customIndicatorId": "6acbf200edda2368845aa439",
+                    "type": "CustomIndicator"
+                  },
+                  "rhs": {
+                    "type": "Value",
+                    "value": 1
+                  },
+                  "type": "Base"
+                },
+                "type": "Filter"
+              }
+            ],
+            "type": "DynamicRebalance",
+            "universe": {
+              "assets": [
+                {
+                  "name": "ADS",
+                  "symbol": "ADS",
+                  "type": "Stock"
+                },
+                {
+                  "name": "AHS",
+                  "symbol": "AHS",
+                  "type": "Stock"
+                },
+                {
+                  "name": "BBRY",
+                  "symbol": "BBRY",
+                  "type": "Stock"
+                },
+                {
+                  "name": "AAPL",
+                  "symbol": "AAPL",
+                  "type": "Stock"
+                }
+              ],
+              "source": "SPECIFIC_ASSETS"
+            },
+            "weightIndicator": {
+              "type": "Value",
+              "value": 1
+            }
+          },
+          "condition": {
+            "conditions": [
+              {
+                "comparison": "equal",
+                "lhs": {
+                  "type": "CurrentTimeHours"
+                },
+                "rhs": {
+                  "type": "Value",
+                  "value": 9.5
+                },
+                "type": "Base"
+              },
+              {
+                "comparison": "equal",
+                "lhs": {
+                  "indicators": [
+                    {
+                      "indicators": [
+                        {
+                          "indicators": [
+                            {
+                              "type": "Year"
+                            },
+                            {
+                              "type": "Value",
+                              "value": 10000
+                            }
+                          ],
+                          "type": "Multiply"
+                        },
+                        {
+                          "indicators": [
+                            {
+                              "type": "Month"
+                            },
+                            {
+                              "type": "Value",
+                              "value": 100
+                            }
+                          ],
+                          "type": "Multiply"
+                        }
+                      ],
+                      "type": "Plus"
+                    },
+                    {
+                      "type": "Date"
+                    }
+                  ],
+                  "type": "Plus"
+                },
+                "rhs": {
+                  "type": "Value",
+                  "value": 20150102
+                },
+                "type": "Base"
+              }
+            ],
+            "type": "And"
+          },
+          "name": "Synthetic ones fixture",
+          "orderExecution": {
+            "type": "Market"
+          }
+        }
+      ],
+      "supportsFractionalShares": true
+    },
+    "tool": "backtest_portfolio"
+  },
+  "uploads": {
+    "momentum180": {
+      "accepted_rows": 0,
+      "custom_indicator_id": "6acbf09f32636c1b6c14b72c",
+      "failure_columns": [
+        "ticker"
+      ],
+      "rejected_rows": 4445,
+      "total_rows": 273115,
+      "upload_job_id": "6acbf0a0cc7976c7bd1eb183"
+    },
+    "momentum365": {
+      "accepted_rows": 0,
+      "custom_indicator_id": "6acbf17fedda2368845aa262",
+      "failure_columns": [
+        "ticker"
+      ],
+      "rejected_rows": 4445,
+      "total_rows": 273115,
+      "upload_job_id": "6acbf183cc7976c7bd1eb2f1"
+    },
+    "ordinal180": {
+      "accepted_rows": 0,
+      "custom_indicator_id": "6acbf17fb9997c1f58eba03d",
+      "failure_columns": [
+        "ticker"
+      ],
+      "rejected_rows": 4445,
+      "total_rows": 273115,
+      "upload_job_id": "6acbf183edda2368845aa279"
+    },
+    "ordinal365": {
+      "accepted_rows": 0,
+      "custom_indicator_id": "6acbf17fcc7976c7bd1eb2e1",
+      "failure_columns": [
+        "ticker"
+      ],
+      "rejected_rows": 4445,
+      "total_rows": 273115,
+      "upload_job_id": "6acbf1835f7c0dbd8e48bafe"
+    },
+    "session": {
+      "accepted_rows": 0,
+      "custom_indicator_id": "6acbf17fcc7976c7bd1eb2df",
+      "failure_columns": [
+        "ticker"
+      ],
+      "rejected_rows": 4445,
+      "total_rows": 273115,
+      "upload_job_id": "6acbf183edda2368845aa277"
+    },
+    "validity": {
+      "accepted_rows": 0,
+      "custom_indicator_id": "6acbf1805f7c0dbd8e48bae9",
+      "failure_columns": [
+        "ticker"
+      ],
+      "rejected_rows": 4445,
+      "total_rows": 273115,
+      "upload_job_id": "6acbf18332636c1b6c14b7b9"
+    }
+  },
+  "verified_private_receipts": 191
+}
