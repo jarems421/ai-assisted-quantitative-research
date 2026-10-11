@@ -1,6 +1,6 @@
 # EXP002 — research design draft
 
-**DRAFT, not frozen; no Nexus research or jobs performed.** The [specification](spec.json) replaces the synthetic starter with proposed methodological choices. All source and universe point-in-time flags remain false. [Provenance](provenance.json) separates repository rules, owner intent, proposed choices and missing evidence. No spend is approved: every stage token ceiling is zero.
+**DRAFT, not frozen; no Nexus observation queries or jobs performed.** The [specification](spec.json) contains proposed methodological choices and a bounded declaration audit. All source and universe point-in-time flags remain false. [Provenance](provenance.json) separates VERIFIED declarations/documentation, PROPOSED choices and UNRESOLVED runtime evidence. No spend is approved: every stage token ceiling is zero. The supplied [Aurora memo](aurora_research_memo.md) is preserved verbatim as external evidence; its heading and self-reported activity are not independent verification.
 
 ## Question and proposed hypothesis
 
@@ -44,7 +44,7 @@ These are bounded design ranges, **not empirically supported optima or compiled 
 |---|---|
 | Momentum | 126 or 252 trading sessions; lag the input close |
 | Insider accumulation | 30 or 90 calendar days of publicly available qualifying disclosures |
-| Institutional improvement | 180 or 365 calendar days of publicly available filing updates; comparison logic unresolved |
+| Institutional filing recency | 180 or 365 calendar days; limits eligible filing age, not a rolling sum of quarterly ownership changes |
 | Holdings | 20 or 40 |
 | Rebalance | Monthly baseline; weekly robustness alternative, exact calendar rules unresolved |
 | Liquidity | $10m or $25m trailing 20-session average dollar volume |
@@ -102,4 +102,42 @@ Paper trading requires a separate owner decision, the frozen portfolio, recorded
 7. Which parameter units/ranges and chronological windows are supported by coverage alone? Can a later historical lockbox be protected, with acknowledged prior EXP001/model knowledge?
 8. What actual evaluation count, fold amplification, current token quote and manual-Aurora access controls apply? Which economic mechanisms could fail, and which claims remain unsupported?
 
-Use [the manual prompt](aurora_research_prompt.md). No Aurora memo has been received or ingested. After receiving it, audit each claim with exact evidence and update this DRAFT/provenance; run `python -m src.research audit EXP002`, repair only schema/methodology issues, and stop before freeze. **The draft is not ready for human freeze approval.** Current schema validation can pass while the research audit intentionally fails on unestablished point-in-time evidence.
+The [manual prompt](aurora_research_prompt.md) is retained as the original research instruction. The supplied memo has now been ingested claim-by-claim into provenance. Its original tool trajectory was not supplied, so its no-mutation/no-spend/access assertions remain external self-report. **The draft is not ready for human freeze approval.** Schema validation passes while `python -m src.research audit EXP002` intentionally fails on unestablished point-in-time evidence; the audit has not been weakened.
+
+## Bounded declaration audit — 2026-10-11
+
+VERIFIED below means the stated declaration, documentation or metadata was inspected. It never means an indicator was evaluated by the server. Installed SDK 1.42.0 signatures, source line numbers, source hashes and offline indicator JSON are recorded in provenance. No strategies, portfolios, candidate snapshots, API clients or jobs were created. Current MCP declarations were inspected without calling their tools.
+
+| Blocker | Status and exact declaration | Remaining uncertainty |
+|---|---|---|
+| Insider fields | VERIFIED SDK: `InsiderTrades(asset, metric, role, window_days, owner_cik=None, issuer_cik=None, instrument=None)`; `DistinctBuyers`, `BuyCount`, `BuyValue` | Native identity/dedup, dollar scaling, zero/missing and amendment completeness |
+| Institutional fields | VERIFIED SDK: `InstitutionalHoldings(asset, manager, metric='HolderCount', window_days=180, instrument='Equity')`; `NewHolders`, `NetHolderChange`, `NetShareChange` | Empty manager string is aggregate; quarter/cohort alignment and changes under asynchronous filings remain UNRESOLVED |
+| Momentum | VERIFIED SDK: `PriceRateOfChange(asset, length=30, interval='Day')`; `IndicatorRateOfChange(operand, length=30, interval='Day')` | Both 126/252 serialize locally; native session/calendar counting, warmup and price basis UNRESOLVED |
+| Market cap / liquidity | VERIFIED fields: `Fundamental(CANDIDATE,'marketCap')`, `Price`, `Volume`, `IndicatorSimpleMovingAverage`, `IndicatorWindowAgo`; `lake.sec_daily_ohlc.{date,closingPrice,volume,marketCap}` | PIT cap vintages, lagged completed bars, adjustment consistency, stale/missing behavior and ADV composition UNRESOLVED |
+| Universe / exclusions | VERIFIED builders: `universe('ALL_US_STOCKS')`, `dynamic_rebalance`, `filter`, `select_top`, `select_percentile` | `IsAssetType` accepts Stock/Cryptocurrency/Option/Other; Stock includes ETFs. Historical listings/dead names/subtype exclusions/identifier changes UNRESOLVED |
+| Availability / revisions | VERIFIED static columns: `availableAt`, `filingDate`, `availabilitySource`, `accession`, `isAmendment`, `amendmentType` | Native as-of mapping, ingestion, owner coverage, amendment replacement/addition and stale/zero taxonomy UNRESOLVED |
+| Execution | VERIFIED `backtest(..., fee_config, dividend_policy)` and cash/reinvest choices; dividend/split catalog declarations | No next-session-delay or stock-slippage argument found on this handle; actual fill/debit/action timing UNRESOLVED |
+| Prospective gates | VERIFIED `rebalance_planned_turnover()`, `rebalance_estimated_cost()`, `rebalance_expected_benefit()`, `rebalance_net_benefit()` → `RebalanceDecisionMetric` | Exact formulas, turnover convention and as-of input lineage UNRESOLVED |
+| Coverage | VERIFIED public receipt lists 2015–2020 partitions for all four ownership tables | Joint native field/ticker/price/cap/security-master completeness UNRESOLVED |
+| Future planning | VERIFIED declared `get_sweep_surface(portfolio_id?)`, `systematic_sweep(...,preview_only=True)`, `run_walk_forward_study(...,preview_only=True)` | No operation invoked; actual counts/quotes and sweep compilation billing UNRESOLVED |
+
+Required native JSON selectors are `InsiderTrades.metric` and `InstitutionalHoldings.metric`, with `windowDays`; `manager` is a required SDK argument even though the aggregate value is an empty string. `CANDIDATE` omits `targetAsset` rather than naming a fake ticker. Documented insider/holder metrics use counts, BuyValue uses dollars and NetShareChange uses shares. ROC is documented in percentage units. These unit contracts have not been checked against native values. [Fundamental reference](https://nexustrade.io/docs/indicators/fundamental-indicators), [technical reference](https://nexustrade.io/docs/indicators/technical-indicators).
+
+Material corrections to the external memo/design are recorded before freeze:
+
+- SEC code P includes private purchases; it cannot establish an open-market-only filter by itself.
+- The institutional recency axis was renamed to `institutional_filing_recency_calendar_days`, preserving 180/365. Latest-public versus prior-quarter comparison is documented, but synchronized cross-manager books are not established.
+- Updated insider documentation distinguishes unknown owner/amendment coverage from a known zero. An institutional zero may mean no recently public filing. Neither is automatic evidence of no economic activity.
+- An advanced-documentation ETF subtype example conflicts with the installed SDK enum. No unsupported subtype string was silently substituted, and no narrower historical universe was invented.
+
+The vendor's [coverage publication](https://nexustrade.io/blog/free-historical-insider-and-institutional-stock-data-20261003) documents insider history from 2006 Q1 and institutional history from 2013 Q2. The [pinned snapshot receipt](https://huggingface.co/datasets/austin-starks/sec-ownership-disclosures/blob/0662635d4adddd295ba93530fa0de51aa453b97d/snapshot.json), generated October 10, lists all six Development years for each table. Its SHA-256 is `074f5471871cb871c44ef3a45da9e549f06c39405399a2a6e30b6a3d1df6f5ca`; only receipt metadata was downloaded, never Parquet or observations. Partition existence supports a coverage audit, not field completeness or equivalence to native engine inputs.
+
+That publication describes a New York filing-day-end convention for the public ownership package. It is not exact intraday acceptance, nor proof of native-engine behavior. The custom-data SDK's date-only `disclosed` normalization uses next UTC midnight: that separate convention must not be generalized to SEC data. No fixed lag is assumed to repair revisions or identifier mappings.
+
+The [prospective metric reference](https://nexustrade.io/docs/indicators/portfolio-indicators) documents turnover as a portfolio fraction and cost/benefit as dollars, evaluated before rebalance actions with zero outside those contexts. It does not establish the calculation formulas or point-in-time input lineage. No prospective gate was enabled.
+
+For later planning, `get_sweep_surface` describes applicable axes. `systematic_sweep` preview declares `plannedUnits`, genes and warnings without launch, but does not establish zero billing for LLM gene compilation. `run_walk_forward_study` and the SDK `walk_forward` docstring declare a preview without creating a study or billing. None was called. `build_portfolio` is declared zero-token/no-persistence, but was not used because strategy generation is outside this task. Deterministic reviewed genes are required before any preview; do not invoke `gene_intents` under zero spend. No dedicated standalone backtest cost-estimate endpoint was found.
+
+Read-only SDK metadata methods are `NexusTradeClient.get_lake_catalog()` and `describe_lake_table(table)`, issuing GETs to the versioned lake catalog. They were not invoked or assumed free. The SDK can create an anonymous workspace when authentication is absent; a later metadata audit must use existing registered authentication and avoid that side effect. [API overview](https://nexustrade.io/docs/api-reference/overview).
+
+**READY FOR COVERAGE AUDIT** means the declaration/partition evidence supports reviewing the next bounded, non-performance audit of pre-cutoff completeness, identities and availability. It does not mean freeze-ready or authorize further data reads, spend, previews or jobs. The cutoff remains **2020-12-31**. Historical lockbox, native PIT coverage, execution/slippage, inferential implementation and actual budgets remain freeze blockers.

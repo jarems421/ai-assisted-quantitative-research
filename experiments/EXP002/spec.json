@@ -25,7 +25,7 @@
     "PROPOSED: historically listed U.S. exchange-traded common equities, rebuilt at each rebalance; exact Nexus source and security-type mapping unresolved"
   ],
   "dynamic_universe": {
-    "definition": "Proposed: rebuild membership at each decision using only then-listed securities, lagged price/volume and point-in-time market capitalization. Exclude ETFs, funds, preferreds, ADRs and OTC securities; retain delisted histories and corporate-action mappings. Base filters: price >= USD 5, trailing 20-session average dollar volume >= USD 10 million, market cap >= USD 1 billion. Use common audited signal coverage for matched comparisons and report coverage exclusions separately. Exact historical source, filter semantics and coverage remain UNRESOLVED; no current ticker list is a substitute.",
+    "definition": "Proposed: rebuild membership at each decision using only then-listed securities, lagged price/volume and point-in-time market capitalization. Exclude ETFs, funds, preferreds, ADRs and OTC securities; retain delisted histories and corporate-action mappings. Base filters: price >= USD 5, trailing 20-session average dollar volume >= USD 10 million, market cap >= USD 1 billion. Use common audited signal coverage for matched comparisons and report coverage exclusions separately. Exact historical source, filter semantics and coverage remain UNRESOLVED; no current ticker list is a substitute. VERIFIED declaration: universe(ALL_US_STOCKS), dynamic_rebalance, filter/select_top/select_percentile and CANDIDATE binding. IsAssetType only accepts Stock/Cryptocurrency/Option/Other; Stock includes ETFs and ETF subtype is rejected locally. Historical common-equity-only membership, subtype exclusions and identifiers remain UNRESOLVED.",
     "point_in_time_verified": false
   },
   "benchmarks": [
@@ -36,36 +36,36 @@
   "candidate_family_budget": 9,
   "maximum_complexity": 3,
   "permitted_indicators": [
-    "PROPOSED momentum: split-consistent lagged price Rate of Change; exact SDK mapping unresolved",
-    "PROPOSED insider primary: DistinctBuyers for qualifying disclosed open-market purchases; BuyCount and BuyValue diagnostic alternatives only",
-    "PROPOSED institutional primary: NetHolderChange from publicly usable filings; NewHolders and NetShareChange diagnostic alternatives only",
-    "PROPOSED universe filters: lagged price, trailing dollar volume, point-in-time market capitalization",
-    "OPTIONAL robustness only: prospective rebalance_planned_turnover, rebalance_estimated_cost, rebalance_expected_benefit and rebalance_net_benefit; semantics and leakage audit unresolved"
+    "VERIFIED SDK declaration only: PriceRateOfChange(CANDIDATE,length,interval=Day) -> PriceRateOfChange/window{length,interval}; 126/252 serialize locally. Percentage units documented; runtime trading-session counting, price basis and lag UNRESOLVED.",
+    "VERIFIED SDK declaration only: InsiderTrades(asset,metric,role,window_days,owner_cik=None,issuer_cik=None,instrument=None); DistinctBuyers/BuyCount/BuyValue supported selectors. Any role and Equity instrument PROPOSED. Code P includes private purchases; open-market-only classification UNRESOLVED.",
+    "VERIFIED SDK declaration only: InstitutionalHoldings(asset,manager,metric=HolderCount,window_days=180,instrument=Equity); NewHolders/NetHolderChange/NetShareChange supported. Empty manager string means aggregate. windowDays limits filing recency, not summed quarterly accumulation; native cohort behavior UNRESOLVED.",
+    "VERIFIED SDK declarations only: Fundamental(CANDIDATE,marketCap), Volume(CANDIDATE), Price(CANDIDATE), IndicatorSimpleMovingAverage and IndicatorWindowAgo. Lagged 20-session dollar-volume composition PROPOSED; availability/vintages, completed-bar joins and missing/stale behavior UNRESOLVED.",
+    "VERIFIED SDK declarations only: rebalance_planned_turnover(), rebalance_estimated_cost(), rebalance_expected_benefit(), rebalance_net_benefit() -> RebalanceDecisionMetric. Context/units documented; formulas and as-of lineage UNRESOLVED; optional robustness only."
   ],
   "data_sources": [
     {
       "name": "Nexus daily prices, volume and corporate actions",
-      "availability_timestamp": "UNRESOLVED: per-bar availability and corporate-action vintage; require information available before the decision, then execute no earlier than the next session",
+      "availability_timestamp": "VERIFIED static catalog columns lake.sec_daily_ohlc.date/closingPrice/volume/marketCap; actual publication instant, market-cap vintage and completed-bar lagging UNRESOLVED.",
       "point_in_time_verified": false,
-      "revision_policy": "UNRESOLVED: preserve original observations and action vintages; audit split adjustments, backfills and corrections"
+      "revision_policy": "Catalog describes sec_daily_ohlc as split-adjusted; adjustment vintage, price/volume consistency, historical shares and future corrections UNRESOLVED."
     },
     {
       "name": "Nexus corporate-insider disclosures: DistinctBuyers / BuyCount / BuyValue",
-      "availability_timestamp": "REQUIRED, not verified: actual public filing acceptance/publication plus any vendor ingestion latency; never the insider transaction date",
+      "availability_timestamp": "VERIFIED catalog: insider_filings/insider_transactions.availableAt. Public ownership package documents filing-date end in America/New_York, not exact intraday publication; native-engine equivalence and ingestion latency UNRESOLVED.",
       "point_in_time_verified": false,
-      "revision_policy": "UNRESOLVED: use original filings as first available and amendments only after their own publication; audit duplicate and purchase classifications"
+      "revision_policy": "Metric selectors verified; native owner/dedup/amendment completeness UNRESOLVED. Code P includes private purchases. Public 2015-2020 table partitions exist, not proof of complete native field coverage."
     },
     {
       "name": "Nexus institutional disclosures: NewHolders / NetHolderChange / NetShareChange",
-      "availability_timestamp": "REQUIRED, not verified: actual public filing acceptance/publication plus vendor latency; never reporting quarter-end; resolve asynchronous filer comparisons",
+      "availability_timestamp": "VERIFIED catalog: institutional_filings/holdings.availableAt and availabilitySource; actual filing-public availability, effective periods and engine timestamp mapping UNRESOLVED.",
       "point_in_time_verified": false,
-      "revision_policy": "UNRESOLVED: retain as-filed vintages, amendments and filer-universe changes; prohibit latest-snapshot retrospective joins"
+      "revision_policy": "Documented latest public quarter versus prior quarter and publication-effective amendments; catalog has accession/isAmendment/amendmentType. windowDays is filing recency; asynchronous cohorts, amendments/additions and native coverage UNRESOLVED."
     },
     {
       "name": "Nexus historical security master, listing membership and market capitalization",
-      "availability_timestamp": "UNRESOLVED: membership and shares-outstanding / market-cap inputs known at each rebalance, including dead securities",
+      "availability_timestamp": "VERIFIED declarations: universe(ALL_US_STOCKS), Fundamental(...,marketCap), stockEligibility.minimumMarketCapUsd/missingMarketCapBehavior. Historical listing/publication and identity continuity UNRESOLVED.",
       "point_in_time_verified": false,
-      "revision_policy": "UNRESOLVED: stable identifiers, historical security types, symbol changes, delistings and shares-outstanding revisions"
+      "revision_policy": "SDK Stock includes ETFs and lacks separate ETF/ADR/preferred/OTC categories. No audited historical listings/delistings or identifier contract established; current snapshots cannot prove PIT membership."
     }
   ],
   "windows": {
@@ -90,7 +90,7 @@
   "costs": {
     "initial_value": 25000,
     "fee_percent": 0.1,
-    "slippage_note": "Proposed 0.10% notional fee per fill, not a verified execution model. Spread/slippage calibration and supported implementation are UNRESOLVED. No zero-slippage assumption may be silently adopted; audit execution and stress doubled costs, delay and turnover before freeze.",
+    "slippage_note": "Proposed 0.10% notional fee per fill, not a verified execution model. Spread/slippage calibration and supported implementation are UNRESOLVED. No zero-slippage assumption may be silently adopted; audit execution and stress doubled costs, delay and turnover before freeze. VERIFIED declarations: backtest fee_config asset amount/type percent|dollars and dividend_policy cash/reinvest. No explicit stock-slippage or next-session-delay argument found on inspected backtest handle; formulas/fill timing UNRESOLVED. OptionSlippageFraction is not a stock-slippage solution.",
     "dividend_policy": "cash",
     "fee_contract": {
       "Stock": {
@@ -105,7 +105,7 @@
     "requires_events": true,
     "event_rationale": "Required to audit dynamic membership decisions, timestamped signal inputs, holdings, submitted/filled orders, costs and corporate actions. Verify that Nexus events actually expose this evidence; missing fields remain unresolved. Events must be extracted first when authorized jobs eventually complete.",
     "warmup_days": 400,
-    "assumptions": "Proposed long-only, unlevered, equal-weight top-N portfolio with 95% deployment and cash remainder, monthly rebalancing; weekly cadence is a declared robustness alternative. Rank each included signal cross-sectionally and average ranks with equal weights; no fitted weights, stops, leverage or interaction rules. Decisions use lagged closes and public filings; fills no earlier than the next session. Warmup is proposed calendar days, outside measured returns; Nexus warmup units/coverage, rank arithmetic, ties, scheduling, lot sizes, stale data, missing values and execution semantics require evidence. Date windows and numeric grids are provisional design choices, not coverage claims; see README.md and provenance.json."
+    "assumptions": "Proposed long-only, unlevered, equal-weight top-N portfolio with 95% deployment and cash remainder, monthly rebalancing; weekly cadence is a declared robustness alternative. Rank each included signal cross-sectionally and average ranks with equal weights; no fitted weights, stops, leverage or interaction rules. Decisions use lagged closes and public filings; fills no earlier than the next session. Warmup is proposed calendar days, outside measured returns; Nexus warmup units/coverage, rank arithmetic, ties, scheduling, lot sizes, stale data, missing values and execution semantics require evidence. Date windows and numeric grids are provisional design choices, not coverage claims; see README.md and provenance.json. DECLARATION AUDIT: institutional 180/365 days are maximum filing recency, not summed rolling quarterly changes. Constructors verified offline only; no strategy or portfolio built. Next-session execution remains PROPOSED, not a confirmed engine setting. All PIT flags remain false."
   },
   "optimization_ranges": {
     "momentum_lookback_sessions": [
@@ -115,10 +115,6 @@
     "insider_lookback_calendar_days": [
       30,
       90
-    ],
-    "institutional_lookback_calendar_days": [
-      180,
-      365
     ],
     "number_of_holdings": [
       20,
@@ -131,6 +127,10 @@
     "minimum_market_cap_usd": [
       1000000000,
       5000000000
+    ],
+    "institutional_filing_recency_calendar_days": [
+      180,
+      365
     ]
   },
   "selection": {

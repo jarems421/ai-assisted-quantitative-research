@@ -1,47 +1,933 @@
 {
   "experiment_id": "EXP002",
-  "status": "DRAFT_RESEARCH_DESIGN_ONLY",
+  "status": "DRAFT_METADATA_DECLARATION_AUDITED",
   "prepared_on": "2026-10-11",
   "nexus_calls": 0,
-  "aurora_memo_received": false,
+  "aurora_memo_received": true,
   "frozen": false,
   "execution_authorized": false,
   "sources": [
-    {"id": "owner_question", "kind": "owner_instruction", "reference": "User request: EXP002 research design only, 2026-10-11", "supports": "Research question, signal families, no execution or freeze"},
-    {"id": "repository_methodology", "kind": "local_methodology", "reference": "AGENTS.md; docs/research_os.md; experiments/_template/README.md; src/research/spec.py; src/research/analysis.py", "supports": "PIT gates, chronology, all three pair ablations, immutable metrics, Holm policy, approvals, provenance and paper distinction"},
-    {"id": "local_capabilities", "kind": "previous_local_inventory", "reference": "docs/nexus_capabilities.md; docs/nexus_sdk_inventory.json; docs/nexus_mcp_inventory.json; src/research/dynamic.py", "supports": "Observed builder and prospective metric names only; not account-specific historical coverage or PIT verification"},
-    {"id": "pricing_metadata", "kind": "dated_local_metadata", "reference": "config/research_pricing.json", "supports": "Planning inputs only; no live quote, entitlement or spending approval"},
-    {"id": "design_proposal", "kind": "unfrozen_methodological_choice", "reference": "experiments/EXP002/README.md; experiments/EXP002/spec.json", "supports": "Preliminary dates, grids, baseline construction, eligibility, inference proposal, cost assumptions, trial ceiling and paper monitoring; not empirical evidence"}
+    {
+      "id": "owner_question",
+      "kind": "owner_instruction",
+      "reference": "User request: EXP002 research design only, 2026-10-11",
+      "supports": "Research question, signal families, no execution or freeze"
+    },
+    {
+      "id": "repository_methodology",
+      "kind": "local_methodology",
+      "reference": "AGENTS.md; docs/research_os.md; experiments/_template/README.md; src/research/spec.py; src/research/analysis.py",
+      "supports": "PIT gates, chronology, all three pair ablations, immutable metrics, Holm policy, approvals, provenance and paper distinction"
+    },
+    {
+      "id": "local_capabilities",
+      "kind": "previous_local_inventory",
+      "reference": "docs/nexus_capabilities.md; docs/nexus_sdk_inventory.json; docs/nexus_mcp_inventory.json; src/research/dynamic.py",
+      "supports": "Observed builder and prospective metric names only; not account-specific historical coverage or PIT verification"
+    },
+    {
+      "id": "pricing_metadata",
+      "kind": "dated_local_metadata",
+      "reference": "config/research_pricing.json",
+      "supports": "Planning inputs only; no live quote, entitlement or spending approval"
+    },
+    {
+      "id": "design_proposal",
+      "kind": "unfrozen_methodological_choice",
+      "reference": "experiments/EXP002/README.md; experiments/EXP002/spec.json",
+      "supports": "Preliminary dates, grids, baseline construction, eligibility, inference proposal, cost assumptions, trial ceiling and paper monitoring; not empirical evidence"
+    },
+    {
+      "id": "aurora_memo",
+      "kind": "external_user_supplied_memo",
+      "reference": "experiments/EXP002/aurora_research_memo.md",
+      "supports": "External research evidence, not verified by default; original tool trajectory/citations absent",
+      "observed_on": "2026-10-11"
+    },
+    {
+      "id": "installed_sdk_audit",
+      "kind": "offline_source_and_serialization",
+      "reference": "nexustrade 1.42.0: portfolio.py, portfolio_handle.py, client.py, tigris.py",
+      "supports": "Local signatures/enums/JSON only, no backend evaluation",
+      "observed_on": "2026-10-11"
+    },
+    {
+      "id": "fundamental_docs",
+      "kind": "vendor_documentation",
+      "reference": "https://nexustrade.io/docs/indicators/fundamental-indicators",
+      "supports": "Documented units and disclosure contract, not runtime proof",
+      "observed_on": "2026-10-11"
+    },
+    {
+      "id": "technical_docs",
+      "kind": "vendor_documentation",
+      "reference": "https://nexustrade.io/docs/indicators/technical-indicators",
+      "supports": "ROC percentage interpretation only",
+      "observed_on": "2026-10-11"
+    },
+    {
+      "id": "prospective_docs",
+      "kind": "vendor_documentation",
+      "reference": "https://nexustrade.io/docs/indicators/portfolio-indicators",
+      "supports": "Prospective context and units, no formula/lineage proof",
+      "observed_on": "2026-10-11"
+    },
+    {
+      "id": "ownership_coverage_docs",
+      "kind": "vendor_coverage_metadata",
+      "reference": "https://nexustrade.io/blog/free-historical-insider-and-institutional-stock-data-20261003",
+      "supports": "Documented 2006 Q1 / 2013 Q2 starts and package availability convention only",
+      "observed_on": "2026-10-11"
+    },
+    {
+      "id": "public_snapshot_receipt",
+      "kind": "public_partition_metadata",
+      "reference": "https://huggingface.co/datasets/austin-starks/sec-ownership-disclosures/blob/0662635d4adddd295ba93530fa0de51aa453b97d/snapshot.json",
+      "supports": "Partition existence/file hashes, no parquet observations",
+      "observed_on": "2026-10-11"
+    },
+    {
+      "id": "api_overview",
+      "kind": "vendor_documentation",
+      "reference": "https://nexustrade.io/docs/api-reference/overview",
+      "supports": "Registered API and versioned lake metadata routes",
+      "observed_on": "2026-10-11"
+    }
   ],
   "evidence_matrix": [
-    {"claim": "ROC / prices / volume / corporate actions", "status": "UNRESOLVED", "required": "Exact indicator units; bar publication; adjustment vintages; historical coverage; missingness; benchmark and execution semantics"},
-    {"claim": "Insider DistinctBuyers, BuyCount, BuyValue", "status": "UNRESOLVED", "required": "Actual signatures, purchase classification, distinct-person IDs, filing/publication and ingestion timestamps, amendments, deduplication, historical coverage and missingness"},
-    {"claim": "Institutional NewHolders, NetHolderChange, NetShareChange", "status": "UNRESOLVED", "required": "Actual signatures, disclosure threshold/filer universe, asynchronous filing comparison, public availability, revision vintages, coverage and missingness"},
-    {"claim": "Dynamic historical liquid U.S. common-equity universe", "status": "UNRESOLVED", "required": "Historical listings and dead stocks; stable IDs; security types; then-known shares/market cap; corporate actions and delistings; matched coverage universe"},
-    {"claim": "Proposed rank composite and next-session execution", "status": "UNRESOLVED", "required": "Reviewed implementable SDK snapshot; cross-sectional arithmetic and ties; cadence; missing/stale policy; warmup units; execution and event audit fields"},
-    {"claim": "Prospective turnover/cost/benefit gating", "status": "UNRESOLVED", "required": "Decision-time availability, units, formulas and no realized future inputs; supported slippage/capacity assumptions"},
-    {"claim": "Historical windows and lockbox", "status": "PROVISIONAL_UNVERIFIED", "required": "Joint coverage supports chronological splits/warmup; record coverage-only changes; set and seal exact Test dates before freeze; acknowledge prior historical knowledge"},
-    {"claim": "453 proposed evaluation units, cap 500", "status": "PROPOSAL_NOT_SERVER_PREVIEW", "required": "Compiled job mappings; complete counts including folds, stress internals, failures and diagnostics; current server preview and human budget"},
-    {"claim": "Holm-adjusted confirmatory evidence", "status": "UNRESOLVED_IMPLEMENTATION", "required": "Null-centered paired test, p-value validation and complete comparison/window inventory; current helper provides percentile intervals only"},
-    {"claim": "Forward paper design", "status": "PROVISIONAL_NOT_AUTHORIZED", "required": "Frozen portfolio, final owner review, funding/start date, monitoring schedule and operational stop criteria"}
+    {
+      "blocker": 1,
+      "claim": "Ownership selectors",
+      "status": "VERIFIED",
+      "verified_scope": "SDK serialization; documented units",
+      "exact_declaration": "InsiderTrades(asset,metric,role,window_days,owner_cik=None,issuer_cik=None,instrument=None); InstitutionalHoldings(asset,manager,metric=HolderCount,window_days=180,instrument=Equity)",
+      "remaining_uncertainty": "Counts: DistinctBuyers/BuyCount/NewHolders/NetHolderChange; dollars: BuyValue; shares: NetShareChange. Runtime dedup, unit scaling and amendments unresolved."
+    },
+    {
+      "blocker": 2,
+      "claim": "Momentum ROC",
+      "status": "VERIFIED",
+      "verified_scope": "SDK serialization; technical docs",
+      "exact_declaration": "PriceRateOfChange(asset,length=30,interval=Day); IndicatorRateOfChange(operand,length=30,interval=Day)",
+      "remaining_uncertainty": "126/252 accepted locally; percentage units documented; engine trading-session counting, split/price basis and lag unresolved."
+    },
+    {
+      "blocker": 3,
+      "claim": "PIT cap/liquidity",
+      "status": "UNRESOLVED",
+      "verified_scope": "SDK/static catalog",
+      "exact_declaration": "Fundamental(CANDIDATE,marketCap); Volume; Price; IndicatorSimpleMovingAverage; IndicatorWindowAgo; lake.sec_daily_ohlc.date/closingPrice/volume/marketCap",
+      "remaining_uncertainty": "Market-cap vintage/availability, stale rules, matched completed bars and dollar-volume composition unverified; missingMarketCapBehavior EXCLUDE/INCLUDE is only a declared policy."
+    },
+    {
+      "blocker": 4,
+      "claim": "Historical dynamic universe",
+      "status": "UNRESOLVED",
+      "verified_scope": "SDK source/enum rejection",
+      "exact_declaration": "universe(ALL_US_STOCKS); dynamic_rebalance; filter; select_top; select_percentile; IsAssetType(...,Stock)",
+      "remaining_uncertainty": "Stock includes ETFs; ETF subtype rejected by SDK despite advanced-doc example. Historical listings/dead names/ADR/preferred/OTC exclusions/identifier mappings unresolved."
+    },
+    {
+      "blocker": 5,
+      "claim": "PIT/revisions/zero/stale",
+      "status": "UNRESOLVED",
+      "verified_scope": "Public package contract and static catalog",
+      "exact_declaration": "availableAt; filingDate; availabilitySource; accession; isAmendment; amendmentType; windowDays",
+      "remaining_uncertainty": "Native timestamp/ingestion/source parity unverified. Updated docs allow unknown insider owner/amendment coverage to have no value; institutional no recent filing may return zero, which is not evidence of an economic zero."
+    },
+    {
+      "blocker": 6,
+      "claim": "Institutional comparison",
+      "status": "UNRESOLVED",
+      "verified_scope": "SDK/doc temporal contract",
+      "exact_declaration": "InstitutionalHoldings(...,manager=\"\",window_days=180)",
+      "remaining_uncertainty": "Latest public quarter versus prior quarter documented; per-manager/global quarter selection, asynchronous cohorts, absent prior data and amendment type handling unresolved."
+    },
+    {
+      "blocker": 7,
+      "claim": "Execution/corporate actions",
+      "status": "UNRESOLVED",
+      "verified_scope": "SDK/MCP backtest fields; static catalog",
+      "exact_declaration": "backtest(...,fee_config,dividend_policy); Stock:{amount:0.1,type:percent} PROPOSED; lake.dividends; lake.stock_splits",
+      "remaining_uncertainty": "Cash/reinvest and fee contract declared; no inspected stock-slippage/next-session parameter. Debit, dividend/split, delay and fill-price behavior untested."
+    },
+    {
+      "blocker": 8,
+      "claim": "Prospective metrics",
+      "status": "VERIFIED",
+      "verified_scope": "SDK declarations; portfolio docs",
+      "exact_declaration": "rebalance_planned_turnover()/rebalance_estimated_cost()/rebalance_expected_benefit()/rebalance_net_benefit() -> RebalanceDecisionMetric",
+      "remaining_uncertainty": "Documented turnover portfolio fraction; costs/benefits dollars; pre-trade context and zero outside rebalance actions. Formulas/turnover convention/as-of lineage unresolved."
+    },
+    {
+      "blocker": 9,
+      "claim": "2015-2020 source coverage",
+      "status": "VERIFIED",
+      "verified_scope": "Public receipt/documentation only",
+      "exact_declaration": "snapshot.json: insider_filings/insider_transactions/institutional_filings/institutional_holdings",
+      "remaining_uncertainty": "All four table partitions present for 2015-2020. Native metric/ticker/price/cap/security-master completeness NOT established; no parquet downloaded."
+    },
+    {
+      "blocker": 10,
+      "claim": "Planning and cost operations",
+      "status": "VERIFIED",
+      "verified_scope": "Observed MCP schemas/SDK docstrings, no invocation",
+      "exact_declaration": "get_sweep_surface(portfolio_id?); systematic_sweep(...,preview_only=True); run_walk_forward_study(...,preview_only=True); build_portfolio(...)",
+      "remaining_uncertainty": "Walk-forward docs claim no charge in preview; sweep genes may invoke LLM compilation, not proven zero cost. No previews/genes/portfolios generated; actual counts/quotes unverified."
+    }
   ],
   "window_status": {
     "development": "PROVISIONAL_COVERAGE_NOT_VERIFIED",
     "inner_validation": "PROVISIONAL_COVERAGE_NOT_VERIFIED",
     "outer_validation": "PROVISIONAL_NOT_AUTHORIZED_FOR_RESEARCH_ACCESS",
     "historical_test": "UNRESOLVED_NO_PERIOD_DESIGNATED",
-    "research_cutoff": "PROVISIONAL_2020-12-31_NO_LATER_MARKET_OR_PERFORMANCE_ACCESS",
+    "research_cutoff": "FIXED_2020-12-31_FOR_THIS_AUDIT_NO_LATER_OBSERVATIONS",
     "forward_paper": "UNRESOLVED_START_AFTER_FREEZE_AND_SEPARATE_OWNER_APPROVAL"
   },
-  "spending": {"approved_tokens": 0, "current_quote": null, "estimated_tokens": null},
+  "spending": {
+    "approved_tokens": 0,
+    "current_quote": null,
+    "estimated_tokens": null
+  },
   "checks": {
     "json_schema": "PASSED",
     "draft_guards_and_local_links": "PASSED",
     "research_audit": "BLOCKED_AS_INTENDED",
     "audit_reason": "Point-in-time availability unestablished: Nexus daily prices, volume and corporate actions",
-    "local_unittest": {"passed": 76, "failed": 0},
-    "backtests_or_remote_research_run": false
+    "local_unittest": {
+      "passed": 52,
+      "failed": 0,
+      "suite": "tests/test_research_os.py; synthetic/fake transports only",
+      "exp001_held_out_integration_tests_run": false
+    },
+    "backtests_or_remote_research_run": false,
+    "metadata_declaration_audit": "PASSED_WITH_UNRESOLVED_RUNTIME_CLAIMS",
+    "prior_design_unittest": {
+      "passed": 76,
+      "failed": 0
+    },
+    "audit_command": "python -m src.research audit EXP002",
+    "audit_exit_code": 1
   },
   "ready_for_human_freeze_approval": false,
-  "next_action": "Owner may use saved prompt manually only within an auditable read-only research scope; ingest a supplied memo locally and verify claims before any freeze decision"
+  "next_action": "Review a bounded pre-cutoff source/coverage/PIT audit plan; no freeze or spend. Registered metadata GET only, never anonymous workspace creation; further observation reads need their own reviewed bounds.",
+  "aurora_activity_verified": false,
+  "declaration_audit": {
+    "observed_on": "2026-10-11",
+    "sdk_version": "1.42.0",
+    "module_sha256": {
+      "portfolio.py": "73a98d5657078efc73d23398b1eeb79dd46a113dd547e5ec74ba6467bb2d8c0d",
+      "portfolio_handle.py": "331b558573a5b551a2a46261903d8cd50b7cb0dc856adf0dbf16ea244d50f8af",
+      "client.py": "43e725b5c6a871ffe49be6539a661e7bb7564a48d8711c035064acaa2a698bfa",
+      "tigris.py": "55c6d535c5078fdde7b21638f6df0cd5817d8cfeb06669a4757080ce233b3397"
+    },
+    "declarations": {
+      "InsiderTrades": {
+        "signature": "(asset: Union[str, Dict[str, Any], nexustrade.portfolio._Candidate], metric: Literal['NetValue', 'BuyValue', 'SellValue', 'NetShares', 'BuyCount', 'SellCount', 'AwardCount', 'AcquisitionCount', 'DistinctBuyers', 'PurchaseSharePercent', 'AcquisitionSharePercent'], role: Literal['Any', 'Officer', 'Director', 'TenPercentOwner', 'OfficerOrDirector'], window_days: float, owner_cik: Optional[str] = None, issuer_cik: Optional[str] = None, instrument: Optional[Literal['Equity', 'Call', 'Put']] = None) -> nexustrade.portfolio.Indicator",
+        "line": 2009
+      },
+      "InstitutionalHoldings": {
+        "signature": "(asset: Union[str, Dict[str, Any], nexustrade.portfolio._Candidate], manager: str, metric: Literal['HolderCount', 'TotalShares', 'TotalValue', 'BookSharePercent', 'ConcentrationTop5', 'NetShareChange', 'NetHolderChange', 'NewHolders', 'ClosedHolders'] = 'HolderCount', window_days: float = 180, instrument: Literal['Equity', 'Call', 'Put'] = 'Equity') -> nexustrade.portfolio.Indicator",
+        "line": 2039
+      },
+      "PriceRateOfChange": {
+        "signature": "(asset: Union[str, Dict[str, Any], nexustrade.portfolio._Candidate], length: float = 30, interval: Literal['Day', 'Hour', 'Minute'] = 'Day') -> nexustrade.portfolio.Indicator",
+        "line": 3107
+      },
+      "IndicatorRateOfChange": {
+        "signature": "(operand: nexustrade.portfolio.Indicator, length: float = 30, interval: Literal['Day', 'Hour', 'Minute'] = 'Day') -> nexustrade.portfolio.Indicator",
+        "line": 1937
+      },
+      "Fundamental": {
+        "signature": "(asset: Union[str, Dict[str, Any], nexustrade.portfolio._Candidate], metric: Literal['totalRevenue', 'grossProfit', 'operatingIncome', 'ebitda', 'epsActual', 'epsEstimate', 'netIncome', 'freeCashFlow', 'totalAssets', 'totalLiab', 'shortTermDebt', 'longTermDebt', 'commonStockSharesOutstanding', 'dividendYield', 'openingPrice', 'highestPrice', 'lowestPrice', 'closingPrice', 'volume', 'marketCap', 'peRatioTTM', 'psRatioTTM', 'pbRatioTTM', 'enterpriseValue']) -> nexustrade.portfolio.Indicator",
+        "line": 1755
+      },
+      "Volume": {
+        "signature": "(asset: Union[str, Dict[str, Any], nexustrade.portfolio._Candidate], metric: Literal['totalRevenue', 'grossProfit', 'operatingIncome', 'ebitda', 'epsActual', 'epsEstimate', 'netIncome', 'freeCashFlow', 'totalAssets', 'totalLiab', 'shortTermDebt', 'longTermDebt', 'commonStockSharesOutstanding', 'dividendYield', 'openingPrice', 'highestPrice', 'lowestPrice', 'closingPrice', 'volume', 'marketCap', 'peRatioTTM', 'psRatioTTM', 'pbRatioTTM', 'enterpriseValue'] = 'volume') -> nexustrade.portfolio.Indicator",
+        "line": 3378
+      },
+      "IndicatorWindowAgo": {
+        "signature": "(operand: nexustrade.portfolio.Indicator, length: float, interval: Literal['Day', 'Hour', 'Minute']) -> nexustrade.portfolio.Indicator",
+        "line": 1985
+      },
+      "IndicatorSimpleMovingAverage": {
+        "signature": "(operand: nexustrade.portfolio.Indicator, length: float = 30, interval: Literal['Day', 'Hour', 'Minute'] = 'Day') -> nexustrade.portfolio.Indicator",
+        "line": 1953
+      },
+      "IsAssetType": {
+        "signature": "(asset: Union[str, Dict[str, Any], nexustrade.portfolio._Candidate], asset_type: Literal['Stock', 'Cryptocurrency', 'Option', 'Other'] = 'Stock') -> nexustrade.portfolio.Indicator",
+        "line": 2078
+      },
+      "universe": {
+        "signature": "(source: Literal['ALL_US_STOCKS', 'SP500', 'NASDAQ100', 'DJIA', 'CRYPTO', 'SPECIFIC_ASSETS'], assets: Optional[Sequence[Union[str, Dict[str, Any]]]] = None) -> Dict[str, Any]",
+        "line": 440
+      },
+      "dynamic_rebalance": {
+        "signature": "(universe: Optional[Dict[str, Any]] = None, pipeline: Optional[Sequence[Dict[str, Any]]] = None, weight_indicator: Optional[nexustrade.portfolio.Indicator] = None, *, universe_config: Optional[Dict[str, Any]] = None, limit: Optional[int] = None, deployment_percent: Optional[nexustrade.portfolio.Indicator] = None, reserve_option_budget: Optional[Dict[str, Any]] = None, per_name_allocation: Optional[Dict[str, Any]] = None, can_sell: Optional[nexustrade.portfolio.Condition] = None, allow_shorts: Optional[bool] = None, allocation_policy: Optional[Dict[str, Any]] = None, exposure_policy: Optional[Dict[str, Any]] = None) -> Dict[str, Any]",
+        "line": 739
+      },
+      "filter": {
+        "signature": "(condition: nexustrade.portfolio.Condition) -> Dict[str, Any]",
+        "line": 410
+      },
+      "select_top": {
+        "signature": "(metric: nexustrade.portfolio.Indicator, limit: int, direction: Literal['Highest', 'Lowest'] = 'Highest') -> Dict[str, Any]",
+        "line": 414
+      },
+      "select_percentile": {
+        "signature": "(metric: nexustrade.portfolio.Indicator, percentile: float, direction: Literal['Highest', 'Lowest'] = 'Highest') -> Dict[str, Any]",
+        "line": 427
+      },
+      "rebalance_planned_turnover": {
+        "signature": "() -> nexustrade.portfolio.Indicator",
+        "line": 671
+      },
+      "rebalance_estimated_cost": {
+        "signature": "() -> nexustrade.portfolio.Indicator",
+        "line": 675
+      },
+      "rebalance_expected_benefit": {
+        "signature": "() -> nexustrade.portfolio.Indicator",
+        "line": 679
+      },
+      "rebalance_net_benefit": {
+        "signature": "() -> nexustrade.portfolio.Indicator",
+        "line": 683
+      },
+      "backtest": {
+        "signature": "(portfolio: Dict[str, Any], *, start_date: str, end_date: str, baseline_symbol: Optional[str] = None, interval: Optional[Literal['Day', 'Minute']] = None, initial_value: Optional[float] = None, generate_events: Optional[bool] = None, fee_config: Optional[Dict[str, Any]] = None, dividend_policy: Optional[Literal['cash', 'reinvest']] = None) -> Dict[str, Any]",
+        "line": 3438
+      },
+      "walk_forward": {
+        "signature": "(portfolio: Dict[str, Any], *, global_start_date: str, global_end_date: str, fold_count: float, engine_kind: Optional[Literal['ga', 'sweep']] = None, walk_forward_mode: Optional[Literal['anchored', 'rolling']] = None, oos_width_days: Optional[float] = None, validation_percent: Optional[float] = None, embargo_days: Optional[float] = None, population_size: Optional[float] = None, num_generations: Optional[float] = None, num_windows: Optional[float] = None, training_percent: Optional[float] = None, window_overlap_percent: Optional[float] = None, fitness_functions: Optional[Sequence[Literal['sharpeRatio', 'sortinoRatio', 'winRate', 'profitFactor', 'calmarRatio', 'maxDrawdown', 'avgDrawdown', 'percentChange', 'dollarsSold', 'ulcerPerformanceIndex', 'participationRate', 'distinctUnderlyingsTraded', 'medianDeployment']]] = None, selection_policy: Optional[Dict[str, Any]] = None, fold_selection_policy: Optional[Dict[str, Any]] = None, fee_config: Optional[Dict[str, Any]] = None, degradation_penalty: Optional[float] = None, leaderboard_size: Optional[float] = None, search_mode: Optional[Literal['auto', 'exhaustive', 'generational']] = None, preview_only: Optional[bool] = None, interval: Optional[Literal['Day', 'Minute']] = None, auto_run: Optional[bool] = None, name: Optional[str] = None, mode: Optional[Literal['validation', 'adaptive', 'both']] = None, oos_stride_days: Optional[float] = None, adaptive_config: Optional[Dict[str, Any]] = None, inner_mode: Optional[Literal['optimize', 'backtest_only']] = None, certification: Optional[bool] = None, allow_ga_certification: Optional[bool] = None, use_certification_selection_policy: Optional[bool] = None, genes: Optional[Sequence[Dict[str, Any]]] = None) -> Dict[str, Any]",
+        "line": 3478
+      }
+    },
+    "offline_serialization": {
+      "DistinctBuyers": {
+        "type": "InsiderTrades",
+        "metric": "DistinctBuyers",
+        "role": "Any",
+        "windowDays": 90,
+        "instrument": "Equity"
+      },
+      "BuyCount": {
+        "type": "InsiderTrades",
+        "metric": "BuyCount",
+        "role": "Any",
+        "windowDays": 90,
+        "instrument": "Equity"
+      },
+      "BuyValue": {
+        "type": "InsiderTrades",
+        "metric": "BuyValue",
+        "role": "Any",
+        "windowDays": 90,
+        "instrument": "Equity"
+      },
+      "NewHolders": {
+        "type": "InstitutionalHoldings",
+        "manager": "",
+        "metric": "NewHolders",
+        "windowDays": 180,
+        "instrument": "Equity"
+      },
+      "NetHolderChange": {
+        "type": "InstitutionalHoldings",
+        "manager": "",
+        "metric": "NetHolderChange",
+        "windowDays": 180,
+        "instrument": "Equity"
+      },
+      "NetShareChange": {
+        "type": "InstitutionalHoldings",
+        "manager": "",
+        "metric": "NetShareChange",
+        "windowDays": 180,
+        "instrument": "Equity"
+      },
+      "ROC_126": {
+        "type": "PriceRateOfChange",
+        "window": {
+          "length": 126,
+          "interval": "Day"
+        }
+      },
+      "ROC_252": {
+        "type": "PriceRateOfChange",
+        "window": {
+          "length": 252,
+          "interval": "Day"
+        }
+      },
+      "rebalance_planned_turnover": {
+        "type": "RebalanceDecisionMetric",
+        "metric": "plannedTurnover"
+      },
+      "rebalance_estimated_cost": {
+        "type": "RebalanceDecisionMetric",
+        "metric": "estimatedCost"
+      },
+      "rebalance_expected_benefit": {
+        "type": "RebalanceDecisionMetric",
+        "metric": "expectedBenefit"
+      },
+      "rebalance_net_benefit": {
+        "type": "RebalanceDecisionMetric",
+        "metric": "netBenefit"
+      },
+      "market_cap": {
+        "type": "Fundamental",
+        "metric": "marketCap"
+      },
+      "volume": {
+        "type": "Volume",
+        "metric": "volume"
+      },
+      "lag": {
+        "type": "IndicatorWindowAgo",
+        "indicators": [
+          {
+            "type": "Price"
+          }
+        ],
+        "window": {
+          "length": 1,
+          "interval": "Day"
+        }
+      },
+      "universe": {
+        "source": "ALL_US_STOCKS"
+      },
+      "ETF_subtype": {
+        "accepted": false,
+        "reason": "SDK enum has Stock/Cryptocurrency/Option/Other only"
+      }
+    },
+    "backend_evaluation_performed": false,
+    "scope": "Indicator/declaration fragments only; no strategy/portfolio/candidate snapshot/API client/remote job constructed"
+  },
+  "public_coverage_receipt": {
+    "source_url": "https://huggingface.co/datasets/austin-starks/sec-ownership-disclosures/resolve/main/snapshot.json",
+    "repo_commit": "0662635d4adddd295ba93530fa0de51aa453b97d",
+    "sha256": "074f5471871cb871c44ef3a45da9e549f06c39405399a2a6e30b6a3d1df6f5ca",
+    "generated_at": "2026-10-10T12:10:41.386Z",
+    "tables": {
+      "insider_filings": {
+        "earliest_partition_year": 2006,
+        "development_partition_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020
+        ],
+        "development_receipts": [
+          {
+            "year": 2015,
+            "files": [
+              {
+                "publicPath": "data/insider_filings/2015.parquet",
+                "size": 3684911,
+                "sha256": "74d76e932acfc157d8e25f90091aaa55ce018f0b917f261019799b6e8105ebd4",
+                "sourceKey": "insider_filings/2015-v-2026-09-24T20-19-52-452Z.parquet",
+                "rows": 234320
+              }
+            ]
+          },
+          {
+            "year": 2016,
+            "files": [
+              {
+                "publicPath": "data/insider_filings/2016.parquet",
+                "size": 3488800,
+                "sha256": "5356200575f1ce2b704ea20ea293b3dc2ec77a46b7ee8ec79e07c11b08a19206",
+                "sourceKey": "insider_filings/2016-v-2026-09-24T20-20-00-660Z.parquet",
+                "rows": 223411
+              }
+            ]
+          },
+          {
+            "year": 2017,
+            "files": [
+              {
+                "publicPath": "data/insider_filings/2017.parquet",
+                "size": 3428988,
+                "sha256": "0a3be85595fe07e592ef200a642a5b45b6346e15981e3f91c1637ed18588529b",
+                "sourceKey": "insider_filings/2017-v-2026-09-24T20-20-35-970Z.parquet",
+                "rows": 220639
+              }
+            ]
+          },
+          {
+            "year": 2018,
+            "files": [
+              {
+                "publicPath": "data/insider_filings/2018.parquet",
+                "size": 3387319,
+                "sha256": "2e5fb93bee7de8c12f6d7c910d6735b4bb66e33fbfd68616aadc890474acee37",
+                "sourceKey": "insider_filings/2018-v-2026-09-24T20-20-42-155Z.parquet",
+                "rows": 219160
+              }
+            ]
+          },
+          {
+            "year": 2019,
+            "files": [
+              {
+                "publicPath": "data/insider_filings/2019.parquet",
+                "size": 3287718,
+                "sha256": "722735bb77d968a29ade92e9f6f5812dc8c4a1967218f1292f1d91e2f76e8cfe",
+                "sourceKey": "insider_filings/2019-v-2026-09-24T20-21-47-044Z.parquet",
+                "rows": 212997
+              }
+            ]
+          },
+          {
+            "year": 2020,
+            "files": [
+              {
+                "publicPath": "data/insider_filings/2020.parquet",
+                "size": 3410749,
+                "sha256": "ff4eb78f858818fe04e07e22e04a51214d1028f14980853b0c73b83b692c9c2d",
+                "sourceKey": "insider_filings/2020-v-2026-09-24T20-21-52-872Z.parquet",
+                "rows": 222205
+              }
+            ]
+          }
+        ],
+        "asserts_field_completeness": false
+      },
+      "insider_transactions": {
+        "earliest_partition_year": 2006,
+        "development_partition_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020
+        ],
+        "development_receipts": [
+          {
+            "year": 2015,
+            "files": [
+              {
+                "publicPath": "data/insider_transactions/2015.parquet",
+                "size": 7909172,
+                "sha256": "99a549e656abb4bfbcc5227072461d487c7099cd03b7614643f618bcaf48d581",
+                "sourceKey": "insider_transactions/2015-v-2026-09-24T20-19-52-452Z.parquet",
+                "rows": 443608
+              }
+            ]
+          },
+          {
+            "year": 2016,
+            "files": [
+              {
+                "publicPath": "data/insider_transactions/2016.parquet",
+                "size": 7255166,
+                "sha256": "b629ad9173a7f511125aad8ade1af7bc02976a0ff623f92a1ec025e2625cc89f",
+                "sourceKey": "insider_transactions/2016-v-2026-09-24T20-20-00-660Z.parquet",
+                "rows": 408331
+              }
+            ]
+          },
+          {
+            "year": 2017,
+            "files": [
+              {
+                "publicPath": "data/insider_transactions/2017.parquet",
+                "size": 7327057,
+                "sha256": "5a1b711cfafd463ced1c02f011fecdd632f428a52d1d636c652326b3690cd625",
+                "sourceKey": "insider_transactions/2017-v-2026-09-24T20-20-35-970Z.parquet",
+                "rows": 413639
+              }
+            ]
+          },
+          {
+            "year": 2018,
+            "files": [
+              {
+                "publicPath": "data/insider_transactions/2018.parquet",
+                "size": 7444192,
+                "sha256": "57c739fc7848d85c1b1df797913f47d7696a9af2fea0ceef75890c48b015a973",
+                "sourceKey": "insider_transactions/2018-v-2026-09-24T20-20-42-155Z.parquet",
+                "rows": 426346
+              }
+            ]
+          },
+          {
+            "year": 2019,
+            "files": [
+              {
+                "publicPath": "data/insider_transactions/2019.parquet",
+                "size": 7131199,
+                "sha256": "691ecdaf2a4aad573eabcb4635887c6c61ba795765427be7383867ef42680a9e",
+                "sourceKey": "insider_transactions/2019-v-2026-09-24T20-21-47-044Z.parquet",
+                "rows": 410834
+              }
+            ]
+          },
+          {
+            "year": 2020,
+            "files": [
+              {
+                "publicPath": "data/insider_transactions/2020.parquet",
+                "size": 7543652,
+                "sha256": "00cc9b1ed9c68ab7009643d7fa207ebf57278aad540e9d27bb5a98fa88bdd906",
+                "sourceKey": "insider_transactions/2020-v-2026-09-24T20-21-52-872Z.parquet",
+                "rows": 429994
+              }
+            ]
+          }
+        ],
+        "asserts_field_completeness": false
+      },
+      "institutional_filings": {
+        "earliest_partition_year": 2013,
+        "development_partition_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020
+        ],
+        "development_receipts": [
+          {
+            "year": 2015,
+            "files": [
+              {
+                "publicPath": "data/institutional_filings/2015.parquet",
+                "size": 273197,
+                "sha256": "3650df5adebd51d3b1b24acd2163e2ea93700dc120c603ce382bdb4e2e163a39",
+                "sourceKey": "institutional_filings/2015-v-2026-09-23T18-59-54-988Z.parquet",
+                "rows": 23929
+              }
+            ]
+          },
+          {
+            "year": 2016,
+            "files": [
+              {
+                "publicPath": "data/institutional_filings/2016.parquet",
+                "size": 277257,
+                "sha256": "3605a867a88153922eef2d92af91c06b2379eff86b38dac651e009d4797a7b65",
+                "sourceKey": "institutional_filings/2016-v-2026-09-23T18-59-54-988Z.parquet",
+                "rows": 24129
+              }
+            ]
+          },
+          {
+            "year": 2017,
+            "files": [
+              {
+                "publicPath": "data/institutional_filings/2017.parquet",
+                "size": 282065,
+                "sha256": "c1c6a9b77c67e7a29cce2547ece7976d3b89f0e332295032e719ce1d62104a96",
+                "sourceKey": "institutional_filings/2017-v-2026-09-23T19-10-36-505Z.parquet",
+                "rows": 24809
+              }
+            ]
+          },
+          {
+            "year": 2018,
+            "files": [
+              {
+                "publicPath": "data/institutional_filings/2018.parquet",
+                "size": 299035,
+                "sha256": "02c0e32cb7d8151719d80ed88a57afbe57883bebba9a27d7da87aedbcae332da",
+                "sourceKey": "institutional_filings/2018-v-2026-09-23T19-10-41-970Z.parquet",
+                "rows": 26497
+              }
+            ]
+          },
+          {
+            "year": 2019,
+            "files": [
+              {
+                "publicPath": "data/institutional_filings/2019.parquet",
+                "size": 312288,
+                "sha256": "4ae1159752c60989f76fbad050472e762ed449c43442b21abd10f3b654e7e444",
+                "sourceKey": "institutional_filings/2019-v-2026-09-23T19-18-08-190Z.parquet",
+                "rows": 27945
+              }
+            ]
+          },
+          {
+            "year": 2020,
+            "files": [
+              {
+                "publicPath": "data/institutional_filings/2020.parquet",
+                "size": 323676,
+                "sha256": "8768e6ef13c250cdec9c8032ebbc709f20af53302d593b4745f346dc8d9c5e10",
+                "sourceKey": "institutional_filings/2020-v-2026-09-23T19-18-41-499Z.parquet",
+                "rows": 28975
+              }
+            ]
+          }
+        ],
+        "asserts_field_completeness": false
+      },
+      "institutional_holdings": {
+        "earliest_partition_year": 2013,
+        "development_partition_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020
+        ],
+        "development_receipts": [
+          {
+            "year": 2015,
+            "files": [
+              {
+                "publicPath": "data/institutional_holdings/2015.parquet",
+                "size": 135739204,
+                "sha256": "269434866fd4f87fff631759868e9209375f7f7933b4e15fc712ad7d9dd86019",
+                "sourceKey": "institutional_holdings/2015-v-2026-09-23T18-59-54-988Z.parquet",
+                "rows": 6919985
+              }
+            ]
+          },
+          {
+            "year": 2016,
+            "files": [
+              {
+                "publicPath": "data/institutional_holdings/2016.parquet",
+                "size": 136168174,
+                "sha256": "27c07c6cb7e6558126bbc2d1be6fdeb10b53f4edd95aa0a8e544e4ca758bd964",
+                "sourceKey": "institutional_holdings/2016-v-2026-09-23T18-59-54-988Z.parquet",
+                "rows": 6945949
+              }
+            ]
+          },
+          {
+            "year": 2017,
+            "files": [
+              {
+                "publicPath": "data/institutional_holdings/2017.parquet",
+                "size": 139376813,
+                "sha256": "7930755c4f4e323574d598450c2d119802b84cecb0c147a5da7a26cf3b307aaa",
+                "sourceKey": "institutional_holdings/2017-v-2026-09-23T19-10-36-505Z.parquet",
+                "rows": 7144512
+              }
+            ]
+          },
+          {
+            "year": 2018,
+            "files": [
+              {
+                "publicPath": "data/institutional_holdings/2018.parquet",
+                "size": 150881462,
+                "sha256": "56c54600da9122b27201145f3196f71ee3706ebcd1bb6c0ccec225670fdf701f",
+                "sourceKey": "institutional_holdings/2018-v-2026-09-23T19-10-41-970Z.parquet",
+                "rows": 7780066
+              }
+            ]
+          },
+          {
+            "year": 2019,
+            "files": [
+              {
+                "publicPath": "data/institutional_holdings/2019.parquet",
+                "size": 161925224,
+                "sha256": "4940fb4a4b846613e73938aa700af06dc5ef11d4307416cb4101ee9ea981262e",
+                "sourceKey": "institutional_holdings/2019-v-2026-09-23T19-18-08-190Z.parquet",
+                "rows": 8480167
+              }
+            ]
+          },
+          {
+            "year": 2020,
+            "files": [
+              {
+                "publicPath": "data/institutional_holdings/2020.parquet",
+                "size": 162351304,
+                "sha256": "28810253faf680890c7295628b9ac5468843d4ab7e62daca0ec01281e7bddfe9",
+                "sourceKey": "institutional_holdings/2020-v-2026-09-23T19-18-41-499Z.parquet",
+                "rows": 8569101
+              }
+            ]
+          }
+        ],
+        "asserts_field_completeness": false
+      }
+    }
+  },
+  "aurora_memo_sha256": "cf18aa57832755b4930213e27da7e5cdadd5289b6fe00a9b29ae882e97622726",
+  "memo_claim_audit": [
+    {
+      "claim": "Insider tables and 2006 Q1 backfill",
+      "status": "VERIFIED",
+      "scope": "Public documentation and receipt partitions; not native completeness",
+      "evidence": [
+        "ownership_coverage_docs",
+        "public_snapshot_receipt",
+        "installed_sdk_audit"
+      ]
+    },
+    {
+      "claim": "Institutional tables and 2013 Q2 backfill",
+      "status": "VERIFIED",
+      "scope": "Public documentation and receipt partitions; not complete native books",
+      "evidence": [
+        "ownership_coverage_docs",
+        "public_snapshot_receipt",
+        "installed_sdk_audit"
+      ]
+    },
+    {
+      "claim": "13F does not disclose between-quarter trading or short positions",
+      "status": "VERIFIED",
+      "scope": "Documented reporting-framework description only",
+      "evidence": [
+        "ownership_coverage_docs"
+      ]
+    },
+    {
+      "claim": "availableAt and New York filing-date end",
+      "status": "VERIFIED",
+      "scope": "Documented public ownership package convention only; native parity unresolved",
+      "evidence": [
+        "ownership_coverage_docs",
+        "installed_sdk_audit"
+      ]
+    },
+    {
+      "claim": "Insider syntax/selectors",
+      "status": "VERIFIED",
+      "scope": "SDK declaration and offline serialization; event/dollar normalization unresolved",
+      "evidence": [
+        "installed_sdk_audit",
+        "fundamental_docs"
+      ]
+    },
+    {
+      "claim": "Institutional syntax/selectors",
+      "status": "VERIFIED",
+      "scope": "SDK requires manager argument; empty string aggregates. windowDays limits filing recency",
+      "evidence": [
+        "installed_sdk_audit",
+        "fundamental_docs"
+      ]
+    },
+    {
+      "claim": "Momentum building blocks",
+      "status": "VERIFIED",
+      "scope": "PriceRateOfChange accepts 126/252 Day locally; engine/session semantics unresolved",
+      "evidence": [
+        "installed_sdk_audit",
+        "technical_docs"
+      ]
+    },
+    {
+      "claim": "Dynamic universe/filter/rank builders",
+      "status": "VERIFIED",
+      "scope": "Declarations only; historical membership and exclusions unresolved",
+      "evidence": [
+        "installed_sdk_audit"
+      ]
+    },
+    {
+      "claim": "Historical delisting handling",
+      "status": "UNRESOLVED",
+      "scope": "Memo has no supporting citation; inspected declarations do not establish historical dead-security handling",
+      "evidence": [
+        "aurora_memo"
+      ]
+    },
+    {
+      "claim": "Custom availableAt proves native behavior",
+      "status": "UNRESOLVED",
+      "scope": "Custom point-kind contract is separate; disclosed date-only SDK normalization uses next UTC midnight, not New York filing-day end",
+      "evidence": [
+        "installed_sdk_audit",
+        "local_capabilities"
+      ]
+    },
+    {
+      "claim": "Lake catalog access read-only",
+      "status": "VERIFIED",
+      "scope": "SDK GET methods inspected but not invoked; actual metadata parity/cost/access unresolved",
+      "evidence": [
+        "installed_sdk_audit"
+      ]
+    },
+    {
+      "claim": "Nine families and parameter/cost/execution ranges",
+      "status": "PROPOSED",
+      "scope": "Untested design; institutional axis corrected to filing recency with values unchanged",
+      "evidence": [
+        "aurora_memo",
+        "design_proposal"
+      ]
+    },
+    {
+      "claim": "Falsification conditions",
+      "status": "PROPOSED",
+      "scope": "Consistent with draft; no result supplied or tested",
+      "evidence": [
+        "aurora_memo",
+        "design_proposal"
+      ]
+    },
+    {
+      "claim": "Aurora no mutations/spend/post-cutoff access",
+      "status": "UNRESOLVED",
+      "scope": "External self-report preserved; original session trajectory unavailable",
+      "evidence": [
+        "aurora_memo"
+      ]
+    },
+    {
+      "claim": "Not execution-ready / original freeze blockers",
+      "status": "VERIFIED",
+      "scope": "Current local draft still has false PIT flags, no Test and zero budgets",
+      "evidence": [
+        "design_proposal"
+      ]
+    }
+  ],
+  "planning_declarations": {
+    "get_sweep_surface": "optional portfolio_id; zero-LLM declaration; returns applicableFields/default templates/authoringControls; not called",
+    "systematic_sweep": "Required start_date/end_date; optional portfolio_id/sweep_config/gene_intents/preview_only. Preview returns plannedUnits/genes/warnings without launch; LLM billing guarantee absent. Use deterministic reviewed config later, not gene_intents under zero spend.",
+    "run_walk_forward_study": "Required global_start_date/global_end_date/fold_count; optional preview_only/auto_run/engine_kind/sweep_config/gene_intents. Documented preview no study/no billing; no call made.",
+    "build_portfolio": "Declared zero-token, no persistence canonicalization; not invoked because no strategy generation is authorized.",
+    "sdk_metadata": "NexusTradeClient.get_lake_catalog() -> GET lake/catalog; describe_lake_table(table) -> GET lake/catalog/lake/{table}. Existing registered authentication required to avoid anonymous workspace creation; no client instantiated.",
+    "missing": "No dedicated standalone backtest token-estimate endpoint found in inspected declarations; generic pricing is not an account quote."
+  },
+  "metadata_audit": {
+    "observed_on": "2026-10-11",
+    "candidate_formation_cutoff": "2020-12-31",
+    "performance_queries": 0,
+    "observation_queries": 0,
+    "nexus_mcp_calls": 0,
+    "nexus_sdk_remote_calls": 0,
+    "mutations": 0,
+    "previews_submitted": 0,
+    "spend_authorized": false,
+    "operations": [
+      "Local source/signature inspection and indicator-only serialization",
+      "Current MCP declarations inspected without invocation",
+      "Public vendor documentation and public snapshot receipt GET; no parquet/downloaded observations",
+      "Public documentation HTTP GET received 403; no bypass attempted"
+    ],
+    "search_scope_note": "Metadata-directed searches returned incidental unrelated pages; their performance content was not used as evidence or saved. No market/backtest endpoint or held-out data was queried.",
+    "readiness": "READY FOR COVERAGE AUDIT",
+    "readiness_scope": "Metadata foundation supports planning the next bounded pre-cutoff completeness/PIT audit. Not freeze-ready and no further data query or spending authorization is implied.",
+    "remaining": [
+      "Native source completeness and timestamp parity",
+      "PIT market-cap/liquidity",
+      "Historical security types/delistings/identifier maps",
+      "Asynchronous 13F amendments/cohorts",
+      "Next-session execution/slippage/corporate-action runtime",
+      "Prospective formulas/as-of lineage",
+      "Historical lockbox, audited budget and inferential implementation"
+    ]
+  }
 }
