@@ -2,13 +2,15 @@
 import json
 from concurrent.futures import ThreadPoolExecutor
 
-from src.research.exp004_inputs import save, client_for
+from src.research.exp004_inputs import ROOT, save, client_for
+from src.research.capabilities import require_remote_enabled
 from src.research.exp004_streams import OUT
 from src.research.prepare_exp004 import verify_freeze
 from src.research.spec import digest
 
 
 def one(name):
+    require_remote_enabled(ROOT, 'EXP004')
     m=json.loads((OUT/'manifest.json').read_bytes());s=m['streams'][name];d=OUT/name
     if (d/'publication.json').exists():return json.loads((d/'publication.json').read_bytes())
     client=client_for(d)
@@ -39,6 +41,7 @@ def one(name):
 
 
 def remaining():
+    require_remote_enabled(ROOT, 'EXP004')
     verify_freeze()
     m=json.loads((OUT/'manifest.json').read_bytes())
     # Separate indicators have no shared mutation state or ordering dependency.

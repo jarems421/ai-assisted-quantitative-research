@@ -6,6 +6,7 @@ from datetime import date
 from pathlib import Path
 
 from src.research.prepare_exp004 import verify_freeze
+from src.research.capabilities import require_remote_enabled
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT/'data/raw/EXP004/production_inputs_v001'
@@ -22,6 +23,7 @@ def save(path, value):
 
 
 def client_for(directory):
+    require_remote_enabled(ROOT, 'EXP004')
     from nexustrade.client import NexusTradeClient
     settings = {}
     for line in (ROOT/'.env').read_text(encoding='utf-8-sig').splitlines():
@@ -62,6 +64,7 @@ def bar_request(start,end):
 
 
 def extract(name, request):
+    require_remote_enabled(ROOT, 'EXP004')
     verify_freeze()
     from nexustrade.lake import get, LakeQueryResult
     directory = RAW/name; directory.mkdir(parents=True, exist_ok=True)

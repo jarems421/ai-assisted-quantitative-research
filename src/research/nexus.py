@@ -9,6 +9,7 @@ from src.research.budget import plan
 from src.research.extraction import extract
 from src.research.spec import canonical, digest, enforce_range, stage_window
 from src.research.store import RawStore
+from src.research.capabilities import require_remote_enabled
 
 SUBMISSIONS = {"backtest": "create_backtest", "sweep": "create_systematic_sweep", "walk_forward": "create_walk_forward"}
 READERS = {"backtest": "get_backtest", "sweep": "get_systematic_sweep", "walk_forward": "get_walk_forward"}
@@ -66,6 +67,8 @@ class Jobs:
 
     def _submit(self, spec, kind, payload, pricing, *, family, candidate, parameters,
                assets=1, evaluations=1, folds=1, execute=False):
+        if execute:
+            require_remote_enabled(self.store.root, spec['experiment_id'])
         state = self.store.verify(spec)
         stage = state["stage"]
         allowed = {"backtest": {"DEVELOPMENT", "VALIDATION", "TEST_AUTHORIZED", "ROBUSTNESS"},
@@ -182,6 +185,7 @@ class Jobs:
         return dict(self.store.db.execute("SELECT * FROM jobs WHERE key=?", (key,)).fetchone())
 
     def poll(self, spec, key, *, attempts=100, interval=3):
+        require_remote_enabled(self.store.root, spec['experiment_id'])
         self.store.verify(spec)
         row = self.store.db.execute("SELECT * FROM jobs WHERE key=? AND experiment=?", (key, spec["experiment_id"])).fetchone()
         if row is None or row["operation_id"] is None:
@@ -217,6 +221,7 @@ class Jobs:
 
     def reconcile(self, spec, key, operation_id):
         """Attach an independently confirmed operation ID; never issue another POST."""
+        require_remote_enabled(self.store.root, spec['experiment_id'])
         self.store.verify(spec)
         row = self.store.db.execute("SELECT * FROM jobs WHERE key=? AND experiment=?",(key,spec['experiment_id'])).fetchone()
         if row is None or row['status'] not in ('UNKNOWN','SUBMITTING'):
@@ -231,6 +236,8 @@ class Jobs:
         return dict(self.store.db.execute("SELECT * FROM jobs WHERE key=?",(key,)).fetchone())
 
     def deploy_paper(self, spec, portfolio_id, *, execute=False):
+        if execute:
+            require_remote_enabled(self.store.root, spec['experiment_id'])
         state=self.store.verify(spec)
         if state['stage']!='PAPER_AUTHORIZED' or 'PAPER' not in json.loads(state['approvals']):
             raise ValueError('Paper deployment requires separate human authorization')

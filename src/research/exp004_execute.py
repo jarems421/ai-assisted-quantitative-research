@@ -10,6 +10,7 @@ from src.research.prepare_exp004 import verify_freeze
 from src.research.nexus import Jobs, SDK
 from src.research.spec import digest
 from src.research.store import Store
+from src.research.capabilities import require_remote_enabled
 
 RUNS = ROOT/'data/raw/EXP004/development_v002'
 NAMES = ('M180_K20','M180_K40','M365_K20','M365_K40','EW','SPY')
@@ -47,6 +48,7 @@ def binding(name, start, end):
 
 
 def submit(name,year):
+    require_remote_enabled(ROOT, 'EXP004')
     f=verify_freeze();directory=ROOT/'experiments/EXP004'
     if year not in (2017,2018,2019,2020,0):raise ValueError('Frozen folds/full Development only')
     from src.research.exp004_compile import calendar
@@ -81,6 +83,7 @@ def submit(name,year):
 
 
 def poll(label):
+    require_remote_enabled(ROOT, 'EXP004')
     d=RUNS/label;j=json.loads((d/'job.json').read_bytes())
     r=client_for(d).get_backtest(j['id'])
     n=len(list(d.glob('status_*.json')))

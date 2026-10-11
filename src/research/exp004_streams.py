@@ -7,6 +7,7 @@ from datetime import datetime
 from src.research.exp004_inputs import ROOT, RAW, save, client_for
 from src.research.prepare_exp004 import verify_freeze
 from src.research.spec import digest
+from src.research.capabilities import require_remote_enabled
 
 OUT = ROOT/'data/raw/EXP004/streams_v002'
 
@@ -58,6 +59,7 @@ def generate():
 
 
 def publish():
+    require_remote_enabled(ROOT, 'EXP004')
     m=generate();published={}
     for name,summary in m['streams'].items():
         d=OUT/name;response=d/'publication.json'

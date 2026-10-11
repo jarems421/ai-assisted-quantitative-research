@@ -1,0 +1,8 @@
+{
+  "EXP004": {
+    "status": "PAUSED",
+    "as_of": "2026-10-11",
+    "authority": "docs/acceleration/phase1.md",
+    "reason": "Owner Phase 1 instruction prohibits all EXP004 Nexus operations pending separately authorized execution-route certification. Scientific stage and freezes remain unchanged."
+  }
+}
