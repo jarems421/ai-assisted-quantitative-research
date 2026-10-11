@@ -1,0 +1,61 @@
+{
+  "before_optimization_ranges": {
+    "momentum_lookback_sessions": [
+      126,
+      252
+    ],
+    "insider_lookback_calendar_days": [
+      30,
+      90
+    ],
+    "number_of_holdings": [
+      20,
+      40
+    ],
+    "minimum_average_dollar_volume_usd": [
+      10000000,
+      25000000
+    ],
+    "minimum_market_cap_usd": [
+      1000000000,
+      5000000000
+    ],
+    "institutional_filing_recency_calendar_days": [
+      180,
+      365
+    ]
+  },
+  "after_optimization_ranges": {
+    "insider_lookback_calendar_days": [
+      30,
+      90
+    ],
+    "number_of_holdings": [
+      20,
+      40
+    ],
+    "minimum_average_dollar_volume_usd": [
+      10000000,
+      25000000
+    ],
+    "minimum_market_cap_usd": [
+      1000000000,
+      5000000000
+    ],
+    "institutional_filing_recency_calendar_days": [
+      180,
+      365
+    ],
+    "momentum_lookback_calendar_days": [
+      180,
+      365
+    ]
+  },
+  "reasons": [
+    "20/20 elapsed-calendar references; 0/20 completed-session references; no performance inspected",
+    "Nominal USD 5 filter must use unadjusted prices",
+    "Same-tick native execution invalidates assumed automatic next-session timing"
+  ],
+  "hypothesis_frozen": false,
+  "performance_used": false
+}

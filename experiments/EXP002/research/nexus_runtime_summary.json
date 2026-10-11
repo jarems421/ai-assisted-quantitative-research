@@ -1,0 +1,939 @@
+{
+  "diagnostic_probes": [
+    {
+      "name": "native_probe",
+      "tool": "Portfolio.backtest -> NexusTradeClient.create_backtest",
+      "job_id": "6acb87638c2f7fb888b3c0ed",
+      "status": "completed",
+      "request_intent": {
+        "purpose": "Native metric/timing audit, never performance evidence",
+        "dates": [
+          "2016-01-04",
+          "2016-01-08"
+        ],
+        "indicators": [
+          "ROC126",
+          "ROC252",
+          "DistinctBuyers",
+          "BuyCount",
+          "BuyValue",
+          "NewHolders",
+          "NetHolderChange",
+          "NetShareChange"
+        ],
+        "feeConfig": {
+          "Stock": {
+            "amount": 0.1,
+            "type": "percent"
+          }
+        },
+        "idempotency_key": "exp002-native-probe-20160104-20160108-v1",
+        "estimated_daily_non_options_tokens": 0
+      },
+      "reconstructed_body": {
+        "body": {
+          "portfolio": {
+            "name": "EXP002 native declaration/timing diagnostic only",
+            "initialValue": 1000,
+            "cash": 1000,
+            "buyingPower": 1000,
+            "strategies": [
+              {
+                "name": "ROC126",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "PriceRateOfChange",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "window": {
+                      "length": 126,
+                      "interval": "Day"
+                    }
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "ROC252",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "PriceRateOfChange",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "window": {
+                      "length": 252,
+                      "interval": "Day"
+                    }
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "DistinctBuyers",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InsiderTrades",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "metric": "DistinctBuyers",
+                    "role": "Any",
+                    "windowDays": 90,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "BuyCount",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InsiderTrades",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "metric": "BuyCount",
+                    "role": "Any",
+                    "windowDays": 90,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "BuyValue",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InsiderTrades",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "metric": "BuyValue",
+                    "role": "Any",
+                    "windowDays": 90,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "NewHolders",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InstitutionalHoldings",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "manager": "",
+                    "metric": "NewHolders",
+                    "windowDays": 365,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "NetHolderChange",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InstitutionalHoldings",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "manager": "",
+                    "metric": "NetHolderChange",
+                    "windowDays": 365,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "NetShareChange",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InstitutionalHoldings",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "manager": "",
+                    "metric": "NetShareChange",
+                    "windowDays": 365,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              }
+            ],
+            "dividendPolicy": "cash"
+          },
+          "startDate": "2016-01-04",
+          "endDate": "2016-01-08",
+          "interval": "Day",
+          "initialValue": 1000,
+          "generateEvents": true,
+          "feeConfig": {
+            "Stock": {
+              "amount": 0.1,
+              "type": "percent"
+            }
+          },
+          "dividendPolicy": "cash"
+        },
+        "scope": "Deterministic offline reconstruction of SDK payload; original wire request body was not separately captured."
+      },
+      "original_wire_body_preserved": false,
+      "event_rows": 260,
+      "event_pages": 6,
+      "simulated_min_timestamp": "2016-01-04T14:30:00+00:00",
+      "simulated_max_timestamp": "2016-01-08T21:00:00+00:00",
+      "event_type_counts": {
+        "Order": 240,
+        "BuySignal": 10,
+        "Market": 10
+      },
+      "performance_results_used": false,
+      "administrative_timestamps_policy": "createdAt/expirationTime in 2026 are operation administration, not simulated observations; preserved privately."
+    },
+    {
+      "name": "corporate_probe",
+      "tool": "Portfolio.backtest -> NexusTradeClient.create_backtest",
+      "job_id": "6acb88758c2f7fb888b3c16a",
+      "status": "completed",
+      "request_intent": {
+        "purpose": "Native metric/timing audit, never performance evidence",
+        "dates": [
+          "2020-08-06",
+          "2020-09-01"
+        ],
+        "indicators": [],
+        "feeConfig": {
+          "Stock": {
+            "amount": 0.1,
+            "type": "percent"
+          }
+        },
+        "idempotency_key": "exp002-native-probe-20200806-20200901-v1",
+        "estimated_daily_non_options_tokens": 0
+      },
+      "reconstructed_body": {
+        "body": {
+          "portfolio": {
+            "name": "EXP002 corporate-action diagnostic only",
+            "initialValue": 1000,
+            "cash": 1000,
+            "buyingPower": 1000,
+            "strategies": [
+              {
+                "name": "Single entry corporate-action diagnostic",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "PositionValue",
+                    "targetAssets": [
+                      {
+                        "type": "Stock",
+                        "symbol": "AAPL",
+                        "name": "AAPL"
+                      }
+                    ]
+                  },
+                  "comparison": "lessThan",
+                  "rhs": {
+                    "type": "Value",
+                    "value": 1
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "percent of portfolio",
+                    "amount": 50
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              }
+            ],
+            "dividendPolicy": "cash"
+          },
+          "startDate": "2020-08-06",
+          "endDate": "2020-09-01",
+          "interval": "Day",
+          "initialValue": 1000,
+          "generateEvents": true,
+          "feeConfig": {
+            "Stock": {
+              "amount": 0.1,
+              "type": "percent"
+            }
+          },
+          "dividendPolicy": "cash"
+        },
+        "scope": "Deterministic offline reconstruction of SDK payload; original wire request body was not separately captured."
+      },
+      "original_wire_body_preserved": false,
+      "event_rows": 80,
+      "event_pages": 2,
+      "simulated_min_timestamp": "2020-08-06T13:30:00+00:00",
+      "simulated_max_timestamp": "2020-09-01T20:00:00+00:00",
+      "event_type_counts": {
+        "NoSignal": 37,
+        "Market": 38,
+        "ApplyDividend": 1,
+        "Order": 3,
+        "BuySignal": 1
+      },
+      "performance_results_used": false,
+      "administrative_timestamps_policy": "createdAt/expirationTime in 2026 are operation administration, not simulated observations; preserved privately."
+    }
+  ],
+  "finding_statistics": {
+    "calendar_day_reference_matches": 20,
+    "completed_session_reference_matches": 0,
+    "roc_observations": 20,
+    "source_filing_sample_rows": 90,
+    "purchase_economic_after_available": 24.0,
+    "purchase_null_total_value": 232152.0,
+    "purchase_rows": 232685,
+    "insider_report_after_available_rows": 59.0,
+    "null_institutional_amendment_flag_rows": 95753,
+    "filing_timing_by_year": [
+      {
+        "dataset": "insider",
+        "year": 2015,
+        "amended": false,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 227470,
+        "distinct_filings": 210744,
+        "median_report_delay_days": 2.0,
+        "p95_report_delay_days": 17.0,
+        "min_report_delay_days": -721,
+        "max_report_delay_days": 735890,
+        "report_after_available": 38.0,
+        "min_date": "2015-01-01",
+        "max_date": "2015-12-31"
+      },
+      {
+        "dataset": "insider",
+        "year": 2015,
+        "amended": true,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 6850,
+        "distinct_filings": 5864,
+        "median_report_delay_days": 20.5,
+        "p95_report_delay_days": 553.5499999999993,
+        "min_report_delay_days": -363,
+        "max_report_delay_days": 7759,
+        "report_after_available": 2.0,
+        "min_date": "2015-01-01",
+        "max_date": "2015-12-31"
+      },
+      {
+        "dataset": "insider",
+        "year": 2016,
+        "amended": false,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 217519,
+        "distinct_filings": 199516,
+        "median_report_delay_days": 2.0,
+        "p95_report_delay_days": 14.0,
+        "min_report_delay_days": -362,
+        "max_report_delay_days": 736303,
+        "report_after_available": 19.0,
+        "min_date": "2016-01-01",
+        "max_date": "2016-12-31"
+      },
+      {
+        "dataset": "insider",
+        "year": 2016,
+        "amended": true,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 5892,
+        "distinct_filings": 5169,
+        "median_report_delay_days": 21.0,
+        "p95_report_delay_days": 558.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 736092,
+        "report_after_available": 0.0,
+        "min_date": "2016-01-01",
+        "max_date": "2016-12-31"
+      },
+      {
+        "dataset": "insider",
+        "year": 2017,
+        "amended": false,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 215445,
+        "distinct_filings": 197890,
+        "median_report_delay_days": 2.0,
+        "p95_report_delay_days": 13.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 736334,
+        "report_after_available": 0.0,
+        "min_date": "2017-01-04",
+        "max_date": "2017-12-30"
+      },
+      {
+        "dataset": "insider",
+        "year": 2017,
+        "amended": true,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 5194,
+        "distinct_filings": 4606,
+        "median_report_delay_days": 18.0,
+        "p95_report_delay_days": 510.6999999999989,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 5736,
+        "report_after_available": 0.0,
+        "min_date": "2017-01-04",
+        "max_date": "2017-12-30"
+      },
+      {
+        "dataset": "insider",
+        "year": 2018,
+        "amended": false,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 214150,
+        "distinct_filings": 197322,
+        "median_report_delay_days": 2.0,
+        "p95_report_delay_days": 13.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 736753,
+        "report_after_available": 0.0,
+        "min_date": "2018-01-03",
+        "max_date": "2018-12-29"
+      },
+      {
+        "dataset": "insider",
+        "year": 2018,
+        "amended": true,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 5010,
+        "distinct_filings": 4344,
+        "median_report_delay_days": 18.0,
+        "p95_report_delay_days": 447.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 4089,
+        "report_after_available": 0.0,
+        "min_date": "2018-01-03",
+        "max_date": "2018-12-29"
+      },
+      {
+        "dataset": "insider",
+        "year": 2019,
+        "amended": false,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 208170,
+        "distinct_filings": 191992,
+        "median_report_delay_days": 2.0,
+        "p95_report_delay_days": 11.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 737101,
+        "report_after_available": 0.0,
+        "min_date": "2019-01-01",
+        "max_date": "2019-12-31"
+      },
+      {
+        "dataset": "insider",
+        "year": 2019,
+        "amended": true,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 4826,
+        "distinct_filings": 4282,
+        "median_report_delay_days": 19.0,
+        "p95_report_delay_days": 498.75,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 7147,
+        "report_after_available": 0.0,
+        "min_date": "2019-01-01",
+        "max_date": "2019-12-31"
+      },
+      {
+        "dataset": "insider",
+        "year": 2020,
+        "amended": false,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 217209,
+        "distinct_filings": 199178,
+        "median_report_delay_days": 2.0,
+        "p95_report_delay_days": 11.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 737737,
+        "report_after_available": 0.0,
+        "min_date": "2020-01-01",
+        "max_date": "2020-12-31"
+      },
+      {
+        "dataset": "insider",
+        "year": 2020,
+        "amended": true,
+        "availabilitySource": "sec_dataset_filing_date",
+        "owner_or_filing_rows": 4996,
+        "distinct_filings": 4329,
+        "median_report_delay_days": 22.0,
+        "p95_report_delay_days": 437.5,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 7322,
+        "report_after_available": 0.0,
+        "min_date": "2020-01-01",
+        "max_date": "2020-12-31"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2015,
+        "amended": false,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 7220,
+        "distinct_filings": 7220,
+        "median_report_delay_days": 44.0,
+        "p95_report_delay_days": 48.0,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 2956,
+        "report_after_available": 0.0,
+        "min_date": "2015-01-01",
+        "max_date": "2015-12-31"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2015,
+        "amended": true,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 1307,
+        "distinct_filings": 1307,
+        "median_report_delay_days": 106.0,
+        "p95_report_delay_days": 1153.1000000000001,
+        "min_report_delay_days": 3,
+        "max_report_delay_days": 3117,
+        "report_after_available": 0.0,
+        "min_date": "2015-01-01",
+        "max_date": "2015-12-31"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2015,
+        "amended": null,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 15402,
+        "distinct_filings": 15402,
+        "median_report_delay_days": 43.0,
+        "p95_report_delay_days": 48.0,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 2829,
+        "report_after_available": 0.0,
+        "min_date": "2015-01-03",
+        "max_date": "2015-12-30"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2016,
+        "amended": false,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 7416,
+        "distinct_filings": 7416,
+        "median_report_delay_days": 43.0,
+        "p95_report_delay_days": 47.0,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 1532,
+        "report_after_available": 0.0,
+        "min_date": "2016-01-05",
+        "max_date": "2016-12-30"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2016,
+        "amended": true,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 1088,
+        "distinct_filings": 1088,
+        "median_report_delay_days": 119.5,
+        "p95_report_delay_days": 947.749999999998,
+        "min_report_delay_days": 6,
+        "max_report_delay_days": 1866,
+        "report_after_available": 0.0,
+        "min_date": "2016-01-01",
+        "max_date": "2016-12-29"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2016,
+        "amended": null,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 15625,
+        "distinct_filings": 15625,
+        "median_report_delay_days": 42.0,
+        "p95_report_delay_days": 47.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 1964,
+        "report_after_available": 0.0,
+        "min_date": "2016-01-05",
+        "max_date": "2016-12-31"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2017,
+        "amended": false,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 7851,
+        "distinct_filings": 7851,
+        "median_report_delay_days": 44.0,
+        "p95_report_delay_days": 45.0,
+        "min_report_delay_days": 2,
+        "max_report_delay_days": 1987,
+        "report_after_available": 0.0,
+        "min_date": "2017-01-04",
+        "max_date": "2017-12-12"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2017,
+        "amended": true,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 1096,
+        "distinct_filings": 1096,
+        "median_report_delay_days": 109.5,
+        "p95_report_delay_days": 593.25,
+        "min_report_delay_days": 4,
+        "max_report_delay_days": 996,
+        "report_after_available": 0.0,
+        "min_date": "2017-01-04",
+        "max_date": "2017-12-22"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2017,
+        "amended": null,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 15862,
+        "distinct_filings": 15862,
+        "median_report_delay_days": 41.0,
+        "p95_report_delay_days": 46.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 3051,
+        "report_after_available": 0.0,
+        "min_date": "2017-01-04",
+        "max_date": "2017-12-22"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2018,
+        "amended": false,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 9041,
+        "distinct_filings": 9041,
+        "median_report_delay_days": 44.0,
+        "p95_report_delay_days": 45.0,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 2448,
+        "report_after_available": 0.0,
+        "min_date": "2018-01-03",
+        "max_date": "2018-12-19"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2018,
+        "amended": true,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 1067,
+        "distinct_filings": 1067,
+        "median_report_delay_days": 79.0,
+        "p95_report_delay_days": 591.0,
+        "min_report_delay_days": 3,
+        "max_report_delay_days": 1968,
+        "report_after_available": 0.0,
+        "min_date": "2018-01-04",
+        "max_date": "2018-12-29"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2018,
+        "amended": null,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 16389,
+        "distinct_filings": 16389,
+        "median_report_delay_days": 41.0,
+        "p95_report_delay_days": 46.0,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 4433,
+        "report_after_available": 0.0,
+        "min_date": "2018-01-03",
+        "max_date": "2018-12-27"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2019,
+        "amended": false,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 10170,
+        "distinct_filings": 10170,
+        "median_report_delay_days": 44.0,
+        "p95_report_delay_days": 45.0,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 2426,
+        "report_after_available": 0.0,
+        "min_date": "2019-01-03",
+        "max_date": "2019-12-24"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2019,
+        "amended": true,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 1229,
+        "distinct_filings": 1229,
+        "median_report_delay_days": 129.0,
+        "p95_report_delay_days": 941.0,
+        "min_report_delay_days": 2,
+        "max_report_delay_days": 2004,
+        "report_after_available": 0.0,
+        "min_date": "2019-01-01",
+        "max_date": "2019-12-24"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2019,
+        "amended": null,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 16546,
+        "distinct_filings": 16546,
+        "median_report_delay_days": 43.0,
+        "p95_report_delay_days": 46.0,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 3127,
+        "report_after_available": 0.0,
+        "min_date": "2019-01-03",
+        "max_date": "2019-12-28"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2020,
+        "amended": false,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 12012,
+        "distinct_filings": 12012,
+        "median_report_delay_days": 43.0,
+        "p95_report_delay_days": 47.0,
+        "min_report_delay_days": 0,
+        "max_report_delay_days": 2509,
+        "report_after_available": 0.0,
+        "min_date": "2020-01-03",
+        "max_date": "2020-12-31"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2020,
+        "amended": true,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 1034,
+        "distinct_filings": 1034,
+        "median_report_delay_days": 80.0,
+        "p95_report_delay_days": 829.6999999999962,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 2543,
+        "report_after_available": 0.0,
+        "min_date": "2020-01-04",
+        "max_date": "2020-12-31"
+      },
+      {
+        "dataset": "institutional",
+        "year": 2020,
+        "amended": null,
+        "availabilitySource": "sec_13f_quarterly_dataset",
+        "owner_or_filing_rows": 15929,
+        "distinct_filings": 15929,
+        "median_report_delay_days": 42.0,
+        "p95_report_delay_days": 47.0,
+        "min_report_delay_days": 1,
+        "max_report_delay_days": 2180,
+        "report_after_available": 0.0,
+        "min_date": "2020-01-03",
+        "max_date": "2020-12-31"
+      }
+    ]
+  },
+  "performance_used": false
+}

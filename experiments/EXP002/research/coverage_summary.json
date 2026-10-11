@@ -1,0 +1,2516 @@
+{
+  "experiment_id": "EXP002",
+  "state": "NEEDS DESIGN REVISION",
+  "cutoff": "2020-12-31",
+  "price_warmup_start": "2014-01-01",
+  "source_window_start": "2015-01-01",
+  "denominator": "CS-coded stable security IDs with a price on the last observed common-stock session of each month; annual counts are unions across month-end snapshots, not averages or a fixed universe. Exchange/OTC and listing-publication vintages remain unaudited.",
+  "source_presence_warning": "Nonderivative insider legs and SH non-option institutional rows only. Any row is not complete native coverage, revision safety or a genuine zero. Calendar month-end availability is used; ownership history starts in 2015, so early rolling windows are left-censored. UTC cutoff conservatively excludes December 31 NY end-of-day filings represented on January 1 UTC.",
+  "adv_warning": "Unadjusted close multiplied by reported volume; volume adjustment basis and native lag remain unverified. Price windows count available rows, not yet independently verified unique exchange sessions.",
+  "warmup_warning": "Only prices use 2014 warmup. Ownership queries begin 2015, so early 2015 rolling source presence is left-censored. A fully defensible Development start remains unresolved.",
+  "usable_joint_start_date": null,
+  "yearly_coverage": [
+    {
+      "year": 2015,
+      "annual_union_of_month_end_ids": {
+        "common_stock_price_ids": 4722,
+        "market_cap_present_ids": 3542,
+        "cap_lineage_ids": 3304,
+        "sufficient_252_price_bars_ids": 4387,
+        "sufficient_20_volume_bars_ids": 4700,
+        "proposed_price_liquid_ids": 1995,
+        "institutional_source_presence_ids": 2883,
+        "proposed_liquid_institutional_source_presence_ids": 1456,
+        "insider_source_presence_ids": 4069,
+        "proposed_liquid_insider_source_presence_ids": 1831,
+        "proposed_cap_filtered_ids": 1391,
+        "joint_source_presence_ids": 2187,
+        "proposed_liquid_joint_source_presence_ids": 1365
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 86.1711139347734,
+        "institutional_source_presence_ids": 61.05463786531131,
+        "joint_source_presence_ids": 46.3151207115629
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 91.77944862155388,
+        "proposed_liquid_institutional_source_presence_ids": 72.98245614035088,
+        "proposed_liquid_joint_source_presence_ids": 68.42105263157895
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "annual_union_of_month_end_ids": {
+        "common_stock_price_ids": 4818,
+        "market_cap_present_ids": 3655,
+        "cap_lineage_ids": 3419,
+        "sufficient_252_price_bars_ids": 4509,
+        "sufficient_20_volume_bars_ids": 4787,
+        "proposed_price_liquid_ids": 2034,
+        "proposed_cap_filtered_ids": 1397,
+        "institutional_source_presence_ids": 3092,
+        "proposed_liquid_institutional_source_presence_ids": 1555,
+        "insider_source_presence_ids": 4157,
+        "proposed_liquid_insider_source_presence_ids": 1873,
+        "joint_source_presence_ids": 2375,
+        "proposed_liquid_joint_source_presence_ids": 1462
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 86.28061436280615,
+        "institutional_source_presence_ids": 64.17600664176007,
+        "joint_source_presence_ids": 49.29431299294313
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 92.08456243854474,
+        "proposed_liquid_institutional_source_presence_ids": 76.4503441494592,
+        "proposed_liquid_joint_source_presence_ids": 71.87807276302851
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "annual_union_of_month_end_ids": {
+        "common_stock_price_ids": 4856,
+        "market_cap_present_ids": 3765,
+        "cap_lineage_ids": 3524,
+        "sufficient_252_price_bars_ids": 4515,
+        "sufficient_20_volume_bars_ids": 4832,
+        "proposed_price_liquid_ids": 2114,
+        "institutional_source_presence_ids": 3321,
+        "proposed_liquid_institutional_source_presence_ids": 1704,
+        "insider_source_presence_ids": 4185,
+        "proposed_liquid_insider_source_presence_ids": 1936,
+        "proposed_cap_filtered_ids": 1497,
+        "joint_source_presence_ids": 2559,
+        "proposed_liquid_joint_source_presence_ids": 1593
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 86.18204283360791,
+        "institutional_source_presence_ids": 68.38962108731467,
+        "joint_source_presence_ids": 52.69769357495881
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 91.57994323557237,
+        "proposed_liquid_institutional_source_presence_ids": 80.60548722800378,
+        "proposed_liquid_joint_source_presence_ids": 75.35477767265847
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "annual_union_of_month_end_ids": {
+        "common_stock_price_ids": 4880,
+        "market_cap_present_ids": 4003,
+        "cap_lineage_ids": 3764,
+        "sufficient_252_price_bars_ids": 4489,
+        "sufficient_20_volume_bars_ids": 4847,
+        "institutional_source_presence_ids": 3574,
+        "proposed_price_liquid_ids": 2208,
+        "insider_source_presence_ids": 4189,
+        "proposed_liquid_insider_source_presence_ids": 2037,
+        "proposed_cap_filtered_ids": 1669,
+        "proposed_liquid_institutional_source_presence_ids": 1882,
+        "joint_source_presence_ids": 2738,
+        "proposed_liquid_joint_source_presence_ids": 1771
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 85.84016393442623,
+        "institutional_source_presence_ids": 73.23770491803279,
+        "joint_source_presence_ids": 56.10655737704918
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 92.2554347826087,
+        "proposed_liquid_institutional_source_presence_ids": 85.23550724637681,
+        "proposed_liquid_joint_source_presence_ids": 80.20833333333333
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "annual_union_of_month_end_ids": {
+        "common_stock_price_ids": 4868,
+        "market_cap_present_ids": 4150,
+        "cap_lineage_ids": 3920,
+        "sufficient_252_price_bars_ids": 4515,
+        "sufficient_20_volume_bars_ids": 4846,
+        "institutional_source_presence_ids": 3799,
+        "proposed_price_liquid_ids": 2140,
+        "insider_source_presence_ids": 4107,
+        "proposed_liquid_insider_source_presence_ids": 1959,
+        "proposed_cap_filtered_ids": 1720,
+        "proposed_liquid_institutional_source_presence_ids": 1958,
+        "joint_source_presence_ids": 2988,
+        "proposed_liquid_joint_source_presence_ids": 1823
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 84.36729663105999,
+        "institutional_source_presence_ids": 78.04026294165982,
+        "joint_source_presence_ids": 61.38044371405095
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 91.54205607476635,
+        "proposed_liquid_institutional_source_presence_ids": 91.49532710280374,
+        "proposed_liquid_joint_source_presence_ids": 85.18691588785046
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "annual_union_of_month_end_ids": {
+        "common_stock_price_ids": 5069,
+        "market_cap_present_ids": 4334,
+        "cap_lineage_ids": 4107,
+        "sufficient_252_price_bars_ids": 4520,
+        "sufficient_20_volume_bars_ids": 4993,
+        "institutional_source_presence_ids": 3853,
+        "proposed_price_liquid_ids": 2285,
+        "insider_source_presence_ids": 4183,
+        "proposed_liquid_insider_source_presence_ids": 2053,
+        "proposed_liquid_institutional_source_presence_ids": 2111,
+        "joint_source_presence_ids": 3121,
+        "proposed_liquid_joint_source_presence_ids": 1932,
+        "proposed_cap_filtered_ids": 1819
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 82.52120733872559,
+        "institutional_source_presence_ids": 76.01104754389426,
+        "joint_source_presence_ids": 61.570329453541135
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.84682713347921,
+        "proposed_liquid_institutional_source_presence_ids": 92.3851203501094,
+        "proposed_liquid_joint_source_presence_ids": 84.55142231947484
+      },
+      "verified_usable_joint_count": null
+    }
+  ],
+  "monthly_coverage": [
+    {
+      "year": 2015,
+      "month": 1,
+      "last_price_date": "2015-01-30",
+      "availability_decision_time": "2015-02-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4375,
+        "market_cap_present_ids": 3225,
+        "cap_lineage_ids": 2971,
+        "sufficient_252_price_bars_ids": 3836,
+        "sufficient_20_volume_bars_ids": 4353,
+        "proposed_price_liquid_ids": 1557,
+        "institutional_source_presence_ids": 2586,
+        "proposed_liquid_institutional_source_presence_ids": 1147,
+        "insider_source_presence_ids": 2191,
+        "proposed_liquid_insider_source_presence_ids": 1063,
+        "proposed_cap_filtered_ids": 1100,
+        "joint_source_presence_ids": 1210,
+        "proposed_liquid_joint_source_presence_ids": 793
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 50.08,
+        "institutional_source_presence_ids": 59.10857142857143,
+        "joint_source_presence_ids": 27.65714285714286
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 68.27231856133591,
+        "proposed_liquid_institutional_source_presence_ids": 73.66730892742453,
+        "proposed_liquid_joint_source_presence_ids": 50.93127809890816
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 2,
+      "last_price_date": "2015-02-27",
+      "availability_decision_time": "2015-03-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4389,
+        "market_cap_present_ids": 3246,
+        "cap_lineage_ids": 2882,
+        "sufficient_252_price_bars_ids": 3915,
+        "sufficient_20_volume_bars_ids": 4359,
+        "proposed_price_liquid_ids": 1599,
+        "institutional_source_presence_ids": 2684,
+        "proposed_liquid_institutional_source_presence_ids": 1182,
+        "insider_source_presence_ids": 3068,
+        "proposed_liquid_insider_source_presence_ids": 1395,
+        "proposed_cap_filtered_ids": 1076,
+        "joint_source_presence_ids": 1688,
+        "proposed_liquid_joint_source_presence_ids": 1052
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 69.90202779676464,
+        "institutional_source_presence_ids": 61.152882205513784,
+        "joint_source_presence_ids": 38.45978582820688
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 87.24202626641652,
+        "proposed_liquid_institutional_source_presence_ids": 73.92120075046904,
+        "proposed_liquid_joint_source_presence_ids": 65.79111944965604
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 3,
+      "last_price_date": "2015-03-31",
+      "availability_decision_time": "2015-04-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4393,
+        "market_cap_present_ids": 3258,
+        "cap_lineage_ids": 2981,
+        "sufficient_252_price_bars_ids": 3968,
+        "sufficient_20_volume_bars_ids": 4377,
+        "proposed_price_liquid_ids": 1617,
+        "proposed_cap_filtered_ids": 1168,
+        "institutional_source_presence_ids": 2684,
+        "proposed_liquid_institutional_source_presence_ids": 1203,
+        "insider_source_presence_ids": 3413,
+        "proposed_liquid_insider_source_presence_ids": 1475,
+        "joint_source_presence_ids": 1857,
+        "proposed_liquid_joint_source_presence_ids": 1115
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 77.69178238106078,
+        "institutional_source_presence_ids": 61.09720009105395,
+        "joint_source_presence_ids": 42.2717960391532
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 91.2183055040198,
+        "proposed_liquid_institutional_source_presence_ids": 74.39703153988869,
+        "proposed_liquid_joint_source_presence_ids": 68.95485466914039
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 4,
+      "last_price_date": "2015-04-30",
+      "availability_decision_time": "2015-05-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4405,
+        "market_cap_present_ids": 3261,
+        "cap_lineage_ids": 2942,
+        "sufficient_252_price_bars_ids": 3994,
+        "sufficient_20_volume_bars_ids": 4380,
+        "proposed_price_liquid_ids": 1557,
+        "proposed_cap_filtered_ids": 1086,
+        "institutional_source_presence_ids": 2710,
+        "proposed_liquid_institutional_source_presence_ids": 1168,
+        "insider_source_presence_ids": 3388,
+        "proposed_liquid_insider_source_presence_ids": 1423,
+        "joint_source_presence_ids": 1860,
+        "proposed_liquid_joint_source_presence_ids": 1078
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.91259931895573,
+        "institutional_source_presence_ids": 61.52099886492622,
+        "joint_source_presence_ids": 42.22474460839955
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 91.39370584457289,
+        "proposed_liquid_institutional_source_presence_ids": 75.0160565189467,
+        "proposed_liquid_joint_source_presence_ids": 69.23570969813744
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 5,
+      "last_price_date": "2015-05-29",
+      "availability_decision_time": "2015-06-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4390,
+        "market_cap_present_ids": 3278,
+        "cap_lineage_ids": 3027,
+        "sufficient_252_price_bars_ids": 4015,
+        "sufficient_20_volume_bars_ids": 4365,
+        "proposed_price_liquid_ids": 1577,
+        "proposed_cap_filtered_ids": 1156,
+        "institutional_source_presence_ids": 2703,
+        "proposed_liquid_institutional_source_presence_ids": 1187,
+        "insider_source_presence_ids": 3396,
+        "proposed_liquid_insider_source_presence_ids": 1434,
+        "joint_source_presence_ids": 1864,
+        "proposed_liquid_joint_source_presence_ids": 1093
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 77.35763097949886,
+        "institutional_source_presence_ids": 61.571753986332574,
+        "joint_source_presence_ids": 42.46013667425968
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 90.93214965123653,
+        "proposed_liquid_institutional_source_presence_ids": 75.26949904882689,
+        "proposed_liquid_joint_source_presence_ids": 69.30881420418517
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 6,
+      "last_price_date": "2015-06-30",
+      "availability_decision_time": "2015-07-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4442,
+        "market_cap_present_ids": 3314,
+        "cap_lineage_ids": 3068,
+        "sufficient_252_price_bars_ids": 4066,
+        "sufficient_20_volume_bars_ids": 4404,
+        "proposed_price_liquid_ids": 1630,
+        "proposed_cap_filtered_ids": 1184,
+        "institutional_source_presence_ids": 2715,
+        "proposed_liquid_institutional_source_presence_ids": 1225,
+        "insider_source_presence_ids": 3391,
+        "proposed_liquid_insider_source_presence_ids": 1459,
+        "joint_source_presence_ids": 1869,
+        "proposed_liquid_joint_source_presence_ids": 1112
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.33948671769473,
+        "institutional_source_presence_ids": 61.121116614137776,
+        "joint_source_presence_ids": 42.07564160288158
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.50920245398773,
+        "proposed_liquid_institutional_source_presence_ids": 75.15337423312883,
+        "proposed_liquid_joint_source_presence_ids": 68.22085889570552
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 7,
+      "last_price_date": "2015-07-31",
+      "availability_decision_time": "2015-08-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4453,
+        "market_cap_present_ids": 3311,
+        "cap_lineage_ids": 2985,
+        "sufficient_252_price_bars_ids": 4081,
+        "sufficient_20_volume_bars_ids": 4419,
+        "proposed_price_liquid_ids": 1582,
+        "proposed_cap_filtered_ids": 1117,
+        "institutional_source_presence_ids": 2769,
+        "proposed_liquid_institutional_source_presence_ids": 1203,
+        "insider_source_presence_ids": 3397,
+        "proposed_liquid_insider_source_presence_ids": 1403,
+        "joint_source_presence_ids": 1885,
+        "proposed_liquid_joint_source_presence_ids": 1089
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.28565012351224,
+        "institutional_source_presence_ids": 62.18279811363126,
+        "joint_source_presence_ids": 42.33101280035931
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 88.68520859671303,
+        "proposed_liquid_institutional_source_presence_ids": 76.04298356510746,
+        "proposed_liquid_joint_source_presence_ids": 68.83691529709229
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 8,
+      "last_price_date": "2015-08-31",
+      "availability_decision_time": "2015-09-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4469,
+        "market_cap_present_ids": 3354,
+        "cap_lineage_ids": 3111,
+        "sufficient_252_price_bars_ids": 4111,
+        "sufficient_20_volume_bars_ids": 4448,
+        "proposed_price_liquid_ids": 1636,
+        "proposed_cap_filtered_ids": 1173,
+        "institutional_source_presence_ids": 2785,
+        "proposed_liquid_institutional_source_presence_ids": 1235,
+        "insider_source_presence_ids": 3338,
+        "proposed_liquid_insider_source_presence_ids": 1411,
+        "joint_source_presence_ids": 1850,
+        "proposed_liquid_joint_source_presence_ids": 1092
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.69232490490043,
+        "institutional_source_presence_ids": 62.31819198925934,
+        "joint_source_presence_ids": 41.39628552248825
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 86.24694376528117,
+        "proposed_liquid_institutional_source_presence_ids": 75.48899755501222,
+        "proposed_liquid_joint_source_presence_ids": 66.7481662591687
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 9,
+      "last_price_date": "2015-09-30",
+      "availability_decision_time": "2015-10-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4455,
+        "market_cap_present_ids": 3365,
+        "cap_lineage_ids": 3123,
+        "sufficient_252_price_bars_ids": 4111,
+        "sufficient_20_volume_bars_ids": 4445,
+        "proposed_price_liquid_ids": 1543,
+        "proposed_cap_filtered_ids": 1111,
+        "institutional_source_presence_ids": 2772,
+        "proposed_liquid_institutional_source_presence_ids": 1180,
+        "insider_source_presence_ids": 3218,
+        "proposed_liquid_insider_source_presence_ids": 1315,
+        "joint_source_presence_ids": 1801,
+        "proposed_liquid_joint_source_presence_ids": 1025
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 72.2334455667789,
+        "institutional_source_presence_ids": 62.22222222222222,
+        "joint_source_presence_ids": 40.42648709315376
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.22359040829552,
+        "proposed_liquid_institutional_source_presence_ids": 76.47440051847052,
+        "proposed_liquid_joint_source_presence_ids": 66.42903434867142
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 10,
+      "last_price_date": "2015-10-30",
+      "availability_decision_time": "2015-11-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4456,
+        "market_cap_present_ids": 3358,
+        "cap_lineage_ids": 3027,
+        "sufficient_252_price_bars_ids": 4129,
+        "sufficient_20_volume_bars_ids": 4429,
+        "proposed_price_liquid_ids": 1560,
+        "proposed_cap_filtered_ids": 1081,
+        "institutional_source_presence_ids": 2813,
+        "proposed_liquid_institutional_source_presence_ids": 1201,
+        "insider_source_presence_ids": 3218,
+        "proposed_liquid_insider_source_presence_ids": 1323,
+        "joint_source_presence_ids": 1820,
+        "proposed_liquid_joint_source_presence_ids": 1040
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 72.21723518850987,
+        "institutional_source_presence_ids": 63.128366247755835,
+        "joint_source_presence_ids": 40.843806104129264
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 84.8076923076923,
+        "proposed_liquid_institutional_source_presence_ids": 76.98717948717949,
+        "proposed_liquid_joint_source_presence_ids": 66.66666666666667
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 11,
+      "last_price_date": "2015-11-30",
+      "availability_decision_time": "2015-12-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4507,
+        "market_cap_present_ids": 3397,
+        "cap_lineage_ids": 3160,
+        "sufficient_252_price_bars_ids": 4185,
+        "sufficient_20_volume_bars_ids": 4471,
+        "proposed_price_liquid_ids": 1578,
+        "proposed_cap_filtered_ids": 1151,
+        "institutional_source_presence_ids": 2834,
+        "proposed_liquid_institutional_source_presence_ids": 1203,
+        "insider_source_presence_ids": 3165,
+        "proposed_liquid_insider_source_presence_ids": 1315,
+        "joint_source_presence_ids": 1798,
+        "proposed_liquid_joint_source_presence_ids": 1021
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 70.2240958508986,
+        "institutional_source_presence_ids": 62.87996449966718,
+        "joint_source_presence_ids": 39.89349900155314
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 83.33333333333333,
+        "proposed_liquid_institutional_source_presence_ids": 76.23574144486692,
+        "proposed_liquid_joint_source_presence_ids": 64.70215462610899
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2015,
+      "month": 12,
+      "last_price_date": "2015-12-31",
+      "availability_decision_time": "2016-01-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4522,
+        "market_cap_present_ids": 3428,
+        "cap_lineage_ids": 3195,
+        "sufficient_252_price_bars_ids": 4208,
+        "sufficient_20_volume_bars_ids": 4501,
+        "proposed_price_liquid_ids": 1570,
+        "proposed_cap_filtered_ids": 1162,
+        "institutional_source_presence_ids": 2840,
+        "proposed_liquid_institutional_source_presence_ids": 1214,
+        "insider_source_presence_ids": 3233,
+        "proposed_liquid_insider_source_presence_ids": 1343,
+        "joint_source_presence_ids": 1832,
+        "proposed_liquid_joint_source_presence_ids": 1054
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 71.49491375497567,
+        "institutional_source_presence_ids": 62.80406899601946,
+        "joint_source_presence_ids": 40.51304732419283
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.54140127388536,
+        "proposed_liquid_institutional_source_presence_ids": 77.32484076433121,
+        "proposed_liquid_joint_source_presence_ids": 67.13375796178345
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 1,
+      "last_price_date": "2016-01-29",
+      "availability_decision_time": "2016-02-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4508,
+        "market_cap_present_ids": 3426,
+        "cap_lineage_ids": 3181,
+        "sufficient_252_price_bars_ids": 4202,
+        "sufficient_20_volume_bars_ids": 4495,
+        "proposed_price_liquid_ids": 1600,
+        "proposed_cap_filtered_ids": 1148,
+        "institutional_source_presence_ids": 2875,
+        "proposed_liquid_institutional_source_presence_ids": 1244,
+        "insider_source_presence_ids": 3371,
+        "proposed_liquid_insider_source_presence_ids": 1418,
+        "joint_source_presence_ids": 1925,
+        "proposed_liquid_joint_source_presence_ids": 1114
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.77817213842059,
+        "institutional_source_presence_ids": 63.775510204081634,
+        "joint_source_presence_ids": 42.701863354037265
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 88.625,
+        "proposed_liquid_institutional_source_presence_ids": 77.75,
+        "proposed_liquid_joint_source_presence_ids": 69.625
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 2,
+      "last_price_date": "2016-02-29",
+      "availability_decision_time": "2016-03-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4473,
+        "market_cap_present_ids": 3399,
+        "cap_lineage_ids": 3061,
+        "sufficient_252_price_bars_ids": 4185,
+        "sufficient_20_volume_bars_ids": 4460,
+        "proposed_price_liquid_ids": 1582,
+        "proposed_cap_filtered_ids": 1093,
+        "institutional_source_presence_ids": 2871,
+        "proposed_liquid_institutional_source_presence_ids": 1237,
+        "insider_source_presence_ids": 3428,
+        "proposed_liquid_insider_source_presence_ids": 1439,
+        "joint_source_presence_ids": 1985,
+        "proposed_liquid_joint_source_presence_ids": 1141
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.63760339816677,
+        "institutional_source_presence_ids": 64.1851106639839,
+        "joint_source_presence_ids": 44.37737536329086
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 90.96080910240202,
+        "proposed_liquid_institutional_source_presence_ids": 78.19216182048041,
+        "proposed_liquid_joint_source_presence_ids": 72.12389380530973
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 3,
+      "last_price_date": "2016-03-31",
+      "availability_decision_time": "2016-04-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4475,
+        "market_cap_present_ids": 3413,
+        "cap_lineage_ids": 3172,
+        "sufficient_252_price_bars_ids": 4203,
+        "sufficient_20_volume_bars_ids": 4466,
+        "proposed_price_liquid_ids": 1580,
+        "proposed_cap_filtered_ids": 1153,
+        "institutional_source_presence_ids": 2869,
+        "proposed_liquid_institutional_source_presence_ids": 1245,
+        "insider_source_presence_ids": 3462,
+        "proposed_liquid_insider_source_presence_ids": 1447,
+        "joint_source_presence_ids": 2012,
+        "proposed_liquid_joint_source_presence_ids": 1161
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 77.36312849162012,
+        "institutional_source_presence_ids": 64.11173184357541,
+        "joint_source_presence_ids": 44.960893854748605
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 91.58227848101266,
+        "proposed_liquid_institutional_source_presence_ids": 78.79746835443038,
+        "proposed_liquid_joint_source_presence_ids": 73.48101265822785
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 4,
+      "last_price_date": "2016-04-29",
+      "availability_decision_time": "2016-05-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4430,
+        "market_cap_present_ids": 3382,
+        "cap_lineage_ids": 3083,
+        "sufficient_252_price_bars_ids": 4180,
+        "sufficient_20_volume_bars_ids": 4418,
+        "proposed_price_liquid_ids": 1538,
+        "proposed_cap_filtered_ids": 1097,
+        "institutional_source_presence_ids": 2866,
+        "proposed_liquid_institutional_source_presence_ids": 1209,
+        "insider_source_presence_ids": 3417,
+        "proposed_liquid_insider_source_presence_ids": 1393,
+        "joint_source_presence_ids": 2010,
+        "proposed_liquid_joint_source_presence_ids": 1117
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 77.13318284424379,
+        "institutional_source_presence_ids": 64.69525959367945,
+        "joint_source_presence_ids": 45.372460496613996
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 90.57217165149545,
+        "proposed_liquid_institutional_source_presence_ids": 78.60858257477243,
+        "proposed_liquid_joint_source_presence_ids": 72.62678803641093
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 5,
+      "last_price_date": "2016-05-31",
+      "availability_decision_time": "2016-06-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4454,
+        "market_cap_present_ids": 3411,
+        "cap_lineage_ids": 3173,
+        "sufficient_252_price_bars_ids": 4201,
+        "sufficient_20_volume_bars_ids": 4432,
+        "proposed_price_liquid_ids": 1551,
+        "proposed_cap_filtered_ids": 1144,
+        "institutional_source_presence_ids": 2894,
+        "proposed_liquid_institutional_source_presence_ids": 1224,
+        "insider_source_presence_ids": 3415,
+        "proposed_liquid_insider_source_presence_ids": 1388,
+        "joint_source_presence_ids": 2014,
+        "proposed_liquid_joint_source_presence_ids": 1113
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.67265379434217,
+        "institutional_source_presence_ids": 64.97530309833857,
+        "joint_source_presence_ids": 45.21778176919623
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.49065119277886,
+        "proposed_liquid_institutional_source_presence_ids": 78.91682785299807,
+        "proposed_liquid_joint_source_presence_ids": 71.76015473887814
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 6,
+      "last_price_date": "2016-06-30",
+      "availability_decision_time": "2016-07-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4497,
+        "market_cap_present_ids": 3453,
+        "cap_lineage_ids": 3216,
+        "sufficient_252_price_bars_ids": 4263,
+        "sufficient_20_volume_bars_ids": 4478,
+        "proposed_price_liquid_ids": 1609,
+        "proposed_cap_filtered_ids": 1185,
+        "institutional_source_presence_ids": 2917,
+        "proposed_liquid_institutional_source_presence_ids": 1272,
+        "insider_source_presence_ids": 3380,
+        "proposed_liquid_insider_source_presence_ids": 1411,
+        "joint_source_presence_ids": 2002,
+        "proposed_liquid_joint_source_presence_ids": 1135
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 75.16121859017123,
+        "institutional_source_presence_ids": 64.86546586613298,
+        "joint_source_presence_ids": 44.51856793417834
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 87.69422001243008,
+        "proposed_liquid_institutional_source_presence_ids": 79.05531385954009,
+        "proposed_liquid_joint_source_presence_ids": 70.54070851460534
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 7,
+      "last_price_date": "2016-07-29",
+      "availability_decision_time": "2016-08-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4479,
+        "market_cap_present_ids": 3432,
+        "cap_lineage_ids": 3125,
+        "sufficient_252_price_bars_ids": 4254,
+        "sufficient_20_volume_bars_ids": 4454,
+        "proposed_price_liquid_ids": 1546,
+        "proposed_cap_filtered_ids": 1117,
+        "institutional_source_presence_ids": 2935,
+        "proposed_liquid_institutional_source_presence_ids": 1227,
+        "insider_source_presence_ids": 3353,
+        "proposed_liquid_insider_source_presence_ids": 1354,
+        "joint_source_presence_ids": 2019,
+        "proposed_liquid_joint_source_presence_ids": 1089
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.8604599240902,
+        "institutional_source_presence_ids": 65.52801964724269,
+        "joint_source_presence_ids": 45.07702612190221
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 87.58085381630013,
+        "proposed_liquid_institutional_source_presence_ids": 79.36610608020699,
+        "proposed_liquid_joint_source_presence_ids": 70.4398447606727
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 8,
+      "last_price_date": "2016-08-31",
+      "availability_decision_time": "2016-09-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4488,
+        "market_cap_present_ids": 3447,
+        "cap_lineage_ids": 3211,
+        "sufficient_252_price_bars_ids": 4276,
+        "sufficient_20_volume_bars_ids": 4473,
+        "proposed_price_liquid_ids": 1549,
+        "institutional_source_presence_ids": 2953,
+        "proposed_liquid_institutional_source_presence_ids": 1233,
+        "insider_source_presence_ids": 3233,
+        "proposed_cap_filtered_ids": 1150,
+        "proposed_liquid_insider_source_presence_ids": 1342,
+        "joint_source_presence_ids": 1985,
+        "proposed_liquid_joint_source_presence_ids": 1090
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 72.03654188948306,
+        "institutional_source_presence_ids": 65.79768270944741,
+        "joint_source_presence_ids": 44.22905525846702
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 86.63653970303422,
+        "proposed_liquid_institutional_source_presence_ids": 79.59974176888315,
+        "proposed_liquid_joint_source_presence_ids": 70.36797934151065
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 9,
+      "last_price_date": "2016-09-30",
+      "availability_decision_time": "2016-10-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4455,
+        "market_cap_present_ids": 3445,
+        "cap_lineage_ids": 3213,
+        "sufficient_252_price_bars_ids": 4240,
+        "sufficient_20_volume_bars_ids": 4430,
+        "proposed_price_liquid_ids": 1609,
+        "institutional_source_presence_ids": 2939,
+        "proposed_liquid_institutional_source_presence_ids": 1283,
+        "insider_source_presence_ids": 3149,
+        "proposed_liquid_insider_source_presence_ids": 1374,
+        "proposed_cap_filtered_ids": 1190,
+        "joint_source_presence_ids": 1945,
+        "proposed_liquid_joint_source_presence_ids": 1125
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 70.68462401795735,
+        "institutional_source_presence_ids": 65.97081930415264,
+        "joint_source_presence_ids": 43.65881032547699
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.39465506525792,
+        "proposed_liquid_institutional_source_presence_ids": 79.73896830329397,
+        "proposed_liquid_joint_source_presence_ids": 69.91920447482909
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 10,
+      "last_price_date": "2016-10-31",
+      "availability_decision_time": "2016-11-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4533,
+        "market_cap_present_ids": 3460,
+        "cap_lineage_ids": 3199,
+        "sufficient_252_price_bars_ids": 4254,
+        "sufficient_20_volume_bars_ids": 4484,
+        "proposed_price_liquid_ids": 1525,
+        "institutional_source_presence_ids": 3011,
+        "proposed_liquid_institutional_source_presence_ids": 1237,
+        "insider_source_presence_ids": 3142,
+        "proposed_liquid_insider_source_presence_ids": 1297,
+        "proposed_cap_filtered_ids": 1122,
+        "joint_source_presence_ids": 1928,
+        "proposed_liquid_joint_source_presence_ids": 1067
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 69.31392014118686,
+        "institutional_source_presence_ids": 66.42400176483565,
+        "joint_source_presence_ids": 42.53253915729098
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.04918032786885,
+        "proposed_liquid_institutional_source_presence_ids": 81.11475409836065,
+        "proposed_liquid_joint_source_presence_ids": 69.9672131147541
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 11,
+      "last_price_date": "2016-11-30",
+      "availability_decision_time": "2016-12-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4530,
+        "market_cap_present_ids": 3486,
+        "cap_lineage_ids": 3252,
+        "sufficient_252_price_bars_ids": 4258,
+        "sufficient_20_volume_bars_ids": 4507,
+        "proposed_price_liquid_ids": 1687,
+        "institutional_source_presence_ids": 3035,
+        "proposed_liquid_institutional_source_presence_ids": 1352,
+        "insider_source_presence_ids": 3152,
+        "proposed_liquid_insider_source_presence_ids": 1429,
+        "proposed_cap_filtered_ids": 1231,
+        "joint_source_presence_ids": 1949,
+        "proposed_liquid_joint_source_presence_ids": 1174
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 69.58057395143487,
+        "institutional_source_presence_ids": 66.99779249448123,
+        "joint_source_presence_ids": 43.0242825607064
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 84.70657972732661,
+        "proposed_liquid_institutional_source_presence_ids": 80.14226437462952,
+        "proposed_liquid_joint_source_presence_ids": 69.59098992294012
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2016,
+      "month": 12,
+      "last_price_date": "2016-12-30",
+      "availability_decision_time": "2017-01-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4533,
+        "market_cap_present_ids": 3502,
+        "cap_lineage_ids": 3266,
+        "sufficient_252_price_bars_ids": 4256,
+        "sufficient_20_volume_bars_ids": 4508,
+        "proposed_price_liquid_ids": 1689,
+        "institutional_source_presence_ids": 3041,
+        "proposed_liquid_institutional_source_presence_ids": 1378,
+        "insider_source_presence_ids": 3283,
+        "proposed_liquid_insider_source_presence_ids": 1447,
+        "proposed_cap_filtered_ids": 1253,
+        "joint_source_presence_ids": 2048,
+        "proposed_liquid_joint_source_presence_ids": 1206
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 72.42444297374807,
+        "institutional_source_presence_ids": 67.0858151334657,
+        "joint_source_presence_ids": 45.17979263181116
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.67199526346951,
+        "proposed_liquid_institutional_source_presence_ids": 81.58673771462404,
+        "proposed_liquid_joint_source_presence_ids": 71.40319715808171
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 1,
+      "last_price_date": "2017-01-31",
+      "availability_decision_time": "2017-02-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4513,
+        "market_cap_present_ids": 3476,
+        "cap_lineage_ids": 3242,
+        "sufficient_252_price_bars_ids": 4220,
+        "sufficient_20_volume_bars_ids": 4488,
+        "proposed_price_liquid_ids": 1618,
+        "institutional_source_presence_ids": 3072,
+        "proposed_liquid_institutional_source_presence_ids": 1326,
+        "insider_source_presence_ids": 3354,
+        "proposed_liquid_insider_source_presence_ids": 1412,
+        "proposed_cap_filtered_ids": 1210,
+        "joint_source_presence_ids": 2094,
+        "proposed_liquid_joint_source_presence_ids": 1179
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.31863505428761,
+        "institutional_source_presence_ids": 68.07001994238865,
+        "joint_source_presence_ids": 46.399290937292264
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 87.2682323856613,
+        "proposed_liquid_institutional_source_presence_ids": 81.95302843016069,
+        "proposed_liquid_joint_source_presence_ids": 72.86773794808406
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 2,
+      "last_price_date": "2017-02-28",
+      "availability_decision_time": "2017-03-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4512,
+        "market_cap_present_ids": 3485,
+        "cap_lineage_ids": 3166,
+        "sufficient_252_price_bars_ids": 4215,
+        "sufficient_20_volume_bars_ids": 4496,
+        "proposed_price_liquid_ids": 1658,
+        "institutional_source_presence_ids": 3094,
+        "proposed_liquid_institutional_source_presence_ids": 1363,
+        "insider_source_presence_ids": 3449,
+        "proposed_liquid_insider_source_presence_ids": 1498,
+        "proposed_cap_filtered_ids": 1197,
+        "joint_source_presence_ids": 2176,
+        "proposed_liquid_joint_source_presence_ids": 1256
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.44060283687944,
+        "institutional_source_presence_ids": 68.572695035461,
+        "joint_source_presence_ids": 48.226950354609926
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 90.34981905910736,
+        "proposed_liquid_institutional_source_presence_ids": 82.2074788902292,
+        "proposed_liquid_joint_source_presence_ids": 75.75392038600724
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 3,
+      "last_price_date": "2017-03-31",
+      "availability_decision_time": "2017-04-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4499,
+        "market_cap_present_ids": 3488,
+        "cap_lineage_ids": 3223,
+        "sufficient_252_price_bars_ids": 4197,
+        "sufficient_20_volume_bars_ids": 4475,
+        "institutional_source_presence_ids": 3091,
+        "proposed_price_liquid_ids": 1644,
+        "insider_source_presence_ids": 3504,
+        "proposed_liquid_insider_source_presence_ids": 1507,
+        "proposed_cap_filtered_ids": 1226,
+        "proposed_liquid_institutional_source_presence_ids": 1364,
+        "joint_source_presence_ids": 2204,
+        "proposed_liquid_joint_source_presence_ids": 1274
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 77.88397421649255,
+        "institutional_source_presence_ids": 68.7041564792176,
+        "joint_source_presence_ids": 48.98866414758835
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 91.66666666666667,
+        "proposed_liquid_institutional_source_presence_ids": 82.9683698296837,
+        "proposed_liquid_joint_source_presence_ids": 77.49391727493918
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 4,
+      "last_price_date": "2017-04-28",
+      "availability_decision_time": "2017-05-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4499,
+        "sufficient_252_price_bars_ids": 4176,
+        "sufficient_20_volume_bars_ids": 4465,
+        "institutional_source_presence_ids": 3128,
+        "proposed_price_liquid_ids": 1635,
+        "insider_source_presence_ids": 3474,
+        "proposed_liquid_insider_source_presence_ids": 1498,
+        "market_cap_present_ids": 3481,
+        "cap_lineage_ids": 3182,
+        "proposed_cap_filtered_ids": 1188,
+        "proposed_liquid_institutional_source_presence_ids": 1367,
+        "joint_source_presence_ids": 2205,
+        "proposed_liquid_joint_source_presence_ids": 1275
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 77.21715936874861,
+        "institutional_source_presence_ids": 69.5265614581018,
+        "joint_source_presence_ids": 49.01089130917982
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 91.62079510703364,
+        "proposed_liquid_institutional_source_presence_ids": 83.6085626911315,
+        "proposed_liquid_joint_source_presence_ids": 77.98165137614679
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 5,
+      "last_price_date": "2017-05-31",
+      "availability_decision_time": "2017-06-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4512,
+        "market_cap_present_ids": 3514,
+        "cap_lineage_ids": 3275,
+        "sufficient_252_price_bars_ids": 4177,
+        "sufficient_20_volume_bars_ids": 4484,
+        "proposed_price_liquid_ids": 1650,
+        "institutional_source_presence_ids": 3143,
+        "proposed_liquid_institutional_source_presence_ids": 1386,
+        "insider_source_presence_ids": 3449,
+        "proposed_liquid_insider_source_presence_ids": 1477,
+        "proposed_cap_filtered_ids": 1228,
+        "joint_source_presence_ids": 2198,
+        "proposed_liquid_joint_source_presence_ids": 1260
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.44060283687944,
+        "institutional_source_presence_ids": 69.65868794326241,
+        "joint_source_presence_ids": 48.7145390070922
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.51515151515152,
+        "proposed_liquid_institutional_source_presence_ids": 84.0,
+        "proposed_liquid_joint_source_presence_ids": 76.36363636363636
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 6,
+      "last_price_date": "2017-06-30",
+      "availability_decision_time": "2017-07-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4513,
+        "market_cap_present_ids": 3515,
+        "cap_lineage_ids": 3275,
+        "sufficient_252_price_bars_ids": 4172,
+        "sufficient_20_volume_bars_ids": 4481,
+        "institutional_source_presence_ids": 3142,
+        "proposed_price_liquid_ids": 1678,
+        "insider_source_presence_ids": 3380,
+        "proposed_liquid_insider_source_presence_ids": 1494,
+        "proposed_cap_filtered_ids": 1257,
+        "proposed_liquid_institutional_source_presence_ids": 1416,
+        "joint_source_presence_ids": 2155,
+        "proposed_liquid_joint_source_presence_ids": 1280
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.89474850432084,
+        "institutional_source_presence_ids": 69.62109461555507,
+        "joint_source_presence_ids": 47.75094172390871
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.03456495828367,
+        "proposed_liquid_institutional_source_presence_ids": 84.38617401668652,
+        "proposed_liquid_joint_source_presence_ids": 76.28128724672229
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 7,
+      "last_price_date": "2017-07-31",
+      "availability_decision_time": "2017-08-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4518,
+        "market_cap_present_ids": 3517,
+        "cap_lineage_ids": 3254,
+        "sufficient_252_price_bars_ids": 4172,
+        "sufficient_20_volume_bars_ids": 4491,
+        "institutional_source_presence_ids": 3215,
+        "proposed_price_liquid_ids": 1603,
+        "insider_source_presence_ids": 3376,
+        "proposed_cap_filtered_ids": 1192,
+        "proposed_liquid_insider_source_presence_ids": 1414,
+        "proposed_liquid_institutional_source_presence_ids": 1348,
+        "joint_source_presence_ids": 2179,
+        "proposed_liquid_joint_source_presence_ids": 1208
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.72332890659584,
+        "institutional_source_presence_ids": 71.15980522355024,
+        "joint_source_presence_ids": 48.229305002213366
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 88.20960698689956,
+        "proposed_liquid_institutional_source_presence_ids": 84.09232688708671,
+        "proposed_liquid_joint_source_presence_ids": 75.35870243293824
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 8,
+      "last_price_date": "2017-08-31",
+      "availability_decision_time": "2017-09-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4539,
+        "market_cap_present_ids": 3561,
+        "cap_lineage_ids": 3321,
+        "sufficient_252_price_bars_ids": 4188,
+        "sufficient_20_volume_bars_ids": 4524,
+        "institutional_source_presence_ids": 3239,
+        "proposed_price_liquid_ids": 1596,
+        "insider_source_presence_ids": 3263,
+        "proposed_cap_filtered_ids": 1207,
+        "proposed_liquid_insider_source_presence_ids": 1365,
+        "proposed_liquid_institutional_source_presence_ids": 1356,
+        "joint_source_presence_ids": 2102,
+        "proposed_liquid_joint_source_presence_ids": 1173
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 71.88808107512668,
+        "institutional_source_presence_ids": 71.35933024895351,
+        "joint_source_presence_ids": 46.30975985899978
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.52631578947368,
+        "proposed_liquid_institutional_source_presence_ids": 84.9624060150376,
+        "proposed_liquid_joint_source_presence_ids": 73.49624060150376
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 9,
+      "last_price_date": "2017-09-29",
+      "availability_decision_time": "2017-10-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4479,
+        "market_cap_present_ids": 3530,
+        "cap_lineage_ids": 3296,
+        "sufficient_252_price_bars_ids": 4148,
+        "sufficient_20_volume_bars_ids": 4463,
+        "institutional_source_presence_ids": 3218,
+        "proposed_price_liquid_ids": 1670,
+        "insider_source_presence_ids": 3157,
+        "proposed_liquid_insider_source_presence_ids": 1412,
+        "proposed_cap_filtered_ids": 1261,
+        "proposed_liquid_institutional_source_presence_ids": 1428,
+        "joint_source_presence_ids": 2066,
+        "proposed_liquid_joint_source_presence_ids": 1225
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 70.48448314355883,
+        "institutional_source_presence_ids": 71.84639428443849,
+        "joint_source_presence_ids": 46.12636749274392
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 84.55089820359281,
+        "proposed_liquid_institutional_source_presence_ids": 85.50898203592814,
+        "proposed_liquid_joint_source_presence_ids": 73.35329341317366
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 10,
+      "last_price_date": "2017-10-31",
+      "availability_decision_time": "2017-11-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4490,
+        "market_cap_present_ids": 3516,
+        "cap_lineage_ids": 3244,
+        "sufficient_252_price_bars_ids": 4203,
+        "sufficient_20_volume_bars_ids": 4463,
+        "institutional_source_presence_ids": 3249,
+        "proposed_price_liquid_ids": 1656,
+        "insider_source_presence_ids": 3138,
+        "proposed_liquid_insider_source_presence_ids": 1388,
+        "proposed_cap_filtered_ids": 1227,
+        "proposed_liquid_institutional_source_presence_ids": 1423,
+        "joint_source_presence_ids": 2081,
+        "proposed_liquid_joint_source_presence_ids": 1211
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 69.88864142538975,
+        "institutional_source_presence_ids": 72.3608017817372,
+        "joint_source_presence_ids": 46.347438752783965
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 83.81642512077295,
+        "proposed_liquid_institutional_source_presence_ids": 85.92995169082126,
+        "proposed_liquid_joint_source_presence_ids": 73.1280193236715
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 11,
+      "last_price_date": "2017-11-30",
+      "availability_decision_time": "2017-12-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4505,
+        "market_cap_present_ids": 3526,
+        "cap_lineage_ids": 3284,
+        "sufficient_252_price_bars_ids": 4202,
+        "sufficient_20_volume_bars_ids": 4470,
+        "institutional_source_presence_ids": 3259,
+        "proposed_price_liquid_ids": 1727,
+        "insider_source_presence_ids": 3156,
+        "proposed_liquid_insider_source_presence_ids": 1453,
+        "proposed_cap_filtered_ids": 1294,
+        "proposed_liquid_institutional_source_presence_ids": 1485,
+        "joint_source_presence_ids": 2115,
+        "proposed_liquid_joint_source_presence_ids": 1271
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 70.05549389567148,
+        "institutional_source_presence_ids": 72.3418423973363,
+        "joint_source_presence_ids": 46.94783573806881
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 84.13433700057904,
+        "proposed_liquid_institutional_source_presence_ids": 85.98726114649682,
+        "proposed_liquid_joint_source_presence_ids": 73.59583092067169
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2017,
+      "month": 12,
+      "last_price_date": "2017-12-29",
+      "availability_decision_time": "2018-01-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4507,
+        "market_cap_present_ids": 3543,
+        "cap_lineage_ids": 3302,
+        "sufficient_252_price_bars_ids": 4208,
+        "sufficient_20_volume_bars_ids": 4491,
+        "institutional_source_presence_ids": 3263,
+        "proposed_price_liquid_ids": 1743,
+        "insider_source_presence_ids": 3253,
+        "proposed_liquid_insider_source_presence_ids": 1511,
+        "proposed_cap_filtered_ids": 1310,
+        "proposed_liquid_institutional_source_presence_ids": 1497,
+        "joint_source_presence_ids": 2187,
+        "proposed_liquid_joint_source_presence_ids": 1315
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 72.1766141557577,
+        "institutional_source_presence_ids": 72.39849123585533,
+        "joint_source_presence_ids": 48.524517417350786
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 86.68961560527826,
+        "proposed_liquid_institutional_source_presence_ids": 85.88640275387263,
+        "proposed_liquid_joint_source_presence_ids": 75.44463568559954
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 1,
+      "last_price_date": "2018-01-31",
+      "availability_decision_time": "2018-02-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4492,
+        "market_cap_present_ids": 3523,
+        "cap_lineage_ids": 3282,
+        "sufficient_252_price_bars_ids": 4195,
+        "sufficient_20_volume_bars_ids": 4471,
+        "institutional_source_presence_ids": 3296,
+        "proposed_price_liquid_ids": 1772,
+        "insider_source_presence_ids": 3368,
+        "proposed_liquid_insider_source_presence_ids": 1551,
+        "proposed_cap_filtered_ids": 1320,
+        "proposed_liquid_institutional_source_presence_ids": 1536,
+        "joint_source_presence_ids": 2257,
+        "proposed_liquid_joint_source_presence_ids": 1361
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.97773820124667,
+        "institutional_source_presence_ids": 73.37488869100623,
+        "joint_source_presence_ids": 50.24487978628673
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 87.52821670428894,
+        "proposed_liquid_institutional_source_presence_ids": 86.68171557562077,
+        "proposed_liquid_joint_source_presence_ids": 76.8058690744921
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 2,
+      "last_price_date": "2018-02-28",
+      "availability_decision_time": "2018-03-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4490,
+        "market_cap_present_ids": 3534,
+        "cap_lineage_ids": 3211,
+        "sufficient_252_price_bars_ids": 4186,
+        "sufficient_20_volume_bars_ids": 4464,
+        "institutional_source_presence_ids": 3313,
+        "proposed_price_liquid_ids": 1814,
+        "insider_source_presence_ids": 3442,
+        "proposed_liquid_insider_source_presence_ids": 1634,
+        "proposed_cap_filtered_ids": 1309,
+        "proposed_liquid_institutional_source_presence_ids": 1573,
+        "joint_source_presence_ids": 2322,
+        "proposed_liquid_joint_source_presence_ids": 1437
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.65924276169265,
+        "institutional_source_presence_ids": 73.78619153674833,
+        "joint_source_presence_ids": 51.71492204899777
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 90.07717750826902,
+        "proposed_liquid_institutional_source_presence_ids": 86.71444321940463,
+        "proposed_liquid_joint_source_presence_ids": 79.21719955898567
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 3,
+      "last_price_date": "2018-03-29",
+      "availability_decision_time": "2018-04-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4508,
+        "market_cap_present_ids": 3623,
+        "cap_lineage_ids": 3366,
+        "sufficient_252_price_bars_ids": 4199,
+        "sufficient_20_volume_bars_ids": 4482,
+        "institutional_source_presence_ids": 3317,
+        "proposed_price_liquid_ids": 1808,
+        "insider_source_presence_ids": 3503,
+        "proposed_liquid_insider_source_presence_ids": 1643,
+        "proposed_cap_filtered_ids": 1395,
+        "proposed_liquid_institutional_source_presence_ids": 1567,
+        "joint_source_presence_ids": 2367,
+        "proposed_liquid_joint_source_presence_ids": 1448
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 77.70629991126886,
+        "institutional_source_presence_ids": 73.58030168589175,
+        "joint_source_presence_ids": 52.506654835847385
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 90.87389380530973,
+        "proposed_liquid_institutional_source_presence_ids": 86.67035398230088,
+        "proposed_liquid_joint_source_presence_ids": 80.08849557522124
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 4,
+      "last_price_date": "2018-04-30",
+      "availability_decision_time": "2018-05-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4489,
+        "market_cap_present_ids": 3645,
+        "cap_lineage_ids": 3378,
+        "sufficient_252_price_bars_ids": 4186,
+        "sufficient_20_volume_bars_ids": 4464,
+        "institutional_source_presence_ids": 3332,
+        "proposed_price_liquid_ids": 1703,
+        "insider_source_presence_ids": 3454,
+        "proposed_liquid_insider_source_presence_ids": 1532,
+        "proposed_cap_filtered_ids": 1328,
+        "proposed_liquid_institutional_source_presence_ids": 1493,
+        "joint_source_presence_ids": 2354,
+        "proposed_liquid_joint_source_presence_ids": 1364
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.94364000891068,
+        "institutional_source_presence_ids": 74.22588549788371,
+        "joint_source_presence_ids": 52.439296057028294
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.9588960657663,
+        "proposed_liquid_institutional_source_presence_ids": 87.66881972988843,
+        "proposed_liquid_joint_source_presence_ids": 80.09395184967704
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 5,
+      "last_price_date": "2018-05-31",
+      "availability_decision_time": "2018-06-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4501,
+        "market_cap_present_ids": 3695,
+        "cap_lineage_ids": 3450,
+        "sufficient_252_price_bars_ids": 4193,
+        "sufficient_20_volume_bars_ids": 4464,
+        "institutional_source_presence_ids": 3353,
+        "proposed_price_liquid_ids": 1809,
+        "insider_source_presence_ids": 3402,
+        "proposed_liquid_insider_source_presence_ids": 1605,
+        "proposed_cap_filtered_ids": 1403,
+        "proposed_liquid_institutional_source_presence_ids": 1570,
+        "joint_source_presence_ids": 2329,
+        "proposed_liquid_joint_source_presence_ids": 1420
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 75.58320373250389,
+        "institutional_source_presence_ids": 74.4945567651633,
+        "joint_source_presence_ids": 51.74405687624972
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 88.72305140961858,
+        "proposed_liquid_institutional_source_presence_ids": 86.78828081813157,
+        "proposed_liquid_joint_source_presence_ids": 78.49640685461581
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 6,
+      "last_price_date": "2018-06-29",
+      "availability_decision_time": "2018-07-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4534,
+        "market_cap_present_ids": 3717,
+        "cap_lineage_ids": 3469,
+        "sufficient_252_price_bars_ids": 4205,
+        "sufficient_20_volume_bars_ids": 4494,
+        "institutional_source_presence_ids": 3353,
+        "proposed_price_liquid_ids": 1871,
+        "insider_source_presence_ids": 3399,
+        "proposed_liquid_insider_source_presence_ids": 1656,
+        "proposed_cap_filtered_ids": 1446,
+        "proposed_liquid_institutional_source_presence_ids": 1637,
+        "joint_source_presence_ids": 2329,
+        "proposed_liquid_joint_source_presence_ids": 1474
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.96691662990736,
+        "institutional_source_presence_ids": 73.95235994706661,
+        "joint_source_presence_ids": 51.36744596382885
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 88.50881881346874,
+        "proposed_liquid_institutional_source_presence_ids": 87.4933190807055,
+        "proposed_liquid_joint_source_presence_ids": 78.78140032068413
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 7,
+      "last_price_date": "2018-07-31",
+      "availability_decision_time": "2018-08-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4539,
+        "market_cap_present_ids": 3707,
+        "cap_lineage_ids": 3426,
+        "sufficient_252_price_bars_ids": 4200,
+        "sufficient_20_volume_bars_ids": 4502,
+        "institutional_source_presence_ids": 3417,
+        "proposed_price_liquid_ids": 1708,
+        "insider_source_presence_ids": 3390,
+        "proposed_liquid_insider_source_presence_ids": 1514,
+        "proposed_cap_filtered_ids": 1346,
+        "proposed_liquid_institutional_source_presence_ids": 1518,
+        "joint_source_presence_ids": 2346,
+        "proposed_liquid_joint_source_presence_ids": 1369
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.68605419695969,
+        "institutional_source_presence_ids": 75.28089887640449,
+        "joint_source_presence_ids": 51.68539325842696
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 88.64168618266979,
+        "proposed_liquid_institutional_source_presence_ids": 88.87587822014052,
+        "proposed_liquid_joint_source_presence_ids": 80.15222482435597
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 8,
+      "last_price_date": "2018-08-31",
+      "availability_decision_time": "2018-09-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4524,
+        "market_cap_present_ids": 3734,
+        "cap_lineage_ids": 3488,
+        "sufficient_252_price_bars_ids": 4186,
+        "sufficient_20_volume_bars_ids": 4507,
+        "institutional_source_presence_ids": 3417,
+        "proposed_price_liquid_ids": 1728,
+        "insider_source_presence_ids": 3308,
+        "proposed_liquid_insider_source_presence_ids": 1497,
+        "proposed_cap_filtered_ids": 1384,
+        "proposed_liquid_institutional_source_presence_ids": 1539,
+        "joint_source_presence_ids": 2306,
+        "proposed_liquid_joint_source_presence_ids": 1352
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 73.1211317418214,
+        "institutional_source_presence_ids": 75.53050397877985,
+        "joint_source_presence_ids": 50.97259062776304
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 86.63194444444444,
+        "proposed_liquid_institutional_source_presence_ids": 89.0625,
+        "proposed_liquid_joint_source_presence_ids": 78.24074074074075
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 9,
+      "last_price_date": "2018-09-28",
+      "availability_decision_time": "2018-10-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4564,
+        "market_cap_present_ids": 3776,
+        "cap_lineage_ids": 3532,
+        "sufficient_252_price_bars_ids": 4208,
+        "sufficient_20_volume_bars_ids": 4532,
+        "institutional_source_presence_ids": 3428,
+        "proposed_price_liquid_ids": 1770,
+        "insider_source_presence_ids": 3232,
+        "proposed_liquid_insider_source_presence_ids": 1518,
+        "proposed_cap_filtered_ids": 1413,
+        "proposed_liquid_institutional_source_presence_ids": 1577,
+        "joint_source_presence_ids": 2248,
+        "proposed_liquid_joint_source_presence_ids": 1369
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 70.81507449605608,
+        "institutional_source_presence_ids": 75.10955302366345,
+        "joint_source_presence_ids": 49.25503943908852
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.76271186440678,
+        "proposed_liquid_institutional_source_presence_ids": 89.09604519774011,
+        "proposed_liquid_joint_source_presence_ids": 77.34463276836158
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 10,
+      "last_price_date": "2018-10-31",
+      "availability_decision_time": "2018-11-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4558,
+        "market_cap_present_ids": 3751,
+        "cap_lineage_ids": 3461,
+        "sufficient_252_price_bars_ids": 4203,
+        "sufficient_20_volume_bars_ids": 4525,
+        "institutional_source_presence_ids": 3483,
+        "proposed_price_liquid_ids": 1776,
+        "insider_source_presence_ids": 3202,
+        "proposed_liquid_insider_source_presence_ids": 1504,
+        "proposed_cap_filtered_ids": 1361,
+        "proposed_liquid_institutional_source_presence_ids": 1593,
+        "joint_source_presence_ids": 2253,
+        "proposed_liquid_joint_source_presence_ids": 1371
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 70.25010969723563,
+        "institutional_source_presence_ids": 76.41509433962264,
+        "joint_source_presence_ids": 49.42957437472576
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 84.68468468468468,
+        "proposed_liquid_institutional_source_presence_ids": 89.69594594594595,
+        "proposed_liquid_joint_source_presence_ids": 77.19594594594595
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 11,
+      "last_price_date": "2018-11-30",
+      "availability_decision_time": "2018-12-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4578,
+        "market_cap_present_ids": 3806,
+        "cap_lineage_ids": 3567,
+        "sufficient_252_price_bars_ids": 4222,
+        "sufficient_20_volume_bars_ids": 4544,
+        "institutional_source_presence_ids": 3512,
+        "proposed_price_liquid_ids": 1751,
+        "insider_source_presence_ids": 3186,
+        "proposed_liquid_insider_source_presence_ids": 1456,
+        "proposed_cap_filtered_ids": 1399,
+        "proposed_liquid_institutional_source_presence_ids": 1577,
+        "joint_source_presence_ids": 2257,
+        "proposed_liquid_joint_source_presence_ids": 1337
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 69.59370904325033,
+        "institutional_source_presence_ids": 76.71472258628222,
+        "joint_source_presence_ids": 49.30100480559196
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 83.15248429468875,
+        "proposed_liquid_institutional_source_presence_ids": 90.06282124500285,
+        "proposed_liquid_joint_source_presence_ids": 76.35636778983438
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2018,
+      "month": 12,
+      "last_price_date": "2018-12-31",
+      "availability_decision_time": "2019-01-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4560,
+        "market_cap_present_ids": 3796,
+        "cap_lineage_ids": 3559,
+        "sufficient_252_price_bars_ids": 4210,
+        "sufficient_20_volume_bars_ids": 4535,
+        "institutional_source_presence_ids": 3506,
+        "proposed_price_liquid_ids": 1761,
+        "insider_source_presence_ids": 3195,
+        "proposed_liquid_insider_source_presence_ids": 1475,
+        "proposed_cap_filtered_ids": 1391,
+        "proposed_liquid_institutional_source_presence_ids": 1598,
+        "joint_source_presence_ids": 2239,
+        "proposed_liquid_joint_source_presence_ids": 1357
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 70.0657894736842,
+        "institutional_source_presence_ids": 76.8859649122807,
+        "joint_source_presence_ids": 49.10087719298246
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 83.75922771152754,
+        "proposed_liquid_institutional_source_presence_ids": 90.74389551391255,
+        "proposed_liquid_joint_source_presence_ids": 77.05848949460534
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 1,
+      "last_price_date": "2019-01-31",
+      "availability_decision_time": "2019-02-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4507,
+        "market_cap_present_ids": 3748,
+        "cap_lineage_ids": 3510,
+        "sufficient_252_price_bars_ids": 4177,
+        "sufficient_20_volume_bars_ids": 4488,
+        "institutional_source_presence_ids": 3520,
+        "proposed_price_liquid_ids": 1664,
+        "insider_source_presence_ids": 3307,
+        "proposed_liquid_insider_source_presence_ids": 1425,
+        "proposed_cap_filtered_ids": 1338,
+        "proposed_liquid_institutional_source_presence_ids": 1522,
+        "joint_source_presence_ids": 2351,
+        "proposed_liquid_joint_source_presence_ids": 1320
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 73.3747503882849,
+        "institutional_source_presence_ids": 78.10073219436433,
+        "joint_source_presence_ids": 52.163301530951856
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.63701923076923,
+        "proposed_liquid_institutional_source_presence_ids": 91.46634615384616,
+        "proposed_liquid_joint_source_presence_ids": 79.32692307692308
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 2,
+      "last_price_date": "2019-02-28",
+      "availability_decision_time": "2019-03-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4497,
+        "market_cap_present_ids": 3748,
+        "cap_lineage_ids": 3418,
+        "sufficient_252_price_bars_ids": 4182,
+        "sufficient_20_volume_bars_ids": 4465,
+        "institutional_source_presence_ids": 3544,
+        "proposed_price_liquid_ids": 1695,
+        "insider_source_presence_ids": 3426,
+        "proposed_liquid_insider_source_presence_ids": 1521,
+        "proposed_cap_filtered_ids": 1316,
+        "proposed_liquid_institutional_source_presence_ids": 1566,
+        "joint_source_presence_ids": 2458,
+        "proposed_liquid_joint_source_presence_ids": 1424
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.184122748499,
+        "institutional_source_presence_ids": 78.80809428507894,
+        "joint_source_presence_ids": 54.658661329775406
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.73451327433628,
+        "proposed_liquid_institutional_source_presence_ids": 92.38938053097345,
+        "proposed_liquid_joint_source_presence_ids": 84.0117994100295
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 3,
+      "last_price_date": "2019-03-29",
+      "availability_decision_time": "2019-04-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4516,
+        "market_cap_present_ids": 3774,
+        "cap_lineage_ids": 3509,
+        "sufficient_252_price_bars_ids": 4190,
+        "sufficient_20_volume_bars_ids": 4494,
+        "institutional_source_presence_ids": 3552,
+        "proposed_price_liquid_ids": 1728,
+        "insider_source_presence_ids": 3425,
+        "proposed_liquid_insider_source_presence_ids": 1555,
+        "proposed_cap_filtered_ids": 1382,
+        "proposed_liquid_institutional_source_presence_ids": 1596,
+        "joint_source_presence_ids": 2486,
+        "proposed_liquid_joint_source_presence_ids": 1455
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 75.8414526129318,
+        "institutional_source_presence_ids": 78.65367581930913,
+        "joint_source_presence_ids": 55.048715677590785
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.98842592592592,
+        "proposed_liquid_institutional_source_presence_ids": 92.36111111111111,
+        "proposed_liquid_joint_source_presence_ids": 84.20138888888889
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 4,
+      "last_price_date": "2019-04-30",
+      "availability_decision_time": "2019-05-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4493,
+        "market_cap_present_ids": 3760,
+        "cap_lineage_ids": 3492,
+        "sufficient_252_price_bars_ids": 4161,
+        "sufficient_20_volume_bars_ids": 4451,
+        "institutional_source_presence_ids": 3570,
+        "proposed_price_liquid_ids": 1644,
+        "insider_source_presence_ids": 3352,
+        "proposed_liquid_insider_source_presence_ids": 1473,
+        "proposed_cap_filtered_ids": 1326,
+        "proposed_liquid_institutional_source_presence_ids": 1534,
+        "joint_source_presence_ids": 2455,
+        "proposed_liquid_joint_source_presence_ids": 1394
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.60494101936345,
+        "institutional_source_presence_ids": 79.45693300689962,
+        "joint_source_presence_ids": 54.640551969730694
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.5985401459854,
+        "proposed_liquid_institutional_source_presence_ids": 93.30900243309003,
+        "proposed_liquid_joint_source_presence_ids": 84.79318734793188
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 5,
+      "last_price_date": "2019-05-31",
+      "availability_decision_time": "2019-06-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4512,
+        "market_cap_present_ids": 3795,
+        "cap_lineage_ids": 3560,
+        "sufficient_252_price_bars_ids": 4179,
+        "sufficient_20_volume_bars_ids": 4476,
+        "institutional_source_presence_ids": 3599,
+        "proposed_price_liquid_ids": 1682,
+        "insider_source_presence_ids": 3384,
+        "proposed_liquid_insider_source_presence_ids": 1504,
+        "joint_source_presence_ids": 2495,
+        "proposed_cap_filtered_ids": 1347,
+        "proposed_liquid_institutional_source_presence_ids": 1573,
+        "proposed_liquid_joint_source_presence_ids": 1424
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 75.0,
+        "institutional_source_presence_ids": 79.76507092198581,
+        "joint_source_presence_ids": 55.29698581560284
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.41736028537456,
+        "proposed_liquid_institutional_source_presence_ids": 93.51961950059453,
+        "proposed_liquid_joint_source_presence_ids": 84.66111771700356
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 6,
+      "last_price_date": "2019-06-28",
+      "availability_decision_time": "2019-07-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4552,
+        "market_cap_present_ids": 3831,
+        "cap_lineage_ids": 3602,
+        "sufficient_252_price_bars_ids": 4221,
+        "sufficient_20_volume_bars_ids": 4513,
+        "institutional_source_presence_ids": 3614,
+        "proposed_price_liquid_ids": 1697,
+        "insider_source_presence_ids": 3375,
+        "proposed_liquid_insider_source_presence_ids": 1499,
+        "joint_source_presence_ids": 2501,
+        "proposed_cap_filtered_ids": 1381,
+        "proposed_liquid_institutional_source_presence_ids": 1586,
+        "proposed_liquid_joint_source_presence_ids": 1414
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.1432337434095,
+        "institutional_source_presence_ids": 79.39367311072056,
+        "joint_source_presence_ids": 54.94288224956063
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 88.33235120801415,
+        "proposed_liquid_institutional_source_presence_ids": 93.45904537418974,
+        "proposed_liquid_joint_source_presence_ids": 83.32351208014143
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 7,
+      "last_price_date": "2019-07-31",
+      "availability_decision_time": "2019-08-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4557,
+        "market_cap_present_ids": 3850,
+        "cap_lineage_ids": 3554,
+        "sufficient_252_price_bars_ids": 4240,
+        "sufficient_20_volume_bars_ids": 4522,
+        "institutional_source_presence_ids": 3654,
+        "proposed_price_liquid_ids": 1644,
+        "insider_source_presence_ids": 3342,
+        "proposed_liquid_insider_source_presence_ids": 1451,
+        "joint_source_presence_ids": 2507,
+        "proposed_cap_filtered_ids": 1326,
+        "proposed_liquid_institutional_source_presence_ids": 1548,
+        "proposed_liquid_joint_source_presence_ids": 1382
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 73.33772218564846,
+        "institutional_source_presence_ids": 80.18433179723502,
+        "joint_source_presence_ids": 55.01426377002414
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 88.2603406326034,
+        "proposed_liquid_institutional_source_presence_ids": 94.16058394160584,
+        "proposed_liquid_joint_source_presence_ids": 84.06326034063261
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 8,
+      "last_price_date": "2019-08-30",
+      "availability_decision_time": "2019-09-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4511,
+        "market_cap_present_ids": 3888,
+        "cap_lineage_ids": 3657,
+        "sufficient_252_price_bars_ids": 4210,
+        "sufficient_20_volume_bars_ids": 4487,
+        "institutional_source_presence_ids": 3633,
+        "proposed_price_liquid_ids": 1666,
+        "insider_source_presence_ids": 3232,
+        "proposed_liquid_insider_source_presence_ids": 1439,
+        "proposed_cap_filtered_ids": 1397,
+        "proposed_liquid_institutional_source_presence_ids": 1572,
+        "joint_source_presence_ids": 2473,
+        "proposed_liquid_joint_source_presence_ids": 1373
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 71.64708490356905,
+        "institutional_source_presence_ids": 80.53646641542895,
+        "joint_source_presence_ids": 54.82154732875194
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 86.37454981992798,
+        "proposed_liquid_institutional_source_presence_ids": 94.3577430972389,
+        "proposed_liquid_joint_source_presence_ids": 82.41296518607443
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 9,
+      "last_price_date": "2019-09-30",
+      "availability_decision_time": "2019-10-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4501,
+        "market_cap_present_ids": 3889,
+        "cap_lineage_ids": 3664,
+        "sufficient_252_price_bars_ids": 4218,
+        "sufficient_20_volume_bars_ids": 4472,
+        "institutional_source_presence_ids": 3612,
+        "proposed_price_liquid_ids": 1737,
+        "insider_source_presence_ids": 3129,
+        "proposed_liquid_insider_source_presence_ids": 1462,
+        "joint_source_presence_ids": 2404,
+        "proposed_cap_filtered_ids": 1455,
+        "proposed_liquid_institutional_source_presence_ids": 1635,
+        "proposed_liquid_joint_source_presence_ids": 1395
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 69.51788491446345,
+        "institutional_source_presence_ids": 80.248833592535,
+        "joint_source_presence_ids": 53.41035325483226
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 84.16810592976397,
+        "proposed_liquid_institutional_source_presence_ids": 94.12780656303973,
+        "proposed_liquid_joint_source_presence_ids": 80.31088082901555
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 10,
+      "last_price_date": "2019-10-31",
+      "availability_decision_time": "2019-11-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4501,
+        "market_cap_present_ids": 3877,
+        "cap_lineage_ids": 3549,
+        "sufficient_252_price_bars_ids": 4201,
+        "sufficient_20_volume_bars_ids": 4467,
+        "institutional_source_presence_ids": 3632,
+        "proposed_price_liquid_ids": 1638,
+        "insider_source_presence_ids": 3082,
+        "proposed_liquid_insider_source_presence_ids": 1352,
+        "joint_source_presence_ids": 2395,
+        "proposed_cap_filtered_ids": 1339,
+        "proposed_liquid_institutional_source_presence_ids": 1538,
+        "proposed_liquid_joint_source_presence_ids": 1290
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 68.47367251721839,
+        "institutional_source_presence_ids": 80.69317929349033,
+        "joint_source_presence_ids": 53.210397689402356
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 82.53968253968254,
+        "proposed_liquid_institutional_source_presence_ids": 93.89499389499389,
+        "proposed_liquid_joint_source_presence_ids": 78.75457875457876
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 11,
+      "last_price_date": "2019-11-29",
+      "availability_decision_time": "2019-12-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4475,
+        "market_cap_present_ids": 3897,
+        "cap_lineage_ids": 3668,
+        "sufficient_252_price_bars_ids": 4181,
+        "sufficient_20_volume_bars_ids": 4449,
+        "institutional_source_presence_ids": 3616,
+        "proposed_price_liquid_ids": 1741,
+        "insider_source_presence_ids": 3064,
+        "joint_source_presence_ids": 2399,
+        "proposed_cap_filtered_ids": 1478,
+        "proposed_liquid_insider_source_presence_ids": 1450,
+        "proposed_liquid_institutional_source_presence_ids": 1631,
+        "proposed_liquid_joint_source_presence_ids": 1385
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 68.46927374301676,
+        "institutional_source_presence_ids": 80.80446927374301,
+        "joint_source_presence_ids": 53.608938547486034
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 83.2854681217691,
+        "proposed_liquid_institutional_source_presence_ids": 93.68179207352097,
+        "proposed_liquid_joint_source_presence_ids": 79.55198161975876
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2019,
+      "month": 12,
+      "last_price_date": "2019-12-31",
+      "availability_decision_time": "2020-01-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4513,
+        "market_cap_present_ids": 3937,
+        "cap_lineage_ids": 3712,
+        "sufficient_252_price_bars_ids": 4219,
+        "sufficient_20_volume_bars_ids": 4496,
+        "institutional_source_presence_ids": 3631,
+        "proposed_price_liquid_ids": 1776,
+        "insider_source_presence_ids": 3104,
+        "proposed_liquid_insider_source_presence_ids": 1485,
+        "joint_source_presence_ids": 2426,
+        "proposed_cap_filtered_ids": 1511,
+        "proposed_liquid_institutional_source_presence_ids": 1667,
+        "proposed_liquid_joint_source_presence_ids": 1414
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 68.77908265012186,
+        "institutional_source_presence_ids": 80.45645911810325,
+        "joint_source_presence_ids": 53.755816530024376
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 83.61486486486487,
+        "proposed_liquid_institutional_source_presence_ids": 93.86261261261261,
+        "proposed_liquid_joint_source_presence_ids": 79.61711711711712
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 1,
+      "last_price_date": "2020-01-31",
+      "availability_decision_time": "2020-02-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4481,
+        "market_cap_present_ids": 3900,
+        "cap_lineage_ids": 3655,
+        "sufficient_252_price_bars_ids": 4184,
+        "sufficient_20_volume_bars_ids": 4462,
+        "institutional_source_presence_ids": 3625,
+        "proposed_price_liquid_ids": 1727,
+        "insider_source_presence_ids": 3227,
+        "proposed_liquid_insider_source_presence_ids": 1485,
+        "proposed_liquid_institutional_source_presence_ids": 1629,
+        "joint_source_presence_ids": 2512,
+        "proposed_liquid_joint_source_presence_ids": 1420,
+        "proposed_cap_filtered_ids": 1460
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 72.01517518411069,
+        "institutional_source_presence_ids": 80.89712117830841,
+        "joint_source_presence_ids": 56.05891542066503
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 85.98726114649682,
+        "proposed_liquid_institutional_source_presence_ids": 94.3254198031268,
+        "proposed_liquid_joint_source_presence_ids": 82.22350897510132
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 2,
+      "last_price_date": "2020-02-28",
+      "availability_decision_time": "2020-03-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4521,
+        "market_cap_present_ids": 3925,
+        "cap_lineage_ids": 3596,
+        "sufficient_252_price_bars_ids": 4217,
+        "sufficient_20_volume_bars_ids": 4486,
+        "institutional_source_presence_ids": 3649,
+        "proposed_price_liquid_ids": 1761,
+        "insider_source_presence_ids": 3364,
+        "proposed_liquid_insider_source_presence_ids": 1579,
+        "proposed_liquid_institutional_source_presence_ids": 1660,
+        "joint_source_presence_ids": 2613,
+        "proposed_liquid_joint_source_presence_ids": 1508,
+        "proposed_cap_filtered_ids": 1439
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 74.40831674408317,
+        "institutional_source_presence_ids": 80.71223180712232,
+        "joint_source_presence_ids": 57.796947577969476
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.66496308915389,
+        "proposed_liquid_institutional_source_presence_ids": 94.26462237365133,
+        "proposed_liquid_joint_source_presence_ids": 85.63316297558205
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 3,
+      "last_price_date": "2020-03-31",
+      "availability_decision_time": "2020-04-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4516,
+        "market_cap_present_ids": 3943,
+        "cap_lineage_ids": 3698,
+        "sufficient_252_price_bars_ids": 4220,
+        "sufficient_20_volume_bars_ids": 4505,
+        "institutional_source_presence_ids": 3636,
+        "proposed_price_liquid_ids": 1792,
+        "insider_source_presence_ids": 3454,
+        "proposed_liquid_insider_source_presence_ids": 1621,
+        "proposed_liquid_institutional_source_presence_ids": 1688,
+        "joint_source_presence_ids": 2691,
+        "proposed_liquid_joint_source_presence_ids": 1547,
+        "proposed_cap_filtered_ids": 1433
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.48361381753764,
+        "institutional_source_presence_ids": 80.51372896368467,
+        "joint_source_presence_ids": 59.5881310894597
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 90.45758928571429,
+        "proposed_liquid_institutional_source_presence_ids": 94.19642857142857,
+        "proposed_liquid_joint_source_presence_ids": 86.328125
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 4,
+      "last_price_date": "2020-04-30",
+      "availability_decision_time": "2020-05-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4491,
+        "market_cap_present_ids": 3931,
+        "cap_lineage_ids": 3639,
+        "sufficient_252_price_bars_ids": 4215,
+        "sufficient_20_volume_bars_ids": 4468,
+        "proposed_price_liquid_ids": 1689,
+        "institutional_source_presence_ids": 3646,
+        "proposed_liquid_institutional_source_presence_ids": 1593,
+        "insider_source_presence_ids": 3439,
+        "proposed_liquid_insider_source_presence_ids": 1524,
+        "joint_source_presence_ids": 2693,
+        "proposed_liquid_joint_source_presence_ids": 1456,
+        "proposed_cap_filtered_ids": 1384
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 76.57537296815853,
+        "institutional_source_presence_ids": 81.1845914050323,
+        "joint_source_presence_ids": 59.964373190826095
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 90.23090586145648,
+        "proposed_liquid_institutional_source_presence_ids": 94.31616341030195,
+        "proposed_liquid_joint_source_presence_ids": 86.2048549437537
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 5,
+      "last_price_date": "2020-05-29",
+      "availability_decision_time": "2020-06-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4493,
+        "market_cap_present_ids": 3953,
+        "cap_lineage_ids": 3718,
+        "sufficient_252_price_bars_ids": 4220,
+        "sufficient_20_volume_bars_ids": 4472,
+        "institutional_source_presence_ids": 3646,
+        "proposed_price_liquid_ids": 1746,
+        "insider_source_presence_ids": 3403,
+        "proposed_liquid_insider_source_presence_ids": 1557,
+        "proposed_cap_filtered_ids": 1473,
+        "proposed_liquid_institutional_source_presence_ids": 1649,
+        "joint_source_presence_ids": 2679,
+        "proposed_liquid_joint_source_presence_ids": 1490
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 75.74004006231917,
+        "institutional_source_presence_ids": 81.14845314934342,
+        "joint_source_presence_ids": 59.626085021144
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 89.17525773195877,
+        "proposed_liquid_institutional_source_presence_ids": 94.44444444444444,
+        "proposed_liquid_joint_source_presence_ids": 85.33791523482245
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 6,
+      "last_price_date": "2020-06-30",
+      "availability_decision_time": "2020-07-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4528,
+        "market_cap_present_ids": 3961,
+        "cap_lineage_ids": 3734,
+        "sufficient_252_price_bars_ids": 4233,
+        "sufficient_20_volume_bars_ids": 4481,
+        "institutional_source_presence_ids": 3631,
+        "proposed_price_liquid_ids": 1849,
+        "insider_source_presence_ids": 3292,
+        "proposed_liquid_insider_source_presence_ids": 1607,
+        "proposed_cap_filtered_ids": 1532,
+        "proposed_liquid_institutional_source_presence_ids": 1740,
+        "joint_source_presence_ids": 2606,
+        "proposed_liquid_joint_source_presence_ids": 1536
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 72.70318021201413,
+        "institutional_source_presence_ids": 80.18992932862191,
+        "joint_source_presence_ids": 57.553003533568905
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 86.9118442401298,
+        "proposed_liquid_institutional_source_presence_ids": 94.10492157923201,
+        "proposed_liquid_joint_source_presence_ids": 83.07193077339102
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 7,
+      "last_price_date": "2020-07-31",
+      "availability_decision_time": "2020-08-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4552,
+        "market_cap_present_ids": 3959,
+        "cap_lineage_ids": 3569,
+        "sufficient_252_price_bars_ids": 4243,
+        "sufficient_20_volume_bars_ids": 4513,
+        "institutional_source_presence_ids": 3646,
+        "proposed_price_liquid_ids": 1724,
+        "insider_source_presence_ids": 3286,
+        "proposed_liquid_insider_source_presence_ids": 1497,
+        "proposed_cap_filtered_ids": 1366,
+        "proposed_liquid_institutional_source_presence_ids": 1627,
+        "joint_source_presence_ids": 2601,
+        "proposed_liquid_joint_source_presence_ids": 1440
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 72.18804920913884,
+        "institutional_source_presence_ids": 80.09666080843586,
+        "joint_source_presence_ids": 57.13971880492091
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 86.83294663573086,
+        "proposed_liquid_institutional_source_presence_ids": 94.37354988399072,
+        "proposed_liquid_joint_source_presence_ids": 83.52668213457076
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 8,
+      "last_price_date": "2020-08-31",
+      "availability_decision_time": "2020-09-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4579,
+        "market_cap_present_ids": 4030,
+        "cap_lineage_ids": 3803,
+        "sufficient_252_price_bars_ids": 4250,
+        "sufficient_20_volume_bars_ids": 4533,
+        "institutional_source_presence_ids": 3650,
+        "insider_source_presence_ids": 3221,
+        "proposed_price_liquid_ids": 1730,
+        "proposed_cap_filtered_ids": 1465,
+        "proposed_liquid_insider_source_presence_ids": 1459,
+        "proposed_liquid_institutional_source_presence_ids": 1633,
+        "joint_source_presence_ids": 2542,
+        "proposed_liquid_joint_source_presence_ids": 1399
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 70.34286962218825,
+        "institutional_source_presence_ids": 79.7117274514086,
+        "joint_source_presence_ids": 55.514304433282376
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 84.33526011560694,
+        "proposed_liquid_institutional_source_presence_ids": 94.39306358381504,
+        "proposed_liquid_joint_source_presence_ids": 80.86705202312139
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 9,
+      "last_price_date": "2020-09-30",
+      "availability_decision_time": "2020-10-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4613,
+        "market_cap_present_ids": 4046,
+        "cap_lineage_ids": 3822,
+        "sufficient_252_price_bars_ids": 4250,
+        "sufficient_20_volume_bars_ids": 4552,
+        "institutional_source_presence_ids": 3635,
+        "insider_source_presence_ids": 3119,
+        "proposed_price_liquid_ids": 1789,
+        "proposed_cap_filtered_ids": 1511,
+        "proposed_liquid_insider_source_presence_ids": 1473,
+        "proposed_liquid_institutional_source_presence_ids": 1685,
+        "joint_source_presence_ids": 2470,
+        "proposed_liquid_joint_source_presence_ids": 1407
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 67.61326685454151,
+        "institutional_source_presence_ids": 78.7990461738565,
+        "joint_source_presence_ids": 53.5443312378062
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 82.33650083845724,
+        "proposed_liquid_institutional_source_presence_ids": 94.1866964784796,
+        "proposed_liquid_joint_source_presence_ids": 78.6472889882616
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 10,
+      "last_price_date": "2020-10-30",
+      "availability_decision_time": "2020-11-01T03:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4659,
+        "market_cap_present_ids": 4037,
+        "cap_lineage_ids": 3727,
+        "sufficient_252_price_bars_ids": 4251,
+        "sufficient_20_volume_bars_ids": 4591,
+        "institutional_source_presence_ids": 3671,
+        "proposed_price_liquid_ids": 1680,
+        "proposed_cap_filtered_ids": 1390,
+        "insider_source_presence_ids": 3096,
+        "proposed_liquid_insider_source_presence_ids": 1382,
+        "proposed_liquid_institutional_source_presence_ids": 1586,
+        "joint_source_presence_ids": 2462,
+        "proposed_liquid_joint_source_presence_ids": 1328
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 66.45202833226014,
+        "institutional_source_presence_ids": 78.79373256063533,
+        "joint_source_presence_ids": 52.843957930886454
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 82.26190476190476,
+        "proposed_liquid_institutional_source_presence_ids": 94.4047619047619,
+        "proposed_liquid_joint_source_presence_ids": 79.04761904761905
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 11,
+      "last_price_date": "2020-11-30",
+      "availability_decision_time": "2020-12-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4733,
+        "market_cap_present_ids": 4126,
+        "cap_lineage_ids": 3897,
+        "sufficient_252_price_bars_ids": 4273,
+        "sufficient_20_volume_bars_ids": 4657,
+        "institutional_source_presence_ids": 3692,
+        "proposed_price_liquid_ids": 1849,
+        "proposed_cap_filtered_ids": 1582,
+        "insider_source_presence_ids": 3122,
+        "proposed_liquid_insider_source_presence_ids": 1518,
+        "proposed_liquid_institutional_source_presence_ids": 1741,
+        "joint_source_presence_ids": 2485,
+        "proposed_liquid_joint_source_presence_ids": 1453
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 65.9623917177266,
+        "institutional_source_presence_ids": 78.00549334460173,
+        "joint_source_presence_ids": 52.50369744348193
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 82.09843158464035,
+        "proposed_liquid_institutional_source_presence_ids": 94.15900486749594,
+        "proposed_liquid_joint_source_presence_ids": 78.58301784748512
+      },
+      "verified_usable_joint_count": null
+    },
+    {
+      "year": 2020,
+      "month": 12,
+      "last_price_date": "2020-12-31",
+      "availability_decision_time": "2021-01-01T04:59:59.999000+00:00",
+      "source_counts": {
+        "common_stock_price_ids": 4794,
+        "market_cap_present_ids": 4145,
+        "cap_lineage_ids": 3920,
+        "sufficient_252_price_bars_ids": 4266,
+        "sufficient_20_volume_bars_ids": 4719,
+        "institutional_source_presence_ids": 3680,
+        "proposed_price_liquid_ids": 1915,
+        "insider_source_presence_ids": 3234,
+        "proposed_liquid_insider_source_presence_ids": 1600,
+        "proposed_cap_filtered_ids": 1620,
+        "proposed_liquid_institutional_source_presence_ids": 1792,
+        "joint_source_presence_ids": 2523,
+        "proposed_liquid_joint_source_presence_ids": 1521
+      },
+      "source_presence_percentages": {
+        "insider_source_presence_ids": 67.459324155194,
+        "institutional_source_presence_ids": 76.76261994159366,
+        "joint_source_presence_ids": 52.62828535669587
+      },
+      "proposed_liquid_source_presence_percentages": {
+        "proposed_liquid_insider_source_presence_ids": 83.55091383812011,
+        "proposed_liquid_institutional_source_presence_ids": 93.57702349869452,
+        "proposed_liquid_joint_source_presence_ids": 79.42558746736293
+      },
+      "verified_usable_joint_count": null
+    }
+  ],
+  "native_runtime_metrics_compile_verified": true,
+  "all_pit_flags_verified": false,
+  "state_reason": "Same-tick execution, asynchronous institutional cohorts, incomplete source lineage/identity and unverified zero/completeness/adjustment semantics require pre-freeze design work.",
+  "identity_and_snapshot_issues": {
+    "unresolved_or_ambiguous_ownership_identity_rows": 24930,
+    "excluded_earlier_last_price_security_months": 5775
+  },
+  "identity_policy": "Unique security segment at disclosure's New York availability date; ambiguous/unresolved mappings excluded, ticker renames joined by stable ID.",
+  "checked_source_panel": "price_panel_unadjusted/rows.json",
+  "momentum_revision": "Native Day lookbacks are elapsed calendar time in diagnostic references; proposed 180/365 calendar days replace session-labeled grid",
+  "checks": {
+    "tests_passed": 80,
+    "tests_failed": 0,
+    "full_suite": true,
+    "command": "python -m unittest discover -s tests -v",
+    "exp001_scope": "Software regression only; no EXP002 research evidence",
+    "research_audit_command": "python -m src.research audit EXP002",
+    "research_audit_exit": 2,
+    "research_audit_stdout": "",
+    "research_audit_stderr": "Research gate: Point-in-time availability unestablished: Nexus daily prices, volume and corporate actions\n",
+    "audit_weakened": false
+  }
+}

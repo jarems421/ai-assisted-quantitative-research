@@ -25,7 +25,7 @@
     "PROPOSED: historically listed U.S. exchange-traded common equities, rebuilt at each rebalance; exact Nexus source and security-type mapping unresolved"
   ],
   "dynamic_universe": {
-    "definition": "Proposed: rebuild membership at each decision using only then-listed securities, lagged price/volume and point-in-time market capitalization. Exclude ETFs, funds, preferreds, ADRs and OTC securities; retain delisted histories and corporate-action mappings. Base filters: price >= USD 5, trailing 20-session average dollar volume >= USD 10 million, market cap >= USD 1 billion. Use common audited signal coverage for matched comparisons and report coverage exclusions separately. Exact historical source, filter semantics and coverage remain UNRESOLVED; no current ticker list is a substitute. VERIFIED declaration: universe(ALL_US_STOCKS), dynamic_rebalance, filter/select_top/select_percentile and CANDIDATE binding. IsAssetType only accepts Stock/Cryptocurrency/Option/Other; Stock includes ETFs and ETF subtype is rejected locally. Historical common-equity-only membership, subtype exclusions and identifiers remain UNRESOLVED.",
+    "definition": "Proposed: rebuild membership at each decision using only then-listed securities, lagged price/volume and point-in-time market capitalization. Exclude ETFs, funds, preferreds, ADRs and OTC securities; retain delisted histories and corporate-action mappings. Base filters: price >= USD 5, trailing 20-session average dollar volume >= USD 10 million, market cap >= USD 1 billion. Use common audited signal coverage for matched comparisons and report coverage exclusions separately. Exact historical source, filter semantics and coverage remain UNRESOLVED; no current ticker list is a substitute. VERIFIED declaration: universe(ALL_US_STOCKS), dynamic_rebalance, filter/select_top/select_percentile and CANDIDATE binding. IsAssetType only accepts Stock/Cryptocurrency/Option/Other; Stock includes ETFs and ETF subtype is rejected locally. Historical common-equity-only membership, subtype exclusions and identifiers remain UNRESOLVED. RUNTIME AUDIT: historical lake.security_segments exposes CS, ETF, ADR, PFD and other subtype codes and stable security_id spans. PROPOSED explicit as-of CS-only identity join plus unadjustedClose >= USD 5, audited lagged dollar volume and cap lineage; unknown subtype or ambiguous identity excluded. This is not established native ALL_US_STOCKS parity; exchange/OTC fields are absent from inspected segment schema. Do not assume Stock excludes ETFs.",
     "point_in_time_verified": false
   },
   "benchmarks": [
@@ -36,7 +36,7 @@
   "candidate_family_budget": 9,
   "maximum_complexity": 3,
   "permitted_indicators": [
-    "VERIFIED SDK declaration only: PriceRateOfChange(CANDIDATE,length,interval=Day) -> PriceRateOfChange/window{length,interval}; 126/252 serialize locally. Percentage units documented; runtime trading-session counting, price basis and lag UNRESOLVED.",
+    "VERIFIED native evaluation in AAPL 2016-01-04 through 2016-01-08: PriceRateOfChange(asset,length,interval=Day) matches elapsed calendar-day first-available-tick behavior in 20/20 references, not completed sessions (0/20 matches). PROPOSED primary horizons 180/365 calendar days; actual chosen lengths and prior-completed-bar wrapper require diagnostic confirmation before freeze.",
     "VERIFIED SDK declaration only: InsiderTrades(asset,metric,role,window_days,owner_cik=None,issuer_cik=None,instrument=None); DistinctBuyers/BuyCount/BuyValue supported selectors. Any role and Equity instrument PROPOSED. Code P includes private purchases; open-market-only classification UNRESOLVED.",
     "VERIFIED SDK declaration only: InstitutionalHoldings(asset,manager,metric=HolderCount,window_days=180,instrument=Equity); NewHolders/NetHolderChange/NetShareChange supported. Empty manager string means aggregate. windowDays limits filing recency, not summed quarterly accumulation; native cohort behavior UNRESOLVED.",
     "VERIFIED SDK declarations only: Fundamental(CANDIDATE,marketCap), Volume(CANDIDATE), Price(CANDIDATE), IndicatorSimpleMovingAverage and IndicatorWindowAgo. Lagged 20-session dollar-volume composition PROPOSED; availability/vintages, completed-bar joins and missing/stale behavior UNRESOLVED.",
@@ -45,21 +45,21 @@
   "data_sources": [
     {
       "name": "Nexus daily prices, volume and corporate actions",
-      "availability_timestamp": "VERIFIED static catalog columns lake.sec_daily_ohlc.date/closingPrice/volume/marketCap; actual publication instant, market-cap vintage and completed-bar lagging UNRESOLVED.",
+      "availability_timestamp": "VERIFIED live catalog guidance: finalized EOD refresh at 21:00 New York; observed source schemas include unadjustedClose, sharesAsOf, sharesAvailableAt and sharesAccession. Source samples exist pre-cutoff. Native completed-bar lag, revision vintages and price/volume adjustment compatibility remain UNRESOLVED.",
       "point_in_time_verified": false,
-      "revision_policy": "Catalog describes sec_daily_ohlc as split-adjusted; adjustment vintage, price/volume consistency, historical shares and future corrections UNRESOLVED."
+      "revision_policy": "Observed catalog describes closingPrice as split/dividend-adjusted and marketCap as unadjustedClose*sharesOutstanding. Use unadjustedClose for the nominal USD 5 threshold. Historical adjustment vintages and volume basis remain UNRESOLVED; corporate probe did not emit a split event."
     },
     {
       "name": "Nexus corporate-insider disclosures: DistinctBuyers / BuyCount / BuyValue",
       "availability_timestamp": "VERIFIED catalog: insider_filings/insider_transactions.availableAt. Public ownership package documents filing-date end in America/New_York, not exact intraday publication; native-engine equivalence and ingestion latency UNRESOLVED.",
       "point_in_time_verified": false,
-      "revision_policy": "Metric selectors verified; native owner/dedup/amendment completeness UNRESOLVED. Code P includes private purchases. Public 2015-2020 table partitions exist, not proof of complete native field coverage."
+      "revision_policy": "Metric selectors verified; native owner/dedup/amendment completeness UNRESOLVED. Code P includes private purchases. Public 2015-2020 table partitions exist, not proof of complete native field coverage. AUDIT: code P documented as open-market OR private purchases; nonderiv is the observed rowKind. Most P totalValue fields are null; price/shares operands may be usable but native amount reconstruction remains unverified. AAPL native zeros match absence of P rows in a source-populated sample, not a universal missingness contract."
     },
     {
       "name": "Nexus institutional disclosures: NewHolders / NetHolderChange / NetShareChange",
       "availability_timestamp": "VERIFIED catalog: institutional_filings/holdings.availableAt and availabilitySource; actual filing-public availability, effective periods and engine timestamp mapping UNRESOLVED.",
       "point_in_time_verified": false,
-      "revision_policy": "Documented latest public quarter versus prior quarter and publication-effective amendments; catalog has accession/isAmendment/amendmentType. windowDays is filing recency; asynchronous cohorts, amendments/additions and native coverage UNRESOLVED."
+      "revision_policy": "Documented latest public quarter versus prior quarter and publication-effective amendments; catalog has accession/isAmendment/amendmentType. windowDays is filing recency; asynchronous cohorts, amendments/additions and native coverage UNRESOLVED. AUDIT: source amendments coexist; null amendment flags occur. AAPL newest-quarter sample has 43 managers versus 2144 prior-quarter managers at 2016-01-08; native changes are not safe evidence of accumulation without matched cohort/quarter completeness policy. No native amendment replacement equivalence established."
     },
     {
       "name": "Nexus historical security master, listing membership and market capitalization",
@@ -105,13 +105,9 @@
     "requires_events": true,
     "event_rationale": "Required to audit dynamic membership decisions, timestamped signal inputs, holdings, submitted/filled orders, costs and corporate actions. Verify that Nexus events actually expose this evidence; missing fields remain unresolved. Events must be extracted first when authorized jobs eventually complete.",
     "warmup_days": 400,
-    "assumptions": "Proposed long-only, unlevered, equal-weight top-N portfolio with 95% deployment and cash remainder, monthly rebalancing; weekly cadence is a declared robustness alternative. Rank each included signal cross-sectionally and average ranks with equal weights; no fitted weights, stops, leverage or interaction rules. Decisions use lagged closes and public filings; fills no earlier than the next session. Warmup is proposed calendar days, outside measured returns; Nexus warmup units/coverage, rank arithmetic, ties, scheduling, lot sizes, stale data, missing values and execution semantics require evidence. Date windows and numeric grids are provisional design choices, not coverage claims; see README.md and provenance.json. DECLARATION AUDIT: institutional 180/365 days are maximum filing recency, not summed rolling quarterly changes. Constructors verified offline only; no strategy or portfolio built. Next-session execution remains PROPOSED, not a confirmed engine setting. All PIT flags remain false."
+    "assumptions": "Proposed long-only, unlevered, equal-weight top-N portfolio with 95% deployment and cash remainder, monthly rebalancing; weekly cadence is a declared robustness alternative. Rank each included signal cross-sectionally and average ranks with equal weights; no fitted weights, stops, leverage or interaction rules. Decisions use lagged closes and public filings; fills no earlier than the next session. Warmup is proposed calendar days, outside measured returns; Nexus warmup units/coverage, rank arithmetic, ties, scheduling, lot sizes, stale data, missing values and execution semantics require evidence. Date windows and numeric grids are provisional design choices, not coverage claims; see README.md and provenance.json. DECLARATION AUDIT: institutional 180/365 days are maximum filing recency, not summed rolling quarterly changes. Constructors verified offline only; no strategy or portfolio built. Next-session execution remains PROPOSED, not a confirmed engine setting. All PIT flags remain false. SUPERSEDING AUTHORIZATION/RUNTIME AUDIT: owner authorizes up to 1000 included research tokens for this pre-freeze audit only. DRAFT stage execution budgets still do not authorize candidate studies. Native daily signals and fills occur at the same timestamp; next-session timing is a requirement to implement/test with lagged inputs and scheduling, not an automatic engine setting. Native ROC Day is elapsed calendar time, so proposed horizons are now 180/365 calendar days. Required fixed cohort/public quarter, zero/missing and action-adjustment policies remain unresolved; all PIT flags stay false. State: NEEDS DESIGN REVISION."
   },
   "optimization_ranges": {
-    "momentum_lookback_sessions": [
-      126,
-      252
-    ],
     "insider_lookback_calendar_days": [
       30,
       90
@@ -129,6 +125,10 @@
       5000000000
     ],
     "institutional_filing_recency_calendar_days": [
+      180,
+      365
+    ],
+    "momentum_lookback_calendar_days": [
       180,
       365
     ]

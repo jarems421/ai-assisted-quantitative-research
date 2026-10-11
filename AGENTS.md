@@ -59,6 +59,7 @@ This repository studies AI-assisted quantitative research using NexusTrade simul
 - Live trading has no Research OS path. Do not add brokerage/order operations to bypass this boundary.
 - Aurora prompts are not access control. Remote Aurora stays disabled until an audited server-side tool/date isolation capability is available.
 - Require current cost metadata, explicit execution opt-in, predeclared evaluation ceilings, and an extraction bridge before remote jobs. Preserve uncertain submissions and reconcile their existing IDs; never blindly resubmit.
+- Use an already authorized included research allowance actively for bounded verification and auditability; do not request renewed approval for small calls within its scope and ceiling. Record estimates, actual debits when observable, and unknowns. Be generous with computation and strict with degrees of freedom: no unbounded strategy mining, retrospective grid changes, or early held-out access. An audit allowance does not authorize candidate studies, deployment, credit purchases, or later phases.
 - Count all families, planned evaluations, failures, and poor results. Keep raw responses immutable and private; track specs, trial summaries, cards, reports, tests, and code.
 - Infrastructure demonstrations must use synthetic EXP999 in temporary directories with fake transports. Do not start EXP002 during setup or tests.
 

@@ -1,0 +1,2688 @@
+{
+  "experiment_id": "EXP002",
+  "audit_date": "2026-10-11",
+  "cutoff": "2020-12-31",
+  "previous_cost_blocked_attempt": {
+    "experiment_id": "EXP002",
+    "audit_date": "2026-10-11",
+    "cutoff": "2020-12-31",
+    "historical_reads": [],
+    "nexus_calls": 0,
+    "paid_operations": 0,
+    "cutoff_incidents": [],
+    "quarantined_responses": [],
+    "preservation_note": "Local snapshots preserve source bytes, not original shell stdout. Initial documentation tool responses were not all archived verbatim; repeated successful retrieval is preserved. No historical response exists.",
+    "reads": [
+      {
+        "source_tool": "local filesystem: Get-Content/rg/Python",
+        "query": "AGENTS.md",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/local_read_01.txt",
+        "raw_response_sha256": "59e97b19412715f1bd64b271bd0b9cd4bbf0db9ffd814a50f09946c27579c2dd",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local filesystem: Get-Content/rg/Python",
+        "query": "experiments/EXP002/spec.json",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/local_read_02.txt",
+        "raw_response_sha256": "8e752e2afb288cb5c39b3e67b4398ccad9341cfa9bd28dc26863b3081d4f712f",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local filesystem: Get-Content/rg/Python",
+        "query": "experiments/EXP002/README.md",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/local_read_03.txt",
+        "raw_response_sha256": "b8b55c63f445062186573657b2ff252e3811edb582809e698dc4d1e94dc05d72",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local filesystem: Get-Content/rg/Python",
+        "query": "experiments/EXP002/provenance.json",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/local_read_04.txt",
+        "raw_response_sha256": "6e4bd14e54900721c1c61e4f107147e16662376dbc1b259d0b2704dbcae4d478",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local filesystem: Get-Content/rg/Python",
+        "query": "docs/nexus_sdk_inventory.json",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/local_read_05.txt",
+        "raw_response_sha256": "1680ea412122765a17c76ac41db0d3a0bda59700cd05e0c43735d67cfd79ad06",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local filesystem: Get-Content/rg/Python",
+        "query": "docs/nexus_capabilities.md",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/local_read_06.txt",
+        "raw_response_sha256": "a149fbae88477d6757a7791929590feef624674b1a86dfa8352ea17e952999e7",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local filesystem: Get-Content/rg/Python",
+        "query": "src/research/spec.py",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/local_read_07.txt",
+        "raw_response_sha256": "263934ffd624517af1e8c19d7a8be0387c7028b4f77df454c39b1a2d9dd4ce8e",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local filesystem: Get-Content/rg/Python",
+        "query": "tests/test_exp001.py",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/local_read_08.txt",
+        "raw_response_sha256": "4544ce40bfc67720ec140eca22660a761dfc67f07afba5af90739e73ab2fd69a",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local SDK inspect.getsource/source lines",
+        "query": "create_lake_query/get_lake_catalog/describe_lake_table; lake.py lines 156-194 and 656-699",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/sdk_cost_boundary.json",
+        "raw_response_sha256": "54c485ac7961d533cb70bfc5a28ec0eb5b841b260c6b1b2377e075204ee91f8d",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "ALL_TOOLS local MCP declaration metadata",
+        "query": "Name filters for lake/catalog/query/screen/asset/indicator/data/history; no invocation; no Lake SQL MCP declaration found",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": null,
+        "raw_response_sha256": null,
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "web initial open/click",
+        "query": "https://nexustrade.io/docs/features/data-lake",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": null,
+        "raw_response_sha256": null,
+        "status": "UNAVAILABLE"
+      },
+      {
+        "source_tool": "web initial open/click",
+        "query": "https://nexustrade.io/docs/api-reference/overview",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": null,
+        "raw_response_sha256": null,
+        "status": "Initial output not separately archived; later retrieval preserved"
+      },
+      {
+        "source_tool": "web initial open/click",
+        "query": "https://nexustrade.io/docs/indicators/fundamental-indicators",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": null,
+        "raw_response_sha256": null,
+        "status": "Initial output not separately archived; later retrieval preserved"
+      },
+      {
+        "source_tool": "web initial open/click",
+        "query": "https://nexustrade.io/docs/api-reference/sdk-v1",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": null,
+        "raw_response_sha256": null,
+        "status": "Initial output not separately archived; later retrieval preserved"
+      },
+      {
+        "source_tool": "web repeated open",
+        "query": "API overview; SDK v1; fundamental indicators documentation",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/documentation_receipt.json",
+        "raw_response_sha256": "befc819bd0f38113f885fffdb18ca7a597500a82f614fa1b72b5e4f23a622978",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local checks",
+        "query": "audit_result.json",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/audit_result.json",
+        "raw_response_sha256": "3850eac9ef5f6b99ecf64715426e33230e27dc738afd6395fe156c228517f4d9",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      },
+      {
+        "source_tool": "local checks",
+        "query": "checks_result.json",
+        "table_dataset": "local code/declaration or public documentation; no historical observations",
+        "requested_date_bounds": null,
+        "actual_returned_bounds": null,
+        "row_count": null,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "raw_response": "data/raw/EXP002/audit/raw/coverage_20261011/checks_result.json",
+        "raw_response_sha256": "f20c7f30c22f78c7d49acd6a5157ba1ff460901c60f712266f6ee5db9779e7c2",
+        "status": "LOCAL_OR_DOCUMENTATION_ONLY"
+      }
+    ],
+    "blocked_operations": [
+      {
+        "tool": "NexusTradeClient.create_lake_query(request, *, idempotency_key)",
+        "helper": "nexustrade.lake.submit(query, params=None, *, timeout_seconds=None, max_rows=None, max_result_bytes=None, idempotency_key=None, client=None)",
+        "http": "POST /api/v1/nexustrade/lake/queries",
+        "query": null,
+        "query_status": "Not compiled or submitted; source identity/as-of contracts unaudited",
+        "tables": [
+          "lake.sec_daily_ohlc",
+          "lake.insider_transactions",
+          "lake.insider_filings",
+          "lake.institutional_holdings",
+          "lake.institutional_filings",
+          "historical security master: exact table unresolved",
+          "lake.stock_splits",
+          "lake.dividends"
+        ],
+        "requested_date_bounds": {
+          "start": "2015-01-01",
+          "end": "2020-12-31"
+        },
+        "additional_required_bounds": "Economic, availability, amendment, listing and action dates must not exceed cutoff. No date-free history fetch.",
+        "actual_returned_bounds": null,
+        "row_count": 0,
+        "pagination": null,
+        "result_exceeded_cutoff": false,
+        "expected_cost": null,
+        "cost_units": null,
+        "cost_status": "Account-specific price/zero-cost entitlement unestablished; SDK explicitly documents paid-query risk",
+        "raw_response_sha256": null,
+        "status": "BLOCKED_BEFORE_SUBMISSION"
+      }
+    ],
+    "other_local_inspections": [
+      "git status/branch/remotes",
+      "Get-ChildItem EXP002 and Test-Path raw/EXP002",
+      "rg --files docs/src/research/experiments/tests",
+      "rg SDK inventory, capabilities, provenance, spec and tests",
+      "Initial lake* wildcard rg failed; corrected to lake.py",
+      "Initial audit and 52 synthetic tests; subsequent audit and 67 synthetic tests captured in receipts",
+      "Final local JSON/hash/schema gate verification; compares spec against Git HEAD: only explanatory execution.assumptions suffix changed",
+      "git diff --check/status/stat; ignored raw receipt verified with git check-ignore",
+      "Preserved original README bytes/line endings before appended coverage section"
+    ]
+  },
+  "authorization": "experiments/EXP002/research/audit_authorization_20261011.md",
+  "lake_queries": [
+    {
+      "name": "filing_samples",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi),\nu AS (SELECT 'insider' AS dataset,accession,filingDate,periodOfReport,availableAt,availabilitySource,formType AS submissionType,CASE WHEN formType LIKE '%/A' THEN TRUE ELSE FALSE END AS isAmendment,dateOfOriginalSubmission AS original_date,issuerCik AS entity_cik,resolvedTicker AS ticker,NULL::VARCHAR AS amendmentType,sourceUrl FROM lake.insider_filings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND filingDate <= hi AND (periodOfReport IS NULL OR periodOfReport <= hi) AND (dateOfOriginalSubmission IS NULL OR dateOfOriginalSubmission <= hi)\nUNION ALL SELECT 'institutional',accession,filingDate,periodOfReport,availableAt,availabilitySource,submissionType,isAmendment,NULL::DATE,cik,NULL::VARCHAR,amendmentType,sourceUrl FROM lake.institutional_filings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND filingDate <= hi AND (periodOfReport IS NULL OR periodOfReport <= hi)),\nr AS (SELECT *,ROW_NUMBER() OVER(PARTITION BY dataset,EXTRACT(YEAR FROM availableAt),isAmendment ORDER BY accession,ticker) AS n FROM u)\nSELECT * EXCLUDE(n) FROM r WHERE n <= 3 ORDER BY dataset,availableAt,accession",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 10000,
+        "maxResultBytes": 8388608
+      },
+      "job_id": "lq_be4aa70117757f2d939a1537",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2009-03-31",
+        "max_returned_date_field": "2020-11-13",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 90,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 5648,
+          "sha256": "17b4dfaf9dc9528e54061dbdef6fbf44f71b5a7ac17c0540d4a1b8b978ce04a0"
+        }
+      ],
+      "query_file_sha256": "14acf3b9d385ce138dc0355c3a7c181d08ce731a93707642b15ddf8cc8599b4f",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/filing_samples/rows.json",
+      "result_file_sha256": "5339bbb7ffb10ed1b004419f27ddc3fa7e4e4589f3dfe1bf10f9c7670356ef0e",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "filing_timing",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi),\nu AS (SELECT 'insider' AS dataset, accession, filingDate, periodOfReport, availableAt, availabilitySource, CASE WHEN formType LIKE '%/A' THEN TRUE ELSE FALSE END AS amended, dateOfOriginalSubmission AS original_date FROM lake.insider_filings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND filingDate <= hi AND (periodOfReport IS NULL OR periodOfReport <= hi) AND (dateOfOriginalSubmission IS NULL OR dateOfOriginalSubmission <= hi)\nUNION ALL SELECT 'institutional',accession,filingDate,periodOfReport,availableAt,availabilitySource,isAmendment,NULL::DATE FROM lake.institutional_filings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND filingDate <= hi AND (periodOfReport IS NULL OR periodOfReport <= hi))\nSELECT dataset,EXTRACT(YEAR FROM availableAt) AS year,amended,availabilitySource,COUNT(*) AS owner_or_filing_rows,COUNT(DISTINCT accession) AS distinct_filings,MEDIAN(DATE_DIFF('day',periodOfReport,filingDate)) AS median_report_delay_days,QUANTILE_CONT(DATE_DIFF('day',periodOfReport,filingDate),0.95) AS p95_report_delay_days,MIN(DATE_DIFF('day',periodOfReport,filingDate)) AS min_report_delay_days,MAX(DATE_DIFF('day',periodOfReport,filingDate)) AS max_report_delay_days,SUM(CASE WHEN periodOfReport > CAST(availableAt AS DATE) THEN 1 ELSE 0 END) AS report_after_available,MIN(CAST(availableAt AS DATE)) AS min_date,MAX(CAST(availableAt AS DATE)) AS max_date FROM u GROUP BY 1,2,3,4 ORDER BY 1,2,3,4",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 10000,
+        "maxResultBytes": 8388608
+      },
+      "job_id": "lq_b475eaa78de5534541d42ac3",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-01",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 30,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 3263,
+          "sha256": "50f8fccfd47fe70691b9c58106a3128b1153cb7c03f39b0a6f2c494aee303dde"
+        }
+      ],
+      "query_file_sha256": "c42bf7e3a8e79b80289ea51ace51df2b8628aa510cf38c5f62e917f19a29de99",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/rows.json",
+      "result_file_sha256": "7488a8d04e44382f046fae4bf5d96248ffb38dccd0cccace87759e765a2dd5ff",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "insider_zero_check",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi) SELECT resolvedTicker,rowKind,transactionCode,acquiredDisposed,COUNT(*) AS rows,SUM(CASE WHEN pricePerShare IS NULL THEN 1 ELSE 0 END) AS null_price_rows,SUM(CASE WHEN totalValue IS NULL THEN 1 ELSE 0 END) AS null_value_rows,MIN(CAST(availableAt AS DATE)) AS min_date,MAX(CAST(availableAt AS DATE)) AS max_date FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker='AAPL' AND CAST(availableAt AS DATE) BETWEEN DATE '2015-10-01' AND DATE '2016-01-08' AND (transactionDate IS NULL OR transactionDate<=hi) GROUP BY 1,2,3,4 ORDER BY 1,2,3,4",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 120,
+        "maxRows": 1000,
+        "maxResultBytes": 1048576
+      },
+      "job_id": "lq_55cc65ae24019b4e52b15b67",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-10-03",
+        "max_returned_date_field": "2015-11-11",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 7,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 1378,
+          "sha256": "01fdefc7a0d67d20ce5c3ca682732740f0f1c7942eafdf9c693fdea10569cc27"
+        }
+      ],
+      "query_file_sha256": "9b70585de76f09789293e98caa4f85402d0d1c5c38b14215489eeb4e35a717ed",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/insider_zero_check/rows.json",
+      "result_file_sha256": "e71a6bcdd081c562aae8a84df4a4838d3dc6d66cd1cc5d3f4e4ad55c83b46db2",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "institutional_cohorts",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi), decisions AS (SELECT TIMESTAMP '2016-01-04 14:30:00' AS as_of UNION ALL SELECT TIMESTAMP '2016-01-08 21:00:00'), f AS (SELECT accession,cik,periodOfReport,availableAt,isAmendment,amendmentType FROM lake.institutional_filings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND CAST(availableAt AS DATE)<=DATE '2016-01-08' AND (periodOfReport IS NULL OR periodOfReport<=hi)),h AS (SELECT accession,sharesAmount,availableAt FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND CAST(availableAt AS DATE)<=DATE '2016-01-08' AND resolvedTicker='AAPL' AND sharesType='SH' AND (putCall IS NULL OR putCall='')) SELECT d.as_of,f.periodOfReport,COUNT(DISTINCT f.cik) AS distinct_managers,COUNT(DISTINCT f.accession) AS distinct_filings,COUNT(*) AS holding_rows,SUM(h.sharesAmount) AS raw_reported_shares,SUM(CASE WHEN f.isAmendment THEN 1 ELSE 0 END) AS amended_holding_rows,MIN(f.availableAt) AS min_availableAt,MAX(f.availableAt) AS max_availableAt FROM decisions d JOIN f ON f.availableAt<=d.as_of JOIN h ON h.accession=f.accession AND h.availableAt<=d.as_of GROUP BY 1,2 ORDER BY 1,2",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 120,
+        "maxRows": 1000,
+        "maxResultBytes": 1048576
+      },
+      "job_id": "lq_e84bcefb61996345204ed116",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2006-12-31",
+        "max_returned_date_field": "2016-01-08",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 73,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 2668,
+          "sha256": "a967b7c0772497683bb55e26f1bf3652ff58986b606eb7572ca381a6145d684d"
+        }
+      ],
+      "query_file_sha256": "eedb723786602a1c674aeba04dc3f372759e9056baeaab6d2bf3bb44e5b1c7c7",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/institutional_cohorts/rows.json",
+      "result_file_sha256": "82e3d8330d31b32fa095a01009859f83b78ce861be1930f1c8f635b5ca699f5b",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "joint_coverage",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi),\np AS (SELECT o.ticker,s.security_id,CAST(o.date AS DATE) AS day,o.closingPrice,o.unadjustedClose,o.volume,o.marketCap,o.sharesAvailableAt FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds WHERE CAST(o.date AS DATE) BETWEEN lo AND hi AND s.from_date<=hi AND s.asset_type='CS'),\nw AS (SELECT *,COUNT(CASE WHEN closingPrice > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 252 PRECEDING AND 1 PRECEDING) AS prior_price_bars,COUNT(CASE WHEN volume IS NOT NULL AND volume >= 0 AND unadjustedClose > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS prior_volume_bars,AVG(unadjustedClose*volume) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS proposed_adv FROM p),\nsnap AS (SELECT *,ROW_NUMBER() OVER(PARTITION BY security_id,EXTRACT(YEAR FROM day),EXTRACT(MONTH FROM day) ORDER BY day DESC) AS n FROM w),\ni AS (SELECT DISTINCT resolvedTicker AS ticker,CAST(availableAt AS DATE) AS available_day FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND transactionCode='P' AND acquiredDisposed='A' AND (transactionDate IS NULL OR transactionDate <= hi)),\nh AS (SELECT DISTINCT resolvedTicker AS ticker,CAST(availableAt AS DATE) AS available_day FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND sharesType='SH' AND (putCall IS NULL OR putCall='') AND sharesAmount > 0),\njoined AS (SELECT s.*,CASE WHEN EXISTS(SELECT 1 FROM i WHERE i.ticker=s.ticker AND i.available_day<s.day AND i.available_day>=s.day-INTERVAL 90 DAY) THEN 1 ELSE 0 END AS insider_record,CASE WHEN EXISTS(SELECT 1 FROM h WHERE h.ticker=s.ticker AND h.available_day<s.day AND h.available_day>=s.day-INTERVAL 365 DAY) THEN 1 ELSE 0 END AS institutional_record FROM snap s WHERE n=1),\neligible AS (SELECT *,closingPrice >= 5 AND prior_price_bars=252 AND prior_volume_bars=20 AND proposed_adv >= 10000000 AS proposed_price_liquid FROM joined)\nSELECT EXTRACT(YEAR FROM day) AS year,EXTRACT(MONTH FROM day) AS month,COUNT(*) AS observed_tickers,SUM(CASE WHEN prior_price_bars=252 THEN 1 ELSE 0 END) AS sufficient_252_bars,SUM(CASE WHEN prior_volume_bars=20 THEN 1 ELSE 0 END) AS sufficient_volume,SUM(CASE WHEN proposed_price_liquid THEN 1 ELSE 0 END) AS proposed_price_liquid_tickers,SUM(CASE WHEN proposed_price_liquid AND marketCap >= 1000000000 THEN 1 ELSE 0 END) AS cap_threshold_tickers,SUM(CASE WHEN proposed_price_liquid AND marketCap >= 1000000000 AND sharesAvailableAt IS NOT NULL AND CAST(sharesAvailableAt AS DATE)<day THEN 1 ELSE 0 END) AS cap_lineage_tickers,SUM(CASE WHEN proposed_price_liquid AND insider_record=1 THEN 1 ELSE 0 END) AS insider_positive_presence,SUM(CASE WHEN proposed_price_liquid AND institutional_record=1 THEN 1 ELSE 0 END) AS institutional_presence,SUM(CASE WHEN proposed_price_liquid AND insider_record=1 AND institutional_record=1 THEN 1 ELSE 0 END) AS joint_positive_presence,MIN(day) AS min_date,MAX(day) AS max_date FROM eligible GROUP BY 1,2 ORDER BY 1,2",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 10000,
+        "maxResultBytes": 8388608
+      },
+      "job_id": "lq_c2b6cdcdc59bb3da227a17e3",
+      "status": "failed",
+      "error": {
+        "code": "invalid_sql",
+        "message": "INTERRUPT Error: Interrupted!",
+        "retryable": false
+      },
+      "actual_returned_bounds": null,
+      "row_count": null,
+      "pagination_parts": [],
+      "query_file_sha256": "62f4b5cefc015c8ff39b87e7141150057fc5319629e96e893f8368e781ff0c6d",
+      "result_file": null,
+      "result_file_sha256": null,
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "joint_coverage_v2",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi),\np AS (SELECT o.ticker,s.security_id,CAST(o.date AS DATE) AS day,o.closingPrice,o.unadjustedClose,o.volume,o.marketCap,o.sharesAvailableAt FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds WHERE CAST(o.date AS DATE) BETWEEN lo AND hi AND s.from_date<=hi AND s.asset_type='CS'),\nw AS (SELECT *,COUNT(CASE WHEN closingPrice > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 252 PRECEDING AND 1 PRECEDING) AS prior_price_bars,COUNT(CASE WHEN volume IS NOT NULL AND volume >= 0 AND unadjustedClose > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS prior_volume_bars,AVG(unadjustedClose*volume) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS proposed_adv FROM p),\nsnap AS (SELECT *,ROW_NUMBER() OVER(PARTITION BY security_id,EXTRACT(YEAR FROM day),EXTRACT(MONTH FROM day) ORDER BY day DESC) AS n FROM w),\ni AS (SELECT DISTINCT resolvedTicker AS ticker,CAST(availableAt AS DATE) AS available_day FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND transactionCode='P' AND acquiredDisposed='A' AND (transactionDate IS NULL OR transactionDate <= hi)),\nh AS (SELECT DISTINCT resolvedTicker AS ticker,CAST(availableAt AS DATE) AS available_day FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND sharesType='SH' AND (putCall IS NULL OR putCall='') AND sharesAmount > 0),\njoined AS (SELECT s.*,CASE WHEN i.available_day>=s.day-INTERVAL 90 DAY THEN 1 ELSE 0 END AS insider_record,CASE WHEN h.available_day>=s.day-INTERVAL 365 DAY THEN 1 ELSE 0 END AS institutional_record FROM (SELECT * FROM snap WHERE n=1) s ASOF LEFT JOIN i ON s.ticker=i.ticker AND s.day>i.available_day ASOF LEFT JOIN h ON s.ticker=h.ticker AND s.day>h.available_day),\neligible AS (SELECT *,closingPrice >= 5 AND prior_price_bars=252 AND prior_volume_bars=20 AND proposed_adv >= 10000000 AS proposed_price_liquid FROM joined)\nSELECT EXTRACT(YEAR FROM day) AS year,EXTRACT(MONTH FROM day) AS month,COUNT(*) AS observed_tickers,SUM(CASE WHEN prior_price_bars=252 THEN 1 ELSE 0 END) AS sufficient_252_bars,SUM(CASE WHEN prior_volume_bars=20 THEN 1 ELSE 0 END) AS sufficient_volume,SUM(CASE WHEN proposed_price_liquid THEN 1 ELSE 0 END) AS proposed_price_liquid_tickers,SUM(CASE WHEN proposed_price_liquid AND marketCap >= 1000000000 THEN 1 ELSE 0 END) AS cap_threshold_tickers,SUM(CASE WHEN proposed_price_liquid AND marketCap >= 1000000000 AND sharesAvailableAt IS NOT NULL AND CAST(sharesAvailableAt AS DATE)<day THEN 1 ELSE 0 END) AS cap_lineage_tickers,SUM(CASE WHEN proposed_price_liquid AND insider_record=1 THEN 1 ELSE 0 END) AS insider_positive_presence,SUM(CASE WHEN proposed_price_liquid AND institutional_record=1 THEN 1 ELSE 0 END) AS institutional_presence,SUM(CASE WHEN proposed_price_liquid AND insider_record=1 AND institutional_record=1 THEN 1 ELSE 0 END) AS joint_positive_presence,MIN(day) AS min_date,MAX(day) AS max_date FROM eligible GROUP BY 1,2 ORDER BY 1,2",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 10000,
+        "maxResultBytes": 8388608
+      },
+      "job_id": "lq_4b5aea19598924424eae9f44",
+      "status": "failed",
+      "error": {
+        "code": "query_timeout",
+        "message": "Lake query exceeded its time limit",
+        "retryable": true
+      },
+      "actual_returned_bounds": null,
+      "row_count": null,
+      "pagination_parts": [],
+      "query_file_sha256": "366bc2246b82b2908a20f73cc225f6a7848da953b7766b61dc8c8e584d1ff160",
+      "result_file": null,
+      "result_file_sha256": null,
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "joint_presence",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi), p AS (SELECT o.ticker,s.security_id,CAST(o.date AS DATE) AS day,o.closingPrice,o.volume,o.marketCap,o.sharesAvailableAt FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds WHERE CAST(o.date AS DATE) BETWEEN lo AND hi AND s.from_date<=hi AND s.asset_type='CS'), snap AS (SELECT security_id,ARG_MAX(ticker,day) AS ticker,MAX(day) AS day,ARG_MAX(closingPrice,day) AS closingPrice,ARG_MAX(volume,day) AS volume,ARG_MAX(marketCap,day) AS marketCap,ARG_MAX(sharesAvailableAt,day) AS sharesAvailableAt FROM p GROUP BY security_id,EXTRACT(YEAR FROM day),EXTRACT(MONTH FROM day)),i AS (SELECT DISTINCT resolvedTicker AS ticker,CAST(availableAt AS DATE) AS available_day FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND (transactionDate IS NULL OR transactionDate<=hi)),h AS (SELECT DISTINCT resolvedTicker AS ticker,CAST(availableAt AS DATE) AS available_day FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL),j AS (SELECT s.*,i.available_day AS insider_day,h.available_day AS institution_day FROM snap s ASOF LEFT JOIN i ON s.ticker=i.ticker AND s.day>i.available_day ASOF LEFT JOIN h ON s.ticker=h.ticker AND s.day>h.available_day) SELECT EXTRACT(YEAR FROM day) AS year,EXTRACT(MONTH FROM day) AS month,COUNT(*) AS common_stock_price_ids,SUM(CASE WHEN closingPrice>=5 THEN 1 ELSE 0 END) AS price_threshold_ids,SUM(CASE WHEN marketCap>0 THEN 1 ELSE 0 END) AS cap_present_ids,SUM(CASE WHEN marketCap>0 AND sharesAvailableAt IS NOT NULL AND CAST(sharesAvailableAt AS DATE)<day THEN 1 ELSE 0 END) AS cap_lineage_ids,SUM(CASE WHEN volume IS NOT NULL AND volume>=0 THEN 1 ELSE 0 END) AS volume_present_ids,SUM(CASE WHEN insider_day>=day-INTERVAL 90 DAY THEN 1 ELSE 0 END) AS insider_source_presence_ids,SUM(CASE WHEN institution_day>=day-INTERVAL 365 DAY THEN 1 ELSE 0 END) AS institutional_source_presence_ids,SUM(CASE WHEN marketCap>0 AND volume IS NOT NULL AND volume>=0 AND insider_day>=day-INTERVAL 90 DAY AND institution_day>=day-INTERVAL 365 DAY THEN 1 ELSE 0 END) AS joint_source_presence_ids,MIN(day) AS min_date,MAX(day) AS max_date FROM j GROUP BY 1,2 ORDER BY 1,2",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 1000,
+        "maxResultBytes": 1048576
+      },
+      "job_id": "lq_685ae4dbc9fcdad02276e7ed",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-02",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 72,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 3346,
+          "sha256": "b6a23d5fe0432f34ab7550192ba19d83c48716c82899bce2f6041e282b64d38c"
+        }
+      ],
+      "query_file_sha256": "410eb266f573f73bcd349c460008e6680d83715dec70e70003b47c120f4c3d82",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/rows.json",
+      "result_file_sha256": "a45200d47dde11df190226e670268ca408f118760ee9d0edab14612bbf900aca",
+      "cutoff_exceeded": false,
+      "use_status": "SUPERSEDED_NONCANONICAL"
+    },
+    {
+      "name": "ownership_coverage",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi),\ni AS (SELECT 'insider' AS dataset, resolvedTicker AS ticker, availableAt, transactionDate AS economic_date, transactionCode AS category FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND (transactionDate IS NULL OR transactionDate <= hi)),\nh AS (SELECT 'institutional' AS dataset, resolvedTicker AS ticker, availableAt, NULL::DATE AS economic_date, sharesType AS category FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi),\nu AS (SELECT * FROM i UNION ALL SELECT * FROM h)\nSELECT dataset, EXTRACT(YEAR FROM availableAt) AS year, EXTRACT(MONTH FROM availableAt) AS month, COUNT(*) AS rows, COUNT(DISTINCT ticker) AS resolved_securities, SUM(CASE WHEN ticker IS NULL THEN 1 ELSE 0 END) AS unresolved_rows, SUM(CASE WHEN economic_date > CAST(availableAt AS DATE) THEN 1 ELSE 0 END) AS economic_after_available, MIN(CAST(availableAt AS DATE)) AS min_date, MAX(CAST(availableAt AS DATE)) AS max_date FROM u GROUP BY 1,2,3 ORDER BY 1,2,3",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 10000,
+        "maxResultBytes": 8388608
+      },
+      "job_id": "lq_77a5d9784cc41a8272d2a11a",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-01",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 144,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 3421,
+          "sha256": "b69987565eb7ed0e5e939e19c1ca2b84f5e15a584ce605451c746cc0f2620228"
+        }
+      ],
+      "query_file_sha256": "648426a8997c39039b3bf5811d142bc56e30e04d7a570c3ab5583a6749c42db4",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/rows.json",
+      "result_file_sha256": "2c94dc8788bc9044bde934988ba34a145603ef3c07b2e2b740c0e0184042ef3d",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "ownership_equity_panel",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi), u AS (SELECT 'insider' AS dataset,resolvedTicker AS ticker,availableAt FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND rowKind='nonderiv' AND (transactionDate IS NULL OR transactionDate<=hi) UNION ALL SELECT 'institutional',resolvedTicker,availableAt FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND sharesType='SH' AND (putCall IS NULL OR putCall='')) SELECT dataset,ticker,EXTRACT(YEAR FROM availableAt) AS year,EXTRACT(MONTH FROM availableAt) AS month,MAX(availableAt) AS last_availableAt,COUNT(*) AS source_rows FROM u GROUP BY 1,2,3,4 ORDER BY 1,2,3,4",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 1500000,
+        "maxResultBytes": 134217728
+      },
+      "job_id": "lq_06073d34a5e221be7a6714c5",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-01",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 513438,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 1479642,
+          "sha256": "7d560edd2921370d4aab4233da9a98530ae5ee586e7f865b827525a14e93a164"
+        }
+      ],
+      "query_file_sha256": "ac8fa905af2064944dfe4bf5aa9e866c1d2aa23e86413ec2dac2667d508aa15e",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/rows.json",
+      "result_file_sha256": "549418176298650156c1e23258676f8097d970bd317646564f948d79ab2e8728",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "ownership_panel",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi), u AS (SELECT 'insider' AS dataset,resolvedTicker AS ticker,availableAt FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND (transactionDate IS NULL OR transactionDate<=hi) UNION ALL SELECT 'institutional',resolvedTicker,availableAt FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL) SELECT dataset,ticker,EXTRACT(YEAR FROM availableAt) AS year,EXTRACT(MONTH FROM availableAt) AS month,MAX(availableAt) AS last_availableAt,COUNT(*) AS source_rows FROM u GROUP BY 1,2,3,4 ORDER BY 1,2,3,4",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 500000,
+        "maxResultBytes": 67108864
+      },
+      "job_id": "lq_218a6acacbb53543f7146c20",
+      "status": "failed",
+      "error": {
+        "code": "result_limit_exceeded",
+        "message": "Result exceeded maxRows (500000)",
+        "retryable": false,
+        "details": {
+          "maxRows": 500000,
+          "observedRows": 500001
+        }
+      },
+      "actual_returned_bounds": null,
+      "row_count": null,
+      "pagination_parts": [],
+      "query_file_sha256": "9990b3d450d5b54c8ebda55ffc68cc3054aa797568e0ebb8f2d964e40fe4909b",
+      "result_file": null,
+      "result_file_sha256": null,
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "ownership_panel_v2",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi), u AS (SELECT 'insider' AS dataset,resolvedTicker AS ticker,availableAt FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND (transactionDate IS NULL OR transactionDate<=hi) UNION ALL SELECT 'institutional',resolvedTicker,availableAt FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL) SELECT dataset,ticker,EXTRACT(YEAR FROM availableAt) AS year,EXTRACT(MONTH FROM availableAt) AS month,MAX(availableAt) AS last_availableAt,COUNT(*) AS source_rows FROM u GROUP BY 1,2,3,4 ORDER BY 1,2,3,4",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 1500000,
+        "maxResultBytes": 134217728
+      },
+      "job_id": "lq_bd5a627f599062369add8017",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-01",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 529833,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 1534168,
+          "sha256": "00d04aed55449a5aca4dd00f24b15fb90233ce9e05add27af2db15e6ac809f00"
+        }
+      ],
+      "query_file_sha256": "776c2ebccc3050993cd7767bcdf937900dd4ad854ca4bd39fc54c5bbfe538eee",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel_v2/rows.json",
+      "result_file_sha256": "0354bc27444b3c6735cae75a312edd1a426b804b0cedebbdd49d761b2c576752",
+      "cutoff_exceeded": false,
+      "use_status": "SUPERSEDED_NONCANONICAL"
+    },
+    {
+      "name": "price_coverage",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "SELECT EXTRACT(YEAR FROM date) AS year, EXTRACT(MONTH FROM date) AS month, COUNT(*) AS rows, COUNT(DISTINCT ticker) AS securities, MIN(CAST(date AS DATE)) AS min_date, MAX(CAST(date AS DATE)) AS max_date, COUNT(DISTINCT CASE WHEN closingPrice > 0 AND volume IS NOT NULL AND volume >= 0 THEN ticker END) AS price_volume_securities, COUNT(DISTINCT CASE WHEN marketCap > 0 THEN ticker END) AS cap_securities, COUNT(DISTINCT CASE WHEN marketCap > 0 AND sharesAvailableAt IS NOT NULL AND sharesAvailableAt <= date THEN ticker END) AS cap_lineage_securities FROM lake.sec_daily_ohlc WHERE CAST(date AS DATE) >= CAST(? AS DATE) AND CAST(date AS DATE) <= CAST(? AS DATE) GROUP BY 1,2 ORDER BY 1,2",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 120,
+        "maxRows": 1000,
+        "maxResultBytes": 1048576
+      },
+      "job_id": "lq_00fd5b2279bc968d27003529",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-02",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 72,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 2623,
+          "sha256": "95f0c84d5d2ce18e95ffc51bdd661db03b77bfdea5a4df5a067571afd70abecf"
+        }
+      ],
+      "query_file_sha256": "4a99315dabd5851fd2abdbaa990234883dda01292f7e4d20a69d657a744732c5",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/rows.json",
+      "result_file_sha256": "abbbdcfe71daf2896415618f439a67b13649480652a09033b83ed85306bb2805",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "price_panel",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi),\np AS (SELECT o.ticker,s.security_id,CAST(o.date AS DATE) AS day,o.closingPrice,o.unadjustedClose,o.volume,o.marketCap,o.sharesAvailableAt FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds WHERE CAST(o.date AS DATE) BETWEEN lo AND hi AND s.from_date<=hi AND s.asset_type='CS'),\nw AS (SELECT *,COUNT(CASE WHEN closingPrice > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 252 PRECEDING AND 1 PRECEDING) AS prior_price_bars,COUNT(CASE WHEN volume IS NOT NULL AND volume >= 0 AND unadjustedClose > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS prior_volume_bars,AVG(unadjustedClose*volume) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS proposed_adv FROM p),\nsnap AS (SELECT *,ROW_NUMBER() OVER(PARTITION BY security_id,EXTRACT(YEAR FROM day),EXTRACT(MONTH FROM day) ORDER BY day DESC) AS n FROM w) SELECT security_id,ticker,day,prior_price_bars,prior_volume_bars,proposed_adv,closingPrice>=5 AS price_threshold,marketCap>=1000000000 AS cap_threshold,marketCap IS NOT NULL AS cap_present,sharesAvailableAt IS NOT NULL AND CAST(sharesAvailableAt AS DATE)<day AS cap_lineage FROM snap WHERE n=1 ORDER BY day,security_id",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 500000,
+        "maxResultBytes": 67108864
+      },
+      "job_id": "lq_0dbf767f418965c71ace9b4f",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-02",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 330404,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 3392404,
+          "sha256": "92f6c525cdff4ed6527c3239e09b663cdace1584c44cb2598abe8b04879b983a"
+        }
+      ],
+      "query_file_sha256": "d1c52a60f209a30c10ca0a89c09cb3887fe0d031a5a88cee84163a2b05fe29e0",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/rows.json",
+      "result_file_sha256": "732024a2f55c15feb2325a8ee07eaecc9b58eee49812af83753b22b11d34c814",
+      "cutoff_exceeded": false,
+      "use_status": "SUPERSEDED_NONCANONICAL"
+    },
+    {
+      "name": "price_panel_unadjusted",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi),\np AS (SELECT o.ticker,s.security_id,CAST(o.date AS DATE) AS day,o.closingPrice,o.unadjustedClose,o.volume,o.marketCap,o.sharesAvailableAt FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds WHERE CAST(o.date AS DATE) BETWEEN lo AND hi AND s.from_date<=hi AND s.asset_type='CS'),\nw AS (SELECT *,COUNT(CASE WHEN closingPrice > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 252 PRECEDING AND 1 PRECEDING) AS prior_price_bars,COUNT(CASE WHEN volume IS NOT NULL AND volume >= 0 AND unadjustedClose > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS prior_volume_bars,AVG(unadjustedClose*volume) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS proposed_adv FROM p),\nsnap AS (SELECT *,ROW_NUMBER() OVER(PARTITION BY security_id,EXTRACT(YEAR FROM day),EXTRACT(MONTH FROM day) ORDER BY day DESC) AS n FROM w) SELECT security_id,ticker,day,prior_price_bars,prior_volume_bars,proposed_adv,unadjustedClose>=5 AS price_threshold,marketCap>=1000000000 AS cap_threshold,marketCap IS NOT NULL AS cap_present,sharesAvailableAt IS NOT NULL AND CAST(sharesAvailableAt AS DATE)<day AS cap_lineage FROM snap WHERE n=1 AND day>=DATE '2015-01-01' ORDER BY day,security_id",
+      "parameters": [
+        "2014-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 500000,
+        "maxResultBytes": 67108864
+      },
+      "job_id": "lq_54c1f6a2707e22e9e3beac4a",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-02",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 330404,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 3385887,
+          "sha256": "ae4a1c81c4025356d0493cf2ffe54cd7f7af25f61c96057c63630a6d46069db9"
+        }
+      ],
+      "query_file_sha256": "58d0b397877d95d586a4358e15c92ea5294405002257323be76c2c69d7e30288",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_unadjusted/rows.json",
+      "result_file_sha256": "2032c1d610140ad7a72f5138a8bea8487d64f227eb3d3be5db624be2e420e221",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "price_panel_warmup",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi),\np AS (SELECT o.ticker,s.security_id,CAST(o.date AS DATE) AS day,o.closingPrice,o.unadjustedClose,o.volume,o.marketCap,o.sharesAvailableAt FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds WHERE CAST(o.date AS DATE) BETWEEN lo AND hi AND s.from_date<=hi AND s.asset_type='CS'),\nw AS (SELECT *,COUNT(CASE WHEN closingPrice > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 252 PRECEDING AND 1 PRECEDING) AS prior_price_bars,COUNT(CASE WHEN volume IS NOT NULL AND volume >= 0 AND unadjustedClose > 0 THEN 1 END) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS prior_volume_bars,AVG(unadjustedClose*volume) OVER(PARTITION BY security_id ORDER BY day ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING) AS proposed_adv FROM p),\nsnap AS (SELECT *,ROW_NUMBER() OVER(PARTITION BY security_id,EXTRACT(YEAR FROM day),EXTRACT(MONTH FROM day) ORDER BY day DESC) AS n FROM w) SELECT security_id,ticker,day,prior_price_bars,prior_volume_bars,proposed_adv,closingPrice>=5 AS price_threshold,marketCap>=1000000000 AS cap_threshold,marketCap IS NOT NULL AS cap_present,sharesAvailableAt IS NOT NULL AND CAST(sharesAvailableAt AS DATE)<day AS cap_lineage FROM snap WHERE n=1 AND day>=DATE '2015-01-01' ORDER BY day,security_id",
+      "parameters": [
+        "2014-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 500000,
+        "maxResultBytes": 67108864
+      },
+      "job_id": "lq_2117008be807d53aa2d392ad",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-02",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 330404,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 3380056,
+          "sha256": "9ee060b8bb76ea9d71615333484ab463f4550318bc5948e8923caed78ead9b13"
+        }
+      ],
+      "query_file_sha256": "3130adb5c0cc7fce3b89adccaef5411c09c905a30effb6f672974ba83c1fbbdd",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/rows.json",
+      "result_file_sha256": "b659f32a36621db8068dfcbd215840b1c4efbef54ea70943cdc29f3e9836b85f",
+      "cutoff_exceeded": false,
+      "use_status": "SUPERSEDED_NONCANONICAL"
+    },
+    {
+      "name": "purchase_quality",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi) SELECT EXTRACT(YEAR FROM availableAt) AS year,rowKind,COUNT(*) AS purchase_rows,COUNT(DISTINCT resolvedTicker) AS resolved_tickers,SUM(CASE WHEN totalValue IS NULL THEN 1 ELSE 0 END) AS null_total_value,SUM(CASE WHEN shares IS NULL OR pricePerShare IS NULL THEN 1 ELSE 0 END) AS null_value_inputs,SUM(CASE WHEN transactionDate>CAST(availableAt AS DATE) THEN 1 ELSE 0 END) AS economic_after_available,MIN(CAST(availableAt AS DATE)) AS min_date,MAX(CAST(availableAt AS DATE)) AS max_date FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND transactionCode='P' AND acquiredDisposed='A' AND (transactionDate IS NULL OR transactionDate<=hi) GROUP BY 1,2 ORDER BY 1,2",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 120,
+        "maxRows": 1000,
+        "maxResultBytes": 1048576
+      },
+      "job_id": "lq_b54558c5a8dd9bfb29b3362c",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-01",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 12,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 1656,
+          "sha256": "81e46e1487115ab8ef5240b01ad50a39e662acd3b1f1fbd8e180f48a0c771d67"
+        }
+      ],
+      "query_file_sha256": "6af8e901bf1b82d1ef7dc03b0f9a0b3baff346c212400222276dcc73659fc1c1",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/rows.json",
+      "result_file_sha256": "d30185ce72de30fa82f45b39d24b3e50507eaea207a499ede6356b0ee99e3bd5",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "roc_price_reference",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi) SELECT CAST(date AS DATE) AS day,openingPrice,closingPrice,unadjustedClose FROM lake.sec_daily_ohlc,bounds WHERE CAST(date AS DATE) BETWEEN lo AND hi AND CAST(date AS DATE)<=DATE '2016-01-08' AND ticker='AAPL' ORDER BY date",
+      "parameters": [
+        "2014-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 120,
+        "maxRows": 1000,
+        "maxResultBytes": 1048576
+      },
+      "job_id": "lq_ac05d8b30723f686e6f32663",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2014-01-02",
+        "max_returned_date_field": "2016-01-08",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 509,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 7623,
+          "sha256": "7e92645d57c21ee3d5f7f4d9d71b08dca6dded475a2abff017361b711137af11"
+        }
+      ],
+      "query_file_sha256": "2bff78a104edee6324e210d88ba52a0a34713df2fa43645e4b7bd0b9028662b1",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/roc_price_reference/rows.json",
+      "result_file_sha256": "a56a7b4a1cd853febed575716ab9ee44062a9332bb892ad1b9a479e4c6a00e25",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "security_spans",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi) SELECT ticker,security_id,asset_type,share_class_figi,cik,GREATEST(from_date,lo) AS bounded_from_date,LEAST(COALESCE(to_date,hi),hi) AS bounded_to_date,CASE WHEN to_date BETWEEN lo AND hi THEN TRUE ELSE FALSE END AS span_ended_in_window FROM lake.security_segments,bounds WHERE from_date<=hi AND (to_date IS NULL OR to_date>=lo) ORDER BY security_id,bounded_from_date,ticker",
+      "parameters": [
+        "2014-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 120,
+        "maxRows": 30000,
+        "maxResultBytes": 8388608
+      },
+      "job_id": "lq_4815ac6ac65155d5770f23f2",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2014-01-01",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 16748,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 301735,
+          "sha256": "3eda017492ceb75cfaa1d782187cd897da5a1c19e8a5f27467837a954d22bac7"
+        }
+      ],
+      "query_file_sha256": "d9974d73f0c7698154302df64d986fe3c5071fe98c9c3dfe395bb1520d04e99d",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/security_spans/rows.json",
+      "result_file_sha256": "716efc7e75992fb141856741302a03a9be8f341072f3fca7c76f959fc64f9ee5",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    },
+    {
+      "name": "universe_types",
+      "tool": "NexusTradeClient.create_lake_query",
+      "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo, CAST(? AS DATE) AS hi)\nSELECT asset_type,COUNT(*) AS segments,COUNT(DISTINCT security_id) AS securities,COUNT(DISTINCT ticker) AS tickers,SUM(CASE WHEN to_date BETWEEN lo AND hi THEN 1 ELSE 0 END) AS segments_ended_in_window,SUM(CASE WHEN security_id IS NULL THEN 1 ELSE 0 END) AS missing_id,MIN(GREATEST(from_date,lo)) AS min_date,MAX(LEAST(COALESCE(to_date,hi),hi)) AS max_date FROM lake.security_segments,bounds WHERE from_date <= hi AND (to_date IS NULL OR to_date >= lo) GROUP BY 1 ORDER BY 1",
+      "parameters": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "limits": {
+        "timeoutSeconds": 180,
+        "maxRows": 10000,
+        "maxResultBytes": 8388608
+      },
+      "job_id": "lq_255313d188cdb72ace43a738",
+      "status": "completed",
+      "error": null,
+      "actual_returned_bounds": {
+        "min_returned_date_field": "2015-01-01",
+        "max_returned_date_field": "2020-12-31",
+        "scope": "All returned date-like observation fields; may include earlier economic dates. Administrative operation dates excluded."
+      },
+      "row_count": 16,
+      "pagination_parts": [
+        {
+          "part": 0,
+          "byteSize": 1724,
+          "sha256": "6171ec02c8cb7cadb27f446fd43f3e3622bb7b409947b36acf9ca5e7e78ad2ac"
+        }
+      ],
+      "query_file_sha256": "ab1161d15ebdf8d69ea39a400c908ab9f329e80fa1930d8f5b438b9440f1e44b",
+      "result_file": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/rows.json",
+      "result_file_sha256": "f7175245c1ddae6a3e19d081aa4a20f15ff75e09cf917b596f80b8634acd6a9e",
+      "cutoff_exceeded": false,
+      "use_status": "CANONICAL_OR_SUPPLEMENTARY"
+    }
+  ],
+  "diagnostic_probes": [
+    {
+      "name": "native_probe",
+      "tool": "Portfolio.backtest -> NexusTradeClient.create_backtest",
+      "job_id": "6acb87638c2f7fb888b3c0ed",
+      "status": "completed",
+      "request_intent": {
+        "purpose": "Native metric/timing audit, never performance evidence",
+        "dates": [
+          "2016-01-04",
+          "2016-01-08"
+        ],
+        "indicators": [
+          "ROC126",
+          "ROC252",
+          "DistinctBuyers",
+          "BuyCount",
+          "BuyValue",
+          "NewHolders",
+          "NetHolderChange",
+          "NetShareChange"
+        ],
+        "feeConfig": {
+          "Stock": {
+            "amount": 0.1,
+            "type": "percent"
+          }
+        },
+        "idempotency_key": "exp002-native-probe-20160104-20160108-v1",
+        "estimated_daily_non_options_tokens": 0
+      },
+      "reconstructed_body": {
+        "body": {
+          "portfolio": {
+            "name": "EXP002 native declaration/timing diagnostic only",
+            "initialValue": 1000,
+            "cash": 1000,
+            "buyingPower": 1000,
+            "strategies": [
+              {
+                "name": "ROC126",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "PriceRateOfChange",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "window": {
+                      "length": 126,
+                      "interval": "Day"
+                    }
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "ROC252",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "PriceRateOfChange",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "window": {
+                      "length": 252,
+                      "interval": "Day"
+                    }
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "DistinctBuyers",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InsiderTrades",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "metric": "DistinctBuyers",
+                    "role": "Any",
+                    "windowDays": 90,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "BuyCount",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InsiderTrades",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "metric": "BuyCount",
+                    "role": "Any",
+                    "windowDays": 90,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "BuyValue",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InsiderTrades",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "metric": "BuyValue",
+                    "role": "Any",
+                    "windowDays": 90,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "NewHolders",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InstitutionalHoldings",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "manager": "",
+                    "metric": "NewHolders",
+                    "windowDays": 365,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "NetHolderChange",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InstitutionalHoldings",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "manager": "",
+                    "metric": "NetHolderChange",
+                    "windowDays": 365,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              },
+              {
+                "name": "NetShareChange",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "InstitutionalHoldings",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "AAPL",
+                      "name": "AAPL"
+                    },
+                    "manager": "",
+                    "metric": "NetShareChange",
+                    "windowDays": 365,
+                    "instrument": "Equity"
+                  },
+                  "comparison": "greaterThanOrEqual",
+                  "rhs": {
+                    "type": "Value",
+                    "value": -1e+30
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "dollars",
+                    "amount": 1
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              }
+            ],
+            "dividendPolicy": "cash"
+          },
+          "startDate": "2016-01-04",
+          "endDate": "2016-01-08",
+          "interval": "Day",
+          "initialValue": 1000,
+          "generateEvents": true,
+          "feeConfig": {
+            "Stock": {
+              "amount": 0.1,
+              "type": "percent"
+            }
+          },
+          "dividendPolicy": "cash"
+        },
+        "scope": "Deterministic offline reconstruction of SDK payload; original wire request body was not separately captured."
+      },
+      "original_wire_body_preserved": false,
+      "event_rows": 260,
+      "event_pages": 6,
+      "simulated_min_timestamp": "2016-01-04T14:30:00+00:00",
+      "simulated_max_timestamp": "2016-01-08T21:00:00+00:00",
+      "event_type_counts": {
+        "Order": 240,
+        "BuySignal": 10,
+        "Market": 10
+      },
+      "performance_results_used": false,
+      "administrative_timestamps_policy": "createdAt/expirationTime in 2026 are operation administration, not simulated observations; preserved privately."
+    },
+    {
+      "name": "corporate_probe",
+      "tool": "Portfolio.backtest -> NexusTradeClient.create_backtest",
+      "job_id": "6acb88758c2f7fb888b3c16a",
+      "status": "completed",
+      "request_intent": {
+        "purpose": "Native metric/timing audit, never performance evidence",
+        "dates": [
+          "2020-08-06",
+          "2020-09-01"
+        ],
+        "indicators": [],
+        "feeConfig": {
+          "Stock": {
+            "amount": 0.1,
+            "type": "percent"
+          }
+        },
+        "idempotency_key": "exp002-native-probe-20200806-20200901-v1",
+        "estimated_daily_non_options_tokens": 0
+      },
+      "reconstructed_body": {
+        "body": {
+          "portfolio": {
+            "name": "EXP002 corporate-action diagnostic only",
+            "initialValue": 1000,
+            "cash": 1000,
+            "buyingPower": 1000,
+            "strategies": [
+              {
+                "name": "Single entry corporate-action diagnostic",
+                "condition": {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "PositionValue",
+                    "targetAssets": [
+                      {
+                        "type": "Stock",
+                        "symbol": "AAPL",
+                        "name": "AAPL"
+                      }
+                    ]
+                  },
+                  "comparison": "lessThan",
+                  "rhs": {
+                    "type": "Value",
+                    "value": 1
+                  }
+                },
+                "action": {
+                  "type": "Buy",
+                  "targetAsset": {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  "amount": {
+                    "type": "percent of portfolio",
+                    "amount": 50
+                  }
+                },
+                "orderExecution": {
+                  "type": "Market"
+                }
+              }
+            ],
+            "dividendPolicy": "cash"
+          },
+          "startDate": "2020-08-06",
+          "endDate": "2020-09-01",
+          "interval": "Day",
+          "initialValue": 1000,
+          "generateEvents": true,
+          "feeConfig": {
+            "Stock": {
+              "amount": 0.1,
+              "type": "percent"
+            }
+          },
+          "dividendPolicy": "cash"
+        },
+        "scope": "Deterministic offline reconstruction of SDK payload; original wire request body was not separately captured."
+      },
+      "original_wire_body_preserved": false,
+      "event_rows": 80,
+      "event_pages": 2,
+      "simulated_min_timestamp": "2020-08-06T13:30:00+00:00",
+      "simulated_max_timestamp": "2020-09-01T20:00:00+00:00",
+      "event_type_counts": {
+        "NoSignal": 37,
+        "Market": 38,
+        "ApplyDividend": 1,
+        "Order": 3,
+        "BuySignal": 1
+      },
+      "performance_results_used": false,
+      "administrative_timestamps_policy": "createdAt/expirationTime in 2026 are operation administration, not simulated observations; preserved privately."
+    }
+  ],
+  "read_receipts": [
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_samples/response_0001.json",
+      "sha256": "eff92bf0591322e1f3dfea0266851354ad999ac5ddd0e6e1e5bc24709eff376d"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_be4aa70117757f2d939a1537",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_samples/response_0002.json",
+      "sha256": "c848f7469079cc5990fc339fbf456d6006cd26c137072df9087d52d0e769f592"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_be4aa70117757f2d939a1537",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_samples/response_0003.json",
+      "sha256": "c848f7469079cc5990fc339fbf456d6006cd26c137072df9087d52d0e769f592"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_be4aa70117757f2d939a1537",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_samples/response_0004.json",
+      "sha256": "c848f7469079cc5990fc339fbf456d6006cd26c137072df9087d52d0e769f592"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_be4aa70117757f2d939a1537",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_samples/response_0005.json",
+      "sha256": "130eb0d0af2d9c50537599621c83b158da643b656e2bb6ff039385ce654717e4"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/response_0001.json",
+      "sha256": "714434f4c83f01c7d742d79923ebfd594aabdc2381704b5049646bb193d94895"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b475eaa78de5534541d42ac3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/response_0002.json",
+      "sha256": "14652af3f37d070fdb5bf13e8f3fce7963924d0ea05c5d913c39f30fbd742bc0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b475eaa78de5534541d42ac3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/response_0003.json",
+      "sha256": "14652af3f37d070fdb5bf13e8f3fce7963924d0ea05c5d913c39f30fbd742bc0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b475eaa78de5534541d42ac3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/response_0004.json",
+      "sha256": "14652af3f37d070fdb5bf13e8f3fce7963924d0ea05c5d913c39f30fbd742bc0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b475eaa78de5534541d42ac3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/response_0005.json",
+      "sha256": "14652af3f37d070fdb5bf13e8f3fce7963924d0ea05c5d913c39f30fbd742bc0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b475eaa78de5534541d42ac3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/response_0006.json",
+      "sha256": "be93f92a11cbe08f72eda48ae6af4eff9f1c10bb44c4b9e7726d874d0a225bd2"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b475eaa78de5534541d42ac3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/response_0007.json",
+      "sha256": "d46862663f5d5a5d7b60e84f6677d10ab0fe8c79455a8b03e70cab8521fcf09d"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/insider_zero_check/response_0001.json",
+      "sha256": "c70b1aa0f471294d0c6ad9e891c12b2811bd1729c9f3f03920723f8ddc39539a"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_55cc65ae24019b4e52b15b67",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/insider_zero_check/response_0002.json",
+      "sha256": "e1c1e1a9415bc1b7c18be5dc62e62900b7139a1b5c075b6e4dda8e48e6c4a845"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_55cc65ae24019b4e52b15b67",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/insider_zero_check/response_0003.json",
+      "sha256": "e1c1e1a9415bc1b7c18be5dc62e62900b7139a1b5c075b6e4dda8e48e6c4a845"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_55cc65ae24019b4e52b15b67",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/insider_zero_check/response_0004.json",
+      "sha256": "1945174f4cfeee991136b24bbe2d707068796cba57a2990d6cf4750cc5e74f35"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/institutional_cohorts/response_0001.json",
+      "sha256": "871b6a282c49c1494f7e2cc8a383b5f037cbc6fd1d67f7901ace9f9cecf41f8b"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_e84bcefb61996345204ed116",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/institutional_cohorts/response_0002.json",
+      "sha256": "0814a6a15661c5a7c55aa4fef1610115ae6bb2b526a3d8d4e674db385109db7a"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_e84bcefb61996345204ed116",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/institutional_cohorts/response_0003.json",
+      "sha256": "0814a6a15661c5a7c55aa4fef1610115ae6bb2b526a3d8d4e674db385109db7a"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_e84bcefb61996345204ed116",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/institutional_cohorts/response_0004.json",
+      "sha256": "0814a6a15661c5a7c55aa4fef1610115ae6bb2b526a3d8d4e674db385109db7a"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_e84bcefb61996345204ed116",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/institutional_cohorts/response_0005.json",
+      "sha256": "0814a6a15661c5a7c55aa4fef1610115ae6bb2b526a3d8d4e674db385109db7a"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_e84bcefb61996345204ed116",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/institutional_cohorts/response_0006.json",
+      "sha256": "ab98325ace4cf95dabe4f6d093edb57bf25446a3b4aabf4758d6c47c1b082209"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0001.json",
+      "sha256": "c60b88a16da0fca1ccab75d64e6a426e87175e03c0770b2906de5e5444201365"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0002.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0003.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0004.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0005.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0006.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0007.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0008.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0009.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0010.json",
+      "sha256": "e7ee54e82dbd1b2f217d4033f1208ea8deac866128947eb0f0bc48972706449c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0011.json",
+      "sha256": "5966ae6ec4b70e44306956f41608b965ed552b6dd49dcab883b6181731f878b0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_c2b6cdcdc59bb3da227a17e3",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage/response_0012.json",
+      "sha256": "5966ae6ec4b70e44306956f41608b965ed552b6dd49dcab883b6181731f878b0"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0001.json",
+      "sha256": "28f3f7fbe20a07dea035c96fd83b0061079519887cd8b4ddbe705042821f04a0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0002.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0003.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0004.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0005.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0006.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0007.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0008.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0009.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0010.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0011.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0012.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0013.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0014.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0015.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0016.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0017.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0018.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0019.json",
+      "sha256": "ded7cfa20239899413b8beca081e4897041efe47d66e48c0e335025b97787e61"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0020.json",
+      "sha256": "626d0b0527b8a969bb3534c10724b711a8177f7db56475662f5cb53a4419d267"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4b5aea19598924424eae9f44",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_coverage_v2/response_0021.json",
+      "sha256": "626d0b0527b8a969bb3534c10724b711a8177f7db56475662f5cb53a4419d267"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0001.json",
+      "sha256": "e4b2b9e6285fff773b358ff3b932e01e940bc73431f0deaae669d57647f19bb0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0002.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0003.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0004.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0005.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0006.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0007.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0008.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0009.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0010.json",
+      "sha256": "a963b2041774dc4cbcac7829c473ab9ed78c9b0b047452823e524104da1bde2e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_685ae4dbc9fcdad02276e7ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/response_0011.json",
+      "sha256": "3c66c2bc5e26e3b96db77fdbefbdfe98705ece7b2a343950a5f7ec8690b34530"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0001.json",
+      "sha256": "d6cc56badaab9d606ee8a9879a846deb546c2f4fcbe28fcaa89309723a3d3938"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0002.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0003.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0004.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0005.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0006.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0007.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0008.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0009.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0010.json",
+      "sha256": "e4b8b8664ed13a0b3c2209416491b034d9c2f7fd7fdd654792bd31c37be11490"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_77a5d9784cc41a8272d2a11a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/response_0011.json",
+      "sha256": "d28fe5a0910c5a629c54215f4e027b0fba7bb96ee6bbb47dca55640081944a89"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0001.json",
+      "sha256": "76ddf5f3cf22ff183412e28e6ee24e038f5c64f266da69c3581883b19f5fb388"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_06073d34a5e221be7a6714c5",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0002.json",
+      "sha256": "3991f2714d749fd57484faea2a13dbdecd5b63612bbfb0b4f81cc94eb904281c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_06073d34a5e221be7a6714c5",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0003.json",
+      "sha256": "3991f2714d749fd57484faea2a13dbdecd5b63612bbfb0b4f81cc94eb904281c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_06073d34a5e221be7a6714c5",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0004.json",
+      "sha256": "3991f2714d749fd57484faea2a13dbdecd5b63612bbfb0b4f81cc94eb904281c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_06073d34a5e221be7a6714c5",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0005.json",
+      "sha256": "3991f2714d749fd57484faea2a13dbdecd5b63612bbfb0b4f81cc94eb904281c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_06073d34a5e221be7a6714c5",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0006.json",
+      "sha256": "3991f2714d749fd57484faea2a13dbdecd5b63612bbfb0b4f81cc94eb904281c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_06073d34a5e221be7a6714c5",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0007.json",
+      "sha256": "3991f2714d749fd57484faea2a13dbdecd5b63612bbfb0b4f81cc94eb904281c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_06073d34a5e221be7a6714c5",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0008.json",
+      "sha256": "3991f2714d749fd57484faea2a13dbdecd5b63612bbfb0b4f81cc94eb904281c"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_06073d34a5e221be7a6714c5",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/response_0009.json",
+      "sha256": "9ff5d49873c62c45dc0a57ec0c935656ca056dfb1eebd542d62ccd683d4832b5"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0001.json",
+      "sha256": "d3f99126ac26765e98c1f3ec87081cd5838180810e714f46b93f1212753d3cd0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_218a6acacbb53543f7146c20",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0002.json",
+      "sha256": "35f6cb3971e48d6a94c8385f3def1fb7804b134d9b1e0aae2604462a6990f946"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_218a6acacbb53543f7146c20",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0003.json",
+      "sha256": "35f6cb3971e48d6a94c8385f3def1fb7804b134d9b1e0aae2604462a6990f946"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_218a6acacbb53543f7146c20",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0004.json",
+      "sha256": "35f6cb3971e48d6a94c8385f3def1fb7804b134d9b1e0aae2604462a6990f946"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_218a6acacbb53543f7146c20",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0005.json",
+      "sha256": "35f6cb3971e48d6a94c8385f3def1fb7804b134d9b1e0aae2604462a6990f946"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_218a6acacbb53543f7146c20",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0006.json",
+      "sha256": "35f6cb3971e48d6a94c8385f3def1fb7804b134d9b1e0aae2604462a6990f946"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_218a6acacbb53543f7146c20",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0007.json",
+      "sha256": "35f6cb3971e48d6a94c8385f3def1fb7804b134d9b1e0aae2604462a6990f946"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_218a6acacbb53543f7146c20",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0008.json",
+      "sha256": "35f6cb3971e48d6a94c8385f3def1fb7804b134d9b1e0aae2604462a6990f946"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_218a6acacbb53543f7146c20",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel/response_0009.json",
+      "sha256": "daa467067eb7711afd62dc885f53accc7321d53edd771966a5a5d28120e335c2"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel_v2/response_0001.json",
+      "sha256": "d359d2672e7910f84417de87c00c2154eac07d8b0d8e9bb2b5a10177818885c2"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_bd5a627f599062369add8017",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel_v2/response_0002.json",
+      "sha256": "4cf437ebbc82be82c734f3e0add9a4db9b3ee63418c3c8cc2cc960af42c3caec"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_bd5a627f599062369add8017",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel_v2/response_0003.json",
+      "sha256": "4cf437ebbc82be82c734f3e0add9a4db9b3ee63418c3c8cc2cc960af42c3caec"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_bd5a627f599062369add8017",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel_v2/response_0004.json",
+      "sha256": "4cf437ebbc82be82c734f3e0add9a4db9b3ee63418c3c8cc2cc960af42c3caec"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_bd5a627f599062369add8017",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel_v2/response_0005.json",
+      "sha256": "819d43c14b0939d071d1c71f01c89f0e72430c8942fae4cc91efe362bff2bc37"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/response_0001.json",
+      "sha256": "9b96dce31b9654b9e9fa3b655e12eccf8dfae8f2c51306e409d28d9ea0408bd7"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_00fd5b2279bc968d27003529",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/response_0002.json",
+      "sha256": "6efb453cb44952dcdb228dc4028da1620aef2a0e8cf15ee7d47705f0e4f651ef"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_00fd5b2279bc968d27003529",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/response_0003.json",
+      "sha256": "6efb453cb44952dcdb228dc4028da1620aef2a0e8cf15ee7d47705f0e4f651ef"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_00fd5b2279bc968d27003529",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/response_0004.json",
+      "sha256": "6efb453cb44952dcdb228dc4028da1620aef2a0e8cf15ee7d47705f0e4f651ef"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_00fd5b2279bc968d27003529",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/response_0005.json",
+      "sha256": "6efb453cb44952dcdb228dc4028da1620aef2a0e8cf15ee7d47705f0e4f651ef"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_00fd5b2279bc968d27003529",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/response_0006.json",
+      "sha256": "6efb453cb44952dcdb228dc4028da1620aef2a0e8cf15ee7d47705f0e4f651ef"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_00fd5b2279bc968d27003529",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/response_0007.json",
+      "sha256": "0014e6b25ce2566e4dedf4daa486d6f063705d62f7bf57d8d200b202332a9513"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/response_0001.json",
+      "sha256": "a28198cf59e320b43389260e70f3f4093bfdd9aa89da759ed834774ade8957a8"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_0dbf767f418965c71ace9b4f",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/response_0002.json",
+      "sha256": "518faf5bc7261d0764bf40b816ed2b29a2b2bfdeba5e758e5a6b71ec3dd8bb44"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_0dbf767f418965c71ace9b4f",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/response_0003.json",
+      "sha256": "518faf5bc7261d0764bf40b816ed2b29a2b2bfdeba5e758e5a6b71ec3dd8bb44"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_0dbf767f418965c71ace9b4f",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/response_0004.json",
+      "sha256": "518faf5bc7261d0764bf40b816ed2b29a2b2bfdeba5e758e5a6b71ec3dd8bb44"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_0dbf767f418965c71ace9b4f",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/response_0005.json",
+      "sha256": "518faf5bc7261d0764bf40b816ed2b29a2b2bfdeba5e758e5a6b71ec3dd8bb44"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_0dbf767f418965c71ace9b4f",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/response_0006.json",
+      "sha256": "518faf5bc7261d0764bf40b816ed2b29a2b2bfdeba5e758e5a6b71ec3dd8bb44"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_0dbf767f418965c71ace9b4f",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/response_0007.json",
+      "sha256": "518faf5bc7261d0764bf40b816ed2b29a2b2bfdeba5e758e5a6b71ec3dd8bb44"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_0dbf767f418965c71ace9b4f",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/response_0008.json",
+      "sha256": "317c82855cdd037741509039b8cc2300b49bcb71f720ce20044df67f768ce1b2"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_unadjusted/response_0001.json",
+      "sha256": "d3493e3cd3e58b0592019b4a65d8576d878140317916dc02dbbcfd62d10cdfe1"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_54c1f6a2707e22e9e3beac4a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_unadjusted/response_0002.json",
+      "sha256": "2e8f791787fa67665cb4f32c68d7a240a2fe34c4ee34ca2b2ded69b9bd988a4d"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_54c1f6a2707e22e9e3beac4a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_unadjusted/response_0003.json",
+      "sha256": "2e8f791787fa67665cb4f32c68d7a240a2fe34c4ee34ca2b2ded69b9bd988a4d"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_54c1f6a2707e22e9e3beac4a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_unadjusted/response_0004.json",
+      "sha256": "2e8f791787fa67665cb4f32c68d7a240a2fe34c4ee34ca2b2ded69b9bd988a4d"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_54c1f6a2707e22e9e3beac4a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_unadjusted/response_0005.json",
+      "sha256": "2e8f791787fa67665cb4f32c68d7a240a2fe34c4ee34ca2b2ded69b9bd988a4d"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_54c1f6a2707e22e9e3beac4a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_unadjusted/response_0006.json",
+      "sha256": "c357f6bb4a1432567d18545fd346a874ce2ca350473238d30da274100a1db92c"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/response_0001.json",
+      "sha256": "1c5c4e86b7ea2d6823a0ba555b0d76887242311195abc07087f1f7173977e0e2"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_2117008be807d53aa2d392ad",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/response_0002.json",
+      "sha256": "55816cff82fc6f1f108f2661b0ba4fb8b3d14344cc1642d53c43e983cba73e5e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_2117008be807d53aa2d392ad",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/response_0003.json",
+      "sha256": "55816cff82fc6f1f108f2661b0ba4fb8b3d14344cc1642d53c43e983cba73e5e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_2117008be807d53aa2d392ad",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/response_0004.json",
+      "sha256": "55816cff82fc6f1f108f2661b0ba4fb8b3d14344cc1642d53c43e983cba73e5e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_2117008be807d53aa2d392ad",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/response_0005.json",
+      "sha256": "55816cff82fc6f1f108f2661b0ba4fb8b3d14344cc1642d53c43e983cba73e5e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_2117008be807d53aa2d392ad",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/response_0006.json",
+      "sha256": "55816cff82fc6f1f108f2661b0ba4fb8b3d14344cc1642d53c43e983cba73e5e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_2117008be807d53aa2d392ad",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/response_0007.json",
+      "sha256": "3298fa28b7be1204a9f2a9bdffda0449b0affcfb0113fcdc536910fb6b7057e6"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/response_0001.json",
+      "sha256": "8cb36aa3d669f51053073e883bb3e8cd7888cb2a5421e0188f5eb9cae1fe6c5e"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b54558c5a8dd9bfb29b3362c",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/response_0002.json",
+      "sha256": "ebc12694208b63e98a343602f314cd2ec76b91fcc189122fb8e177434b91f0a0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b54558c5a8dd9bfb29b3362c",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/response_0003.json",
+      "sha256": "ebc12694208b63e98a343602f314cd2ec76b91fcc189122fb8e177434b91f0a0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b54558c5a8dd9bfb29b3362c",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/response_0004.json",
+      "sha256": "ebc12694208b63e98a343602f314cd2ec76b91fcc189122fb8e177434b91f0a0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b54558c5a8dd9bfb29b3362c",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/response_0005.json",
+      "sha256": "ebc12694208b63e98a343602f314cd2ec76b91fcc189122fb8e177434b91f0a0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b54558c5a8dd9bfb29b3362c",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/response_0006.json",
+      "sha256": "ebc12694208b63e98a343602f314cd2ec76b91fcc189122fb8e177434b91f0a0"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_b54558c5a8dd9bfb29b3362c",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/response_0007.json",
+      "sha256": "da08f62f9cb86c864565dfa4593f5475443f0f38cb365cab7b696af0935f5d5e"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/roc_price_reference/response_0001.json",
+      "sha256": "45978a6ea835a825244cee994ab910a7e7f8cc1324b6930c55c60bce88572879"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_ac05d8b30723f686e6f32663",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/roc_price_reference/response_0002.json",
+      "sha256": "86282108db5d60b2f548621ff31c4cee23a39afc87d9fd81c8d05cf4be13ff8b"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_ac05d8b30723f686e6f32663",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/roc_price_reference/response_0003.json",
+      "sha256": "86282108db5d60b2f548621ff31c4cee23a39afc87d9fd81c8d05cf4be13ff8b"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_ac05d8b30723f686e6f32663",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/roc_price_reference/response_0004.json",
+      "sha256": "86282108db5d60b2f548621ff31c4cee23a39afc87d9fd81c8d05cf4be13ff8b"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_ac05d8b30723f686e6f32663",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/roc_price_reference/response_0005.json",
+      "sha256": "0df0e67567fa799306bf494ca02e0febbed08bb062d0d2c5323c2056114861ef"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/security_spans/response_0001.json",
+      "sha256": "f5677e94589b1ffd6f4e063ba3b9ff0ad27c30c1f65459db8da4bfe2577a4e6f"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4815ac6ac65155d5770f23f2",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/security_spans/response_0002.json",
+      "sha256": "b91f23af67028a273944019c66d7fe15bfe768e4a29ad2284e988ba8d22e21be"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_4815ac6ac65155d5770f23f2",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/security_spans/response_0003.json",
+      "sha256": "70fcc417baf4aa024e88540b4947dde05d9e457ab0e530c200a43a2007b1845a"
+    },
+    {
+      "method": "POST",
+      "path": "lake/queries",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0001.json",
+      "sha256": "deb8bd2c579121078a3ad48668ebdc4e4cf5a20005d54f520f9555033d2bc7c3"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0002.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0003.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0004.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0005.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0006.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0007.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0008.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0009.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0010.json",
+      "sha256": "3583771a586c8dc2250130463cd03e030d8a166f2fa3e61449ee8bb0f79f8131"
+    },
+    {
+      "method": "GET",
+      "path": "lake/queries/lq_255313d188cdb72ace43a738",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/response_0011.json",
+      "sha256": "344b259bf96cb2fa8c4f29cbe25268f481fbbc4b1623d4776d80c58afd8dcdf5"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/catalog.json",
+      "sha256": "2a6ff3a6bc806949b80eab1cfd1541bfb0c0eaff2a89eddd02f4c791004ce21a",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/dividends",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_dividends.json",
+      "sha256": "0f055fd98937d98561022c97aacfaf7d2c2d7169f52dd8c64257592d439744b8",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/insider_filings",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_insider_filings.json",
+      "sha256": "cb0ccfcaaa594f506b0a1eb897f99a776cf87f462bb4c8d79c434c311a71eb64",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/insider_transactions",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_insider_transactions.json",
+      "sha256": "b1b707479f4fe25f824333e79586f561bdbc7c6ec0970dec0a1ed954cec14f00",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/institutional_filings",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_institutional_filings.json",
+      "sha256": "089f4923f3303742f0994d1aac93961774fbc27c2c8d64f9a605730f9d363456",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/institutional_holdings",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_institutional_holdings.json",
+      "sha256": "459fdc443109bb3506eadb665b5f6afda4fe6695f7e2387d2c4fd25c9041f4be",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/sec_daily_ohlc",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_sec_daily_ohlc.json",
+      "sha256": "8981eeb858c1064af677d6c4dbdd7f87d7c24bb53b7cd688d154fe6b7805d69f",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/security_segments",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_security_segments.json",
+      "sha256": "760bb40da2f145fba8864824cdde711eb7b249556c45762b01ab12aa27008da0",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/stock_market_cap",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_stock_market_cap.json",
+      "sha256": "cd34010ada1527f506a01851643444905f1364e07c236f9cf8b2c8cb8809f5ff",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "method": "GET metadata",
+      "path": "lake/catalog/lake/stock_splits",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/describe_stock_splits.json",
+      "sha256": "297b98cc152488f3785d77873a7530620fd0a05d6a3f2f3c1e19634d4cf7752c",
+      "scope": "Current declarations, not historical observations"
+    },
+    {
+      "tool": "query_backtest_events",
+      "request": {
+        "backtest_id": "6acb87638c2f7fb888b3c0ed",
+        "start_date": "2016-01-04T05:00:00.000Z",
+        "end_date": "2016-01-09T04:59:59.999Z",
+        "page": 1,
+        "page_size": 50,
+        "raw": true,
+        "include_noise_events": true,
+        "include_condition_audit": true,
+        "collapse_repeats": false
+      },
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/events_0001.json",
+      "sha256": "054e944e53789ec689ddf5a679be7511e3432b1f635616b6b4435e73343a777a"
+    },
+    {
+      "tool": "query_backtest_events",
+      "request": {
+        "backtest_id": "6acb87638c2f7fb888b3c0ed",
+        "start_date": "2016-01-04T05:00:00.000Z",
+        "end_date": "2016-01-09T04:59:59.999Z",
+        "page": 2,
+        "page_size": 50,
+        "raw": true,
+        "include_noise_events": true,
+        "include_condition_audit": true,
+        "collapse_repeats": false
+      },
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/events_0002.json",
+      "sha256": "a396e6285455260a8921252e24b1c16c15cb972a1c77cd6c33dd0838c3087f57"
+    },
+    {
+      "tool": "query_backtest_events",
+      "request": {
+        "backtest_id": "6acb87638c2f7fb888b3c0ed",
+        "start_date": "2016-01-04T05:00:00.000Z",
+        "end_date": "2016-01-09T04:59:59.999Z",
+        "page": 3,
+        "page_size": 50,
+        "raw": true,
+        "include_noise_events": true,
+        "include_condition_audit": true,
+        "collapse_repeats": false
+      },
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/events_0003.json",
+      "sha256": "ae2a28836fdfc41f74d597dc956b4a2c781cce36a252e31edaeec9a9f52e0a4d"
+    },
+    {
+      "tool": "query_backtest_events",
+      "request": {
+        "backtest_id": "6acb87638c2f7fb888b3c0ed",
+        "start_date": "2016-01-04T05:00:00.000Z",
+        "end_date": "2016-01-09T04:59:59.999Z",
+        "page": 4,
+        "page_size": 50,
+        "raw": true,
+        "include_noise_events": true,
+        "include_condition_audit": true,
+        "collapse_repeats": false
+      },
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/events_0004.json",
+      "sha256": "d21f0e3a07be3540e4d852d3f2b5465158da080f27b850e0ee4f0b8b3549000c"
+    },
+    {
+      "tool": "query_backtest_events",
+      "request": {
+        "backtest_id": "6acb87638c2f7fb888b3c0ed",
+        "start_date": "2016-01-04T05:00:00.000Z",
+        "end_date": "2016-01-09T04:59:59.999Z",
+        "page": 5,
+        "page_size": 50,
+        "raw": true,
+        "include_noise_events": true,
+        "include_condition_audit": true,
+        "collapse_repeats": false
+      },
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/events_0005.json",
+      "sha256": "0b67c7842797316da513febd53b8ee9ea13b8e7b9764b67734dc8e092fb7e006"
+    },
+    {
+      "tool": "query_backtest_events",
+      "request": {
+        "backtest_id": "6acb87638c2f7fb888b3c0ed",
+        "start_date": "2016-01-04T05:00:00.000Z",
+        "end_date": "2016-01-09T04:59:59.999Z",
+        "page": 6,
+        "page_size": 50,
+        "raw": true,
+        "include_noise_events": true,
+        "include_condition_audit": true,
+        "collapse_repeats": false
+      },
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/events_0006.json",
+      "sha256": "78df2550122bc4d5322e4fc0f319e5304181e1491085bc6d12bd876ab1600adc"
+    },
+    {
+      "tool": "query_backtest_events",
+      "request": {
+        "backtest_id": "6acb88758c2f7fb888b3c16a",
+        "start_date": "2020-08-06T04:00:00.000Z",
+        "end_date": "2020-09-02T03:59:59.999Z",
+        "page": 1,
+        "page_size": 50,
+        "raw": true,
+        "include_noise_events": true,
+        "include_condition_audit": true,
+        "collapse_repeats": false
+      },
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/corporate_probe/events_0001.json",
+      "sha256": "df104f8e2f8f6ff3396a4e399d4a97e204e8a258e6f3bb914e4fc25537ba52c1"
+    },
+    {
+      "tool": "query_backtest_events",
+      "request": {
+        "backtest_id": "6acb88758c2f7fb888b3c16a",
+        "start_date": "2020-08-06T04:00:00.000Z",
+        "end_date": "2020-09-02T03:59:59.999Z",
+        "page": 2,
+        "page_size": 50,
+        "raw": true,
+        "include_noise_events": true,
+        "include_condition_audit": true,
+        "collapse_repeats": false
+      },
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/corporate_probe/events_0002.json",
+      "sha256": "c0ac4a96fcaf20ec04842c568e43204ec0dbad7ce2bb758c46897b1adb451218"
+    },
+    {
+      "method": "POST",
+      "path": "backtests/batch",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/response_0001.json",
+      "sha256": "9b0f9db49ecdbaea410c5b7aeb6bd895be6c9e0db19fdafd8371583ab3c1cbe0",
+      "scope": "Authorized diagnostic; performance fields unused"
+    },
+    {
+      "method": "GET",
+      "path": "backtests/6acb87638c2f7fb888b3c0ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/response_0002.json",
+      "sha256": "bc1576ca6d711cc46f406ffd82533d4e3ed5c7f6b55c0e53def8d4cbfbf568d6",
+      "scope": "Authorized diagnostic; performance fields unused"
+    },
+    {
+      "method": "GET",
+      "path": "backtests/6acb87638c2f7fb888b3c0ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/response_0003.json",
+      "sha256": "81dbb2b4188b52e8cc2629a2a69c58d2c6ebccc63c604e76c247a5d8e097594f",
+      "scope": "Authorized diagnostic; performance fields unused"
+    },
+    {
+      "method": "GET",
+      "path": "backtests/6acb87638c2f7fb888b3c0ed",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/native_probe/response_0004.json",
+      "sha256": "81dbb2b4188b52e8cc2629a2a69c58d2c6ebccc63c604e76c247a5d8e097594f",
+      "scope": "Authorized diagnostic; performance fields unused"
+    },
+    {
+      "method": "POST",
+      "path": "backtests/batch",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/corporate_probe/response_0001.json",
+      "sha256": "bbebd0a2a65375f7f6c89702692e58d25fa88bd579bc4ee81791e3a0f7ab5562",
+      "scope": "Authorized diagnostic; performance fields unused"
+    },
+    {
+      "method": "GET",
+      "path": "backtests/6acb88758c2f7fb888b3c16a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/corporate_probe/response_0002.json",
+      "sha256": "63127cecfdcdb6097b7b97cea7e64c6d174219ba2e8b9ef91f16d7e6439bdb48",
+      "scope": "Authorized diagnostic; performance fields unused"
+    },
+    {
+      "method": "GET",
+      "path": "backtests/6acb88758c2f7fb888b3c16a",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/corporate_probe/response_0003.json",
+      "sha256": "963c1f6799173f410d70e216357fb27b93ed4832729113a89d2a833269e30252",
+      "scope": "Authorized diagnostic; performance fields unused"
+    },
+    {
+      "tool": "public documentation GET",
+      "url": "https://nexustrade.io/docs/features/backtesting",
+      "raw_response": "data/raw/EXP002/audit/raw/runtime_20261011/pricing_documentation.json",
+      "sha256": "38fa5aa98362ecac6a33d8b3e80f9fc0d6b2144007bad6db77ae6b3c702f6d45",
+      "scope": "Current pricing metadata only"
+    }
+  ],
+  "cutoff_incidents": [],
+  "quarantined_responses": [],
+  "performance_queries": 0,
+  "portfolio_writes": 0,
+  "optimization_jobs": 0,
+  "deployment_or_trade_calls": 0,
+  "original_wire_body_note": "SQL requests are exact persisted inputs; diagnostic SDK bodies reconstructed deterministically offline, not claimed original network receipts. Transport response JSON and returned Parquet parts preserved. No API credentials/headers logged.",
+  "download_receipts": [
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/filing_samples/parts/lq_be4aa70117757f2d939a1537/part-00000.parquet",
+      "sha256": "17b4dfaf9dc9528e54061dbdef6fbf44f71b5a7ac17c0540d4a1b8b978ce04a0",
+      "bytes": 5648
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/filing_timing/parts/lq_b475eaa78de5534541d42ac3/part-00000.parquet",
+      "sha256": "50f8fccfd47fe70691b9c58106a3128b1153cb7c03f39b0a6f2c494aee303dde",
+      "bytes": 3263
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/insider_zero_check/parts/lq_55cc65ae24019b4e52b15b67/part-00000.parquet",
+      "sha256": "01fdefc7a0d67d20ce5c3ca682732740f0f1c7942eafdf9c693fdea10569cc27",
+      "bytes": 1378
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/institutional_cohorts/parts/lq_e84bcefb61996345204ed116/part-00000.parquet",
+      "sha256": "a967b7c0772497683bb55e26f1bf3652ff58986b606eb7572ca381a6145d684d",
+      "bytes": 2668
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/joint_presence/parts/lq_685ae4dbc9fcdad02276e7ed/part-00000.parquet",
+      "sha256": "b6a23d5fe0432f34ab7550192ba19d83c48716c82899bce2f6041e282b64d38c",
+      "bytes": 3346
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_coverage/parts/lq_77a5d9784cc41a8272d2a11a/part-00000.parquet",
+      "sha256": "b69987565eb7ed0e5e939e19c1ca2b84f5e15a584ce605451c746cc0f2620228",
+      "bytes": 3421
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_equity_panel/parts/lq_06073d34a5e221be7a6714c5/part-00000.parquet",
+      "sha256": "7d560edd2921370d4aab4233da9a98530ae5ee586e7f865b827525a14e93a164",
+      "bytes": 1479642
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/ownership_panel_v2/parts/lq_bd5a627f599062369add8017/part-00000.parquet",
+      "sha256": "00d04aed55449a5aca4dd00f24b15fb90233ce9e05add27af2db15e6ac809f00",
+      "bytes": 1534168
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/price_coverage/parts/lq_00fd5b2279bc968d27003529/part-00000.parquet",
+      "sha256": "95f0c84d5d2ce18e95ffc51bdd661db03b77bfdea5a4df5a067571afd70abecf",
+      "bytes": 2623
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel/parts/lq_0dbf767f418965c71ace9b4f/part-00000.parquet",
+      "sha256": "92f6c525cdff4ed6527c3239e09b663cdace1584c44cb2598abe8b04879b983a",
+      "bytes": 3392404
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_unadjusted/parts/lq_54c1f6a2707e22e9e3beac4a/part-00000.parquet",
+      "sha256": "ae4a1c81c4025356d0493cf2ffe54cd7f7af25f61c96057c63630a6d46069db9",
+      "bytes": 3385887
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/price_panel_warmup/parts/lq_2117008be807d53aa2d392ad/part-00000.parquet",
+      "sha256": "9ee060b8bb76ea9d71615333484ab463f4550318bc5948e8923caed78ead9b13",
+      "bytes": 3380056
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/purchase_quality/parts/lq_b54558c5a8dd9bfb29b3362c/part-00000.parquet",
+      "sha256": "81e46e1487115ab8ef5240b01ad50a39e662acd3b1f1fbd8e180f48a0c771d67",
+      "bytes": 1656
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/roc_price_reference/parts/lq_ac05d8b30723f686e6f32663/part-00000.parquet",
+      "sha256": "7e92645d57c21ee3d5f7f4d9d71b08dca6dded475a2abff017361b711137af11",
+      "bytes": 7623
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/security_spans/parts/lq_4815ac6ac65155d5770f23f2/part-00000.parquet",
+      "sha256": "3eda017492ceb75cfaa1d782187cd897da5a1c19e8a5f27467837a954d22bac7",
+      "bytes": 301735
+    },
+    {
+      "part_file": "data/raw/EXP002/audit/raw/runtime_20261011/universe_types/parts/lq_255313d188cdb72ace43a738/part-00000.parquet",
+      "sha256": "6171ec02c8cb7cadb27f446fd43f3e3622bb7b409947b36acf9ca5e7e78ad2ac",
+      "bytes": 1724
+    }
+  ],
+  "local_checks": {
+    "command": "python -m unittest discover -s tests -v",
+    "tests_passed": 80,
+    "tests_failed": 0,
+    "full_suite": true,
+    "exp001_test_access": "Explicitly authorized software regression only; never EXP002 evidence",
+    "coverage_processor": "python -m src.research.coverage_exp002",
+    "sql_scope": "No performance/corpus/portfolio/backtest tables in Lake queries; all source predicates bounded at or before 2020-12-31; 2014 price warmup authorized pre-cutoff."
+  }
+}

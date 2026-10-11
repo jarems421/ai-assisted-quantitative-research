@@ -1,6 +1,6 @@
 # EXP002 — research design draft
 
-**DRAFT, not frozen; no Nexus observation queries or jobs performed.** The [specification](spec.json) contains proposed methodological choices and a bounded declaration audit. All source and universe point-in-time flags remain false. [Provenance](provenance.json) separates VERIFIED declarations/documentation, PROPOSED choices and UNRESOLVED runtime evidence. No spend is approved: every stage token ceiling is zero. The supplied [Aurora memo](aurora_research_memo.md) is preserved verbatim as external evidence; its heading and self-reported activity are not independent verification.
+**DRAFT ? NEEDS DESIGN REVISION; not frozen.** The authorized pre-freeze audit submitted 19 bounded Lake jobs and two diagnostic daily backtests. All PIT flags remain false. [Provenance](provenance.json) separates verified sample behavior, proposals and unresolved evidence. The owner authorized up to 1,000 included tokens for this audit; candidate-stage budgets remain zero and authorize no candidate studies. The original [Aurora memo](aurora_research_memo.md) remains unchanged external evidence.
 
 ## Question and proposed hypothesis
 
@@ -42,7 +42,7 @@ These are bounded design ranges, **not empirically supported optima or compiled 
 
 | Concept | Proposed grid / fixed choice |
 |---|---|
-| Momentum | 126 or 252 trading sessions; lag the input close |
+| Momentum | Proposed 180 or 365 elapsed calendar days; prior-completed-bar lag required. Native 126/252 Day is not 126/252 sessions in the runtime sample. |
 | Insider accumulation | 30 or 90 calendar days of publicly available qualifying disclosures |
 | Institutional filing recency | 180 or 365 calendar days; limits eligible filing age, not a rolling sum of quarterly ownership changes |
 | Holdings | 20 or 40 |
@@ -83,7 +83,7 @@ Use the existing independent metrics: true New York session closes, simple adjac
 
 Record every attempted family, cell, failure, replacement and unresolved result. Proposed paired moving-block bootstrap uses aligned daily return differences, 20-session blocks, 10,000 draws and seed 2002. Bootstrap intervals alone are not Holm-adjusted p-values: the existing helper reports percentile intervals, so a valid null-centered one-sided test and its audited implementation remain unresolved before inferential claims. Proposed Holm familywise alpha is 0.05 across full-versus-momentum, full-versus-momentum+insider and full-versus-momentum+institutional comparisons and all declared confirmatory windows. Freeze the exact test inventory before results; parameter search and winner-selection bias remain even after adjusting these comparisons. Report effect sizes, uncertainty and nonconfirmation without treating absence of significance as equivalence.
 
-Token ceilings are zero because no spending was authorized. Actual cost needs a current quote, asset counts, audited job amplification, event multiplier and server preview. The dated pricing file is metadata, not an account quote. Aurora cost is unknown. Do not infer free execution from the daily-stock price entry. Intraday research is out of scope.
+Candidate-stage ceilings remain zero. A separate owner authorization permits up to 1,000 included research tokens for pre-freeze coverage/runtime diagnostics. Published daily non-options pricing estimates the two diagnostics at zero; Lake estimates and actual debit/account allowance were not exposed by inspected SDK responses. Record unknowns rather than inventing a receipt. No additional credits, optimization or Aurora jobs were purchased/submitted. Intraday research remains out of scope.
 
 ## Robustness and prospective paper
 
@@ -141,3 +141,21 @@ For later planning, `get_sweep_surface` describes applicable axes. `systematic_s
 Read-only SDK metadata methods are `NexusTradeClient.get_lake_catalog()` and `describe_lake_table(table)`, issuing GETs to the versioned lake catalog. They were not invoked or assumed free. The SDK can create an anonymous workspace when authentication is absent; a later metadata audit must use existing registered authentication and avoid that side effect. [API overview](https://nexustrade.io/docs/api-reference/overview).
 
 **READY FOR COVERAGE AUDIT** means the declaration/partition evidence supports reviewing the next bounded, non-performance audit of pre-cutoff completeness, identities and availability. It does not mean freeze-ready or authorize further data reads, spend, previews or jobs. The cutoff remains **2020-12-31**. Historical lockbox, native PIT coverage, execution/slippage, inferential implementation and actual budgets remain freeze blockers.
+
+## Bounded coverage audit — 2026-10-11
+
+**Historical attempt: BLOCKED before the later authorization.** Earlier READY FOR COVERAGE AUDIT meant readiness to attempt the audit, not established coverage. The [coverage audit](research/coverage_audit.md) stopped before historical reads: SDK Lake SQL carries billing risk and account-specific zero cost/price is unestablished. No Nexus operation, observation query or job occurred.
+
+[Coverage summary](research/coverage_summary.json) contains unmeasured (`null`, not zero) 2015–2020 counts and percentages. No eligible-universe denominator or usable joint start date is established. [PIT](research/pit_audit.md) and [universe](research/universe_audit.md) evidence remain unresolved; [query log](research/coverage_query_log.json) records reads, receipts and the blocked exact operation. PIT flags remain false, windows/thresholds unchanged, budgets zero, Test undesignated and hypothesis unfrozen.
+
+The unchanged Research OS audit rejects PIT availability (exit 2). All 67 existing synthetic tests pass; nine EXP001 real-Test integration tests are excluded to preserve the cutoff. That attempt did not claim full-suite success or commit. The later owner authorization permits diagnostic spending and explicitly permits all EXP001 software-regression tests; current results below supersede those restrictions.
+
+## Authorized source/runtime evidence pack ? current
+
+See [coverage audit](research/coverage_audit.md), [72 monthly/yearly source counts](research/coverage_summary.json), [PIT](research/pit_audit.md), [universe](research/universe_audit.md), [execution](research/execution_audit.md), [native runtime](research/nexus_runtime_audit.md), [all query/job receipts](research/coverage_query_log.json) and [cost](research/cost_receipt.json). No candidate profitability was examined. The earlier declaration-only sections are historical observations; the original Aurora prompt is retained as a pre-runtime artifact and its session-lookback proposal is superseded by the current specification.
+
+The native ROC probe matched calendar-time references in 20/20 samples and completed-session references in 0/20. Proposed momentum horizons are now 180/365 calendar days, recorded in [draft revisions](research/draft_revisions.json); new-length/lag confirmation remains open. Nominal price filters use unadjustedClose. Same-timestamp native signals/fills require explicit lag/scheduling; automatic next-session execution is not assumed. Asynchronous institutional cohorts and versioning need design work before freeze.
+
+Actual source presence is measured, including stable-ID joins and ended-price exclusions. It is not complete native/PIT coverage: verified usable joint counts and a final Development start remain unresolved. Native ALL_US_STOCKS/exchange/OTC parity, cap vintages, price-volume basis, missing/zero contracts, cohort/amendment policy and prospective metric safety are still gates. Current state: **NEEDS DESIGN REVISION**. All PIT flags remain false and the unchanged Research OS audit rejects them. No hypothesis freeze, outer Validation or Test opening occurred.
+
+Reproduce source counts locally with `python -m src.research.coverage_exp002`; run `python -m unittest discover -s tests -v`. EXP001 Test files may be read only by the explicitly authorized software regression checks, never used as EXP002 evidence.
