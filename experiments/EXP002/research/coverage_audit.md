@@ -1,6 +1,11 @@
-# EXP002 pre-freeze coverage audit — 2026-10-11
+# EXP002 pre-freeze coverage audit - revised 2026-10-11
+
+**NEEDS DESIGN REVISION.** The [final design/runtime audit](design_revision.md) and [owner authorization](design_revision_authorization_20261011.md) supersede earlier primary cap/recency/liquidity axes. 2014 ownership warmup is now included. Current coverage counts are source diagnostics only: price-volume adjustment, exchange history and usable native joint signals remain unverified. A final usable Development start is still null.
+
+## Previous coverage/runtime phase
 
 **NEEDS DESIGN REVISION.** The [owner authorization](audit_authorization_20261011.md) supersedes the earlier cost stop: up to 1,000 included research tokens for this audit. Nineteen parameterized Lake jobs and two diagnostic daily backtests were submitted; 16 Lake jobs completed and three failed (two timeout/interruption attempts and a result-row limit). All exact SQL, parameters, IDs, failures, bounds and raw hashes are in [coverage_query_log.json](coverage_query_log.json). No candidate performance, ranking effectiveness, optimization, Aurora job, portfolio creation call, deployment or brokerage action was used. Outer Validation/Test were not queried or defined. Hypothesis remains DRAFT.
+
 
 ## Actual source coverage
 
@@ -41,4 +46,19 @@ See [PIT](pit_audit.md), [universe](universe_audit.md), [execution](execution_au
 
 ## Conditional chronological folds
 
-If joint PIT coverage supports 2015, a conditional five-fold expanding proposal is: train 2015/evaluate 2016; train 2015?2016/evaluate 2017; train 2015?2017/evaluate 2018; train 2015?2018/evaluate 2019; train 2015?2019/evaluate 2020. These folds are not executed or confirmed sufficient. Reconcile inner-selection boundaries, warmup, embargo and evaluation count before freeze. None accesses outer Validation. If coverage invalidates 2015, revise chronology from coverage only, before performance.
+If joint PIT coverage supports 2015, a conditional five-fold expanding proposal is: train 2015/evaluate 2016; train 2015 through 2016/evaluate 2017; train 2015 through 2017/evaluate 2018; train 2015 through 2018/evaluate 2019; train 2015 through 2019/evaluate 2020. These folds are not executed or confirmed sufficient. Reconcile inner-selection boundaries, warmup, embargo and evaluation count before freeze. None accesses outer Validation. If coverage invalidates 2015, revise chronology from coverage only, before performance.
+
+
+## Current revision coverage interpretation
+
+2014 ownership warmup now supplies early rolling source-recency windows; all 72 monthly diagnostics are regenerated in coverage_summary.json. Previous tables describe the earlier audit snapshot and are preserved as history. Current annual diagnostics below still use the old unverified ADV basis; they are not primary universe sizes, native completeness or zero-activity evidence. Market cap is no longer required by the primary proposal. No coverage-based final inception is claimed until critical PIT/source, price warmup and execution gates pass.
+
+
+| Year | CS IDs | Provisional liquid IDs | Insider within liquid | Institutional within liquid | Both within liquid |
+|---|---:|---:|---:|---:|---:|
+| 2015 | 4722 | 1995 | 1838 | 1460 | 1372 |
+| 2016 | 4818 | 2034 | 1873 | 1555 | 1462 |
+| 2017 | 4856 | 2114 | 1936 | 1704 | 1593 |
+| 2018 | 4880 | 2208 | 2037 | 1882 | 1771 |
+| 2019 | 4868 | 2140 | 1959 | 1958 | 1823 |
+| 2020 | 5069 | 2285 | 2053 | 2111 | 1932 |

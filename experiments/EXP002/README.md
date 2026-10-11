@@ -1,6 +1,6 @@
 # EXP002 — research design draft
 
-**DRAFT ? NEEDS DESIGN REVISION; not frozen.** The authorized pre-freeze audit submitted 19 bounded Lake jobs and two diagnostic daily backtests. All PIT flags remain false. [Provenance](provenance.json) separates verified sample behavior, proposals and unresolved evidence. The owner authorized up to 1,000 included tokens for this audit; candidate-stage budgets remain zero and authorize no candidate studies. The original [Aurora memo](aurora_research_memo.md) remains unchanged external evidence.
+**DRAFT - NEEDS DESIGN REVISION; not frozen.** [Final bounded design/runtime audit](research/design_revision.md) removes unsupported market-cap and institutional-recency axes, fixes monthly cadence and USD 10m liquidity, and proposes a 60-day public-cohort gate. Eight full-composite cells remain. All critical PIT flags remain false. Cumulative audit: 24 Lake jobs, two rejected submissions and eight diagnostic backtests; actual token debit is unknown. Candidate-stage budgets remain zero.
 
 ## Question and proposed hypothesis
 
@@ -44,15 +44,15 @@ These are bounded design ranges, **not empirically supported optima or compiled 
 |---|---|
 | Momentum | Proposed 180 or 365 elapsed calendar days; prior-completed-bar lag required. Native 126/252 Day is not 126/252 sessions in the runtime sample. |
 | Insider accumulation | 30 or 90 calendar days of publicly available qualifying disclosures |
-| Institutional filing recency | 180 or 365 calendar days; limits eligible filing age, not a rolling sum of quarterly ownership changes |
+| Institutional cohorts | Fixed proposed 60-day post-quarter buffer; matched adjacent public manager cohorts. Recency grid removed; native reconstruction unresolved. |
 | Holdings | 20 or 40 |
 | Rebalance | Monthly baseline; weekly robustness alternative, exact calendar rules unresolved |
-| Liquidity | $10m or $25m trailing 20-session average dollar volume |
-| Market capitalization | $1bn or $5bn, point in time |
+| Liquidity | Fixed $10m trailing 20 completed-session ADV; $25m robustness only. Price-volume adjustment basis unresolved. |
+| Market capitalization | Removed from primary eligibility and grid; diagnostic concept only. |
 | Deployment / price floor | 95% / $5 fixed |
 | Weights | Equal security weights and equal signal-rank weights |
 
-The six numeric axes imply **64 cells**, not six independent optimization authorizations. A preliminary plan is 9 baseline family runs + 64 full-composite cells + 5 Development folds × (64 training candidates + 1 selected held-out candidate + 3 held-out comparators) + 4 outer-Validation runs + 8 stress scenarios × 4 portfolios + 4 historical-Test runs = **453 evaluation units**. This is planning arithmetic, not a Nexus preview or guaranteed upper bound: it counts repeated baselines and benchmarks, and actual fold/optimizer/stress amplification is unresolved. No grid is approved for execution. Before freeze, replace this proposal with an audited plan capped at 500 total remote evaluation units across the experiment, including failed jobs, controls, all fold internals and ancillary simulations. Reject any compiler/preview that exceeds the cap; do not silently prune after viewing outcomes. The generic v1 planner's 1,000-unit guard does not enforce this proposed aggregate ceiling; experiment-level ledger enforcement must be reviewed before freeze.
+Three two-point axes imply **8 full-composite cells**. [The conditional plan](research/evaluation_plan.json) contains 34 distinct signal-family cells and two benchmarks per five proposed folds, 9 selected Development replays, 54 robustness runs, 9 outer Validation and 9 eventual Test runs, and 20 failed/unresolved reserve: **281 future runs**, plus **8 already attempted diagnostic backtests**, or **289 projected total backtest evaluations**. No server preview or candidate execution is authorized. Do not add axes to reach a cosmetic grid size; preserve the 500-unit aggregate ceiling and reconcile nested amplification before freeze.
 
 Signal alternatives, extra cadence grids, sector portfolios and new weighting schemes add counted trials and require a revised pre-freeze plan. Predeclared stresses diagnose the frozen candidate; they do not select replacements.
 
@@ -83,7 +83,7 @@ Use the existing independent metrics: true New York session closes, simple adjac
 
 Record every attempted family, cell, failure, replacement and unresolved result. Proposed paired moving-block bootstrap uses aligned daily return differences, 20-session blocks, 10,000 draws and seed 2002. Bootstrap intervals alone are not Holm-adjusted p-values: the existing helper reports percentile intervals, so a valid null-centered one-sided test and its audited implementation remain unresolved before inferential claims. Proposed Holm familywise alpha is 0.05 across full-versus-momentum, full-versus-momentum+insider and full-versus-momentum+institutional comparisons and all declared confirmatory windows. Freeze the exact test inventory before results; parameter search and winner-selection bias remain even after adjusting these comparisons. Report effect sizes, uncertainty and nonconfirmation without treating absence of significance as equivalence.
 
-Candidate-stage ceilings remain zero. A separate owner authorization permits up to 1,000 included research tokens for pre-freeze coverage/runtime diagnostics. Published daily non-options pricing estimates the two diagnostics at zero; Lake estimates and actual debit/account allowance were not exposed by inspected SDK responses. Record unknowns rather than inventing a receipt. No additional credits, optimization or Aurora jobs were purchased/submitted. Intraday research remains out of scope.
+Candidate-stage ceilings remain zero. The shared included-token ceiling for the pre-freeze audit is 1,000; the revision is not another separate allowance. Eight diagnostics were attempted (six complete, two failed); 24 Lake jobs were submitted (21 complete, three failed) and two submissions rejected without IDs. Published daily non-options estimates are zero; actual debit and Lake estimates remain unknown. No credits, optimization or Aurora jobs were purchased/submitted.
 
 ## Robustness and prospective paper
 
@@ -159,3 +159,9 @@ The native ROC probe matched calendar-time references in 20/20 samples and compl
 Actual source presence is measured, including stable-ID joins and ended-price exclusions. It is not complete native/PIT coverage: verified usable joint counts and a final Development start remain unresolved. Native ALL_US_STOCKS/exchange/OTC parity, cap vintages, price-volume basis, missing/zero contracts, cohort/amendment policy and prospective metric safety are still gates. Current state: **NEEDS DESIGN REVISION**. All PIT flags remain false and the unchanged Research OS audit rejects them. No hypothesis freeze, outer Validation or Test opening occurred.
 
 Reproduce source counts locally with `python -m src.research.coverage_exp002`; run `python -m unittest discover -s tests -v`. EXP001 Test files may be read only by the explicitly authorized software regression checks, never used as EXP002 evidence.
+
+## Latest freeze blockers
+
+Strict open-market classification (P includes private purchases), amendment/source completeness, executable matched institutional cohorts, historical exchange/OTC, compatible price-volume basis, disclosure/monthly scheduling and full execution semantics, sufficient price warmup and final Development chronology remain critical. A 400-day price warmup for January 2015 is not supplied by the January 2014 extraction. The 2014 ownership source gap has been filled; that does not certify usable native coverage. [Design revision](research/design_revision.md) is the current proposal; legacy memo/prompt and older audit sections remain historical evidence.
+
+The full suite passes 86 tests. `python -m src.research audit EXP002` deliberately remains blocked by unestablished PIT price/corporate-action availability; no gate was weakened.

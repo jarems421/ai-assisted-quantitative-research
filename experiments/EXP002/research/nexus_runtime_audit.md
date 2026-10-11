@@ -17,3 +17,12 @@ At January 8, 2016 close, the 126 reference selects September 8 opening price an
 AAPL's January 8 newest quarter has 43 public managers versus 2,144 prior-quarter managers. This supports a cohort-comparability concern; raw versioned share sums are not deduplicated native reconstructions, and precise attribution of each native change remains unresolved.
 
 P source rows predominantly lack totalValue and some economic dates exceed availability. Raw versions coexist without establishing native replacement semantics. See query log and nexus_runtime_summary.json for sample-scoped evidence. No performance search or freeze occurred.
+
+
+## Design-revision runtime audit (2026-10-11)
+
+[Design revision](design_revision.md) supersedes primary market-cap, liquidity, recency and cadence axes. Five further Lake jobs completed; two SQL requests were rejected before job IDs. One 50-second wait expired; the existing job was polled, not resubmitted. Six diagnostic backtests: four complete, two retained schema failures. Events: 228 rows / seven pages (one empty exhaustion page). New Nexus calls: 66, including two rejected requests; cumulative 261. Actual token debit remains unknown, shared ceiling 1,000 included tokens, no purchases.
+
+2014 source warmup is saved and used locally. Mature cohort completeness supports considering a fixed 60-day gate, never a hindsight completeness input. Native horizons 180/365 evaluate; sample 12.5-Hour operand lag recovers prior completed closes, while one Day does not. Prospective-metric conditions are incompatible with the observed backend; basic dynamic actions without them complete. CQB pruning/liquidation is observed in one case, with unexplained haircut/allocation mechanics. No ALL_US_STOCKS/global candidate simulation substitutes for absent exchange history.
+
+All critical PIT flags remain false. Source classification, amendments/completeness, native matched-cohort parity, volume/price basis, safe monthly disclosure/execution composition and start/folds remain unresolved. No hypothesis freeze, candidate study, optimizer, outer Validation/Test or deployment occurred. One metadata web search returned unsolicited unrelated later vendor performance snippets, excluded and logged in provenance; no linked performance page was opened. The unchanged semantic gate remains a deliberate failure, not weakened to pass.

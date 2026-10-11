@@ -1,8 +1,8 @@
 {
   "experiment_id": "EXP002",
-  "status": "DRAFT_PRE_FREEZE_AUDIT_NEEDS_DESIGN_REVISION",
+  "status": "DRAFT_FINAL_PRE_FREEZE_AUDIT_NEEDS_DESIGN_REVISION",
   "prepared_on": "2026-10-11",
-  "nexus_calls": 195,
+  "nexus_calls": 261,
   "aurora_memo_received": true,
   "frozen": false,
   "execution_authorized": false,
@@ -105,6 +105,12 @@
       "reference": "experiments/EXP002/research/audit_authorization_20261011.md",
       "sha256": "f44cacc3cf2e5d198e8fb3853a9c45260c76a1944ba05daf0aeded6108f8db8e",
       "supports": "1000 included tokens for bounded pre-cutoff audit and diagnostics; full EXP001 software regression; no candidate search or freeze/deployment/held-out access"
+    },
+    {
+      "id": "final_design_revision_20261011",
+      "kind": "owner_authorized_bounded_source_and_runtime_audit",
+      "reference": "research/design_revision.md; research/revision_runtime_summary.json; research/cohort_summary.json; research/design_revision_log.json",
+      "supports": "Verified bounded samples and unfrozen proposals, never strategy performance or comprehensive PIT certification"
     }
   ],
   "evidence_matrix": [
@@ -195,7 +201,8 @@
     "outer_validation": "PROVISIONAL_NOT_AUTHORIZED_FOR_RESEARCH_ACCESS",
     "historical_test": "UNRESOLVED_NO_PERIOD_DESIGNATED",
     "research_cutoff": "FIXED_2020-12-31_FOR_THIS_AUDIT_NO_LATER_OBSERVATIONS",
-    "forward_paper": "UNRESOLVED_START_AFTER_FREEZE_AND_SEPARATE_OWNER_APPROVAL"
+    "forward_paper": "UNRESOLVED_START_AFTER_FREEZE_AND_SEPARATE_OWNER_APPROVAL",
+    "final_usable_development_start": null
   },
   "spending": {
     "approved_tokens": 0,
@@ -235,7 +242,7 @@
     }
   },
   "ready_for_human_freeze_approval": false,
-  "next_action": "Review a bounded pre-cutoff source/coverage/PIT audit plan; no freeze or spend. Registered metadata GET only, never anonymous workspace creation; further observation reads need their own reviewed bounds.",
+  "next_action": "Resolve explicit open-market classification, as-of amendment/source completeness and executable matched cohorts, historical exchange and compatible ADV basis before finalizing Development chronology. No freeze or candidate execution.",
   "aurora_activity_verified": false,
   "declaration_audit": {
     "observed_on": "2026-10-11",
@@ -1421,6 +1428,77 @@
     },
     "processor_sha256": "dae1a94a3b0c779a46cbee69e570a8806cf49975e044043281ef83fc2a7fa0ab",
     "tests_sha256": "9818c9b662515e95dd6719f32699e35a46477ced132687cd40ef31ab197d43ef",
-    "persistent_policy_sha256": "09ab22f32f5159adb50fd2048273509bd9191dfa97b8142b4ba8c3bac5ec05fc"
+    "persistent_policy_sha256": "09ab22f32f5159adb50fd2048273509bd9191dfa97b8142b4ba8c3bac5ec05fc",
+    "artifact_snapshot_commit": "040176c",
+    "snapshot_note": "Historical first-phase artifact hashes/claims retained unchanged; current revision artifacts and tests are under design_revision_20261011."
+  },
+  "design_revision_20261011": {
+    "authorization_sha256": "5a74c3d216dd0da8ee32059d5a310f82e2458bab61370100f5b421d1ba0c2856",
+    "changes": "research/design_revision_log.json",
+    "runtime": "research/revision_runtime_summary.json",
+    "cohorts": "research/cohort_summary.json",
+    "evaluation_plan": "research/evaluation_plan.json",
+    "additional_nexus_calls": 66,
+    "candidate_performance_observed": false,
+    "all_pit_flags_remain_false": true,
+    "actual_tokens": null,
+    "included_shared_token_ceiling": 1000,
+    "critical_blockers": [
+      "Strict open-market classifier absent; P includes private purchases",
+      "Native eligible matched institutional cohorts and amendment lineage not established",
+      "Historical exchange/OTC vintages absent",
+      "Compatible price-volume basis and unique sessions not certified",
+      "Disclosure/lag/monthly execution composition, corporate action basis, slippage and general delisting economics unresolved",
+      "Coverage-supported start, exact chronology and inferential/failure ledger gates not finalized"
+    ],
+    "incidental_public_search_exposure": {
+      "query": "site.nexustrade.io delisted 90% haircut volume adjusted backtest",
+      "purpose": "metadata/execution semantics only",
+      "unexpected_content": "Search returned unrelated 2026 vendor strategy/account performance snippets. Excluded from evidence and design; no linked performance pages opened.",
+      "source_urls": [
+        "https://nexustrade.io/videos/ai-trading-advice-fact-check-part-2-06102026",
+        "https://nexustrade.io/"
+      ],
+      "candidate_performance_accessed": false,
+      "market_or_signal_observations_queried_after_cutoff": false,
+      "mitigation": "Use exact official documentation URLs; do not repeat broad strategy searches."
+    },
+    "artifact_sha256": {
+      "experiments/EXP002/research/audit_authorization_20261011.md": "f44cacc3cf2e5d198e8fb3853a9c45260c76a1944ba05daf0aeded6108f8db8e",
+      "experiments/EXP002/research/cohort_summary.json": "8c350d0dbd1650ff6974a9710852d272aa7dc5881c60a87537f59dc323aaf645",
+      "experiments/EXP002/research/cost_receipt.json": "4f43ce68f93c4caa5a7648cd6ebbe3f605f95cf7b66f34d80addc5126f5f4016",
+      "experiments/EXP002/research/coverage_audit.md": "d91b65d79f1c601856fcaaeebcfcef6ceddc8e671f9e05f8c996646f4852f918",
+      "experiments/EXP002/research/coverage_query_log.json": "eca2692552ae4b58bb6727a6188338fa200afc1b1f30eca52e6073a7ed33c52c",
+      "experiments/EXP002/research/coverage_summary.json": "dd97150f2b6f08c4d3b73e32ca0cc886d3440661b29e2dd40e7b409703e6a15d",
+      "experiments/EXP002/research/design_revision.md": "d00a9c688f69ec822a5f5c04fa7b1b718a6ebaeed244aafcc27e3900349e0f5d",
+      "experiments/EXP002/research/design_revision_authorization_20261011.md": "5a74c3d216dd0da8ee32059d5a310f82e2458bab61370100f5b421d1ba0c2856",
+      "experiments/EXP002/research/design_revision_log.json": "fc067791007ef3abb04770cf268b459548992d9565a734ba92220ad3458616b9",
+      "experiments/EXP002/research/draft_revisions.json": "c02116444a0901313335b060dcf36b759d15e3540acd21017ad9caf272d7e28d",
+      "experiments/EXP002/research/evaluation_plan.json": "4ba3a7b6de97a8d26759399f05ccfe3b4b4b97ea4dc706a81f77fa04aa7dcf1f",
+      "experiments/EXP002/research/execution_audit.md": "3c755c57264ec7e28890fef2d3ba091adebbe99c9fe01238c578b26efaaed49f",
+      "experiments/EXP002/research/nexus_runtime_audit.md": "ef7da56d8ac5261e9097f6c1164735e69cb373993aa2483499e86054f905a1a1",
+      "experiments/EXP002/research/nexus_runtime_summary.json": "0be2424ee3a940e2ae7c9c81c552f0baf761d62748ae2f56162b037722f224d4",
+      "experiments/EXP002/research/pit_audit.md": "f860122ecf47d4fdd31d031d12fa9cc5ecc139efc07afbc9c503d35ca849392f",
+      "experiments/EXP002/research/revision_runtime_summary.json": "8e144d55cdd3f0669365e04ff8509d8ecf7814fcf62c7a76bbd8a4d40b85438b",
+      "experiments/EXP002/research/universe_audit.md": "6d7dd1ba810241fee0b49b3947fd06950200689bfac6ca319a06cf253b0590d4"
+    },
+    "checks": {
+      "full_suite": "86 passed",
+      "json_schema": "valid",
+      "semantic_audit_exit_code": 2,
+      "semantic_audit_block": "PIT daily price/corporate-action availability unestablished",
+      "gates_weakened": false,
+      "freeze": false,
+      "local_reports_byte_deterministic": true
+    },
+    "previous_private_receipts_verified": 316,
+    "spec_sha256": "57c5aa8ccd7f5baaed19d29279dadd24f6fb04696eda114ecccc24de117aed81",
+    "code_sha256": {
+      "src/research/cohorts_exp002.py": "1ada75939fbaf602354f70c7e008bca882be80e9fc4db191a991d0b07e34eea3",
+      "src/research/design_exp002.py": "606bd7548a398b8741bb5aba751a31c67cd1ac9bf2c2729eb1fc1713f8e4e43b",
+      "src/research/coverage_exp002.py": "5be21d2d5f57e16ad18c2dc18fc2b24c16c699238b6feb6bb0406fa3cb435d55",
+      "tests/test_exp002_cohorts.py": "45fd0dfe62afcec7feba697ec9513fa6ecd3ca7de9562c11d6b34c4cfd0b96e9",
+      "tests/test_exp002_design.py": "0e90f98cc87ac9b93b40731f284cface95cac073dd129d11cb982043528f284c"
+    }
   }
 }

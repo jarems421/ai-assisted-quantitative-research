@@ -2684,5 +2684,682 @@
     "exp001_test_access": "Explicitly authorized software regression only; never EXP002 evidence",
     "coverage_processor": "python -m src.research.coverage_exp002",
     "sql_scope": "No performance/corpus/portfolio/backtest tables in Lake queries; all source predicates bounded at or before 2020-12-31; 2014 price warmup authorized pre-cutoff."
+  },
+  "design_revision_20261011": {
+    "scope": "2026-10-11 final pre-freeze design/runtime audit",
+    "authorization": "experiments/EXP002/research/design_revision_authorization_20261011.md",
+    "historical_observation_cutoff": "2020-12-31",
+    "calls": 66,
+    "successful_sdk_json_receipts": 52,
+    "parquet_part_downloads": 5,
+    "mcp_event_pages": 7,
+    "rejected_sql_posts": 2,
+    "lake_attempts": [
+      {
+        "name": "warmup",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi), u AS (SELECT 'insider' dataset,resolvedTicker ticker,availableAt FROM lake.insider_transactions,bounds WHERE availableAt>=CAST(lo AS TIMESTAMP) AND availableAt<CAST(hi+INTERVAL 1 DAY AS TIMESTAMP) AND rowKind='nonderiv' UNION ALL SELECT 'institutional',resolvedTicker,availableAt FROM lake.institutional_holdings,bounds WHERE availableAt>=CAST(lo AS TIMESTAMP) AND availableAt<CAST(hi+INTERVAL 1 DAY AS TIMESTAMP) AND sharesType='SH' AND (putCall IS NULL OR putCall='')) SELECT dataset,ticker,EXTRACT(YEAR FROM availableAt) year,EXTRACT(MONTH FROM availableAt) month,MAX(availableAt) last_availableAt,COUNT(*) source_rows FROM u GROUP BY 1,2,3,4 ORDER BY 1,2,3,4",
+          "params": [
+            "2014-01-01",
+            "2014-12-31"
+          ],
+          "limits": {
+            "timeoutSeconds": 180,
+            "maxRows": 500000,
+            "maxResultBytes": 134217728
+          }
+        },
+        "request_sha256": "e472e493940543f14ba00de6bf900f11cbf4d5ef2ca4eae3e06dbba909050f72",
+        "error": {
+          "status": 400,
+          "code": "invalid_sql",
+          "message": "failed to parse SQL statement",
+          "job_id": null,
+          "replacement": "warmup_v2"
+        },
+        "error_preservation": "Error transcribed from actual SDK shell exception, not original wire response; no job ID returned."
+      },
+      {
+        "name": "warmup_v2",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi), u AS (SELECT 'insider' AS dataset,resolvedTicker AS ticker,availableAt FROM lake.insider_transactions,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND rowKind='nonderiv' AND (transactionDate IS NULL OR transactionDate<=hi) UNION ALL SELECT 'institutional',resolvedTicker,availableAt FROM lake.institutional_holdings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND resolvedTicker IS NOT NULL AND sharesType='SH' AND (putCall IS NULL OR putCall='')) SELECT dataset,ticker,EXTRACT(YEAR FROM availableAt) AS year,EXTRACT(MONTH FROM availableAt) AS month,MAX(availableAt) AS last_availableAt,COUNT(*) AS source_rows FROM u GROUP BY 1,2,3,4 ORDER BY 1,2,3,4",
+          "params": [
+            "2014-01-01",
+            "2014-12-31"
+          ],
+          "limits": {
+            "timeoutSeconds": 180,
+            "maxRows": 1500000,
+            "maxResultBytes": 134217728
+          }
+        },
+        "request_sha256": "af571fe29feb42bc63178e6285698d1987cc238242bdc3fc0fa5b30efe58c902",
+        "submission": {
+          "id": "lq_fb41d23da62a88c49b8d2c0c",
+          "kind": "lake_query",
+          "status": "queued"
+        },
+        "result_receipt": {
+          "id": "lq_fb41d23da62a88c49b8d2c0c",
+          "row_count": 73739,
+          "byte_size": 236647,
+          "result": {
+            "engine": "tigris",
+            "fallbackUsed": false,
+            "catalogVersion": "v1-d62f103f6e177a91",
+            "format": "parquet",
+            "rowCount": 73739,
+            "byteSize": 236647,
+            "schema": [
+              {
+                "name": "dataset",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "ticker",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "year",
+                "type": "BIGINT"
+              },
+              {
+                "name": "month",
+                "type": "BIGINT"
+              },
+              {
+                "name": "last_availableAt",
+                "type": "TIMESTAMP"
+              },
+              {
+                "name": "source_rows",
+                "type": "BIGINT"
+              }
+            ],
+            "parts": [
+              {
+                "part": 0,
+                "byteSize": 236647,
+                "sha256": "13ed8c699334d1a7af08a6b4c18c333ff709fee18512e6f5316a8ec9628b6836"
+              }
+            ],
+            "planReason": "Tigris engine"
+          }
+        }
+      },
+      {
+        "name": "cohort_filings",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi) SELECT accession,cik,submissionType,periodOfReport,availableAt,filingDate,isAmendment,amendmentNo,amendmentType FROM lake.institutional_filings,bounds WHERE availableAt>=CAST(lo AS TIMESTAMP) AND availableAt<CAST(hi+INTERVAL 1 DAY AS TIMESTAMP) AND periodOfReport BETWEEN lo AND hi AND submissionType IN ('13F-HR','13F-HR/A') ORDER BY periodOfReport,cik,availableAt,accession",
+          "params": [
+            "2014-01-01",
+            "2020-12-31"
+          ],
+          "limits": {
+            "timeoutSeconds": 180,
+            "maxRows": 500000,
+            "maxResultBytes": 134217728
+          }
+        },
+        "request_sha256": "2c42f3689a345a79ca4d89fb0f62c45946a11dd3410709cebc50bd04467fa6d2",
+        "submission": {
+          "id": "lq_ba39fdf9a62527db97c92a96",
+          "kind": "lake_query",
+          "status": "queued"
+        },
+        "result_receipt": {
+          "id": "lq_ba39fdf9a62527db97c92a96",
+          "row_count": 130308,
+          "byte_size": 1079625,
+          "result": {
+            "engine": "tigris",
+            "fallbackUsed": false,
+            "catalogVersion": "v1-d62f103f6e177a91",
+            "format": "parquet",
+            "rowCount": 130308,
+            "byteSize": 1079625,
+            "schema": [
+              {
+                "name": "accession",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "cik",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "submissionType",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "periodOfReport",
+                "type": "DATE"
+              },
+              {
+                "name": "availableAt",
+                "type": "TIMESTAMP"
+              },
+              {
+                "name": "filingDate",
+                "type": "DATE"
+              },
+              {
+                "name": "isAmendment",
+                "type": "BOOLEAN"
+              },
+              {
+                "name": "amendmentNo",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "amendmentType",
+                "type": "VARCHAR"
+              }
+            ],
+            "parts": [
+              {
+                "part": 0,
+                "byteSize": 1079625,
+                "sha256": "3998d533cc3fa9bb3625a0eb4e65233afb6857fbfa7affdf13c8517cdc52c6d3"
+              }
+            ],
+            "planReason": "Tigris engine"
+          }
+        }
+      },
+      {
+        "name": "insider_identity",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi), owners AS (SELECT accession,COUNT(*) owner_rows,COUNT(DISTINCT ownerCik) distinct_owners,COUNT(*) FILTER(WHERE ownerCik IS NULL OR ownerCik='') null_owners,COUNT(*) FILTER(WHERE isOfficer OR isDirector) role_owners FROM lake.insider_filings,bounds WHERE availableAt>=CAST(lo AS TIMESTAMP) AND availableAt<CAST(hi+INTERVAL 1 DAY AS TIMESTAMP) GROUP BY accession) SELECT EXTRACT(YEAR FROM t.availableAt) year,t.formType,COUNT(*) purchase_rows,COUNT(DISTINCT t.accession) accessions,COUNT(DISTINCT t.accession||':'||t.rowKind||':'||t.rowSk) distinct_legs,COUNT(*) FILTER(WHERE o.accession IS NULL) missing_owner_join,COUNT(*) FILTER(WHERE o.null_owners>0) legs_with_null_owner,COUNT(*) FILTER(WHERE o.distinct_owners>1) joint_owner_legs,COUNT(*) FILTER(WHERE t.resolvedTicker IS NULL) null_security,COUNT(*) FILTER(WHERE t.shares IS NULL OR t.pricePerShare IS NULL) missing_amount_operands,COUNT(*) FILTER(WHERE o.role_owners>0) officer_director_legs FROM lake.insider_transactions t LEFT JOIN owners o USING(accession),bounds WHERE t.availableAt>=CAST(lo AS TIMESTAMP) AND t.availableAt<CAST(hi+INTERVAL 1 DAY AS TIMESTAMP) AND t.transactionCode='P' AND t.acquiredDisposed='A' AND t.rowKind='nonderiv' GROUP BY 1,2 ORDER BY 1,2",
+          "params": [
+            "2014-01-01",
+            "2020-12-31"
+          ],
+          "limits": {
+            "timeoutSeconds": 180,
+            "maxRows": 500000,
+            "maxResultBytes": 134217728
+          }
+        },
+        "request_sha256": "8571afdbb5cbdfea6f74c8a426892a451ca2366412ca1f0f3db406b6f7800dec",
+        "error": {
+          "status": 400,
+          "code": "invalid_sql",
+          "message": "failed to parse SQL statement",
+          "job_id": null,
+          "replacement": "insider_identity_v2"
+        },
+        "error_preservation": "Error transcribed from actual SDK shell exception, not original wire response; no job ID returned."
+      },
+      {
+        "name": "insider_identity_v2",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi), owners AS (SELECT accession,COUNT(*) owner_rows,COUNT(DISTINCT ownerCik) distinct_owners,SUM(CASE WHEN ownerCik IS NULL OR ownerCik='' THEN 1 ELSE 0 END) null_owners,SUM(CASE WHEN isOfficer OR isDirector THEN 1 ELSE 0 END) role_owners FROM lake.insider_filings,bounds WHERE availableAt>=CAST(lo AS TIMESTAMP) AND availableAt<CAST(hi+INTERVAL 1 DAY AS TIMESTAMP) GROUP BY accession) SELECT EXTRACT(YEAR FROM t.availableAt) AS year,t.formType,COUNT(*) purchase_rows,COUNT(DISTINCT t.accession) accessions,COUNT(DISTINCT t.accession||':'||t.rowKind||':'||t.rowSk) distinct_legs,SUM(CASE WHEN o.accession IS NULL THEN 1 ELSE 0 END) missing_owner_join,SUM(CASE WHEN o.null_owners>0 THEN 1 ELSE 0 END) legs_with_null_owner,SUM(CASE WHEN o.distinct_owners>1 THEN 1 ELSE 0 END) joint_owner_legs,SUM(CASE WHEN t.resolvedTicker IS NULL THEN 1 ELSE 0 END) null_security,SUM(CASE WHEN t.shares IS NULL OR t.pricePerShare IS NULL THEN 1 ELSE 0 END) missing_amount_operands,SUM(CASE WHEN o.role_owners>0 THEN 1 ELSE 0 END) officer_director_legs FROM lake.insider_transactions t LEFT JOIN owners o USING(accession),bounds WHERE t.availableAt>=CAST(lo AS TIMESTAMP) AND t.availableAt<CAST(hi+INTERVAL 1 DAY AS TIMESTAMP) AND t.transactionCode='P' AND t.acquiredDisposed='A' AND t.rowKind='nonderiv' GROUP BY 1,2 ORDER BY 1,2",
+          "params": [
+            "2014-01-01",
+            "2020-12-31"
+          ],
+          "limits": {
+            "timeoutSeconds": 180,
+            "maxRows": 500000,
+            "maxResultBytes": 134217728
+          }
+        },
+        "request_sha256": "c83d069f63f30a0bca6f2b69f896c787477484288cffd149c24c18eed043d565",
+        "submission": {
+          "id": "lq_de2fce9f2dd0febd403abea0",
+          "kind": "lake_query",
+          "status": "queued"
+        },
+        "result_receipt": {
+          "id": "lq_de2fce9f2dd0febd403abea0",
+          "row_count": 28,
+          "byte_size": 2442,
+          "result": {
+            "engine": "tigris",
+            "fallbackUsed": false,
+            "catalogVersion": "v1-d62f103f6e177a91",
+            "format": "parquet",
+            "rowCount": 28,
+            "byteSize": 2442,
+            "schema": [
+              {
+                "name": "year",
+                "type": "BIGINT"
+              },
+              {
+                "name": "formType",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "purchase_rows",
+                "type": "BIGINT"
+              },
+              {
+                "name": "accessions",
+                "type": "BIGINT"
+              },
+              {
+                "name": "distinct_legs",
+                "type": "BIGINT"
+              },
+              {
+                "name": "missing_owner_join",
+                "type": "DOUBLE"
+              },
+              {
+                "name": "legs_with_null_owner",
+                "type": "DOUBLE"
+              },
+              {
+                "name": "joint_owner_legs",
+                "type": "DOUBLE"
+              },
+              {
+                "name": "null_security",
+                "type": "DOUBLE"
+              },
+              {
+                "name": "missing_amount_operands",
+                "type": "DOUBLE"
+              },
+              {
+                "name": "officer_director_legs",
+                "type": "DOUBLE"
+              }
+            ],
+            "parts": [
+              {
+                "part": 0,
+                "byteSize": 2442,
+                "sha256": "70256680de31ad3493cb9d6539aef6e25844225a1bd7048a74141c0dc4a01810"
+              }
+            ],
+            "planReason": "Tigris engine"
+          }
+        }
+      },
+      {
+        "name": "action_price_basis",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi) SELECT ticker,date,openingPrice,closingPrice,unadjustedClose,volume FROM lake.sec_daily_ohlc,bounds WHERE ticker IN ('AAPL','CQB','ROC','SNDK') AND CAST(date AS DATE) BETWEEN lo AND hi AND ((ticker='AAPL' AND CAST(date AS DATE) BETWEEN DATE '2020-08-03' AND DATE '2020-09-04') OR (ticker='SNDK' AND CAST(date AS DATE) BETWEEN DATE '2016-05-02' AND DATE '2016-05-20') OR (ticker IN ('CQB','ROC') AND CAST(date AS DATE) BETWEEN DATE '2014-12-15' AND DATE '2015-03-31')) ORDER BY ticker,date",
+          "params": [
+            "2014-01-01",
+            "2020-12-31"
+          ],
+          "limits": {
+            "timeoutSeconds": 180,
+            "maxRows": 500000,
+            "maxResultBytes": 134217728
+          }
+        },
+        "request_sha256": "f3c8eb4d0b51e745ccb2e3091c26bc8fffe2a0655ca04040f4a96d4afc5b079a",
+        "submission": {
+          "id": "lq_fa23097b2a8bc4d9d260a1ff",
+          "kind": "lake_query",
+          "status": "queued"
+        },
+        "result_receipt": {
+          "id": "lq_fa23097b2a8bc4d9d260a1ff",
+          "row_count": 67,
+          "byte_size": 2569,
+          "result": {
+            "engine": "tigris",
+            "fallbackUsed": false,
+            "catalogVersion": "v1-d62f103f6e177a91",
+            "format": "parquet",
+            "rowCount": 67,
+            "byteSize": 2569,
+            "schema": [
+              {
+                "name": "ticker",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "date",
+                "type": "TIMESTAMP"
+              },
+              {
+                "name": "openingPrice",
+                "type": "DOUBLE"
+              },
+              {
+                "name": "closingPrice",
+                "type": "DOUBLE"
+              },
+              {
+                "name": "unadjustedClose",
+                "type": "DOUBLE"
+              },
+              {
+                "name": "volume",
+                "type": "DOUBLE"
+              }
+            ],
+            "parts": [
+              {
+                "part": 0,
+                "byteSize": 2569,
+                "sha256": "ced43c49a882dd341da1e06f874d910daf5a4226ac1199066a29ccb06ebfabba"
+              }
+            ],
+            "planReason": "Tigris engine"
+          }
+        }
+      },
+      {
+        "name": "issuer_cohorts",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi), f AS (SELECT accession,cik,periodOfReport,availableAt FROM lake.institutional_filings,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND periodOfReport>=lo AND periodOfReport<=DATE '2019-12-31' AND submissionType='13F-HR') SELECT f.periodOfReport,h.resolvedTicker AS ticker,f.cik,MIN(f.availableAt) AS first_availableAt FROM lake.institutional_holdings h JOIN f USING(accession),bounds WHERE CAST(h.availableAt AS DATE) BETWEEN lo AND hi AND h.resolvedTicker IN ('AAPL','MSFT','IBM','XOM','JNJ','JPM','GE','F','WMT','KO') AND h.sharesType='SH' AND (h.putCall IS NULL OR h.putCall='') GROUP BY 1,2,3 ORDER BY 1,2,3",
+          "params": [
+            "2014-01-01",
+            "2020-12-31"
+          ],
+          "limits": {
+            "timeoutSeconds": 180,
+            "maxRows": 500000,
+            "maxResultBytes": 134217728
+          }
+        },
+        "request_sha256": "cf5081c3e2baf581da7786e8fa8fae52b9188316d5824f68efe22dd92471a171",
+        "submission": {
+          "id": "lq_1342cee476789bc3740b9971",
+          "kind": "lake_query",
+          "status": "queued"
+        },
+        "result_receipt": {
+          "id": "lq_1342cee476789bc3740b9971",
+          "row_count": 430976,
+          "byte_size": 743171,
+          "result": {
+            "engine": "tigris",
+            "fallbackUsed": false,
+            "catalogVersion": "v1-d62f103f6e177a91",
+            "format": "parquet",
+            "rowCount": 430976,
+            "byteSize": 743171,
+            "schema": [
+              {
+                "name": "periodOfReport",
+                "type": "DATE"
+              },
+              {
+                "name": "ticker",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "cik",
+                "type": "VARCHAR"
+              },
+              {
+                "name": "first_availableAt",
+                "type": "TIMESTAMP"
+              }
+            ],
+            "parts": [
+              {
+                "part": 0,
+                "byteSize": 743171,
+                "sha256": "9b0d3d906e459f2ba3786f6482be0a8236a27a0dd48653985e218934b8330645"
+              }
+            ],
+            "planReason": "Tigris engine"
+          }
+        },
+        "client_wait_timeout_note": "First 50-second client wait timed out; existing job polled, never resubmitted."
+      }
+    ],
+    "diagnostic_probes": [
+      {
+        "name": "timing_probe",
+        "id": "6acb94dc8c2f7fb888b43a58",
+        "status": "failed",
+        "error": "Schema incompatibility: BSON error. Kind: A deserialization-related error occurred. Message: unknown field `compound`, expected `metric`.",
+        "event_rows": 0,
+        "pages": 0,
+        "event_types": {},
+        "min_simulated_timestamp": null,
+        "max_simulated_timestamp": null
+      },
+      {
+        "name": "timing_probe_v2",
+        "id": "6acb94fa8c2f7fb888b43a80",
+        "status": "completed",
+        "error": null,
+        "event_rows": 80,
+        "pages": 2,
+        "event_types": {
+          "NoSignal": 8,
+          "Market": 8,
+          "Order": 60,
+          "BuySignal": 4
+        },
+        "min_simulated_timestamp": "2016-01-07T14:30:00+00:00",
+        "max_simulated_timestamp": "2016-01-12T21:00:00+00:00"
+      },
+      {
+        "name": "dynamic_probe",
+        "id": "6acb95428c2f7fb888b43abf",
+        "status": "failed",
+        "error": "Schema incompatibility: BSON error. Kind: A deserialization-related error occurred. Message: unknown field `compound`, expected `metric`.",
+        "event_rows": 0,
+        "pages": 0,
+        "event_types": {},
+        "min_simulated_timestamp": null,
+        "max_simulated_timestamp": null
+      },
+      {
+        "name": "dynamic_probe_v2",
+        "id": "6acb95688c2f7fb888b43ada",
+        "status": "completed",
+        "error": null,
+        "event_rows": 18,
+        "pages": 1,
+        "event_types": {
+          "NoSignal": 2,
+          "Market": 4,
+          "RebalanceOrder": 4,
+          "Order": 6,
+          "RebalanceSignal": 2
+        },
+        "min_simulated_timestamp": "2016-01-07T14:30:00+00:00",
+        "max_simulated_timestamp": "2016-01-08T21:00:00+00:00"
+      },
+      {
+        "name": "delisting_probe",
+        "id": "6acb96278c2f7fb888b43b5d",
+        "status": "completed",
+        "error": null,
+        "event_rows": 50,
+        "pages": 2,
+        "event_types": {
+          "NoSignal": 6,
+          "Market": 10,
+          "RebalanceOrder": 8,
+          "Order": 22,
+          "RebalanceSignal": 4
+        },
+        "min_simulated_timestamp": "2015-01-05T14:30:00+00:00",
+        "max_simulated_timestamp": "2015-01-09T21:00:00+00:00"
+      },
+      {
+        "name": "completed_bar_probe",
+        "id": "6acb96498c2f7fb888b43b75",
+        "status": "completed",
+        "error": null,
+        "event_rows": 80,
+        "pages": 2,
+        "event_types": {
+          "NoSignal": 8,
+          "Market": 8,
+          "Order": 60,
+          "BuySignal": 4
+        },
+        "min_simulated_timestamp": "2016-01-07T14:30:00+00:00",
+        "max_simulated_timestamp": "2016-01-12T21:00:00+00:00"
+      }
+    ],
+    "performance_queries": 0,
+    "portfolio_creation_calls": 0,
+    "optimization_calls": 0,
+    "deployment_or_brokerage_calls": 0,
+    "raw_sha256": {
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/intent.json": "35c2d62a2c9e3f9726da6a2d8a1d1ee5d6ef1ad8c1c4418a080a4e1066871222",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/parts/lq_fa23097b2a8bc4d9d260a1ff/download_manifest.json": "7700ccb672d2754e66a28597d72e4cc626bc974fb5bf20f48341a58b62f66a35",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/parts/lq_fa23097b2a8bc4d9d260a1ff/part-00000.parquet": "ced43c49a882dd341da1e06f874d910daf5a4226ac1199066a29ccb06ebfabba",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/response_0001.json": "18c2fdd50fb322d46c13e81ced0eab8c01d5f3b65610153c95cb45d091ad8623",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/response_0002.json": "12ea49f51c0c1573e166368ecd59a9d02cff3677bed78c41cc32161575034dfd",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/response_0003.json": "12ea49f51c0c1573e166368ecd59a9d02cff3677bed78c41cc32161575034dfd",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/response_0004.json": "12ea49f51c0c1573e166368ecd59a9d02cff3677bed78c41cc32161575034dfd",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/response_0005.json": "12ea49f51c0c1573e166368ecd59a9d02cff3677bed78c41cc32161575034dfd",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/response_0006.json": "12ea49f51c0c1573e166368ecd59a9d02cff3677bed78c41cc32161575034dfd",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/response_0007.json": "67e83385690f158b10a2892048aa8249fc4ef726e4bd9374e0371be7074acf29",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/result_receipt.json": "4bde213dd4bca38716cfc3dc6fd88e19f6c7d74108cbfeed3f262d5578262050",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/rows.json": "ed79e7ae236a8423d7bd77ed16c55003f4d1e1fde53b932a98b62b8b5251039b",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis/submission.json": "90eecc234df3a563c5ba4e2c8757036a4887b17fd4e6fbec65976548cbdcc554",
+      "data/raw/EXP002/audit/raw/revision_20261011/action_price_basis_request.json": "f3c8eb4d0b51e745ccb2e3091c26bc8fffe2a0655ca04040f4a96d4afc5b079a",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/intent.json": "13bbf5b0089018f456c3168b91b690848ade419e2b1b68a515d22c2cbe48fccc",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/parts/lq_ba39fdf9a62527db97c92a96/download_manifest.json": "07a521409245bffb6dc91cdc10ec08dce854240962cbc1034f96ed772dfb7a33",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/parts/lq_ba39fdf9a62527db97c92a96/part-00000.parquet": "3998d533cc3fa9bb3625a0eb4e65233afb6857fbfa7affdf13c8517cdc52c6d3",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/response_0001.json": "746db0ea9350a4be910e745a593ee2cd9a820f20bdb1e451b35f7eccbef8ac8a",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/response_0002.json": "d13c01d03b1786d99c81cd107501a16278ea18c5d151dd21ed274a00b5239de2",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/response_0003.json": "d13c01d03b1786d99c81cd107501a16278ea18c5d151dd21ed274a00b5239de2",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/response_0004.json": "d13c01d03b1786d99c81cd107501a16278ea18c5d151dd21ed274a00b5239de2",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/response_0005.json": "f884ef3cc5290a508b326c843b6d1f4b9a518453cb823d1e758c33e7ac5aca21",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/result_receipt.json": "70b639479ed92970ba19c477eed7581c971c3ff0018c448681ecfb5afdbcc1db",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/rows.json": "e3f6452bf1ac71f314b7f4b12bde49171ef2bc7eb4d039306ae245c3bedec98a",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings/submission.json": "38ffdd594a123a0e28de80475d7cc35e4d1047bb6e441c0324082a7df91f6dfe",
+      "data/raw/EXP002/audit/raw/revision_20261011/cohort_filings_request.json": "2c42f3689a345a79ca4d89fb0f62c45946a11dd3410709cebc50bd04467fa6d2",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/decoded_events.json": "643ec7c6a434692f1837a2ca5574a9d5109a22caa5a08ed176c5bd7618f780e4",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/events_0001.json": "649e90ca6d682007249bc810fe6e12d0722020486a0ff734b1a2928819d0a1ec",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/events_0002.json": "4667399af326ca0e5edcc2cbdb9b8f2b0102af7dcef50c3c1ee6e960cabeb5cf",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/intent.json": "f755a76c05b447e5071b9d01370c4348cc9ef58d068d00d9de5c4f15e01413dd",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/latest.json": "c88e73eab5417c37e5e81fd1223892d2c9b365d56efce0ba00e8460cc1d9072f",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/portfolio_payload.json": "b264c2d7dd6c71835244226e0e7ff3a822422b18e358107eee386b3d8d810be5",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/response_0001.json": "4a3a8e05cf2b20b627c3920bc9471f06277dc123b91831b1493a4d2ced96904d",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/response_0002.json": "b9a23ff9e5de41afd7a4289d93a267891a478133cf6ca9de72ca3fef32fe685e",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/response_0003.json": "7f4f999e381f8b0b2c439abbc03f14521225f578f8b867fa7533cf1b0320e8fb",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/roc_reference_comparison.json": "c0d7dc89cff63e152b56a99e23e3f2f466e972c5122703adaf0cef461c480161",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/submission.json": "ec7d69cc7c1a97a4401f3eb8ab07fa193553a0e124a92dc987f6be74faf12bb1",
+      "data/raw/EXP002/audit/raw/revision_20261011/completed_bar_probe/wire_request_0001.json": "26dcec6bd5dfb81ec2932884257ccf42cb893d17cd3b2e803d54f3381c3df5a5",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/decoded_events.json": "be3b8bb1ff0b709378e626e5756f1ea3a71a9c330afaad6682a22a417d545b84",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/events_0001.json": "ffdc5bd2c68e235923b2c5853e07faefba1c682a8679788cc94a19a55977812b",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/events_0002.json": "b784fc36490e104fb9eea4a357bc20f4ba13f2fadcd802ddbe25bc3068c42e93",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/intent.json": "e5f6c03fe50946e22fe6bf6069ddf1a92b47628bc1ce1fcb6656cfb975cdcc67",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/latest.json": "dead487468cc527c283fb89a54702fc161467b00c2367979c451e4651b04ca39",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/portfolio_payload.json": "98ab258c83d9cabb3edbf6b001efeada22b41c478887dc9635a6943572f1692b",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/response_0001.json": "2af8192f96ee1ecfa0beb4266348014a827317980fce32f4299d7be8786585dc",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/response_0002.json": "414c440cfd767fdd81118ef6d1fade7f8e0c5b55213fcdb084673eeb26f97c42",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/response_0003.json": "2357e4a520186c13778ef513c923f438db15f09f7cf1aa7782c0437e1cc5e035",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/submission.json": "dc84de3d413485c01aa4a3ccc4b7bd5a9655f80c5ad19b09920e4b9916ce1242",
+      "data/raw/EXP002/audit/raw/revision_20261011/delisting_probe/wire_request_0001.json": "50b7db2d06f402c6f9ab3212f214dca41a569a9f7f3824822f531b5d3928a3a7",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe/intent.json": "6301f5f6c9d14e057f069c2dfa5b250e8fc87215fee1f2a7aaac805c21a2a600",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe/latest.json": "5c1e0c2f25e0c4b4f3a7e159793c302bb9065c7eaf1675afcbb31857471a081b",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe/portfolio_payload.json": "4af428b910f16f657006f2b749bfe9a1791b7c43cdad109ce1169d8422803b12",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe/response_0001.json": "b173a2177588b132671ef8d676340f9bfb2f25bc8963f68c15d5041cfb986da5",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe/response_0002.json": "eae00efce1353927eb1ae9881ad35816de23b985b185c3c3e00e96edb4e52ff2",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe/submission.json": "7915cbf082eb644ba1547e2641d717c4142c52d6076e7ecd3554f48d0a7c7cd0",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe/wire_request_0001.json": "99624d0fe250fd5d8d11cdab33006a4ee6040c828cea2990635fd05466aaa462",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/decoded_events.json": "6fd9041ea1148c66219284495176efa6af693e6c78c987e3516cfac40388df80",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/events_0001.json": "d8c6620931aaaa151ccc43c24ce7610f7ad0c0821505141bfd5342f103972628",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/intent.json": "0b7589b9243a5aa41ef84332867cae53d6a5bd45fc6f42d776431b93dc821afb",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/latest.json": "56849f3a677ad9d6d5846ad2da4dfacda523891da6acea9ede3cab4d4b4ae397",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/portfolio_payload.json": "73bb705f66c70a1569115579840e2e7b421ad8fe16151a90a19405b41f2f8a62",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/response_0001.json": "884472e636537d726da6b2e882876f59cb30e349b77479d1b77a099723bdcb12",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/response_0002.json": "05945375ce6c73e0a38bd2e500ee7bd8d843ff523ef1f41cbca31f7323f5d8ce",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/response_0003.json": "90647408726416557e048e5bdd25ce5ad60b7fe6d9bb5b128cfe8cfbecf8b6c5",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/submission.json": "70629557b3077e6bea2336384b6318fb5f7164a480465b6fac5d4ca1515ecd2b",
+      "data/raw/EXP002/audit/raw/revision_20261011/dynamic_probe_v2/wire_request_0001.json": "2f6e7733e362992113f608103ef1ec30dd237797c4569e774cb3b75f9619ad51",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity/intent.json": "52aa88fcda5fb9788d4bffe8cc30d0742f21dfaa840e3b5aabe4d38f77c0bf40",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity/submission_error.json": "6dd3a6883ff3a2e86ed478d8e1e952e73047d56ef5e44aacd94d9500af56bacc",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_request.json": "8571afdbb5cbdfea6f74c8a426892a451ca2366412ca1f0f3db406b6f7800dec",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/intent.json": "f1eae3f8448c00701973804139e00adc51a151621919f57c06e8f71b134011a3",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/parts/lq_de2fce9f2dd0febd403abea0/download_manifest.json": "f7a768632416447bd068d93bb752fd83ef6e372a7862232c61595afee00d872f",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/parts/lq_de2fce9f2dd0febd403abea0/part-00000.parquet": "70256680de31ad3493cb9d6539aef6e25844225a1bd7048a74141c0dc4a01810",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/response_0001.json": "bb9066116c8374fffaa89ceed86485b6d789acc60148a28ca6d17ed90137fbb5",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/response_0002.json": "459234792a890da106670c73f8b9abe98a7caf4bae9594c1a9276074d18dc2ce",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/response_0003.json": "459234792a890da106670c73f8b9abe98a7caf4bae9594c1a9276074d18dc2ce",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/response_0004.json": "459234792a890da106670c73f8b9abe98a7caf4bae9594c1a9276074d18dc2ce",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/response_0005.json": "459234792a890da106670c73f8b9abe98a7caf4bae9594c1a9276074d18dc2ce",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/response_0006.json": "459234792a890da106670c73f8b9abe98a7caf4bae9594c1a9276074d18dc2ce",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/response_0007.json": "f767a981005d75fa4694a5c291a3474f0826b681ce612bc63a80dd953095561b",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/result_receipt.json": "269eadce6905b76c9c042933861e770837d98f0220e002a6cd4c229b93d23f92",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/rows.json": "75f0372cfd7f5f79d0083c576af4fc566fa3e341d6fe9fcf3c9d1d1cee288a9d",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2/submission.json": "69cee3c45e9d850770c3425fd6980cf0edbb7b195812cf93d800ccbe5ade123c",
+      "data/raw/EXP002/audit/raw/revision_20261011/insider_identity_v2_request.json": "c83d069f63f30a0bca6f2b69f896c787477484288cffd149c24c18eed043d565",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/intent.json": "b9ab1a7896ea707d3c8e6966a3eabd766165c661331405c6a63fc9c8be676305",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/parts/lq_1342cee476789bc3740b9971/download_manifest.json": "40a7b2663fd2f1b75ba99e555b2d8d99e5e5a228d45de1b0dc686f845ff71055",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/parts/lq_1342cee476789bc3740b9971/part-00000.parquet": "9b0d3d906e459f2ba3786f6482be0a8236a27a0dd48653985e218934b8330645",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0001.json": "9144b81c259d05b6468657b6e963e1d0496d4df330d1b49520d898e1d22d52cb",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0002.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0003.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0004.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0005.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0006.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0007.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0008.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0009.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0010.json": "b775d7905ccc7f53be915b45b7c0dabf930d2f8d2b3d0a7e89cfa082bf4911f7",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/response_0011.json": "945dcb10e01092523478cf03b215118f626f4b0d9258352ceec9666bd6d68c08",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/result_receipt.json": "6ee570b1edb47583d9eeb58eb6d764edba8e7eb5085cd2e28aa3f85d4c034f81",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/rows.json": "1b18366e77fd3a8ec091df9cf1811adc767ab220f646f9ab6542981dbbf8eb2c",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts/submission.json": "65a124be3a2250346d9e3f30afc246c0ad19a098601cb0fa0e45b041aeb3209f",
+      "data/raw/EXP002/audit/raw/revision_20261011/issuer_cohorts_request.json": "cf5081c3e2baf581da7786e8fa8fae52b9188316d5824f68efe22dd92471a171",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe/intent.json": "5065599d5e157a9ccfaf96c8197186f8d9d61a1ce4c4c1462c3041607fc0e21a",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe/latest.json": "dda6dd2c8d3d9d4350037e73879e65ba30c74881e2bda2ea938e4a6433fce1a9",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe/portfolio_payload.json": "5ed154cce4652056a988bb180a8c8fafcffaaf8554692ff2a8937adb57a17508",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe/response_0001.json": "f12ab02f190a7033b9553f711469d3c76998a6501c3c0ad45d5cf44ac02d4d56",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe/response_0002.json": "4f7b1436afa5ab16e948ee6a9b57990b55025d841016983ee0e87a942efba8d6",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe/submission.json": "a40e0b4f2df7b3182b9ba70797c9a9afcd2b85d1e1dce051e9b4995a554be196",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe/wire_request_0001.json": "4df0ed52b32203b787721122246c2fa0c54bc5ade593dee1c52ba5e26b802359",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/decoded_events.json": "d8b4544da94fca7d090042dff88501d10640870e168d0d92a0afc6d9ee63f837",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/events_0001.json": "b8ba9d47c4748f840fed298ab07ceaae12fbd0a06c660fe480b22a6ac856148d",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/events_0002.json": "19e5466dd6bbce362d6826edb745e82be326133129f08a3eea9ba868043d5172",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/intent.json": "ce9689bd48542896e81c4e35f2ee93350bfc8fcfb4c462299a599790837e2217",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/latest.json": "07e2b402a2293dc55428d15274fdf3f57e6cd3246fb944b8912825e510c9079b",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/portfolio_payload.json": "90b26a5c2c432d534a7eccbb1ea6b1a90eb6a7e1d91226ab472dc344086fc009",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/response_0001.json": "82c5cedb7b9d26451252ea95e9793fee9544fd892a1740398bdcd77eb93e1a95",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/response_0002.json": "d6333dd71d8cb6aac8ba13c599f833d862f582a6b6c91cc312bea7a83e99dd53",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/response_0003.json": "34ab6348844f08fe09c500e75bd7d315a55f00672306c341689764749b268c3e",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/submission.json": "0305e12810c986634847619e9c6f4cbaad8c26852852b83cc313b0d572910afe",
+      "data/raw/EXP002/audit/raw/revision_20261011/timing_probe_v2/wire_request_0001.json": "e802367c1738477b6727c1c2e96e5c780edf5fbb2713819c4cd26c224c7e9c43",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup/intent.json": "7dae611b6e0e79e84a984cb0ecdf3ffd0636f4037049e8ae1e7d485b791f6816",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup/submission_error.json": "548cfc040032041c5a38a20ab9d2203ad19e8863aed666851b932faf2793261c",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_request.json": "e472e493940543f14ba00de6bf900f11cbf4d5ef2ca4eae3e06dbba909050f72",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/intent.json": "956ef56039b858151621b506964a8af1edd4984f197bc442ffbd93ea71760e2a",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/parts/lq_fb41d23da62a88c49b8d2c0c/download_manifest.json": "b1ef77efc9cd5ca27711b660311456dc263f029e5e9f37e8b58c63d58bdf3020",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/parts/lq_fb41d23da62a88c49b8d2c0c/part-00000.parquet": "13ed8c699334d1a7af08a6b4c18c333ff709fee18512e6f5316a8ec9628b6836",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/response_0001.json": "dbe523bd3d6b3e7cd8fbe9c2eb103ac4a6a8e7e7b720fa7a911b20223e924d1a",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/response_0002.json": "1edf34288fab3743d37d2b0c7d3099ab14bcf631d911b25c143cd6052be8c455",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/response_0003.json": "1edf34288fab3743d37d2b0c7d3099ab14bcf631d911b25c143cd6052be8c455",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/response_0004.json": "1edf34288fab3743d37d2b0c7d3099ab14bcf631d911b25c143cd6052be8c455",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/response_0005.json": "1edf34288fab3743d37d2b0c7d3099ab14bcf631d911b25c143cd6052be8c455",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/response_0006.json": "50b950bf17e6f301a77ab638ebf378f03c234f76c8827a8c0107bc1f1c5abf9e",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/result_receipt.json": "cb8c38880d170e1dc8e05938ed8e2b106c2e03ef4c17cc78e65840bcb8b27924",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/rows.json": "8834b7cc99572107db2464093eaec25b7751b605a65a83d5506edd7cdbeb5d41",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/submission.json": "809f719154bb05bec43db5b79168a6b0487c5689a918a7322ae090ab02e51970",
+      "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2_request.json": "af571fe29feb42bc63178e6285698d1987cc238242bdc3fc0fa5b30efe58c902"
+    },
+    "incidental_public_search_exposure": {
+      "query": "site.nexustrade.io delisted 90% haircut volume adjusted backtest",
+      "purpose": "metadata/execution semantics only",
+      "unexpected_content": "Search returned unrelated 2026 vendor strategy/account performance snippets. Excluded from evidence and design; no linked performance pages opened.",
+      "source_urls": [
+        "https://nexustrade.io/videos/ai-trading-advice-fact-check-part-2-06102026",
+        "https://nexustrade.io/"
+      ],
+      "candidate_performance_accessed": false,
+      "market_or_signal_observations_queried_after_cutoff": false,
+      "mitigation": "Use exact official documentation URLs; do not repeat broad strategy searches."
+    },
+    "local_checks": {
+      "full_tests": 86,
+      "pass": true,
+      "semantic_audit_exit_code": 2,
+      "semantic_audit_error": "Point-in-time availability unestablished: Nexus daily prices, volume and corporate actions",
+      "schema_valid": true,
+      "gates_weakened": false,
+      "new_horizon_calendar_reference_matches": "8/8 within 0.001 pp"
+    }
   }
 }

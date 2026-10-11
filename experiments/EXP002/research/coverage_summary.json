@@ -3,11 +3,11 @@
   "state": "NEEDS DESIGN REVISION",
   "cutoff": "2020-12-31",
   "price_warmup_start": "2014-01-01",
-  "source_window_start": "2015-01-01",
+  "source_window_start": "2014-01-01",
   "denominator": "CS-coded stable security IDs with a price on the last observed common-stock session of each month; annual counts are unions across month-end snapshots, not averages or a fixed universe. Exchange/OTC and listing-publication vintages remain unaudited.",
-  "source_presence_warning": "Nonderivative insider legs and SH non-option institutional rows only. Any row is not complete native coverage, revision safety or a genuine zero. Calendar month-end availability is used; ownership history starts in 2015, so early rolling windows are left-censored. UTC cutoff conservatively excludes December 31 NY end-of-day filings represented on January 1 UTC.",
-  "adv_warning": "Unadjusted close multiplied by reported volume; volume adjustment basis and native lag remain unverified. Price windows count available rows, not yet independently verified unique exchange sessions.",
-  "warmup_warning": "Only prices use 2014 warmup. Ownership queries begin 2015, so early 2015 rolling source presence is left-censored. A fully defensible Development start remains unresolved.",
+  "source_presence_warning": "Nonderivative insider legs and SH non-option institutional rows only. Any row is not complete native coverage, revision safety or a genuine zero. Calendar month-end availability is used. 2014 ownership warmup is included when the preserved revision extract exists. UTC cutoff conservatively excludes December 31 NY end-of-day filings represented on January 1 UTC.",
+  "adv_warning": "Unadjusted close times reported volume is NOT certified primary ADV. AAPL price basis changes by factor four across its split; volume basis is undocumented. Existing liquid-ID counts remain provisional diagnostics, not verified primary-universe coverage.",
+  "warmup_warning": "2014 ownership warmup now included; 2015 source-recency windows are no longer left-censored by the old extraction start. Native field completeness, true zeros, revisions and a usable joint start remain unverified. A 400-day price warmup for January 2015 is not supplied by January 2014 extraction.",
   "usable_joint_start_date": null,
   "yearly_coverage": [
     {
@@ -19,23 +19,23 @@
         "sufficient_252_price_bars_ids": 4387,
         "sufficient_20_volume_bars_ids": 4700,
         "proposed_price_liquid_ids": 1995,
-        "institutional_source_presence_ids": 2883,
-        "proposed_liquid_institutional_source_presence_ids": 1456,
-        "insider_source_presence_ids": 4069,
-        "proposed_liquid_insider_source_presence_ids": 1831,
+        "institutional_source_presence_ids": 2887,
+        "proposed_liquid_institutional_source_presence_ids": 1460,
+        "insider_source_presence_ids": 4107,
+        "proposed_liquid_insider_source_presence_ids": 1838,
         "proposed_cap_filtered_ids": 1391,
-        "joint_source_presence_ids": 2187,
-        "proposed_liquid_joint_source_presence_ids": 1365
+        "joint_source_presence_ids": 2200,
+        "proposed_liquid_joint_source_presence_ids": 1372
       },
       "source_presence_percentages": {
-        "insider_source_presence_ids": 86.1711139347734,
-        "institutional_source_presence_ids": 61.05463786531131,
-        "joint_source_presence_ids": 46.3151207115629
+        "insider_source_presence_ids": 86.97585768742059,
+        "institutional_source_presence_ids": 61.13934773401101,
+        "joint_source_presence_ids": 46.59042778483693
       },
       "proposed_liquid_source_presence_percentages": {
-        "proposed_liquid_insider_source_presence_ids": 91.77944862155388,
-        "proposed_liquid_institutional_source_presence_ids": 72.98245614035088,
-        "proposed_liquid_joint_source_presence_ids": 68.42105263157895
+        "proposed_liquid_insider_source_presence_ids": 92.13032581453633,
+        "proposed_liquid_institutional_source_presence_ids": 73.1829573934837,
+        "proposed_liquid_joint_source_presence_ids": 68.7719298245614
       },
       "verified_usable_joint_count": null
     },
@@ -198,23 +198,23 @@
         "sufficient_252_price_bars_ids": 3836,
         "sufficient_20_volume_bars_ids": 4353,
         "proposed_price_liquid_ids": 1557,
-        "institutional_source_presence_ids": 2586,
-        "proposed_liquid_institutional_source_presence_ids": 1147,
-        "insider_source_presence_ids": 2191,
-        "proposed_liquid_insider_source_presence_ids": 1063,
+        "institutional_source_presence_ids": 2676,
+        "proposed_liquid_institutional_source_presence_ids": 1154,
+        "insider_source_presence_ids": 3339,
+        "proposed_liquid_insider_source_presence_ids": 1384,
         "proposed_cap_filtered_ids": 1100,
-        "joint_source_presence_ids": 1210,
-        "proposed_liquid_joint_source_presence_ids": 793
+        "joint_source_presence_ids": 1756,
+        "proposed_liquid_joint_source_presence_ids": 1038
       },
       "source_presence_percentages": {
-        "insider_source_presence_ids": 50.08,
-        "institutional_source_presence_ids": 59.10857142857143,
-        "joint_source_presence_ids": 27.65714285714286
+        "insider_source_presence_ids": 76.32,
+        "institutional_source_presence_ids": 61.16571428571429,
+        "joint_source_presence_ids": 40.137142857142855
       },
       "proposed_liquid_source_presence_percentages": {
-        "proposed_liquid_insider_source_presence_ids": 68.27231856133591,
-        "proposed_liquid_institutional_source_presence_ids": 73.66730892742453,
-        "proposed_liquid_joint_source_presence_ids": 50.93127809890816
+        "proposed_liquid_insider_source_presence_ids": 88.88888888888889,
+        "proposed_liquid_institutional_source_presence_ids": 74.11689145793191,
+        "proposed_liquid_joint_source_presence_ids": 66.66666666666667
       },
       "verified_usable_joint_count": null
     },
@@ -230,23 +230,23 @@
         "sufficient_252_price_bars_ids": 3915,
         "sufficient_20_volume_bars_ids": 4359,
         "proposed_price_liquid_ids": 1599,
-        "institutional_source_presence_ids": 2684,
-        "proposed_liquid_institutional_source_presence_ids": 1182,
-        "insider_source_presence_ids": 3068,
-        "proposed_liquid_insider_source_presence_ids": 1395,
+        "institutional_source_presence_ids": 2687,
+        "proposed_liquid_institutional_source_presence_ids": 1185,
+        "insider_source_presence_ids": 3400,
+        "proposed_liquid_insider_source_presence_ids": 1448,
         "proposed_cap_filtered_ids": 1076,
-        "joint_source_presence_ids": 1688,
-        "proposed_liquid_joint_source_presence_ids": 1052
+        "joint_source_presence_ids": 1818,
+        "proposed_liquid_joint_source_presence_ids": 1089
       },
       "source_presence_percentages": {
-        "insider_source_presence_ids": 69.90202779676464,
-        "institutional_source_presence_ids": 61.152882205513784,
-        "joint_source_presence_ids": 38.45978582820688
+        "insider_source_presence_ids": 77.46639325586693,
+        "institutional_source_presence_ids": 61.221234905445435,
+        "joint_source_presence_ids": 41.42173615857826
       },
       "proposed_liquid_source_presence_percentages": {
-        "proposed_liquid_insider_source_presence_ids": 87.24202626641652,
-        "proposed_liquid_institutional_source_presence_ids": 73.92120075046904,
-        "proposed_liquid_joint_source_presence_ids": 65.79111944965604
+        "proposed_liquid_insider_source_presence_ids": 90.55659787367104,
+        "proposed_liquid_institutional_source_presence_ids": 74.10881801125704,
+        "proposed_liquid_joint_source_presence_ids": 68.10506566604127
       },
       "verified_usable_joint_count": null
     },
@@ -263,22 +263,22 @@
         "sufficient_20_volume_bars_ids": 4377,
         "proposed_price_liquid_ids": 1617,
         "proposed_cap_filtered_ids": 1168,
-        "institutional_source_presence_ids": 2684,
-        "proposed_liquid_institutional_source_presence_ids": 1203,
+        "institutional_source_presence_ids": 2687,
+        "proposed_liquid_institutional_source_presence_ids": 1205,
         "insider_source_presence_ids": 3413,
         "proposed_liquid_insider_source_presence_ids": 1475,
-        "joint_source_presence_ids": 1857,
-        "proposed_liquid_joint_source_presence_ids": 1115
+        "joint_source_presence_ids": 1859,
+        "proposed_liquid_joint_source_presence_ids": 1117
       },
       "source_presence_percentages": {
         "insider_source_presence_ids": 77.69178238106078,
-        "institutional_source_presence_ids": 61.09720009105395,
-        "joint_source_presence_ids": 42.2717960391532
+        "institutional_source_presence_ids": 61.16549055315274,
+        "joint_source_presence_ids": 42.317323013885726
       },
       "proposed_liquid_source_presence_percentages": {
         "proposed_liquid_insider_source_presence_ids": 91.2183055040198,
-        "proposed_liquid_institutional_source_presence_ids": 74.39703153988869,
-        "proposed_liquid_joint_source_presence_ids": 68.95485466914039
+        "proposed_liquid_institutional_source_presence_ids": 74.52071737786024,
+        "proposed_liquid_joint_source_presence_ids": 69.07854050711194
       },
       "verified_usable_joint_count": null
     },
@@ -295,22 +295,22 @@
         "sufficient_20_volume_bars_ids": 4380,
         "proposed_price_liquid_ids": 1557,
         "proposed_cap_filtered_ids": 1086,
-        "institutional_source_presence_ids": 2710,
-        "proposed_liquid_institutional_source_presence_ids": 1168,
+        "institutional_source_presence_ids": 2712,
+        "proposed_liquid_institutional_source_presence_ids": 1170,
         "insider_source_presence_ids": 3388,
         "proposed_liquid_insider_source_presence_ids": 1423,
-        "joint_source_presence_ids": 1860,
-        "proposed_liquid_joint_source_presence_ids": 1078
+        "joint_source_presence_ids": 1861,
+        "proposed_liquid_joint_source_presence_ids": 1080
       },
       "source_presence_percentages": {
         "insider_source_presence_ids": 76.91259931895573,
-        "institutional_source_presence_ids": 61.52099886492622,
-        "joint_source_presence_ids": 42.22474460839955
+        "institutional_source_presence_ids": 61.566401816118045,
+        "joint_source_presence_ids": 42.24744608399546
       },
       "proposed_liquid_source_presence_percentages": {
         "proposed_liquid_insider_source_presence_ids": 91.39370584457289,
-        "proposed_liquid_institutional_source_presence_ids": 75.0160565189467,
-        "proposed_liquid_joint_source_presence_ids": 69.23570969813744
+        "proposed_liquid_institutional_source_presence_ids": 75.14450867052022,
+        "proposed_liquid_joint_source_presence_ids": 69.36416184971098
       },
       "verified_usable_joint_count": null
     },
@@ -327,22 +327,22 @@
         "sufficient_20_volume_bars_ids": 4365,
         "proposed_price_liquid_ids": 1577,
         "proposed_cap_filtered_ids": 1156,
-        "institutional_source_presence_ids": 2703,
-        "proposed_liquid_institutional_source_presence_ids": 1187,
+        "institutional_source_presence_ids": 2705,
+        "proposed_liquid_institutional_source_presence_ids": 1189,
         "insider_source_presence_ids": 3396,
         "proposed_liquid_insider_source_presence_ids": 1434,
-        "joint_source_presence_ids": 1864,
-        "proposed_liquid_joint_source_presence_ids": 1093
+        "joint_source_presence_ids": 1865,
+        "proposed_liquid_joint_source_presence_ids": 1095
       },
       "source_presence_percentages": {
         "insider_source_presence_ids": 77.35763097949886,
-        "institutional_source_presence_ids": 61.571753986332574,
-        "joint_source_presence_ids": 42.46013667425968
+        "institutional_source_presence_ids": 61.617312072892936,
+        "joint_source_presence_ids": 42.48291571753986
       },
       "proposed_liquid_source_presence_percentages": {
         "proposed_liquid_insider_source_presence_ids": 90.93214965123653,
-        "proposed_liquid_institutional_source_presence_ids": 75.26949904882689,
-        "proposed_liquid_joint_source_presence_ids": 69.30881420418517
+        "proposed_liquid_institutional_source_presence_ids": 75.39632213062778,
+        "proposed_liquid_joint_source_presence_ids": 69.43563728598605
       },
       "verified_usable_joint_count": null
     },
@@ -359,22 +359,22 @@
         "sufficient_20_volume_bars_ids": 4404,
         "proposed_price_liquid_ids": 1630,
         "proposed_cap_filtered_ids": 1184,
-        "institutional_source_presence_ids": 2715,
-        "proposed_liquid_institutional_source_presence_ids": 1225,
+        "institutional_source_presence_ids": 2717,
+        "proposed_liquid_institutional_source_presence_ids": 1226,
         "insider_source_presence_ids": 3391,
         "proposed_liquid_insider_source_presence_ids": 1459,
-        "joint_source_presence_ids": 1869,
-        "proposed_liquid_joint_source_presence_ids": 1112
+        "joint_source_presence_ids": 1870,
+        "proposed_liquid_joint_source_presence_ids": 1113
       },
       "source_presence_percentages": {
         "insider_source_presence_ids": 76.33948671769473,
-        "institutional_source_presence_ids": 61.121116614137776,
-        "joint_source_presence_ids": 42.07564160288158
+        "institutional_source_presence_ids": 61.16614137775777,
+        "joint_source_presence_ids": 42.09815398469158
       },
       "proposed_liquid_source_presence_percentages": {
         "proposed_liquid_insider_source_presence_ids": 89.50920245398773,
-        "proposed_liquid_institutional_source_presence_ids": 75.15337423312883,
-        "proposed_liquid_joint_source_presence_ids": 68.22085889570552
+        "proposed_liquid_institutional_source_presence_ids": 75.21472392638037,
+        "proposed_liquid_joint_source_presence_ids": 68.28220858895706
       },
       "verified_usable_joint_count": null
     },
@@ -391,22 +391,22 @@
         "sufficient_20_volume_bars_ids": 4419,
         "proposed_price_liquid_ids": 1582,
         "proposed_cap_filtered_ids": 1117,
-        "institutional_source_presence_ids": 2769,
-        "proposed_liquid_institutional_source_presence_ids": 1203,
+        "institutional_source_presence_ids": 2771,
+        "proposed_liquid_institutional_source_presence_ids": 1204,
         "insider_source_presence_ids": 3397,
         "proposed_liquid_insider_source_presence_ids": 1403,
-        "joint_source_presence_ids": 1885,
-        "proposed_liquid_joint_source_presence_ids": 1089
+        "joint_source_presence_ids": 1886,
+        "proposed_liquid_joint_source_presence_ids": 1090
       },
       "source_presence_percentages": {
         "insider_source_presence_ids": 76.28565012351224,
-        "institutional_source_presence_ids": 62.18279811363126,
-        "joint_source_presence_ids": 42.33101280035931
+        "institutional_source_presence_ids": 62.227711655064,
+        "joint_source_presence_ids": 42.35346957107568
       },
       "proposed_liquid_source_presence_percentages": {
         "proposed_liquid_insider_source_presence_ids": 88.68520859671303,
-        "proposed_liquid_institutional_source_presence_ids": 76.04298356510746,
-        "proposed_liquid_joint_source_presence_ids": 68.83691529709229
+        "proposed_liquid_institutional_source_presence_ids": 76.10619469026548,
+        "proposed_liquid_joint_source_presence_ids": 68.90012642225031
       },
       "verified_usable_joint_count": null
     },
@@ -423,7 +423,7 @@
         "sufficient_20_volume_bars_ids": 4448,
         "proposed_price_liquid_ids": 1636,
         "proposed_cap_filtered_ids": 1173,
-        "institutional_source_presence_ids": 2785,
+        "institutional_source_presence_ids": 2786,
         "proposed_liquid_institutional_source_presence_ids": 1235,
         "insider_source_presence_ids": 3338,
         "proposed_liquid_insider_source_presence_ids": 1411,
@@ -432,7 +432,7 @@
       },
       "source_presence_percentages": {
         "insider_source_presence_ids": 74.69232490490043,
-        "institutional_source_presence_ids": 62.31819198925934,
+        "institutional_source_presence_ids": 62.34056835981204,
         "joint_source_presence_ids": 41.39628552248825
       },
       "proposed_liquid_source_presence_percentages": {
@@ -455,17 +455,17 @@
         "sufficient_20_volume_bars_ids": 4445,
         "proposed_price_liquid_ids": 1543,
         "proposed_cap_filtered_ids": 1111,
-        "institutional_source_presence_ids": 2772,
+        "institutional_source_presence_ids": 2773,
         "proposed_liquid_institutional_source_presence_ids": 1180,
         "insider_source_presence_ids": 3218,
         "proposed_liquid_insider_source_presence_ids": 1315,
-        "joint_source_presence_ids": 1801,
+        "joint_source_presence_ids": 1802,
         "proposed_liquid_joint_source_presence_ids": 1025
       },
       "source_presence_percentages": {
         "insider_source_presence_ids": 72.2334455667789,
-        "institutional_source_presence_ids": 62.22222222222222,
-        "joint_source_presence_ids": 40.42648709315376
+        "institutional_source_presence_ids": 62.24466891133558,
+        "joint_source_presence_ids": 40.44893378226712
       },
       "proposed_liquid_source_presence_percentages": {
         "proposed_liquid_insider_source_presence_ids": 85.22359040829552,
@@ -487,17 +487,17 @@
         "sufficient_20_volume_bars_ids": 4429,
         "proposed_price_liquid_ids": 1560,
         "proposed_cap_filtered_ids": 1081,
-        "institutional_source_presence_ids": 2813,
+        "institutional_source_presence_ids": 2814,
         "proposed_liquid_institutional_source_presence_ids": 1201,
         "insider_source_presence_ids": 3218,
         "proposed_liquid_insider_source_presence_ids": 1323,
-        "joint_source_presence_ids": 1820,
+        "joint_source_presence_ids": 1821,
         "proposed_liquid_joint_source_presence_ids": 1040
       },
       "source_presence_percentages": {
         "insider_source_presence_ids": 72.21723518850987,
-        "institutional_source_presence_ids": 63.128366247755835,
-        "joint_source_presence_ids": 40.843806104129264
+        "institutional_source_presence_ids": 63.1508078994614,
+        "joint_source_presence_ids": 40.86624775583483
       },
       "proposed_liquid_source_presence_percentages": {
         "proposed_liquid_insider_source_presence_ids": 84.8076923076923,
@@ -2495,7 +2495,7 @@
   "all_pit_flags_verified": false,
   "state_reason": "Same-tick execution, asynchronous institutional cohorts, incomplete source lineage/identity and unverified zero/completeness/adjustment semantics require pre-freeze design work.",
   "identity_and_snapshot_issues": {
-    "unresolved_or_ambiguous_ownership_identity_rows": 24930,
+    "unresolved_or_ambiguous_ownership_identity_rows": 29551,
     "excluded_earlier_last_price_security_months": 5775
   },
   "identity_policy": "Unique security segment at disclosure's New York availability date; ambiguous/unresolved mappings excluded, ticker renames joined by stable ID.",
@@ -2512,5 +2512,8 @@
     "research_audit_stdout": "",
     "research_audit_stderr": "Research gate: Point-in-time availability unestablished: Nexus daily prices, volume and corporate actions\n",
     "audit_weakened": false
-  }
+  },
+  "ownership_warmup_included": true,
+  "primary_market_cap_required": false,
+  "native_joint_signal_coverage_verified": false
 }

@@ -1,0 +1,119 @@
+{
+  "no_strategy_performance_informed_changes": true,
+  "state": "NEEDS DESIGN REVISION",
+  "changes": [
+    {
+      "assumption": "momentum units",
+      "old_value": "126/252 sessions (original draft)",
+      "new_value": "180/365 calendar days",
+      "evidence": "Prior runtime 20/20 calendar matches; new 180/365 native evaluations",
+      "reason": "Do not interpret Day as trading sessions",
+      "performance_informed": false
+    },
+    {
+      "assumption": "market cap primary gate",
+      "old_value": "USD 1bn required",
+      "new_value": "Removed; diagnostic/robustness concept only",
+      "evidence": "Uncertified share vintages/class scope",
+      "reason": "Avoid unsupported PIT filter",
+      "performance_informed": false
+    },
+    {
+      "assumption": "market cap axis",
+      "old_value": [
+        1000000000,
+        5000000000
+      ],
+      "new_value": null,
+      "evidence": "Same lineage blocker",
+      "reason": "Reduce unsupported selection freedom",
+      "performance_informed": false
+    },
+    {
+      "assumption": "liquidity axis",
+      "old_value": [
+        10000000,
+        25000000
+      ],
+      "new_value": "USD 10m fixed; USD 25m robustness",
+      "evidence": "Eligibility is a capacity constraint, not demonstrated predictive uncertainty; basis still unresolved",
+      "reason": "Fewer optimized eligibility parameters",
+      "performance_informed": false
+    },
+    {
+      "assumption": "rebalance cadence",
+      "old_value": "Monthly with possible weekly axis",
+      "new_value": "Monthly fixed; weekly robustness",
+      "evidence": "Owner design revision",
+      "reason": "No cadence search",
+      "performance_informed": false
+    },
+    {
+      "assumption": "institutional recency axis",
+      "old_value": [
+        180,
+        365
+      ],
+      "new_value": null,
+      "evidence": "Partial-quarter cohorts invalidate simple native latest-quarter interpretation",
+      "reason": "Use eligible adjacent cohorts, not arbitrary recency tuning",
+      "performance_informed": false
+    },
+    {
+      "assumption": "institutional cohort gate",
+      "old_value": "Newest public quarter",
+      "new_value": "PROPOSED fixed 60 days after quarter end, end-of-day NY gate",
+      "evidence": "24 mature global cohorts and 222 issuer/quarter samples",
+      "reason": "At day 60 minima 97.46% global/97.15% issuer; missing tail remains, not complete",
+      "performance_informed": false
+    },
+    {
+      "assumption": "execution lag",
+      "old_value": "Assumed next-session; one-day lag unverified",
+      "new_value": "PROPOSED prior-calendar 21:00 cutoff; next tradable open, sample-supported 12.5-Hour operand lag",
+      "evidence": "Four prior-close samples; one-day lag used prior open",
+      "reason": "Require completed bars and explicit schedule; disclosure composition not certified",
+      "performance_informed": false
+    },
+    {
+      "assumption": "insider qualification",
+      "old_value": "Code P assumed open-market",
+      "new_value": "Require explicit open-market evidence; P alone insufficient",
+      "evidence": "Catalog says open-market OR private, no discriminator in schema",
+      "reason": "Do not silently broaden economic hypothesis",
+      "performance_informed": false
+    },
+    {
+      "assumption": "ownership warmup",
+      "old_value": "Only 2015+ source rows",
+      "new_value": "2014 source warmup appended to local coverage",
+      "evidence": "73,739 ticker-month aggregates; 318,671 insider and 4,056,067 institution source rows",
+      "reason": "Remove source-window left censoring, not proof of native completeness",
+      "performance_informed": false
+    },
+    {
+      "assumption": "full-composite grid",
+      "old_value": "64 cells",
+      "new_value": "8 cells",
+      "evidence": "Three retained two-point axes",
+      "reason": "Do not add axes merely to reach 16-32",
+      "performance_informed": false
+    },
+    {
+      "assumption": "total evaluation plan",
+      "old_value": "453 preliminary future units",
+      "new_value": "281 future + 8 diagnostic = 289 conditional ceiling",
+      "evidence": "Reproducible family enumeration",
+      "reason": "Count ablations, benchmarks, folds, robustness and failure reserve without redundant axes",
+      "performance_informed": false
+    },
+    {
+      "assumption": "Development chronology",
+      "old_value": "2015 proposed start",
+      "new_value": "Still conditional; end fixed 2020-12-31",
+      "evidence": "2014 ownership exists but feed PIT, price warmup and matched cohort implementation unresolved",
+      "reason": "Never choose final start from returns",
+      "performance_informed": false
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "state": "NEEDS DESIGN REVISION",
+  "uses_strategy_performance": false,
+  "cutoff": "2020-12-31",
+  "cohort_day60": {
+    "global": {
+      "minimum": 0.9745744904391679,
+      "median": 0.9887365763711945,
+      "maximum": 0.9932176341512069
+    },
+    "issuer_sample": {
+      "minimum": 0.9714779602420052,
+      "median": 0.9872569859616491,
+      "maximum": 1.0
+    }
+  },
+  "warmup": {
+    "aggregate_rows": 73739,
+    "source_counts": {
+      "insider": 318671,
+      "institutional": 4056067
+    }
+  },
+  "purchase_quality": {
+    "purchase_rows": 259289,
+    "accessions": 129617,
+    "distinct_legs": 259289,
+    "missing_owner_join": 0.0,
+    "legs_with_null_owner": 0.0,
+    "joint_owner_legs": 43129.0,
+    "null_security": 5062.0,
+    "missing_amount_operands": 2118.0
+  },
+  "diagnostics": [
+    {
+      "name": "timing_probe",
+      "id": "6acb94dc8c2f7fb888b43a58",
+      "status": "failed",
+      "error": "Schema incompatibility: BSON error. Kind: A deserialization-related error occurred. Message: unknown field `compound`, expected `metric`.",
+      "event_rows": 0,
+      "pages": 0,
+      "event_types": {},
+      "min_simulated_timestamp": null,
+      "max_simulated_timestamp": null
+    },
+    {
+      "name": "timing_probe_v2",
+      "id": "6acb94fa8c2f7fb888b43a80",
+      "status": "completed",
+      "error": null,
+      "event_rows": 80,
+      "pages": 2,
+      "event_types": {
+        "NoSignal": 8,
+        "Market": 8,
+        "Order": 60,
+        "BuySignal": 4
+      },
+      "min_simulated_timestamp": "2016-01-07T14:30:00+00:00",
+      "max_simulated_timestamp": "2016-01-12T21:00:00+00:00"
+    },
+    {
+      "name": "dynamic_probe",
+      "id": "6acb95428c2f7fb888b43abf",
+      "status": "failed",
+      "error": "Schema incompatibility: BSON error. Kind: A deserialization-related error occurred. Message: unknown field `compound`, expected `metric`.",
+      "event_rows": 0,
+      "pages": 0,
+      "event_types": {},
+      "min_simulated_timestamp": null,
+      "max_simulated_timestamp": null
+    },
+    {
+      "name": "dynamic_probe_v2",
+      "id": "6acb95688c2f7fb888b43ada",
+      "status": "completed",
+      "error": null,
+      "event_rows": 18,
+      "pages": 1,
+      "event_types": {
+        "NoSignal": 2,
+        "Market": 4,
+        "RebalanceOrder": 4,
+        "Order": 6,
+        "RebalanceSignal": 2
+      },
+      "min_simulated_timestamp": "2016-01-07T14:30:00+00:00",
+      "max_simulated_timestamp": "2016-01-08T21:00:00+00:00"
+    },
+    {
+      "name": "delisting_probe",
+      "id": "6acb96278c2f7fb888b43b5d",
+      "status": "completed",
+      "error": null,
+      "event_rows": 50,
+      "pages": 2,
+      "event_types": {
+        "NoSignal": 6,
+        "Market": 10,
+        "RebalanceOrder": 8,
+        "Order": 22,
+        "RebalanceSignal": 4
+      },
+      "min_simulated_timestamp": "2015-01-05T14:30:00+00:00",
+      "max_simulated_timestamp": "2015-01-09T21:00:00+00:00"
+    },
+    {
+      "name": "completed_bar_probe",
+      "id": "6acb96498c2f7fb888b43b75",
+      "status": "completed",
+      "error": null,
+      "event_rows": 80,
+      "pages": 2,
+      "event_types": {
+        "NoSignal": 8,
+        "Market": 8,
+        "Order": 60,
+        "BuySignal": 4
+      },
+      "min_simulated_timestamp": "2016-01-07T14:30:00+00:00",
+      "max_simulated_timestamp": "2016-01-12T21:00:00+00:00"
+    }
+  ],
+  "strict_open_market_classification_verified": false,
+  "native_matched_cohort_verified": false,
+  "completed_bar_sample_matches": 4,
+  "completed_bar_full_contract_verified": false,
+  "prospective_metrics_certified": false,
+  "prospective_metric_schema_error": "unknown field compound, expected metric; reproduces with empty dynamic pipeline, disappears when prospective metrics removed",
+  "primary_market_cap_removed": true,
+  "usable_joint_start_date": null,
+  "frozen": false,
+  "new_horizon_reference_comparisons": [
+    {
+      "execution_timestamp": "2016-01-12T14:30:00+00:00",
+      "completed_tick_timestamp": "2016-01-11T21:00:00+00:00",
+      "horizon_calendar_days": 180,
+      "baseline_tick_timestamp": "2015-07-16T13:30:00+00:00",
+      "observed_native_roc": -22.86676027317939,
+      "independent_calendar_reference": -22.86676156309936,
+      "difference_percentage_points": 1.2899199681726259e-06,
+      "match_within_0_001_percentage_points": true
+    },
+    {
+      "execution_timestamp": "2016-01-12T14:30:00+00:00",
+      "completed_tick_timestamp": "2016-01-11T21:00:00+00:00",
+      "horizon_calendar_days": 365,
+      "baseline_tick_timestamp": "2015-01-12T14:30:00+00:00",
+      "observed_native_roc": -12.495559400969205,
+      "independent_calendar_reference": -12.495560586770093,
+      "difference_percentage_points": 1.1858008885923255e-06,
+      "match_within_0_001_percentage_points": true
+    },
+    {
+      "execution_timestamp": "2016-01-11T14:30:00+00:00",
+      "completed_tick_timestamp": "2016-01-08T21:00:00+00:00",
+      "horizon_calendar_days": 180,
+      "baseline_tick_timestamp": "2015-07-13T13:30:00+00:00",
+      "observed_native_roc": -22.450611828264847,
+      "independent_calendar_reference": -22.450612585401373,
+      "difference_percentage_points": 7.571365259195773e-07,
+      "match_within_0_001_percentage_points": true
+    },
+    {
+      "execution_timestamp": "2016-01-11T14:30:00+00:00",
+      "completed_tick_timestamp": "2016-01-08T21:00:00+00:00",
+      "horizon_calendar_days": 365,
+      "baseline_tick_timestamp": "2015-01-09T14:30:00+00:00",
+      "observed_native_roc": -13.943373870403352,
+      "independent_calendar_reference": -13.94337526895123,
+      "difference_percentage_points": 1.3985478783951066e-06,
+      "match_within_0_001_percentage_points": true
+    },
+    {
+      "execution_timestamp": "2016-01-08T14:30:00+00:00",
+      "completed_tick_timestamp": "2016-01-07T21:00:00+00:00",
+      "horizon_calendar_days": 180,
+      "baseline_tick_timestamp": "2015-07-13T13:30:00+00:00",
+      "observed_native_roc": -22.858515644316807,
+      "independent_calendar_reference": -22.85851639747086,
+      "difference_percentage_points": 7.53154054677907e-07,
+      "match_within_0_001_percentage_points": true
+    },
+    {
+      "execution_timestamp": "2016-01-08T14:30:00+00:00",
+      "completed_tick_timestamp": "2016-01-07T21:00:00+00:00",
+      "horizon_calendar_days": 365,
+      "baseline_tick_timestamp": "2015-01-08T14:30:00+00:00",
+      "observed_native_roc": -11.700087902524238,
+      "independent_calendar_reference": -11.700085188828913,
+      "difference_percentage_points": -2.7136953253403817e-06,
+      "match_within_0_001_percentage_points": true
+    },
+    {
+      "execution_timestamp": "2016-01-07T14:30:00+00:00",
+      "completed_tick_timestamp": "2016-01-06T21:00:00+00:00",
+      "horizon_calendar_days": 180,
+      "baseline_tick_timestamp": "2015-07-13T13:30:00+00:00",
+      "observed_native_roc": -19.459331415336603,
+      "independent_calendar_reference": -19.45933220167785,
+      "difference_percentage_points": 7.863412463393615e-07,
+      "match_within_0_001_percentage_points": true
+    },
+    {
+      "execution_timestamp": "2016-01-07T14:30:00+00:00",
+      "completed_tick_timestamp": "2016-01-06T21:00:00+00:00",
+      "horizon_calendar_days": 365,
+      "baseline_tick_timestamp": "2015-01-07T14:30:00+00:00",
+      "observed_native_roc": -6.06343300843404,
+      "independent_calendar_reference": -6.063435682609897,
+      "difference_percentage_points": 2.674175856753891e-06,
+      "match_within_0_001_percentage_points": true
+    }
+  ]
+}

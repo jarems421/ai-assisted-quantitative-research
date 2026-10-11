@@ -15,3 +15,12 @@ Ended securities are historically discoverable: SNDK has a bounded end of May 11
 - Establish historical exchange/OTC exclusion. The inspected schema has **no exchange/OTC field**; CS alone is insufficient.
 
 Segment publication vintages, native ALL_US_STOCKS parity, share-class/company selection, subtype completeness, exchange exclusions, identifier corrections and merger/delisting execution remain unresolved. Identity checks excluded 24,930 ownership aggregates; no current ticker substitution was used. Native IsAssetType Stock alone cannot exclude ETFs. The two diagnostics use an explicit ticker; no native DynamicRebalance membership probe was run. This filter is proposed, not certified executable. No outer Validation/Test definition changed.
+
+
+## Revised primary construction (2026-10-11)
+
+Prefer explicit effective historical security spans to native ALL_US_STOCKS. Primary proposal: known CS common stocks, nominal unadjusted price >= $5, fixed USD 10m ADV on 20 distinct completed lagged sessions; retain ended spans. Exclude ADR/ETF/preferred/fund/other/unknown types and ambiguous identities; record exclusions, including unsupported delisted histories. Historical exchange/OTC vintages remain unavailable in the inspected schema. No safe exchange-only universe or full native parity is claimed.
+
+Market cap is removed from the primary universe and grid; USD 25m liquidity is robustness only. Existing liquid-ID counts use unverified price-volume units and must not be treated as finalized eligibility. AAPL unadjustedClose/closingPrice = 4 before its split and 1 afterward; reported volume basis remains unresolved.
+
+The CQB/SPY diagnostic pruned CQB after its final January 6, 2015 source session and sold it January 7 at 90% of the prior close. This is event-level evidence for one native delisting mechanism, not proof of merger consideration, all security types, complete historic membership or exchange vintages. See [design revision](design_revision.md).
