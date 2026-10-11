@@ -84,6 +84,14 @@ def check_numeric_input(rows, expected_identities, *, session, prior_session, de
 
 def prepare():
     freeze = verify_freeze()
+    if freeze.get('version') == 2:
+        # Preserve subsequent runtime dispositions: legacy preparation must not
+        # overwrite the amended QA manifest or its publication-failure evidence.
+        manifest = json.loads((ROOT/'experiments/EXP004/development_input_manifest.json').read_bytes())
+        expected = manifest['input_manifest_sha256']
+        if digest({k:v for k,v in manifest.items() if k!='input_manifest_sha256'}) != expected:
+            raise ValueError('Amended input manifest changed without its integrity hash')
+        return manifest
     coverage = price_coverage()
     decisions = []
     for m in coverage['monthly']:

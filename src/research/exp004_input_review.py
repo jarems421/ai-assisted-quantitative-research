@@ -47,8 +47,9 @@ def review():
                   'four_cells_and_EW_same_maximum_horizon_population':True,'no_performance_calculated':True}}
     write(directory/'research/amended_input_qa.json',qa)
     manifest=json.loads((directory/'development_input_manifest.json').read_bytes())
-    manifest.update(status='INPUT_QA_PASSED_AWAITING_AMENDED_FREEZE_AND_PUBLICATION',decisions=monthly,
-                    qa_failure=None,amendment_qa='research/amended_input_qa.json',corporate_action_ledger='research/corporate_action_ambiguity_ledger.json')
+    manifest.update(decisions=monthly,amendment_qa='research/amended_input_qa.json',corporate_action_ledger='research/corporate_action_ambiguity_ledger.json')
+    if not (directory/'research/publication_runtime_audit.json').exists():
+        manifest.update(status='INPUT_QA_PASSED_AWAITING_AMENDED_FREEZE_AND_PUBLICATION',qa_failure=None)
     manifest.pop('input_manifest_sha256',None);manifest['input_manifest_sha256']=digest(manifest)
     write(directory/'development_input_manifest.json',manifest)
     print(json.dumps({'status':qa['status'],'decisions':72,'ambiguity_groups':len(ledger),'exclusions':action['monthly_excluded_security_decisions']}))

@@ -1,68 +1,74 @@
-# EXP004 Development — frozen, input QA blocked
+# EXP004 Development ? amended freeze; historical-symbol execution blocked
 
-**No Development performance results exist.** The owner approved the exact reviewed specification and methodology. The audit passed and `freeze-hypothesis` completed before preparation. Freeze checkpoint: `efc3626` on `main`, pushed to GitHub. No candidate or benchmark backtest, custom publication or performance query was performed. Nine authorized source Lake jobs completed; Nexus source bounds stayed pre-2021. Incidental later web-search references are disclosed in provenance, never used.
+**The corporate-action amendment and complete Development numeric QA pass. No candidate or benchmark performance results exist.** The frozen economic design remains unchanged. Production publication/runtime checks identified an independent historical-symbol transport failure; executing a pruned population would violate that design.
 
-Frozen hypothesis: medium-term cross-sectional price momentum improves net mean daily return and zero-RF Sharpe versus monthly equal-weight ownership of the same historical source-defined common-equity universe, with directionally consistent chronological held-out Development folds.
+## Pre-performance amendment
 
-| Frozen artifact | SHA-256 |
-|---|---|
-| Specification | `88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d` |
-| Methodology | `caf07509c04a9b703725983482e7502c03616b1ab27bdc5287148fdcca9b6328`; file mapping in [freeze receipt](../experiments/EXP004/freeze_receipt.json). |
+The original [freeze receipt](../experiments/EXP004/freeze_receipt.json) is unchanged. Its [version 1 disposition](../experiments/EXP004/freeze_versions/v001/disposition.json) records **SUPERSEDED_PRE_PERFORMANCE_BY_SOURCE_QA**. Original specification/methodology bytes are archived, not replaced. The original freeze checkpoint was `efc3626`; the amended input/freeze checkpoint is `fa65f94`, pushed before any diagnostic backtest.
 
-The reviewed specification bytes, source-universe definition, costs, four cells, benchmarks, statistical definitions and selection contract remain unchanged. Development is 2015-01-02–2020-12-31; outer Validation 2021–2023 remains unopened. Sealed ranges are 2024-01-01–2024-12-31 and 2025-01-01–9999-12-31. No later observations may repair Development inputs.
-
-## Input QA
-
-The owner's subsequent authorization allowed included research tokens for bounded production preparation, then lifted the numerical 2,000-token cap. No frozen specification/budget field changed and no credit purchase occurred. See [authorization](../experiments/EXP004/research/input_preparation_authorization.json).
-
-Nine Lake jobs completed: eight quarter-sized CS nominal-price extracts covering 2013-12-31 through 2015-12-31 (2,189,960 rows), plus a 2013-12-31?2020-12-31 split extract (8,149 rows). Two packed-array SQL submissions were rejected without job IDs and are retained. All source parameters, IDs, immutable receipts/Parquet hashes and 38 logged transport calls are in the [query ledger](../experiments/EXP004/research/production_query_log.json). No precise Lake cost quote or debit appeared in receipts: charges remain unknown, not zero. This stop is about source integrity, not budget.
-
-Local numeric QA generated all 12 monthly 2015 panels under the frozen completed-session, historical-identity and split-safe calculation. Eligible counts range 3,553?3,736. Compared with prior count-only prerequisites, strict calendar/positive-price and historical lookback-identity checks produce additional explicit exclusions; no new financial screen was added. Exact numbers, stable-ID rankings and top K targets remain private with hashes. These are input data, not performance. Later full numerical panels remain unbuilt after the critical failure.
-
-**Critical gate: ambiguous same-date split lineage.** The table exposes only ticker, executionDate, splitFrom and splitTo; it has no event/version/public-availability identity. A focused current-catalog check found no alternate split event/version table. Three active CS histories have distinct same-date factors:
-
-| Security | Source effective date | Factors | Affected predeclared decisions |
-|---|---|---|---|
-| LADR | 2015-12-08 | 1.126853 and 1.097582 | 2016 monthly decisions; full-Development replay |
-| BTX | 2016-06-17 | 2.0 and 0.01 | 2016-07 through 2017-06; scored 2017 |
-| ALEX | 2017-11-28 | 1.5741279154 and 1.42 | 2017-12 through 2018-11; scored 2017/2018 |
-
-Multiple rows may represent real sequential legs or unresolved vendor revisions/identity errors. Neither choosing one nor compounding all is certified by this schema. The frozen helper multiplies intervening factors; without authoritative event lineage, production use cannot establish the intended split-continuous price contract. Three other CS same-date groups do not enter the saved monthly eligible windows and are not presented as active blockers.
-
-ALEX's 2017 issuer announcement says the stock distribution amount depended on prices following a January 2018 election deadline. This does not identify which Nexus row is correct, but reinforces that a November-dated adjustment must have a verified as-of basis rather than assumed availability. [Issuer announcement](https://investors.alexanderbaldwin.com/2017-11-16-Alexander-Baldwin-Declares-783-Million-Special-Distribution), [SEC accompanying materials](https://www.sec.gov/Archives/edgar/data/1545654/000154565417000073/a3-accompanying_materials.htm).
-
-The [split QA receipt](../experiments/EXP004/research/production_split_qa.json) preserves exact rows, affected windows and inference boundaries. No heuristic ratio selection, new ticker exclusion, rewritten source response or alpha redesign occurred. The [input manifest](../experiments/EXP004/development_input_manifest.json) remains blocked and prevents submission. Production custom streams were not created. A corrected/certified event and availability lineage under the existing methodology is required; otherwise a separately reviewed design revision would be needed, which this task does not authorize.
-
-A targeted pre-cutoff issuer search returned incidental later dividend-page references; these were excluded, and no linked post-cutoff page was opened. Exact primary pages opened describe 2017/2018 events only. No 2021+ Nexus observation, Validation job or Test job occurred. The exposure note is retained rather than claiming all web responses contained only pre-cutoff text.
-
-## Four-cell surface
-
-| Cell | Independent metrics | Paired EW/SPY effects | Turnover / participation | Nexus ID |
-|---|---|---|---|---|
-| M180/K20 | Not run | Not run | Not measured | None |
-| M180/K40 | Not run | Not run | Not measured | None |
-| M365/K20 | Not run | Not run | Not measured | None |
-| M365/K40 | Not run | Not run | Not measured | None |
-
-## Fold and benchmark programme
-
-| Earlier history | Scored year | Four cells + EW + SPY |
+| Hash | Original | Amended version 2 |
 |---|---|---|
-| 2015–2016 | 2017 | All six unsubmitted |
-| 2015–2017 | 2018 | All six unsubmitted |
-| 2015–2018 | 2019 | All six unsubmitted |
-| 2015–2019 | 2020 | All six unsubmitted |
+| Specification | `88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d` | `32b216dd7d510399421d9ea89e61aff30c6b59aa8a4e0b31f5786615c1e6b3b9` |
+| Methodology | `caf07509c04a9b703725983482e7502c03616b1ab27bdc5287148fdcca9b6328` | `6bcb2a0c8513c06bfe4040275cfe6fa7f204b8e5844a80e36ed3e574560bee2a` |
 
-Both explicit SPY and monthly entire eligible-universe benchmarks remain unsubmitted. There are **0 runs and no run IDs**; the frozen plan has 24 scored-fold jobs, six full-Development replays and the later conditional stages/reserve. Withholding SPY avoids producing an unmatched partial programme while the shared source split lineage is uncertified.
+The [amended receipt](../experiments/EXP004/freeze_versions/v002/receipt.json) contains the exact one-field specification diff, reason and zero-performance proof: owner declaration, no local EXP004 jobs/trials/candidate and no strategy receipts before amendment. This is scoped evidence, not an independent audit of all account activity. The hypothesis,180/365-day horizons, K20/K40, cadence, ranks, costs, benchmarks, dates/folds, selection and robustness remain unchanged.
 
-## Selection, stability and robustness
+Ambiguous adjustments temporarily exclude a security whenever the complete inclusive 365-calendar-day window crosses the event. All four cells and monthly EW share that same population;180-day momentum cannot reenter earlier. Unique ordinary source splits remain usable. Identical economic factors normalize once; distinct factors without composition lineage are never selected, multiplied or averaged. No external ticker correction, permanent exclusion or survivor screen was introduced. Raw split rows are unchanged.
 
-Selection is **not evaluated**. This is not `NO EXP004 CANDIDATE ADVANCES`: that verdict requires the completed four-fold evidence and frozen eligibility rule. No winner is selected. Neither isolated optima nor horizon/holding sensitivity, fold signs or turnover can be measured without returns/events.
+## Complete Development input QA
 
-Local additional 10/20-bps cost stresses and the one-session-delay test have not run. They remain separate from base results and may not be used to change definitions or loosen eligibility. Regime decomposition likewise has no observations. Every failure/unknown remains explicit; nothing is reported as economic falsification or confirmed alpha.
+Twenty additional quarter-sized price queries completed. The complete input extract now has 28 price jobs (7,871,192 rows) plus the earlier split job (8,149 rows), bounded 2013-12-31 through 2020-12-31. Two earlier rejected SQL attempts remain in the historical ledger. Exact queries, IDs and private receipt/part hashes are in [the amendment query log](../experiments/EXP004/research/amendment_query_log.json); earlier operations remain in [the original log](../experiments/EXP004/research/production_query_log.json).
 
-Source-population coverage, vendor revisions, historical knowledge, simulated fills/corporate actions, effective deployment, capacity and selection bias retain their frozen limitations. No universe or alpha parameter changed to solve the input failure.
+All 72 monthly panels pass numeric QA, with 3,553?3,952 common eligible identities and 273,115 security-decisions. Both K sizes are available throughout. QA checks unique identities, complete expected prior sessions, positive finite prices, historical lookback/execution identity, completed cutoff availability, no future factors/bars and no ambiguous window entering either numerical signal. Both horizons and EW use the same common maximum-horizon population. These are signal inputs, not realized strategy returns.
 
-Reproduce preparation locally with `python -m src.research.prepare_exp004`; this performs no Nexus operations. The freeze and raw preparation receipt are immutable. Stop before affected runs and before outer Validation.
+The complete [ambiguity ledger](../experiments/EXP004/research/corporate_action_ambiguity_ledger.json) includes 63 ambiguous source groups, including noneligible/unresolved identities and groups with no affected decision. Only three affect otherwise eligible Development windows:
 
-Validation: 151 software tests passed; semantic audit passes at HYPOTHESIS_FROZEN; six presentation artifacts are deterministic. Production split QA remains failed and is not overridden by software checks.
+| Source example | First excluded decision | Last excluded decision | Excluded security-decisions |
+|---|---|---|---:|
+| BTX | 2016-07-01 | 2017-06-01 | 12 |
+| LADR | 2016-01-04 | 2016-12-01 | 12 |
+| ALEX | 2017-12-01 | 2018-11-01 | 12 |
+
+These are discovered examples, not an exclusion list. The generic scan produces 36 temporary exclusions. The owner-supplied LADR cash/stock-election distribution explanation is preserved; it supplies no corrected factor. The optional adjusted-price diagnostic was not performed. No broader corporate-action integrity failure was discovered.
+
+## Publication and runtime failure
+
+Each of the six per-asset streams contains 273,115 immutable numeric/rank/validity/date points. Nexus created indicator shells but rejected every full upload: **4,445 rows across 92 reported symbols; zero rows accepted per upload**. All failed columns are ticker validation. The complete error samples map one-to-one to original input rows, including punctuation normalization in server messages. The local source data/rankings were not rewritten to pass validation.
+
+The 72-point monthly schedule published successfully. A four-row synthetic dataset-promotion fixture accepted ADS, AHS, BBRY, AAPL, retaining their original symbols. A single 2015-01-02 deterministic daily backtest then tested whether that documented alternative preserved the requested universe. Its raw rebalance audit reported `universeSize=1`, with only AAPL. Thus storage acceptance is insufficient evidence of historical simulation support. This fixture does not prove every historical symbol is unsupported; it demonstrates an unacceptable population change in the tested implementation.
+
+| Diagnostic | Evidence |
+|---|---|
+| Existing diagnostic backtest | `6acbf2738c2f7fb888b4df99` |
+| Authorized source/session |2015-01-02 only |
+| Requested/observed universe size |4 /1 |
+| Raw events |6 rows,1 complete page; noise and condition audits included |
+| History |1 complete page, retained without calculating metrics |
+| Role |Synthetic transport check; no momentum/candidate/benchmark study |
+
+The diagnostic produced no executed trades. Its engine summaries are retained privately; no independent performance metrics were calculated. One diagnostic consumes the frozen failure/unresolved reserve: 19 reserve evaluations remain within the 59-evaluation total. No frozen economic cell was added. Six failed/empty indicator shells, one schedule and the synthetic diagnostic dataset/indicator remain preserved; none was silently deleted, replaced or republished. Their IDs, receipt hashes, monthly impact and exact runtime audit are in [publication_runtime_audit.json](../experiments/EXP004/research/publication_runtime_audit.json).
+
+This is a publication/execution blocker, not a failure of the corporate-action amendment or economic falsification. Removing unrecognized names or substituting today's symbols without an audited historical binding would change the frozen universe and EW comparator. A production submission guard rejects uncertified population transport. No candidate or benchmark is submitted from a partially accepted/pruned population.
+
+## Frozen programme and selection
+
+| Cell | Four scored folds | Full Development replay | Independent metrics / paired effects |
+|---|---|---|---|
+| M180/K20 |Not submitted |Not submitted |Not available |
+| M180/K40 |Not submitted |Not submitted |Not available |
+| M365/K20 |Not submitted |Not submitted |Not available |
+| M365/K40 |Not submitted |Not submitted |Not available |
+| Monthly entire eligible-universe EW |Not submitted |Not submitted |Not available |
+| Explicit SPY buy-and-hold |Not submitted |Not submitted |Not available |
+
+Scored folds remain2017,2018,2019,2020, with expanding earlier history and independent funding. All 24 fold jobs and six full-Development replays remain unsubmitted. No winner/eligibility, bootstrap, turnover/participation, regime decomposition, cost stress or delay result can be reported. **This is not NO EXP004 CANDIDATE ADVANCES**: that verdict requires the frozen complete fold evidence.
+
+The next required capability is historical-symbol publication and simulation binding that preserves every certified eligible identity, including renamed/ended histories, without current-survivor filtering. The observed SDK/interface declarations supplied no certified binding that fixes the demonstrated pruning. Resume using unchanged frozen inputs once that platform capability is established; no new design approval is needed solely because this amendment passed. The Development execution authorization remains in force.
+
+## Boundaries and reproduction
+
+No 2021+ market/signal observations, outer Validation or Test were queried. No saved portfolio, optimization, credit purchase, deployment or trade operation was called. One input-only synthetic diagnostic backtest was authorized and retained; zero candidate/benchmark jobs exist. Included-token preparation authorization has no numerical cap; actual Lake/upload debit remains unknown, not zero. Official dated pricing describes daily non-options simulations as free, not an account-specific billing receipt: [Nexus documentation](https://nexustrade.io/docs/features/backtesting).
+
+Rebuild the immutable local panels with `python -m src.research.exp004_compile YEAR` for 2015?2020; aggregate with `python -m src.research.exp004_input_review` only when deliberately refreshing derived QA. Stream generation uses `python -m src.research.exp004_streams`; raw receipts are required. Publication and diagnostic commands are remote mutations and must not be run as routine local reproduction. The older `prepare_exp004` path is legacy preparation evidence, not a command to overwrite the current runtime disposition.
+
+Semantic audit: `python -m src.research audit EXP004`. Tests: `python -m unittest discover -s tests -v`. Presentation: `python -m src.presentation.exp001 --check`. Software tests do not override the failed publication/runtime evidence. EXP001/EXP002/EXP003 results and definitions remain unchanged.

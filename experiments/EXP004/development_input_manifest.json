@@ -1,7 +1,7 @@
 {
-  "status": "INPUT_QA_PASSED_AWAITING_AMENDED_FREEZE_AND_PUBLICATION",
-  "frozen_specification_sha256": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
-  "frozen_methodology_sha256": "caf07509c04a9b703725983482e7502c03616b1ab27bdc5287148fdcca9b6328",
+  "status": "BLOCKED_HISTORICAL_SYMBOL_TRANSPORT_NUMERIC_QA_PASSED",
+  "frozen_specification_sha256": "32b216dd7d510399421d9ea89e61aff30c6b59aa8a4e0b31f5786615c1e6b3b9",
+  "frozen_methodology_sha256": "6bcb2a0c8513c06bfe4040275cfe6fa7f204b8e5844a80e36ed3e574560bee2a",
   "source_receipts": [
     {
       "path": "data/raw/EXP002/audit/raw/two_gate_20261011/historical_security_spans/rows.json",
@@ -1883,7 +1883,7 @@
     }
   ],
   "affected_runs": "Full2015-2020 replays and scored2017/2018 cells/shared-universe comparator. No partial unmatched programme submitted.",
-  "qa_failure": null,
+  "qa_failure": "Numeric/source QA passes; production publication and native universe preservation fail. No frozen-universe reduction is permitted.",
   "required_input": "Authoritative split event/version/identity/availability lineage for active LADR/BTX/ALEX rows or a corrected as-of source under the same frozen contract; no new exclusion filter or parameter allowed.",
   "cost_boundary": "Owner lifted included-token cap; no credit purchase. Token charges unknown in receipts, so this is a source QA stop, not a budget stop.",
   "operations": {
@@ -1903,5 +1903,10 @@
   "downloaded_split_rows": 8149,
   "amendment_qa": "research/amended_input_qa.json",
   "corporate_action_ledger": "research/corporate_action_ambiguity_ledger.json",
-  "input_manifest_sha256": "caeb45353cbe79aab0940bf06d0d26c5057f3785932d83c6b73877158d9d54ba"
+  "diagnostic_jobs": 1,
+  "diagnostic_run_ids": [
+    "6acbf2738c2f7fb888b4df99"
+  ],
+  "publication_runtime_audit": "research/publication_runtime_audit.json",
+  "input_manifest_sha256": "52c0827077357adf478f37e93b63a27558148da3a6ab2e1465c671ee63614b72"
 }

@@ -187,5 +187,17 @@
     "zero_performance_observed_before_amendment": true,
     "trigger": "Production input QA only",
     "economic_definition_unchanged": true
+  },
+  "amended_input_publication_runtime": {
+    "audit": "research/publication_runtime_audit.json",
+    "numeric_input_QA": "PASS_COMPLETE_DEVELOPMENT_INPUT_QA",
+    "disposition": "BLOCKED_HISTORICAL_SYMBOL_TRANSPORT",
+    "failed_large_uploads": 6,
+    "candidate_or_benchmark_runs": 0,
+    "synthetic_diagnostic_runs": 1,
+    "diagnostic_run_id": "6acbf2738c2f7fb888b4df99",
+    "held_out_reads": 0,
+    "economic_definitions_unchanged": true,
+    "independent_performance_calculated": false
   }
 }

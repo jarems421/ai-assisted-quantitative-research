@@ -1,0 +1,1960 @@
+{
+  "status": "BLOCKED_HISTORICAL_SYMBOL_TRANSPORT",
+  "uploads": {
+    "momentum180": {
+      "custom_indicator_id": "6acbf09f32636c1b6c14b72c",
+      "upload_job_id": "6acbf0a0cc7976c7bd1eb183",
+      "status": "failed",
+      "total_rows": 273115,
+      "accepted_rows": 0,
+      "rejected_rows": 4445,
+      "invalid_symbols": [
+        "AAXN",
+        "ADS",
+        "AESE",
+        "AHS",
+        "AIKI",
+        "AINV",
+        "ANTM",
+        "BBRY",
+        "BF-A",
+        "BF-B",
+        "BHGE",
+        "BLL",
+        "BOFI",
+        "BOMN",
+        "BRKS",
+        "CBAK",
+        "CBG",
+        "CBS-A",
+        "CCE",
+        "CECE",
+        "CFI",
+        "CLI",
+        "CLSN",
+        "COG",
+        "CRD-A",
+        "CRD-B",
+        "CRTX",
+        "CSU",
+        "CVTI",
+        "CWEN-A",
+        "ELY",
+        "ETE",
+        "FBHS",
+        "FCE-A",
+        "FII",
+        "FLDM",
+        "GEF-B",
+        "GMT",
+        "GNUS",
+        "HAPP",
+        "HBHC",
+        "HCN",
+        "HEI-A",
+        "HSC",
+        "HUB-B",
+        "INS",
+        "JCOM",
+        "JW-A",
+        "KMPH",
+        "LAWS",
+        "LEN-B",
+        "LGF-A",
+        "LGF-B",
+        "LNDC",
+        "LPI",
+        "MLHR",
+        "MOG-A",
+        "MSG",
+        "MTBC",
+        "MVG",
+        "NCBS",
+        "NLOK",
+        "NRCIA",
+        "NRZ",
+        "NYLD-A",
+        "OAS",
+        "OBNK",
+        "ONNN",
+        "PCCC",
+        "PEIX",
+        "PJC",
+        "PKI",
+        "RCII",
+        "RECN",
+        "RLGY",
+        "ROLL",
+        "SGMS",
+        "SWM",
+        "SYNL",
+        "TBK",
+        "TCK",
+        "TTS",
+        "UACL",
+        "UEPS",
+        "VEC",
+        "VIAC",
+        "VIACA",
+        "WETF",
+        "WRE",
+        "WRTC",
+        "WSTG",
+        "ZMH"
+      ],
+      "failure_columns": [
+        "ticker"
+      ],
+      "raw_receipt": "data/raw/EXP004/streams_v002/momentum180/wire_response_0021.json",
+      "raw_sha256": "55f2bb33008bc24015e07cd2a8b5168fe7c3f086b07ab49050ddaa32e5146380",
+      "indicator_ready": false,
+      "indicator_point_count": 0
+    },
+    "momentum365": {
+      "custom_indicator_id": "6acbf17fedda2368845aa262",
+      "upload_job_id": "6acbf183cc7976c7bd1eb2f1",
+      "status": "failed",
+      "total_rows": 273115,
+      "accepted_rows": 0,
+      "rejected_rows": 4445,
+      "invalid_symbols": [
+        "AAXN",
+        "ADS",
+        "AESE",
+        "AHS",
+        "AIKI",
+        "AINV",
+        "ANTM",
+        "BBRY",
+        "BF-A",
+        "BF-B",
+        "BHGE",
+        "BLL",
+        "BOFI",
+        "BOMN",
+        "BRKS",
+        "CBAK",
+        "CBG",
+        "CBS-A",
+        "CCE",
+        "CECE",
+        "CFI",
+        "CLI",
+        "CLSN",
+        "COG",
+        "CRD-A",
+        "CRD-B",
+        "CRTX",
+        "CSU",
+        "CVTI",
+        "CWEN-A",
+        "ELY",
+        "ETE",
+        "FBHS",
+        "FCE-A",
+        "FII",
+        "FLDM",
+        "GEF-B",
+        "GMT",
+        "GNUS",
+        "HAPP",
+        "HBHC",
+        "HCN",
+        "HEI-A",
+        "HSC",
+        "HUB-B",
+        "INS",
+        "JCOM",
+        "JW-A",
+        "KMPH",
+        "LAWS",
+        "LEN-B",
+        "LGF-A",
+        "LGF-B",
+        "LNDC",
+        "LPI",
+        "MLHR",
+        "MOG-A",
+        "MSG",
+        "MTBC",
+        "MVG",
+        "NCBS",
+        "NLOK",
+        "NRCIA",
+        "NRZ",
+        "NYLD-A",
+        "OAS",
+        "OBNK",
+        "ONNN",
+        "PCCC",
+        "PEIX",
+        "PJC",
+        "PKI",
+        "RCII",
+        "RECN",
+        "RLGY",
+        "ROLL",
+        "SGMS",
+        "SWM",
+        "SYNL",
+        "TBK",
+        "TCK",
+        "TTS",
+        "UACL",
+        "UEPS",
+        "VEC",
+        "VIAC",
+        "VIACA",
+        "WETF",
+        "WRE",
+        "WRTC",
+        "WSTG",
+        "ZMH"
+      ],
+      "failure_columns": [
+        "ticker"
+      ],
+      "raw_receipt": "data/raw/EXP004/streams_v002/momentum365/wire_response_0012.json",
+      "raw_sha256": "bdbfcda3519949f3155c530da5a6bcef183cf45951e764b8471b5ac0876f4ebb",
+      "indicator_ready": false,
+      "indicator_point_count": 0
+    },
+    "ordinal180": {
+      "custom_indicator_id": "6acbf17fb9997c1f58eba03d",
+      "upload_job_id": "6acbf183edda2368845aa279",
+      "status": "failed",
+      "total_rows": 273115,
+      "accepted_rows": 0,
+      "rejected_rows": 4445,
+      "invalid_symbols": [
+        "AAXN",
+        "ADS",
+        "AESE",
+        "AHS",
+        "AIKI",
+        "AINV",
+        "ANTM",
+        "BBRY",
+        "BF-A",
+        "BF-B",
+        "BHGE",
+        "BLL",
+        "BOFI",
+        "BOMN",
+        "BRKS",
+        "CBAK",
+        "CBG",
+        "CBS-A",
+        "CCE",
+        "CECE",
+        "CFI",
+        "CLI",
+        "CLSN",
+        "COG",
+        "CRD-A",
+        "CRD-B",
+        "CRTX",
+        "CSU",
+        "CVTI",
+        "CWEN-A",
+        "ELY",
+        "ETE",
+        "FBHS",
+        "FCE-A",
+        "FII",
+        "FLDM",
+        "GEF-B",
+        "GMT",
+        "GNUS",
+        "HAPP",
+        "HBHC",
+        "HCN",
+        "HEI-A",
+        "HSC",
+        "HUB-B",
+        "INS",
+        "JCOM",
+        "JW-A",
+        "KMPH",
+        "LAWS",
+        "LEN-B",
+        "LGF-A",
+        "LGF-B",
+        "LNDC",
+        "LPI",
+        "MLHR",
+        "MOG-A",
+        "MSG",
+        "MTBC",
+        "MVG",
+        "NCBS",
+        "NLOK",
+        "NRCIA",
+        "NRZ",
+        "NYLD-A",
+        "OAS",
+        "OBNK",
+        "ONNN",
+        "PCCC",
+        "PEIX",
+        "PJC",
+        "PKI",
+        "RCII",
+        "RECN",
+        "RLGY",
+        "ROLL",
+        "SGMS",
+        "SWM",
+        "SYNL",
+        "TBK",
+        "TCK",
+        "TTS",
+        "UACL",
+        "UEPS",
+        "VEC",
+        "VIAC",
+        "VIACA",
+        "WETF",
+        "WRE",
+        "WRTC",
+        "WSTG",
+        "ZMH"
+      ],
+      "failure_columns": [
+        "ticker"
+      ],
+      "raw_receipt": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0010.json",
+      "raw_sha256": "1999a91df0d20647261ee1938be29fed35fb95080721e9b7de2393f0722932c1",
+      "indicator_ready": false,
+      "indicator_point_count": 0
+    },
+    "ordinal365": {
+      "custom_indicator_id": "6acbf17fcc7976c7bd1eb2e1",
+      "upload_job_id": "6acbf1835f7c0dbd8e48bafe",
+      "status": "failed",
+      "total_rows": 273115,
+      "accepted_rows": 0,
+      "rejected_rows": 4445,
+      "invalid_symbols": [
+        "AAXN",
+        "ADS",
+        "AESE",
+        "AHS",
+        "AIKI",
+        "AINV",
+        "ANTM",
+        "BBRY",
+        "BF-A",
+        "BF-B",
+        "BHGE",
+        "BLL",
+        "BOFI",
+        "BOMN",
+        "BRKS",
+        "CBAK",
+        "CBG",
+        "CBS-A",
+        "CCE",
+        "CECE",
+        "CFI",
+        "CLI",
+        "CLSN",
+        "COG",
+        "CRD-A",
+        "CRD-B",
+        "CRTX",
+        "CSU",
+        "CVTI",
+        "CWEN-A",
+        "ELY",
+        "ETE",
+        "FBHS",
+        "FCE-A",
+        "FII",
+        "FLDM",
+        "GEF-B",
+        "GMT",
+        "GNUS",
+        "HAPP",
+        "HBHC",
+        "HCN",
+        "HEI-A",
+        "HSC",
+        "HUB-B",
+        "INS",
+        "JCOM",
+        "JW-A",
+        "KMPH",
+        "LAWS",
+        "LEN-B",
+        "LGF-A",
+        "LGF-B",
+        "LNDC",
+        "LPI",
+        "MLHR",
+        "MOG-A",
+        "MSG",
+        "MTBC",
+        "MVG",
+        "NCBS",
+        "NLOK",
+        "NRCIA",
+        "NRZ",
+        "NYLD-A",
+        "OAS",
+        "OBNK",
+        "ONNN",
+        "PCCC",
+        "PEIX",
+        "PJC",
+        "PKI",
+        "RCII",
+        "RECN",
+        "RLGY",
+        "ROLL",
+        "SGMS",
+        "SWM",
+        "SYNL",
+        "TBK",
+        "TCK",
+        "TTS",
+        "UACL",
+        "UEPS",
+        "VEC",
+        "VIAC",
+        "VIACA",
+        "WETF",
+        "WRE",
+        "WRTC",
+        "WSTG",
+        "ZMH"
+      ],
+      "failure_columns": [
+        "ticker"
+      ],
+      "raw_receipt": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0011.json",
+      "raw_sha256": "b316384ffdd295fbfc98f9edc7002fb2bd68139a6c6b6179ac5e6b312a4869d4",
+      "indicator_ready": false,
+      "indicator_point_count": 0
+    },
+    "validity": {
+      "custom_indicator_id": "6acbf1805f7c0dbd8e48bae9",
+      "upload_job_id": "6acbf18332636c1b6c14b7b9",
+      "status": "failed",
+      "total_rows": 273115,
+      "accepted_rows": 0,
+      "rejected_rows": 4445,
+      "invalid_symbols": [
+        "AAXN",
+        "ADS",
+        "AESE",
+        "AHS",
+        "AIKI",
+        "AINV",
+        "ANTM",
+        "BBRY",
+        "BF-A",
+        "BF-B",
+        "BHGE",
+        "BLL",
+        "BOFI",
+        "BOMN",
+        "BRKS",
+        "CBAK",
+        "CBG",
+        "CBS-A",
+        "CCE",
+        "CECE",
+        "CFI",
+        "CLI",
+        "CLSN",
+        "COG",
+        "CRD-A",
+        "CRD-B",
+        "CRTX",
+        "CSU",
+        "CVTI",
+        "CWEN-A",
+        "ELY",
+        "ETE",
+        "FBHS",
+        "FCE-A",
+        "FII",
+        "FLDM",
+        "GEF-B",
+        "GMT",
+        "GNUS",
+        "HAPP",
+        "HBHC",
+        "HCN",
+        "HEI-A",
+        "HSC",
+        "HUB-B",
+        "INS",
+        "JCOM",
+        "JW-A",
+        "KMPH",
+        "LAWS",
+        "LEN-B",
+        "LGF-A",
+        "LGF-B",
+        "LNDC",
+        "LPI",
+        "MLHR",
+        "MOG-A",
+        "MSG",
+        "MTBC",
+        "MVG",
+        "NCBS",
+        "NLOK",
+        "NRCIA",
+        "NRZ",
+        "NYLD-A",
+        "OAS",
+        "OBNK",
+        "ONNN",
+        "PCCC",
+        "PEIX",
+        "PJC",
+        "PKI",
+        "RCII",
+        "RECN",
+        "RLGY",
+        "ROLL",
+        "SGMS",
+        "SWM",
+        "SYNL",
+        "TBK",
+        "TCK",
+        "TTS",
+        "UACL",
+        "UEPS",
+        "VEC",
+        "VIAC",
+        "VIACA",
+        "WETF",
+        "WRE",
+        "WRTC",
+        "WSTG",
+        "ZMH"
+      ],
+      "failure_columns": [
+        "ticker"
+      ],
+      "raw_receipt": "data/raw/EXP004/streams_v002/validity/wire_response_0011.json",
+      "raw_sha256": "44a996467d962315a627ac4f9c8c8128b580a99b77f9e2c083ab28ebcfad83a6",
+      "indicator_ready": false,
+      "indicator_point_count": 0
+    },
+    "session": {
+      "custom_indicator_id": "6acbf17fcc7976c7bd1eb2df",
+      "upload_job_id": "6acbf183edda2368845aa277",
+      "status": "failed",
+      "total_rows": 273115,
+      "accepted_rows": 0,
+      "rejected_rows": 4445,
+      "invalid_symbols": [
+        "AAXN",
+        "ADS",
+        "AESE",
+        "AHS",
+        "AIKI",
+        "AINV",
+        "ANTM",
+        "BBRY",
+        "BF-A",
+        "BF-B",
+        "BHGE",
+        "BLL",
+        "BOFI",
+        "BOMN",
+        "BRKS",
+        "CBAK",
+        "CBG",
+        "CBS-A",
+        "CCE",
+        "CECE",
+        "CFI",
+        "CLI",
+        "CLSN",
+        "COG",
+        "CRD-A",
+        "CRD-B",
+        "CRTX",
+        "CSU",
+        "CVTI",
+        "CWEN-A",
+        "ELY",
+        "ETE",
+        "FBHS",
+        "FCE-A",
+        "FII",
+        "FLDM",
+        "GEF-B",
+        "GMT",
+        "GNUS",
+        "HAPP",
+        "HBHC",
+        "HCN",
+        "HEI-A",
+        "HSC",
+        "HUB-B",
+        "INS",
+        "JCOM",
+        "JW-A",
+        "KMPH",
+        "LAWS",
+        "LEN-B",
+        "LGF-A",
+        "LGF-B",
+        "LNDC",
+        "LPI",
+        "MLHR",
+        "MOG-A",
+        "MSG",
+        "MTBC",
+        "MVG",
+        "NCBS",
+        "NLOK",
+        "NRCIA",
+        "NRZ",
+        "NYLD-A",
+        "OAS",
+        "OBNK",
+        "ONNN",
+        "PCCC",
+        "PEIX",
+        "PJC",
+        "PKI",
+        "RCII",
+        "RECN",
+        "RLGY",
+        "ROLL",
+        "SGMS",
+        "SWM",
+        "SYNL",
+        "TBK",
+        "TCK",
+        "TTS",
+        "UACL",
+        "UEPS",
+        "VEC",
+        "VIAC",
+        "VIACA",
+        "WETF",
+        "WRE",
+        "WRTC",
+        "WSTG",
+        "ZMH"
+      ],
+      "failure_columns": [
+        "ticker"
+      ],
+      "raw_receipt": "data/raw/EXP004/streams_v002/session/wire_response_0010.json",
+      "raw_sha256": "24d21ddf0715bd5cb84be0497f4a459e774904334877bdf15a5599d28f53c05c",
+      "indicator_ready": false,
+      "indicator_point_count": 0
+    }
+  },
+  "monthly": [
+    {
+      "session": "2015-01-02",
+      "eligible_count": 3553,
+      "unrecognized_historical_symbols": 66
+    },
+    {
+      "session": "2015-02-02",
+      "eligible_count": 3556,
+      "unrecognized_historical_symbols": 66
+    },
+    {
+      "session": "2015-03-02",
+      "eligible_count": 3578,
+      "unrecognized_historical_symbols": 66
+    },
+    {
+      "session": "2015-04-01",
+      "eligible_count": 3592,
+      "unrecognized_historical_symbols": 66
+    },
+    {
+      "session": "2015-05-01",
+      "eligible_count": 3606,
+      "unrecognized_historical_symbols": 65
+    },
+    {
+      "session": "2015-06-01",
+      "eligible_count": 3619,
+      "unrecognized_historical_symbols": 64
+    },
+    {
+      "session": "2015-07-01",
+      "eligible_count": 3643,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2015-08-03",
+      "eligible_count": 3668,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2015-09-01",
+      "eligible_count": 3682,
+      "unrecognized_historical_symbols": 64
+    },
+    {
+      "session": "2015-10-01",
+      "eligible_count": 3678,
+      "unrecognized_historical_symbols": 64
+    },
+    {
+      "session": "2015-11-02",
+      "eligible_count": 3701,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2015-12-01",
+      "eligible_count": 3736,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2016-01-04",
+      "eligible_count": 3744,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2016-02-01",
+      "eligible_count": 3735,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2016-03-01",
+      "eligible_count": 3744,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2016-04-01",
+      "eligible_count": 3751,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2016-05-02",
+      "eligible_count": 3747,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2016-06-01",
+      "eligible_count": 3756,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2016-07-01",
+      "eligible_count": 3777,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2016-08-01",
+      "eligible_count": 3787,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2016-09-01",
+      "eligible_count": 3797,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2016-10-03",
+      "eligible_count": 3777,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2016-11-01",
+      "eligible_count": 3789,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2016-12-01",
+      "eligible_count": 3797,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2017-01-03",
+      "eligible_count": 3795,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2017-02-01",
+      "eligible_count": 3793,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2017-03-01",
+      "eligible_count": 3784,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2017-04-03",
+      "eligible_count": 3776,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2017-05-01",
+      "eligible_count": 3773,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2017-06-01",
+      "eligible_count": 3787,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2017-07-03",
+      "eligible_count": 3803,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2017-08-01",
+      "eligible_count": 3807,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2017-09-01",
+      "eligible_count": 3805,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2017-10-02",
+      "eligible_count": 3795,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2017-11-01",
+      "eligible_count": 3854,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2017-12-01",
+      "eligible_count": 3852,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2018-01-02",
+      "eligible_count": 3846,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2018-02-01",
+      "eligible_count": 3857,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2018-03-01",
+      "eligible_count": 3851,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2018-04-02",
+      "eligible_count": 3850,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2018-05-01",
+      "eligible_count": 3856,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2018-06-01",
+      "eligible_count": 3858,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2018-07-02",
+      "eligible_count": 3854,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2018-08-01",
+      "eligible_count": 3849,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2018-09-04",
+      "eligible_count": 3848,
+      "unrecognized_historical_symbols": 63
+    },
+    {
+      "session": "2018-10-01",
+      "eligible_count": 3842,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2018-11-01",
+      "eligible_count": 3850,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2018-12-03",
+      "eligible_count": 3848,
+      "unrecognized_historical_symbols": 59
+    },
+    {
+      "session": "2019-01-02",
+      "eligible_count": 3828,
+      "unrecognized_historical_symbols": 59
+    },
+    {
+      "session": "2019-02-01",
+      "eligible_count": 3817,
+      "unrecognized_historical_symbols": 59
+    },
+    {
+      "session": "2019-03-01",
+      "eligible_count": 3816,
+      "unrecognized_historical_symbols": 59
+    },
+    {
+      "session": "2019-04-01",
+      "eligible_count": 3812,
+      "unrecognized_historical_symbols": 59
+    },
+    {
+      "session": "2019-05-01",
+      "eligible_count": 3821,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2019-06-03",
+      "eligible_count": 3835,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2019-07-01",
+      "eligible_count": 3852,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2019-08-01",
+      "eligible_count": 3858,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2019-09-03",
+      "eligible_count": 3851,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2019-10-01",
+      "eligible_count": 3854,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2019-11-01",
+      "eligible_count": 3844,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2019-12-02",
+      "eligible_count": 3849,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2020-01-02",
+      "eligible_count": 3836,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2020-02-03",
+      "eligible_count": 3825,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2020-03-02",
+      "eligible_count": 3822,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2020-04-01",
+      "eligible_count": 3828,
+      "unrecognized_historical_symbols": 62
+    },
+    {
+      "session": "2020-05-01",
+      "eligible_count": 3845,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2020-06-01",
+      "eligible_count": 3850,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2020-07-01",
+      "eligible_count": 3861,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2020-08-03",
+      "eligible_count": 3881,
+      "unrecognized_historical_symbols": 60
+    },
+    {
+      "session": "2020-09-01",
+      "eligible_count": 3894,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2020-10-01",
+      "eligible_count": 3906,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2020-11-02",
+      "eligible_count": 3932,
+      "unrecognized_historical_symbols": 61
+    },
+    {
+      "session": "2020-12-01",
+      "eligible_count": 3952,
+      "unrecognized_historical_symbols": 60
+    }
+  ],
+  "total_unrecognized_security_decisions": 4445,
+  "affected_top_K_monthly_decisions": {
+    "M180_K20": 18,
+    "M180_K40": 31,
+    "M365_K20": 16,
+    "M365_K40": 30
+  },
+  "transport_diagnostic": {
+    "run_id": "6acbf2738c2f7fb888b4df99",
+    "window": [
+      "2015-01-02",
+      "2015-01-02"
+    ],
+    "requested_symbols": [
+      "ADS",
+      "AHS",
+      "BBRY",
+      "AAPL"
+    ],
+    "observed_dynamic_universe_size": 1,
+    "observed_assets": [
+      "AAPL"
+    ],
+    "events_rows": 6,
+    "events_pages": 1,
+    "candidate_or_benchmark": false,
+    "source": "streams_v002/transport_execution_diagnostic/events_00001.json",
+    "reserve_evaluations_consumed": 1,
+    "performance_metrics_not_calculated": true,
+    "boundary": "One synthetic transport fixture; demonstrates pruning in this case, not every historical symbol/native mechanism."
+  },
+  "dataset_promotion_fixture": {
+    "dataset_id": "6acbf1ffedda2368845aa437",
+    "custom_indicator_id": "6acbf200edda2368845aa439",
+    "ready": true,
+    "points": 4,
+    "result": "Stored original symbols, but engine omitted three of four requested assets"
+  },
+  "schedule": "6acbf17eedda2368845aa25e",
+  "candidate_backtests": 0,
+  "benchmark_backtests": 0,
+  "held_out_reads": 0,
+  "credit_purchases": 0,
+  "actual_token_debit": null,
+  "remedy": "Nexus historical-symbol publication and simulation support preserving the exact frozen historical population; no present-day renaming/filtering.",
+  "original_source_tickers_rejected": [
+    "AAXN",
+    "ADS",
+    "AESE",
+    "AHS",
+    "AIKI",
+    "AINV",
+    "ANTM",
+    "BBRY",
+    "BF.A",
+    "BF.B",
+    "BHGE",
+    "BLL",
+    "BOFI",
+    "BOMN",
+    "BRKS",
+    "CBAK",
+    "CBG",
+    "CBS.A",
+    "CCE",
+    "CECE",
+    "CFI",
+    "CLI",
+    "CLSN",
+    "COG",
+    "CRD.A",
+    "CRD.B",
+    "CRTX",
+    "CSU",
+    "CVTI",
+    "CWEN.A",
+    "ELY",
+    "ETE",
+    "FBHS",
+    "FCE.A",
+    "FII",
+    "FLDM",
+    "GEF.B",
+    "GMT",
+    "GNUS",
+    "HAPP",
+    "HBHC",
+    "HCN",
+    "HEI.A",
+    "HSC",
+    "HUB.B",
+    "INS",
+    "JCOM",
+    "JW.A",
+    "KMPH",
+    "LAWS",
+    "LEN.B",
+    "LGF.A",
+    "LGF.B",
+    "LNDC",
+    "LPI",
+    "MLHR",
+    "MOG.A",
+    "MSG",
+    "MTBC",
+    "MVG",
+    "NCBS",
+    "NLOK",
+    "NRCIA",
+    "NRZ",
+    "NYLD.A",
+    "OAS",
+    "OBNK",
+    "ONNN",
+    "PCCC",
+    "PEIX",
+    "PJC",
+    "PKI",
+    "RCII",
+    "RECN",
+    "RLGY",
+    "ROLL",
+    "SGMS",
+    "SWM",
+    "SYNL",
+    "TBK",
+    "TCK",
+    "TTS",
+    "UACL",
+    "UEPS",
+    "VEC",
+    "VIAC",
+    "VIACA",
+    "WETF",
+    "WRE",
+    "WRTC",
+    "WSTG",
+    "ZMH"
+  ],
+  "symbol_mapping_evidence": "One-based failed sampleRows exhaust all4445 failures and map to original immutable points. Server error normalizes punctuation, e.g.BF.A?BF-A; no alias correction applied.",
+  "operations": {
+    "SDK_indicator_creates": 7,
+    "SDK_large_upload_attempts": 6,
+    "SDK_large_upload_failures": 6,
+    "ready_schedule_streams": 1,
+    "MCP_synthetic_dataset_creates": 1,
+    "MCP_synthetic_indicator_promotions": 1,
+    "diagnostic_backtests": 1,
+    "candidate_backtests": 0,
+    "benchmark_backtests": 0,
+    "Validation_backtests": 0,
+    "Test_backtests": 0,
+    "portfolio_creation_calls": 0,
+    "optimization_calls": 0,
+    "paper_or_live_operations": 0,
+    "credit_purchases": 0
+  },
+  "reserve_accounting": {
+    "frozen_total_evaluation_ceiling": 59,
+    "input_transport_diagnostics_attempted": 1,
+    "failure_unresolved_reserve_remaining": 19,
+    "planned_economic_cells_unchanged": true
+  },
+  "receipt_index": [
+    {
+      "path": "data/raw/EXP004/streams_v002/manifest.json",
+      "sha256": "5177902b29faad2053e283c6a50db6c1eed03ca6bd8afdf510b4bdd40d15b2a5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/intent.json",
+      "sha256": "50c2ce43e4425412b91b70e33249ca72e9ba6e2a03e97d9b0170cfd9bc9258ce"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/terminal_indicator_metadata.json",
+      "sha256": "602e2925f6f4b3d08e71125dcc7c3b04412290b8627d0b46583735b7b2d4fa21"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0001.json",
+      "sha256": "2acac41d929997f451c1597f3718cec17ccc78f3e40db40896212c3edfa68ad1"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0002.json",
+      "sha256": "1e1476f3ce9caa676d2dd706b2244a6cfb0146a08fe47a01acd1778ded0675d1"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0003.json",
+      "sha256": "a5746fe716a9b521fd3283e4d346e16d791166f6d26cbe866a3b67c2de57c2ed"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0004.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0005.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0006.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0007.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0008.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0009.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0010.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0011.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0012.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0013.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0014.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0015.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0016.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0017.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0018.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0019.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0020.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0021.json",
+      "sha256": "36302e3ee5d8788568b8f48a065802be4aca43847a242b3141b53e6822339223"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_request_0022.json",
+      "sha256": "d650e3ce6941056dc5a1e7a6a20121eb14327ede308f1fd58442dc4aa1569f17"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0001.json",
+      "sha256": "4c24265abbb95181df1d082df5f21db94c104d143e8797ba197a17a5990f5d2f"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0002.json",
+      "sha256": "29449d349d8ac790f88a3ca04a95f30497d580a1029fb8174cc63c33359a9f04"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0003.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0004.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0005.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0006.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0007.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0008.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0009.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0010.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0011.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0012.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0013.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0014.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0015.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0016.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0017.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0018.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0019.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0020.json",
+      "sha256": "8556d195f9deefeb93102cb042c8b21fcb6515f4eb946201299b60b79b7ffa6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0021.json",
+      "sha256": "55f2bb33008bc24015e07cd2a8b5168fe7c3f086b07ab49050ddaa32e5146380"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum180/wire_response_0022.json",
+      "sha256": "4c24265abbb95181df1d082df5f21db94c104d143e8797ba197a17a5990f5d2f"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/intent.json",
+      "sha256": "db1e456538a5484c191ee9f137958acc53a02f12c81d066ffe2821171a89fe04"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/terminal_indicator_metadata.json",
+      "sha256": "4a2bb0c65c6f4d6e094754e27b3f7050287dc2c7300f14ddc185c960cf451ff6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0001.json",
+      "sha256": "75b5ad4dfe54461d21ca93e5ce4b454af95da831eb0240e0466f0b760b781522"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0002.json",
+      "sha256": "e9f49c6160d3b234a1ce42f53a9e2668bc9401550c3f20c56f37a7e3d1e228e3"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0003.json",
+      "sha256": "725363f315cd92014437fec2ca95e6657f1536e8b7f297da75efd6b63ea6f0ba"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0004.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0005.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0006.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0007.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0008.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0009.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0010.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0011.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0012.json",
+      "sha256": "4db84fe277d5d3e153a2cfa8708bce9ae6b397446905d8df512bb261e50073c2"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_request_0013.json",
+      "sha256": "5748312a787297f987b9dbe85300ed0c03fa326017ce5cc74d1e05f3d096b015"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0001.json",
+      "sha256": "5d0d9b6dd4e6520373105ac717e29fb8d3bcbc38578e178cdd79c26c17a26098"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0002.json",
+      "sha256": "7d4f81b6bb149203c6782388602df7bff344d702b3f4c43d782989e80070fa45"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0003.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0004.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0005.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0006.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0007.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0008.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0009.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0010.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0011.json",
+      "sha256": "fe37d691a3e1b6e45e1743a7749fd6ae63dc04b4f20d8f036b08af675efdd178"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0012.json",
+      "sha256": "bdbfcda3519949f3155c530da5a6bcef183cf45951e764b8471b5ac0876f4ebb"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/momentum365/wire_response_0013.json",
+      "sha256": "5d0d9b6dd4e6520373105ac717e29fb8d3bcbc38578e178cdd79c26c17a26098"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/intent.json",
+      "sha256": "8591d48f6acf8b3d3de826da200c93f308fe78b52db00813fd2a456719106e62"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/terminal_indicator_metadata.json",
+      "sha256": "4022f5331d01a2c6adad5dd5e82c3eb574967d3207e8410dd471c24b40c4b34a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0001.json",
+      "sha256": "5ff92df88d360c4b91870b7e4893db6d3a44628157b3344183a0c84b80df5d5c"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0002.json",
+      "sha256": "f94bcde4f8489fac35e3dd49ece366a3dc0c6e87b582a406090c6b465bb12e94"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0003.json",
+      "sha256": "334a3fa6868062b9c58b13975ae6dacae2ae058bb86e8dc1893998f0f37b2cab"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0004.json",
+      "sha256": "6db07fa856661b43b32a2aeb28003f6b3f6e3b719a807bb2be4f4e9f5d401788"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0005.json",
+      "sha256": "6db07fa856661b43b32a2aeb28003f6b3f6e3b719a807bb2be4f4e9f5d401788"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0006.json",
+      "sha256": "6db07fa856661b43b32a2aeb28003f6b3f6e3b719a807bb2be4f4e9f5d401788"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0007.json",
+      "sha256": "6db07fa856661b43b32a2aeb28003f6b3f6e3b719a807bb2be4f4e9f5d401788"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0008.json",
+      "sha256": "6db07fa856661b43b32a2aeb28003f6b3f6e3b719a807bb2be4f4e9f5d401788"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0009.json",
+      "sha256": "6db07fa856661b43b32a2aeb28003f6b3f6e3b719a807bb2be4f4e9f5d401788"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0010.json",
+      "sha256": "6db07fa856661b43b32a2aeb28003f6b3f6e3b719a807bb2be4f4e9f5d401788"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_request_0011.json",
+      "sha256": "f73b916dfbcb651d153f63dc829d056d3f7a19c6e988a98cbf70a9b442edd70d"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0001.json",
+      "sha256": "32b6e9c7abd69d2f2092ff86c219a1b48171b120abe97b5a0be8b04ab9c1e342"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0002.json",
+      "sha256": "bf8df5167c56ef8800b82e9a60f7fc6010ceea4764617ebdb677d1c44521899d"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0003.json",
+      "sha256": "90b40e5e716d26f629f495fa61bd2a5716ef0e4c4a8ea5f229dafe327036d805"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0004.json",
+      "sha256": "90b40e5e716d26f629f495fa61bd2a5716ef0e4c4a8ea5f229dafe327036d805"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0005.json",
+      "sha256": "90b40e5e716d26f629f495fa61bd2a5716ef0e4c4a8ea5f229dafe327036d805"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0006.json",
+      "sha256": "90b40e5e716d26f629f495fa61bd2a5716ef0e4c4a8ea5f229dafe327036d805"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0007.json",
+      "sha256": "90b40e5e716d26f629f495fa61bd2a5716ef0e4c4a8ea5f229dafe327036d805"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0008.json",
+      "sha256": "90b40e5e716d26f629f495fa61bd2a5716ef0e4c4a8ea5f229dafe327036d805"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0009.json",
+      "sha256": "90b40e5e716d26f629f495fa61bd2a5716ef0e4c4a8ea5f229dafe327036d805"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0010.json",
+      "sha256": "1999a91df0d20647261ee1938be29fed35fb95080721e9b7de2393f0722932c1"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal180/wire_response_0011.json",
+      "sha256": "32b6e9c7abd69d2f2092ff86c219a1b48171b120abe97b5a0be8b04ab9c1e342"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/intent.json",
+      "sha256": "528d5a925c2819d325a17e7948bec1937142f11735821700db3f5a2f1551c3fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/terminal_indicator_metadata.json",
+      "sha256": "0a0a7006558a5fb8703d1af76ce47bd2ea455b9b258f2fa6857780d9f02b188a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0001.json",
+      "sha256": "5bc837b221f755ab40ac180ca1717c2696c89d439a0d27c5fe6e7303603bd30c"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0002.json",
+      "sha256": "96274f0f4c75124e22da0d257863078ccc33a8af8092e5262189d301399dce22"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0003.json",
+      "sha256": "05501bccf4df9d3800b37fc3ca14531d3f7a44f24c78af38b1ebd4fca1ce39dc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0004.json",
+      "sha256": "59b1120471d663ec0d4d442d41db4d2af3c424d4b171073c6e6457510b5089fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0005.json",
+      "sha256": "59b1120471d663ec0d4d442d41db4d2af3c424d4b171073c6e6457510b5089fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0006.json",
+      "sha256": "59b1120471d663ec0d4d442d41db4d2af3c424d4b171073c6e6457510b5089fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0007.json",
+      "sha256": "59b1120471d663ec0d4d442d41db4d2af3c424d4b171073c6e6457510b5089fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0008.json",
+      "sha256": "59b1120471d663ec0d4d442d41db4d2af3c424d4b171073c6e6457510b5089fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0009.json",
+      "sha256": "59b1120471d663ec0d4d442d41db4d2af3c424d4b171073c6e6457510b5089fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0010.json",
+      "sha256": "59b1120471d663ec0d4d442d41db4d2af3c424d4b171073c6e6457510b5089fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0011.json",
+      "sha256": "59b1120471d663ec0d4d442d41db4d2af3c424d4b171073c6e6457510b5089fa"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_request_0012.json",
+      "sha256": "f684e88dddefb87702389c864089fb908fd8194bd76d7e4b3d845d1e72915bce"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0001.json",
+      "sha256": "6c234219e9d600380ebf172c6b095e38c421f2244397b68cc1e0754ed0480e05"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0002.json",
+      "sha256": "be796c4ed2ebe2886098be4ea210611e10cd75eed739bd32a81eca9e784ee3a7"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0003.json",
+      "sha256": "1be7eee9acab488460b2c932922f407b8e4b82a9199cb8ebff76dc3056735928"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0004.json",
+      "sha256": "1be7eee9acab488460b2c932922f407b8e4b82a9199cb8ebff76dc3056735928"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0005.json",
+      "sha256": "1be7eee9acab488460b2c932922f407b8e4b82a9199cb8ebff76dc3056735928"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0006.json",
+      "sha256": "1be7eee9acab488460b2c932922f407b8e4b82a9199cb8ebff76dc3056735928"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0007.json",
+      "sha256": "1be7eee9acab488460b2c932922f407b8e4b82a9199cb8ebff76dc3056735928"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0008.json",
+      "sha256": "1be7eee9acab488460b2c932922f407b8e4b82a9199cb8ebff76dc3056735928"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0009.json",
+      "sha256": "1be7eee9acab488460b2c932922f407b8e4b82a9199cb8ebff76dc3056735928"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0010.json",
+      "sha256": "1be7eee9acab488460b2c932922f407b8e4b82a9199cb8ebff76dc3056735928"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0011.json",
+      "sha256": "b316384ffdd295fbfc98f9edc7002fb2bd68139a6c6b6179ac5e6b312a4869d4"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/ordinal365/wire_response_0012.json",
+      "sha256": "6c234219e9d600380ebf172c6b095e38c421f2244397b68cc1e0754ed0480e05"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/schedule/intent.json",
+      "sha256": "071212f05599f6cfcb07390b033bdd9c9747613f88218cf6afdb7217e39e3540"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/schedule/publication.json",
+      "sha256": "a46bd73f68c649c584a32c4d07cebf3c7f435b12eb8f8edc8b02191b6cb1fc17"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/schedule/wire_request_0001.json",
+      "sha256": "d8e6ee29930fd0fbcab953b96358634ca97db13139965929572fccbc53bf7e6a"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/schedule/wire_response_0001.json",
+      "sha256": "2f12ba30276f5981248acb2987915eff2f388b16692236767064db0d14576afb"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/intent.json",
+      "sha256": "4b901bc83f9cb0f1eea579c079c6251401a48eef731ba571266fbe01c4fd7b45"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/terminal_indicator_metadata.json",
+      "sha256": "0a830adf7f14c344b58684ae5ad153ba5ebc982c2746f6d9b23c6cbdf14430fb"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0001.json",
+      "sha256": "15b4700743a2df3746ee175057fc7d76812b024e6bec03aafd6cca2f29b340b8"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0002.json",
+      "sha256": "638a34170ce631e0c7946cebc9343d81fc5c82900b6032b7ef856b21c10a5a5d"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0003.json",
+      "sha256": "a89b56b4fb8c0610bd2072b69c319f0910e73bf660491314ec4d1e02fcce8a7d"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0004.json",
+      "sha256": "6895cb799763572644203b46c806011939e3d2770542594a0dbf982ab6519d61"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0005.json",
+      "sha256": "6895cb799763572644203b46c806011939e3d2770542594a0dbf982ab6519d61"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0006.json",
+      "sha256": "6895cb799763572644203b46c806011939e3d2770542594a0dbf982ab6519d61"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0007.json",
+      "sha256": "6895cb799763572644203b46c806011939e3d2770542594a0dbf982ab6519d61"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0008.json",
+      "sha256": "6895cb799763572644203b46c806011939e3d2770542594a0dbf982ab6519d61"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0009.json",
+      "sha256": "6895cb799763572644203b46c806011939e3d2770542594a0dbf982ab6519d61"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0010.json",
+      "sha256": "6895cb799763572644203b46c806011939e3d2770542594a0dbf982ab6519d61"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_request_0011.json",
+      "sha256": "889a78d8ef9ce2498e721fa89fb4a86ac69b9d7fadd10d4e5c4ef40a9f49c113"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0001.json",
+      "sha256": "50209e6e950f1340ec2f441c83d64a434192d7783fbcc439f9bbb4baf11b7203"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0002.json",
+      "sha256": "932cde2468ea9381b879e3997d029fa2533fab4f5d935177ad351d24d0d8c47e"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0003.json",
+      "sha256": "3a2f1ac1ce88ee40ec32d63c9fc8091538bffea6ec0085951ddeb23e97d803bc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0004.json",
+      "sha256": "3a2f1ac1ce88ee40ec32d63c9fc8091538bffea6ec0085951ddeb23e97d803bc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0005.json",
+      "sha256": "3a2f1ac1ce88ee40ec32d63c9fc8091538bffea6ec0085951ddeb23e97d803bc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0006.json",
+      "sha256": "3a2f1ac1ce88ee40ec32d63c9fc8091538bffea6ec0085951ddeb23e97d803bc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0007.json",
+      "sha256": "3a2f1ac1ce88ee40ec32d63c9fc8091538bffea6ec0085951ddeb23e97d803bc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0008.json",
+      "sha256": "3a2f1ac1ce88ee40ec32d63c9fc8091538bffea6ec0085951ddeb23e97d803bc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0009.json",
+      "sha256": "3a2f1ac1ce88ee40ec32d63c9fc8091538bffea6ec0085951ddeb23e97d803bc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0010.json",
+      "sha256": "24d21ddf0715bd5cb84be0497f4a459e774904334877bdf15a5599d28f53c05c"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/session/wire_response_0011.json",
+      "sha256": "50209e6e950f1340ec2f441c83d64a434192d7783fbcc439f9bbb4baf11b7203"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_diagnostic/mcp_response.json",
+      "sha256": "d4bef0bfd4af31f0d7714c6ea2d46a45070b1797f0654ccc0c73c5880ca5c288"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_diagnostic/wire_request_0001.json",
+      "sha256": "161dddbeea3513347be3159e0a6e37310b2e361560af14f245debdec92c713ec"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_diagnostic/wire_response_0001.json",
+      "sha256": "da6a8d9240c336211e209a3590ea7b19bf9689e9c0b39a087f9b3bea25124ed1"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/events_00001.json",
+      "sha256": "ed3cd4698511a7968c777f52fa3d4632aa73fc1250c23bc960380131c54d453f"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/history_00001.json",
+      "sha256": "46b1c76eb5ac9275d236a9ed2f5ffee43ac4570cbecfbbfa753fa43c6523cd04"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/intent.json",
+      "sha256": "c54c6049fc7d4a6b6216659d2b4575fa452c7345107ea5b451d40de578a50d46"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/request.json",
+      "sha256": "4fa1019b63d6310471f48a87e2053a827b11fc497e09ef5d474ab900340500ed"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/submission.json",
+      "sha256": "83482a8fb84d121f8c81b0c30b292f7e33eb8776ba79bb0a9e8288e7be860e59"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/wire_request_0001.json",
+      "sha256": "96e7c4504a6a3fc58af34d33ad2c91237c9b69ab51c53a3643e028fa3bcecd23"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/wire_request_0002.json",
+      "sha256": "bf03343ef764ce7da420ae2fe0cc5b461a6c8719604879c1ee6e910b0d56fbab"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/wire_response_0001.json",
+      "sha256": "656e9107e80841b12aa7a1d53ae983da79e9e8c8219c8537721aad807e15ecb4"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/transport_execution_diagnostic/wire_response_0002.json",
+      "sha256": "d66ecc4310cb0745ad95d9607bb987cd8b4b7b4238412c836c9e450401fefe3b"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/intent.json",
+      "sha256": "134f1f0347f91ea8bf69dfce60f0ec38daafba5028e8b2c3f7eb67364404d827"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/terminal_indicator_metadata.json",
+      "sha256": "0ef6c0eb6ab55cc4d7bc7fc076d8fabb2bd77e137564a20f298fed183776f5b8"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0001.json",
+      "sha256": "dfdc73e47579e4ece114816e19183824fcf2eca09db0b6283572d1ffdae3553c"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0002.json",
+      "sha256": "2b7e9d106de21aea95e484f2da9485ef340840df3053430e32e8b73b01ad561e"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0003.json",
+      "sha256": "8eb920f4ccf3601bba1604c837f96fc4fef679efc0b02e3741eee2f525a153cd"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0004.json",
+      "sha256": "4dcdf5ac2404ce7262a4029e44a45acf683de34c22d1b7aa49bad500727c8cf5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0005.json",
+      "sha256": "4dcdf5ac2404ce7262a4029e44a45acf683de34c22d1b7aa49bad500727c8cf5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0006.json",
+      "sha256": "4dcdf5ac2404ce7262a4029e44a45acf683de34c22d1b7aa49bad500727c8cf5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0007.json",
+      "sha256": "4dcdf5ac2404ce7262a4029e44a45acf683de34c22d1b7aa49bad500727c8cf5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0008.json",
+      "sha256": "4dcdf5ac2404ce7262a4029e44a45acf683de34c22d1b7aa49bad500727c8cf5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0009.json",
+      "sha256": "4dcdf5ac2404ce7262a4029e44a45acf683de34c22d1b7aa49bad500727c8cf5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0010.json",
+      "sha256": "4dcdf5ac2404ce7262a4029e44a45acf683de34c22d1b7aa49bad500727c8cf5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0011.json",
+      "sha256": "4dcdf5ac2404ce7262a4029e44a45acf683de34c22d1b7aa49bad500727c8cf5"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_request_0012.json",
+      "sha256": "d2e5572e86cf1af3e1a20ea3cfbef0c054902866be81d92b1f2a86bc4590cfc4"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0001.json",
+      "sha256": "50185b4d9ea25096a8e10724a69a754b0eee90021226c96ef9099736cd6272cc"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0002.json",
+      "sha256": "6a46f7900c800bbe9ffc9162e38eb9bb6a574b0925420fa2fe22462397af3272"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0003.json",
+      "sha256": "234bd91df201c463343e3aee1d9444905872d501f36a1e2e3c515a3624d080d6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0004.json",
+      "sha256": "234bd91df201c463343e3aee1d9444905872d501f36a1e2e3c515a3624d080d6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0005.json",
+      "sha256": "234bd91df201c463343e3aee1d9444905872d501f36a1e2e3c515a3624d080d6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0006.json",
+      "sha256": "234bd91df201c463343e3aee1d9444905872d501f36a1e2e3c515a3624d080d6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0007.json",
+      "sha256": "234bd91df201c463343e3aee1d9444905872d501f36a1e2e3c515a3624d080d6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0008.json",
+      "sha256": "234bd91df201c463343e3aee1d9444905872d501f36a1e2e3c515a3624d080d6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0009.json",
+      "sha256": "234bd91df201c463343e3aee1d9444905872d501f36a1e2e3c515a3624d080d6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0010.json",
+      "sha256": "234bd91df201c463343e3aee1d9444905872d501f36a1e2e3c515a3624d080d6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0011.json",
+      "sha256": "44a996467d962315a627ac4f9c8c8128b580a99b77f9e2c083ab28ebcfad83a6"
+    },
+    {
+      "path": "data/raw/EXP004/streams_v002/validity/wire_response_0012.json",
+      "sha256": "50185b4d9ea25096a8e10724a69a754b0eee90021226c96ef9099736cd6272cc"
+    }
+  ],
+  "sdk_logged_transport_calls": 85,
+  "mcp_calls": 3,
+  "validation": {
+    "software_tests": 164,
+    "software_status": "PASS",
+    "semantic_audit": "PASS HYPOTHESIS_FROZEN v002",
+    "presentation_check": "PASS six deterministic artifacts",
+    "publication_runtime_gate": "FAIL",
+    "testing_does_not_override_runtime_evidence": true
+  }
+}

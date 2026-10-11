@@ -7,6 +7,11 @@ from src.research.exp004_actions import classify_groups, crossing
 from src.research.amend_exp004 import allowed_amendment, RULE
 from src.research.spec import ROOT
 import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+from src.research import amend_exp004
+from src.research.store import Store
 
 
 class AmendmentTests(unittest.TestCase):
@@ -56,3 +61,34 @@ class AmendmentTests(unittest.TestCase):
         for key,value in [('hypothesis','different'),('research_cutoff','2021-01-01')]:
             bad=copy.deepcopy(new);bad[key]=value
             with self.assertRaisesRegex(ValueError,'more than'):allowed_amendment(old,bad)
+
+    def prepare_temporary_freeze(self,root):
+        p=root/'experiments/EXP004';archive=p/'freeze_versions/v001/experiments/EXP004'
+        archive.mkdir(parents=True)
+        old=(ROOT/'experiments/EXP004/freeze_versions/v001/experiments/EXP004/spec.json').read_bytes()
+        (archive/'spec.json').write_bytes(old);(p/'spec.json').write_bytes(old)
+        (p/'freeze_receipt.json').write_bytes((ROOT/'experiments/EXP004/freeze_receipt.json').read_bytes())
+        raw=root/'raw'
+        for y in range(2015,2021):
+            d=raw/f'compiled_{y}_v002';d.mkdir(parents=True)
+            (d/'qa_summary.json').write_text(json.dumps({'year':y,'status':'PASS_LOCAL_NUMERIC'}))
+        store=Store(root);spec=json.loads(old);store.register(spec);store.transition(spec,'HYPOTHESIS_FROZEN')
+        return store,spec,raw
+
+    def test_amendment_after_development_is_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);store,spec,raw=self.prepare_temporary_freeze(root)
+            store.transition(spec,'DEVELOPMENT');store.close()
+            with patch.object(amend_exp004,'ROOT',root),patch.object(amend_exp004,'RAW',raw):
+                with self.assertRaisesRegex(ValueError,'precede Development'):amend_exp004.freeze_amendment()
+            self.assertFalse((root/'experiments/EXP004/freeze_versions/v002/receipt.json').exists())
+
+    def test_amendment_with_existing_job_is_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);store,spec,raw=self.prepare_temporary_freeze(root)
+            with store.db:
+                store.db.execute("INSERT INTO jobs(key,experiment,kind,stage,request,status) VALUES ('existing','EXP004','backtest','DEVELOPMENT','{}','SUBMITTED')")
+            store.close()
+            with patch.object(amend_exp004,'ROOT',root),patch.object(amend_exp004,'RAW',raw):
+                with self.assertRaisesRegex(ValueError,'Zero jobs'):amend_exp004.freeze_amendment()
+            self.assertFalse((root/'experiments/EXP004/freeze_versions/v002/receipt.json').exists())
