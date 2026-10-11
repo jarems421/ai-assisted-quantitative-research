@@ -338,6 +338,7 @@
       "properties": {
         "primary_metric": {
           "enum": [
+            "paired_mean_daily_excess",
             "sharpe",
             "sortino",
             "total_return"
@@ -378,6 +379,9 @@
         "minimum_breadth": {
           "type": "integer",
           "minimum": 1
+        },
+        "paired_policy": {
+          "const": "exp003_mean_sharpe_v1"
         }
       },
       "required": [

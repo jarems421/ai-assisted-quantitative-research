@@ -7,6 +7,9 @@ from src.research.spec import digest, canonical
 
 
 def eligible(spec, metrics, evidence):
+    if spec['selection']['primary_metric']=='paired_mean_daily_excess':
+        from src.research.exp003_policy import paired_eligibility
+        return paired_eligibility(evidence)
     return (metrics['maximum_drawdown']<=spec['selection']['eligibility']['max_drawdown']
             and evidence['completed_trades']>=spec['selection']['eligibility']['minimum_trades']
             and evidence['participation']>=spec['selection']['minimum_participation']

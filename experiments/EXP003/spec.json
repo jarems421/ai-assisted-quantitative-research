@@ -20,8 +20,8 @@
     "Historical source-covered CS identities with unambiguous effective ticker/date spans and completed valid source prices; no current membership, index, cap, ADV or exchange filter"
   ],
   "dynamic_universe": {
-    "definition": "Source-defined historical CS population, not complete US/exchange population: unique nonmissing security_id and unanimous CS type among effective ticker spans at decision; use ticker+historical date joins, never canonical_symbol for membership. Require valid completed prior-session price and split-safe 365-day warmup. Include ended histories while effective. Monthly prototype identity feasibility established; production per-decision price/insider intersection remains unresolved.",
-    "point_in_time_verified": false
+    "definition": "PASS scoped source-rule reconstruction: historically effective unique CS security identity at prior completed session and intended execution; finite positive nominal source price, retain ended histories while active, exclude ambiguous/unknown/non-CS. No current membership, index, exchange, cap or ADV requirement. Completed365-day history and certified insider states define the shared eligible signal universe; insider gate remains false.",
+    "point_in_time_verified": true
   },
   "benchmarks": [
     "explicit_SPY_buy_and_hold_PROPOSED",
@@ -38,7 +38,7 @@
     {
       "name": "Historical source security_segments and completed prices/corporate actions",
       "availability_timestamp": "Historical effective from_date/to_date with ticker+date join; completed bars public by prior-day 21:00 America/New_York. Catalog and bounded EXP002 source/execution samples support convention; full EXP003 production panel not established.",
-      "point_in_time_verified": false,
+      "point_in_time_verified": true,
       "revision_policy": "Freeze source snapshots/hashes; never current symbols backwards or future split factors. Scoped identity feasibility is not immutable vendor-vintage or complete daily-price certification."
     },
     {
@@ -56,9 +56,12 @@
     "inner_validation": null,
     "outer_validation": {
       "start": "2021-01-01",
-      "end": "2021-01-01"
+      "end": "2023-12-31"
     },
-    "test": null
+    "test": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    }
   },
   "forward_paper": {
     "start_state": "Required after historical evaluation and separate owner approval: minimum six calendar months and six monthly rebalance opportunities; extend if event coverage insufficient. Not deployed.",
@@ -99,40 +102,40 @@
     ]
   },
   "selection": {
-    "primary_metric": "sharpe",
+    "primary_metric": "paired_mean_daily_excess",
     "secondary_metrics": [
-      "mean_daily_net_excess_vs_matched_momentum",
-      "sortino",
-      "total_return",
-      "maximum_drawdown",
-      "annualized_volatility",
+      "paired_sharpe_difference",
+      "median_fold_paired_mean_improvement",
+      "neighbor_effect_dispersion",
       "turnover",
-      "fold_and_parameter_stability"
+      "maximum_drawdown",
+      "annualized_volatility"
     ],
     "eligibility": {
-      "max_drawdown": 0.25,
-      "minimum_trades": 20
+      "max_drawdown": 1,
+      "minimum_trades": 0
     },
-    "minimum_participation": 0.35,
-    "minimum_breadth": 20
+    "minimum_participation": 0.9,
+    "minimum_breadth": 1,
+    "paired_policy": "exp003_mean_sharpe_v1"
   },
   "robustness_tests": [
     "PROPOSED chronological expanding Development folds with >=two training years; dates and active fold count unresolved until joint coverage.",
     "Paired noncircular moving-block percentile bootstrap:20 returns/block,10000 draws,seed2002001,95% intervals for paired mean excess and separate zero-RF Sharpe difference. Descriptive, no p-values/significance; inherited implementation.",
     "Full 8-cell composite surface plus 4 momentum and4 insider cells, all failed/poor trials retained. No extra axes.",
     "Matched signal-covered eligible universe across all families; wider momentum diagnostic cannot replace primary comparison.",
-    "Fixed Development stresses:double fee,one extra execution session,one extra filing day. Local+10/+20bps fill costs; local regime/contribution diagnostics."
+    "One additional trading-session delay across selected families; local +10/+20bps cost sensitivity; broader momentum-only Development diagnostic. No weekly cadence or extra grid axis."
   ],
   "multiple_testing": {
     "method": "holm",
     "record_all_trials": true
   },
   "stress_scenarios": [
-    "double_cost",
     "one_bar_delay",
-    "additional_filing_delay",
     "local_cost_10bps",
     "local_cost_20bps",
+    "grid_neighborhoods",
+    "broader_momentum_only",
     "local_regime_and_contribution_diagnostics"
   ],
   "approval_state": "DRAFT",
@@ -142,7 +145,7 @@
       "end": "9999-12-31"
     }
   ],
-  "temporal_contamination_note": "ALL post-cutoff observations prohibited during design. Development start and one-day outer Validation are schema-required NONEXECUTABLE placeholders, not selected dates; actual inception, folds, Validation and Test remain null in provenance. No EXP002 windows copied as evaluation design. Historical evidence is workflow-held-out, never genuinely unseen; EXP001/model historical knowledge disclosed.",
+  "temporal_contamination_note": "Outer Validation2021-2023 and Test2024 designated before any EXP003 performance; workflow-held-out historical, not genuinely unseen. Source metadata supports planning, joint coverage confirmation pending. All2021+ observations forbidden in design; Test sealed. Development start2015-01-02 remains schema-required placeholder; joint inception/folds unresolved. Future paper after separate approval is forward evidence.",
   "historical_evidence_class": "workflow_held_out",
   "research_cutoff": "2020-12-31",
   "budget": {

@@ -2,21 +2,28 @@
   "date": "2026-10-11",
   "software_tests": {
     "command": "python -m unittest discover -s tests -v",
-    "passed": 123,
+    "passed": 132,
     "failed": 0
   },
-  "presentation_check": "6 deterministic artifacts passed",
   "semantic_audit": {
     "command": "python -m src.research audit EXP003",
     "exit_code": 2,
-    "expected_rejection": "Point-in-time availability unestablished: Historical source security_segments and completed prices/corporate actions",
-    "weakened": false
+    "expected_rejection": "Point-in-time availability unestablished: insider_owner_events locally reconstructed qualifying purchasers",
+    "gate_weakened": false
   },
-  "local_summary_and_plan_byte_deterministic": true,
+  "source_universe_gate": "PASS_SCOPED_SOURCE_RULE",
+  "insider_state_gate": "FAIL_WINDOW_COMPLETENESS_UNESTABLISHED",
+  "summary_plan_byte_deterministic": true,
   "EXP002_tracked_files_unchanged": true,
   "referenced_raw_hashes_unchanged": true,
-  "Nexus_calls": 0,
-  "performance_queries": 0,
-  "spend": 0,
+  "lake_jobs_completed": 8,
+  "SQL_rejections_without_job": 1,
+  "backtests": 0,
+  "optimization": 0,
+  "candidate_performance_queries": 0,
+  "held_out_observation_queries": 0,
+  "custom_publications": 0,
+  "actual_token_debit": null,
+  "credit_purchases": 0,
   "hypothesis_frozen": false
 }

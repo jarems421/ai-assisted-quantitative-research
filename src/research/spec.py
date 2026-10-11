@@ -56,6 +56,10 @@ def validate(spec):
             raise ValueError(f"Point-in-time availability unestablished: {source['name']}")
     if not spec["dynamic_universe"]["point_in_time_verified"]:
         raise ValueError("Universe membership must be point-in-time")
+    if spec['selection']['primary_metric']=='paired_mean_daily_excess':
+        if (spec['selection'].get('paired_policy')!='exp003_mean_sharpe_v1'
+                or spec['selection']['minimum_participation']!=.90):
+            raise ValueError('Paired selection requires its explicit policy and scheduled 90% participation')
     fees=spec['costs']['fee_contract']
     if set(fees)-{'Stock','Cryptocurrency','Option','OptionSlippageFraction'}:
         raise ValueError('Unknown asset fee contract')

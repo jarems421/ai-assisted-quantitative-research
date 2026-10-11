@@ -90,15 +90,56 @@
   "components": {
     "development_grid_folds": 72,
     "selected_family_development_replays": 5,
-    "development_remote_stresses": 15,
+    "development_remote_stresses": 5,
+    "broader_momentum_development_diagnostic": 4,
     "outer_validation": 5,
     "eventual_test": 5,
     "failed_unresolved_reserve": 20
   },
-  "conditional_remote_ceiling": 122,
+  "conditional_remote_ceiling": 116,
   "local_cost_stress_analyses": 10,
-  "actual_EXP003_jobs": 0,
   "token_quote": null,
   "spend_authorized": false,
-  "limits": "Four folds and two benchmarks are planning assumptions, not approved chronology. Counts require coverage-supported dates and benchmark implementations. No server amplification preview; extra jobs count against reserve or require pre-performance redesign."
+  "limits": "Four folds and two benchmarks are planning assumptions, not approved chronology. Counts require coverage-supported dates and benchmark implementations. No server amplification preview; extra jobs count against reserve or require pre-performance redesign.",
+  "pricing": {
+    "observed_on": "2026-10-11",
+    "published_independent_Day_stock_backtest_rate": 0,
+    "published_optimizer_Day_stock_rate_per_evaluation": 0.02,
+    "optimizer_minimum_per_job": 2,
+    "source_urls": [
+      "https://nexustrade.io/docs/features/backtesting",
+      "https://nexustrade.io/docs/features/optimization"
+    ],
+    "server_preview_performed": false,
+    "server_preview_blocker": "MCP preview requires a portfolio seed; no executable production binding exists. Do not create a portfolio or obtain irrelevant estimates from artificial/unbound templates.",
+    "actual_audit_debit": null,
+    "lake_rate_not_exposed": true,
+    "current_task_included_ceiling": 2000,
+    "future_experiment_spend_authorized": false,
+    "independent_backtest_design_estimate": 0,
+    "optimizer_preview_estimate": null
+  },
+  "active_fold_count": null,
+  "active_folds": null,
+  "conditional_fold_proposal": [
+    {
+      "train": "2015-2016",
+      "evaluate": 2017
+    },
+    {
+      "train": "2015-2017",
+      "evaluate": 2018
+    },
+    {
+      "train": "2015-2018",
+      "evaluate": 2019
+    },
+    {
+      "train": "2015-2019",
+      "evaluate": 2020
+    }
+  ],
+  "conditional_fold_note": "Not adopted unless coverage certifies inception with at least two prior training years. No folds evaluated.",
+  "actual_candidate_evaluations": 0,
+  "actual_audit_lake_jobs": 8
 }

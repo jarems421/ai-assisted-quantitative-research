@@ -42,7 +42,7 @@ class EXP003DesignTests(unittest.TestCase):
     def test_reduced_controls_and_all_attempt_accounting(self):
         plan = evaluation_plan()
         self.assertEqual(plan['family_cell_counts'], {'momentum_only':4, 'insider_only':4, 'momentum_insider':8})
-        self.assertEqual(plan['conditional_remote_ceiling'], 122)
+        self.assertEqual(plan['conditional_remote_ceiling'], 116)
         self.assertEqual(plan['components']['development_grid_folds'], 72)
         for cell in plan['family_cells']['momentum_only']:
             self.assertNotIn('insider_lookback_calendar_days', cell)
@@ -55,7 +55,7 @@ class EXP003DesignTests(unittest.TestCase):
         Draft202012Validator(schema, format_checker=FormatChecker()).validate(spec)
         with self.assertRaisesRegex(ValueError, 'Point-in-time availability unestablished'):
             validate(spec)
-        self.assertIsNone(spec['windows']['test'])
+        self.assertEqual(spec['windows']['test'], {'start':'2024-01-01','end':'2024-12-31'})
         self.assertEqual(spec['maximum_complexity'], 2)
         self.assertTrue(all(value == 0 for value in spec['budget'].values()))
 

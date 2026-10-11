@@ -1,6 +1,6 @@
 {
   "experiment_id": "EXP003",
-  "status": "DRAFT_NEEDS_DESIGN_REVISION",
+  "status": "DRAFT_NEEDS_DESIGN_REVISION_FINAL_PASS",
   "created_at": "2026-10-11",
   "parent_closed_experiment": "EXP002",
   "base_git_commit": "27fc0ac8b21c1e8091cb0ecdc7d2261d7b46d260",
@@ -75,34 +75,55 @@
     {
       "status": "UNRESOLVED",
       "claim": "Production completed-price/insider source intersection, inception/folds/held-out dates, coverage/zero contracts and executable publication/compiler."
+    },
+    {
+      "status": "VERIFIED",
+      "claim": "Current native insider schemas expose firstAvailableAt, availableAt, supersededAt, coverageUnverifiedAt and sourceArchiveKey, but no per-security/window coverage certificate. Complete SQL results do not establish source completeness.",
+      "evidence": "ignored final_readiness_20261011 catalog and schema receipts"
+    },
+    {
+      "status": "PROPOSED",
+      "claim": "Designated workflow-held-out Validation2021-2023 and sealed Test2024; no observations retrieved. Conditional folds require certified inception; explicit contracts in final_freeze_review.md."
     }
   ],
   "chronology": {
     "joint_development_start": null,
     "development_end": "2020-12-31",
     "inner_folds": null,
-    "outer_validation": null,
-    "historical_test": null,
+    "outer_validation": {
+      "start": "2021-01-01",
+      "end": "2023-12-31"
+    },
+    "historical_test": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
     "schema_placeholders": [
-      "development.start",
-      "outer_validation"
+      "development.start"
     ],
-    "placeholder_reason": "Current strict schema requires dates; false production PIT gates prevent audit/freeze. Dates are not certified/access authorization."
+    "placeholder_reason": "Joint inception unavailable because complete insider states cannot be certified. Outer/Test designated now from metadata; observations forbidden, no automatic freeze."
   },
-  "selection_status": "PROPOSED:25% DD,20 trades,35% participation inherited planning eligibility; justify for two-signal design before freeze; paired mean/Sharpe remain primary hypothesis conditions. Tie/aggregate rule unresolved.",
+  "selection_status": "Predeclared paired_mean_daily_excess / exp003_mean_sharpe_v1. Neutral legacy DD/trade fields replaced by paired effect eligibility and >=90% scheduled participation in every scored fold. No metric definition changed.",
   "multiple_testing": "Record all16 family cells and failed attempts; no p-values or significance. Schema Holm is reserved/inactive, descriptive bootstrap cannot activate it.",
   "operations": {
-    "nexus_calls": 0,
-    "jobs": 0,
-    "performance_queries": 0,
-    "spend": 0,
+    "nexus_metadata_reads": 4,
+    "lake_query_jobs": 8,
+    "rejected_SQL_submissions_without_job_id": 1,
+    "backtests": 0,
+    "optimization": 0,
+    "candidate_performance_queries": 0,
+    "post_cutoff_observation_queries": 0,
+    "portfolio_creations": 0,
+    "custom_indicator_publications": 0,
+    "credit_purchases": 0,
+    "actual_token_debit": null,
     "freeze": false
   },
   "remaining_blockers": [
-    "Production daily warmup and joint insider coverage; true zero and identity certification",
-    "Final inception, folds, held-out chronology and selection/tie contract",
-    "Executable two-signal ranks/publication/compiler and benchmarks; no production data published",
-    "Current token quote, evaluation amplification and explicit execution authorization"
+    "A security/window-complete insider event-version and historical-identity certificate; source presence alone cannot certify zeros or exact purchaser counts",
+    "Joint inception/folds and corresponding production rank/signal streams downstream of that certificate",
+    "Runtime binding of immutable production custom streams and guarded empty-universe liquidations; compiled SDK templates are not runtime certification",
+    "Complete executable preview/token amplification pending production bindings; no account debit/allowance endpoint observed"
   ],
   "preserved_EXP002_tracked_sha256": {
     "experiments/EXP002/README.md": "692f7fec42dc2d10a79f676ff298674909349b867a22aa5fbfa86c2fbee3853d",
@@ -141,5 +162,31 @@
     "experiments/EXP002/research/two_gate_summary.json": "c96be620b86952edb7587888f35ef6b3333044cc3823bae7949c1205285ac38f",
     "experiments/EXP002/research/universe_audit.md": "0fceb3f892ce8360f64b902b062afd808554807c0a9976861fbb9005518a6d5c",
     "experiments/EXP002/spec.json": "a0acbf7a4cc2a8857eb0bcf6633715e7a26d8521baf147e6c8969a41cbbd324f"
-  }
+  },
+  "final_pass_authorization": {
+    "path": "experiments/EXP003/research/final_pass_authorization_20261011.md",
+    "sha256": "bd42b328f22ca57ed97c2d3c7d6994bcfe148fb3cfeadc6515f742058bd805d9",
+    "included_research_token_ceiling": 2000,
+    "credit_purchases_authorized": false,
+    "candidate_performance_authorized": false,
+    "task_only_not_future_execution_budget": true
+  },
+  "current_metadata_artifacts": [
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/catalog.json",
+      "sha256": "2a6ff3a6bc806949b80eab1cfd1541bfb0c0eaff2a89eddd02f4c791004ce21a"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/insider_filings_schema.json",
+      "sha256": "cb0ccfcaaa594f506b0a1eb897f99a776cf87f462bb4c8d79c434c311a71eb64"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/insider_owner_events_schema.json",
+      "sha256": "a0bca8e11902ef17ba677d53b8369f8f81f775b9161ac7388bf31a57f329d8bf"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/sec_daily_ohlc_schema.json",
+      "sha256": "8981eeb858c1064af677d6c4dbdd7f87d7c24bb53b7cd688d154fe6b7805d69f"
+    }
+  ]
 }

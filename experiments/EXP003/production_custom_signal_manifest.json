@@ -1,0 +1,50 @@
+{
+  "status": "BLOCKED_NOT_GENERATED",
+  "production_ready": false,
+  "dataset_version": null,
+  "git_sha": "f9b225292fb3ab19fa3e94260f250f49a25a799e",
+  "code_hashes": {
+    "src/research/exp003_policy.py": "7de7486040b8412d88d291fc94c84ec919ef4b64688d4f04c55a8cb06594fa16",
+    "src/research/readiness_exp003.py": "cfa2c39924eb38225c2e7b4a66b7f7c32e56cb9cb5009c9dfd0fcd92e4dbd1ad",
+    "src/research/pit_signals.py": "1228f9bd8f88f7dc69cf9d49679e432cb2d244be97d5536eed9bd87e33f05d04",
+    "src/research/custom_signals.py": "5d007c2e0939e4c38de671ac73f94c18f792e6b4c3143cf4f9011fe9d0e089ac"
+  },
+  "methodology_spec": {
+    "signals": [
+      "split_safe_calendar_momentum",
+      "DistinctQualifyingInsiderPurchasers"
+    ],
+    "ranges": {
+      "momentum": [
+        180,
+        365
+      ],
+      "insider": [
+        30,
+        90
+      ],
+      "holdings": [
+        20,
+        40
+      ]
+    },
+    "decision": "prior-calendar-day21:00 America/New_York",
+    "execution": "09:30 next audited monthly trading session",
+    "zero": "complete audited security/window versions and identity evidence required",
+    "transport": [
+      "numeric",
+      "validity",
+      "exact_session_key"
+    ],
+    "publication": "none; coverage gate fails"
+  },
+  "methodology_sha256": "cd7cc982d278aa5d0a63433cff54b0905c2c8f5163c2cadbcd2f9a32e938668f",
+  "row_count": 0,
+  "min_source_availableAt": null,
+  "max_source_availableAt": null,
+  "emitted_decision_dates": [],
+  "validity_stream": null,
+  "session_key_stream": null,
+  "reason": "No complete certified insider states. Do not generate or publish a numeric production dataset from source-presence aggregates.",
+  "future_version_reproducibility": "Not yet certified. Legacy export_dataset enforces2020 cutoff; a stage-bound EXP003 export adapter must preserve frozen reconstruction/methodology and owner-only Test gates. No Validation/Test dataset generated."
+}

@@ -21,7 +21,7 @@
       "cells": 8
     }
   },
-  "rank_policy": "Higher values rank higher; equal signal ranks, then equal security weights for top20/40. Proposed deterministic stable-security-ID tie break; no fitted weights. No positive-signal threshold tuning.",
+  "rank_policy": "Higher-is-better within the same eligible cross section; midrank percentile (average rank minus1)/(N-1), N1=>0.5. Equal-weight signal percentiles for composite; stable security_id ascending breaks selection ties. Precomputed rank stream, no learned weights.",
   "matched_policy": "At each decision, all families and eligible-universe benchmark use the same certified union of required 365-day price and90-day insider prerequisites. Genuine zero retained only with certified coverage; unavailable excluded and counted. No insider-presence-only survivor panel.",
   "insider_definition": "Distinct stable owner CIK among active nonderivative P/A positive-share events, firstAvailableAt within30/90 days; private purchases included; future corrections cannot change historical state.",
   "momentum_definition": "180/365 elapsed calendar-day split-safe price ratio minus1 using completed bars; only splits effective within compared bars; not total-return prices plus cash dividends.",
@@ -32,8 +32,12 @@
   "inference": "Paired mean net excess and separate RF0 Sharpe difference vs same momentum horizon/holdings; insider window does not create duplicate momentum trials. Both directional effects must be positive; drawdown alone insufficient.",
   "metric_contract": "True NY closes; simple adjacent daily returns; rf0;252;sampleSD;MAR0 all-return downside RMS; period running-peak drawdown;25000 initial funding.",
   "freeze_blockers": [
-    "Fewer than requested holdings handling and rank/tie implementation audit",
-    "Chronological selection aggregation and matched excess objective ordering",
-    "Benchmark compilation and complete per-decision eligibility panel"
-  ]
+    "Certified insider coverage and genuine zeros",
+    "Coverage-supported inception/folds",
+    "Production compiled stream bindings and empty-universe execution evidence"
+  ],
+  "shortfall_policy": "Select min(N,K); nominal per-name allocation95/K percent, total deployment95*min(N,K)/K; equal selected weights, remainder cash. N0=>cash-only/liquidate at monthly decision; empty-universe server behavior remains untested. Never broaden universe.",
+  "selection_policy": "Scheduled participation>=90% in EACH active scored fold. Count an intended decision only when complete certified inputs, guards and rebalance evaluation exist; cash-only N0 does not count. Require positive pooled paired daily mean excess AND pooled separate zero-RF Sharpe difference, positive median fold mean excess, and no critical failure. Rank eligible composite cells by highest median fold paired mean excess, then lower neighbor effect dispersion, lower mean traded-notional fraction, then ascending(momentum,insider,K).",
+  "aggregation": "Align unique scored dates strategy/control, concatenate held-out fold returns only, no training/warmup returns and no duplicate dates. Pooled mean=mean paired differences; Sharpe difference=separate RF0 sampleSD Sharpes of pooled strategy/control returns. Training may select nothing with held-out data; final Development configuration selected after all predeclared fold evidence.",
+  "stability": "Three Hamming-distance-one neighbors per composite cell. Report incremental means and Sharpes, fold signs and population SD of pooled neighbor mean excess (tie-break dispersion); flag isolated positive maximum if all neighbors fail directional conditions. Never switch winner retrospectively."
 }

@@ -82,7 +82,7 @@ def universe_summary(spans, snapshots):
             'limits': 'Month-end source snapshots only; no daily/session-complete, insider completeness, exchange/OTC, or whole-market coverage certification.'}
 
 
-def evaluation_plan(folds=4, remote_stresses=3, reserve=20):
+def evaluation_plan(folds=4, remote_stresses=1, reserve=20):
     if type(folds) is not int or folds < 1 or remote_stresses < 0 or reserve < 0:
         raise ValueError('Invalid conditional planning count')
     axes = {'momentum_only': ('momentum_lookback_calendar_days', 'number_of_holdings'),
@@ -93,13 +93,14 @@ def evaluation_plan(folds=4, remote_stresses=3, reserve=20):
     components = {'development_grid_folds': (sum(map(len, cells.values())) + 2) * folds,
                   'selected_family_development_replays': 5,
                   'development_remote_stresses': remote_stresses * 5,
+                  'broader_momentum_development_diagnostic': 4,
                   'outer_validation': 5, 'eventual_test': 5,
                   'failed_unresolved_reserve': reserve}
     return {'status': 'PROPOSED_NOT_AUTHORIZED', 'family_cells': cells,
             'family_cell_counts': {k: len(v) for k, v in cells.items()},
             'benchmark_count': 2, 'conditional_fold_count': folds,
             'components': components, 'conditional_remote_ceiling': sum(components.values()),
-            'local_cost_stress_analyses': 10, 'actual_EXP003_jobs': 0,
+            'local_cost_stress_analyses': 10, 'actual_candidate_evaluations': 0,
             'token_quote': None, 'spend_authorized': False,
             'limits': 'Four folds and two benchmarks are planning assumptions, not approved chronology. Counts require coverage-supported dates and benchmark implementations. No server amplification preview; extra jobs count against reserve or require pre-performance redesign.'}
 
@@ -118,8 +119,13 @@ def main():
         if hashlib.sha256(payload).hexdigest() != source['sha256']:
             raise ValueError('Preserved source hash mismatch')
         rows.append(json.loads(payload))
+    plan=evaluation_plan()
+    existing=directory/'evaluation_plan.json'
+    if existing.exists():
+        saved=json.loads(existing.read_text(encoding='utf-8'))
+        plan.update({k:v for k,v in saved.items() if k not in plan})
     for name, value in [('research/universe_summary.json', universe_summary(*rows)),
-                        ('evaluation_plan.json', evaluation_plan())]:
+                        ('evaluation_plan.json', plan)]:
         (directory / name).write_text(json.dumps(value, indent=2, allow_nan=False) + '\n', encoding='utf-8')
     print('EXP003 local identity feasibility and conditional plan reproduced; no Nexus calls.')
 
