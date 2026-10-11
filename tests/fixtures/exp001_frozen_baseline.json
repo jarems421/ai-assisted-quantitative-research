@@ -1,0 +1,812 @@
+{
+  "frozen_metrics": {
+    "experiment_id": "EXP001_SPY_AI_SELECTION",
+    "pipeline_version": 1,
+    "definitions": {
+      "risk_free_rate": 0.0,
+      "trading_days_per_year": 252,
+      "return_definition": "simple daily return",
+      "standard_deviation": "sample",
+      "return_units": "fraction unless field explicitly says percent",
+      "daily_returns": "Adjacent selected session closes; first session has no daily return.",
+      "total_return": "Ending close / manifest starting_cash - 1; includes inception-day change.",
+      "maximum_drawdown": "Positive loss magnitude from this period's daily running peak; no prior-period peak or synthetic initial-equity row.",
+      "sortino": "sqrt(252) * mean(return) / sqrt(mean(min(return,0)^2)), over all returns; daily MAR=0.",
+      "skew": "Adjusted Fisher-Pearson sample skewness.",
+      "excess_kurtosis": "Bias-corrected Fisher excess kurtosis.",
+      "quantiles": "Linear interpolation, type 7.",
+      "tail_days": "Strictly below -2% / -5%; denominator is available daily returns.",
+      "session_close": "Exact timestamp match to SPY Market OHLCV event on an offline NYSE session date; 16:00 regular / 13:00 early close.",
+      "offline_calendar": "2015-2024 weekday/NYSE holiday rules, Juneteenth from 2022, 2018-12-05 mourning closure, no Friday observance of Saturday New Year.",
+      "undefined_statistics": "null; no NaN/Infinity emitted"
+    },
+    "metrics": {
+      "dev_A": {
+        "daily_row_count": 1763,
+        "daily_return_count": 1762,
+        "first_date": "2015-01-02",
+        "last_date": "2021-12-31",
+        "initial_funding_value": 25000,
+        "first_close_value": 25000.0,
+        "ending_value": 45044.7669,
+        "total_return": 0.8017906760000002,
+        "close_to_close_total_return": 0.8017906760000002,
+        "mean_daily_return": 0.00035781115901272354,
+        "median_daily_return": 0.0,
+        "sample_daily_standard_deviation": 0.0068536089074939565,
+        "annualized_volatility": 0.10879766851515656,
+        "sharpe": 0.8287715472381195,
+        "sortino": 1.121107847460522,
+        "daily_downside_deviation": 0.005066484969572687,
+        "skew": -1.2124392164147535,
+        "excess_kurtosis": 8.771732864995025,
+        "daily_return_quantiles": {
+          "1%": -0.023997750170149452,
+          "5%": -0.009432583673114845,
+          "25%": -0.0011838878863876245,
+          "50%": 0.0,
+          "75%": 0.002673037926673172,
+          "95%": 0.011743904342942875,
+          "99%": 0.0171500812315404
+        },
+        "days_below_minus_2pct": 27,
+        "percentage_days_below_minus_2pct": 1.532349602724177,
+        "days_below_minus_5pct": 1,
+        "percentage_days_below_minus_5pct": 0.056753688989784334,
+        "maximum_drawdown": 0.14857793428226496,
+        "maximum_drawdown_peak_date": "2020-02-19",
+        "maximum_drawdown_trough_date": "2020-04-21",
+        "maximum_drawdown_recovery_date": "2020-06-08"
+      },
+      "dev_B": {
+        "daily_row_count": 1763,
+        "daily_return_count": 1762,
+        "first_date": "2015-01-02",
+        "last_date": "2021-12-31",
+        "initial_funding_value": 25000,
+        "first_close_value": 25000.0,
+        "ending_value": 33226.6126,
+        "total_return": 0.329064504,
+        "close_to_close_total_return": 0.329064504,
+        "mean_daily_return": 0.00017388689036754694,
+        "median_daily_return": 0.0,
+        "sample_daily_standard_deviation": 0.004974451864019153,
+        "annualized_volatility": 0.07896697524633822,
+        "sharpe": 0.5549091406366585,
+        "sortino": 0.7571946451223183,
+        "daily_downside_deviation": 0.0036455207743253102,
+        "skew": -1.3816509649663282,
+        "excess_kurtosis": 20.715018904327806,
+        "daily_return_quantiles": {
+          "1%": -0.01620288619733514,
+          "5%": -0.006817393746759653,
+          "25%": -1.3739934651341157e-05,
+          "50%": 0.0,
+          "75%": 0.0004886335742272374,
+          "95%": 0.00787415141414358,
+          "99%": 0.01381835288545042
+        },
+        "days_below_minus_2pct": 12,
+        "percentage_days_below_minus_2pct": 0.681044267877412,
+        "days_below_minus_5pct": 1,
+        "percentage_days_below_minus_5pct": 0.056753688989784334,
+        "maximum_drawdown": 0.21239014513588483,
+        "maximum_drawdown_peak_date": "2018-01-26",
+        "maximum_drawdown_trough_date": "2018-12-07",
+        "maximum_drawdown_recovery_date": "2020-06-03"
+      },
+      "dev_C": {
+        "daily_row_count": 1763,
+        "daily_return_count": 1762,
+        "first_date": "2015-01-02",
+        "last_date": "2021-12-31",
+        "initial_funding_value": 25000,
+        "first_close_value": 24860.6199,
+        "ending_value": 15161.16,
+        "total_return": -0.39355360000000006,
+        "close_to_close_total_return": -0.390153581809921,
+        "mean_daily_return": -0.0002561376365478378,
+        "median_daily_return": 0.0,
+        "sample_daily_standard_deviation": 0.006991298137919856,
+        "annualized_volatility": 0.11098341728666934,
+        "sharpe": -0.581588547082953,
+        "sortino": -0.7803443546095665,
+        "daily_downside_deviation": 0.0052105956841207056,
+        "skew": -0.22579297305003543,
+        "excess_kurtosis": 64.02351060974352,
+        "daily_return_quantiles": {
+          "1%": -0.024180471025735072,
+          "5%": -0.008551599815606967,
+          "25%": -1.0273977942842905e-06,
+          "50%": 0.0,
+          "75%": 0.0,
+          "95%": 0.007585581135657224,
+          "99%": 0.018037428650135485
+        },
+        "days_below_minus_2pct": 32,
+        "percentage_days_below_minus_2pct": 1.8161180476730987,
+        "days_below_minus_5pct": 1,
+        "percentage_days_below_minus_5pct": 0.056753688989784334,
+        "maximum_drawdown": 0.46204544408319925,
+        "maximum_drawdown_peak_date": "2015-01-12",
+        "maximum_drawdown_trough_date": "2020-03-23",
+        "maximum_drawdown_recovery_date": null
+      },
+      "dev_D": {
+        "daily_row_count": 1763,
+        "daily_return_count": 1762,
+        "first_date": "2015-01-02",
+        "last_date": "2021-12-31",
+        "initial_funding_value": 25000,
+        "first_close_value": 25000.0,
+        "ending_value": 32052.9554,
+        "total_return": 0.282118216,
+        "close_to_close_total_return": 0.282118216,
+        "mean_daily_return": 0.0001497700730148393,
+        "median_daily_return": 0.0,
+        "sample_daily_standard_deviation": 0.00416710281578379,
+        "annualized_volatility": 0.06615070642920547,
+        "sharpe": 0.5705465661221787,
+        "sortino": 0.7901879739482293,
+        "daily_downside_deviation": 0.003008810916653196,
+        "skew": -1.6993645794480041,
+        "excess_kurtosis": 29.14729074784173,
+        "daily_return_quantiles": {
+          "1%": -0.01223388520161873,
+          "5%": -0.005797968815251175,
+          "25%": -1.0682857156385506e-06,
+          "50%": 0.0,
+          "75%": 1.6010750059636258e-06,
+          "95%": 0.0068492998625426784,
+          "99%": 0.013043863461407916
+        },
+        "days_below_minus_2pct": 6,
+        "percentage_days_below_minus_2pct": 0.340522133938706,
+        "days_below_minus_5pct": 1,
+        "percentage_days_below_minus_5pct": 0.056753688989784334,
+        "maximum_drawdown": 0.1294243315711061,
+        "maximum_drawdown_peak_date": "2015-03-18",
+        "maximum_drawdown_trough_date": "2016-09-29",
+        "maximum_drawdown_recovery_date": "2019-06-18"
+      },
+      "dev_E": {
+        "daily_row_count": 1763,
+        "daily_return_count": 1762,
+        "first_date": "2015-01-02",
+        "last_date": "2021-12-31",
+        "initial_funding_value": 25000,
+        "first_close_value": 24975.125,
+        "ending_value": 26404.597,
+        "total_return": 0.056183880000000075,
+        "close_to_close_total_return": 0.057235829650502223,
+        "mean_daily_return": 4.6024724630712204e-05,
+        "median_daily_return": 0.0,
+        "sample_daily_standard_deviation": 0.005361564515036188,
+        "annualized_volatility": 0.08511219807008628,
+        "sharpe": 0.13626989867408693,
+        "sortino": 0.17762780735959235,
+        "daily_downside_deviation": 0.004113206507804737,
+        "skew": -1.3551174892891782,
+        "excess_kurtosis": 9.48042690075246,
+        "daily_return_quantiles": {
+          "1%": -0.019224351554050174,
+          "5%": -0.00842423466871331,
+          "25%": -0.0008181246078776128,
+          "50%": 0.0,
+          "75%": 0.0011416150067209418,
+          "95%": 0.008556431542786012,
+          "99%": 0.014309809453750006
+        },
+        "days_below_minus_2pct": 16,
+        "percentage_days_below_minus_2pct": 0.9080590238365494,
+        "days_below_minus_5pct": 0,
+        "percentage_days_below_minus_5pct": 0.0,
+        "maximum_drawdown": 0.160851570264414,
+        "maximum_drawdown_peak_date": "2015-03-02",
+        "maximum_drawdown_trough_date": "2016-03-08",
+        "maximum_drawdown_recovery_date": "2020-01-17"
+      },
+      "val_A": {
+        "daily_row_count": 753,
+        "daily_return_count": 752,
+        "first_date": "2022-01-03",
+        "last_date": "2024-12-31",
+        "initial_funding_value": 25000,
+        "first_close_value": 25048.7631,
+        "ending_value": 25679.0313,
+        "total_return": 0.02716125199999997,
+        "close_to_close_total_return": 0.02516164959857825,
+        "mean_daily_return": 5.927249020988287e-05,
+        "median_daily_return": 0.0,
+        "sample_daily_standard_deviation": 0.007249481974003711,
+        "annualized_volatility": 0.11508195862355662,
+        "sharpe": 0.1297915651726928,
+        "sortino": 0.18318268231526952,
+        "daily_downside_deviation": 0.005136520549894427,
+        "skew": 0.16707889608175283,
+        "excess_kurtosis": 7.076017162831839,
+        "daily_return_quantiles": {
+          "1%": -0.020631052316201617,
+          "5%": -0.012534831493736808,
+          "25%": -0.00148912641693838,
+          "50%": 0.0,
+          "75%": 0.0020167111653420777,
+          "95%": 0.0115112494183452,
+          "99%": 0.019331770201638468
+        },
+        "days_below_minus_2pct": 11,
+        "percentage_days_below_minus_2pct": 1.4627659574468086,
+        "days_below_minus_5pct": 0,
+        "percentage_days_below_minus_5pct": 0.0,
+        "maximum_drawdown": 0.17813075568589654,
+        "maximum_drawdown_peak_date": "2022-01-03",
+        "maximum_drawdown_trough_date": "2022-09-06",
+        "maximum_drawdown_recovery_date": "2024-02-09"
+      },
+      "val_SPY": {
+        "daily_row_count": 753,
+        "daily_return_count": 752,
+        "first_date": "2022-01-03",
+        "last_date": "2024-12-31",
+        "initial_funding_value": 25000,
+        "first_close_value": 25048.7631,
+        "ending_value": 31651.3189,
+        "total_return": 0.2660527559999999,
+        "close_to_close_total_return": 0.26358809709051045,
+        "mean_daily_return": 0.0003703460622641278,
+        "median_daily_return": 0.0004191098736217036,
+        "sample_daily_standard_deviation": 0.010882181844001576,
+        "annualized_volatility": 0.17274928128606273,
+        "sharpe": 0.5402465758223086,
+        "sortino": 0.7697950909908682,
+        "daily_downside_deviation": 0.007637177149480276,
+        "skew": -0.14405176985077547,
+        "excess_kurtosis": 1.7788278355443148,
+        "daily_return_quantiles": {
+          "1%": -0.030532217792972105,
+          "5%": -0.017112277095662546,
+          "25%": -0.005413104921481088,
+          "50%": 0.0004191098736217036,
+          "75%": 0.006450425607229915,
+          "95%": 0.018319081857349363,
+          "99%": 0.026041402884465718
+        },
+        "days_below_minus_2pct": 26,
+        "percentage_days_below_minus_2pct": 3.4574468085106385,
+        "days_below_minus_5pct": 0,
+        "percentage_days_below_minus_5pct": 0.0,
+        "maximum_drawdown": 0.24645625316325492,
+        "maximum_drawdown_peak_date": "2022-01-03",
+        "maximum_drawdown_trough_date": "2022-10-12",
+        "maximum_drawdown_recovery_date": "2023-12-13"
+      }
+    },
+    "session_diagnostics": {
+      "dev_A": {
+        "raw_history_rows": 3629,
+        "daily_close_rows": 1763,
+        "expected_session_rows": 1763,
+        "close_time_counts_new_york": {
+          "13:00": 13,
+          "16:00": 1750
+        },
+        "excluded_non_session_history_dates": [
+          "2015-04-03",
+          "2017-04-14",
+          "2020-04-10",
+          "2021-04-02"
+        ],
+        "excluded_non_session_close_events": [
+          {
+            "excluded_date": "2015-04-03",
+            "previous_session_date": "2015-04-02",
+            "ohlcv_identical_to_previous_session": true
+          },
+          {
+            "excluded_date": "2021-04-02",
+            "previous_session_date": "2021-04-01",
+            "ohlcv_identical_to_previous_session": true
+          }
+        ],
+        "all_validation_checks_passed": true
+      },
+      "dev_B": {
+        "raw_history_rows": 3629,
+        "daily_close_rows": 1763,
+        "expected_session_rows": 1763,
+        "close_time_counts_new_york": {
+          "13:00": 13,
+          "16:00": 1750
+        },
+        "excluded_non_session_history_dates": [
+          "2015-04-03",
+          "2017-04-14",
+          "2020-04-10",
+          "2021-04-02"
+        ],
+        "excluded_non_session_close_events": [
+          {
+            "excluded_date": "2015-04-03",
+            "previous_session_date": "2015-04-02",
+            "ohlcv_identical_to_previous_session": true
+          },
+          {
+            "excluded_date": "2021-04-02",
+            "previous_session_date": "2021-04-01",
+            "ohlcv_identical_to_previous_session": true
+          }
+        ],
+        "all_validation_checks_passed": true
+      },
+      "dev_C": {
+        "raw_history_rows": 3629,
+        "daily_close_rows": 1763,
+        "expected_session_rows": 1763,
+        "close_time_counts_new_york": {
+          "13:00": 13,
+          "16:00": 1750
+        },
+        "excluded_non_session_history_dates": [
+          "2015-04-03",
+          "2017-04-14",
+          "2020-04-10",
+          "2021-04-02"
+        ],
+        "excluded_non_session_close_events": [
+          {
+            "excluded_date": "2015-04-03",
+            "previous_session_date": "2015-04-02",
+            "ohlcv_identical_to_previous_session": true
+          },
+          {
+            "excluded_date": "2021-04-02",
+            "previous_session_date": "2021-04-01",
+            "ohlcv_identical_to_previous_session": true
+          }
+        ],
+        "all_validation_checks_passed": true
+      },
+      "dev_D": {
+        "raw_history_rows": 3629,
+        "daily_close_rows": 1763,
+        "expected_session_rows": 1763,
+        "close_time_counts_new_york": {
+          "13:00": 13,
+          "16:00": 1750
+        },
+        "excluded_non_session_history_dates": [
+          "2015-04-03",
+          "2017-04-14",
+          "2020-04-10",
+          "2021-04-02"
+        ],
+        "excluded_non_session_close_events": [
+          {
+            "excluded_date": "2015-04-03",
+            "previous_session_date": "2015-04-02",
+            "ohlcv_identical_to_previous_session": true
+          },
+          {
+            "excluded_date": "2021-04-02",
+            "previous_session_date": "2021-04-01",
+            "ohlcv_identical_to_previous_session": true
+          }
+        ],
+        "all_validation_checks_passed": true
+      },
+      "dev_E": {
+        "raw_history_rows": 3629,
+        "daily_close_rows": 1763,
+        "expected_session_rows": 1763,
+        "close_time_counts_new_york": {
+          "13:00": 13,
+          "16:00": 1750
+        },
+        "excluded_non_session_history_dates": [
+          "2015-04-03",
+          "2017-04-14",
+          "2020-04-10",
+          "2021-04-02"
+        ],
+        "excluded_non_session_close_events": [
+          {
+            "excluded_date": "2015-04-03",
+            "previous_session_date": "2015-04-02",
+            "ohlcv_identical_to_previous_session": true
+          },
+          {
+            "excluded_date": "2021-04-02",
+            "previous_session_date": "2021-04-01",
+            "ohlcv_identical_to_previous_session": true
+          }
+        ],
+        "all_validation_checks_passed": true
+      },
+      "val_A": {
+        "raw_history_rows": 1550,
+        "daily_close_rows": 753,
+        "expected_session_rows": 753,
+        "close_time_counts_new_york": {
+          "13:00": 6,
+          "16:00": 747
+        },
+        "excluded_non_session_history_dates": [
+          "2023-04-07"
+        ],
+        "excluded_non_session_close_events": [
+          {
+            "excluded_date": "2023-04-07",
+            "previous_session_date": "2023-04-06",
+            "ohlcv_identical_to_previous_session": true
+          }
+        ],
+        "all_validation_checks_passed": true
+      },
+      "val_SPY": {
+        "raw_history_rows": 1550,
+        "daily_close_rows": 753,
+        "expected_session_rows": 753,
+        "close_time_counts_new_york": {
+          "13:00": 6,
+          "16:00": 747
+        },
+        "excluded_non_session_history_dates": [
+          "2023-04-07"
+        ],
+        "excluded_non_session_close_events": [
+          {
+            "excluded_date": "2023-04-07",
+            "previous_session_date": "2023-04-06",
+            "ohlcv_identical_to_previous_session": true
+          }
+        ],
+        "all_validation_checks_passed": true
+      }
+    },
+    "development_selection": {
+      "candidates": {
+        "dev_A": {
+          "completed_round_trips": 46,
+          "maximum_drawdown_percent": 14.857793428226495,
+          "sharpe": 0.8287715472381195,
+          "eligible": true
+        },
+        "dev_B": {
+          "completed_round_trips": 98,
+          "maximum_drawdown_percent": 21.239014513588483,
+          "sharpe": 0.5549091406366585,
+          "eligible": true
+        },
+        "dev_C": {
+          "completed_round_trips": 432,
+          "maximum_drawdown_percent": 46.204544408319926,
+          "sharpe": -0.581588547082953,
+          "eligible": false
+        },
+        "dev_D": {
+          "completed_round_trips": 246,
+          "maximum_drawdown_percent": 12.94243315711061,
+          "sharpe": 0.5705465661221787,
+          "eligible": true
+        },
+        "dev_E": {
+          "completed_round_trips": 92,
+          "maximum_drawdown_percent": 16.0851570264414,
+          "sharpe": 0.13626989867408693,
+          "eligible": true
+        }
+      },
+      "winner": "dev_A",
+      "candidate_A_remains_development_winner": true,
+      "selection_uses_validation": false
+    },
+    "validation_comparison": {
+      "frozen_development_winner": "dev_A",
+      "pass_fail_rule_created": false,
+      "status": "available",
+      "candidate_run": "val_A",
+      "benchmark_run": "val_SPY",
+      "differences": {
+        "total_return": {
+          "candidate_minus_spy": -0.23889150399999992,
+          "difference_percentage_points": -23.88915039999999
+        },
+        "sharpe": {
+          "candidate_minus_spy": -0.4104550106496158
+        },
+        "sortino": {
+          "candidate_minus_spy": -0.5866124086755986
+        },
+        "annualized_volatility": {
+          "candidate_minus_spy": -0.05766732266250611,
+          "difference_percentage_points": -5.766732266250611
+        },
+        "maximum_drawdown": {
+          "candidate_minus_spy": -0.06832549747735839,
+          "difference_percentage_points": -6.832549747735839
+        }
+      }
+    },
+    "reconciliation": {
+      "dev_A": {
+        "materiality_threshold_percentage_points": 0.01,
+        "comparisons": {
+          "total_return": {
+            "independent_percent": 80.17906760000002,
+            "nexus_percent": 80.17906750931792,
+            "difference_percentage_points": 9.068210715668101e-08,
+            "material_discrepancy": false
+          },
+          "maximum_drawdown": {
+            "independent_percent": 14.857793428226495,
+            "nexus_percent": 14.857793437019422,
+            "difference_percentage_points": -8.792927275180773e-09,
+            "material_discrepancy": false
+          }
+        },
+        "all_tick_drawdown_diagnostic": {
+          "diagnostic_only_not_used_for_selection": true,
+          "all_history_ticks_maximum_drawdown_percent": 14.857793428226495,
+          "difference_from_nexus_percentage_points": -8.792927275180773e-09,
+          "residual_material_discrepancy": false,
+          "interpretation": "All-tick drawdown reconciles with stored drawdown within tolerance; session-close sampling explains the daily difference."
+        },
+        "stored_risk_free_rate": 0.019999999552965164,
+        "stored_sharpe": 0.8214359926437915,
+        "stored_sortino": 1.1253746641067948,
+        "possible_causes": [
+          "Nexus history rounds values to four decimals.",
+          "Independent drawdown uses daily session closes; Nexus may use intraday ticks.",
+          "Provider holiday artifacts are excluded from independent daily series.",
+          "Nexus has different stored risk-free rates and may use different metric conventions; RF affects Sharpe/Sortino, not equity total return or drawdown."
+        ]
+      },
+      "dev_B": {
+        "materiality_threshold_percentage_points": 0.01,
+        "comparisons": {
+          "total_return": {
+            "independent_percent": 32.9064504,
+            "nexus_percent": 32.906450358318686,
+            "difference_percentage_points": 4.168131084725246e-08,
+            "material_discrepancy": false
+          },
+          "maximum_drawdown": {
+            "independent_percent": 21.239014513588483,
+            "nexus_percent": 21.298529947283253,
+            "difference_percentage_points": -0.05951543369477008,
+            "material_discrepancy": true
+          }
+        },
+        "all_tick_drawdown_diagnostic": {
+          "diagnostic_only_not_used_for_selection": true,
+          "all_history_ticks_maximum_drawdown_percent": 21.298529729166393,
+          "difference_from_nexus_percentage_points": -2.1811685968486927e-07,
+          "residual_material_discrepancy": false,
+          "interpretation": "All-tick drawdown reconciles with stored drawdown within tolerance; session-close sampling explains the daily difference."
+        },
+        "stored_risk_free_rate": 0.019999999552965164,
+        "stored_sharpe": 0.5439404017464462,
+        "stored_sortino": 0.7454087543837581,
+        "possible_causes": [
+          "Nexus history rounds values to four decimals.",
+          "Independent drawdown uses daily session closes; Nexus may use intraday ticks.",
+          "Provider holiday artifacts are excluded from independent daily series.",
+          "Nexus has different stored risk-free rates and may use different metric conventions; RF affects Sharpe/Sortino, not equity total return or drawdown."
+        ]
+      },
+      "dev_C": {
+        "materiality_threshold_percentage_points": 0.01,
+        "comparisons": {
+          "total_return": {
+            "independent_percent": -39.355360000000005,
+            "nexus_percent": -39.355359957013405,
+            "difference_percentage_points": -4.298659916912584e-08,
+            "material_discrepancy": false
+          },
+          "maximum_drawdown": {
+            "independent_percent": 46.204544408319926,
+            "nexus_percent": 46.435838414155555,
+            "difference_percentage_points": -0.23129400583562898,
+            "material_discrepancy": true
+          }
+        },
+        "all_tick_drawdown_diagnostic": {
+          "diagnostic_only_not_used_for_selection": true,
+          "all_history_ticks_maximum_drawdown_percent": 46.382488976531654,
+          "difference_from_nexus_percentage_points": -0.05334943762390054,
+          "residual_material_discrepancy": true,
+          "interpretation": "Residual remains after checking all available history ticks. Source-engine convention or unexposed observations may differ; cause is not established."
+        },
+        "stored_risk_free_rate": 0.019999999552965164,
+        "stored_sharpe": -0.604365639911557,
+        "stored_sortino": -0.7871799517266724,
+        "possible_causes": [
+          "Nexus history rounds values to four decimals.",
+          "Independent drawdown uses daily session closes; Nexus may use intraday ticks.",
+          "Provider holiday artifacts are excluded from independent daily series.",
+          "Nexus has different stored risk-free rates and may use different metric conventions; RF affects Sharpe/Sortino, not equity total return or drawdown."
+        ]
+      },
+      "dev_D": {
+        "materiality_threshold_percentage_points": 0.01,
+        "comparisons": {
+          "total_return": {
+            "independent_percent": 28.211821599999997,
+            "nexus_percent": 28.211821602827087,
+            "difference_percentage_points": -2.8270896734738926e-09,
+            "material_discrepancy": false
+          },
+          "maximum_drawdown": {
+            "independent_percent": 12.94243315711061,
+            "nexus_percent": 12.942433300800726,
+            "difference_percentage_points": -1.4369011580583901e-07,
+            "material_discrepancy": false
+          }
+        },
+        "all_tick_drawdown_diagnostic": {
+          "diagnostic_only_not_used_for_selection": true,
+          "all_history_ticks_maximum_drawdown_percent": 12.94243315711061,
+          "difference_from_nexus_percentage_points": -1.4369011580583901e-07,
+          "residual_material_discrepancy": false,
+          "interpretation": "All-tick drawdown reconciles with stored drawdown within tolerance; session-close sampling explains the daily difference."
+        },
+        "stored_risk_free_rate": 0.019999999552965164,
+        "stored_sharpe": 0.562329120293366,
+        "stored_sortino": 0.7879424047506095,
+        "possible_causes": [
+          "Nexus history rounds values to four decimals.",
+          "Independent drawdown uses daily session closes; Nexus may use intraday ticks.",
+          "Provider holiday artifacts are excluded from independent daily series.",
+          "Nexus has different stored risk-free rates and may use different metric conventions; RF affects Sharpe/Sortino, not equity total return or drawdown."
+        ]
+      },
+      "dev_E": {
+        "materiality_threshold_percentage_points": 0.01,
+        "comparisons": {
+          "total_return": {
+            "independent_percent": 5.6183880000000075,
+            "nexus_percent": 5.618388046860156,
+            "difference_percentage_points": -4.6860148650296196e-08,
+            "material_discrepancy": false
+          },
+          "maximum_drawdown": {
+            "independent_percent": 16.0851570264414,
+            "nexus_percent": 16.085156766785566,
+            "difference_percentage_points": 2.5965583461129427e-07,
+            "material_discrepancy": false
+          }
+        },
+        "all_tick_drawdown_diagnostic": {
+          "diagnostic_only_not_used_for_selection": true,
+          "all_history_ticks_maximum_drawdown_percent": 16.0851570264414,
+          "difference_from_nexus_percentage_points": 2.5965583461129427e-07,
+          "residual_material_discrepancy": false,
+          "interpretation": "All-tick drawdown reconciles with stored drawdown within tolerance; session-close sampling explains the daily difference."
+        },
+        "stored_risk_free_rate": 0.019999999552965164,
+        "stored_sharpe": 0.13357287195002157,
+        "stored_sortino": 0.17282337516994536,
+        "possible_causes": [
+          "Nexus history rounds values to four decimals.",
+          "Independent drawdown uses daily session closes; Nexus may use intraday ticks.",
+          "Provider holiday artifacts are excluded from independent daily series.",
+          "Nexus has different stored risk-free rates and may use different metric conventions; RF affects Sharpe/Sortino, not equity total return or drawdown."
+        ]
+      },
+      "val_A": {
+        "materiality_threshold_percentage_points": 0.01,
+        "comparisons": {
+          "total_return": {
+            "independent_percent": 2.716125199999997,
+            "nexus_percent": 2.7161252576935953,
+            "difference_percentage_points": -5.769359834317811e-08,
+            "material_discrepancy": false
+          },
+          "maximum_drawdown": {
+            "independent_percent": 17.813075568589653,
+            "nexus_percent": 18.13992626268482,
+            "difference_percentage_points": -0.3268506940951674,
+            "material_discrepancy": true
+          }
+        },
+        "all_tick_drawdown_diagnostic": {
+          "diagnostic_only_not_used_for_selection": true,
+          "all_history_ticks_maximum_drawdown_percent": 18.139926329127153,
+          "difference_from_nexus_percentage_points": 6.644233252472986e-08,
+          "residual_material_discrepancy": false,
+          "interpretation": "All-tick drawdown reconciles with stored drawdown within tolerance; session-close sampling explains the daily difference."
+        },
+        "stored_risk_free_rate": 0.07999999821186066,
+        "stored_sharpe": 0.12824855752074718,
+        "stored_sortino": 0.17597563978617795,
+        "possible_causes": [
+          "Nexus history rounds values to four decimals.",
+          "Independent drawdown uses daily session closes; Nexus may use intraday ticks.",
+          "Provider holiday artifacts are excluded from independent daily series.",
+          "Nexus has different stored risk-free rates and may use different metric conventions; RF affects Sharpe/Sortino, not equity total return or drawdown."
+        ]
+      },
+      "val_SPY": {
+        "materiality_threshold_percentage_points": 0.01,
+        "comparisons": {
+          "total_return": {
+            "independent_percent": 26.605275599999988,
+            "nexus_percent": 26.605275450028188,
+            "difference_percentage_points": 1.499718003117323e-07,
+            "material_discrepancy": false
+          },
+          "maximum_drawdown": {
+            "independent_percent": 24.645625316325493,
+            "nexus_percent": 26.410791543703287,
+            "difference_percentage_points": -1.7651662273777937,
+            "material_discrepancy": true
+          }
+        },
+        "all_tick_drawdown_diagnostic": {
+          "diagnostic_only_not_used_for_selection": true,
+          "all_history_ticks_maximum_drawdown_percent": 24.8821188788796,
+          "difference_from_nexus_percentage_points": -1.528672664823688,
+          "residual_material_discrepancy": true,
+          "interpretation": "Residual remains after checking all available history ticks. Source-engine convention or unexposed observations may differ; cause is not established."
+        },
+        "stored_risk_free_rate": 0.07999999821186066,
+        "stored_sharpe": 0.5342307402034204,
+        "stored_sortino": 0.7520697888090261,
+        "possible_causes": [
+          "Nexus history rounds values to four decimals.",
+          "Independent drawdown uses daily session closes; Nexus may use intraday ticks.",
+          "Provider holiday artifacts are excluded from independent daily series.",
+          "Nexus has different stored risk-free rates and may use different metric conventions; RF affects Sharpe/Sortino, not equity total return or drawdown."
+        ]
+      }
+    },
+    "source_sha256": {
+      "experiments\\EXP001_SPY_AI_SELECTION\\manifest.json": "8934009b27a3f5423961ff4a4b1a7204a7e86d2d55c85c6afda9c43efa7514ef",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\integrity_report.json": "633d8ec3dcf4fe5678bd52d76d269595fce2a770be8871107c085b29beb07fea",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_A_history.json": "3d06c76b5002d932691228ca476058b8ca3db9e0ed6700055a974cc3ffc1a7b7",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_A_events.json": "a1490f93e1653c13e27ef8343b03509b380f47d3cc1e50bd19ffbbdf4bedf116",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_A_metadata.json": "529c905d938d9e0b8f44eb04ac7e1fb91277e7d4824c01565d2483501479e8a2",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_B_history.json": "afd3056464bcb0b244e8c4255e52afca6cab8f8a28bd4d22b2f10aa4af5e1667",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_B_events.json": "414bc2895705f8f8eb21c33a42375d96a9e364386949f90991d73fd872a8e7e1",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_B_metadata.json": "027d4c7acef6482d54495d5feb5946adb9e3dc7ce5ff9cc347fa0040b8fd1351",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_C_history.json": "7e85df9d75840f7d1cd066c2385d63d1b5714569acd3f31bb05736493c9bcbaa",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_C_events.json": "190427c67b6545059da0690c5348d11e7abb437eaa2b14e2be57b7c9025ab8c8",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_C_metadata.json": "5611eb277592965c84e8ef9587a4ea398e1dbb507d6c89af9d8f0482b8067d36",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_D_history.json": "9eb3a7a93f6c5abe03e80b6ccf1f51a4110ed12c5d133eb1a9955aefbc9d776f",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_D_events.json": "005de317121e65e9e2641bdc53f535ff52a05129e8e83ee580fae51d92705312",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_D_metadata.json": "d4d08c114a8500ac4380284b7578d86cf31acfed1856db522e866986c999c9e0",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_E_history.json": "f5ada92fdeccf5bc2031ce15be32540fd2cd96adfd507c8b6d994b6e504dbfed",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_E_events.json": "af2e313cc826353414fdd913898d843109b0ca8d61fa9610b54a9fb47fdefe37",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\dev_E_metadata.json": "4e0b70c601daea21a29166b887731e379fd43d70a39a0fb0df6c66b1c2e1e1c2",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\val_A_history.json": "e8828290a13db808f0f658c513f91b988d5b209860507383dd56d477debcc279",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\val_A_events.json": "9f43dc219891cb83f9837cb19380e32f54428d6260e1ce0df37ce910680f4167",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\val_A_metadata.json": "326b7295da1d5cba9a8ea69d50c81d62fdeb539dab60dea6384284b5c81325a0",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\val_SPY_history.json": "82d3b35157533eda72ec837f522e05922da715b194374803b9bf4ed6061cad1c",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\val_SPY_events.json": "b80ffbc0f6cf4cfd7ab8324ea506528af96ed433490f028520309c147daec522",
+      "data\\raw\\EXP001_SPY_AI_SELECTION\\val_SPY_metadata.json": "9f9e19696b09357551e6c70d53894a05e7ac63bcf5710bec42ff9529fb74de1b"
+    },
+    "integrity": {
+      "raw_and_manifest_unchanged": true,
+      "no_nexus_calls": true,
+      "no_processed_timestamp_on_or_after_2025_01_01": true,
+      "all_runs_have_one_close_per_expected_session": true,
+      "sealed_test_not_processed": true
+    },
+    "precision_limitations": [
+      "Nexus history response values were already rounded to four decimal places.",
+      "Initial funding uses manifest starting_cash; Nexus status did not expose this configuration field.",
+      "Stored round-trip counts are used exactly as instructed; they are not recalculated from events.",
+      "Administrative timestamps and dividend schedules in raw envelopes are not processed as observations."
+    ]
+  },
+  "daily_csv_sha256": {
+    "dev_A_daily.csv": "bfb4f4bde209dcb893cc59c51ae258e250dbbfe4d2c9c0479b5a094165c58ec3",
+    "dev_B_daily.csv": "60138c36c4ec94339405454a912d28bfa1cb2ba143b36f578dd67cec0e2e1d34",
+    "dev_C_daily.csv": "52c3a39aabb1428688e2f13db2aaee5f55cd6612938aa09a77745a1ebe544d39",
+    "dev_D_daily.csv": "65b35587ec69098e1c6c4209b940824b546f793ba493b417d72f742c6bfde955",
+    "dev_E_daily.csv": "286281ee220e421e1581321f11a307277b0f7080793affb1eda4a477c8f7c041",
+    "val_A_daily.csv": "c9f979523158463036efd4e48412de13c0096aa85b01be00c3d210fa36df68a6",
+    "val_SPY_daily.csv": "085ef049223d02587ea5cc0f89ffa35b0d35e6cbf9551dcc23c443319b54bc2c"
+  },
+  "performance_module_sha256": "b37a02d5f407ba9bd3e0bd768249a77721403ab91d9ec9548db05e8ced5aafd9"
+}

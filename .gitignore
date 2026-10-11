@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+data/raw/
+lake-results/
+.extraction_pages/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.matplotlib/

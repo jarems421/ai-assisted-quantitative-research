@@ -1,0 +1,2 @@
+# Preserve exact bytes: frozen source/output SHA-256 checks include line endings.
+* -text whitespace=cr-at-eol

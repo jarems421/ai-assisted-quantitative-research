@@ -1,0 +1,2 @@
+# Analysis uses the standard library; Windows needs an IANA timezone database.
+tzdata==2026.5

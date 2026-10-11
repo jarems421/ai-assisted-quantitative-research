@@ -1,0 +1,18 @@
+{
+  "generator": "python -m src.presentation.exp001",
+  "source_sha256": {
+    "data/processed/EXP001_SPY_AI_SELECTION/metrics.json": "64df418979cf977aa502681b2e79a3c81570bd1a0c49076add1a0ee4f7218f90",
+    "experiments/EXP001_SPY_AI_SELECTION/manifest.json": "8934009b27a3f5423961ff4a4b1a7204a7e86d2d55c85c6afda9c43efa7514ef",
+    "data/processed/EXP001_SPY_AI_SELECTION/val_A_daily.csv": "c9f979523158463036efd4e48412de13c0096aa85b01be00c3d210fa36df68a6",
+    "data/processed/EXP001_SPY_AI_SELECTION/val_SPY_daily.csv": "085ef049223d02587ea5cc0f89ffa35b0d35e6cbf9551dcc23c443319b54bc2c",
+    "data/processed/EXP001_SPY_AI_SELECTION/test_A_daily.csv": "84618ada599b05e11305273e132cad6a4754af5657d4af3dd5b465177e311c02",
+    "data/processed/EXP001_SPY_AI_SELECTION/test_SPY_daily.csv": "4b39865edf32f590b9b8e6ae2e4ae47c15284b0753d08cb719ef7c2d8ab850db"
+  },
+  "matplotlib_version": "3.11.2",
+  "artifacts": [
+    "exp001_development_risk_return.png",
+    "exp001_drawdowns.png",
+    "exp001_test_equity.png",
+    "exp001_validation_equity.png"
+  ]
+}
