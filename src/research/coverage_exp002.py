@@ -135,13 +135,16 @@ def main():
     root = Path(__file__).resolve().parents[2]
     raw = root / "data/raw/EXP002/audit/raw/runtime_20261011"
     read = lambda path: json.loads((raw / path).read_text(encoding="utf-8"))
+    warmup_path = root / "data/raw/EXP002/audit/raw/revision_20261011/warmup_v2/rows.json"
+    warmup = json.loads(warmup_path.read_text(encoding="utf-8")) if warmup_path.exists() else []
     result = summarize(read("price_panel_unadjusted/rows.json"),
-                       read("ownership_equity_panel/rows.json"), read("security_spans/rows.json"))
+                       warmup + read("ownership_equity_panel/rows.json"), read("security_spans/rows.json"))
     summary_path = root / "experiments/EXP002/research/coverage_summary.json"
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
     summary.update(result)
     summary["identity_policy"] = "Unique security segment at disclosure's New York availability date; ambiguous/unresolved mappings excluded, ticker renames joined by stable ID."
-    summary["source_presence_warning"] = "Nonderivative insider legs and SH non-option institutional rows only. Any row is not complete native coverage, revision safety or a genuine zero. Calendar month-end availability is used; ownership history starts in 2015, so early rolling windows are left-censored. UTC cutoff conservatively excludes December 31 NY end-of-day filings represented on January 1 UTC."
+    summary["source_presence_warning"] = "Nonderivative insider legs and SH non-option institutional rows only. Any row is not complete native coverage, revision safety or a genuine zero. Calendar month-end availability is used. 2014 ownership warmup is included when the preserved revision extract exists. UTC cutoff conservatively excludes December 31 NY end-of-day filings represented on January 1 UTC."
+    summary["ownership_warmup_included"] = bool(warmup)
     summary_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
 
 
