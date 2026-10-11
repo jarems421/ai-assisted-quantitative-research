@@ -14,6 +14,10 @@ from src.research.budget import plan
 from src.research.analysis import controls, surface, rank_stability, paired_bootstrap, holm, validate_folds, regime_metrics
 from src.research.aurora import launch, prompts, quality, DIMENSIONS, corpus_evidence
 from src.research.dynamic import build, turnover_gate
+from src.research.nexus import Jobs, retry_read, SDK
+from src.research.extraction import extract, decode_page
+from src.research.demo import FakeSDK, fake_mcp, payload, demo
+from src.research.report import compute
 
 
 def fixture():
@@ -65,6 +69,12 @@ class SchemaTests(unittest.TestCase):
         with self.assertRaises(ValueError):audit_availability([{"available_at":"2020-01-02T15:00:00Z"}],"2020-01-02T14:00:00Z")
         self.assertEqual(audit_availability([{"available_at":"2020-01-02T13:00:00Z"}],"2020-01-02T14:00:00Z")["rows"],1)
 
+    def test_nonfinite_json_and_inconsistent_fees_rejected(self):
+        s=fixture();s['costs']['fee_percent']=float('nan')
+        with self.assertRaises(ValueError):validate(s)
+        s=fixture();s['costs']['fee_contract']['Stock']['amount']=.2
+        with self.assertRaises(ValueError):validate(s)
+
 
 class StoreTests(unittest.TestCase):
     def setUp(self):
@@ -92,6 +102,14 @@ class StoreTests(unittest.TestCase):
         trials=json.loads((Path(self.tmp.name)/"experiments/EXP999/trials.json").read_text())
         self.assertEqual(len(trials),2)
         self.assertEqual(trials[0]["result"]["status"],"FAILED")
+
+    def test_assessed_metrics_and_provenance_cannot_be_rewritten(self):
+        self.store.record_trial('k','EXP999','f','c',{},'DEVELOPMENT',{'status':'COMPLETE','metrics':{'sharpe':1}},eligibility=True)
+        with self.assertRaises(ValueError):self.store.record_trial('k','EXP999','f','c',{},'DEVELOPMENT',{'status':'COMPLETE','metrics':{'sharpe':2}})
+        with self.assertRaises(ValueError):self.store.record_trial('k','EXP999','f','different',{},'DEVELOPMENT',{'status':'COMPLETE'})
+        self.store.record_trial('k','EXP999','f','c',{},'DEVELOPMENT',{'status':'COMPLETE'})
+        row=json.loads(self.store.db.execute('SELECT result FROM trials').fetchone()[0])
+        self.assertEqual(row['metrics']['sharpe'],1);self.assertEqual(len(row['history']),1)
 
     def test_raw_immutable_and_path_safe(self):
         raw=RawStore(Path(self.tmp.name)/"raw")
@@ -173,6 +191,224 @@ class AnalysisTests(unittest.TestCase):
         self.assertEqual(node["type"],"DynamicRebalance")
         self.assertEqual([x["type"] for x in node["pipeline"]],["SelectPercentile","SelectTop"])
         self.assertFalse(turnover_gate({},max_turnover=.2,max_cost=2,min_net_benefit=0)["eligible"])
+
+
+class JobTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
+        self.spec=fixture();self.spec['execution']['requires_events']=True
+        self.store=Store(self.root);self.store.register(self.spec)
+        self.store.transition(self.spec,'HYPOTHESIS_FROZEN');self.store.transition(self.spec,'DEVELOPMENT')
+        self.sdk=FakeSDK();self.calls=[]
+        def bridge(name,args):self.calls.append((name,args));return fake_mcp(name,args)
+        self.jobs=Jobs(self.store,self.sdk,mcp=bridge,sleep=lambda _:None)
+        self.price=json.loads((ROOT/'config/research_pricing.json').read_text());self.price['expires_on']='2999-01-01'
+        self.kw=dict(family='synthetic',candidate='candidate',parameters={},assets=1)
+
+    def tearDown(self):self.store.close();self.tmp.cleanup()
+
+    def submit(self,**options):return self.jobs.submit(self.spec,'backtest',payload(self.spec),self.price,**self.kw,**options)
+
+    def force_stage(self,stage):
+        # Fixture-only injection to isolate specific guard tests; no production bypass API.
+        candidate={'portfolio':payload(self.spec)['portfolio'],'signals':['synthetic'],'signal_count':1,'controls':[],
+                   'benchmarks':{'SYNTHETIC_BENCHMARK':{'name':'benchmark','strategies':[]}}}
+        with self.store.db:self.store.db.execute('UPDATE experiments SET stage=?,candidate=?,candidate_hash=? WHERE id=?',
+            (stage,json.dumps(candidate),digest(candidate),'EXP999'))
+        return candidate
+
+    def test_dry_run_no_job_or_trial_or_network(self):
+        result=self.submit()
+        self.assertTrue(result['dry_run']);self.assertEqual(self.sdk.submissions,0)
+        self.assertEqual(self.store.db.execute('SELECT COUNT(*) FROM jobs').fetchone()[0],0)
+
+    def test_idempotent_submission_and_events_first(self):
+        first=self.submit(execute=True);self.jobs.poll(self.spec,first['key'])
+        second=self.submit(execute=True)
+        self.assertEqual(first['key'],second['key']);self.assertEqual(self.sdk.submissions,1)
+        self.assertEqual(self.calls[0][0],'query_backtest_events')
+        self.assertEqual([c[1]['page'] for c in self.calls if c[0]=='query_backtest_events'],[1,2])
+        integrity=self.jobs.raw.read('EXP999/synthetic_run/integrity.json')
+        self.assertEqual(integrity['files']['events']['rows'],2)
+
+    def test_unacknowledged_submission_never_retried(self):
+        def uncertain(*a):self.sdk.submissions+=1;raise TimeoutError('Response lost')
+        self.sdk.submit=uncertain
+        with self.assertRaises(TimeoutError):self.submit(execute=True)
+        with self.assertRaises(ValueError):self.submit(execute=True)
+        self.assertEqual(self.sdk.submissions,1)
+        self.assertEqual(self.store.db.execute('SELECT status FROM jobs').fetchone()[0],'UNKNOWN')
+
+    def test_interrupted_extraction_resumes_saved_pages(self):
+        raw=self.jobs.raw;calls=[]
+        def interrupted(name,args):
+            calls.append((name,args['page']))
+            if name=='query_backtest_events' and args['page']==2:raise TimeoutError()
+            return fake_mcp(name,args)
+        with self.assertRaises(TimeoutError):extract(raw,interrupted,self.spec,'DEVELOPMENT','run',events_required=True)
+        calls.clear()
+        def resumed(name,args):calls.append((name,args['page']));return fake_mcp(name,args)
+        result=extract(raw,resumed,self.spec,'DEVELOPMENT','run',events_required=True)
+        self.assertNotIn(('query_backtest_events',1),calls)
+        self.assertEqual(result['files']['events']['pages'],2)
+
+    def test_unknown_schema_does_not_silently_end_pagination(self):
+        with self.assertRaises(ValueError):decode_page({'content':[{'type':'text','text':'empty result'}]},'events',1)
+
+    def test_out_of_range_simulation_but_admin_dates_preserved(self):
+        raw=self.jobs.raw
+        result=extract(raw,fake_mcp,self.spec,'DEVELOPMENT','ok',events_required=True)
+        self.assertTrue(result['simulated_dates_within_window'])
+        saved=raw.read('EXP999/ok/events_000001.json')
+        self.assertIn('2030-01-01',saved['response']['content'][0]['text'])
+        def leaked(name,args):return json.loads(json.dumps(fake_mcp(name,args)).replace('2015-01-02T21:00:00Z','2023-01-02T21:00:00Z'))
+        with self.assertRaises(ValueError):extract(raw,leaked,self.spec,'DEVELOPMENT','bad',events_required=True)
+
+    def test_read_transient_retry_and_permanent_no_retry(self):
+        class Error(Exception):
+            def __init__(self,status):self.status=status
+        calls=[]
+        def transient():
+            calls.append(1)
+            if len(calls)==1:raise Error(429)
+            return 'ok'
+        waits=[];self.assertEqual(retry_read(transient,sleep=waits.append),'ok');self.assertEqual(waits,[1])
+        calls.clear()
+        def permanent():calls.append(1);raise Error(400)
+        with self.assertRaises(Error):retry_read(permanent,sleep=waits.append)
+        self.assertEqual(len(calls),1)
+
+    def test_range_and_fee_contract_before_network(self):
+        for field,value in [('end_date','2024-12-31'),('fee_config',{}),('generate_events',False)]:
+            p=payload(self.spec);p['args'][field]=value
+            with self.assertRaises(ValueError):self.jobs.submit(self.spec,'backtest',p,self.price,execute=True,**self.kw)
+        self.assertEqual(self.sdk.submissions,0)
+
+    def test_validation_cannot_change_candidate(self):
+        self.force_stage('VALIDATION');p=payload(self.spec)
+        p['args'].update(start_date='2021-01-01',end_date='2022-12-31');p['portfolio']['name']='Altered'
+        with self.assertRaises(ValueError):self.jobs.submit(self.spec,'backtest',p,self.price,execute=True,**self.kw)
+
+    def test_missing_bridge_blocks_submission(self):
+        self.jobs.mcp=None
+        with self.assertRaises(ValueError):self.submit(execute=True)
+        self.assertEqual(self.sdk.submissions,0)
+
+    def test_test_and_paper_need_separate_human_approval(self):
+        state=self.force_stage('ROBUSTNESS')
+        directory=self.root/'experiments/EXP999'
+        for filename in ['robustness.json','final_review.json']:
+            (directory/filename).write_text(json.dumps({'spec_hash':digest(self.spec),'candidate_hash':digest(state),'review_complete':True}))
+        with self.assertRaises(ValueError):self.store.transition(self.spec,'TEST_AUTHORIZED',confirmation='OPEN EXP999 TEST',human=False)
+        with self.assertRaises(ValueError):self.store.transition(self.spec,'TEST_AUTHORIZED',confirmation='OPEN EXP998 TEST',human=True)
+        self.store.transition(self.spec,'TEST_AUTHORIZED',confirmation='OPEN EXP999 TEST',human=True)
+        self.assertNotIn('PAPER',json.loads(self.store.state('EXP999')['approvals']))
+        with self.assertRaises(ValueError):self.jobs.deploy_paper(self.spec,'draft',execute=True)
+
+    def test_no_skipping_failed_validation_job(self):
+        self.force_stage('VALIDATION')
+        with self.assertRaises(ValueError):self.store.transition(self.spec,'WALK_FORWARD')
+
+    def test_sdk_missing_key_and_live_operation_rejected(self):
+        with self.assertRaises(ValueError):SDK(api_key=None)
+        with self.assertRaises(ValueError):SDK(api_key=None,client=object()).submit('live',{},'key')
+
+    def test_cumulative_eval_ceiling_counts_prior_jobs(self):
+        self.price['max_evaluations']=1
+        self.submit(execute=True)
+        p=payload(self.spec);p['portfolio']['name']='Second variant'
+        with self.assertRaises(ValueError):self.jobs.submit(self.spec,'backtest',p,self.price,execute=True,**self.kw)
+
+    def test_frozen_candidate_can_select_explicit_benchmark(self):
+        frozen=self.force_stage('VALIDATION');p=payload(self.spec)
+        p['portfolio']=frozen['benchmarks']['SYNTHETIC_BENCHMARK']
+        p['args'].update(start_date='2021-01-01',end_date='2022-12-31')
+        self.assertTrue(self.jobs.submit(self.spec,'backtest',p,self.price,**self.kw)['dry_run'])
+
+    def test_successful_assessed_candidate_freeze_and_frozen_hash(self):
+        from src.research.analysis import controls
+        first=self.submit(execute=True);self.jobs.poll(self.spec,first['key'])
+        self.store.record_trial(first['key'],'EXP999','synthetic','candidate',{},'DEVELOPMENT',{'status':'COMPLETE','metrics':{'sharpe':1}},run_id='synthetic_run',eligibility=True)
+        candidate={'portfolio':payload(self.spec)['portfolio'],'trial_key':first['key'],'signals':['synthetic'],'signal_count':1,
+                   'controls':controls(['synthetic']),'control_evidence':[],
+                   'benchmarks':{'SYNTHETIC_BENCHMARK':{'name':'benchmark','strategies':[]}}}
+        state=self.store.transition(self.spec,'CANDIDATE_FROZEN',candidate=candidate)
+        self.assertEqual(state['candidate_hash'],digest(candidate))
+        self.assertEqual(self.store.candidate(self.spec),candidate)
+        with self.assertRaises(ValueError):self.store.transition(self.spec,'CANDIDATE_FROZEN',candidate=candidate)
+
+    def test_all_optimizer_cells_count_in_ledger(self):
+        from src.research.ingestion import sweep_cells
+        source={'id':'sweep','status':'completed','result':{'opaque_surface':'saved in full'}}
+        request={'family':'synthetic','candidate':'seed','payload':payload(self.spec)}
+        with self.store.db:self.store.db.execute('INSERT INTO jobs VALUES (?,?,?,?,?,?,?,?,?)',
+            ('parent','EXP999','sweep','DEVELOPMENT',json.dumps(request),'COMPLETED','sweep',json.dumps(source),None))
+        cells=[{'parameters':{'lookback':a,'threshold':b},'status':'FAILED'} for a in [10,20,30] for b in [0,1,2]]
+        normalized={'source_sha256':digest(source),'normalization_audited':True,'cells':cells}
+        result=sweep_cells(self.store,self.spec,'parent',normalized)
+        self.assertEqual(len(result['cell_trial_keys']),9)
+        self.assertEqual(self.store.db.execute('SELECT COUNT(*) FROM trials').fetchone()[0],9)
+        self.assertTrue(all(json.loads(row[0])['status']=='FAILED' for row in self.store.db.execute('SELECT result FROM trials')))
+        normalized['cells'].pop()
+        with self.assertRaises(ValueError):sweep_cells(self.store,self.spec,'parent',normalized)
+
+
+class ReportingTests(unittest.TestCase):
+    def test_metrics_use_existing_frozen_definitions_and_are_deterministic(self):
+        rows=[{'date':d,'timestamp':d+'T21:00:00Z','close_evidence_timestamp':d+'T21:00:00Z','portfolio_value':v}
+              for d,v in [('2015-01-02',25000),('2015-01-05',25100),('2015-01-06',25050)]]
+        runs={'candidate':{'stage':'DEVELOPMENT','closes':rows}}
+        first=compute(fixture(),runs)
+        self.assertEqual(first,compute(fixture(),runs));self.assertAlmostEqual(first['candidate']['total_return'],.002)
+        rows[1]['date']=rows[0]['date']
+        with self.assertRaises(ValueError):compute(fixture(),runs)
+
+    def test_demo_no_real_nexus_or_workspace_mutation(self):
+        result=demo();self.assertEqual(result['real_nexus_jobs'],0)
+        self.assertTrue(result['idempotency_verified']);self.assertEqual(result['persistent_workspace_changes'],0)
+
+    def test_report_cards_charts_and_benchmark_differences(self):
+        from src.research.report import write
+        rows=[{'date':d,'timestamp':d+'T21:00:00Z','close_evidence_timestamp':d+'T21:00:00Z','portfolio_value':v}
+              for d,v in [('2015-01-02',25000),('2015-01-05',25100),('2015-01-06',25050)]]
+        bundle={'runs':{'candidate':{'stage':'DEVELOPMENT','closes':rows},'benchmark':{'stage':'DEVELOPMENT','closes':copy.deepcopy(rows)}},
+                'comparisons':[{'candidate':'candidate','benchmark':'benchmark'}],
+                'limitations':['Synthetic only'],'interpretation':'No research claim; infrastructure fixture only.'}
+        with tempfile.TemporaryDirectory() as directory:
+            state={'stage':'DEVELOPMENT','candidate_hash':None,'approvals':'{}'}
+            result=write(Path(directory),fixture(),state,bundle,[])
+            self.assertEqual(result['benchmark_comparisons']['candidate minus benchmark']['total_return'],0)
+            self.assertTrue((Path(directory)/'reports/EXP999_report.md').exists())
+            self.assertTrue((Path(directory)/'docs/assets/research_os/EXP999/equity.png').exists())
+
+    def test_cli_dry_propose_and_invalid_authorization_leave_no_files(self):
+        from unittest.mock import patch
+        from src.research.cli import main
+        import io,contextlib
+        with tempfile.TemporaryDirectory() as directory:
+            with patch('src.research.cli.ROOT',Path(directory)):
+                output=io.StringIO()
+                with contextlib.redirect_stdout(output):main(['propose','EXP999','--dry-run'])
+                self.assertIn('would_create',output.getvalue())
+                self.assertEqual(list(Path(directory).iterdir()),[])
+
+    def test_wrong_close_and_missing_values_rejected(self):
+        rows=[{'date':d,'timestamp':d+'T21:00:00Z','close_evidence_timestamp':d+'T21:00:00Z','portfolio_value':25000}
+              for d in ['2015-01-02','2015-01-05']]
+        rows[0]['close_evidence_timestamp']='2015-01-02T14:30:00Z'
+        with self.assertRaises(ValueError):compute(fixture(),{'candidate':{'stage':'DEVELOPMENT','closes':rows}})
+
+    def test_optimizer_understated_config_and_paper_without_receipt_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            store=Store(Path(directory));spec=fixture();store.register(spec)
+            try:
+                store.transition(spec,'HYPOTHESIS_FROZEN');store.transition(spec,'DEVELOPMENT')
+                price=json.loads((ROOT/'config/research_pricing.json').read_text());price['expires_on']='2999-01-01'
+                job=payload(spec);job['args'].update(search_mode='Exhaustive',sweep_config={'genes':[{'field':'lookback','values':[1,2,3,4]}]},num_windows=1)
+                with self.assertRaises(ValueError):Jobs(store,FakeSDK()).submit(spec,'sweep',job,price,family='f',candidate='c',parameters={},evaluations=9,assets=500)
+                with store.db:store.db.execute("UPDATE experiments SET stage='PAPER_AUTHORIZED' WHERE id='EXP999'")
+                with self.assertRaises(ValueError):store.transition(spec,'PAPER')
+            finally:store.close()
 
 
 if __name__=="__main__":unittest.main()

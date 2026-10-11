@@ -65,6 +65,12 @@ class Store:
                                             (spec["experiment_id"], prerequisite)))
                 if not rows or any(r[0] not in ("COMPLETE", "COMPLETED") for r in rows):
                     raise ValueError(f"All {prerequisite} jobs must complete before advancing")
+                if prerequisite in ('VALIDATION','TEST_AUTHORIZED'):
+                    frozen=json.loads(state['candidate'])
+                    needed={digest(p) for p in [frozen['portfolio'],*frozen['benchmarks'].values()]}
+                    observed={digest(json.loads(row[0])['payload']['portfolio']) for row in self.db.execute(
+                        'SELECT request FROM jobs WHERE experiment=? AND stage=?',(spec['experiment_id'],prerequisite))}
+                    if not needed.issubset(observed):raise ValueError('Candidate and every explicit benchmark run are required')
             if target in ("TEST_AUTHORIZED", "PAPER_AUTHORIZED"):
                 artifact = "robustness.json" if target == "TEST_AUTHORIZED" else "final_review.json"
                 path = self.root / "experiments" / spec["experiment_id"] / artifact
@@ -91,14 +97,42 @@ class Store:
                                               (spec["experiment_id"],)))
                 if not trials or not any(row[1] == 1 for row in trials):
                     raise ValueError("At least one evidenced eligible Development trial required")
-                if any(row[0] in ("SUBMITTING", "UNKNOWN", "SUBMITTED") for row in self.db.execute(
+                if any(row[0] in ("SUBMITTING", "UNKNOWN", "SUBMITTED", "UNRESOLVED") for row in self.db.execute(
                         "SELECT status FROM jobs WHERE experiment=? AND stage='DEVELOPMENT'", (spec["experiment_id"],))):
                     raise ValueError("Resolve pending Development jobs before freezing")
                 if not candidate or candidate.get("signal_count", 0) > spec["maximum_complexity"]:
                     raise ValueError("Candidate missing or exceeds complexity budget")
                 if not candidate.get("portfolio") or not candidate.get("controls"):
                     raise ValueError("Candidate needs an inline portfolio and recorded controls")
+                row = self.db.execute("SELECT * FROM trials WHERE key=? AND experiment=? AND eligibility=1",
+                                      (candidate.get('trial_key'),spec['experiment_id'])).fetchone()
+                if row is None:
+                    raise ValueError('Frozen candidate must reference an assessed eligible trial')
+                metric=spec['selection']['primary_metric']
+                eligible=list(self.db.execute("SELECT key,result FROM trials WHERE experiment=? AND eligibility=1",(spec['experiment_id'],)))
+                if any(json.loads(r['result']).get('metrics',{}).get(metric) is None for r in eligible):
+                    raise ValueError('Independent primary metric missing for an eligible trial')
+                winner=max(eligible,key=lambda r:(json.loads(r['result'])['metrics'][metric],r['key']))['key']
+                if candidate['trial_key']!=winner:
+                    raise ValueError('Candidate differs from frozen highest-eligible primary-metric selection')
+                job=self.db.execute('SELECT request FROM jobs WHERE key=?',(candidate['trial_key'],)).fetchone()
+                if job is None or digest(json.loads(job[0])['payload']['portfolio'])!=digest(candidate['portfolio']):
+                    raise ValueError('Candidate portfolio differs from its Development submission')
+                if candidate.get('signal_count')!=len(candidate.get('signals',[])):
+                    raise ValueError('Complexity declaration differs from signal count')
+                control_signals=set()
+                for key in set(candidate.get('control_evidence',[])):
+                    control=self.db.execute('SELECT result,parameters FROM trials WHERE key=? AND experiment=?',(key,spec['experiment_id'])).fetchone()
+                    if control is None:raise ValueError('Missing control trial')
+                    control_signals.add(tuple(sorted(json.loads(control['parameters']).get('signals',[]))))
+                required_controls={tuple(sorted(c['signals'])) for c in candidate['controls']}
+                if len(candidate.get('signals',[]))>1 and not required_controls.issubset(control_signals):
+                    raise ValueError('Multi-signal candidate requires distinct evidenced controls and ablations')
+                if set(candidate.get('benchmarks',{}))!=set(spec['benchmarks']):
+                    raise ValueError('Explicit frozen benchmark portfolios required')
                 frozen, frozen_hash = canonical(candidate).decode(), digest(candidate)
+            if target=='PAPER' and not (self.root/'data/raw/research_os'/spec['experiment_id']/'paper/response.json').exists():
+                raise ValueError('Successful paper deployment receipt required')
             self.db.execute("UPDATE experiments SET stage=?,spec_hash=?,candidate=?,candidate_hash=?,approvals=? WHERE id=?",
                             (target, spec_hash, frozen, frozen_hash, json.dumps(approvals), spec["experiment_id"]))
         self.export(spec["experiment_id"])
@@ -116,6 +150,20 @@ class Store:
     def record_trial(self, key, exp, family, candidate, parameters, stage, result, *, run_id=None, eligibility=None):
         # Rows are never removed; failures and unresolved submissions remain visible.
         with self.db:
+            prior=self.db.execute('SELECT * FROM trials WHERE key=?',(key,)).fetchone()
+            if prior:
+                if (prior['experiment'],prior['family'],prior['candidate'],json.loads(prior['parameters']),prior['stage'])!=(exp,family,candidate,parameters,stage):
+                    raise ValueError('Cannot change trial provenance')
+                old=json.loads(prior['result'])
+                if old.get('metrics') is not None:
+                    if result.get('metrics') is not None and result['metrics']!=old['metrics']:
+                        raise ValueError('Assessed metrics are immutable')
+                    result=dict(result,metrics=old['metrics'])
+                    if eligibility is not None and prior['eligibility'] is not None and eligibility!=prior['eligibility']:
+                        raise ValueError('Assessed eligibility is immutable')
+                    if eligibility is None:eligibility=prior['eligibility']
+                history=old.get('history',[])+[{k:v for k,v in old.items() if k!='history'}]
+                result=dict(result,history=history)
             self.db.execute("""INSERT INTO trials VALUES (?,?,?,?,?,?,?,?,?)
             ON CONFLICT(key) DO UPDATE SET run_id=excluded.run_id,result=excluded.result,eligibility=excluded.eligibility""",
                             (key, exp, family, candidate, json.dumps(parameters), run_id, stage,

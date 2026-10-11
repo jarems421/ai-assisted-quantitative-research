@@ -61,7 +61,13 @@
     "initial_value": 25000,
     "fee_percent": 0.1,
     "slippage_note": "Requires execution audit before actual study",
-    "dividend_policy": "cash"
+    "dividend_policy": "cash",
+    "fee_contract": {
+      "Stock": {
+        "amount": 0.1,
+        "type": "percent"
+      }
+    }
   },
   "execution": {
     "interval": "Day",

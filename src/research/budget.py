@@ -6,7 +6,7 @@ from datetime import date
 def plan(spec, operation, pricing, *, assets, evaluations=1, folds=1, aurora_quote=None,
          now=None, used_tokens=0, server_preview=None, window=None):
     today = now or date.today()
-    if today > date.fromisoformat(pricing["expires_on"]):
+    if today > date.fromisoformat(pricing["expires_on"]) and not (server_preview and today<=date.fromisoformat(server_preview['expires_on'])):
         raise ValueError("Pricing metadata expired; refresh or supply a current server preview")
     if any(type(v) is not int or v < 1 for v in (assets, evaluations, folds)):
         raise ValueError("Positive integer assets/evaluations/folds required")
@@ -35,6 +35,7 @@ def plan(spec, operation, pricing, *, assets, evaluations=1, folds=1, aurora_quo
     if spec["execution"]["requires_events"]:
         tokens *= pricing["event_multiplier"]
     if server_preview is not None:
+        if today>date.fromisoformat(server_preview['expires_on']):raise ValueError('Server preview quote expired')
         if server_preview["planned_evaluations"] != total:
             raise ValueError("Preview and local evaluation count disagree")
         tokens = float(server_preview["estimated_tokens"])

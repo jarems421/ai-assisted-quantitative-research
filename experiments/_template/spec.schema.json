@@ -256,13 +256,30 @@
             "cash",
             "reinvest"
           ]
+        },
+        "fee_contract": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            ]
+          }
         }
       },
       "required": [
         "initial_value",
         "fee_percent",
         "slippage_note",
-        "dividend_policy"
+        "dividend_policy",
+        "fee_contract"
       ],
       "additionalProperties": false
     },

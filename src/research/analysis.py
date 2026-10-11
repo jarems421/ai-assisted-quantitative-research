@@ -49,6 +49,7 @@ def surface(cells, ranges, *, higher_is_better=True):
 
 
 def rank_stability(scores_by_fold):
+    if len(scores_by_fold)<2:raise ValueError('At least two folds required')
     keys = sorted(scores_by_fold[0])
     if len(scores_by_fold) < 2 or len(keys) < 2 or any(sorted(s) != keys for s in scores_by_fold):
         raise ValueError("Aligned candidates in at least two folds required")

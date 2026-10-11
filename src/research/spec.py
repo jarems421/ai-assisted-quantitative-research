@@ -32,6 +32,7 @@ def experiment_id(value):
 
 
 def validate(spec):
+    canonical(spec)  # Reject non-JSON NaN/Infinity before schema comparisons.
     schema = json.loads((ROOT / "experiments/_template/spec.schema.json").read_text())
     Draft202012Validator(schema, format_checker=FormatChecker()).validate(spec)
     experiment_id(spec["experiment_id"])
@@ -55,6 +56,19 @@ def validate(spec):
             raise ValueError(f"Point-in-time availability unestablished: {source['name']}")
     if not spec["dynamic_universe"]["point_in_time_verified"]:
         raise ValueError("Universe membership must be point-in-time")
+    fees=spec['costs']['fee_contract']
+    if set(fees)-{'Stock','Cryptocurrency','Option','OptionSlippageFraction'}:
+        raise ValueError('Unknown asset fee contract')
+    for asset,contract in fees.items():
+        if asset=='OptionSlippageFraction':
+            if not isinstance(contract,(int,float)) or not 0<=contract<=1:raise ValueError('Invalid option slippage')
+        elif (set(contract)!= {'amount','type'} or contract['type'] not in ('percent','dollars')
+              or type(contract['amount']) not in (int,float) or contract['amount']<0):
+            raise ValueError('Invalid explicit fee contract')
+    if fees.get('Stock',{}).get('type')=='percent' and fees['Stock']['amount']!=spec['costs']['fee_percent']:
+        raise ValueError('Stock fee percentage and explicit contract disagree')
+    if spec['execution']['requires_events'] and not spec['execution']['event_rationale'].strip():
+        raise ValueError('Event-heavy execution requires rationale')
     return spec
 
 
