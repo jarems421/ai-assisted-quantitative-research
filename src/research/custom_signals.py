@@ -1,11 +1,12 @@
 """Immutable local export and explicit, create-only Nexus publication adapter."""
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import hashlib
 import json
 import math
 
-from src.research.pit_signals import assert_pit, instant, validate_decision
+from src.research.pit_signals import NY, assert_pit, instant, validate_decision
+from src.research.exp002_contracts import session_key
 
 
 def canonical(value):
@@ -25,10 +26,14 @@ def export_dataset(directory: Path, *, version: str, name: str, rows: list[dict]
         raise ValueError("Version, code revision and source hashes required")
     points = []
     validity_points = []
+    session_points = []
     seen = set()
     source_times = []
     for row in rows:
         at = validate_decision(row["decision_timestamp"])
+        local = at.astimezone(NY)
+        if (local.hour, local.minute, local.second, local.microsecond) != (21, 0, 0, 0):
+            raise ValueError("Decision must be exactly 21:00 New York")
         assert_pit(row, at)
         source_times.extend(instant(c["availableAt"]) for c in row["contributors"])
         key = (row["ticker"], at)
@@ -38,6 +43,8 @@ def export_dataset(directory: Path, *, version: str, name: str, rows: list[dict]
         iso = at.isoformat().replace("+00:00", "Z")
         validity_points.append({"ticker": row["ticker"], "timestamp": iso,
                                 "availableAt": iso, "value": int(row["value"] is not None)})
+        session_points.append({"ticker": row["ticker"], "timestamp": iso,
+                               "availableAt": iso, "value": session_key(local.date()+timedelta(days=1))})
         if row["value"] is None:
             continue  # Missingness audit is separate; no carry-forward or zero point.
         if not math.isfinite(row["value"]) or not row.get("identity_certified"):
@@ -45,6 +52,7 @@ def export_dataset(directory: Path, *, version: str, name: str, rows: list[dict]
         points.append({"ticker": row["ticker"], "timestamp": iso, "availableAt": iso, "value": row["value"]})
     points.sort(key=lambda r: (r["timestamp"], r["ticker"]))
     validity_points.sort(key=lambda r: (r["timestamp"], r["ticker"]))
+    session_points.sort(key=lambda r: (r["timestamp"], r["ticker"]))
     emitted = [p["timestamp"] for p in points]
     manifest = {"dataset_version": version, "name": name, "git_sha": git_sha,
                 "code_hashes": {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
@@ -59,10 +67,11 @@ def export_dataset(directory: Path, *, version: str, name: str, rows: list[dict]
                 "production_ready": False, "missing_rows": sum(r["value"] is None for r in rows),
                 "point_kind": "disclosed", "missingness_transport_certified": False,
                 "validity_points_sha256": digest(validity_points),
+                "session_points_sha256": digest(session_points),
                 "decision_row_count": len(rows)}
     directory.mkdir(parents=True)
     for filename, value in [("points.json", points), ("validity_points.json", validity_points),
-                            ("audit.json", rows), ("manifest.json", manifest)]:
+                            ("session_points.json", session_points), ("audit.json", rows), ("manifest.json", manifest)]:
         (directory / filename).write_bytes(canonical(value) + b"\n")
     return manifest
 

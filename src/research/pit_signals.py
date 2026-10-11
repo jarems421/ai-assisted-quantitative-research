@@ -131,15 +131,24 @@ def quarter_pair(decision: datetime, buffer_days: int = 60) -> tuple[str, str]:
 
 def filing_state(rows: list[dict], decision: datetime) -> dict:
     visible = [r for r in rows if r.get("availableAt") and instant(r["availableAt"]) <= decision]
-    visible.sort(key=lambda r: (instant(r["availableAt"]), r.get("accession", "")))
+    def sequence(row):
+        if row.get("kind") == "ORIGINAL":
+            return 0
+        value = row.get("amendment_sequence")
+        return value if type(value) is int and value > 0 else None
+    visible.sort(key=lambda r: (instant(r["availableAt"]), sequence(r) or 0, r.get("accession", "")))
     holdings = None
     contributors = []
     seen = set()
     for row in visible:
         at = instant(row["availableAt"])
-        if at in seen or not row.get("complete") or not row.get("identity_certified"):
+        order = sequence(row)
+        marker = (at, order)
+        same_time = [key for key in seen if key[0] == at]
+        if (marker in seen or same_time and (order is None or any(key[1] is None for key in same_time))
+                or not row.get("complete") or not row.get("identity_certified")):
             raise ValueError("ambiguous_or_incomplete_filing")
-        seen.add(at)
+        seen.add(marker)
         kind = row.get("kind")
         if kind == "ORIGINAL":
             if holdings is not None:
@@ -161,11 +170,14 @@ def filing_state(rows: list[dict], decision: datetime) -> dict:
 
 def institutional_score(rows: list[dict], security_id: str, decision: datetime,
                         *, source_certified: bool, minimum_managers: int = 20,
-                        minimum_coverage: float = .95) -> dict:
+                        minimum_coverage: float = .95, maximum_stale_days: int = 180) -> dict:
     decision = validate_decision(decision)
     if not source_certified:
         return missing("source_completeness_not_certified")
     prior, current = quarter_pair(decision)
+    quarter_age = (decision.astimezone(NY).date() - date.fromisoformat(current)).days
+    if quarter_age > maximum_stale_days:
+        return missing("stale_quarter", quarter_age_days=quarter_age)
     groups = defaultdict(list)
     for row in rows:
         if not row.get("availableAt"):
@@ -185,6 +197,8 @@ def institutional_score(rows: list[dict], security_id: str, decision: datetime,
         try:
             before = filing_state(groups[(manager, prior)], decision)
             after = filing_state(groups[(manager, current)], decision)
+            if (decision - after["last_public"]).total_seconds() / 86400 > maximum_stale_days:
+                raise ValueError("stale_public_submission")
         except ValueError as error:
             excluded[manager] = str(error)
             continue
@@ -193,7 +207,7 @@ def institutional_score(rows: list[dict], security_id: str, decision: datetime,
         contributors.extend(before["contributors"] + after["contributors"])
         stale.append((decision - after["last_public"]).total_seconds() / 86400)
     coverage = len(matched) / len(managers) if managers else None
-    audit = {"quarters": [prior, current], "excluded_managers": excluded, "matched_manager_count": len(matched), "known_manager_count": len(managers), "cohort_coverage": coverage, "maximum_stale_days": max(stale) if stale else None, "amendment_states": [r["kind"] for r in contributors]}
+    audit = {"quarters": [prior, current], "quarter_age_days": quarter_age, "stale_limit_days": maximum_stale_days, "excluded_managers": excluded, "matched_manager_count": len(matched), "known_manager_count": len(managers), "cohort_coverage": coverage, "maximum_stale_days": max(stale) if stale else None, "amendment_states": [r["kind"] for r in contributors]}
     if len(matched) < minimum_managers or coverage is None or coverage < minimum_coverage:
         return missing("insufficient_matched_cohort", **audit)
     result = {"value": score, "status": "USABLE", "contributors": contributors, **audit}
