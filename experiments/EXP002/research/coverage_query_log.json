@@ -3883,5 +3883,120 @@
       "deployment_95": "6acbb27f8c2f7fb888b44fe6",
       "corporate_price": "6acbb2808c2f7fb888b44fe8"
     }
+  },
+  "two_gate_resolution": {
+    "owner_request": "research/two_gate_authorization_20261011.md",
+    "owner_request_sha256": "9049212cf2e3d925697394f1eff0b57ffac5e9c60e1cb9eba46ede4274d7845c",
+    "outcome": "ABANDON EXP002",
+    "gate_a": "FAIL",
+    "gate_b": "FAIL",
+    "formation_cutoff": "2020-12-31",
+    "public_code_revision": "aaa6e7a8d8a00d22d221e288d9f2f3e0a6150625",
+    "public_dataset_revision": "0662635d4adddd295ba93530fa0de51aa453b97d",
+    "deployed_code_dataset_revision": null,
+    "dataset_observations_downloaded": false,
+    "nexus_sdk_version": "1.42.0",
+    "nexus_call_count": 143,
+    "metadata_calls_unwrapped": 4,
+    "event_queries": 76,
+    "diagnostic_jobs": 5,
+    "lake_jobs": 7,
+    "lake_completed": 6,
+    "lake_failed": 1,
+    "event_rows_retrieved": 192,
+    "event_pages_retrieved": 76,
+    "event_scope": "Four transition windows and 72 monthly sessions, not every event across the six-year diagnostic",
+    "source_contracts": "research/index_membership_certification.md; research/institutional_identity_certification.md",
+    "actual_debit": null,
+    "credit_purchases": 0,
+    "candidate_performance": false,
+    "held_out_access": false,
+    "freeze": false,
+    "lake_requests": [
+      {
+        "name": "cohort_2015",
+        "request": {
+          "query": "WITH h AS (SELECT accession,COUNT(*) AS rows,COUNT(DISTINCT infoTableSk) AS unique_rows,COUNT(DISTINCT cusip) AS cusips,SUM(CASE WHEN resolvedTicker IS NOT NULL THEN 1 ELSE 0 END) AS resolved_rows,COUNT(DISTINCT CASE WHEN resolvedTicker IS NULL THEN cusip END) AS unresolved_cusips FROM lake.institutional_holdings WHERE availableAt>=CAST(? AS TIMESTAMP) AND availableAt<=CAST(? AS TIMESTAMP) GROUP BY accession) SELECT f.accession,f.cik,f.periodOfReport,f.availableAt,f.submissionType,f.amendmentType,h.* EXCLUDE(accession) FROM lake.institutional_filings f JOIN h USING(accession) WHERE f.periodOfReport IN ('2015-06-30','2015-09-30') AND f.availableAt<TIMESTAMP '2015-12-01' ORDER BY periodOfReport,cik,availableAt",
+          "params": [
+            "2015-07-01",
+            "2015-11-30"
+          ]
+        },
+        "id": "lq_d6892f63aca234830ead58d4",
+        "status": "COMPLETED"
+      },
+      {
+        "name": "cohort_2017",
+        "request": {
+          "query": "WITH h AS (SELECT accession,COUNT(*) AS rows,COUNT(DISTINCT infoTableSk) AS unique_rows,COUNT(DISTINCT cusip) AS cusips,SUM(CASE WHEN resolvedTicker IS NOT NULL THEN 1 ELSE 0 END) AS resolved_rows,COUNT(DISTINCT CASE WHEN resolvedTicker IS NULL THEN cusip END) AS unresolved_cusips FROM lake.institutional_holdings WHERE availableAt>=CAST(? AS TIMESTAMP) AND availableAt<=CAST(? AS TIMESTAMP) GROUP BY accession) SELECT f.accession,f.cik,f.periodOfReport,f.availableAt,f.submissionType,f.amendmentType,h.* EXCLUDE(accession) FROM lake.institutional_filings f JOIN h USING(accession) WHERE f.periodOfReport IN ('2017-06-30','2017-09-30') AND f.availableAt<TIMESTAMP '2017-12-01' ORDER BY periodOfReport,cik,availableAt",
+          "params": [
+            "2017-07-01",
+            "2017-11-30"
+          ]
+        },
+        "id": "lq_bd5b705fb8e57e9f247c607d",
+        "status": "COMPLETED"
+      },
+      {
+        "name": "cohort_2020",
+        "request": {
+          "query": "WITH h AS (SELECT accession,COUNT(*) AS rows,COUNT(DISTINCT infoTableSk) AS unique_rows,COUNT(DISTINCT cusip) AS cusips,SUM(CASE WHEN resolvedTicker IS NOT NULL THEN 1 ELSE 0 END) AS resolved_rows,COUNT(DISTINCT CASE WHEN resolvedTicker IS NULL THEN cusip END) AS unresolved_cusips FROM lake.institutional_holdings WHERE availableAt>=CAST(? AS TIMESTAMP) AND availableAt<=CAST(? AS TIMESTAMP) GROUP BY accession) SELECT f.accession,f.cik,f.periodOfReport,f.availableAt,f.submissionType,f.amendmentType,h.* EXCLUDE(accession) FROM lake.institutional_filings f JOIN h USING(accession) WHERE f.periodOfReport IN ('2020-06-30','2020-09-30') AND f.availableAt<TIMESTAMP '2020-12-01' ORDER BY periodOfReport,cik,availableAt",
+          "params": [
+            "2020-07-01",
+            "2020-11-30"
+          ]
+        },
+        "id": "lq_d882a2ab6e1263847a952004",
+        "status": "COMPLETED"
+      },
+      {
+        "name": "historical_security_spans",
+        "request": {
+          "query": "SELECT ticker,security_id,canonical_symbol,share_class_figi,cik,asset_type,from_date,LEAST(COALESCE(to_date,DATE '2020-12-31'),DATE '2020-12-31') AS to_date FROM lake.security_segments WHERE COALESCE(to_date,DATE '2020-12-31')>=CAST(? AS DATE) AND from_date<=CAST(? AS DATE) ORDER BY ticker,from_date",
+          "params": [
+            "2015-01-01",
+            "2020-12-31"
+          ]
+        },
+        "id": "lq_1340284afea91ac6ee1e29ce",
+        "status": "COMPLETED"
+      },
+      {
+        "name": "memberships",
+        "request": {
+          "query": "SELECT indexCode,indexName,componentCode,componentName,startDate,LEAST(COALESCE(endDate,TIMESTAMP '2020-12-31 23:59:59'),TIMESTAMP '2020-12-31 23:59:59') AS endDate FROM lake.index_constituents WHERE indexCode='GSPC' AND (endDate IS NULL OR endDate>=CAST(? AS TIMESTAMP)) AND startDate<=CAST(? AS TIMESTAMP) ORDER BY componentCode,startDate",
+          "params": [
+            "2015-01-01",
+            "2020-12-31"
+          ]
+        },
+        "id": "lq_fbd49b33dfca5b514ddde788",
+        "status": "COMPLETED"
+      },
+      {
+        "name": "ownership_coverage",
+        "request": {
+          "query": "WITH h AS (SELECT accession, COUNT(*) AS rows, COUNT(DISTINCT infoTableSk) AS unique_rows, COUNT(DISTINCT cusip) AS cusips, SUM(CASE WHEN resolvedTicker IS NOT NULL THEN 1 ELSE 0 END) AS resolved_rows, COUNT(DISTINCT CASE WHEN resolvedTicker IS NULL THEN cusip END) AS unresolved_cusips FROM lake.institutional_holdings WHERE availableAt>=CAST(? AS TIMESTAMP) AND availableAt<=CAST(? AS TIMESTAMP) GROUP BY accession) SELECT f.accession,f.cik,f.periodOfReport,f.availableAt,f.submissionType,f.amendmentType,h.* EXCLUDE(accession) FROM lake.institutional_filings f JOIN h USING(accession) WHERE f.periodOfReport IN ('2015-06-30','2015-09-30','2017-06-30','2017-09-30','2020-06-30','2020-09-30') AND f.availableAt<CAST(f.periodOfReport AS TIMESTAMP)+INTERVAL 61 DAY ORDER BY periodOfReport,cik,availableAt",
+          "params": [
+            "2015-01-01",
+            "2020-12-31"
+          ]
+        },
+        "id": "lq_eaead2eeef133cbef4d2e571",
+        "status": "FAILED_QUERY_TIMEOUT"
+      },
+      {
+        "name": "sample_identities",
+        "request": {
+          "query": "SELECT h.resolvedTicker,h.cusip,s.security_id,s.share_class_figi,s.cik,s.from_date,LEAST(COALESCE(s.to_date,DATE '2020-12-31'),DATE '2020-12-31') AS to_date, MIN(h.availableAt) AS first_public,MAX(h.availableAt) AS last_public,COUNT(*) AS rows FROM lake.institutional_holdings h LEFT JOIN lake.security_segments s ON h.resolvedTicker=s.ticker AND CAST(h.availableAt AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE h.availableAt>=CAST(? AS TIMESTAMP) AND h.availableAt<=CAST(? AS TIMESTAMP) AND h.resolvedTicker IN ('AAPL','MSFT','IBM','XOM','JNJ','JPM','GE','F','WMT','KO','AAL','TSLA') GROUP BY ALL ORDER BY h.resolvedTicker,h.cusip,s.from_date",
+          "params": [
+            "2015-01-01",
+            "2020-12-31"
+          ]
+        },
+        "id": "lq_ca3f270facc8c7e22de20f75",
+        "status": "COMPLETED"
+      }
+    ]
   }
 }

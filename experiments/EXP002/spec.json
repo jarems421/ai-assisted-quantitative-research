@@ -2,7 +2,7 @@
   "schema_version": 1,
   "experiment_id": "EXP002",
   "title": "Momentum with PIT qualifying insider purchases and matched-cohort institutional holdings",
-  "hypothesis": "PROPOSED, not frozen: in a historical GSPC common-stock universe reconstructed point in time, combining 180/365-calendar-day price momentum with recent publicly available Distinct Qualifying Insider Purchasers (nonderivative P/A, including private purchases) and matched-manager institutional holder-count change improves net mean daily excess return and independent zero-RF Sharpe versus momentum alone on the same certified coverage universe, robustly across chronological Development folds and later frozen windows. Historical membership and institutional production identity/zero semantics remain uncertified; guarded artificial transport passes; no candidate performance has been observed.",
+  "hypothesis": "PROPOSED, not frozen: in a historical GSPC common-stock universe reconstructed point in time, combining 180/365-calendar-day price momentum with recent publicly available Distinct Qualifying Insider Purchasers (nonderivative P/A, including private purchases) and matched-manager institutional holder-count change improves net mean daily excess return and independent zero-RF Sharpe versus momentum alone on the same certified coverage universe, robustly across chronological Development folds and later frozen windows. Historical membership and institutional production identity/zero semantics remain uncertified; guarded artificial transport passes; no candidate performance has been observed. FINAL TWO-GATE DISPOSITION: ABANDON EXP002 for source feasibility, not economic falsification. No candidate study or further design revision authorized.",
   "rationale": "Proposed economic mechanism, not an established result: momentum may reflect gradual information incorporation; publicly disclosed insider purchases may indicate management conviction; changes in disclosed institutional positions may indicate sustained demand. Their information may be complementary, but disclosure delays, crowding, confounding and trading costs could remove any incremental value.",
   "expected_effect": "Positive incremental net daily return and Sharpe for the full composite versus momentum alone. Lower volatility or drawdown alone does not confirm the return hypothesis. No unconditional promise of market outperformance or alpha.",
   "falsification_conditions": [
@@ -25,7 +25,7 @@
     "Historical large-cap US common-equity GSPC concept; production membership/identity FAILED, not an executable universe. Nominal unadjusted price >= USD 5."
   ],
   "dynamic_universe": {
-    "definition": "PROPOSED historical GSPC/common-stock universe with contemporaneous listing spans, stable IDs and nominal unadjustedClose >= USD 5. CRITICAL FAILED: supplied memberships contain only 380 symbols at 2015 inception and 482 at 2020 end; literal symbol joins include type mismatches and 19 missing IDs. Obtain trustworthy constituent history and identity bridge, never use modern symbols backwards. Retain later-ended histories. Same joint-certified exclusions across all seven families. No cap, ADV or prospective gates. Narrowness is not the blocker; survivorship/identity is.",
+    "definition": "FAILED final native audit: SDK IsIndexMember(asset,SP500) shows historical transitions, but filtered native universe has only 385–475 members across 72 monthly sessions before price/signal exclusions. Lake index_constituents/GSPC has no stable IDs; native/Lake and identity discrepancies retained in two_gate_summary.json. No production universe adopted; do not substitute current symbols or a repaired list. ABANDON EXP002.",
     "point_in_time_verified": false
   },
   "benchmarks": [
@@ -58,13 +58,13 @@
       "name": "Nexus institutional filings/holdings -> locally controlled matched-manager quarterly change",
       "availability_timestamp": "VERIFIED 130308 filing-date NY end-of-day values stored as naive UTC. Fixed 60-day cohort EOD maturity and actual public availability. CRITICAL production security/CUSIP completeness remains unresolved.",
       "point_in_time_verified": false,
-      "revision_policy": "Fixed 20 matched managers, 95% known-public union coverage and maximum 180-calendar-day current-quarter/publication age, chosen from chronology/coverage only. Adjacent global pairs pass 95% in 16/23; lower 90% adds only one pair. Six bounded complete-source extracts (629 rows) exercise CUSIP-only originals/restatements/additions, not certified eligible-security absence. Unknown identities cannot produce zero; no usable certified 20-manager cohort demonstrated. Keep PIT false."
+      "revision_policy": "Fixed 20 matched managers, 95% known-public union coverage and maximum 180-calendar-day current-quarter/publication age, chosen from chronology/coverage only. Adjacent global pairs pass 95% in 16/23; lower 90% adds only one pair. Six bounded complete-source extracts (629 rows) exercise CUSIP-only originals/restatements/additions, not certified eligible-security absence. Unknown identities cannot produce zero; no usable certified 20-manager cohort demonstrated. Keep PIT false. FINAL: published resolver pinned at aaa6e7a8d8a00d22d221e288d9f2f3e0a6150625 permits undated and first-match spans. Nexus exposes no CUSIP mapping span/source/status; candidate-specific omission cannot be certified. Keep PIT false; unrelated unresolved bonds alone are not the reason."
     },
     {
       "name": "Historical GSPC membership and historical CS security/listing spans",
       "availability_timestamp": "Historical effective spans observed but underfilled membership and modern/reused symbol mappings fail certification. NU/ES same stable ID transition verified individually, not whole panel.",
       "point_in_time_verified": false,
-      "revision_policy": "CRITICAL failed historical identity/completeness gate. 365 symbols in 2014, 380 in 2015, 482 at 2020 end; 19 missing IDs and mismatched subtypes. No current-active filter or available-subset substitution. Obtain trustworthy membership/identifier history; keep PIT false."
+      "revision_policy": "CRITICAL failed historical identity/completeness gate. 365 symbols in 2014, 380 in 2015, 482 at 2020 end; 19 missing IDs and mismatched subtypes. No current-active filter or available-subset substitution. Obtain trustworthy membership/identifier history; keep PIT false. FINAL native monthly completeness audit FAIL; no new authoritative universe or further substitution. Keep PIT false."
     }
   ],
   "windows": {

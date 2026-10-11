@@ -1,3 +1,9 @@
+# EXP002 closed: ABANDON EXP002
+
+Both final source gates failed. This is a negative research-design feasibility result; candidate performance was never tested. No further broad revision, freeze or new experiment was initiated. See [native membership certification](research/index_membership_certification.md), [institutional identity certification](research/institutional_identity_certification.md) and [final decision](research/final_freeze_review.md).
+
+Reproduce source diagnostics locally: `python -m src.research.two_gate_exp002`. Historical draft and earlier audits follow unchanged.
+
 # Current EXP002 status — final bounded pass
 
 **NEEDS DESIGN REVISION; DRAFT, not frozen or executable.** [Final review](research/final_freeze_review.md) distinguishes two critical source failures (historical membership/identity and institutional omission-to-zero) from noncritical execution/vendor limitations. Timezone, artificial exact-session transport, price/dividend units and deployment fixtures pass within their recorded bounds. No candidate performance or held-out access occurred. Validation 2021–2023; sealed workflow Test 2024. Development inception remains uncertified.

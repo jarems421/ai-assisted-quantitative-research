@@ -1,3 +1,7 @@
+# Final decision: ABANDON EXP002
+
+Both critical source gates failed. This is a documented feasibility result, not evidence against the economic hypothesis. The detailed two-gate decision is appended below; earlier bounded passing gates remain unchanged.
+
 # EXP002 final pre-freeze review
 
 **NEEDS DESIGN REVISION. DRAFT; no automatic freeze.** This pass follows the verbatim [owner request](final_blocker_authorization_20261011.md). No EXP002 candidate performance, optimization or post-2020 source observation was accessed.
@@ -53,3 +57,14 @@ The remaining work is specific: obtain a trustworthy historical constituent/iden
 The unchanged semantic audit still rejects EXP002; no look-ahead, sealed-date, provenance or PIT gate was weakened. No hypothesis was frozen.
 
 Validation: 114 software tests passed. The unchanged semantic audit exits 1 at institutional PIT availability; schema and sealed-date structure are valid. Local source/runtime summaries are byte deterministic. EXP001 tracked results and definitions are unchanged.
+
+
+## Final two-gate decision — supersedes continuation proposals above
+
+**ABANDON EXP002.** DRAFT preserved as a negative research-design feasibility result; the economic hypothesis was never tested. See [native index certification](index_membership_certification.md), [institutional identity certification](institutional_identity_certification.md) and [complete local summary](two_gate_summary.json).
+
+Gate A FAIL: native historical additions/removals/rename examples work, but all 72 monthly populations remain materially underfilled (385–475 before price/signal filters), with incomplete identity certification. Gate B FAIL: audited published resolver supports spans but also accepts undated/first-match mappings; deployed holdings expose no mapping spans/source/confidence. Source-manager coverage is high, but no certified candidate CUSIP omission-to-zero cohort follows. Unknown holdings never become zero. No further substitution, automatic freeze or new experiment is authorized. Already-passed gates remain unchanged.
+
+Development inception and active folds are not available. The 2021–2023 Validation and sealed 2024 workflow lockbox remain untouched. Eight composite cells and all families are retained historically, not executed. Five new diagnostic simulations, seven Lake queries (six complete, one timeout), 192 selectively retrieved audit events on 76 pages. No orders in retrieved transition pages; monthly strategy is always false. No candidate performance, optimization, saved-portfolio API, held-out access, credit purchase or freeze occurred.
+
+Final two-gate validation: 117 tests passed; unchanged semantic audit rejects institutional PIT (exit 1). Schema/Test seal, byte determinism, immutable private hashes and unchanged EXP001 results verified. The audit implementation was not weakened.

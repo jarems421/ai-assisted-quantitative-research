@@ -1,5 +1,5 @@
 {
-  "status": "CONDITIONAL_SOURCE_GATES_FAILED",
+  "status": "ABANDONED_SOURCE_FEASIBILITY",
   "family_cells": {
     "momentum": 4,
     "insider": 4,
@@ -23,8 +23,8 @@
   "server_preview": false,
   "actual_candidate_evaluations": 0,
   "limits": "Conditional on 4 coverage-supported folds and successful primary implementation. Reconcile all nested/server amplification before freeze. Reserve is a hard planning allocation, not permission to omit failed trials.",
-  "known_diagnostic_backtests": 23,
-  "total_backtest_ceiling_including_known_audits": 241,
+  "known_diagnostic_backtests": 28,
+  "total_backtest_ceiling_including_known_audits": 246,
   "certified_inception": null,
   "active_fold_count": null,
   "hypothesis_freeze_ready": false,
@@ -93,5 +93,7 @@
       "evaluation_start": "2020-01-01",
       "evaluation_end": "2020-12-31"
     }
-  ]
+  ],
+  "execution_authorized": false,
+  "disposition": "Historical conditional 218-run plan preserved, not activated; 28 diagnostic attempts counted. No future candidate study or new experiment."
 }

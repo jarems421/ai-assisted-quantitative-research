@@ -246,7 +246,7 @@ EXP001 establishes an auditable pilot research pipeline, not a market-beating sy
 
 ## Proposed next work
 
-EXP002 remains a pre-performance DRAFT. Its [final bounded review](experiments/EXP002/research/final_freeze_review.md) records passing timezone and guarded artificial decision-transport evidence. Two critical source gates remain: trustworthy historical constituent identities and institutional eligible-security omission-to-zero certification. Development inception is unresolved; no EXP002 candidate study or held-out access has occurred. Execution approximations are disclosed separately.
+EXP002 closed as a [negative research-design feasibility result](experiments/EXP002/research/final_freeze_review.md). Its final native monthly membership audit remains materially underfilled, and the institutional source lacks certified dated CUSIP mapping evidence for omission-as-zero. The owner stop rule is recorded as **ABANDON EXP002**; the economic hypothesis was never tested. No candidate study, held-out access, freeze or new experiment was initiated.
 
 Future research could investigate richer cross-sectional signals, fundamentals and insider/institutional data; regime-aware models and systematic optimization; walk-forward and bootstrap robustness checks; multi-strategy ensembles; and eventually forward paper testing. These are proposals, not completed capabilities or authorized new experiments.
 
