@@ -102,6 +102,19 @@ Historical workflow holdouts can still be known to modern models. Corpus mining 
 
 ## Aurora boundary and remaining integration gates
 
+Save every Aurora response immediately when received, before claim auditing or specification updates. Preserve its text verbatim as a numbered artifact:
+
+```text
+experiments/EXP002/research/
+├── aurora_research_memo_001.md
+├── aurora_research_memo_002.md
+└── ...
+```
+
+Use the next unused number after the highest existing number; never overwrite originals. Follow-ups, corrections, incomplete responses, and negative findings each receive their own file. Keep verification and interpretation separate, and link each artifact and its SHA-256 in experiment provenance with known source, receipt date, session reference, and access bounds. Unknown metadata stays explicitly unknown. Existing legacy memos retain their paths and references.
+
+These research artifacts enter Git through the repository's normal review, commit, and push workflow. Credentials and private raw datasets remain in ignored storage; clearly label any tracked redacted copy. Manual Aurora responses must be supplied to Codex for capture; this policy does not automatically intercept external chats or enable remote Aurora execution.
+
 Five independent roles generate complete stored prompts: researcher, data auditor, architect, skeptic and execution reviewer. Trajectory ingestion preserves original outputs under private raw storage after request-scope audit. The optional evaluator plan asks for ten process dimensions (hypothesis, data, PIT, simplicity, falsifiability, benchmark, confounders, execution, novelty and ablation), with feedback; return is not the objective.
 
 Remote Aurora launching remains explicitly blocked: the observed SDK cannot restrict tools or sealed dates. Implementing unattended launch would defeat the requested protection. A future server-enforced isolated role environment, current cost quote, and budget reservation are prerequisites. Trajectory/evaluator plans are not presented as already completed research runs.

@@ -61,3 +61,11 @@ This repository studies AI-assisted quantitative research using NexusTrade simul
 - Require current cost metadata, explicit execution opt-in, predeclared evaluation ceilings, and an extraction bridge before remote jobs. Preserve uncertain submissions and reconcile their existing IDs; never blindly resubmit.
 - Count all families, planned evaluations, failures, and poor results. Keep raw responses immutable and private; track specs, trial summaries, cards, reports, tests, and code.
 - Infrastructure demonstrations must use synthetic EXP999 in temporary directories with fake transports. Do not start EXP002 during setup or tests.
+
+## Aurora research artifacts
+
+- Save every Aurora response immediately upon receipt, before auditing, summarizing, or updating the experiment specification. This includes manual responses supplied by the user, follow-ups, incomplete responses, and negative findings.
+- Save the original response verbatim under `experiments/<ID>/research/aurora_research_memo_<NNN>.md`, starting at `001` and incrementing the highest existing number. Never overwrite or reuse an artifact number; corrections and later responses get new files.
+- Keep interpretation, claim verification, and VERIFIED / PROPOSED / UNRESOLVED labels in separate provenance or analysis files. Link the original artifact and its SHA-256 in experiment provenance; record source, receipt date, session reference, and access bounds when known, and mark unknown metadata explicitly.
+- Track research memos in Git using the Git and GitHub workflow above. Credentials or private raw datasets must remain in ignored private storage; any tracked redacted copy must be identified as such and reference the private original without exposing it.
+- Preserve existing legacy memo paths and provenance references. Archival does not authorize Aurora execution, spending, performance queries, or access beyond the experiment cutoff.
