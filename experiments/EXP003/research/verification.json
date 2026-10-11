@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-11",
+  "software_tests": {
+    "command": "python -m unittest discover -s tests -v",
+    "passed": 123,
+    "failed": 0
+  },
+  "presentation_check": "6 deterministic artifacts passed",
+  "semantic_audit": {
+    "command": "python -m src.research audit EXP003",
+    "exit_code": 2,
+    "expected_rejection": "Point-in-time availability unestablished: Historical source security_segments and completed prices/corporate actions",
+    "weakened": false
+  },
+  "local_summary_and_plan_byte_deterministic": true,
+  "EXP002_tracked_files_unchanged": true,
+  "referenced_raw_hashes_unchanged": true,
+  "Nexus_calls": 0,
+  "performance_queries": 0,
+  "spend": 0,
+  "hypothesis_frozen": false
+}

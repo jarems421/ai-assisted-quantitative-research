@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "experiment_id": "EXP003",
+  "title": "Momentum plus PIT qualifying insider purchases",
+  "hypothesis": "PROPOSED: adding recent point-in-time qualifying insider-purchase activity to medium-term momentum improves BOTH mean daily net return and zero-RF Sharpe versus matched momentum-only on the same historical source-covered common-equity universe, robustly across frozen chronological evaluations.",
+  "rationale": "Momentum may reflect gradual information incorporation; disclosed insider purchases may supply complementary conviction. Delays, private purchases, selection and costs may remove the incremental information.",
+  "expected_effect": "Positive paired mean daily net excess return and positive separate zero-RF Sharpe difference; lower drawdown alone is insufficient.",
+  "falsification_conditions": [
+    "Nonpositive paired mean daily net excess return OR nonpositive zero-RF Sharpe difference versus matched momentum-only in frozen out-of-sample evaluation.",
+    "Direction disappears under predeclared costs/disclosure delays or is concentrated in one cell, issuer or regime.",
+    "Invalid source availability or identity invalidates design, rather than economically falsifying the hypothesis."
+  ],
+  "confounders": [
+    "Size, sector, market beta, liquidity and volatility exposures",
+    "Nonrandom insider coverage, private P purchases, amendments and disclosure delay",
+    "Vendor revisions, source survivorship, unknown exchange/OTC classification and delisting economics",
+    "Family/grid selection and human/model historical knowledge"
+  ],
+  "asset_universe": [
+    "Historical source-covered CS identities with unambiguous effective ticker/date spans and completed valid source prices; no current membership, index, cap, ADV or exchange filter"
+  ],
+  "dynamic_universe": {
+    "definition": "Source-defined historical CS population, not complete US/exchange population: unique nonmissing security_id and unanimous CS type among effective ticker spans at decision; use ticker+historical date joins, never canonical_symbol for membership. Require valid completed prior-session price and split-safe 365-day warmup. Include ended histories while effective. Monthly prototype identity feasibility established; production per-decision price/insider intersection remains unresolved.",
+    "point_in_time_verified": false
+  },
+  "benchmarks": [
+    "explicit_SPY_buy_and_hold_PROPOSED",
+    "equal_weight_matched_eligible_universe_PROPOSED"
+  ],
+  "candidate_family_budget": 5,
+  "maximum_complexity": 2,
+  "permitted_indicators": [
+    "Locally computed 180/365-calendar-day split-continuous price momentum using only completed bars and splits effective within the lookback. First completed bar on/after elapsed-calendar boundary; cash dividends separate.",
+    "Locally reconstructed Distinct Qualifying Insider Purchasers: nonderivative P/A positive-share events, including private purchases; distinct stable owner CIK, firstAvailableAt 30/90-day windows, as-of corrections.",
+    "Eligibility/guards only: historical CS identity, completed price, certified signal availability, validity==1 and exact full session key. No additional alpha signal."
+  ],
+  "data_sources": [
+    {
+      "name": "Historical source security_segments and completed prices/corporate actions",
+      "availability_timestamp": "Historical effective from_date/to_date with ticker+date join; completed bars public by prior-day 21:00 America/New_York. Catalog and bounded EXP002 source/execution samples support convention; full EXP003 production panel not established.",
+      "point_in_time_verified": false,
+      "revision_policy": "Freeze source snapshots/hashes; never current symbols backwards or future split factors. Scoped identity feasibility is not immutable vendor-vintage or complete daily-price certification."
+    },
+    {
+      "name": "insider_owner_events locally reconstructed qualifying purchasers",
+      "availability_timestamp": "firstAvailableAt and availableAt as explicit UTC instants; sampled naive values match filing-date NY EOD. Require availableAt<=decision and valid historical issuer/security identity.",
+      "point_in_time_verified": false,
+      "revision_policy": "Passed bounded reconstruction/transport software reused, production joint panel absent. Dedup eventId and eventId/ownerCIK, corrections from publication only without restarting first-disclosure window; conflicting/missing/uncertified coverage unavailable, never assumed zero."
+    }
+  ],
+  "windows": {
+    "development": {
+      "start": "2015-01-02",
+      "end": "2020-12-31"
+    },
+    "inner_validation": null,
+    "outer_validation": {
+      "start": "2021-01-01",
+      "end": "2021-01-01"
+    },
+    "test": null
+  },
+  "forward_paper": {
+    "start_state": "Required after historical evaluation and separate owner approval: minimum six calendar months and six monthly rebalance opportunities; extend if event coverage insufficient. Not deployed.",
+    "evidence_class": "genuinely_forward_unseen"
+  },
+  "costs": {
+    "initial_value": 25000,
+    "fee_percent": 0.1,
+    "slippage_note": "Base 0.10% per fill; cash dividends. Proposed local +10/+20-bps absolute traded-notional stresses on both sides, fixed-fill sensitivities rather than native slippage/capacity simulation.",
+    "dividend_policy": "cash",
+    "fee_contract": {
+      "Stock": {
+        "amount": 0.1,
+        "type": "percent"
+      }
+    }
+  },
+  "execution": {
+    "interval": "Day",
+    "options": false,
+    "requires_events": true,
+    "event_rationale": "Audit exact decision inputs, membership, validity/session guards, fills and fees. Events extracted first only after separately authorized jobs.",
+    "warmup_days": 366,
+    "assumptions": "Monthly first audited tradable session, prior-calendar-day 21:00 NY decision and 09:30 intended execution. Precomputed disclosed numeric + validity + exact YYYYMMDD session-key guards. Equal ranks/security weights, long only, no leverage. Proposed nominal deployment95%, bounded inherited empirical93.5% effective; production compiler/universe/coverage not certified. No direct arbitrary disclosures or rejected 12.5-hour CustomIndicator lag."
+  },
+  "optimization_ranges": {
+    "momentum_lookback_calendar_days": [
+      180,
+      365
+    ],
+    "insider_lookback_calendar_days": [
+      30,
+      90
+    ],
+    "number_of_holdings": [
+      20,
+      40
+    ]
+  },
+  "selection": {
+    "primary_metric": "sharpe",
+    "secondary_metrics": [
+      "mean_daily_net_excess_vs_matched_momentum",
+      "sortino",
+      "total_return",
+      "maximum_drawdown",
+      "annualized_volatility",
+      "turnover",
+      "fold_and_parameter_stability"
+    ],
+    "eligibility": {
+      "max_drawdown": 0.25,
+      "minimum_trades": 20
+    },
+    "minimum_participation": 0.35,
+    "minimum_breadth": 20
+  },
+  "robustness_tests": [
+    "PROPOSED chronological expanding Development folds with >=two training years; dates and active fold count unresolved until joint coverage.",
+    "Paired noncircular moving-block percentile bootstrap:20 returns/block,10000 draws,seed2002001,95% intervals for paired mean excess and separate zero-RF Sharpe difference. Descriptive, no p-values/significance; inherited implementation.",
+    "Full 8-cell composite surface plus 4 momentum and4 insider cells, all failed/poor trials retained. No extra axes.",
+    "Matched signal-covered eligible universe across all families; wider momentum diagnostic cannot replace primary comparison.",
+    "Fixed Development stresses:double fee,one extra execution session,one extra filing day. Local+10/+20bps fill costs; local regime/contribution diagnostics."
+  ],
+  "multiple_testing": {
+    "method": "holm",
+    "record_all_trials": true
+  },
+  "stress_scenarios": [
+    "double_cost",
+    "one_bar_delay",
+    "additional_filing_delay",
+    "local_cost_10bps",
+    "local_cost_20bps",
+    "local_regime_and_contribution_diagnostics"
+  ],
+  "approval_state": "DRAFT",
+  "sealed_ranges": [
+    {
+      "start": "2021-01-01",
+      "end": "9999-12-31"
+    }
+  ],
+  "temporal_contamination_note": "ALL post-cutoff observations prohibited during design. Development start and one-day outer Validation are schema-required NONEXECUTABLE placeholders, not selected dates; actual inception, folds, Validation and Test remain null in provenance. No EXP002 windows copied as evaluation design. Historical evidence is workflow-held-out, never genuinely unseen; EXP001/model historical knowledge disclosed.",
+  "historical_evidence_class": "workflow_held_out",
+  "research_cutoff": "2020-12-31",
+  "budget": {
+    "aurora": 0,
+    "candidate_backtests": 0,
+    "parameter_sweeps": 0,
+    "walk_forward": 0,
+    "intraday_confirmation": 0
+  }
+}

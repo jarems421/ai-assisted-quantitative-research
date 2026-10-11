@@ -1,0 +1,619 @@
+{
+  "status": "VERIFIED_SCOPED_IDENTITY_FEASIBILITY",
+  "source_spans": 15952,
+  "source_price_snapshot_rows": 330404,
+  "source_types": {
+    "ADRC": 554,
+    "ADRP": 15,
+    "ADRR": 2,
+    "CS": 7286,
+    "ETF": 3069,
+    "ETN": 257,
+    "ETS": 4,
+    "ETV": 64,
+    "FUND": 576,
+    "INDEX": 226,
+    "None": 913,
+    "PFD": 1149,
+    "RIGHT": 95,
+    "SP": 644,
+    "UNIT": 448,
+    "WARRANT": 650
+  },
+  "monthly": [
+    {
+      "month": "2015-01",
+      "snapshot_date": "2015-01-30",
+      "stale_month_endpoint": 65,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4374
+    },
+    {
+      "month": "2015-02",
+      "snapshot_date": "2015-02-27",
+      "stale_month_endpoint": 60,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4388
+    },
+    {
+      "month": "2015-03",
+      "snapshot_date": "2015-03-31",
+      "stale_month_endpoint": 59,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4392
+    },
+    {
+      "month": "2015-04",
+      "snapshot_date": "2015-04-30",
+      "stale_month_endpoint": 58,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4404
+    },
+    {
+      "month": "2015-05",
+      "snapshot_date": "2015-05-29",
+      "stale_month_endpoint": 83,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4389
+    },
+    {
+      "month": "2015-06",
+      "snapshot_date": "2015-06-30",
+      "stale_month_endpoint": 64,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4441
+    },
+    {
+      "month": "2015-07",
+      "snapshot_date": "2015-07-31",
+      "stale_month_endpoint": 85,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4452
+    },
+    {
+      "month": "2015-08",
+      "snapshot_date": "2015-08-31",
+      "stale_month_endpoint": 72,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4468
+    },
+    {
+      "month": "2015-09",
+      "snapshot_date": "2015-09-30",
+      "stale_month_endpoint": 83,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4454
+    },
+    {
+      "month": "2015-10",
+      "snapshot_date": "2015-10-30",
+      "stale_month_endpoint": 96,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4455
+    },
+    {
+      "month": "2015-11",
+      "snapshot_date": "2015-11-30",
+      "stale_month_endpoint": 64,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4506
+    },
+    {
+      "month": "2015-12",
+      "snapshot_date": "2015-12-31",
+      "stale_month_endpoint": 57,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4521
+    },
+    {
+      "month": "2016-01",
+      "snapshot_date": "2016-01-29",
+      "stale_month_endpoint": 56,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4507
+    },
+    {
+      "month": "2016-02",
+      "snapshot_date": "2016-02-29",
+      "stale_month_endpoint": 81,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4472
+    },
+    {
+      "month": "2016-03",
+      "snapshot_date": "2016-03-31",
+      "stale_month_endpoint": 72,
+      "identity_or_type_exclusion": 1,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4474
+    },
+    {
+      "month": "2016-04",
+      "snapshot_date": "2016-04-29",
+      "stale_month_endpoint": 117,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4428
+    },
+    {
+      "month": "2016-05",
+      "snapshot_date": "2016-05-31",
+      "stale_month_endpoint": 84,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4452
+    },
+    {
+      "month": "2016-06",
+      "snapshot_date": "2016-06-30",
+      "stale_month_endpoint": 48,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4495
+    },
+    {
+      "month": "2016-07",
+      "snapshot_date": "2016-07-29",
+      "stale_month_endpoint": 71,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4477
+    },
+    {
+      "month": "2016-08",
+      "snapshot_date": "2016-08-31",
+      "stale_month_endpoint": 62,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4486
+    },
+    {
+      "month": "2016-09",
+      "snapshot_date": "2016-09-30",
+      "stale_month_endpoint": 100,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4453
+    },
+    {
+      "month": "2016-10",
+      "snapshot_date": "2016-10-31",
+      "stale_month_endpoint": 84,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4531
+    },
+    {
+      "month": "2016-11",
+      "snapshot_date": "2016-11-30",
+      "stale_month_endpoint": 92,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4528
+    },
+    {
+      "month": "2016-12",
+      "snapshot_date": "2016-12-30",
+      "stale_month_endpoint": 77,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4531
+    },
+    {
+      "month": "2017-01",
+      "snapshot_date": "2017-01-31",
+      "stale_month_endpoint": 82,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4511
+    },
+    {
+      "month": "2017-02",
+      "snapshot_date": "2017-02-28",
+      "stale_month_endpoint": 79,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4510
+    },
+    {
+      "month": "2017-03",
+      "snapshot_date": "2017-03-31",
+      "stale_month_endpoint": 88,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4497
+    },
+    {
+      "month": "2017-04",
+      "snapshot_date": "2017-04-28",
+      "stale_month_endpoint": 95,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4497
+    },
+    {
+      "month": "2017-05",
+      "snapshot_date": "2017-05-31",
+      "stale_month_endpoint": 83,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4510
+    },
+    {
+      "month": "2017-06",
+      "snapshot_date": "2017-06-30",
+      "stale_month_endpoint": 91,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4511
+    },
+    {
+      "month": "2017-07",
+      "snapshot_date": "2017-07-31",
+      "stale_month_endpoint": 80,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4516
+    },
+    {
+      "month": "2017-08",
+      "snapshot_date": "2017-08-31",
+      "stale_month_endpoint": 56,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4537
+    },
+    {
+      "month": "2017-09",
+      "snapshot_date": "2017-09-29",
+      "stale_month_endpoint": 107,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4477
+    },
+    {
+      "month": "2017-10",
+      "snapshot_date": "2017-10-31",
+      "stale_month_endpoint": 94,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4488
+    },
+    {
+      "month": "2017-11",
+      "snapshot_date": "2017-11-30",
+      "stale_month_endpoint": 81,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4503
+    },
+    {
+      "month": "2017-12",
+      "snapshot_date": "2017-12-29",
+      "stale_month_endpoint": 68,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4505
+    },
+    {
+      "month": "2018-01",
+      "snapshot_date": "2018-01-31",
+      "stale_month_endpoint": 75,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4490
+    },
+    {
+      "month": "2018-02",
+      "snapshot_date": "2018-02-28",
+      "stale_month_endpoint": 84,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4488
+    },
+    {
+      "month": "2018-03",
+      "snapshot_date": "2018-03-29",
+      "stale_month_endpoint": 74,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4506
+    },
+    {
+      "month": "2018-04",
+      "snapshot_date": "2018-04-30",
+      "stale_month_endpoint": 92,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4487
+    },
+    {
+      "month": "2018-05",
+      "snapshot_date": "2018-05-31",
+      "stale_month_endpoint": 94,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4499
+    },
+    {
+      "month": "2018-06",
+      "snapshot_date": "2018-06-29",
+      "stale_month_endpoint": 80,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4532
+    },
+    {
+      "month": "2018-07",
+      "snapshot_date": "2018-07-31",
+      "stale_month_endpoint": 88,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4537
+    },
+    {
+      "month": "2018-08",
+      "snapshot_date": "2018-08-31",
+      "stale_month_endpoint": 96,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4522
+    },
+    {
+      "month": "2018-09",
+      "snapshot_date": "2018-09-28",
+      "stale_month_endpoint": 68,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4562
+    },
+    {
+      "month": "2018-10",
+      "snapshot_date": "2018-10-31",
+      "stale_month_endpoint": 88,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4556
+    },
+    {
+      "month": "2018-11",
+      "snapshot_date": "2018-11-30",
+      "stale_month_endpoint": 63,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4576
+    },
+    {
+      "month": "2018-12",
+      "snapshot_date": "2018-12-31",
+      "stale_month_endpoint": 67,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4558
+    },
+    {
+      "month": "2019-01",
+      "snapshot_date": "2019-01-31",
+      "stale_month_endpoint": 99,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4505
+    },
+    {
+      "month": "2019-02",
+      "snapshot_date": "2019-02-28",
+      "stale_month_endpoint": 104,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4495
+    },
+    {
+      "month": "2019-03",
+      "snapshot_date": "2019-03-29",
+      "stale_month_endpoint": 80,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4514
+    },
+    {
+      "month": "2019-04",
+      "snapshot_date": "2019-04-30",
+      "stale_month_endpoint": 110,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4491
+    },
+    {
+      "month": "2019-05",
+      "snapshot_date": "2019-05-31",
+      "stale_month_endpoint": 98,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4510
+    },
+    {
+      "month": "2019-06",
+      "snapshot_date": "2019-06-28",
+      "stale_month_endpoint": 72,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4550
+    },
+    {
+      "month": "2019-07",
+      "snapshot_date": "2019-07-31",
+      "stale_month_endpoint": 77,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4555
+    },
+    {
+      "month": "2019-08",
+      "snapshot_date": "2019-08-30",
+      "stale_month_endpoint": 110,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4509
+    },
+    {
+      "month": "2019-09",
+      "snapshot_date": "2019-09-30",
+      "stale_month_endpoint": 124,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4499
+    },
+    {
+      "month": "2019-10",
+      "snapshot_date": "2019-10-31",
+      "stale_month_endpoint": 121,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4499
+    },
+    {
+      "month": "2019-11",
+      "snapshot_date": "2019-11-29",
+      "stale_month_endpoint": 137,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4473
+    },
+    {
+      "month": "2019-12",
+      "snapshot_date": "2019-12-31",
+      "stale_month_endpoint": 90,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4511
+    },
+    {
+      "month": "2020-01",
+      "snapshot_date": "2020-01-31",
+      "stale_month_endpoint": 109,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4479
+    },
+    {
+      "month": "2020-02",
+      "snapshot_date": "2020-02-28",
+      "stale_month_endpoint": 69,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4519
+    },
+    {
+      "month": "2020-03",
+      "snapshot_date": "2020-03-31",
+      "stale_month_endpoint": 71,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4514
+    },
+    {
+      "month": "2020-04",
+      "snapshot_date": "2020-04-30",
+      "stale_month_endpoint": 91,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4489
+    },
+    {
+      "month": "2020-05",
+      "snapshot_date": "2020-05-29",
+      "stale_month_endpoint": 82,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4491
+    },
+    {
+      "month": "2020-06",
+      "snapshot_date": "2020-06-30",
+      "stale_month_endpoint": 62,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4526
+    },
+    {
+      "month": "2020-07",
+      "snapshot_date": "2020-07-31",
+      "stale_month_endpoint": 57,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4550
+    },
+    {
+      "month": "2020-08",
+      "snapshot_date": "2020-08-31",
+      "stale_month_endpoint": 47,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4577
+    },
+    {
+      "month": "2020-09",
+      "snapshot_date": "2020-09-30",
+      "stale_month_endpoint": 51,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4611
+    },
+    {
+      "month": "2020-10",
+      "snapshot_date": "2020-10-30",
+      "stale_month_endpoint": 66,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4657
+    },
+    {
+      "month": "2020-11",
+      "snapshot_date": "2020-11-30",
+      "stale_month_endpoint": 42,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4731
+    },
+    {
+      "month": "2020-12",
+      "snapshot_date": "2020-12-31",
+      "stale_month_endpoint": 43,
+      "identity_or_type_exclusion": 2,
+      "duplicate_security_exclusion_rows": 0,
+      "identity_supported_snapshot_ids": 4792
+    }
+  ],
+  "totals": {
+    "stale_month_endpoint": 5775,
+    "identity_or_type_exclusion": 129,
+    "duplicate_security_exclusion_rows": 0,
+    "identity_supported_snapshot_ids": 324500
+  },
+  "annual_union_ids": {
+    "2015": 4721,
+    "2016": 4816,
+    "2017": 4854,
+    "2018": 4878,
+    "2019": 4866,
+    "2020": 5067
+  },
+  "retained_ids_with_a_pre_cutoff_ended_CS_span": 2242,
+  "ended_span_warning": "Ended spans include renames; not a verified delisting count.",
+  "joint_development_inception": null,
+  "limits": "Month-end source snapshots only; no daily/session-complete, insider completeness, exchange/OTC, or whole-market coverage certification."
+}

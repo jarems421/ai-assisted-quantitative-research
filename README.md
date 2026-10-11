@@ -50,6 +50,7 @@ Nexus supplies strategy simulations and stored engine outputs. Repository engine
 | Experiment | Status | Strategy / asset | Development | Validation | Held-out Test | Finding |
 |---|---|---|---|---|---|---|
 | [EXP001](reports/EXP001_final_report.md) | Complete historical evaluation | Five candidates; SMA20/50 selected / SPY | 2015-01-01 to 2021-12-31 | 2022-01-01 to 2024-12-31 | 2025-01-01 to 2026-10-08 | Lower risk, lower out-of-sample return than SPY |
+| [EXP003](experiments/EXP003/README.md) | Draft; needs design revision | Momentum + qualifying insider purchases / source-covered historical CS universe | Inception unresolved; end 2020-12-31 | Unresolved; inaccessible | Unresolved; inaccessible | Local identity feasibility only; no candidate performance |
 
 
 The manifest retains its historical `SEALED` marker. The final report records the subsequent authorized Test opening once, after the strategy and processing methodology were frozen. No Experiment 002 or forward trading result is reported.
@@ -164,7 +165,9 @@ EXP001 establishes an auditable pilot research pipeline, not a market-beating sy
 
 ## Proposed next work
 
-EXP002 closed as a [negative research-design feasibility result](experiments/EXP002/research/final_freeze_review.md). Its final native monthly membership audit remains materially underfilled, and the institutional source lacks certified dated CUSIP mapping evidence for omission-as-zero. The owner stop rule is recorded as **ABANDON EXP002**; the economic hypothesis was never tested. No candidate study, held-out access, freeze or new experiment was initiated.
+EXP002 closed as a [negative research-design feasibility result](experiments/EXP002/research/final_freeze_review.md). Its final native monthly membership audit remains materially underfilled, and the institutional source lacks certified dated CUSIP mapping evidence for omission-as-zero. The owner stop rule is recorded as **ABANDON EXP002**; the economic hypothesis was never tested. Its closure included no candidate study, held-out access or freeze.
+
+[EXP003](experiments/EXP003/README.md) is a separate two-signal draft: momentum plus point-in-time qualifying insider purchases. A bounded local pass supports a source-covered historical common-equity identity rule without index membership or institutional signals. Production joint coverage, inception and held-out chronology remain unresolved. No Nexus calls, performance evaluations, spend or freeze occurred in this design pass.
 
 Future research could investigate richer cross-sectional signals, fundamentals and insider/institutional data; regime-aware models and systematic optimization; walk-forward and bootstrap robustness checks; multi-strategy ensembles; and eventually forward paper testing. These are proposals, not completed capabilities or authorized new experiments.
 

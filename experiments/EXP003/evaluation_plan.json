@@ -1,0 +1,104 @@
+{
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "family_cells": {
+    "momentum_only": [
+      {
+        "momentum_lookback_calendar_days": 180,
+        "number_of_holdings": 20
+      },
+      {
+        "momentum_lookback_calendar_days": 180,
+        "number_of_holdings": 40
+      },
+      {
+        "momentum_lookback_calendar_days": 365,
+        "number_of_holdings": 20
+      },
+      {
+        "momentum_lookback_calendar_days": 365,
+        "number_of_holdings": 40
+      }
+    ],
+    "insider_only": [
+      {
+        "insider_lookback_calendar_days": 30,
+        "number_of_holdings": 20
+      },
+      {
+        "insider_lookback_calendar_days": 30,
+        "number_of_holdings": 40
+      },
+      {
+        "insider_lookback_calendar_days": 90,
+        "number_of_holdings": 20
+      },
+      {
+        "insider_lookback_calendar_days": 90,
+        "number_of_holdings": 40
+      }
+    ],
+    "momentum_insider": [
+      {
+        "momentum_lookback_calendar_days": 180,
+        "insider_lookback_calendar_days": 30,
+        "number_of_holdings": 20
+      },
+      {
+        "momentum_lookback_calendar_days": 180,
+        "insider_lookback_calendar_days": 30,
+        "number_of_holdings": 40
+      },
+      {
+        "momentum_lookback_calendar_days": 180,
+        "insider_lookback_calendar_days": 90,
+        "number_of_holdings": 20
+      },
+      {
+        "momentum_lookback_calendar_days": 180,
+        "insider_lookback_calendar_days": 90,
+        "number_of_holdings": 40
+      },
+      {
+        "momentum_lookback_calendar_days": 365,
+        "insider_lookback_calendar_days": 30,
+        "number_of_holdings": 20
+      },
+      {
+        "momentum_lookback_calendar_days": 365,
+        "insider_lookback_calendar_days": 30,
+        "number_of_holdings": 40
+      },
+      {
+        "momentum_lookback_calendar_days": 365,
+        "insider_lookback_calendar_days": 90,
+        "number_of_holdings": 20
+      },
+      {
+        "momentum_lookback_calendar_days": 365,
+        "insider_lookback_calendar_days": 90,
+        "number_of_holdings": 40
+      }
+    ]
+  },
+  "family_cell_counts": {
+    "momentum_only": 4,
+    "insider_only": 4,
+    "momentum_insider": 8
+  },
+  "benchmark_count": 2,
+  "conditional_fold_count": 4,
+  "components": {
+    "development_grid_folds": 72,
+    "selected_family_development_replays": 5,
+    "development_remote_stresses": 15,
+    "outer_validation": 5,
+    "eventual_test": 5,
+    "failed_unresolved_reserve": 20
+  },
+  "conditional_remote_ceiling": 122,
+  "local_cost_stress_analyses": 10,
+  "actual_EXP003_jobs": 0,
+  "token_quote": null,
+  "spend_authorized": false,
+  "limits": "Four folds and two benchmarks are planning assumptions, not approved chronology. Counts require coverage-supported dates and benchmark implementations. No server amplification preview; extra jobs count against reserve or require pre-performance redesign."
+}

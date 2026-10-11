@@ -1,0 +1,39 @@
+{
+  "status": "PROPOSED_NOT_COMPILED",
+  "families": {
+    "momentum_only": {
+      "signals": [
+        "momentum"
+      ],
+      "cells": 4
+    },
+    "insider_only": {
+      "signals": [
+        "qualifying_insider_purchasers"
+      ],
+      "cells": 4
+    },
+    "momentum_insider": {
+      "signals": [
+        "momentum",
+        "qualifying_insider_purchasers"
+      ],
+      "cells": 8
+    }
+  },
+  "rank_policy": "Higher values rank higher; equal signal ranks, then equal security weights for top20/40. Proposed deterministic stable-security-ID tie break; no fitted weights. No positive-signal threshold tuning.",
+  "matched_policy": "At each decision, all families and eligible-universe benchmark use the same certified union of required 365-day price and90-day insider prerequisites. Genuine zero retained only with certified coverage; unavailable excluded and counted. No insider-presence-only survivor panel.",
+  "insider_definition": "Distinct stable owner CIK among active nonderivative P/A positive-share events, firstAvailableAt within30/90 days; private purchases included; future corrections cannot change historical state.",
+  "momentum_definition": "180/365 elapsed calendar-day split-safe price ratio minus1 using completed bars; only splits effective within compared bars; not total-return prices plus cash dividends.",
+  "benchmarks": [
+    "Explicit SPY buy-and-hold, proposed implementation pending freeze",
+    "Equal-weight entire matched eligible universe, monthly; not top20/40"
+  ],
+  "inference": "Paired mean net excess and separate RF0 Sharpe difference vs same momentum horizon/holdings; insider window does not create duplicate momentum trials. Both directional effects must be positive; drawdown alone insufficient.",
+  "metric_contract": "True NY closes; simple adjacent daily returns; rf0;252;sampleSD;MAR0 all-return downside RMS; period running-peak drawdown;25000 initial funding.",
+  "freeze_blockers": [
+    "Fewer than requested holdings handling and rank/tie implementation audit",
+    "Chronological selection aggregation and matched excess objective ordering",
+    "Benchmark compilation and complete per-decision eligibility panel"
+  ]
+}
