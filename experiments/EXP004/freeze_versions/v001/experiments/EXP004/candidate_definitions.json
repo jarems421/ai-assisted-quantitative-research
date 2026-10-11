@@ -1,0 +1,46 @@
+{
+  "status": "PREDECLARED_PROPOSAL",
+  "signal_classes": [
+    "price_momentum"
+  ],
+  "cells": [
+    {
+      "momentum_lookback_calendar_days": 180,
+      "number_of_holdings": 20
+    },
+    {
+      "momentum_lookback_calendar_days": 180,
+      "number_of_holdings": 40
+    },
+    {
+      "momentum_lookback_calendar_days": 365,
+      "number_of_holdings": 20
+    },
+    {
+      "momentum_lookback_calendar_days": 365,
+      "number_of_holdings": 40
+    }
+  ],
+  "shared_population": "Maximum365-calendar-day completed-history prerequisite at each decision, same across both horizons and monthly EW. Missing momentum excludes identity across all four cells and EW; never guessed zero. Stable IDs map through historical spans, not current tickers.",
+  "momentum": "Last completed nominal price / first completed nominal price on-or-after elapsed horizon boundary, multiplied by only intervening effective split factors, minus1. Cash dividends outside the price signal.",
+  "ranking": "Higher momentum; ties stable security_id ascending. Precompute ordinal N..1 after this exact sort for native select_top Highest; equal weights.",
+  "shortfall": "min(N,K) selected with nominal95/K per security; unallocated fraction cash. N0 requires liquidation or logs critical failure, never silent carry-forward counted as participation.",
+  "metrics": [
+    "total_return",
+    "zero_RF_Sharpe",
+    "Sortino",
+    "annualized_volatility",
+    "maximum_drawdown",
+    "turnover",
+    "scheduled_participation",
+    "fold_by_fold",
+    "paired_vs_equal_weight",
+    "paired_vs_SPY"
+  ],
+  "metric_contract": "True NY closes including evidenced early closes; adjacent simple daily returns; RF0;252;sample SD; zero-MAR all-return downside RMS; period-specific running-peak DD;25000 initial funding. No metric-definition changes.",
+  "benchmarks": {
+    "equal_weight_eligible_universe": "Entire same certified eligible cross section, monthly,95 nominal allocation divided equally; no topK. Primary incremental-information comparator.",
+    "explicit_SPY_buy_and_hold": "Buy once at each run permitted inception09:30, nominal95%, then hold;25000 funding,.10% fills,cash dividends. A rejected first order is a failure, not later retry."
+  },
+  "publication": "No stream published. Authoritative immutable price/split/identity snapshots plus code/manifest QA precede any separately authorized run. Exports stage-bound; future Test needs owner gate. Synthetic compiled fixture identifiers are prohibited in submissions."
+}

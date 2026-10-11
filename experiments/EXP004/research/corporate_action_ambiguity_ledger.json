@@ -1,0 +1,1148 @@
+{
+  "status": "PASS_GENERIC_TEMPORARY_EXCLUSION",
+  "rule": "Inclusive 365-calendar-day shared quality window; no ticker exclusions/corrected factors",
+  "groups": [
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "AFOVF"
+      ],
+      "effective_date": "2019-02-08",
+      "distinct_factors": [
+        1.0134907251264,
+        1.016863406408
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "AHFCF"
+      ],
+      "effective_date": "2020-06-09",
+      "distinct_factors": [
+        4e-05,
+        12500.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "ALLXF"
+      ],
+      "effective_date": "2018-01-24",
+      "distinct_factors": [
+        0.002,
+        500.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "ALMC"
+      ],
+      "effective_date": "2017-06-06",
+      "distinct_factors": [
+        0.0001,
+        1000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "ASAM"
+      ],
+      "effective_date": "2017-01-06",
+      "distinct_factors": [
+        2e-06,
+        500000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "BDVB"
+      ],
+      "effective_date": "2018-03-29",
+      "distinct_factors": [
+        0.0025,
+        400.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "BKFG"
+      ],
+      "effective_date": "2020-07-29",
+      "distinct_factors": [
+        0.0001,
+        10000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "BRKSL"
+      ],
+      "effective_date": "2017-01-25",
+      "distinct_factors": [
+        0.005,
+        200.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "CALVF"
+      ],
+      "effective_date": "2017-06-27",
+      "distinct_factors": [
+        0.01,
+        20.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "CDLA"
+      ],
+      "effective_date": "2017-11-01",
+      "distinct_factors": [
+        2e-05,
+        50000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "CFFHF"
+      ],
+      "effective_date": "2020-06-17",
+      "distinct_factors": [
+        1.0060331825037707,
+        1.0361990950226243
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "CLKFF"
+      ],
+      "effective_date": "2020-10-26",
+      "distinct_factors": [
+        0.001,
+        1000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "COEP"
+      ],
+      "effective_date": "2020-08-06",
+      "distinct_factors": [
+        2.5e-05,
+        200.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "CSRNF"
+      ],
+      "effective_date": "2017-01-09",
+      "distinct_factors": [
+        0.002,
+        500.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "CXGEF"
+      ],
+      "effective_date": "2018-05-25",
+      "distinct_factors": [
+        1.017482517,
+        1.024475524
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "DVLY"
+      ],
+      "effective_date": "2016-04-26",
+      "distinct_factors": [
+        0.004,
+        250.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "EJMLL"
+      ],
+      "effective_date": "2017-01-25",
+      "distinct_factors": [
+        0.005,
+        200.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "EKIVF"
+      ],
+      "effective_date": "2015-05-06",
+      "distinct_factors": [
+        1.0292000000000001,
+        1.081944
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "EVRRF"
+      ],
+      "effective_date": "2020-09-17",
+      "distinct_factors": [
+        0.1,
+        2.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "FCCGD"
+      ],
+      "effective_date": "2020-09-02",
+      "distinct_factors": [
+        3.067484662576687e-06,
+        326000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "FTLF"
+      ],
+      "effective_date": "2019-04-16",
+      "distinct_factors": [
+        0.000125,
+        800.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "GLYE"
+      ],
+      "effective_date": "2018-07-11",
+      "distinct_factors": [
+        0.002,
+        4.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "GPEAF"
+      ],
+      "effective_date": "2018-03-29",
+      "distinct_factors": [
+        0.034482758620689655,
+        25.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "HBEXF"
+      ],
+      "effective_date": "2018-02-12",
+      "distinct_factors": [
+        0.001,
+        1000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "ITEX"
+      ],
+      "effective_date": "2017-12-05",
+      "distinct_factors": [
+        0.01,
+        100.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "ITEX"
+      ],
+      "effective_date": "2020-12-22",
+      "distinct_factors": [
+        0.0016666666666666668,
+        600.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "JEFFL"
+      ],
+      "effective_date": "2017-01-25",
+      "distinct_factors": [
+        0.005,
+        200.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "JKMTL"
+      ],
+      "effective_date": "2017-01-25",
+      "distinct_factors": [
+        0.005,
+        200.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "LIME"
+      ],
+      "effective_date": "2017-02-13",
+      "distinct_factors": [
+        0.0033333333333333335,
+        300.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "LSCG"
+      ],
+      "effective_date": "2018-02-16",
+      "distinct_factors": [
+        0.0001,
+        10000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "LXYHF"
+      ],
+      "effective_date": "2015-06-26",
+      "distinct_factors": [
+        2.0,
+        5.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "NPWZ"
+      ],
+      "effective_date": "2018-11-08",
+      "distinct_factors": [
+        5e-07,
+        2000000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "OUT"
+      ],
+      "effective_date": "2014-11-18",
+      "distinct_factors": [
+        1.1216,
+        1.1722
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "PAYD"
+      ],
+      "effective_date": "2017-01-24",
+      "distinct_factors": [
+        0.0003333333333333333,
+        300.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "PHYOF"
+      ],
+      "effective_date": "2018-10-02",
+      "distinct_factors": [
+        0.01,
+        100.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "PKDC"
+      ],
+      "effective_date": "2020-04-15",
+      "distinct_factors": [
+        0.02,
+        50.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "PWON"
+      ],
+      "effective_date": "2018-10-05",
+      "distinct_factors": [
+        0.01,
+        100.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "RDWWF"
+      ],
+      "effective_date": "2019-04-08",
+      "distinct_factors": [
+        0.047619047619047616,
+        20.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "REPYY"
+      ],
+      "effective_date": "2016-12-16",
+      "distinct_factors": [
+        1.0263157894736843,
+        1.0454545454545454
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "SANUL"
+      ],
+      "effective_date": "2017-01-25",
+      "distinct_factors": [
+        0.005,
+        200.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "SNLAF"
+      ],
+      "effective_date": "2018-03-14",
+      "distinct_factors": [
+        1.009296338672769,
+        1.0321796338672768
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "SRTI"
+      ],
+      "effective_date": "2020-01-16",
+      "distinct_factors": [
+        4e-07,
+        25000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "SSILF"
+      ],
+      "effective_date": "2016-12-06",
+      "distinct_factors": [
+        1.0127206233105421,
+        1.0159007791381778
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "SSILF"
+      ],
+      "effective_date": "2018-09-05",
+      "distinct_factors": [
+        1.0082451559708672,
+        1.0302322385598461
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "SZIHF"
+      ],
+      "effective_date": "2018-05-22",
+      "distinct_factors": [
+        1.026915266,
+        1.034255793
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "SZIHF"
+      ],
+      "effective_date": "2019-05-22",
+      "distinct_factors": [
+        1.0270059413070876,
+        1.0525115525415591
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "SZIHF"
+      ],
+      "effective_date": "2020-05-20",
+      "distinct_factors": [
+        1.0436947632238491,
+        1.0527634876665348
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "TRRSF"
+      ],
+      "effective_date": "2017-12-21",
+      "distinct_factors": [
+        0.1,
+        10.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "UBSBF"
+      ],
+      "effective_date": "2017-03-20",
+      "distinct_factors": [
+        0.001,
+        100.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "ULUR"
+      ],
+      "effective_date": "2020-03-23",
+      "distinct_factors": [
+        0.0001,
+        1000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "UOVEF"
+      ],
+      "effective_date": "2018-04-27",
+      "distinct_factors": [
+        1.0067430883344572,
+        1.0151719487525286
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "VNDSL"
+      ],
+      "effective_date": "2017-01-25",
+      "distinct_factors": [
+        0.005,
+        200.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "VXDN"
+      ],
+      "effective_date": "2016-07-20",
+      "distinct_factors": [
+        2.6107009999999997,
+        3.610701
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "VXUP"
+      ],
+      "effective_date": "2016-08-17",
+      "distinct_factors": [
+        1.074458,
+        2.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "XDSC"
+      ],
+      "effective_date": "2017-07-26",
+      "distinct_factors": [
+        0.001,
+        1000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "YTAYF"
+      ],
+      "effective_date": "2018-07-10",
+      "distinct_factors": [
+        2.1653065,
+        2.3346934
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": null,
+      "tickers_at_event": [
+        "YUZHF"
+      ],
+      "effective_date": "2020-06-16",
+      "distinct_factors": [
+        1.011820330969267,
+        1.0620567375886525
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "NOT_UNAMBIGUOUS_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": "cik:1040971:?:SLG.PRAC@2003-09-30",
+      "tickers_at_event": [
+        "SLG"
+      ],
+      "effective_date": "2020-12-14",
+      "distinct_factors": [
+        1.0279,
+        1.0343
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "RESOLVED_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": "cik:768710:?:RELV@2003-09-30",
+      "tickers_at_event": [
+        "RELV"
+      ],
+      "effective_date": "2020-12-21",
+      "distinct_factors": [
+        0.0005,
+        2000.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "RESOLVED_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    },
+    {
+      "security_id": "figi:BBG001SCW8V3",
+      "tickers_at_event": [
+        "BTX"
+      ],
+      "effective_date": "2016-06-17",
+      "distinct_factors": [
+        0.01,
+        2.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "RESOLVED_CS",
+      "first_affected_decision": "2016-07-01",
+      "last_affected_decision": "2017-06-01",
+      "excluded_security_decisions": 12
+    },
+    {
+      "security_id": "figi:BBG005RVGZ50",
+      "tickers_at_event": [
+        "LADR"
+      ],
+      "effective_date": "2015-12-08",
+      "distinct_factors": [
+        1.097582,
+        1.126853
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "RESOLVED_CS",
+      "first_affected_decision": "2016-01-04",
+      "last_affected_decision": "2016-12-01",
+      "excluded_security_decisions": 12
+    },
+    {
+      "security_id": "figi:BBG00HS2GVM7",
+      "tickers_at_event": [
+        "ALEX"
+      ],
+      "effective_date": "2017-11-28",
+      "distinct_factors": [
+        1.42,
+        1.5741279154
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "RESOLVED_CS",
+      "first_affected_decision": "2017-12-01",
+      "last_affected_decision": "2018-11-01",
+      "excluded_security_decisions": 12
+    },
+    {
+      "security_id": "figi:BBG00V4VSCS1",
+      "tickers_at_event": [
+        "NYC"
+      ],
+      "effective_date": "2020-08-18",
+      "distinct_factors": [
+        0.10288065843621398,
+        4.0
+      ],
+      "source_row_count": 2,
+      "ambiguity_reason": "DISTINCT_FACTORS_WITHOUT_COMPOSITION_LINEAGE",
+      "factor": null,
+      "identity_status": "RESOLVED_CS",
+      "first_affected_decision": null,
+      "last_affected_decision": null,
+      "excluded_security_decisions": 0
+    }
+  ],
+  "monthly_excluded_security_decisions": 36,
+  "source_rows_preserved": true,
+  "zero_performance_observed": true,
+  "explanatory_evidence": {
+    "LADR": "Owner explains the2015 cash/stock-election special distribution; source rows remain ambiguous. No external factor is applied.",
+    "source": "corporate_action_amendment_authorization_20261011.md"
+  },
+  "optional_adjusted_price_diagnostic": "Not performed; momentum implementation unchanged"
+}

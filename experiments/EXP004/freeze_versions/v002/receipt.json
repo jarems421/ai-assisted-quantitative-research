@@ -1,0 +1,48 @@
+{
+  "status": "HYPOTHESIS_FROZEN",
+  "version": 2,
+  "supersedes": "SUPERSEDED_PRE_PERFORMANCE_BY_SOURCE_QA",
+  "original_receipt_byte_sha256": "8a2c56e869cb4439eed62bd071a774fe2d1caff9276d6b4c90f3c18de0f0bacb",
+  "old_specification_sha256": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
+  "old_methodology_sha256": "caf07509c04a9b703725983482e7502c03616b1ab27bdc5287148fdcca9b6328",
+  "frozen_specification_sha256": "32b216dd7d510399421d9ea89e61aff30c6b59aa8a4e0b31f5786615c1e6b3b9",
+  "frozen_methodology_sha256": "6bcb2a0c8513c06bfe4040275cfe6fa7f204b8e5844a80e36ed3e574560bee2a",
+  "frozen_artifacts": {
+    "experiments/EXP004/spec.json": "c23c677369ddc8698835cf997dd572765d592065ff3592f41f4d4a5634c15ca6",
+    "experiments/EXP004/candidate_definitions.json": "25fc9f0a049d2aa953540ba7e1d84395eaeec4e4d5d44a1fa4983ca341becf19",
+    "experiments/EXP004/evaluation_plan.json": "4870b5e696eed9b14cdabb6e369cd3cad96e387796e1fdaaea507b785492e7db",
+    "experiments/EXP004/research/selection_contract.md": "64fd3feb2ae9e7120ab1d88ba13520de76491c14107720b3adce044ffd0e1e29",
+    "src/research/exp004_policy.py": "7a7f482b74bf929911d56c4b0f9e125c489c784a0c18cee4a634112022aea541",
+    "src/metrics/performance.py": "b37a02d5f407ba9bd3e0bd768249a77721403ab91d9ec9548db05e8ced5aafd9",
+    "src/research/exp002_contracts.py": "2965778c139b82aaf0798c358bd43aa933dec84fbfd3103b4cde86b22670abbb",
+    "src/research/exp002_inference.py": "d8ae1debcfdf78d215ff75f708f44c043f61a45528b8f754a1f0218d7d5437d8",
+    "src/research/exp004_actions.py": "c3f65252ea86bd347266ad116111265173354264af84b00a8880067a169a8fa2",
+    "src/research/exp004_compile.py": "c72e8bfa45b1cbbb3192b52e5dce8fa89033686429eb7b675cc770604650460b"
+  },
+  "exact_diff": {
+    "/dynamic_universe/definition": {
+      "old": "Reuse the passed EXP003 source rule: unique historical CS security ID at prior completed price and intended execution; exclude identity/alias ambiguity, unknown subtype, nonpositive or missing prices. Require the same completed maximum-365-day price prerequisites for both horizons and the equal-weight universe. Retain ended/delisted histories while historically eligible. No certified additional nominal floor exists; only positivity. No complete US exchange-market claim.",
+      "new": "Reuse the passed EXP003 source rule: unique historical CS security ID at prior completed price and intended execution; exclude identity/alias ambiguity, unknown subtype, nonpositive or missing prices. Require the same completed maximum-365-day price prerequisites for both horizons and the equal-weight universe. Retain ended/delisted histories while historically eligible. No certified additional nominal floor exists; only positivity. No complete US exchange-market claim. Corporate-action QA amendment: at every decision inspect the inclusive prior-completed-session-minus365-calendar-days through prior-session window. A stable-security/effective-date group is ambiguous if multiple distinct adjustment factors lack composition lineage, version/revision is unresolved, or a positive finite unique economically applicable factor cannot be determined. Ordinary unique source splits are not ambiguous merely for imperfect vendor revision history. Identical economic factors normalize once, preserving all raw rows. A crossing ambiguity makes that security temporarily unavailable in the common population for all four cells and the equal-weight benchmark; reentry requires the event to age out of the maximum window and all other requirements to pass. No guessed/composed/averaged or ticker-corrected factor."
+    }
+  },
+  "reason": "Generic temporary information-quality exclusion discovered in production QA before performance",
+  "zero_performance_proof": {
+    "local_store_counts": {
+      "jobs": 0,
+      "trials": 0
+    },
+    "candidate": null,
+    "owner_assertion": true,
+    "strategy_receipts": 0,
+    "boundary": "Local ledgers and owner declaration, not account-wide independent audit"
+  },
+  "input_qa_hashes": [
+    "998481120ae2492b96aea7dea8e9c46f2a6f5718cfb8138574c091f127413b46",
+    "b54727d3b0f89f7e1790b78b088774a9b16a23bc642f3c43101024dba99e9c85",
+    "d71aae6b8ddbd47bb6b6f9412f6ac26f11193db644b55e002a32c73555009936",
+    "3b7a9b6fe80fcde0d9b68db96ce79554169e4388263bb9d78641891e0b45a618",
+    "6cbf683517c477d06b668d18029d912591858aee0096ce5ccd365edd9ca2c803",
+    "594e4294cd7e4dc83769ea9e19b0c0cba51d98e3bd609541e881c4cfa64fe632"
+  ],
+  "authorization_sha256": "8bc75330f69e5596bb8de6d043316a4fb0def9b54669584c7bb1e36a08442ba3"
+}

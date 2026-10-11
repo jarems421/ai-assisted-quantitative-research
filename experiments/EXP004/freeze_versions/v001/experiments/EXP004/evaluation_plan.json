@@ -1,0 +1,66 @@
+{
+  "status": "PREDECLARED_PROPOSAL_NO_RUN_AUTHORIZATION",
+  "parameter_cells": [
+    {
+      "momentum_lookback_calendar_days": 180,
+      "number_of_holdings": 20
+    },
+    {
+      "momentum_lookback_calendar_days": 180,
+      "number_of_holdings": 40
+    },
+    {
+      "momentum_lookback_calendar_days": 365,
+      "number_of_holdings": 20
+    },
+    {
+      "momentum_lookback_calendar_days": 365,
+      "number_of_holdings": 40
+    }
+  ],
+  "folds": [
+    {
+      "train_start": "2015-01-02",
+      "train_end": "2016-12-31",
+      "evaluate_start": "2017-01-01",
+      "evaluate_end": "2017-12-31"
+    },
+    {
+      "train_start": "2015-01-02",
+      "train_end": "2017-12-31",
+      "evaluate_start": "2018-01-01",
+      "evaluate_end": "2018-12-31"
+    },
+    {
+      "train_start": "2015-01-02",
+      "train_end": "2018-12-31",
+      "evaluate_start": "2019-01-01",
+      "evaluate_end": "2019-12-31"
+    },
+    {
+      "train_start": "2015-01-02",
+      "train_end": "2019-12-31",
+      "evaluate_start": "2020-01-01",
+      "evaluate_end": "2020-12-31"
+    }
+  ],
+  "independent_runs": {
+    "development_folds": 24,
+    "full_development_surface_and_benchmarks": 6,
+    "selected_plus_benchmarks_extra_session_delay": 3,
+    "outer_validation_selected_plus_benchmarks": 3,
+    "test_selected_plus_benchmarks": 3,
+    "failed_unresolved_reserve": 20
+  },
+  "future_remote_evaluation_ceiling": 59,
+  "attempted_exp004_remote_jobs": 0,
+  "local_cost_analyses": 12,
+  "accounting": "Four fixed cells plus two benchmarks per fold, four folds; six full Development replays. Three chosen-strategy/benchmark delayed runs, three outer, three owner-opened Test. No fitted model or hidden training jobs. Any retry/internal amplification consumes reserve or requires redesign before performance. Local 10/20bps stresses on six full-Development fill tapes are not new remote evaluations.",
+  "pricing": {
+    "nominal_daily_nonoptions_rate": 0,
+    "source": "config/research_pricing.json",
+    "actual_account_debit": null,
+    "execution_authorized": false,
+    "requirement": "Revalidate dated price metadata, per-run plans and account limits before separately authorized execution. No optimizer/sweep/walk-forward submission."
+  }
+}

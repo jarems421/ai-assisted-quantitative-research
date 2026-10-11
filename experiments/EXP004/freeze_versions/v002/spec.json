@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "experiment_id": "EXP004",
+  "title": "Cross-sectional price momentum",
+  "hypothesis": "PROPOSED: medium-term cross-sectional price momentum improves net mean daily return and zero-RF Sharpe versus monthly equal-weight ownership of the same historical source-defined common-equity universe, with directionally consistent chronological held-out Development folds.",
+  "rationale": "Gradual information incorporation and investor underreaction may sustain medium-term relative price trends. This is a testable economic rationale, not evidence of predictive power.",
+  "expected_effect": "Positive median held-out-fold mean daily net excess versus equal-weight universe, positive pooled mean excess and separate pooled zero-RF Sharpe difference; compare explicit SPY independently.",
+  "falsification_conditions": [
+    "Nonpositive net mean excess or Sharpe difference versus equal-weight universe in untouched out-of-sample evaluation fails the directional hypothesis.",
+    "Fewer than three of four positive Development fold mean excesses prevents candidate advancement.",
+    "A result carried by an isolated cell/regime or erased by predeclared costs/delay weakens robustness; report rather than retune.",
+    "Critical invalid data/execution means an uninterpretable trial, not economic falsification."
+  ],
+  "confounders": [
+    "Sector, size, beta, liquidity and volatility exposures; no factor-adjusted alpha claim.",
+    "Source-defined population, vendor omissions/revisions and unknown exchange/OTC venues.",
+    "Historical human/model knowledge, four-cell selection bias and dependence across folds.",
+    "Simulated corporate actions, delisting proceeds, turnover and effective deployment."
+  ],
+  "asset_universe": [
+    "Historically effective unique source-covered CS stable identities; positive completed nominal prices and maximum-365-calendar-day price prerequisites; no membership, cap, ADV, exchange or ownership filter."
+  ],
+  "dynamic_universe": {
+    "definition": "Reuse the passed EXP003 source rule: unique historical CS security ID at prior completed price and intended execution; exclude identity/alias ambiguity, unknown subtype, nonpositive or missing prices. Require the same completed maximum-365-day price prerequisites for both horizons and the equal-weight universe. Retain ended/delisted histories while historically eligible. No certified additional nominal floor exists; only positivity. No complete US exchange-market claim. Corporate-action QA amendment: at every decision inspect the inclusive prior-completed-session-minus365-calendar-days through prior-session window. A stable-security/effective-date group is ambiguous if multiple distinct adjustment factors lack composition lineage, version/revision is unresolved, or a positive finite unique economically applicable factor cannot be determined. Ordinary unique source splits are not ambiguous merely for imperfect vendor revision history. Identical economic factors normalize once, preserving all raw rows. A crossing ambiguity makes that security temporarily unavailable in the common population for all four cells and the equal-weight benchmark; reentry requires the event to age out of the maximum window and all other requirements to pass. No guessed/composed/averaged or ticker-corrected factor.",
+    "point_in_time_verified": true
+  },
+  "benchmarks": [
+    "equal_weight_eligible_universe",
+    "explicit_SPY_buy_and_hold"
+  ],
+  "candidate_family_budget": 3,
+  "maximum_complexity": 1,
+  "permitted_indicators": [
+    "180/365 elapsed-calendar-day split-safe price momentum; first completed session on/after the elapsed boundary through prior completed session.",
+    "Historical identity and completed-price eligibility, exact monthly schedule, validity and full-session-date execution guards only; no additional alpha signal."
+  ],
+  "data_sources": [
+    {
+      "name": "Historical security_segments effective CS stable identity spans",
+      "availability_timestamp": "Historical effective from_date/to_date joined at prior completed price and intended execution; never current canonical symbols or survivors. Passed scoped EXP003 identity contract reused.",
+      "point_in_time_verified": true,
+      "revision_policy": "Freeze immutable source snapshots and hashes; ambiguous historical aliases are excluded. Source-defined coverage, not full exchange membership or immutable vendor vintages."
+    },
+    {
+      "name": "Completed nominal source prices and effective corporate-action splits",
+      "availability_timestamp": "Prior completed sessions available by preceding-calendar-day 21:00 America/New_York under inherited scoped finalized-EOD source contract; only splits effective through compared completed bars and known at cutoff.",
+      "point_in_time_verified": true,
+      "revision_policy": "Local split-safe ratios; no future split factors or dividend double counting. Persist frozen snapshots, generation code and data hashes; per-run numeric QA required before submission. Bounded inherited evidence, not universal vendor revision immunity."
+    }
+  ],
+  "windows": {
+    "development": {
+      "start": "2015-01-02",
+      "end": "2020-12-31"
+    },
+    "inner_validation": null,
+    "outer_validation": {
+      "start": "2021-01-01",
+      "end": "2023-12-31"
+    },
+    "test": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    }
+  },
+  "forward_paper": {
+    "start_state": "Required after historical evaluation and separate owner approval: minimum six calendar months and six monthly rebalance opportunities; extend if event coverage insufficient. Not deployed.",
+    "evidence_class": "genuinely_forward_unseen"
+  },
+  "costs": {
+    "initial_value": 25000,
+    "fee_percent": 0.1,
+    "slippage_note": "Base 0.10% per fill; cash dividends. Proposed local +10/+20-bps absolute traded-notional stresses on both sides, fixed-fill sensitivities rather than native slippage/capacity simulation.",
+    "dividend_policy": "cash",
+    "fee_contract": {
+      "Stock": {
+        "amount": 0.1,
+        "type": "percent"
+      }
+    }
+  },
+  "execution": {
+    "interval": "Day",
+    "options": false,
+    "requires_events": true,
+    "event_rationale": "Audit exact decision inputs, membership, validity/session guards, fills and fees. Events extracted first only after separately authorized jobs.",
+    "warmup_days": 366,
+    "assumptions": "Monthly first audited tradable session; preceding calendar day21:00 NY cutoff; intended09:30 next-session execution. Completed split-safe local momentum; rank descending with stable-ID ascending ties; equal weights; long only/no leverage. Same maximum-horizon eligible population across four cells and EW. Nominal95% deployment; inherited bounded effective93.5% before fees. For N<K deploy95*min(N,K)/K, cash remainder; N0 liquidate to cash only when execution certified, otherwise critical failure. No silent broadening. Bind immutable numeric/ordinal/validity/session/schedule streams and log actual rebalance evaluations; no rejected custom lag."
+  },
+  "optimization_ranges": {
+    "momentum_lookback_calendar_days": [
+      180,
+      365
+    ],
+    "number_of_holdings": [
+      20,
+      40
+    ]
+  },
+  "selection": {
+    "primary_metric": "paired_mean_daily_excess",
+    "secondary_metrics": [
+      "pooled_zero_RF_Sharpe_difference_vs_equal_weight",
+      "median_fold_mean_daily_excess_vs_equal_weight",
+      "neighbor_effect_dispersion",
+      "mean_absolute_traded_notional_over_equity",
+      "explicit_SPY_comparison",
+      "Sortino",
+      "maximum_drawdown",
+      "annualized_volatility"
+    ],
+    "eligibility": {
+      "max_drawdown": 1,
+      "minimum_trades": 0
+    },
+    "minimum_participation": 0.9,
+    "minimum_breadth": 1,
+    "paired_policy": "exp004_momentum_ew_v1"
+  },
+  "robustness_tests": [
+    "Four clean expanding chronological folds evaluated 2017,2018,2019,2020; two initial training years; completed past warmup outside scored returns. No fitted alpha parameters or separate training jobs.",
+    "Complete four-cell surface and both one-axis neighbors of every cell; isolated positive optimum flagged fragile, never substituted.",
+    "Inherited paired noncircular 20-return-block bootstrap,10000 draws,seed2002001,95% percentile descriptive intervals for mean excess and separate Sharpe difference; no p-values or significance claim. Holm is reserved/inactive.",
+    "Additional local 10/20bps cost per side on six full-Development fill tapes; one additional session execution delay on selected strategy and both benchmarks.",
+    "Predeclared causal SPY regime labels from prior completed closes: bull if trailing252-session price return>=0, bear otherwise; high volatility if trailing63-return annualized sample SD>=20%, low otherwise. Missing warmup remains unclassified. Labels are descriptive, fixed and not selection inputs."
+  ],
+  "multiple_testing": {
+    "method": "holm",
+    "record_all_trials": true
+  },
+  "stress_scenarios": [
+    "local_cost_10bps",
+    "local_cost_20bps",
+    "one_session_extra_execution_delay",
+    "complete_four_cell_surface",
+    "bull_bear_high_low_volatility_descriptive_decomposition"
+  ],
+  "approval_state": "DRAFT",
+  "sealed_ranges": [
+    {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    {
+      "start": "2025-01-01",
+      "end": "9999-12-31"
+    }
+  ],
+  "temporal_contamination_note": "Outer Validation2021-2023 and Test2024 designated before any EXP004 performance. All2021+ observations forbidden in design/Development by stage bounds and research cutoff; Test separately sealed. Workflow-held-out historical, not genuinely unseen: prior experiments and human/model knowledge are disclosed. Owner-only Test approval and later forward paper remain separate gates.",
+  "historical_evidence_class": "workflow_held_out",
+  "research_cutoff": "2020-12-31",
+  "budget": {
+    "aurora": 0,
+    "candidate_backtests": 0,
+    "parameter_sweeps": 0,
+    "walk_forward": 0,
+    "intraday_confirmation": 0
+  }
+}

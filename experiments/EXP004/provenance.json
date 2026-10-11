@@ -178,5 +178,14 @@
     "src/research/ingestion.py": "077be27a478c17a86d68dcbcc37d85123f7598f195cd48d9aea80d49acc9ac18",
     "experiments/_template/spec.schema.json": "14371e45bc18d463123cb6d60573d1c7d30b64fc324f3f0102aab368ad00b033",
     "tests/test_exp004_design.py": "0fa7954ceed423aa9a6aa49cd8567ffb581cd2214efba788b098379b7bd1f894"
+  },
+  "pre_performance_source_qa_amendment": {
+    "authorization": "research/corporate_action_amendment_authorization_20261011.md",
+    "receipt": "freeze_versions/v002/receipt.json",
+    "old_specification_sha256": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
+    "new_specification_sha256": "32b216dd7d510399421d9ea89e61aff30c6b59aa8a4e0b31f5786615c1e6b3b9",
+    "zero_performance_observed_before_amendment": true,
+    "trigger": "Production input QA only",
+    "economic_definition_unchanged": true
   }
 }

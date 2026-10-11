@@ -1,0 +1,850 @@
+{
+  "scope": "Warmup2013-12-31 through2020-12-31; production input preparation only",
+  "queries": [
+    {
+      "name": "bars_2013-12-31_2014-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2013-12-31",
+          "2014-03-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_ab8fe67bb468179942e4993d",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/submission.json",
+        "raw_sha256": "18e5c595b5aca8ab3b6e9cea981e9035a4f4a9e6e740b30e42ec5240c2dafd89"
+      },
+      "result": {
+        "id": "lq_ab8fe67bb468179942e4993d",
+        "row_count": 256677,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/result_receipt.json",
+        "raw_sha256": "4f0d14ec6def433823757938cc11eb52893642bd7baa2e076ef53a51d6124f8a"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/parts/lq_ab8fe67bb468179942e4993d/part-00000.parquet",
+          "sha256": "158593cc1243a48efaf7d2fb563a9966340a200a64abf2193bf7d0b9cab19e98",
+          "bytes": 762396
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2014-04-01_2014-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2014-04-01",
+          "2014-06-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_dd728a013174426972800230",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/submission.json",
+        "raw_sha256": "8fa34e1e09847bc40aaff1d7909772d980a322fd137a7938b5d7d2adf1f13621"
+      },
+      "result": {
+        "id": "lq_dd728a013174426972800230",
+        "row_count": 264970,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/result_receipt.json",
+        "raw_sha256": "922396d0dc5c1d811577fe5441782e86e22ec967ea931d6fdc34282f443408fd"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/parts/lq_dd728a013174426972800230/part-00000.parquet",
+          "sha256": "c30b34eb45d014c80506d7c169041c4f0b7e8e1c9607a88d59eeef204733e5e4",
+          "bytes": 789356
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2014-07-01_2014-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2014-07-01",
+          "2014-09-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_11b887796b18403464d1517d",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/submission.json",
+        "raw_sha256": "65f825572893594976c1c0742377257e6daab53fb2c1c95c9d23f3220a471f25"
+      },
+      "result": {
+        "id": "lq_11b887796b18403464d1517d",
+        "row_count": 274315,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/result_receipt.json",
+        "raw_sha256": "e2d9166e3efc22de10c9b82d99cad7bd4d2671e9a3db29f923f8f13dcff6a2d0"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/parts/lq_11b887796b18403464d1517d/part-00000.parquet",
+          "sha256": "45e1d6c6b10f67a3accf6eed36e2b48007de9ea5f0817560c1b773511ab219a5",
+          "bytes": 819897
+        }
+      ],
+      "transport_calls": 3
+    },
+    {
+      "name": "bars_2014-10-01_2014-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2014-10-01",
+          "2014-12-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_8eb04cc6e3b72595ce53cca8",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/submission.json",
+        "raw_sha256": "c0bb769a4121a225ae8ecf7fb8e542e6a7dfcb6af7b62428c318733defbae078"
+      },
+      "result": {
+        "id": "lq_8eb04cc6e3b72595ce53cca8",
+        "row_count": 278025,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/result_receipt.json",
+        "raw_sha256": "4343bc3c43f19b6f9f54b5d07778f8677e3ad35c0ad0c59dab35b119b5e738e7"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/parts/lq_8eb04cc6e3b72595ce53cca8/part-00000.parquet",
+          "sha256": "58594fc298acb3c43c7686e10fc2db35ce486c46e76e02ad7da6188e706e0b39",
+          "bytes": 841440
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2015-01-01_2015-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2015-01-01",
+          "2015-03-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_1933484c8e29c9c900a0e2de",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/submission.json",
+        "raw_sha256": "2972ee1236034e323f566b654ee83c13f38e1a53c71f00c5b60e07fc225e1d45"
+      },
+      "result": {
+        "id": "lq_1933484c8e29c9c900a0e2de",
+        "row_count": 267053,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/result_receipt.json",
+        "raw_sha256": "4097030680d29b02be62c26770c1bef7b5b13f0b218847e1ccbf11ee3b1de084"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/parts/lq_1933484c8e29c9c900a0e2de/part-00000.parquet",
+          "sha256": "2709a2a28c3072fab6879b3ffabbb113a7517cdbd26511aa71bdb07cbde402fd",
+          "bytes": 808799
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2015-04-01_2015-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2015-04-01",
+          "2015-06-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_dbd8a2f010636e8734ae394c",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/submission.json",
+        "raw_sha256": "e68f19655fa52e3e614ba85a7b8bacec1b77de7454cdfbfbdf8f4abfbf23073a"
+      },
+      "result": {
+        "id": "lq_dbd8a2f010636e8734ae394c",
+        "row_count": 277383,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/result_receipt.json",
+        "raw_sha256": "34ed772e11220bbcca753147f42e835db113eb9ce838010c6a819727461db1b4"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/parts/lq_dbd8a2f010636e8734ae394c/part-00000.parquet",
+          "sha256": "bd6b75f067c7a2369070776e85c4de14ee559559a1d743624a423731d3dbf9ca",
+          "bytes": 840277
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2015-07-01_2015-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2015-07-01",
+          "2015-09-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_c1a95e05827bc2ca4a11af80",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/submission.json",
+        "raw_sha256": "6d3db0ac459785aec5c93de3ed419ace20c5b1c8ca9ee3a8ebf2fde5cd3d5c95"
+      },
+      "result": {
+        "id": "lq_c1a95e05827bc2ca4a11af80",
+        "row_count": 285367,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/result_receipt.json",
+        "raw_sha256": "22aa66b36020ff3ca903a822f4c1edb7c946a3256c457cc62059e58a032dbab8"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/parts/lq_c1a95e05827bc2ca4a11af80/part-00000.parquet",
+          "sha256": "75ae97ec0deb4eff24f3ce1e5aa24803740f1f3f4113f74dc1698852c746e727",
+          "bytes": 859208
+        }
+      ],
+      "transport_calls": 3
+    },
+    {
+      "name": "bars_2015-10-01_2015-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2015-10-01",
+          "2015-12-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_15be2cdee155b597a8e5e14c",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/submission.json",
+        "raw_sha256": "f4802efe40a793b7a3a745492f236ace5097245073890dbca029937dc6462355"
+      },
+      "result": {
+        "id": "lq_15be2cdee155b597a8e5e14c",
+        "row_count": 286170,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/result_receipt.json",
+        "raw_sha256": "34d65837dd90106a0e0d5faef4facbe842e70d70540a01ec0d8967addf03c555"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/parts/lq_15be2cdee155b597a8e5e14c/part-00000.parquet",
+          "sha256": "6f6314c6edd619feb4e02aa2c19f4787ad8f672e3adbdf96bad9c5a053301750",
+          "bytes": 865102
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2016-01-01_2016-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2016-01-01",
+          "2016-03-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_632bb2b978dc1808f4190314",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2016-01-01_2016-03-31/submission.json",
+        "raw_sha256": "68dabe945f81f44b033d749df4fbeebbf71099f615f3c8f00112a087e5d91c6a"
+      },
+      "result": {
+        "id": "lq_632bb2b978dc1808f4190314",
+        "row_count": 272165,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2016-01-01_2016-03-31/result_receipt.json",
+        "raw_sha256": "0b093aace32e90d12f754c778959ba3eb1a15b72f3826d07886f5e7174e9ccc5"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2016-01-01_2016-03-31/parts/lq_632bb2b978dc1808f4190314/part-00000.parquet",
+          "sha256": "79934664ad35801e76440d505218a760e6ad70046354807f081f930687efa5b7",
+          "bytes": 821986
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2016-04-01_2016-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2016-04-01",
+          "2016-06-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_61c9401711a0dca016fb9569",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2016-04-01_2016-06-30/submission.json",
+        "raw_sha256": "1fd68c2a2c95958c5211e65b6d6fbfa4bc5a16f2a94ec7c85f6df058bcbf16cf"
+      },
+      "result": {
+        "id": "lq_61c9401711a0dca016fb9569",
+        "row_count": 284607,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2016-04-01_2016-06-30/result_receipt.json",
+        "raw_sha256": "6afc083c97921063dc01450898bf67bd31cc00cb113cf2a02cdebead2634a994"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2016-04-01_2016-06-30/parts/lq_61c9401711a0dca016fb9569/part-00000.parquet",
+          "sha256": "a5f9df3ee97222a42110a1bb2eb34dc416cc31403d1444b0523b154c99d15ebb",
+          "bytes": 866096
+        }
+      ],
+      "transport_calls": 3
+    },
+    {
+      "name": "bars_2016-07-01_2016-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2016-07-01",
+          "2016-09-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_07a36a196b80944e2bdb7d2c",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2016-07-01_2016-09-30/submission.json",
+        "raw_sha256": "b0debec677a6be316fc8e8a1b82d25e1f321a288bb230e2b31281e6d9a453fde"
+      },
+      "result": {
+        "id": "lq_07a36a196b80944e2bdb7d2c",
+        "row_count": 285810,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2016-07-01_2016-09-30/result_receipt.json",
+        "raw_sha256": "5b3697557bf591380887e1ccbb7e3483687fb08d342a5bad29b81bdfff1526ba"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2016-07-01_2016-09-30/parts/lq_07a36a196b80944e2bdb7d2c/part-00000.parquet",
+          "sha256": "360df86c39b912533d5e1bb9b321eb9e349ef929600f05d07699425f23026a12",
+          "bytes": 865510
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2016-10-01_2016-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2016-10-01",
+          "2016-12-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_e560a53c6eadecbce40514df",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2016-10-01_2016-12-31/submission.json",
+        "raw_sha256": "a0e5b1d10d7e027ef1d57b832c57627d56065bf68d4be91d3080ba96112a5d33"
+      },
+      "result": {
+        "id": "lq_e560a53c6eadecbce40514df",
+        "row_count": 284618,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2016-10-01_2016-12-31/result_receipt.json",
+        "raw_sha256": "399a9a33472202218f24b14f7c2e46ebff08e71744a0a4175144fc7dc1effb9a"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2016-10-01_2016-12-31/parts/lq_e560a53c6eadecbce40514df/part-00000.parquet",
+          "sha256": "5e5782e6973962d0f409990e0b7807ae6eb566e47db0ee1ec08fb7850b82a8cc",
+          "bytes": 857382
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2017-01-01_2017-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2017-01-01",
+          "2017-03-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_a387225b4b196e600d63444f",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2017-01-01_2017-03-31/submission.json",
+        "raw_sha256": "e1a1601c48471fa07cca1c4b2a86ad26cb9877bd99fc2ecd035f587eeb8ad135"
+      },
+      "result": {
+        "id": "lq_a387225b4b196e600d63444f",
+        "row_count": 279453,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2017-01-01_2017-03-31/result_receipt.json",
+        "raw_sha256": "6c3fba395b8461f097b3514f61c6cb2f07872595e1e3f1e208eba0791411bfb8"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2017-01-01_2017-03-31/parts/lq_a387225b4b196e600d63444f/part-00000.parquet",
+          "sha256": "1048de86675732fb16053eb975d656c42e5196bf2aee29d3d05065effb099493",
+          "bytes": 842502
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2017-04-01_2017-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2017-04-01",
+          "2017-06-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_cf7d329de4652eb5c56b4f8d",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2017-04-01_2017-06-30/submission.json",
+        "raw_sha256": "3e48e536422962786622b92ce3c70757e31c77ea770aac0350a2063f1030cfa1"
+      },
+      "result": {
+        "id": "lq_cf7d329de4652eb5c56b4f8d",
+        "row_count": 283475,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2017-04-01_2017-06-30/result_receipt.json",
+        "raw_sha256": "1fc6620b1b9629ad227e3207eb156ecdf50969a3c75ae422fad69a3ce4a1d323"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2017-04-01_2017-06-30/parts/lq_cf7d329de4652eb5c56b4f8d/part-00000.parquet",
+          "sha256": "a13ba47af9baf071a4758d3ac35b9b3210a5276ec431cbc6c1d0689440be8d3f",
+          "bytes": 854559
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2017-07-01_2017-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2017-07-01",
+          "2017-09-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_c9d048eff2115f5b8af5536b",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2017-07-01_2017-09-30/submission.json",
+        "raw_sha256": "f85643ba146448bb09ab09484ce64d00141a1b44992bc27b0d6b8d5e2e793f70"
+      },
+      "result": {
+        "id": "lq_c9d048eff2115f5b8af5536b",
+        "row_count": 283709,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2017-07-01_2017-09-30/result_receipt.json",
+        "raw_sha256": "105be8379374778b079b500c39482209f1f579747b4bd372ae7dfc27fa81ce18"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2017-07-01_2017-09-30/parts/lq_c9d048eff2115f5b8af5536b/part-00000.parquet",
+          "sha256": "9fa4b1007bfcfaa93c51b4fb6f40c1fec9732c18836744062655a3f7e7132a27",
+          "bytes": 855100
+        }
+      ],
+      "transport_calls": 3
+    },
+    {
+      "name": "bars_2017-10-01_2017-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2017-10-01",
+          "2017-12-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_51caa99b0513ee99824fb175",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2017-10-01_2017-12-31/submission.json",
+        "raw_sha256": "fd9f8084a02473313ff1d08378f9a94db9b582752f7fa7f16eaed50679b4fbea"
+      },
+      "result": {
+        "id": "lq_51caa99b0513ee99824fb175",
+        "row_count": 282837,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2017-10-01_2017-12-31/result_receipt.json",
+        "raw_sha256": "f4d3228cfc4ed42f12b3e3c2eec2d89eadf6dcf3799277c723a749d3ce4de350"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2017-10-01_2017-12-31/parts/lq_51caa99b0513ee99824fb175/part-00000.parquet",
+          "sha256": "8a0f4d3ac33a4e7df46855dcf666a9d73e3321e6d34f8f70795a0890b9ecac57",
+          "bytes": 864200
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2018-01-01_2018-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2018-01-01",
+          "2018-03-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_18cd24ae201de2b989358351",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2018-01-01_2018-03-31/submission.json",
+        "raw_sha256": "467c65f54d86e73e471f5d27ebfc1c34563720c52958e85b89d9eff9faee1466"
+      },
+      "result": {
+        "id": "lq_18cd24ae201de2b989358351",
+        "row_count": 273720,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2018-01-01_2018-03-31/result_receipt.json",
+        "raw_sha256": "527faa534c323930a0c70b33c59f75e6875515d915868b9cbaedccfa5f456b17"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2018-01-01_2018-03-31/parts/lq_18cd24ae201de2b989358351/part-00000.parquet",
+          "sha256": "0ba0585220c6288fa98ad00c2878deffb731f55d2cac5806368853ce8bf63966",
+          "bytes": 846857
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2018-04-01_2018-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2018-04-01",
+          "2018-06-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_60b5cebdb15ddb9aff815e0a",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2018-04-01_2018-06-30/submission.json",
+        "raw_sha256": "fe198b2e59960c0e283cc71664cd015b5e23c10f668bc367c6ac0b032ff536cf"
+      },
+      "result": {
+        "id": "lq_60b5cebdb15ddb9aff815e0a",
+        "row_count": 287934,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2018-04-01_2018-06-30/result_receipt.json",
+        "raw_sha256": "d2c2a77532e5d31b382ac3732ea1f1208b96394af8a7f76142b46a101a92759c"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2018-04-01_2018-06-30/parts/lq_60b5cebdb15ddb9aff815e0a/part-00000.parquet",
+          "sha256": "e2fc71d740d1b57973c1013296367e7187a5b32fd46e83d2071f332df23f5d20",
+          "bytes": 890879
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2018-07-01_2018-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2018-07-01",
+          "2018-09-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_47e689d638f6366b48317fec",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2018-07-01_2018-09-30/submission.json",
+        "raw_sha256": "21311593570ef278bc0e531de298ce84ed7d4e2aea5a2cf5db0b04f1be31ebb1"
+      },
+      "result": {
+        "id": "lq_47e689d638f6366b48317fec",
+        "row_count": 285404,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2018-07-01_2018-09-30/result_receipt.json",
+        "raw_sha256": "535f64dd1f1b06f777051f32993ede7910b16d9882f38b729181faa898eee552"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2018-07-01_2018-09-30/parts/lq_47e689d638f6366b48317fec/part-00000.parquet",
+          "sha256": "8a846709080b03c00755bcf52fb3411d5d1cebb4dee5367b73f241c73c709138",
+          "bytes": 882045
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2018-10-01_2018-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2018-10-01",
+          "2018-12-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_a329de85a43b9b2dd5819d14",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2018-10-01_2018-12-31/submission.json",
+        "raw_sha256": "3c803f8aaa19cfc1894e1a90f75e41d06f1a274269f0a1c4c509d023a1f48723"
+      },
+      "result": {
+        "id": "lq_a329de85a43b9b2dd5819d14",
+        "row_count": 286122,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2018-10-01_2018-12-31/result_receipt.json",
+        "raw_sha256": "f9ddbf102ce61271e2df7f15ff9087b8fdff7ac10386e43e82ca6e8dd1ed4c73"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2018-10-01_2018-12-31/parts/lq_a329de85a43b9b2dd5819d14/part-00000.parquet",
+          "sha256": "39b43acc687421258d694a8f6a6b6514571224e61a67110d3043e2382903d859",
+          "bytes": 885752
+        }
+      ],
+      "transport_calls": 3
+    },
+    {
+      "name": "bars_2019-01-01_2019-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2019-01-01",
+          "2019-03-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_423314131af32147759ebb08",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2019-01-01_2019-03-31/submission.json",
+        "raw_sha256": "7de24533a253384de968d80f6b39b58cc21296ed0076cf8d8514781eb75d215e"
+      },
+      "result": {
+        "id": "lq_423314131af32147759ebb08",
+        "row_count": 274854,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2019-01-01_2019-03-31/result_receipt.json",
+        "raw_sha256": "0a6a542a2776bf53cedd6f78c7b735b11d43accfa1255b407be4795b050c89c8"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2019-01-01_2019-03-31/parts/lq_423314131af32147759ebb08/part-00000.parquet",
+          "sha256": "8a0e38afbed7644b8412829bfdb2d492922030852ffd80b928aa91e99b0e4489",
+          "bytes": 845656
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2019-04-01_2019-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2019-04-01",
+          "2019-06-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_f851b8aae2cb337bb8f64734",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2019-04-01_2019-06-30/submission.json",
+        "raw_sha256": "6a08d5fdd8d422c40109069910cc6b6d6fae6baff15e23b01e850b9b11ea9fe6"
+      },
+      "result": {
+        "id": "lq_f851b8aae2cb337bb8f64734",
+        "row_count": 284022,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2019-04-01_2019-06-30/result_receipt.json",
+        "raw_sha256": "b88458578a7cdeb32fba9c6546fa8929dbf05f561e85628084e07057a287fd03"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2019-04-01_2019-06-30/parts/lq_f851b8aae2cb337bb8f64734/part-00000.parquet",
+          "sha256": "821f98d1bf78949cbb8ecfe691510ce7935f648f35b4d60a94121fff86f7544a",
+          "bytes": 871609
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2019-07-01_2019-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2019-07-01",
+          "2019-09-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_3042b219c4e0417b78213936",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2019-07-01_2019-09-30/submission.json",
+        "raw_sha256": "cb7f5a639413c87246acf38b84fe139feace4540df7fda3c5647e5316331bbcc"
+      },
+      "result": {
+        "id": "lq_3042b219c4e0417b78213936",
+        "row_count": 289448,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2019-07-01_2019-09-30/result_receipt.json",
+        "raw_sha256": "ed6f8a90e5bc85fff7b0d59166959c2f1e497103663fa0f6cb4a387f0dfc0efc"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2019-07-01_2019-09-30/parts/lq_3042b219c4e0417b78213936/part-00000.parquet",
+          "sha256": "977f644e7976e8cd79bc3ad227ef8274425bb082b76f5b7662dd93f1f263afd0",
+          "bytes": 891297
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2019-10-01_2019-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2019-10-01",
+          "2019-12-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_0485a5a1e985461fed70f115",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2019-10-01_2019-12-31/submission.json",
+        "raw_sha256": "155566446aaf8978a035815b07989e3a359091beedfab341ff140753bd0d0829"
+      },
+      "result": {
+        "id": "lq_0485a5a1e985461fed70f115",
+        "row_count": 288298,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2019-10-01_2019-12-31/result_receipt.json",
+        "raw_sha256": "02e1f2fbccb04bbd6ad546d5ac786a31d3b85dbd9ddd2ce25173651432770195"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2019-10-01_2019-12-31/parts/lq_0485a5a1e985461fed70f115/part-00000.parquet",
+          "sha256": "fc22e090892802d027ba4c766118f22932efceb7ffb9c8512eccc9e354fb7c0d",
+          "bytes": 886365
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2020-01-01_2020-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2020-01-01",
+          "2020-03-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_73031b53d6b4d45f5d7c5054",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2020-01-01_2020-03-31/submission.json",
+        "raw_sha256": "1992cbd823e2a501028d3aefa2fa01acfc90903b19dc3f72d994287c96481a2c"
+      },
+      "result": {
+        "id": "lq_73031b53d6b4d45f5d7c5054",
+        "row_count": 279111,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2020-01-01_2020-03-31/result_receipt.json",
+        "raw_sha256": "5d7a797e333a6d603ae6a649e19eb975c412af3ee97a6af86809818813fab424"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2020-01-01_2020-03-31/parts/lq_73031b53d6b4d45f5d7c5054/part-00000.parquet",
+          "sha256": "75dd1828624b8a7e607300238b8685e01027e2984c4446a3455fc90e22db40d2",
+          "bytes": 879822
+        }
+      ],
+      "transport_calls": 5
+    },
+    {
+      "name": "bars_2020-04-01_2020-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2020-04-01",
+          "2020-06-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_a4f68565e4b9de3d2e7606b9",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2020-04-01_2020-06-30/submission.json",
+        "raw_sha256": "8093cd520c6e6bf4da3a27023fe74867b0b15160f9e3210957e7e861084e2a34"
+      },
+      "result": {
+        "id": "lq_a4f68565e4b9de3d2e7606b9",
+        "row_count": 283424,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2020-04-01_2020-06-30/result_receipt.json",
+        "raw_sha256": "db925197779280a07deac533bd35d1a24752346e7777c3d2910102ff5fde6f66"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2020-04-01_2020-06-30/parts/lq_a4f68565e4b9de3d2e7606b9/part-00000.parquet",
+          "sha256": "a4989be6f5c15912407f3ed40d3e41deec3425392250ac5fa82050bf9e05f523",
+          "bytes": 881137
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2020-07-01_2020-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2020-07-01",
+          "2020-09-30"
+        ]
+      },
+      "submission": {
+        "id": "lq_cec44e919c1e1b520ef33f2e",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2020-07-01_2020-09-30/submission.json",
+        "raw_sha256": "0defeeacdce94f63e39b337b11ee9d55f5ee468e75303575318241f46f91f77a"
+      },
+      "result": {
+        "id": "lq_cec44e919c1e1b520ef33f2e",
+        "row_count": 291682,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2020-07-01_2020-09-30/result_receipt.json",
+        "raw_sha256": "362adb24461ed033d359a5ed6ea54ee85c300c343a2ff8cb5df48420b01e5ffe"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2020-07-01_2020-09-30/parts/lq_cec44e919c1e1b520ef33f2e/part-00000.parquet",
+          "sha256": "29367eea6227e7d137f24b475dc0539ca096d78012f437a8ce4cf0a4b5c986fa",
+          "bytes": 893469
+        }
+      ],
+      "transport_calls": 4
+    },
+    {
+      "name": "bars_2020-10-01_2020-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2020-10-01",
+          "2020-12-31"
+        ]
+      },
+      "submission": {
+        "id": "lq_cc12e231cf3275d25158c3e0",
+        "row_count": null,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2020-10-01_2020-12-31/submission.json",
+        "raw_sha256": "241b8a61712562ff13451e03626aa078a6438e688e454e372c53ff496c40b3de"
+      },
+      "result": {
+        "id": "lq_cc12e231cf3275d25158c3e0",
+        "row_count": 300539,
+        "raw_path": "data/raw/EXP004/production_inputs_v001/bars_2020-10-01_2020-12-31/result_receipt.json",
+        "raw_sha256": "675f3e4c5072842d3d45f5415926398cbf6c7bc9b71f0f02e8a23ced0a2c427b"
+      },
+      "parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2020-10-01_2020-12-31/parts/lq_cc12e231cf3275d25158c3e0/part-00000.parquet",
+          "sha256": "273d5d6b6c210c4d62bcbbdd853ff405340f5cf44072c014397c7276b3d6d479",
+          "bytes": 925560
+        }
+      ],
+      "transport_calls": 4
+    }
+  ],
+  "split_source": "production_query_log.json",
+  "estimated_Lake_tokens": null,
+  "observable_actual_debit": null,
+  "credit_purchase": false,
+  "later_observations": false
+}

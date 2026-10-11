@@ -21,7 +21,9 @@ class EXP004PreparationTests(unittest.TestCase):
 
     def test_frozen_methodology_remains_exact(self):
         f = verify_freeze()
-        self.assertEqual(f['frozen_specification_sha256'], '88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d')
+        original=json.loads((ROOT/'experiments/EXP004/freeze_receipt.json').read_bytes())
+        self.assertEqual(original['frozen_specification_sha256'], '88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d')
+        self.assertEqual(f['frozen_specification_sha256'],digest(json.loads((ROOT/'experiments/EXP004/spec.json').read_bytes())))
 
     def test_counts_do_not_create_numeric_rank_or_zero(self):
         result = check_numeric_input([], ['stable-A'], **self.arguments())
@@ -51,6 +53,6 @@ class EXP004PreparationTests(unittest.TestCase):
         m = json.loads((ROOT/'experiments/EXP004/development_input_manifest.json').read_text(encoding='utf-8'))
         expected = m.pop('input_manifest_sha256')
         self.assertEqual(digest(m), expected)
-        self.assertEqual(m['actual_jobs'], 0)
         self.assertEqual(len(m['decisions']), 72)
-        self.assertTrue(all(not d['submit_allowed'] for d in m['decisions']))
+        self.assertTrue(all(d['session']<='2020-12-31' for d in m['decisions']))
+        self.assertTrue(all(not d['submit_allowed'] or d['qa_status']=='PASS_LOCAL_NUMERIC' for d in m['decisions']))

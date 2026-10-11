@@ -14,7 +14,16 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def verify_freeze(root=ROOT):
     directory = root/'experiments/EXP004'
-    freeze = json.loads((directory/'freeze_receipt.json').read_text(encoding='utf-8'))
+    original = json.loads((directory/'freeze_receipt.json').read_text(encoding='utf-8'))
+    active = directory/'freeze_versions/v002/receipt.json'
+    freeze = json.loads(active.read_bytes()) if active.exists() else original
+    if active.exists():
+        archive = directory/'freeze_versions/v001'
+        for name, expected in original['frozen_artifacts'].items():
+            if hashlib.sha256((archive/name).read_bytes()).hexdigest() != expected:
+                raise ValueError('Original freeze archive changed: '+name)
+        if hashlib.sha256((directory/'freeze_receipt.json').read_bytes()).hexdigest() != freeze['original_receipt_byte_sha256']:
+            raise ValueError('Original freeze receipt changed')
     spec = json.loads((directory/'spec.json').read_text(encoding='utf-8'))
     if digest(spec) != freeze['frozen_specification_sha256']:
         raise ValueError('Frozen specification changed')

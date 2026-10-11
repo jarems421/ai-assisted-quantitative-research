@@ -1,0 +1,26 @@
+# EXP004 pre-performance selection and statistical contract
+
+**PROPOSED for human freeze; no empirical returns examined.** Implementation: `src.research.exp004_policy`. Only four fixed cells exist. All scored returns are simple adjacent true-New-York-close returns; RF=0, 252 sessions/year, sample SD, zero-MAR downside RMS across all returns, period-specific running-peak drawdown, and total return relative to $25,000 funding. Reuse frozen metric code unchanged.
+
+Each expanding fold has at least the 2015–2016 chronological history before its 2017–2020 scoring year. Momentum has no fitted training parameters. Past warmup is never scored. All independently funded fold runs and benchmarks begin at their first permitted scoring-session open with $25,000; adjacent closes produce no artificial pre-funding return. Full-Development runs are descriptive, never an alternative selection score. Four fold years have disjoint scored dates; pool each return date once. No leakage embargo is required for a forward-return training label because no such labels/model are fitted. As-of information and strict chronological boundaries still apply.
+
+The primary comparator is monthly equal-weight ownership of the **entire same maximum-horizon eligible universe**. Both horizons must be available on that cross section before any of the four candidate or EW decisions. SPY is independently simulated buy-and-hold under the same inception/funding/cost convention. It supplies a separate opportunity-cost comparison, not the primary ranking-adds-value test.
+
+Eligibility requires all of:
+
+- Exact four scored fold years, 2017–2020, audited common dates/universe/costs and no critical execution/data failure.
+- At least 90% participating scheduled monthly decisions in **each** fold. A completed audited rebalance evaluation counts even with unchanged targets; a missed/rejected evaluation or missing-coverage cash-only decision does not. Events substantiate the count. Numerator cannot exceed denominator.
+- Positive pooled paired mean daily net excess versus EW, positive separate pooled zero-RF Sharpe difference versus EW, and positive median fold mean daily excess.
+- At least three of four fold mean daily excesses strictly positive. Undefined/nonfinite effects fail eligibility.
+
+Select the highest median of the four held-out-fold mean daily excesses. Exact ties (no result-driven tolerance) use lower population SD of the **two** Hamming-distance-one neighbors' pooled mean excesses, then lower mean turnover, then ascending `(momentum calendar days, holdings)`. Turnover is mean over scheduled decisions of total absolute filled notional divided by pre-trade equity, including initial entry; each side counts, no halving. Unknown/failed neighboring effects have infinite sensitivity for tie-break purposes and must be reported. No eligible cell means no advancement.
+
+Always report the complete four-cell surface, both horizon/holding directions, neighbor signs and dispersion, regime/contribution diagnostics and every failure. A winner whose two neighbors fail directional evidence is flagged isolated/fragile without changing the selection rule. Lower volatility/drawdown alone never confirms excess-return or alpha.
+
+Reuse `src.research.exp002_inference`: paired noncircular moving blocks of 20 returns, 10,000 draws, seed 2,002,001, 95% percentile intervals for paired mean excess and separate Sharpe difference. Blocks are constructed within fold boundaries; apply synchronized indexes to candidate/comparator, concatenate resampled folds, and retain the noncircular rule. Do not bridge independent fold funding boundaries or drop inconvenient undefined draws silently. The frozen module can be applied per fold; an eventual pooled driver must record boundary-respecting resampling. Intervals describe uncertainty conditional on data and selection; they are not selection-adjusted significance tests. Holm is schema-reserved and **inactive**; no p-values or persistent-alpha claim.
+
+Fixed local cost stresses debit an additional 10/20 bps of absolute filled notional on **each side**, atop recorded fees, on all six full-Development tapes. Reconstruct stressed equity by retaining fill quantities and debiting accumulated extra costs; do not merely subtract fees from total-return percentages or retune orders. This is a fixed-tape sensitivity, not a slippage/capacity simulation. One extra execution session delays each monthly selected-strategy and EW order while retaining its original cutoff information; SPY inception is delayed likewise. Invalidated identity/price is an explicit exclusion/failure, never refreshed alpha. Three remote runs, no new axis.
+
+Regime labels are descriptive, determined from completed prior SPY information: bull/bear by trailing 252-session price return >=0/<0; high/low volatility by trailing 63 simple returns' annualized sample SD >=20%/<20%. Unknown warmup is unclassified. These fixed choices do not enter selection or create optimized thresholds. No regime observations are retrieved in this design pass.
+
+Outer Validation 2021–2023 cannot tune candidate, grid or definitions. Test 2024 stays sealed until separate owner opening. Historical prior knowledge is disclosed; only later approved forward paper is genuinely unseen evidence.

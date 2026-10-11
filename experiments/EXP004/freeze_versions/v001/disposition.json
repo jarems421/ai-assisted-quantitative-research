@@ -1,0 +1,9 @@
+{
+  "status": "SUPERSEDED_PRE_PERFORMANCE_BY_SOURCE_QA",
+  "original_specification_sha256": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
+  "original_methodology_sha256": "caf07509c04a9b703725983482e7502c03616b1ab27bdc5287148fdcca9b6328",
+  "amendment_authorization_sha256": "8bc75330f69e5596bb8de6d043316a4fb0def9b54669584c7bb1e36a08442ba3",
+  "zero_performance_observed": true,
+  "trigger": "Production source QA; before any EXP004 candidate or benchmark run",
+  "boundary": "Owner assertion and local EXP004 job/trial and source ledgers; not an independent audit of all account activity."
+}
