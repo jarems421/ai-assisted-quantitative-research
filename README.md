@@ -15,6 +15,8 @@ The [Phase 1 acceleration audit](docs/acceleration/phase1.md) prioritizes certif
 
 EdgarTools and compatible PyArrow dependencies are prepared in an isolated environment with a [version/hash lock](docs/acceleration/sec_pilot_requirements.lock); existing research dependency pins remain unchanged. No SEC filing corpus has been acquired.
 
+The [Phase 2 implementation plan](docs/acceleration/phase2_plan.md) defines five verified checkpoints for the fixed three-filing pilot, including offline parser validation and immutable as-of snapshots. It is a planning review; acquisition and implementation have not begun.
+
 ```mermaid
 flowchart LR
     S["Specification and PIT audit"] --> D["Development and controls"] --> F["Frozen candidate"]
