@@ -381,7 +381,7 @@
           "minimum": 1
         },
         "paired_policy": {
-          "const": "exp003_mean_sharpe_v1"
+          "enum": ["exp003_mean_sharpe_v1", "exp004_momentum_ew_v1"]
         }
       },
       "required": [

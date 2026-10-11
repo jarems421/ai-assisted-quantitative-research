@@ -8,7 +8,12 @@ from src.research.spec import digest, canonical
 
 def eligible(spec, metrics, evidence):
     if spec['selection']['primary_metric']=='paired_mean_daily_excess':
-        from src.research.exp003_policy import paired_eligibility
+        if spec['selection'].get('paired_policy') == 'exp004_momentum_ew_v1':
+            from src.research.exp004_policy import paired_eligibility
+        elif spec['selection'].get('paired_policy') == 'exp003_mean_sharpe_v1':
+            from src.research.exp003_policy import paired_eligibility
+        else:
+            raise ValueError('Unknown paired selection policy')
         return paired_eligibility(evidence)
     return (metrics['maximum_drawdown']<=spec['selection']['eligibility']['max_drawdown']
             and evidence['completed_trades']>=spec['selection']['eligibility']['minimum_trades']

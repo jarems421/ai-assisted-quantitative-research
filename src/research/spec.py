@@ -57,9 +57,14 @@ def validate(spec):
     if not spec["dynamic_universe"]["point_in_time_verified"]:
         raise ValueError("Universe membership must be point-in-time")
     if spec['selection']['primary_metric']=='paired_mean_daily_excess':
-        if (spec['selection'].get('paired_policy')!='exp003_mean_sharpe_v1'
+        if (spec['selection'].get('paired_policy') not in ('exp003_mean_sharpe_v1', 'exp004_momentum_ew_v1')
                 or spec['selection']['minimum_participation']!=.90):
             raise ValueError('Paired selection requires its explicit policy and scheduled 90% participation')
+        if spec['selection'].get('paired_policy') == 'exp004_momentum_ew_v1':
+            from src.research.exp004_policy import RANGES
+            if (spec['experiment_id'] != 'EXP004' or spec['optimization_ranges'] != RANGES
+                    or spec['selection']['eligibility'] != {'max_drawdown': 1, 'minimum_trades': 0}):
+                raise ValueError('EXP004 requires its exact four-cell policy and neutral legacy eligibility')
     fees=spec['costs']['fee_contract']
     if set(fees)-{'Stock','Cryptocurrency','Option','OptionSlippageFraction'}:
         raise ValueError('Unknown asset fee contract')

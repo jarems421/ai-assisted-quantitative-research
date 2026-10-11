@@ -1,0 +1,11 @@
+[
+  {
+    "experiment": "EXP003",
+    "status": "CLOSED_SOURCE_FEASIBILITY_BLOCKED",
+    "as_of": "2026-10-11",
+    "economic_hypothesis_tested": false,
+    "authority": "EXP004/research/owner_request_20261011.md",
+    "historical_record_unchanged": true,
+    "reason": "No complete insider security/window version-and-identity certificate; no economic candidate run. Closure is external so original EXP003 DRAFT audit remains immutable."
+  }
+]

@@ -1,0 +1,1174 @@
+{
+  "status": "SDK_COMPILED_FIXTURES_NOT_EXECUTABLE",
+  "remote_calls": 0,
+  "candidates": [
+    {
+      "parameters": {
+        "momentum_lookback_calendar_days": 180,
+        "number_of_holdings": 20
+      },
+      "portfolio": {
+        "name": "EXP004 momentum template",
+        "initialValue": 25000,
+        "cash": 25000,
+        "buyingPower": 25000,
+        "strategies": [
+          {
+            "name": "Exact monthly session open",
+            "condition": {
+              "type": "And",
+              "conditions": [
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CurrentTimeHours"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Value",
+                    "value": 9.5
+                  }
+                },
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CustomIndicator",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "SPY",
+                      "name": "SPY"
+                    },
+                    "customIndicatorId": "EXP004_SCHEDULE_UNPUBLISHED"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Plus",
+                    "indicators": [
+                      {
+                        "type": "Plus",
+                        "indicators": [
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Year"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 10000
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Month"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 100
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Date"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "action": {
+              "type": "DynamicRebalance",
+              "universe": {
+                "source": "SPECIFIC_ASSETS",
+                "assets": [
+                  {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  {
+                    "type": "Stock",
+                    "symbol": "MSFT",
+                    "name": "MSFT"
+                  }
+                ]
+              },
+              "pipeline": [
+                {
+                  "type": "Filter",
+                  "condition": {
+                    "type": "And",
+                    "conditions": [
+                      {
+                        "type": "And",
+                        "conditions": [
+                          {
+                            "type": "Base",
+                            "lhs": {
+                              "type": "CustomIndicator",
+                              "customIndicatorId": "EXP004_VALIDITY_UNPUBLISHED"
+                            },
+                            "comparison": "equal",
+                            "rhs": {
+                              "type": "Value",
+                              "value": 1
+                            }
+                          },
+                          {
+                            "type": "Base",
+                            "lhs": {
+                              "type": "CustomIndicator",
+                              "customIndicatorId": "EXP004_SESSION_UNPUBLISHED"
+                            },
+                            "comparison": "equal",
+                            "rhs": {
+                              "type": "Plus",
+                              "indicators": [
+                                {
+                                  "type": "Plus",
+                                  "indicators": [
+                                    {
+                                      "type": "Multiply",
+                                      "indicators": [
+                                        {
+                                          "type": "Year"
+                                        },
+                                        {
+                                          "type": "Value",
+                                          "value": 10000
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "Multiply",
+                                      "indicators": [
+                                        {
+                                          "type": "Month"
+                                        },
+                                        {
+                                          "type": "Value",
+                                          "value": 100
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "Date"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Base",
+                        "lhs": {
+                          "type": "CustomIndicator",
+                          "customIndicatorId": "EXP004_MOMENTUM_UNPUBLISHED"
+                        },
+                        "comparison": "greaterThanOrEqual",
+                        "rhs": {
+                          "type": "Value",
+                          "value": -1e+30
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "SelectTop",
+                  "metric": {
+                    "type": "CustomIndicator",
+                    "customIndicatorId": "EXP004_STABLE_ORDER_UNPUBLISHED"
+                  },
+                  "limit": 20,
+                  "direction": "Highest"
+                }
+              ],
+              "weightIndicator": {
+                "type": "Value",
+                "value": 1
+              },
+              "limit": 20,
+              "deploymentPercent": {
+                "type": "CustomIndicator",
+                "targetAsset": {
+                  "type": "Stock",
+                  "symbol": "SPY",
+                  "name": "SPY"
+                },
+                "customIndicatorId": "EXP004_DEPLOYMENT_UNPUBLISHED"
+              },
+              "allowShorts": false
+            },
+            "orderExecution": {
+              "type": "Market"
+            }
+          }
+        ],
+        "supportsFractionalShares": true,
+        "dividendPolicy": "cash"
+      }
+    },
+    {
+      "parameters": {
+        "momentum_lookback_calendar_days": 180,
+        "number_of_holdings": 40
+      },
+      "portfolio": {
+        "name": "EXP004 momentum template",
+        "initialValue": 25000,
+        "cash": 25000,
+        "buyingPower": 25000,
+        "strategies": [
+          {
+            "name": "Exact monthly session open",
+            "condition": {
+              "type": "And",
+              "conditions": [
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CurrentTimeHours"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Value",
+                    "value": 9.5
+                  }
+                },
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CustomIndicator",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "SPY",
+                      "name": "SPY"
+                    },
+                    "customIndicatorId": "EXP004_SCHEDULE_UNPUBLISHED"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Plus",
+                    "indicators": [
+                      {
+                        "type": "Plus",
+                        "indicators": [
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Year"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 10000
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Month"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 100
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Date"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "action": {
+              "type": "DynamicRebalance",
+              "universe": {
+                "source": "SPECIFIC_ASSETS",
+                "assets": [
+                  {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  {
+                    "type": "Stock",
+                    "symbol": "MSFT",
+                    "name": "MSFT"
+                  }
+                ]
+              },
+              "pipeline": [
+                {
+                  "type": "Filter",
+                  "condition": {
+                    "type": "And",
+                    "conditions": [
+                      {
+                        "type": "And",
+                        "conditions": [
+                          {
+                            "type": "Base",
+                            "lhs": {
+                              "type": "CustomIndicator",
+                              "customIndicatorId": "EXP004_VALIDITY_UNPUBLISHED"
+                            },
+                            "comparison": "equal",
+                            "rhs": {
+                              "type": "Value",
+                              "value": 1
+                            }
+                          },
+                          {
+                            "type": "Base",
+                            "lhs": {
+                              "type": "CustomIndicator",
+                              "customIndicatorId": "EXP004_SESSION_UNPUBLISHED"
+                            },
+                            "comparison": "equal",
+                            "rhs": {
+                              "type": "Plus",
+                              "indicators": [
+                                {
+                                  "type": "Plus",
+                                  "indicators": [
+                                    {
+                                      "type": "Multiply",
+                                      "indicators": [
+                                        {
+                                          "type": "Year"
+                                        },
+                                        {
+                                          "type": "Value",
+                                          "value": 10000
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "Multiply",
+                                      "indicators": [
+                                        {
+                                          "type": "Month"
+                                        },
+                                        {
+                                          "type": "Value",
+                                          "value": 100
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "Date"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Base",
+                        "lhs": {
+                          "type": "CustomIndicator",
+                          "customIndicatorId": "EXP004_MOMENTUM_UNPUBLISHED"
+                        },
+                        "comparison": "greaterThanOrEqual",
+                        "rhs": {
+                          "type": "Value",
+                          "value": -1e+30
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "SelectTop",
+                  "metric": {
+                    "type": "CustomIndicator",
+                    "customIndicatorId": "EXP004_STABLE_ORDER_UNPUBLISHED"
+                  },
+                  "limit": 40,
+                  "direction": "Highest"
+                }
+              ],
+              "weightIndicator": {
+                "type": "Value",
+                "value": 1
+              },
+              "limit": 40,
+              "deploymentPercent": {
+                "type": "CustomIndicator",
+                "targetAsset": {
+                  "type": "Stock",
+                  "symbol": "SPY",
+                  "name": "SPY"
+                },
+                "customIndicatorId": "EXP004_DEPLOYMENT_UNPUBLISHED"
+              },
+              "allowShorts": false
+            },
+            "orderExecution": {
+              "type": "Market"
+            }
+          }
+        ],
+        "supportsFractionalShares": true,
+        "dividendPolicy": "cash"
+      }
+    },
+    {
+      "parameters": {
+        "momentum_lookback_calendar_days": 365,
+        "number_of_holdings": 20
+      },
+      "portfolio": {
+        "name": "EXP004 momentum template",
+        "initialValue": 25000,
+        "cash": 25000,
+        "buyingPower": 25000,
+        "strategies": [
+          {
+            "name": "Exact monthly session open",
+            "condition": {
+              "type": "And",
+              "conditions": [
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CurrentTimeHours"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Value",
+                    "value": 9.5
+                  }
+                },
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CustomIndicator",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "SPY",
+                      "name": "SPY"
+                    },
+                    "customIndicatorId": "EXP004_SCHEDULE_UNPUBLISHED"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Plus",
+                    "indicators": [
+                      {
+                        "type": "Plus",
+                        "indicators": [
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Year"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 10000
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Month"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 100
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Date"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "action": {
+              "type": "DynamicRebalance",
+              "universe": {
+                "source": "SPECIFIC_ASSETS",
+                "assets": [
+                  {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  {
+                    "type": "Stock",
+                    "symbol": "MSFT",
+                    "name": "MSFT"
+                  }
+                ]
+              },
+              "pipeline": [
+                {
+                  "type": "Filter",
+                  "condition": {
+                    "type": "And",
+                    "conditions": [
+                      {
+                        "type": "And",
+                        "conditions": [
+                          {
+                            "type": "Base",
+                            "lhs": {
+                              "type": "CustomIndicator",
+                              "customIndicatorId": "EXP004_VALIDITY_UNPUBLISHED"
+                            },
+                            "comparison": "equal",
+                            "rhs": {
+                              "type": "Value",
+                              "value": 1
+                            }
+                          },
+                          {
+                            "type": "Base",
+                            "lhs": {
+                              "type": "CustomIndicator",
+                              "customIndicatorId": "EXP004_SESSION_UNPUBLISHED"
+                            },
+                            "comparison": "equal",
+                            "rhs": {
+                              "type": "Plus",
+                              "indicators": [
+                                {
+                                  "type": "Plus",
+                                  "indicators": [
+                                    {
+                                      "type": "Multiply",
+                                      "indicators": [
+                                        {
+                                          "type": "Year"
+                                        },
+                                        {
+                                          "type": "Value",
+                                          "value": 10000
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "Multiply",
+                                      "indicators": [
+                                        {
+                                          "type": "Month"
+                                        },
+                                        {
+                                          "type": "Value",
+                                          "value": 100
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "Date"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Base",
+                        "lhs": {
+                          "type": "CustomIndicator",
+                          "customIndicatorId": "EXP004_MOMENTUM_UNPUBLISHED"
+                        },
+                        "comparison": "greaterThanOrEqual",
+                        "rhs": {
+                          "type": "Value",
+                          "value": -1e+30
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "SelectTop",
+                  "metric": {
+                    "type": "CustomIndicator",
+                    "customIndicatorId": "EXP004_STABLE_ORDER_UNPUBLISHED"
+                  },
+                  "limit": 20,
+                  "direction": "Highest"
+                }
+              ],
+              "weightIndicator": {
+                "type": "Value",
+                "value": 1
+              },
+              "limit": 20,
+              "deploymentPercent": {
+                "type": "CustomIndicator",
+                "targetAsset": {
+                  "type": "Stock",
+                  "symbol": "SPY",
+                  "name": "SPY"
+                },
+                "customIndicatorId": "EXP004_DEPLOYMENT_UNPUBLISHED"
+              },
+              "allowShorts": false
+            },
+            "orderExecution": {
+              "type": "Market"
+            }
+          }
+        ],
+        "supportsFractionalShares": true,
+        "dividendPolicy": "cash"
+      }
+    },
+    {
+      "parameters": {
+        "momentum_lookback_calendar_days": 365,
+        "number_of_holdings": 40
+      },
+      "portfolio": {
+        "name": "EXP004 momentum template",
+        "initialValue": 25000,
+        "cash": 25000,
+        "buyingPower": 25000,
+        "strategies": [
+          {
+            "name": "Exact monthly session open",
+            "condition": {
+              "type": "And",
+              "conditions": [
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CurrentTimeHours"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Value",
+                    "value": 9.5
+                  }
+                },
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CustomIndicator",
+                    "targetAsset": {
+                      "type": "Stock",
+                      "symbol": "SPY",
+                      "name": "SPY"
+                    },
+                    "customIndicatorId": "EXP004_SCHEDULE_UNPUBLISHED"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Plus",
+                    "indicators": [
+                      {
+                        "type": "Plus",
+                        "indicators": [
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Year"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 10000
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Month"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 100
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Date"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "action": {
+              "type": "DynamicRebalance",
+              "universe": {
+                "source": "SPECIFIC_ASSETS",
+                "assets": [
+                  {
+                    "type": "Stock",
+                    "symbol": "AAPL",
+                    "name": "AAPL"
+                  },
+                  {
+                    "type": "Stock",
+                    "symbol": "MSFT",
+                    "name": "MSFT"
+                  }
+                ]
+              },
+              "pipeline": [
+                {
+                  "type": "Filter",
+                  "condition": {
+                    "type": "And",
+                    "conditions": [
+                      {
+                        "type": "And",
+                        "conditions": [
+                          {
+                            "type": "Base",
+                            "lhs": {
+                              "type": "CustomIndicator",
+                              "customIndicatorId": "EXP004_VALIDITY_UNPUBLISHED"
+                            },
+                            "comparison": "equal",
+                            "rhs": {
+                              "type": "Value",
+                              "value": 1
+                            }
+                          },
+                          {
+                            "type": "Base",
+                            "lhs": {
+                              "type": "CustomIndicator",
+                              "customIndicatorId": "EXP004_SESSION_UNPUBLISHED"
+                            },
+                            "comparison": "equal",
+                            "rhs": {
+                              "type": "Plus",
+                              "indicators": [
+                                {
+                                  "type": "Plus",
+                                  "indicators": [
+                                    {
+                                      "type": "Multiply",
+                                      "indicators": [
+                                        {
+                                          "type": "Year"
+                                        },
+                                        {
+                                          "type": "Value",
+                                          "value": 10000
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "Multiply",
+                                      "indicators": [
+                                        {
+                                          "type": "Month"
+                                        },
+                                        {
+                                          "type": "Value",
+                                          "value": 100
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "Date"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Base",
+                        "lhs": {
+                          "type": "CustomIndicator",
+                          "customIndicatorId": "EXP004_MOMENTUM_UNPUBLISHED"
+                        },
+                        "comparison": "greaterThanOrEqual",
+                        "rhs": {
+                          "type": "Value",
+                          "value": -1e+30
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "SelectTop",
+                  "metric": {
+                    "type": "CustomIndicator",
+                    "customIndicatorId": "EXP004_STABLE_ORDER_UNPUBLISHED"
+                  },
+                  "limit": 40,
+                  "direction": "Highest"
+                }
+              ],
+              "weightIndicator": {
+                "type": "Value",
+                "value": 1
+              },
+              "limit": 40,
+              "deploymentPercent": {
+                "type": "CustomIndicator",
+                "targetAsset": {
+                  "type": "Stock",
+                  "symbol": "SPY",
+                  "name": "SPY"
+                },
+                "customIndicatorId": "EXP004_DEPLOYMENT_UNPUBLISHED"
+              },
+              "allowShorts": false
+            },
+            "orderExecution": {
+              "type": "Market"
+            }
+          }
+        ],
+        "supportsFractionalShares": true,
+        "dividendPolicy": "cash"
+      }
+    }
+  ],
+  "equal_weight_eligible_universe": {
+    "name": "EXP004 equal-weight eligible universe",
+    "initialValue": 25000,
+    "cash": 25000,
+    "buyingPower": 25000,
+    "strategies": [
+      {
+        "name": "Exact monthly session open",
+        "condition": {
+          "type": "And",
+          "conditions": [
+            {
+              "type": "Base",
+              "lhs": {
+                "type": "CurrentTimeHours"
+              },
+              "comparison": "equal",
+              "rhs": {
+                "type": "Value",
+                "value": 9.5
+              }
+            },
+            {
+              "type": "Base",
+              "lhs": {
+                "type": "CustomIndicator",
+                "targetAsset": {
+                  "type": "Stock",
+                  "symbol": "SPY",
+                  "name": "SPY"
+                },
+                "customIndicatorId": "EXP004_SCHEDULE_UNPUBLISHED"
+              },
+              "comparison": "equal",
+              "rhs": {
+                "type": "Plus",
+                "indicators": [
+                  {
+                    "type": "Plus",
+                    "indicators": [
+                      {
+                        "type": "Multiply",
+                        "indicators": [
+                          {
+                            "type": "Year"
+                          },
+                          {
+                            "type": "Value",
+                            "value": 10000
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Multiply",
+                        "indicators": [
+                          {
+                            "type": "Month"
+                          },
+                          {
+                            "type": "Value",
+                            "value": 100
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Date"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "action": {
+          "type": "DynamicRebalance",
+          "universe": {
+            "source": "SPECIFIC_ASSETS",
+            "assets": [
+              {
+                "type": "Stock",
+                "symbol": "AAPL",
+                "name": "AAPL"
+              },
+              {
+                "type": "Stock",
+                "symbol": "MSFT",
+                "name": "MSFT"
+              }
+            ]
+          },
+          "pipeline": [
+            {
+              "type": "Filter",
+              "condition": {
+                "type": "And",
+                "conditions": [
+                  {
+                    "type": "And",
+                    "conditions": [
+                      {
+                        "type": "Base",
+                        "lhs": {
+                          "type": "CustomIndicator",
+                          "customIndicatorId": "EXP004_VALIDITY_UNPUBLISHED"
+                        },
+                        "comparison": "equal",
+                        "rhs": {
+                          "type": "Value",
+                          "value": 1
+                        }
+                      },
+                      {
+                        "type": "Base",
+                        "lhs": {
+                          "type": "CustomIndicator",
+                          "customIndicatorId": "EXP004_SESSION_UNPUBLISHED"
+                        },
+                        "comparison": "equal",
+                        "rhs": {
+                          "type": "Plus",
+                          "indicators": [
+                            {
+                              "type": "Plus",
+                              "indicators": [
+                                {
+                                  "type": "Multiply",
+                                  "indicators": [
+                                    {
+                                      "type": "Year"
+                                    },
+                                    {
+                                      "type": "Value",
+                                      "value": 10000
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "Multiply",
+                                  "indicators": [
+                                    {
+                                      "type": "Month"
+                                    },
+                                    {
+                                      "type": "Value",
+                                      "value": 100
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "Date"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Base",
+                    "lhs": {
+                      "type": "CustomIndicator",
+                      "customIndicatorId": "EXP004_MOMENTUM_UNPUBLISHED"
+                    },
+                    "comparison": "greaterThanOrEqual",
+                    "rhs": {
+                      "type": "Value",
+                      "value": -1e+30
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "weightIndicator": {
+            "type": "Value",
+            "value": 1
+          },
+          "deploymentPercent": {
+            "type": "Value",
+            "value": 95
+          },
+          "allowShorts": false
+        },
+        "orderExecution": {
+          "type": "Market"
+        }
+      }
+    ],
+    "supportsFractionalShares": true,
+    "dividendPolicy": "cash"
+  },
+  "explicit_SPY": {
+    "name": "EXP004 explicit SPY buy-and-hold",
+    "initialValue": 25000,
+    "cash": 25000,
+    "buyingPower": 25000,
+    "strategies": [
+      {
+        "name": "Permitted inception open",
+        "condition": {
+          "type": "And",
+          "conditions": [
+            {
+              "type": "And",
+              "conditions": [
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "CurrentTimeHours"
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Value",
+                    "value": 9.5
+                  }
+                },
+                {
+                  "type": "Base",
+                  "lhs": {
+                    "type": "Plus",
+                    "indicators": [
+                      {
+                        "type": "Plus",
+                        "indicators": [
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Year"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 10000
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Multiply",
+                            "indicators": [
+                              {
+                                "type": "Month"
+                              },
+                              {
+                                "type": "Value",
+                                "value": 100
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Date"
+                      }
+                    ]
+                  },
+                  "comparison": "equal",
+                  "rhs": {
+                    "type": "Value",
+                    "value": 20150102
+                  }
+                }
+              ]
+            },
+            {
+              "type": "Base",
+              "lhs": {
+                "type": "PositionValue",
+                "targetAssets": [
+                  {
+                    "type": "Stock",
+                    "symbol": "SPY",
+                    "name": "SPY"
+                  }
+                ]
+              },
+              "comparison": "lessThan",
+              "rhs": {
+                "type": "Value",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "action": {
+          "type": "Buy",
+          "targetAsset": {
+            "type": "Stock",
+            "symbol": "SPY",
+            "name": "SPY"
+          },
+          "amount": {
+            "type": "percent of portfolio",
+            "amount": 95
+          }
+        },
+        "orderExecution": {
+          "type": "Market"
+        }
+      }
+    ],
+    "supportsFractionalShares": true,
+    "dividendPolicy": "cash"
+  },
+  "fee_contract": {
+    "Stock": {
+      "amount": 0.1,
+      "type": "percent"
+    }
+  },
+  "binding_contract": "Each run substitutes its permitted inception key; binds its own immutable momentum, stable-order, validity, full-session-key, monthly schedule and shortfall-deployment streams. Fixture assets are replaced with historical ticker transport superset, never membership. The same maximum-365-day eligible population applies to both horizons and EW. No source omissions become numeric zero. Reject any unpublished IDs before submission."
+}

@@ -1,0 +1,20 @@
+{
+  "status": "PASS_LOCAL_DESIGN_ONLY",
+  "experiment": "EXP004",
+  "stage": "DRAFT",
+  "spec_sha256": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
+  "checks": {
+    "research_audit": "PASS",
+    "full_unittest_suite": {
+      "tests": 142,
+      "failures": 0,
+      "errors": 0
+    },
+    "presentation": "6 deterministic artifacts",
+    "price_projection": "Reproduced all72 monthly decisions;273452 price prerequisites",
+    "protected_experiments": "All recorded protected tracked hashes unchanged"
+  },
+  "nexus_calls": 0,
+  "freeze_performed": false,
+  "spending_authorized": false
+}

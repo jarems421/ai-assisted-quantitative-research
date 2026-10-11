@@ -1,0 +1,182 @@
+{
+  "experiment_id": "EXP004",
+  "status": "DRAFT_READY_FOR_HUMAN_FREEZE_REVIEW",
+  "created_at": "2026-10-11",
+  "base_git_commit": "680658be7f32c8ec23f77967498fb83d675bb188",
+  "owner_request": {
+    "path": "experiments/EXP004/research/owner_request_20261011.md",
+    "sha256": "d2d84afd95a510386490aa3b48bb5188de11eeab399039f6e6ff21af284efb4f"
+  },
+  "independent_question": true,
+  "closed_predecessor": {
+    "experiment": "EXP003",
+    "disposition": "CLOSED_SOURCE_FEASIBILITY_BLOCKED",
+    "economic_hypothesis_tested": false,
+    "original_files_preserved": true,
+    "closure_authority": "This owner request; external disposition records closure without rewriting the historical DRAFT."
+  },
+  "evidence_status": {
+    "VERIFIED": [
+      "Scoped historical CS identity contract and72 completed-price prerequisite decisions",
+      "Price-only Development inception2015-01-02 supported by3595 maximal-horizon prerequisites",
+      "Inherited bounded split/availability/open-execution/transport infrastructure",
+      "Actual SDK declarations compile locally without a client"
+    ],
+    "PROPOSED": [
+      "Economic hypothesis, four cells, benchmarks and exact selection policy",
+      "Nominal deployment/reserve convention and fixed costs",
+      "Chronological folds, held-out dates and59-run ceiling"
+    ],
+    "UNRESOLVED": [
+      "Actual strategy performance: deliberately unqueried",
+      "Future production immutable numeric stream IDs and per-run dataQA: deferred implementation bindings, not additional alpha choices",
+      "Live fills/capacity/vendor revisions and future account debit"
+    ]
+  },
+  "source_artifacts": [
+    {
+      "path": "data/raw/EXP002/audit/raw/two_gate_20261011/historical_security_spans/rows.json",
+      "sha256": "de8eaae3e69816425ec2af6d32c87f0598a1b5376b0dd35bbe399e6013e3a965"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/2015_v002/rows.json",
+      "sha256": "20ec73efcc039c2c8309c8ba35c68c9e4a1ced3cf3c7110d14d562d2f51226fc"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/2016_v002/rows.json",
+      "sha256": "ffc5e02ddcb4db3d383a6f741cd83facb79f571ca03a2b0edc1c9737d4bf51fc"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/2017_v003/rows.json",
+      "sha256": "149e4923c747b2772354473c43a845f689ea2a838421be160e22ed33dacea68e"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/2018_v003/rows.json",
+      "sha256": "803cfe979fbb761108d9e6f5a7e85f2a4b912a1e9c332e661de79ab8b99a7848"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/2019_v002/rows.json",
+      "sha256": "720a2608905e4590189f8cfee8de85df2f392a054d22698ead2c9b190da71788"
+    },
+    {
+      "path": "data/raw/EXP003/final_readiness_20261011/2020_v002/rows.json",
+      "sha256": "cb906d70eb4056de720085085fc7fb8c617eb05bdfd4892bf059a97f795a1d8f"
+    },
+    {
+      "path": "experiments/EXP003/research/final_freeze_review.md",
+      "sha256": "f99945e5f3946f02430c5a2eb887773306ff22d88b2e13196a3289abc8bca890"
+    },
+    {
+      "path": "experiments/EXP002/research/final_freeze_review.md",
+      "sha256": "8e02c0c352816c0d2ebf510f46f13e864f1ed5342e0fbe2a3e49784b25850304"
+    },
+    {
+      "path": "experiments/EXP002/research/final_runtime_summary.json",
+      "sha256": "3d70bc1980760a0134ede493f64cd865ffc3131f604dd4cce2bb5d6e2c309b79"
+    },
+    {
+      "path": "experiments/EXP002/research/final_source_summary.json",
+      "sha256": "c23b8ac62876c344667a63252b5b32f8a60adc12b80f2155bfa3ac1490e1f594"
+    },
+    {
+      "path": "src/research/exp002_contracts.py",
+      "sha256": "2965778c139b82aaf0798c358bd43aa933dec84fbfd3103b4cde86b22670abbb"
+    },
+    {
+      "path": "src/research/exp002_inference.py",
+      "sha256": "d8ae1debcfdf78d215ff75f708f44c043f61a45528b8f754a1f0218d7d5437d8"
+    },
+    {
+      "path": "src/metrics/performance.py",
+      "sha256": "b37a02d5f407ba9bd3e0bd768249a77721403ab91d9ec9548db05e8ced5aafd9"
+    },
+    {
+      "path": "config/research_pricing.json",
+      "sha256": "9cf6c1acc0f5462241fd05c647e847886703fc0a4c114a8e2f250dc4aa2d7839"
+    }
+  ],
+  "protected_tracked_sha256": {
+    "data/processed/EXP001_SPY_AI_SELECTION/dev_A_daily.csv": "bfb4f4bde209dcb893cc59c51ae258e250dbbfe4d2c9c0479b5a094165c58ec3",
+    "data/processed/EXP001_SPY_AI_SELECTION/dev_B_daily.csv": "60138c36c4ec94339405454a912d28bfa1cb2ba143b36f578dd67cec0e2e1d34",
+    "data/processed/EXP001_SPY_AI_SELECTION/dev_C_daily.csv": "52c3a39aabb1428688e2f13db2aaee5f55cd6612938aa09a77745a1ebe544d39",
+    "data/processed/EXP001_SPY_AI_SELECTION/dev_D_daily.csv": "65b35587ec69098e1c6c4209b940824b546f793ba493b417d72f742c6bfde955",
+    "data/processed/EXP001_SPY_AI_SELECTION/dev_E_daily.csv": "286281ee220e421e1581321f11a307277b0f7080793affb1eda4a477c8f7c041",
+    "data/processed/EXP001_SPY_AI_SELECTION/metrics.json": "64df418979cf977aa502681b2e79a3c81570bd1a0c49076add1a0ee4f7218f90",
+    "data/processed/EXP001_SPY_AI_SELECTION/test_A_daily.csv": "84618ada599b05e11305273e132cad6a4754af5657d4af3dd5b465177e311c02",
+    "data/processed/EXP001_SPY_AI_SELECTION/test_SPY_daily.csv": "4b39865edf32f590b9b8e6ae2e4ae47c15284b0753d08cb719ef7c2d8ab850db",
+    "data/processed/EXP001_SPY_AI_SELECTION/val_A_daily.csv": "c9f979523158463036efd4e48412de13c0096aa85b01be00c3d210fa36df68a6",
+    "data/processed/EXP001_SPY_AI_SELECTION/val_SPY_daily.csv": "085ef049223d02587ea5cc0f89ffa35b0d35e6cbf9551dcc23c443319b54bc2c",
+    "experiments/EXP001_SPY_AI_SELECTION/manifest.json": "8934009b27a3f5423961ff4a4b1a7204a7e86d2d55c85c6afda9c43efa7514ef",
+    "experiments/EXP002/README.md": "692f7fec42dc2d10a79f676ff298674909349b867a22aa5fbfa86c2fbee3853d",
+    "experiments/EXP002/aurora_research_memo.md": "cf18aa57832755b4930213e27da7e5cdadd5289b6fe00a9b29ae882e97622726",
+    "experiments/EXP002/aurora_research_prompt.md": "3260b93b95d10f53244128a8e52b1b24bca0d1282436ab82e8c6e4ea4209cb32",
+    "experiments/EXP002/provenance.json": "da98e2211f9cc805ac88b211d9ffd9670530c68ae3dd0360016ad565b3150809",
+    "experiments/EXP002/research/audit_authorization_20261011.md": "f44cacc3cf2e5d198e8fb3853a9c45260c76a1944ba05daf0aeded6108f8db8e",
+    "experiments/EXP002/research/cohort_summary.json": "8c350d0dbd1650ff6974a9710852d272aa7dc5881c60a87537f59dc323aaf645",
+    "experiments/EXP002/research/cost_receipt.json": "5db015097b860d033a1cf09c7642e9e99f9161706270ee062ed07e407b0e79e2",
+    "experiments/EXP002/research/coverage_audit.md": "d91b65d79f1c601856fcaaeebcfcef6ceddc8e671f9e05f8c996646f4852f918",
+    "experiments/EXP002/research/coverage_query_log.json": "b7428ec2256ac0043bb9c87776df47a1d8334387e69aeb46cbbb91db70f04379",
+    "experiments/EXP002/research/coverage_summary.json": "8151491f25fbe5cee86cc9933346125d0ef7b1e0fd8c449e943a777754dcc8dd",
+    "experiments/EXP002/research/custom_runtime_summary.json": "51d39124c000bcd811f49e04053761042b475bf0106838d4ebc1543289372445",
+    "experiments/EXP002/research/custom_signal_authorization_20261011.md": "bfab4ca547a39f77791a39676653516f98f6fa37b94f2cb2bfd6ee46ea9c4df0",
+    "experiments/EXP002/research/custom_signal_manifest.json": "a79f81640e54805114f23efd401bf1e47976bac4ed5f32b1efc3cc381ff7fe45",
+    "experiments/EXP002/research/custom_signal_spec.md": "fc1ab8527fac92bdf4e55fc367d554e5df2242e8c80cf260ab233d728c30c5ca",
+    "experiments/EXP002/research/design_revision.md": "77bc7263b48ada7f7a2d7ac43cc1031c06be3d64a6e5b80ac4a068a18f1764b8",
+    "experiments/EXP002/research/design_revision_authorization_20261011.md": "5a74c3d216dd0da8ee32059d5a310f82e2458bab61370100f5b421d1ba0c2856",
+    "experiments/EXP002/research/design_revision_log.json": "97e0c73c5281974af793ee8a4829408305bc8382f9d7557ad5a2d39533c9f5b0",
+    "experiments/EXP002/research/draft_revisions.json": "c02116444a0901313335b060dcf36b759d15e3540acd21017ad9caf272d7e28d",
+    "experiments/EXP002/research/evaluation_plan.json": "1ab7c64a77585e08ae740f3bb275fe8136d431dc56a98fd93deb5791e208ac4c",
+    "experiments/EXP002/research/execution_audit.md": "5a3d84440727c4821548f80cb20fae7dfb4c681229ba7035b396453adffcb87f",
+    "experiments/EXP002/research/final_blocker_authorization_20261011.md": "9221eb4097c0f4f3bf55cfe877a868d1e2e26945f0952b393d0314fa105ba99c",
+    "experiments/EXP002/research/final_freeze_review.md": "8e02c0c352816c0d2ebf510f46f13e864f1ed5342e0fbe2a3e49784b25850304",
+    "experiments/EXP002/research/final_runtime_summary.json": "3d70bc1980760a0134ede493f64cd865ffc3131f604dd4cce2bb5d6e2c309b79",
+    "experiments/EXP002/research/final_source_summary.json": "c23b8ac62876c344667a63252b5b32f8a60adc12b80f2155bfa3ac1490e1f594",
+    "experiments/EXP002/research/index_membership_certification.md": "19273eb854e7d02e029c348d2c9db0351303e116e032b11ef2ac0f89576ed83f",
+    "experiments/EXP002/research/institutional_identity_certification.md": "d1cd8b9faf27b98dff82e164444c163a8e16f570a45f61e6ee2041ae8124838f",
+    "experiments/EXP002/research/nexus_runtime_audit.md": "392d029738a19e826fef2ab8d427773a165c878687cd764ed3d205eb70455681",
+    "experiments/EXP002/research/nexus_runtime_summary.json": "0be2424ee3a940e2ae7c9c81c552f0baf761d62748ae2f56162b037722f224d4",
+    "experiments/EXP002/research/pit_audit.md": "473a2915924f092ee346755240d56ae6cdeec43eb4acf0fcbba8b81dfa48e87d",
+    "experiments/EXP002/research/revision_runtime_summary.json": "8e144d55cdd3f0669365e04ff8509d8ecf7814fcf62c7a76bbd8a4d40b85438b",
+    "experiments/EXP002/research/statistical_contract.md": "be04a93e1f232c9d8990bd124701f4bab88358dc8e87ab99b558663d3c41f2ec",
+    "experiments/EXP002/research/two_gate_authorization_20261011.md": "9049212cf2e3d925697394f1eff0b57ffac5e9c60e1cb9eba46ede4274d7845c",
+    "experiments/EXP002/research/two_gate_receipt_manifest.json": "b378d68c215d2b37a8d3c8fad980a9182d6d2221d27c11a700fed73a97de727b",
+    "experiments/EXP002/research/two_gate_summary.json": "c96be620b86952edb7587888f35ef6b3333044cc3823bae7949c1205285ac38f",
+    "experiments/EXP002/research/universe_audit.md": "0fceb3f892ce8360f64b902b062afd808554807c0a9976861fbb9005518a6d5c",
+    "experiments/EXP002/spec.json": "a0acbf7a4cc2a8857eb0bcf6633715e7a26d8521baf147e6c8969a41cbbd324f",
+    "experiments/EXP003/README.md": "60da72acfa95efbbef1189e9fec2fef9ed13d538edd38d09529f67062f6e8c86",
+    "experiments/EXP003/candidate_definitions.json": "9b65ffa364fd926d0a27615b91ec7d2829719aedaec9d7630b942659f6dbed9c",
+    "experiments/EXP003/compiled_benchmarks.json": "54e11c31b2238930d92bbdc13c734225e639b08af4e93ba48e3f83d40e4e640d",
+    "experiments/EXP003/evaluation_plan.json": "520ccd7197f04bc43030deb861d1f3cb4cf223766acef4925c9f426ad7deff3d",
+    "experiments/EXP003/production_custom_signal_manifest.json": "0d5372e346a94c656454efaa4b12a4066ab292ba8330b2db78bfd61c5b4ba45f",
+    "experiments/EXP003/provenance.json": "a9adbdaa85ce476d7b695492eb6047444412d2de239838c32c7c9decda31db7e",
+    "experiments/EXP003/research/final_freeze_review.md": "f99945e5f3946f02430c5a2eb887773306ff22d88b2e13196a3289abc8bca890",
+    "experiments/EXP003/research/final_pass_authorization_20261011.md": "bd42b328f22ca57ed97c2d3c7d6994bcfe148fb3cfeadc6515f742058bd805d9",
+    "experiments/EXP003/research/owner_request_20261011.md": "10b124defb8dd766d159017573701a9e6491da372fb4e4a4cc56324b2528b020",
+    "experiments/EXP003/research/production_coverage_summary.json": "f10db0c15bb7f7f7be896a9e37883f6999076e3b2b0b23ead112d3b4f556d941",
+    "experiments/EXP003/research/readiness_query_log.json": "cc960faf1740807efbc447fcf5f3f1d0f3980c4f2b00804a12491120495a0334",
+    "experiments/EXP003/research/universe_feasibility.md": "d402afa03e5c8c7ffdb7e4f7f377acbbc3942782fd5d95b7c2782914ae61bef2",
+    "experiments/EXP003/research/universe_summary.json": "c26ae3f9c20573a2e9ccc2c05cdfd7a7de4849f44425e0232907099951b28103",
+    "experiments/EXP003/research/verification.json": "1ac289ad1599d2ba1fcfca52f1dcbe2892c1dd47128c65a92465d79e315b320f",
+    "experiments/EXP003/spec.json": "5a37dcfc52dc347153ed2159550d22fcff475ee9e8a348e7ea5736a5deb07c73",
+    "experiments/EXP003/state.json": "a74cd495b51b52e33f74b95f88ada6e155a45b964cde34e89dbc3992bda8f5ab",
+    "experiments/EXP003/trials.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "reports/EXP001_final_report.md": "bee812916345ddb7aa3686e7cf71d87f88db4cbe9ee77e2eac86a21c64b757d5"
+  },
+  "operations": {
+    "nexus_calls": 0,
+    "remote_jobs": 0,
+    "performance_queries": 0,
+    "custom_publications": 0,
+    "spend_authorized": false,
+    "hypothesis_frozen": false
+  },
+  "next_gate": "Human hypothesis-freeze review; no execution authorized by this document.",
+  "design_code_sha256": {
+    "src/research/exp004_policy.py": "7a7f482b74bf929911d56c4b0f9e125c489c784a0c18cee4a634112022aea541",
+    "src/research/design_exp004.py": "9734a2e45b0bab86ffd2715da76935d13acad1dfb4589f18eb00692cc9d7b6fa",
+    "src/research/spec.py": "98f0209817bc2669301f3017e04f246d5d1b8ed4ef5bb7cd1880d22105fd711a",
+    "src/research/ingestion.py": "077be27a478c17a86d68dcbcc37d85123f7598f195cd48d9aea80d49acc9ac18",
+    "experiments/_template/spec.schema.json": "14371e45bc18d463123cb6d60573d1c7d30b64fc324f3f0102aab368ad00b033",
+    "tests/test_exp004_design.py": "0fa7954ceed423aa9a6aa49cd8567ffb581cd2214efba788b098379b7bd1f894"
+  }
+}
