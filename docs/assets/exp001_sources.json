@@ -6,7 +6,8 @@
     "data/processed/EXP001_SPY_AI_SELECTION/val_A_daily.csv": "c9f979523158463036efd4e48412de13c0096aa85b01be00c3d210fa36df68a6",
     "data/processed/EXP001_SPY_AI_SELECTION/val_SPY_daily.csv": "085ef049223d02587ea5cc0f89ffa35b0d35e6cbf9551dcc23c443319b54bc2c",
     "data/processed/EXP001_SPY_AI_SELECTION/test_A_daily.csv": "84618ada599b05e11305273e132cad6a4754af5657d4af3dd5b465177e311c02",
-    "data/processed/EXP001_SPY_AI_SELECTION/test_SPY_daily.csv": "4b39865edf32f590b9b8e6ae2e4ae47c15284b0753d08cb719ef7c2d8ab850db"
+    "data/processed/EXP001_SPY_AI_SELECTION/test_SPY_daily.csv": "4b39865edf32f590b9b8e6ae2e4ae47c15284b0753d08cb719ef7c2d8ab850db",
+    "experiments/registry.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
   },
   "matplotlib_version": "3.11.2",
   "artifacts": [

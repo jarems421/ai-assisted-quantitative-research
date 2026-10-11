@@ -49,3 +49,15 @@ This repository studies AI-assisted quantitative research using NexusTrade simul
 - Reproduce the existing local analysis with `python -m src.nexus.process_exp001` only when the task authorizes processing; it does not call Nexus.
 - Generate public presentation artifacts with `python -m src.presentation.exp001`; verify them with `python -m src.presentation.exp001 --check`.
 - Documentation work must leave raw files, experiment manifests, canonical processed results, and frozen metric code unchanged.
+
+## Research OS v1
+
+- New research uses `experiments/<ID>/spec.json` validated against `experiments/_template/spec.schema.json`; never migrate or rewrite immutable EXP001 results through Research OS.
+- Follow the sequential gates and frozen specification/candidate hashes. Development access and candidate-formation corpus evidence cannot extend past the declared research cutoff. Validation cannot retune the candidate.
+- Historical held-out data is `workflow_held_out`; modern AI may know historical events. Only forward evidence after freeze may be described as `genuinely_forward_unseen`.
+- Never execute or supply the owner-only interactive Test or paper confirmations on the user's behalf. These are separate human decisions, even when broader research automation is authorized.
+- Live trading has no Research OS path. Do not add brokerage/order operations to bypass this boundary.
+- Aurora prompts are not access control. Remote Aurora stays disabled until an audited server-side tool/date isolation capability is available.
+- Require current cost metadata, explicit execution opt-in, predeclared evaluation ceilings, and an extraction bridge before remote jobs. Preserve uncertain submissions and reconcile their existing IDs; never blindly resubmit.
+- Count all families, planned evaluations, failures, and poor results. Keep raw responses immutable and private; track specs, trial summaries, cards, reports, tests, and code.
+- Infrastructure demonstrations must use synthetic EXP999 in temporary directories with fake transports. Do not start EXP002 during setup or tests.

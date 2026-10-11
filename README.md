@@ -7,6 +7,25 @@ A reproducible research framework for generating and evaluating systematic tradi
 
 [Final EXP001 report](reports/EXP001_final_report.md) · [Processed results](data/processed/EXP001_SPY_AI_SELECTION/metrics.json) · [Reproduction](#reproducing-exp001) · [Publishing notes](docs/publishing.md)
 
+## Research OS v1
+
+Reusable infrastructure now supports validated experiment specifications, frozen hashes, sequential stage gates, bounded job planning, durable submission/trial journals, resumable raw extraction, parameter stability, paired resampling, and generated experiment cards. No new research experiment has been run.
+
+```mermaid
+flowchart LR
+    S["Specification and PIT audit"] --> D["Development and controls"] --> F["Frozen candidate"]
+    F --> V["Validation and explicit benchmark"] --> W["Walk-forward and robustness"]
+    W --> H["Human Test authorization"] --> T["Historical lockbox"]
+    T --> P["Separate human paper authorization"]
+```
+
+Remote execution requires explicit opt-in, a registered SDK key, an authorized MCP extraction bridge, and current budget metadata. Aurora role prompts are implemented; remote agent execution stays blocked because the exposed SDK cannot enforce sealed-data/tool isolation. Paper deployment has a separate gate; live operations are disabled. See [Research OS architecture and commands](docs/research_os.md) and the [observed Nexus capability inventory](docs/nexus_capabilities.md).
+
+```sh
+python -m pip install -r requirements-research.txt
+python -m src.research demo EXP999 --dry-run
+```
+
 ## Research thesis
 
 Can AI-assisted research discover trading strategies that remain robust outside their development period? This project separates hypothesis generation from evaluation: explicit benchmarks, transaction costs, independent statistics, and frozen out-of-sample windows constrain what can be claimed. EXP001 is a historical pilot, not a live trading system. Broader robustness studies and forward paper testing remain future work.
@@ -31,6 +50,7 @@ Nexus supplies strategy simulations and stored engine outputs. Repository engine
 | Experiment | Status | Strategy / asset | Development | Validation | Held-out Test | Finding |
 |---|---|---|---|---|---|---|
 | [EXP001](reports/EXP001_final_report.md) | Complete historical evaluation | Five candidates; SMA20/50 selected / SPY | 2015-01-01 to 2021-12-31 | 2022-01-01 to 2024-12-31 | 2025-01-01 to 2026-10-08 | Lower risk, lower out-of-sample return than SPY |
+
 
 The manifest retains its historical `SEALED` marker. The final report records the subsequent authorized Test opening once, after the strategy and processing methodology were frozen. No Experiment 002 or forward trading result is reported.
 
@@ -105,6 +125,7 @@ experiments/       Experiment manifests and frozen design
 src/metrics/       Independent metric definitions
 src/nexus/         Local EXP001 processor and report renderer
 src/presentation/ README tables and chart generation
+src/research/     Research OS specifications, gates and orchestration
 tests/            Metric, session, integrity, and regression checks
 reports/          Complete human-facing experiment reports
 docs/assets/      Reproducible figures and source hashes

@@ -93,7 +93,8 @@ def write(root, spec, state, bundle, trials):
              "|---|---:|---:|---:|---:|---:|"]
     for name,m in results.items():
         ratio=lambda v:f"{v:.3f}" if v is not None else "undefined"
-        lines.append(f"| {name} | {m['total_return']:.2%} | {m['annualized_volatility']:.2%} | {ratio(m['sharpe'])} | {ratio(m['sortino'])} | {m['maximum_drawdown']:.2%} |")
+        percent=lambda v:f"{v:.2%}" if v is not None else 'undefined'
+        lines.append(f"| {name} | {percent(m['total_return'])} | {percent(m['annualized_volatility'])} | {ratio(m['sharpe'])} | {ratio(m['sortino'])} | {percent(m['maximum_drawdown'])} |")
     lines += ["", "## Candidate and trial ledger", "", "| Candidate | Stage | Run | Status / result | Eligible |", "|---|---|---|---|---|"]
     for t in trials:
         lines.append(f"| {t['candidate']} | {t['stage']} | {t.get('run_id') or 'unresolved'} | {t['result'].get('status','recorded')} | {t.get('eligibility')} |")
