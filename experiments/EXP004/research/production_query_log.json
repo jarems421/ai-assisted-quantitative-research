@@ -1,0 +1,387 @@
+{
+  "scope": "Frozen EXP004 Development input preparation; source observations<=2020-12-31 including authorized warmup",
+  "queries": [
+    {
+      "request_name": "bars_2013-12-31_2014-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose\n        FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n         AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31')\n        WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n         AND s.asset_type='CS' AND s.security_id IS NOT NULL\n        ORDER BY s.security_id,o.date",
+        "params": [
+          "2013-12-31",
+          "2014-03-31"
+        ]
+      },
+      "id": "lq_ab8fe67bb468179942e4993d",
+      "row_count": 256677,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/intent.json": "091c319e4ec9bd4fda4a4e73db16466673511e0e44762e172570d88927013073",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/part_hashes.json": "cd0d4bfb949a930f5fc908af75259931cf1b39fd72af98aeda963afbc7043333",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/request.json": "8f835a4baf016d2ec1ca8cf812d9dff2deaa6aeb8b9af0b535fb0631a25fd4b8",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/result_receipt.json": "4f0d14ec6def433823757938cc11eb52893642bd7baa2e076ef53a51d6124f8a",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/submission.json": "18e5c595b5aca8ab3b6e9cea981e9035a4f4a9e6e740b30e42ec5240c2dafd89",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/wire_request_0001.json": "3e1af26012bf984e77480aff1cc5523b1ea77640a0b429dbc028a053470a61d0",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/wire_request_0002.json": "2efd6f5d5a72180de545298df42b7c0f0b883c40ed70e98387cabf65d9b163ea",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/wire_request_0003.json": "2efd6f5d5a72180de545298df42b7c0f0b883c40ed70e98387cabf65d9b163ea",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/wire_request_0004.json": "2efd6f5d5a72180de545298df42b7c0f0b883c40ed70e98387cabf65d9b163ea",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/wire_response_0001.json": "a240992868da3809b4c8c9a27ee81822c083248277e4f7db34cb4e7281acaac0",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/wire_response_0002.json": "2eb73c55d229f766084375c9a00606de6c05938fbc778b3c4195f8667791383a",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/wire_response_0003.json": "2eb73c55d229f766084375c9a00606de6c05938fbc778b3c4195f8667791383a",
+        "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/wire_response_0004.json": "6e2df218e56343126222ce61676fc2afe9c28a9f19559356936474e801c46cea"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/parts/lq_ab8fe67bb468179942e4993d/part-00000.parquet",
+          "sha256": "158593cc1243a48efaf7d2fb563a9966340a200a64abf2193bf7d0b9cab19e98",
+          "bytes": 762396
+        }
+      ]
+    },
+    {
+      "request_name": "bars_2014-04-01_2014-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2014-04-01",
+          "2014-06-30"
+        ]
+      },
+      "id": "lq_dd728a013174426972800230",
+      "row_count": 264970,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/intent.json": "2538bc07341aaad2c71c2a84bbb89e87bdbd1675c03c561bed9ccacaa64b9644",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/part_hashes.json": "77ef03ca9a5f9babdabb23eec6fc89a6148c8ab951df5c7c317016345c87a1d1",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/request.json": "52d769934ff35402576a101adf38265774d42fed2e7a380e73414cf6893004ab",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/result_receipt.json": "922396d0dc5c1d811577fe5441782e86e22ec967ea931d6fdc34282f443408fd",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/submission.json": "8fa34e1e09847bc40aaff1d7909772d980a322fd137a7938b5d7d2adf1f13621",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/wire_request_0001.json": "80fa6e86ad2419a45f9cb5d3793b756c9f2cae8a4b928cee649d013734e654b5",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/wire_request_0002.json": "ff4494d74525e2025960bd898234ddcccb7ec4d797bdd9bc0292fb66ccd364e2",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/wire_request_0003.json": "ff4494d74525e2025960bd898234ddcccb7ec4d797bdd9bc0292fb66ccd364e2",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/wire_request_0004.json": "ff4494d74525e2025960bd898234ddcccb7ec4d797bdd9bc0292fb66ccd364e2",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/wire_response_0001.json": "2000eca187135af26f4208d70df1e54e19a375a50803133863f21531f88982f9",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/wire_response_0002.json": "ebb23ae502d67d2a0e1f9b36475499cf1a55307abfe94a558905438066ffb898",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/wire_response_0003.json": "ebb23ae502d67d2a0e1f9b36475499cf1a55307abfe94a558905438066ffb898",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/wire_response_0004.json": "0b4747f481e3b01a94ca5f641d9795729e4561f0cdbcb6f11ddcc32b6c2fff83"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/parts/lq_dd728a013174426972800230/part-00000.parquet",
+          "sha256": "c30b34eb45d014c80506d7c169041c4f0b7e8e1c9607a88d59eeef204733e5e4",
+          "bytes": 789356
+        }
+      ]
+    },
+    {
+      "request_name": "bars_2014-07-01_2014-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2014-07-01",
+          "2014-09-30"
+        ]
+      },
+      "id": "lq_11b887796b18403464d1517d",
+      "row_count": 274315,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/intent.json": "1868667785f43d3afcf857018ab927edeb38e1cd9069aa3ab63bb626355fad60",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/part_hashes.json": "df0817c6648a4e2c5abb05f9ae913a769087468c4bbd25773e5e1c29421b0b8a",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/request.json": "4c7a2496f784a957f8c1fe7e71cb65146461d942118418fd73d2f170ddd4bfba",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/result_receipt.json": "e2d9166e3efc22de10c9b82d99cad7bd4d2671e9a3db29f923f8f13dcff6a2d0",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/submission.json": "65f825572893594976c1c0742377257e6daab53fb2c1c95c9d23f3220a471f25",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/wire_request_0001.json": "6796424c07da7305a0a65db7696e617f19b9b13053387207ea639c4a4832f907",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/wire_request_0002.json": "7f6f99efc77e1dc2958e860fca989f8428234dfba362680ba17002d868ca59e7",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/wire_request_0003.json": "7f6f99efc77e1dc2958e860fca989f8428234dfba362680ba17002d868ca59e7",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/wire_response_0001.json": "4b033d3c65f18c492e19fb38e0b7179ce275b47cc6ae6924a3d41f5809249060",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/wire_response_0002.json": "aa047f4b86141d3d87047b8aecac82180634542d4ac9afbf5c79469c981938bc",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/wire_response_0003.json": "c2e5b867799345e2e2ffa292e8b20acee2690219e84dfe6519de0183695afaa8"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/parts/lq_11b887796b18403464d1517d/part-00000.parquet",
+          "sha256": "45e1d6c6b10f67a3accf6eed36e2b48007de9ea5f0817560c1b773511ab219a5",
+          "bytes": 819897
+        }
+      ]
+    },
+    {
+      "request_name": "bars_2014-10-01_2014-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2014-10-01",
+          "2014-12-31"
+        ]
+      },
+      "id": "lq_8eb04cc6e3b72595ce53cca8",
+      "row_count": 278025,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/intent.json": "78f6ceb5959d4fe4edb141c42cb3cc98d3c4ec60a0fc26f968757c49f6c46843",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/part_hashes.json": "00858052bdcffe5a4b899558b320d723309fdf5897d4db84b4f9127f9c28eca0",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/request.json": "cf3232a377b3bfb7bd669e8a54d4cfa6814e94d4a9d7a70be192cc706f4bcccc",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/result_receipt.json": "4343bc3c43f19b6f9f54b5d07778f8677e3ad35c0ad0c59dab35b119b5e738e7",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/submission.json": "c0bb769a4121a225ae8ecf7fb8e542e6a7dfcb6af7b62428c318733defbae078",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/wire_request_0001.json": "c3d60300ffdcdcfc0730a6e638dd62c846c1878e0d79a13883f8aa44bcdd1047",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/wire_request_0002.json": "a1ff10d70af9e3d186e665dfd2c0097a42921bbb39ca1ed2918a8439abf04215",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/wire_request_0003.json": "a1ff10d70af9e3d186e665dfd2c0097a42921bbb39ca1ed2918a8439abf04215",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/wire_request_0004.json": "a1ff10d70af9e3d186e665dfd2c0097a42921bbb39ca1ed2918a8439abf04215",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/wire_response_0001.json": "4fc6837fa99f5de7f4f89d5d80a7f7308a96450fcc9d5e72f93f464e4e1c252f",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/wire_response_0002.json": "df3cae75d8955f98e5fed2303391c5d2cd8f93e20eba357043dc786b7dff2c22",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/wire_response_0003.json": "df3cae75d8955f98e5fed2303391c5d2cd8f93e20eba357043dc786b7dff2c22",
+        "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/wire_response_0004.json": "5d4bd01decb397b67faf5cd808140669a30231cda559d9a589466aec5af64f0d"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/parts/lq_8eb04cc6e3b72595ce53cca8/part-00000.parquet",
+          "sha256": "58594fc298acb3c43c7686e10fc2db35ce486c46e76e02ad7da6188e706e0b39",
+          "bytes": 841440
+        }
+      ]
+    },
+    {
+      "request_name": "bars_2015-01-01_2015-03-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2015-01-01",
+          "2015-03-31"
+        ]
+      },
+      "id": "lq_1933484c8e29c9c900a0e2de",
+      "row_count": 267053,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/intent.json": "2cf7129b0fc08eb509226d8961fb047dc8e45a97ae6ad27a58f6496c04ce06c8",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/part_hashes.json": "4e56e167ed170f0f596845a8bb819e6af0ff78bb452b97c1ba10eb370e5b9152",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/request.json": "f2100edd23e2d38ae34ddddbfb1bfb12ae52570b20a019df3969050a6c55ab37",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/result_receipt.json": "4097030680d29b02be62c26770c1bef7b5b13f0b218847e1ccbf11ee3b1de084",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/submission.json": "2972ee1236034e323f566b654ee83c13f38e1a53c71f00c5b60e07fc225e1d45",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/wire_request_0001.json": "180387e0b9bb694446d0ae7f3738c2929e107f120bb9e2becc0fb0d2e065090e",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/wire_request_0002.json": "b699bfe3ea25c3e3dfc968fbc2f12d3705ca23db979952d60c9b5b6b39bbd4cc",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/wire_request_0003.json": "b699bfe3ea25c3e3dfc968fbc2f12d3705ca23db979952d60c9b5b6b39bbd4cc",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/wire_request_0004.json": "b699bfe3ea25c3e3dfc968fbc2f12d3705ca23db979952d60c9b5b6b39bbd4cc",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/wire_response_0001.json": "a261983ff71199f01049614dec388253194f4ea8866c848e4902f8e77d2199d9",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/wire_response_0002.json": "18d545f4c3da37b976363a83d2a0322d41350a60fb6e4220b76fd21f9931fec2",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/wire_response_0003.json": "18d545f4c3da37b976363a83d2a0322d41350a60fb6e4220b76fd21f9931fec2",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/wire_response_0004.json": "14098c0d004a4f8f7ab4fac8638218184276e53715343f3bf227a690733d483a"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/parts/lq_1933484c8e29c9c900a0e2de/part-00000.parquet",
+          "sha256": "2709a2a28c3072fab6879b3ffabbb113a7517cdbd26511aa71bdb07cbde402fd",
+          "bytes": 808799
+        }
+      ]
+    },
+    {
+      "request_name": "bars_2015-04-01_2015-06-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2015-04-01",
+          "2015-06-30"
+        ]
+      },
+      "id": "lq_dbd8a2f010636e8734ae394c",
+      "row_count": 277383,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/intent.json": "cad8efc192d65a7bdecb6164953c78f3355f9ac1b344ad2f2f6fcb2d4e007b70",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/part_hashes.json": "c26ce754d83f63f6d0dd0307553ad352f96279ad4c1dddfa29910039af64eb68",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/request.json": "903416746b1ee94cf3edea04403880c1428582bcb4aaf68f0a0958efb89f4da4",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/result_receipt.json": "34ed772e11220bbcca753147f42e835db113eb9ce838010c6a819727461db1b4",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/submission.json": "e68f19655fa52e3e614ba85a7b8bacec1b77de7454cdfbfbdf8f4abfbf23073a",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/wire_request_0001.json": "911989d82b3c635ff4e6abdb6e4831e2552e14955903008d79f029e911ea89af",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/wire_request_0002.json": "26ba70d6b25feb668ae983ccdfd0c7508fe143383d3e6118f28337d75b87c6c7",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/wire_request_0003.json": "26ba70d6b25feb668ae983ccdfd0c7508fe143383d3e6118f28337d75b87c6c7",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/wire_request_0004.json": "26ba70d6b25feb668ae983ccdfd0c7508fe143383d3e6118f28337d75b87c6c7",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/wire_response_0001.json": "7e5d6690d6a46ae16a766e6b4bc7e0837909124d29351cb1ddf2a1d850a4988e",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/wire_response_0002.json": "d6a90b06ebfaa0b66baab25dcf52243159afe96c77100313c08a847da13fa1c7",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/wire_response_0003.json": "d6a90b06ebfaa0b66baab25dcf52243159afe96c77100313c08a847da13fa1c7",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/wire_response_0004.json": "4679ead408d1af2edae69a38e80c17c40271fa910bc3affc768d3794f6b7b1ce"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/parts/lq_dbd8a2f010636e8734ae394c/part-00000.parquet",
+          "sha256": "bd6b75f067c7a2369070776e85c4de14ee559559a1d743624a423731d3dbf9ca",
+          "bytes": 840277
+        }
+      ]
+    },
+    {
+      "request_name": "bars_2015-07-01_2015-09-30",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2015-07-01",
+          "2015-09-30"
+        ]
+      },
+      "id": "lq_c1a95e05827bc2ca4a11af80",
+      "row_count": 285367,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/intent.json": "554883a60cf59c741b2e2b50de865c485f1eaaf60c2229a0978e24e96f08d69e",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/part_hashes.json": "2d863c4b738abb8c5627225b46c3423874108884ca2bf2b299c8ba55e7870cf0",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/request.json": "8de15559704161857f67153176c9e62cec1e55b561c67ec1a03c7de45a0e6d5f",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/result_receipt.json": "22aa66b36020ff3ca903a822f4c1edb7c946a3256c457cc62059e58a032dbab8",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/submission.json": "6d3db0ac459785aec5c93de3ed419ace20c5b1c8ca9ee3a8ebf2fde5cd3d5c95",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/wire_request_0001.json": "3357b07fe27ed39c1eb6e0c49efa59cb38e560d0fd7ab5d4da4bd091e08d6fc1",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/wire_request_0002.json": "1c3800d54cbf76df844499cd832720b880be7b426ec2d74b94bc65914eabf713",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/wire_request_0003.json": "1c3800d54cbf76df844499cd832720b880be7b426ec2d74b94bc65914eabf713",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/wire_response_0001.json": "4a1355f4cb4fbe43100144bddbe4d293a46f9776c206cd958d84571e2908fc66",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/wire_response_0002.json": "db9ea1c256607a5806cf4d9100e331f3f438686d642aaf41189970a0233f1208",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/wire_response_0003.json": "30c849d9da72a7de33aaae3f3d70c2ad7a1c3b3f99fee4af3d5f7f7a8dddcc80"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/parts/lq_c1a95e05827bc2ca4a11af80/part-00000.parquet",
+          "sha256": "75ae97ec0deb4eff24f3ce1e5aa24803740f1f3f4113f74dc1698852c746e727",
+          "bytes": 859208
+        }
+      ]
+    },
+    {
+      "request_name": "bars_2015-10-01_2015-12-31",
+      "request": {
+        "query": "SELECT o.ticker,CAST(o.date AS DATE) AS day,s.security_id,o.unadjustedClose FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') WHERE CAST(o.date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND s.asset_type='CS' AND s.security_id IS NOT NULL ORDER BY s.security_id,o.date",
+        "params": [
+          "2015-10-01",
+          "2015-12-31"
+        ]
+      },
+      "id": "lq_15be2cdee155b597a8e5e14c",
+      "row_count": 286170,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/intent.json": "b62077e12219f4f7a67a11806f32fda8f32e360f7cce7083e10dc48b8ae1acd3",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/part_hashes.json": "947a61a7b8cd1fd5ceda896b0c8bf61ef2517f854f9a69ed38ef7158950586a4",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/request.json": "ed3666aa81f77466c4779ad683746e933646bd357a89d8a8ed50af5f5b763ae5",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/result_receipt.json": "34d65837dd90106a0e0d5faef4facbe842e70d70540a01ec0d8967addf03c555",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/submission.json": "f4802efe40a793b7a3a745492f236ace5097245073890dbca029937dc6462355",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/wire_request_0001.json": "0a408873d26a6d5101692abc141472794e477fc6d0c0c7d4728877a9e929069a",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/wire_request_0002.json": "8d1674cff45a207927fc52fa25daadc8a111784f62cc28104ea7105744a3e3ad",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/wire_request_0003.json": "8d1674cff45a207927fc52fa25daadc8a111784f62cc28104ea7105744a3e3ad",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/wire_request_0004.json": "8d1674cff45a207927fc52fa25daadc8a111784f62cc28104ea7105744a3e3ad",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/wire_response_0001.json": "59e644c72d283341236092562a78cf29f6c80c8f38f5626c8d624fbb0c94dbb5",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/wire_response_0002.json": "461b39513af23ba96c0cd0c164d6f88c222437f2ea6a554985d95a247e6a9f08",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/wire_response_0003.json": "461b39513af23ba96c0cd0c164d6f88c222437f2ea6a554985d95a247e6a9f08",
+        "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/wire_response_0004.json": "696c66e6cbe3caf4da3c45663beb2be8624c3a5c88588da03bc869d1380dcffb"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/parts/lq_15be2cdee155b597a8e5e14c/part-00000.parquet",
+          "sha256": "6f6314c6edd619feb4e02aa2c19f4787ad8f672e3adbdf96bad9c5a053301750",
+          "bytes": 865102
+        }
+      ]
+    },
+    {
+      "request_name": "prices_2015_01",
+      "request": {
+        "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi),\n    decisions(session,prior_session,decision_utc,expected_sessions) AS (VALUES (DATE '2015-01-02',DATE '2014-12-31',TIMESTAMP '2015-01-02T02:00:00',253)),\n    mapped AS (\n      SELECT o.ticker,CAST(o.date AS DATE) day,s.security_id,s.asset_type,o.unadjustedClose,\n        COUNT(*) OVER(PARTITION BY o.ticker,CAST(o.date AS DATE)) mappings\n      FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n       AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds\n      WHERE CAST(o.date AS DATE) BETWEEN lo AND hi AND s.from_date<=hi),\n    valid AS (SELECT * FROM mapped WHERE mappings=1 AND asset_type='CS'\n      AND security_id IS NOT NULL AND unadjustedClose>0 AND isfinite(unadjustedClose)),\n    endpoints AS (\n      SELECT d.*,p.security_id,p.ticker,COUNT(*) OVER(PARTITION BY d.session,p.security_id) aliases\n      FROM decisions d JOIN valid p ON p.day=d.prior_session\n      JOIN lake.security_segments s ON s.ticker=p.ticker AND s.security_id=p.security_id\n       AND d.session BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') AND s.asset_type='CS')\n    SELECT e.*,COUNT(DISTINCT p.day) days_365,COUNT(p.day) rows_365,\n      LIST(STRUCT_PACK(day:=p.day,ticker:=p.ticker,price:=p.unadjustedClose) ORDER BY p.day) bars\n    FROM endpoints e LEFT JOIN valid p ON p.security_id=e.security_id\n     AND p.day BETWEEN e.prior_session-INTERVAL 365 DAY AND e.prior_session\n    GROUP BY ALL ORDER BY e.session,e.security_id",
+        "params": [
+          "2013-12-31",
+          "2014-12-31"
+        ]
+      },
+      "id": null,
+      "row_count": null,
+      "status": "REJECTED_NO_JOB_ID",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/prices_2015_01/intent.json": "fc8ecf2a67f7ef4ba8a77ca6cb76230a7ac18b716bd2e2be836462a9ec9e480a",
+        "data/raw/EXP004/production_inputs_v001/prices_2015_01/request.json": "594f0d4510938c686121ecc8d1ff4de17b5bfb7fea83bbde3e06f6b35238f743",
+        "data/raw/EXP004/production_inputs_v001/prices_2015_01/wire_error_0001.json": "9df7f4b3a745af28f9b1f7fe9921a688d13921b4a42d912d7bda60acf1dde27c",
+        "data/raw/EXP004/production_inputs_v001/prices_2015_01/wire_request_0001.json": "a5cc4aa6beb23ac56b028885173fc91a52ff343cfbb00485bf245e1017750d24"
+      },
+      "parquet_parts": []
+    },
+    {
+      "request_name": "prices_2015_01_v002",
+      "request": {
+        "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi),\n    decisions(session,prior_session,decision_utc,expected_sessions) AS (VALUES (DATE '2015-01-02',DATE '2014-12-31',TIMESTAMP '2015-01-02T02:00:00',253)),\n    mapped AS (\n      SELECT o.ticker,CAST(o.date AS DATE) day,s.security_id,s.asset_type,o.unadjustedClose,\n        COUNT(*) OVER(PARTITION BY o.ticker,CAST(o.date AS DATE)) mappings\n      FROM lake.sec_daily_ohlc o JOIN lake.security_segments s ON o.ticker=s.ticker\n       AND CAST(o.date AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds\n      WHERE CAST(o.date AS DATE) BETWEEN lo AND hi AND s.from_date<=hi),\n    valid AS (SELECT * FROM mapped WHERE mappings=1 AND asset_type='CS'\n      AND security_id IS NOT NULL AND unadjustedClose>0 AND isfinite(unadjustedClose)),\n    endpoints AS (\n      SELECT d.*,p.security_id,p.ticker,COUNT(*) OVER(PARTITION BY d.session,p.security_id) aliases\n      FROM decisions d JOIN valid p ON p.day=d.prior_session\n      JOIN lake.security_segments s ON s.ticker=p.ticker AND s.security_id=p.security_id\n       AND d.session BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31') AND s.asset_type='CS')\n    SELECT e.*,COUNT(DISTINCT p.day) days_365,COUNT(p.day) rows_365,\n      ARRAY_AGG(p.day ORDER BY p.day) bar_dates,\n      ARRAY_AGG(p.ticker ORDER BY p.day) bar_tickers,\n      ARRAY_AGG(p.unadjustedClose ORDER BY p.day) bar_prices\n    FROM endpoints e LEFT JOIN valid p ON p.security_id=e.security_id\n     AND p.day BETWEEN e.prior_session-INTERVAL 365 DAY AND e.prior_session\n    GROUP BY ALL ORDER BY e.session,e.security_id",
+        "params": [
+          "2013-12-31",
+          "2014-12-31"
+        ]
+      },
+      "id": null,
+      "row_count": null,
+      "status": "REJECTED_NO_JOB_ID",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/prices_2015_01_v002/intent.json": "587bc2b76ed211a829d19b30fdf623392c7452e43474a8cb8866e9009ebf0d1e",
+        "data/raw/EXP004/production_inputs_v001/prices_2015_01_v002/request.json": "c3a6cb49cc97e88267a4aad3e2c7efea5f51f65d7396ae10087569b6a492e960",
+        "data/raw/EXP004/production_inputs_v001/prices_2015_01_v002/wire_error_0001.json": "9df7f4b3a745af28f9b1f7fe9921a688d13921b4a42d912d7bda60acf1dde27c",
+        "data/raw/EXP004/production_inputs_v001/prices_2015_01_v002/wire_request_0001.json": "1f647bcf50d74184f478e4695e3cedbf037a5cd0ca336bed288e02b2872a4caa"
+      },
+      "parquet_parts": []
+    },
+    {
+      "request_name": "splits",
+      "request": {
+        "query": "SELECT * FROM lake.stock_splits WHERE CAST(executionDate AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)",
+        "params": [
+          "2013-12-31",
+          "2020-12-31"
+        ]
+      },
+      "id": "lq_ee49862e46fc9ef6711c434d",
+      "row_count": 8149,
+      "status": "COMPLETED",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/splits/intent.json": "8a42b955d3c018b0ad675ad8157173de90e091f06fa1605c5199b56633b7117c",
+        "data/raw/EXP004/production_inputs_v001/splits/part_hashes.json": "1efa6d718be00f8483078f5f9173e02ff860b4facb906c88b31c5cb98e2d37bf",
+        "data/raw/EXP004/production_inputs_v001/splits/request.json": "2b749f579ba21ccb958db475931ae823e46f43394c4b24379716d182d6eeaed6",
+        "data/raw/EXP004/production_inputs_v001/splits/result_receipt.json": "bae09d10b5be8c8655752805741bd527fabba3486aa9392ea14e0d27b040b5ee",
+        "data/raw/EXP004/production_inputs_v001/splits/submission.json": "c829ab5e814f4a5880dbdc1d8b27bbbd00386675ff814bd3bb4df478e3f6ccf5",
+        "data/raw/EXP004/production_inputs_v001/splits/wire_request_0001.json": "ba79297ebb2e40e1337110e71995f640535834ff54eb68c857818fca66baa4ef",
+        "data/raw/EXP004/production_inputs_v001/splits/wire_request_0002.json": "1e341c3bc7fc323c7450e13fc4d7438ac0faff4d40b06f494677719ad8342071",
+        "data/raw/EXP004/production_inputs_v001/splits/wire_request_0003.json": "1e341c3bc7fc323c7450e13fc4d7438ac0faff4d40b06f494677719ad8342071",
+        "data/raw/EXP004/production_inputs_v001/splits/wire_request_0004.json": "1e341c3bc7fc323c7450e13fc4d7438ac0faff4d40b06f494677719ad8342071",
+        "data/raw/EXP004/production_inputs_v001/splits/wire_response_0001.json": "e6d510f25683e85daa3235b5c8d8d0b174da1e57eff7fe94fd07d3d3dbaa0c3d",
+        "data/raw/EXP004/production_inputs_v001/splits/wire_response_0002.json": "fc901fe9f4568577b33767a2cb32da0d8828c9e65be52bc1a3cdf045aa468498",
+        "data/raw/EXP004/production_inputs_v001/splits/wire_response_0003.json": "fc901fe9f4568577b33767a2cb32da0d8828c9e65be52bc1a3cdf045aa468498",
+        "data/raw/EXP004/production_inputs_v001/splits/wire_response_0004.json": "c0c47e052a7a1210397e8ada187a6e6f2e06a9d74c2f0005a2966c52a0a426dc"
+      },
+      "parquet_parts": [
+        {
+          "path": "data/raw/EXP004/production_inputs_v001/splits/parts/lq_ee49862e46fc9ef6711c434d/part-00000.parquet",
+          "sha256": "35077442db8348595edf6872325f7fe047bf366f41a5639a4add388588aa7ad7",
+          "bytes": 62508
+        }
+      ]
+    }
+  ],
+  "wire_calls": 38,
+  "wire_errors": 2,
+  "completed_lake_jobs": 9,
+  "rejected_attempts_without_job_id": 2,
+  "actual_token_debit": null,
+  "actual_token_debit_status": "No debit field was exposed in these receipts; unknown, not zero.",
+  "estimated_token_charge": null,
+  "estimate_status": "No authoritative Lake quote available; source-query count/rows tracked separately. Daily stock backtest published estimate0; none submitted.",
+  "included_token_cap": null,
+  "credit_purchases": 0,
+  "custom_publications": 0,
+  "backtests": 0,
+  "metadata_reads": [
+    {
+      "name": "corporate_action_declarations",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/corporate_action_declarations/catalog.json": "34f5b198b8d55fd4b80977af82f098b148ab0ef7421218c49afd311b069de78e",
+        "data/raw/EXP004/production_inputs_v001/corporate_action_declarations/wire_request_0001.json": "e268aff016027f8fa716663e12c703edbb817137c2cefae455fac636fab5c81e",
+        "data/raw/EXP004/production_inputs_v001/corporate_action_declarations/wire_response_0001.json": "3613b2cf8d88d403dc6c8cca712515cff89ce1829639e6c7c30581e90498d34b"
+      }
+    },
+    {
+      "name": "metadata",
+      "receipt_hashes": {
+        "data/raw/EXP004/production_inputs_v001/metadata/stock_splits.json": "742b26f9c24060b18cfbe8eff465875cfa026ba773f4dda88f1091302e4b2b57",
+        "data/raw/EXP004/production_inputs_v001/metadata/wire_request_0001.json": "99ad21009a08f4f180917db36cf8445b5cb0809d8eaec73e2601faff28055cec",
+        "data/raw/EXP004/production_inputs_v001/metadata/wire_response_0001.json": "e10426a0e9777c3eb666e2e09884ca98a7df87e67bf4e0908c1559a761e9d669"
+      }
+    }
+  ],
+  "alternate_split_surface": "Current Lake catalog exposes only stock_splits for split/corporate-action declarations; no alternate event/version/availability table was found."
+}

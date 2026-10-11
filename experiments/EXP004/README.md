@@ -1,6 +1,6 @@
 # EXP004 — cross-sectional price momentum
 
-**DRAFT · READY FOR FREEZE REVIEW.** This is an independent price-only experiment. No performance has been queried, hypothesis frozen, Nexus operation called or spending authorized. EXP003 is closed externally as source-feasibility-blocked; its economic hypothesis was never tested and its original files remain unchanged.
+**HYPOTHESIS FROZEN ? PRODUCTION SPLIT QA BLOCKED.** The approved freeze is unchanged (`efc3626`). Authorized input preparation completed nine bounded Lake jobs: 2,189,960 numeric price rows and 8,149 split rows. All 12 monthly 2015 numeric panels were generated privately. Active LADR/BTX/ALEX same-date factors lack event/version/availability lineage, preventing complete production certification. No custom stream or candidate/benchmark backtest was submitted. See the [Development report](../../reports/EXP004_development_report.md), [split QA](research/production_split_qa.json) and [query log](research/production_query_log.json). EXP003 remains closed and unchanged.
 
 Does medium-term cross-sectional price momentum produce robust out-of-sample excess performance in our historically auditable source-defined common-equity universe?
 

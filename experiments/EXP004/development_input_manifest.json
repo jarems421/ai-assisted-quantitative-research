@@ -1,5 +1,5 @@
 {
-  "status": "BLOCKED_INPUT_QA_NO_RUNS_SUBMITTED",
+  "status": "BLOCKED_AMBIGUOUS_CORPORATE_ACTION_LINEAGE",
   "frozen_specification_sha256": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
   "frozen_methodology_sha256": "caf07509c04a9b703725983482e7502c03616b1ab27bdc5287148fdcca9b6328",
   "source_receipts": [
@@ -46,12 +46,14 @@
       "maximum_horizon_price_prerequisite_count": 3595,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3553,
+      "rankings_sha256": "600029a0fbe90bd0b5442a5bf6ff5a0c6ae3ed966e92037f2bedd599f027dc50"
     },
     {
       "session": "2015-02-02",
@@ -62,12 +64,14 @@
       "maximum_horizon_price_prerequisite_count": 3596,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3556,
+      "rankings_sha256": "6ea324059e908db3936ee80ed4cd7bcde8f6494f11890f187e697876fff833df"
     },
     {
       "session": "2015-03-02",
@@ -78,12 +82,14 @@
       "maximum_horizon_price_prerequisite_count": 3613,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3578,
+      "rankings_sha256": "56b7dac82d7a896f3b2ff663d8e7dfde0f95777bf6d80e8b64b7012d2f182eda"
     },
     {
       "session": "2015-04-01",
@@ -94,12 +100,14 @@
       "maximum_horizon_price_prerequisite_count": 3623,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3592,
+      "rankings_sha256": "99d53e548320624b5271aff2af15a350dd350a3497c2b72441f85572a15c145f"
     },
     {
       "session": "2015-05-01",
@@ -110,12 +118,14 @@
       "maximum_horizon_price_prerequisite_count": 3636,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3606,
+      "rankings_sha256": "a6bd930c201b35c9ac0565b0e2a325d02cf987062724d8c8f5530325af36c03d"
     },
     {
       "session": "2015-06-01",
@@ -126,12 +136,14 @@
       "maximum_horizon_price_prerequisite_count": 3647,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3619,
+      "rankings_sha256": "b67376ff92f6844eac04992a86b0106169650253c09eea98635de5e241e98f87"
     },
     {
       "session": "2015-07-01",
@@ -142,12 +154,14 @@
       "maximum_horizon_price_prerequisite_count": 3666,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3643,
+      "rankings_sha256": "d0dc095580d7eaa90458d1864e65c4a3f6a02000903952c96fb0515c137aaa34"
     },
     {
       "session": "2015-08-03",
@@ -158,12 +172,14 @@
       "maximum_horizon_price_prerequisite_count": 3689,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3668,
+      "rankings_sha256": "ba1f7b9977480b40892601968cb994504ddc1f032e914702ac49785208a2a4c4"
     },
     {
       "session": "2015-09-01",
@@ -174,12 +190,14 @@
       "maximum_horizon_price_prerequisite_count": 3702,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3682,
+      "rankings_sha256": "e2d6606a2084d9bea661446ace2fe5800298e271f3b8f184d24d76fa1fd0e62e"
     },
     {
       "session": "2015-10-01",
@@ -190,12 +208,14 @@
       "maximum_horizon_price_prerequisite_count": 3693,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3678,
+      "rankings_sha256": "9bf4c87a5f0ed78cf08715a31bd517cf4e14a45d9906558ee3e14ad2c346bf2c"
     },
     {
       "session": "2015-11-02",
@@ -206,12 +226,14 @@
       "maximum_horizon_price_prerequisite_count": 3710,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3701,
+      "rankings_sha256": "1ff2533ea1a950dab52d22a1d52c1698e2fe5e23f39d93a4086716f72ec22852"
     },
     {
       "session": "2015-12-01",
@@ -222,12 +244,14 @@
       "maximum_horizon_price_prerequisite_count": 3741,
       "shortfall_K20": false,
       "shortfall_K40": false,
-      "numeric_momentum_available": false,
+      "numeric_momentum_available": true,
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
-      "submit_allowed": false
+      "qa_status": "PARTIAL2015_NUMERIC_ONLY_PROGRAMME_BLOCKED",
+      "submit_allowed": false,
+      "eligible_count": 3736,
+      "rankings_sha256": "b20403db9f10d751c919923c24e3455a878b2085a332511437dfd6d3465ca0b6"
     },
     {
       "session": "2016-01-04",
@@ -242,7 +266,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -258,7 +282,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -274,7 +298,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -290,7 +314,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -306,7 +330,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -322,7 +346,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -338,7 +362,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -354,7 +378,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -370,7 +394,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -386,7 +410,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -402,7 +426,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -418,7 +442,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -434,7 +458,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -450,7 +474,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -466,7 +490,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -482,7 +506,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -498,7 +522,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -514,7 +538,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -530,7 +554,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -546,7 +570,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -562,7 +586,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -578,7 +602,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -594,7 +618,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -610,7 +634,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -626,7 +650,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -642,7 +666,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -658,7 +682,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -674,7 +698,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -690,7 +714,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -706,7 +730,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -722,7 +746,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -738,7 +762,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -754,7 +778,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -770,7 +794,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -786,7 +810,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -802,7 +826,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -818,7 +842,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -834,7 +858,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -850,7 +874,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -866,7 +890,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -882,7 +906,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -898,7 +922,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -914,7 +938,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -930,7 +954,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -946,7 +970,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -962,7 +986,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -978,7 +1002,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -994,7 +1018,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1010,7 +1034,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1026,7 +1050,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1042,7 +1066,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1058,7 +1082,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1074,7 +1098,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1090,7 +1114,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1106,7 +1130,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1122,7 +1146,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1138,7 +1162,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1154,7 +1178,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1170,7 +1194,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     },
     {
@@ -1186,7 +1210,7 @@
       "exact_rank_values": null,
       "selected_K20": null,
       "selected_K40": null,
-      "qa_status": "FAIL_MISSING_NUMERIC_INPUT",
+      "qa_status": "UNBUILT_OR_BLOCKED_SPLIT_LINEAGE",
       "submit_allowed": false
     }
   ],
@@ -1237,15 +1261,24 @@
       "number_of_holdings": 40
     }
   ],
-  "affected_runs": "All four momentum cells and matched equal-weight universe: cannot certify shared numeric-signal eligibility or rankings. SPY withheld to avoid a partial unmatched programme.",
-  "qa_failure": "Existing full-universe receipts contain completed-price counts, identities and endpoints, but no full numeric unadjustedClose/split lineage from which exact 180/365-day momentum can be generated. Bounded AAPL/MSFT and other diagnostic samples cannot replace the frozen universe.",
-  "required_input": "Immutable Development-only nominal completed price bars and effective splits with certified as-of availability, historical stable-ID/ticker mapping and expected-session reconciliation; include pre-2015 warmup only as frozen prerequisites. No 2021+ observations.",
-  "cost_boundary": "Reviewed specification budgets remain zero. Existing priced daily stock backtests estimate zero; this does not establish the cost of additional Lake source extraction or custom publication. No standing EXP002/EXP003 audit allowance carries into EXP004.",
+  "affected_runs": "Full2015-2020 replays and scored2017/2018 cells/shared-universe comparator. No partial unmatched programme submitted.",
+  "qa_failure": "BTX and ALEX have multiple distinct same-date factors within scored2017-2018 eligibility windows, with no event/version/availability lineage. LADR also affects2016 full-Development decisions. Cannot certify compounding or choose a factor without evidence.",
+  "required_input": "Authoritative split event/version/identity/availability lineage for active LADR/BTX/ALEX rows or a corrected as-of source under the same frozen contract; no new exclusion filter or parameter allowed.",
+  "cost_boundary": "Owner lifted included-token cap; no credit purchase. Token charges unknown in receipts, so this is a source QA stop, not a budget stop.",
   "operations": {
-    "nexus_calls": 0,
+    "nexus_calls": 38,
     "backtests": 0,
     "publications": 0,
-    "held_out_reads": 0
+    "held_out_reads": 0,
+    "completed_lake_queries": 9,
+    "rejected_lake_attempts": 2,
+    "nexus_calls_definition": "Logged SDK transport requests; source-query submissions, metadata, polls and downloads. No strategy/account/trade operation."
   },
-  "input_manifest_sha256": "4247fd1543441ac8e53452bfaae8d8a6e143c7793434c3040cb386221a456fdf"
+  "input_authorization": "research/input_preparation_authorization.json",
+  "source_query_log": "research/production_query_log.json",
+  "completed_source_queries": 9,
+  "rejected_source_attempts": 2,
+  "downloaded_numeric_price_rows": 2189960,
+  "downloaded_split_rows": 8149,
+  "input_manifest_sha256": "196b7d1a5d56b546ce92110841c99e75f0458adad31827083c4a0e9ed816a8c3"
 }

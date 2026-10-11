@@ -1,0 +1,337 @@
+{
+  "status": "FAIL_AMBIGUOUS_SAME_DATE_SPLIT_LINEAGE",
+  "all_cs_conflicts": [
+    {
+      "ticker": "LADR",
+      "effective_date": "2015-12-08",
+      "security_id": "figi:BBG005RVGZ50",
+      "source_rows": [
+        {
+          "ticker": "LADR",
+          "executionDate": "2015-12-08 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.126853
+        },
+        {
+          "ticker": "LADR",
+          "executionDate": "2015-12-08 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.097582
+        }
+      ],
+      "alternative_ratios": [
+        1.126853,
+        1.097582
+      ],
+      "frozen_multiplication_factor": 1.236813569446,
+      "affected_decisions": [
+        "2016-01-04",
+        "2016-02-01",
+        "2016-03-01",
+        "2016-04-01",
+        "2016-05-02",
+        "2016-06-01",
+        "2016-07-01",
+        "2016-08-01",
+        "2016-09-01",
+        "2016-10-03",
+        "2016-11-01",
+        "2016-12-01"
+      ]
+    },
+    {
+      "ticker": "BTX",
+      "effective_date": "2016-06-17",
+      "security_id": "figi:BBG001SCW8V3",
+      "source_rows": [
+        {
+          "ticker": "BTX",
+          "executionDate": "2016-06-17 20:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 2.0
+        },
+        {
+          "ticker": "BTX",
+          "executionDate": "2016-06-17 20:00:00",
+          "splitFrom": 100.0,
+          "splitTo": 1.0
+        }
+      ],
+      "alternative_ratios": [
+        2.0,
+        0.01
+      ],
+      "frozen_multiplication_factor": 0.02,
+      "affected_decisions": [
+        "2016-07-01",
+        "2016-08-01",
+        "2016-09-01",
+        "2016-10-03",
+        "2016-11-01",
+        "2016-12-01",
+        "2017-01-03",
+        "2017-02-01",
+        "2017-03-01",
+        "2017-04-03",
+        "2017-05-01",
+        "2017-06-01"
+      ]
+    },
+    {
+      "ticker": "ALEX",
+      "effective_date": "2017-11-28",
+      "security_id": "figi:BBG00HS2GVM7",
+      "source_rows": [
+        {
+          "ticker": "ALEX",
+          "executionDate": "2017-11-28 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.5741279154
+        },
+        {
+          "ticker": "ALEX",
+          "executionDate": "2017-11-28 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.42
+        }
+      ],
+      "alternative_ratios": [
+        1.5741279154,
+        1.42
+      ],
+      "frozen_multiplication_factor": 2.235261639868,
+      "affected_decisions": [
+        "2017-12-01",
+        "2018-01-02",
+        "2018-02-01",
+        "2018-03-01",
+        "2018-04-02",
+        "2018-05-01",
+        "2018-06-01",
+        "2018-07-02",
+        "2018-08-01",
+        "2018-09-04",
+        "2018-10-01",
+        "2018-11-01"
+      ]
+    },
+    {
+      "ticker": "NYC",
+      "effective_date": "2020-08-18",
+      "security_id": "figi:BBG00V4VSCS1",
+      "source_rows": [
+        {
+          "ticker": "NYC",
+          "executionDate": "2020-08-18 20:00:00",
+          "splitFrom": 9.72,
+          "splitTo": 1.0
+        },
+        {
+          "ticker": "NYC",
+          "executionDate": "2020-08-18 20:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 4.0
+        }
+      ],
+      "alternative_ratios": [
+        0.10288065843621398,
+        4.0
+      ],
+      "frozen_multiplication_factor": 0.4115226337448559,
+      "affected_decisions": []
+    },
+    {
+      "ticker": "SLG",
+      "effective_date": "2020-12-14",
+      "security_id": "cik:1040971:?:SLG.PRAC@2003-09-30",
+      "source_rows": [
+        {
+          "ticker": "SLG",
+          "executionDate": "2020-12-14 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.0279
+        },
+        {
+          "ticker": "SLG",
+          "executionDate": "2020-12-14 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.0343
+        }
+      ],
+      "alternative_ratios": [
+        1.0279,
+        1.0343
+      ],
+      "frozen_multiplication_factor": 1.06315697,
+      "affected_decisions": []
+    },
+    {
+      "ticker": "RELV",
+      "effective_date": "2020-12-21",
+      "security_id": "cik:768710:?:RELV@2003-09-30",
+      "source_rows": [
+        {
+          "ticker": "RELV",
+          "executionDate": "2020-12-21 21:00:00",
+          "splitFrom": 2000.0,
+          "splitTo": 1.0
+        },
+        {
+          "ticker": "RELV",
+          "executionDate": "2020-12-21 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 2000.0
+        }
+      ],
+      "alternative_ratios": [
+        0.0005,
+        2000.0
+      ],
+      "frozen_multiplication_factor": 1.0,
+      "affected_decisions": []
+    }
+  ],
+  "critical_active_conflicts": [
+    {
+      "ticker": "LADR",
+      "effective_date": "2015-12-08",
+      "security_id": "figi:BBG005RVGZ50",
+      "source_rows": [
+        {
+          "ticker": "LADR",
+          "executionDate": "2015-12-08 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.126853
+        },
+        {
+          "ticker": "LADR",
+          "executionDate": "2015-12-08 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.097582
+        }
+      ],
+      "alternative_ratios": [
+        1.126853,
+        1.097582
+      ],
+      "frozen_multiplication_factor": 1.236813569446,
+      "affected_decisions": [
+        "2016-01-04",
+        "2016-02-01",
+        "2016-03-01",
+        "2016-04-01",
+        "2016-05-02",
+        "2016-06-01",
+        "2016-07-01",
+        "2016-08-01",
+        "2016-09-01",
+        "2016-10-03",
+        "2016-11-01",
+        "2016-12-01"
+      ]
+    },
+    {
+      "ticker": "BTX",
+      "effective_date": "2016-06-17",
+      "security_id": "figi:BBG001SCW8V3",
+      "source_rows": [
+        {
+          "ticker": "BTX",
+          "executionDate": "2016-06-17 20:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 2.0
+        },
+        {
+          "ticker": "BTX",
+          "executionDate": "2016-06-17 20:00:00",
+          "splitFrom": 100.0,
+          "splitTo": 1.0
+        }
+      ],
+      "alternative_ratios": [
+        2.0,
+        0.01
+      ],
+      "frozen_multiplication_factor": 0.02,
+      "affected_decisions": [
+        "2016-07-01",
+        "2016-08-01",
+        "2016-09-01",
+        "2016-10-03",
+        "2016-11-01",
+        "2016-12-01",
+        "2017-01-03",
+        "2017-02-01",
+        "2017-03-01",
+        "2017-04-03",
+        "2017-05-01",
+        "2017-06-01"
+      ]
+    },
+    {
+      "ticker": "ALEX",
+      "effective_date": "2017-11-28",
+      "security_id": "figi:BBG00HS2GVM7",
+      "source_rows": [
+        {
+          "ticker": "ALEX",
+          "executionDate": "2017-11-28 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.5741279154
+        },
+        {
+          "ticker": "ALEX",
+          "executionDate": "2017-11-28 21:00:00",
+          "splitFrom": 1.0,
+          "splitTo": 1.42
+        }
+      ],
+      "alternative_ratios": [
+        1.5741279154,
+        1.42
+      ],
+      "frozen_multiplication_factor": 2.235261639868,
+      "affected_decisions": [
+        "2017-12-01",
+        "2018-01-02",
+        "2018-02-01",
+        "2018-03-01",
+        "2018-04-02",
+        "2018-05-01",
+        "2018-06-01",
+        "2018-07-02",
+        "2018-08-01",
+        "2018-09-04",
+        "2018-10-01",
+        "2018-11-01"
+      ]
+    }
+  ],
+  "resolution_required": "Authoritative version/event identity or evidence that all same-day legs should compound. Do not silently choose/deduplicate rows, infer ratio from future prices, or exclude tickers via a new filter.",
+  "source_schema_fields": [
+    "ticker",
+    "executionDate",
+    "splitFrom",
+    "splitTo"
+  ],
+  "source_schema_has_revision_or_event_identity": false,
+  "performance_queries": 0,
+  "custom_publications": 0,
+  "backtests": 0,
+  "interpretation": "Multiple same-date rows are not automatically errors: some corporate actions have legitimate sequential legs. Current table lacks identity/version/type lineage needed to distinguish them. No ratio was chosen, multiplied, deduplicated or replaced for production.",
+  "primary_evidence": [
+    {
+      "url": "https://investors.alexanderbaldwin.com/2017-11-16-Alexander-Baldwin-Declares-783-Million-Special-Distribution",
+      "published": "2017-11-16",
+      "status": "VERIFIED_ISSUER_DECLARATION",
+      "finding": "Distribution stock quantity depended on prices after January12,2018 election deadline. Announcement does not identify which Nexus split row is correct.",
+      "inference": "November-dated stock factor needs explicit availability/adjustment-event lineage before use as a completed November split."
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1545654/000154565417000073/a3-accompanying_materials.htm",
+      "status": "VERIFIED_PRIMARY_FILING_TEXT",
+      "finding": "Accompanying materials describe the same election and future pricing mechanism."
+    }
+  ],
+  "web_exposure_note": "A targeted2015/2017 issuer search also returned unrelated2024+ dividend-page titles/boilerplate and a third-party dividend-history snippet. These were excluded from design/evidence; no postcutoff linked page opened or numeric observation used. Exact primary pages opened were the2017 announcement and accompanying filing. Do not claim every web search response was free of later references."
+}

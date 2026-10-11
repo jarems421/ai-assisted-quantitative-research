@@ -1,0 +1,242 @@
+{
+  "year": 2015,
+  "status": "PASS_2015_LOCAL_NUMERIC_ONLY_NOT_PUBLICATION_AUTHORITY",
+  "frozen_specification_sha256": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
+  "source_sha256": "f6649ef2a30dec1c810597b9676271a4194929147646238e6ace2087af2b985d",
+  "source_parts": [
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/bars_2013-12-31_2014-03-31/parts/lq_ab8fe67bb468179942e4993d/part-00000.parquet",
+      "sha256": "158593cc1243a48efaf7d2fb563a9966340a200a64abf2193bf7d0b9cab19e98"
+    },
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/bars_2014-04-01_2014-06-30/parts/lq_dd728a013174426972800230/part-00000.parquet",
+      "sha256": "c30b34eb45d014c80506d7c169041c4f0b7e8e1c9607a88d59eeef204733e5e4"
+    },
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/bars_2014-07-01_2014-09-30/parts/lq_11b887796b18403464d1517d/part-00000.parquet",
+      "sha256": "45e1d6c6b10f67a3accf6eed36e2b48007de9ea5f0817560c1b773511ab219a5"
+    },
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/bars_2014-10-01_2014-12-31/parts/lq_8eb04cc6e3b72595ce53cca8/part-00000.parquet",
+      "sha256": "58594fc298acb3c43c7686e10fc2db35ce486c46e76e02ad7da6188e706e0b39"
+    },
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/bars_2015-01-01_2015-03-31/parts/lq_1933484c8e29c9c900a0e2de/part-00000.parquet",
+      "sha256": "2709a2a28c3072fab6879b3ffabbb113a7517cdbd26511aa71bdb07cbde402fd"
+    },
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/bars_2015-04-01_2015-06-30/parts/lq_dbd8a2f010636e8734ae394c/part-00000.parquet",
+      "sha256": "bd6b75f067c7a2369070776e85c4de14ee559559a1d743624a423731d3dbf9ca"
+    },
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/bars_2015-07-01_2015-09-30/parts/lq_c1a95e05827bc2ca4a11af80/part-00000.parquet",
+      "sha256": "75ae97ec0deb4eff24f3ce1e5aa24803740f1f3f4113f74dc1698852c746e727"
+    },
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/bars_2015-10-01_2015-12-31/parts/lq_15be2cdee155b597a8e5e14c/part-00000.parquet",
+      "sha256": "6f6314c6edd619feb4e02aa2c19f4787ad8f672e3adbdf96bad9c5a053301750"
+    },
+    {
+      "path": "data/raw/EXP004/production_inputs_v001/splits/parts/lq_ee49862e46fc9ef6711c434d/part-00000.parquet",
+      "sha256": "35077442db8348595edf6872325f7fe047bf366f41a5639a4add388588aa7ad7"
+    }
+  ],
+  "monthly": [
+    {
+      "session": "2015-01-02",
+      "prior_session": "2014-12-31",
+      "decision_utc": "2015-01-02T02:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3553,
+      "excluded": {
+        "missing_or_duplicate_endpoint": 177,
+        "missing_duplicate_or_noncalendar_sessions": 783,
+        "lookback_identity_ambiguity": 42,
+        "invalid_price": 2,
+        "ambiguous_or_inactive_identity": 4
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "600029a0fbe90bd0b5442a5bf6ff5a0c6ae3ed966e92037f2bedd599f027dc50"
+    },
+    {
+      "session": "2015-02-02",
+      "prior_session": "2015-01-30",
+      "decision_utc": "2015-02-02T02:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3556,
+      "excluded": {
+        "missing_or_duplicate_endpoint": 199,
+        "missing_duplicate_or_noncalendar_sessions": 775,
+        "ambiguous_or_inactive_identity": 2,
+        "lookback_identity_ambiguity": 40,
+        "invalid_price": 2
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "6ea324059e908db3936ee80ed4cd7bcde8f6494f11890f187e697876fff833df"
+    },
+    {
+      "session": "2015-03-02",
+      "prior_session": "2015-02-27",
+      "decision_utc": "2015-03-02T02:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3578,
+      "excluded": {
+        "missing_or_duplicate_endpoint": 197,
+        "missing_duplicate_or_noncalendar_sessions": 773,
+        "lookback_identity_ambiguity": 35,
+        "ambiguous_or_inactive_identity": 2,
+        "invalid_price": 1
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "56b7dac82d7a896f3b2ff663d8e7dfde0f95777bf6d80e8b64b7012d2f182eda"
+    },
+    {
+      "session": "2015-04-01",
+      "prior_session": "2015-03-31",
+      "decision_utc": "2015-04-01T01:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3592,
+      "excluded": {
+        "missing_or_duplicate_endpoint": 202,
+        "missing_duplicate_or_noncalendar_sessions": 766,
+        "lookback_identity_ambiguity": 31,
+        "ambiguous_or_inactive_identity": 3,
+        "invalid_price": 1
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "99d53e548320624b5271aff2af15a350dd350a3497c2b72441f85572a15c145f"
+    },
+    {
+      "session": "2015-05-01",
+      "prior_session": "2015-04-30",
+      "decision_utc": "2015-05-01T01:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3606,
+      "excluded": {
+        "missing_or_duplicate_endpoint": 211,
+        "missing_duplicate_or_noncalendar_sessions": 767,
+        "lookback_identity_ambiguity": 30,
+        "invalid_price": 2
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "a6bd930c201b35c9ac0565b0e2a325d02cf987062724d8c8f5530325af36c03d"
+    },
+    {
+      "session": "2015-06-01",
+      "prior_session": "2015-05-29",
+      "decision_utc": "2015-06-01T01:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3619,
+      "excluded": {
+        "missing_or_duplicate_endpoint": 241,
+        "missing_duplicate_or_noncalendar_sessions": 740,
+        "lookback_identity_ambiguity": 28,
+        "invalid_price": 2,
+        "ambiguous_or_inactive_identity": 1
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "b67376ff92f6844eac04992a86b0106169650253c09eea98635de5e241e98f87"
+    },
+    {
+      "session": "2015-07-01",
+      "prior_session": "2015-06-30",
+      "decision_utc": "2015-07-01T01:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3643,
+      "excluded": {
+        "missing_or_duplicate_endpoint": 213,
+        "missing_duplicate_or_noncalendar_sessions": 770,
+        "lookback_identity_ambiguity": 23,
+        "ambiguous_or_inactive_identity": 4,
+        "invalid_price": 2
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "d0dc095580d7eaa90458d1864e65c4a3f6a02000903952c96fb0515c137aaa34"
+    },
+    {
+      "session": "2015-08-03",
+      "prior_session": "2015-07-31",
+      "decision_utc": "2015-08-03T01:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3668,
+      "excluded": {
+        "missing_duplicate_or_noncalendar_sessions": 757,
+        "missing_or_duplicate_endpoint": 236,
+        "lookback_identity_ambiguity": 21,
+        "invalid_price": 2,
+        "ambiguous_or_inactive_identity": 5
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "ba1f7b9977480b40892601968cb994504ddc1f032e914702ac49785208a2a4c4"
+    },
+    {
+      "session": "2015-09-01",
+      "prior_session": "2015-08-31",
+      "decision_utc": "2015-09-01T01:00:00",
+      "expected_365_sessions": 252,
+      "eligible_count": 3682,
+      "excluded": {
+        "missing_duplicate_or_noncalendar_sessions": 763,
+        "missing_or_duplicate_endpoint": 232,
+        "lookback_identity_ambiguity": 20,
+        "invalid_price": 2,
+        "ambiguous_or_inactive_identity": 2
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "e2d6606a2084d9bea661446ace2fe5800298e271f3b8f184d24d76fa1fd0e62e"
+    },
+    {
+      "session": "2015-10-01",
+      "prior_session": "2015-09-30",
+      "decision_utc": "2015-10-01T01:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3678,
+      "excluded": {
+        "missing_duplicate_or_noncalendar_sessions": 756,
+        "missing_or_duplicate_endpoint": 247,
+        "lookback_identity_ambiguity": 15,
+        "invalid_price": 2,
+        "ambiguous_or_inactive_identity": 4
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "9bf4c87a5f0ed78cf08715a31bd517cf4e14a45d9906558ee3e14ad2c346bf2c"
+    },
+    {
+      "session": "2015-11-02",
+      "prior_session": "2015-10-30",
+      "decision_utc": "2015-11-02T02:00:00",
+      "expected_365_sessions": 253,
+      "eligible_count": 3701,
+      "excluded": {
+        "missing_duplicate_or_noncalendar_sessions": 743,
+        "missing_or_duplicate_endpoint": 267,
+        "lookback_identity_ambiguity": 9,
+        "invalid_price": 2,
+        "ambiguous_or_inactive_identity": 1
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "1ff2533ea1a950dab52d22a1d52c1698e2fe5e23f39d93a4086716f72ec22852"
+    },
+    {
+      "session": "2015-12-01",
+      "prior_session": "2015-11-30",
+      "decision_utc": "2015-12-01T02:00:00",
+      "expected_365_sessions": 252,
+      "eligible_count": 3736,
+      "excluded": {
+        "missing_duplicate_or_noncalendar_sessions": 763,
+        "missing_or_duplicate_endpoint": 234,
+        "lookback_identity_ambiguity": 5,
+        "invalid_price": 2,
+        "ambiguous_or_inactive_identity": 1
+      },
+      "qa_status": "PASS_LOCAL_NUMERIC",
+      "rankings_sha256": "b20403db9f10d751c919923c24e3455a878b2085a332511437dfd6d3465ca0b6"
+    }
+  ],
+  "normalization": "Price availability uses inherited finalized21:00NY EOD convention, not a vendor availability column. Effective splits use the same completed-day normalization solely under the inherited scoped split contract, never future factors; precise announcement/vintage immutability is not claimed.",
+  "private_input_sha256": "caa0ed03cc72c91456b617596460db078a67c4e7aed4d384607cc87670a509a4",
+  "nexus_strategy_jobs": 0,
+  "complete_programme_qa": "FAIL_AMBIGUOUS_SPLITS_IN2016_2017_2018_DECISIONS",
+  "limitations": "Current2015 normalization used scoped inherited EOD availability; it must not certify as-of split knowledge for ambiguous source rows. No complete2016-2020 numeric panel or production streams generated."
+}

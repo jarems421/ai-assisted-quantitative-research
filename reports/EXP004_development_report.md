@@ -1,6 +1,6 @@
 # EXP004 Development — frozen, input QA blocked
 
-**No Development performance results exist.** The owner approved the exact reviewed specification and methodology. The audit passed and `freeze-hypothesis` completed before preparation. Freeze checkpoint: `efc3626` on `main`, pushed to GitHub. No candidate or benchmark backtest, custom publication, performance query or held-out read was performed.
+**No Development performance results exist.** The owner approved the exact reviewed specification and methodology. The audit passed and `freeze-hypothesis` completed before preparation. Freeze checkpoint: `efc3626` on `main`, pushed to GitHub. No candidate or benchmark backtest, custom publication or performance query was performed. Nine authorized source Lake jobs completed; Nexus source bounds stayed pre-2021. Incidental later web-search references are disclosed in provenance, never used.
 
 Frozen hypothesis: medium-term cross-sectional price momentum improves net mean daily return and zero-RF Sharpe versus monthly equal-weight ownership of the same historical source-defined common-equity universe, with directionally consistent chronological held-out Development folds.
 
@@ -13,11 +13,27 @@ The reviewed specification bytes, source-universe definition, costs, four cells,
 
 ## Input QA
 
-The [Development manifest](../experiments/EXP004/development_input_manifest.json) binds all 72 monthly decision dates, inherited source receipt hashes, per-date universe/history prerequisite counts, four cells and fold boundaries to the freeze. Each decision currently fails **MISSING NUMERIC INPUT**. Completed-price counts are not prices: they cannot produce exact split-safe 180/365-day momentum, numeric ranking values or selected top K. The existing small diagnostic price/split samples do not cover the frozen source population. No absent value becomes a zero or an invented rank.
+The owner's subsequent authorization allowed included research tokens for bounded production preparation, then lifted the numerical 2,000-token cap. No frozen specification/budget field changed and no credit purchase occurred. See [authorization](../experiments/EXP004/research/input_preparation_authorization.json).
 
-Required production inputs are immutable numeric nominal completed prices and effective split lineage, with as-of availability and historical identity/session reconciliation. After extraction, complete per-decision QA must prove eligible counts, stable identities, no ambiguous/duplicate identity, both horizon values, exact ranks/top K, completed-bar availability and no future bars. The local preparation gate rejects incomplete evidence before submission. Unpublished SDK fixture IDs cannot be used for a run.
+Nine Lake jobs completed: eight quarter-sized CS nominal-price extracts covering 2013-12-31 through 2015-12-31 (2,189,960 rows), plus a 2013-12-31?2020-12-31 split extract (8,149 rows). Two packed-array SQL submissions were rejected without job IDs and are retained. All source parameters, IDs, immutable receipts/Parquet hashes and 38 logged transport calls are in the [query ledger](../experiments/EXP004/research/production_query_log.json). No precise Lake cost quote or debit appeared in receipts: charges remain unknown, not zero. This stop is about source integrity, not budget.
 
-The reviewed budget is zero. Dated daily non-options backtest estimates are zero, but they do not establish the cost of additional Lake extraction/custom publication. An explicit included-token preparation ceiling is pending; old experiment allowances are not transferred and no credit purchase is authorized. This is an operational input/cost stop, not a strategy redesign or a new generic source audit.
+Local numeric QA generated all 12 monthly 2015 panels under the frozen completed-session, historical-identity and split-safe calculation. Eligible counts range 3,553?3,736. Compared with prior count-only prerequisites, strict calendar/positive-price and historical lookback-identity checks produce additional explicit exclusions; no new financial screen was added. Exact numbers, stable-ID rankings and top K targets remain private with hashes. These are input data, not performance. Later full numerical panels remain unbuilt after the critical failure.
+
+**Critical gate: ambiguous same-date split lineage.** The table exposes only ticker, executionDate, splitFrom and splitTo; it has no event/version/public-availability identity. A focused current-catalog check found no alternate split event/version table. Three active CS histories have distinct same-date factors:
+
+| Security | Source effective date | Factors | Affected predeclared decisions |
+|---|---|---|---|
+| LADR | 2015-12-08 | 1.126853 and 1.097582 | 2016 monthly decisions; full-Development replay |
+| BTX | 2016-06-17 | 2.0 and 0.01 | 2016-07 through 2017-06; scored 2017 |
+| ALEX | 2017-11-28 | 1.5741279154 and 1.42 | 2017-12 through 2018-11; scored 2017/2018 |
+
+Multiple rows may represent real sequential legs or unresolved vendor revisions/identity errors. Neither choosing one nor compounding all is certified by this schema. The frozen helper multiplies intervening factors; without authoritative event lineage, production use cannot establish the intended split-continuous price contract. Three other CS same-date groups do not enter the saved monthly eligible windows and are not presented as active blockers.
+
+ALEX's 2017 issuer announcement says the stock distribution amount depended on prices following a January 2018 election deadline. This does not identify which Nexus row is correct, but reinforces that a November-dated adjustment must have a verified as-of basis rather than assumed availability. [Issuer announcement](https://investors.alexanderbaldwin.com/2017-11-16-Alexander-Baldwin-Declares-783-Million-Special-Distribution), [SEC accompanying materials](https://www.sec.gov/Archives/edgar/data/1545654/000154565417000073/a3-accompanying_materials.htm).
+
+The [split QA receipt](../experiments/EXP004/research/production_split_qa.json) preserves exact rows, affected windows and inference boundaries. No heuristic ratio selection, new ticker exclusion, rewritten source response or alpha redesign occurred. The [input manifest](../experiments/EXP004/development_input_manifest.json) remains blocked and prevents submission. Production custom streams were not created. A corrected/certified event and availability lineage under the existing methodology is required; otherwise a separately reviewed design revision would be needed, which this task does not authorize.
+
+A targeted pre-cutoff issuer search returned incidental later dividend-page references; these were excluded, and no linked post-cutoff page was opened. Exact primary pages opened describe 2017/2018 events only. No 2021+ Nexus observation, Validation job or Test job occurred. The exposure note is retained rather than claiming all web responses contained only pre-cutoff text.
 
 ## Four-cell surface
 
@@ -37,7 +53,7 @@ The reviewed budget is zero. Dated daily non-options backtest estimates are zero
 | 2015–2018 | 2019 | All six unsubmitted |
 | 2015–2019 | 2020 | All six unsubmitted |
 
-Both explicit SPY and monthly entire eligible-universe benchmarks remain unsubmitted. There are **0 runs and no run IDs**; the frozen plan has 24 scored-fold jobs, six full-Development replays and the later conditional stages/reserve. Withholding SPY avoids producing an unmatched partial programme while the shared input panel is unavailable.
+Both explicit SPY and monthly entire eligible-universe benchmarks remain unsubmitted. There are **0 runs and no run IDs**; the frozen plan has 24 scored-fold jobs, six full-Development replays and the later conditional stages/reserve. Withholding SPY avoids producing an unmatched partial programme while the shared source split lineage is uncertified.
 
 ## Selection, stability and robustness
 
@@ -49,4 +65,4 @@ Source-population coverage, vendor revisions, historical knowledge, simulated fi
 
 Reproduce preparation locally with `python -m src.research.prepare_exp004`; this performs no Nexus operations. The freeze and raw preparation receipt are immutable. Stop before affected runs and before outer Validation.
 
-Validation: 147 software tests passed; semantic audit passes at HYPOTHESIS_FROZEN; six presentation artifacts are deterministic. Input QA remains failed and is not overridden by software checks.
+Validation: 151 software tests passed; semantic audit passes at HYPOTHESIS_FROZEN; six presentation artifacts are deterministic. Production split QA remains failed and is not overridden by software checks.

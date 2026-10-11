@@ -1,0 +1,23 @@
+{
+  "status": "SOFTWARE_PASS_PRODUCTION_QA_BLOCKED",
+  "tests": 151,
+  "failures": 0,
+  "errors": 0,
+  "frozen_specification_sha256": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
+  "frozen_methodology_sha256": "caf07509c04a9b703725983482e7502c03616b1ab27bdc5287148fdcca9b6328",
+  "frozen_artifacts_verified_unchanged": true,
+  "checks": [
+    "semantic audit atHYPOTHESIS_FROZEN",
+    "6 deterministic presentation artifacts",
+    "same-date split-source QA rejects ambiguous lineage",
+    "bounded extraction rejects2021+ ranges"
+  ],
+  "backtests": 0,
+  "custom_publications": 0,
+  "critical_source_block": "LADR/BTX/ALEX active same-date split rows lack authoritative identity/version/availability lineage",
+  "code_sha256": {
+    "src/research/exp004_inputs.py": "64fa41b2c4fdbfc13140f4c68a53d7516a5cf5f83983ce1c9177d696a3342c0f",
+    "src/research/exp004_compile.py": "cb980dd683f30882c70bd8d10a5d3d5e912e2917de263580cd33c4075b1aba55",
+    "tests/test_exp004_sources.py": "5ef858be8c86b7299fcba703a439d615780932870825bff07cf817b455657d5b"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "scope": "Frozen EXP004 Development input preparation and subsequent already-authorized Development-only programme after QA passes",
+  "initial_included_token_ceiling": 2000,
+  "latest_owner_instruction_verbatim": "just use as many tokens as u need",
+  "effective_included_token_ceiling": null,
+  "interpretation": "Owner lifted numerical included-token cap for this preparation phase; no credit purchase or expansion of frozen research design. Track estimates and observable debits separately.",
+  "permitted": [
+    "bounded pre2021 Lake price/split/corporate-action extraction including required frozen warmup",
+    "Development source/universe generation, QA and immutable custom publication",
+    "minimal deterministic diagnostics and cost/planning previews",
+    "already-approved Development runs only after QA"
+  ],
+  "forbidden": [
+    "credit purchase",
+    "redesign or extra cells",
+    "outer Validation and Test reads",
+    "any2021+ market/signal observation",
+    "paper/live deployment"
+  ],
+  "frozen_specification_unchanged": true
+}
