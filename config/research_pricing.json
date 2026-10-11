@@ -1,0 +1,24 @@
+{
+  "observed_on": "2026-10-11",
+  "expires_on": "2026-10-18",
+  "sources": [
+    "https://nexustrade.io/docs/features/backtesting",
+    "https://nexustrade.io/docs/features/optimization"
+  ],
+  "backtest_per_calendar_day": {
+    "Day_stock": 0,
+    "Day_options": 0.01,
+    "Minute_stock": 0.125,
+    "Minute_options": 0.25
+  },
+  "optimizer_per_evaluation": {
+    "Day_stock": 0.02,
+    "Day_options": 0.04,
+    "Minute_stock": 0.4,
+    "Minute_options": 0.6
+  },
+  "event_multiplier": 5,
+  "optimizer_minimum": 2,
+  "max_evaluations": 1000,
+  "aurora_tokens_per_run": null
+}

@@ -11,3 +11,4 @@ lake-results/
 .mypy_cache/
 .ruff_cache/
 .matplotlib/
+.research/

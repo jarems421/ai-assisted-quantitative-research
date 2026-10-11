@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "experiment_id": "EXP999",
+  "title": "Synthetic Research OS smoke test",
+  "hypothesis": "Synthetic signal has no established predictive effect.",
+  "rationale": "Fixture for infrastructure only, not a research claim.",
+  "expected_effect": "No expected market effect in this synthetic fixture.",
+  "falsification_conditions": [
+    "No paired excess return after costs"
+  ],
+  "confounders": [
+    "Synthetic data are not market observations"
+  ],
+  "asset_universe": [
+    "SYNTHETIC"
+  ],
+  "dynamic_universe": {
+    "definition": "Synthetic membership fixed before fixture generation",
+    "point_in_time_verified": true
+  },
+  "benchmarks": [
+    "SYNTHETIC_BENCHMARK"
+  ],
+  "candidate_family_budget": 4,
+  "maximum_complexity": 3,
+  "permitted_indicators": [
+    "synthetic_momentum",
+    "synthetic_quality"
+  ],
+  "data_sources": [
+    {
+      "name": "synthetic",
+      "availability_timestamp": "available_at",
+      "point_in_time_verified": true,
+      "revision_policy": "Immutable synthetic fixture"
+    }
+  ],
+  "windows": {
+    "development": {
+      "start": "2015-01-01",
+      "end": "2020-12-31"
+    },
+    "inner_validation": {
+      "start": "2020-01-01",
+      "end": "2020-12-31"
+    },
+    "outer_validation": {
+      "start": "2021-01-01",
+      "end": "2022-12-31"
+    },
+    "test": {
+      "start": "2023-01-01",
+      "end": "2024-12-31"
+    }
+  },
+  "forward_paper": {
+    "start_state": "Not deployed; zero synthetic holdings",
+    "evidence_class": "genuinely_forward_unseen"
+  },
+  "costs": {
+    "initial_value": 25000,
+    "fee_percent": 0.1,
+    "slippage_note": "Requires execution audit before actual study",
+    "dividend_policy": "cash"
+  },
+  "execution": {
+    "interval": "Day",
+    "options": false,
+    "requires_events": false,
+    "event_rationale": "No events needed for synthetic cheap screen",
+    "warmup_days": 0,
+    "assumptions": "Synthetic adjacent closes only"
+  },
+  "optimization_ranges": {
+    "lookback": [
+      10,
+      20,
+      30
+    ],
+    "threshold": [
+      0,
+      1,
+      2
+    ]
+  },
+  "selection": {
+    "primary_metric": "sharpe",
+    "secondary_metrics": [
+      "sortino",
+      "maximum_drawdown",
+      "annualized_volatility"
+    ],
+    "eligibility": {
+      "max_drawdown": 0.25,
+      "minimum_trades": 20
+    },
+    "minimum_participation": 0.35,
+    "minimum_breadth": 5
+  },
+  "robustness_tests": [
+    "paired_block_bootstrap",
+    "cost_stress",
+    "parameter_perturbation"
+  ],
+  "multiple_testing": {
+    "method": "holm",
+    "record_all_trials": true
+  },
+  "stress_scenarios": [
+    "double_cost",
+    "one_bar_delay",
+    "changed_universe",
+    "alternate_cadence",
+    "bull_bear",
+    "high_low_volatility",
+    "rising_falling_rates"
+  ],
+  "approval_state": "DRAFT",
+  "sealed_ranges": [
+    {
+      "start": "2023-01-01",
+      "end": "2024-12-31"
+    }
+  ],
+  "temporal_contamination_note": "Modern models may know these historical events; workflow-held-out is not prospective.",
+  "historical_evidence_class": "workflow_held_out",
+  "research_cutoff": "2020-12-31",
+  "budget": {
+    "aurora": 50,
+    "candidate_backtests": 10,
+    "parameter_sweeps": 20,
+    "walk_forward": 50,
+    "intraday_confirmation": 50
+  }
+}
