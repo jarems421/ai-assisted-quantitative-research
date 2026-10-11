@@ -1,7 +1,7 @@
 {
   "id": "EXP004",
-  "stage": "DRAFT",
-  "spec_hash": null,
+  "stage": "HYPOTHESIS_FROZEN",
+  "spec_hash": "88fec6e53e14939d3a40fa8f55170ad40712f5b1b8ff7e2c5c9002a4d2ef185d",
   "candidate": null,
   "candidate_hash": null,
   "approvals": {}
