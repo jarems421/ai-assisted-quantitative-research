@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "experiment_id": "EXP002",
+  "title": "Momentum with point-in-time insider accumulation and institutional ownership",
+  "hypothesis": "Proposed, not frozen: in a point-in-time dynamic liquid U.S. common-equity universe, an equal-weight rank composite of medium-term price momentum, corporate-insider accumulation and improving institutional ownership has positive net-of-cost mean daily excess return and higher independent zero-RF Sharpe than a matched momentum-only portfolio, with gains stable across chronological Development folds and later untouched evaluation windows.",
+  "rationale": "Proposed economic mechanism, not an established result: momentum may reflect gradual information incorporation; publicly disclosed insider purchases may indicate management conviction; changes in disclosed institutional positions may indicate sustained demand. Their information may be complementary, but disclosure delays, crowding, confounding and trading costs could remove any incremental value.",
+  "expected_effect": "Positive incremental net daily return and Sharpe for the full composite versus momentum alone. Lower volatility or drawdown alone does not confirm the return hypothesis. No unconditional promise of market outperformance or alpha.",
+  "falsification_conditions": [
+    "Economic failure: full composite net mean daily excess return versus matched momentum-only is nonpositive, or its zero-RF Sharpe is no higher, in a later frozen evaluation window.",
+    "Statistical nonconfirmation: the predeclared paired moving-block excess-return test does not reject the nonpositive-effect null after Holm adjustment; lack of significance is not proof of no effect.",
+    "Robustness failure: the incremental effect is an isolated parameter optimum, dominated by one stock or regime, or disappears under predeclared cost and disclosure-delay stresses.",
+    "Incremental-information failure: the full composite adds no stable value beyond either momentum-plus-insider or momentum-plus-institutional ablation.",
+    "Design invalidation, not economic falsification: historical membership, filing availability, revisions or missingness cannot be audited point in time. Stop rather than substitute current snapshots."
+  ],
+  "confounders": [
+    "Market beta, size, sector, value, liquidity and volatility exposures",
+    "Disclosure delays, reporting thresholds, transaction classification and filing amendments",
+    "Institutional holdings are reported positions, not contemporaneous fund flows",
+    "Survivorship, delisting treatment, symbol changes and present-day universe membership",
+    "Vendor backfills, revisions, stale values and nonrandom signal coverage",
+    "Momentum crashes, crowding, capacity, turnover, spread and slippage",
+    "Selection over families and parameters; modern model knowledge of historical events"
+  ],
+  "asset_universe": [
+    "PROPOSED: historically listed U.S. exchange-traded common equities, rebuilt at each rebalance; exact Nexus source and security-type mapping unresolved"
+  ],
+  "dynamic_universe": {
+    "definition": "Proposed: rebuild membership at each decision using only then-listed securities, lagged price/volume and point-in-time market capitalization. Exclude ETFs, funds, preferreds, ADRs and OTC securities; retain delisted histories and corporate-action mappings. Base filters: price >= USD 5, trailing 20-session average dollar volume >= USD 10 million, market cap >= USD 1 billion. Use common audited signal coverage for matched comparisons and report coverage exclusions separately. Exact historical source, filter semantics and coverage remain UNRESOLVED; no current ticker list is a substitute.",
+    "point_in_time_verified": false
+  },
+  "benchmarks": [
+    "momentum_only_matched_universe",
+    "explicit_SPY_buy_and_hold",
+    "equal_weight_dynamic_eligible_universe"
+  ],
+  "candidate_family_budget": 9,
+  "maximum_complexity": 3,
+  "permitted_indicators": [
+    "PROPOSED momentum: split-consistent lagged price Rate of Change; exact SDK mapping unresolved",
+    "PROPOSED insider primary: DistinctBuyers for qualifying disclosed open-market purchases; BuyCount and BuyValue diagnostic alternatives only",
+    "PROPOSED institutional primary: NetHolderChange from publicly usable filings; NewHolders and NetShareChange diagnostic alternatives only",
+    "PROPOSED universe filters: lagged price, trailing dollar volume, point-in-time market capitalization",
+    "OPTIONAL robustness only: prospective rebalance_planned_turnover, rebalance_estimated_cost, rebalance_expected_benefit and rebalance_net_benefit; semantics and leakage audit unresolved"
+  ],
+  "data_sources": [
+    {
+      "name": "Nexus daily prices, volume and corporate actions",
+      "availability_timestamp": "UNRESOLVED: per-bar availability and corporate-action vintage; require information available before the decision, then execute no earlier than the next session",
+      "point_in_time_verified": false,
+      "revision_policy": "UNRESOLVED: preserve original observations and action vintages; audit split adjustments, backfills and corrections"
+    },
+    {
+      "name": "Nexus corporate-insider disclosures: DistinctBuyers / BuyCount / BuyValue",
+      "availability_timestamp": "REQUIRED, not verified: actual public filing acceptance/publication plus any vendor ingestion latency; never the insider transaction date",
+      "point_in_time_verified": false,
+      "revision_policy": "UNRESOLVED: use original filings as first available and amendments only after their own publication; audit duplicate and purchase classifications"
+    },
+    {
+      "name": "Nexus institutional disclosures: NewHolders / NetHolderChange / NetShareChange",
+      "availability_timestamp": "REQUIRED, not verified: actual public filing acceptance/publication plus vendor latency; never reporting quarter-end; resolve asynchronous filer comparisons",
+      "point_in_time_verified": false,
+      "revision_policy": "UNRESOLVED: retain as-filed vintages, amendments and filer-universe changes; prohibit latest-snapshot retrospective joins"
+    },
+    {
+      "name": "Nexus historical security master, listing membership and market capitalization",
+      "availability_timestamp": "UNRESOLVED: membership and shares-outstanding / market-cap inputs known at each rebalance, including dead securities",
+      "point_in_time_verified": false,
+      "revision_policy": "UNRESOLVED: stable identifiers, historical security types, symbol changes, delistings and shares-outstanding revisions"
+    }
+  ],
+  "windows": {
+    "development": {
+      "start": "2015-01-01",
+      "end": "2020-12-31"
+    },
+    "inner_validation": {
+      "start": "2019-01-01",
+      "end": "2020-12-31"
+    },
+    "outer_validation": {
+      "start": "2021-01-01",
+      "end": "2024-12-31"
+    },
+    "test": null
+  },
+  "forward_paper": {
+    "start_state": "Not deployed. Separate owner approval required after frozen historical evaluation; start with the frozen candidate and recorded funding/holdings. Proposed minimum six calendar months and six monthly rebalance opportunities, extended to twelve months if event coverage is insufficient. No live orders.",
+    "evidence_class": "genuinely_forward_unseen"
+  },
+  "costs": {
+    "initial_value": 25000,
+    "fee_percent": 0.1,
+    "slippage_note": "Proposed 0.10% notional fee per fill, not a verified execution model. Spread/slippage calibration and supported implementation are UNRESOLVED. No zero-slippage assumption may be silently adopted; audit execution and stress doubled costs, delay and turnover before freeze.",
+    "dividend_policy": "cash",
+    "fee_contract": {
+      "Stock": {
+        "amount": 0.1,
+        "type": "percent"
+      }
+    }
+  },
+  "execution": {
+    "interval": "Day",
+    "options": false,
+    "requires_events": true,
+    "event_rationale": "Required to audit dynamic membership decisions, timestamped signal inputs, holdings, submitted/filled orders, costs and corporate actions. Verify that Nexus events actually expose this evidence; missing fields remain unresolved. Events must be extracted first when authorized jobs eventually complete.",
+    "warmup_days": 400,
+    "assumptions": "Proposed long-only, unlevered, equal-weight top-N portfolio with 95% deployment and cash remainder, monthly rebalancing; weekly cadence is a declared robustness alternative. Rank each included signal cross-sectionally and average ranks with equal weights; no fitted weights, stops, leverage or interaction rules. Decisions use lagged closes and public filings; fills no earlier than the next session. Warmup is proposed calendar days, outside measured returns; Nexus warmup units/coverage, rank arithmetic, ties, scheduling, lot sizes, stale data, missing values and execution semantics require evidence. Date windows and numeric grids are provisional design choices, not coverage claims; see README.md and provenance.json."
+  },
+  "optimization_ranges": {
+    "momentum_lookback_sessions": [
+      126,
+      252
+    ],
+    "insider_lookback_calendar_days": [
+      30,
+      90
+    ],
+    "institutional_lookback_calendar_days": [
+      180,
+      365
+    ],
+    "number_of_holdings": [
+      20,
+      40
+    ],
+    "minimum_average_dollar_volume_usd": [
+      10000000,
+      25000000
+    ],
+    "minimum_market_cap_usd": [
+      1000000000,
+      5000000000
+    ]
+  },
+  "selection": {
+    "primary_metric": "sharpe",
+    "secondary_metrics": [
+      "sortino",
+      "total_return",
+      "maximum_drawdown",
+      "annualized_volatility",
+      "mean_daily_excess_vs_momentum",
+      "turnover",
+      "parameter_and_fold_stability"
+    ],
+    "eligibility": {
+      "max_drawdown": 0.25,
+      "minimum_trades": 20
+    },
+    "minimum_participation": 0.35,
+    "minimum_breadth": 20
+  },
+  "robustness_tests": [
+    "Chronological inner selection and five proposed expanding Development-only walk-forward folds with audited warmup/embargo; exact boundaries unresolved; no outer Validation tuning",
+    "Paired moving-block bootstrap of aligned daily excess returns: proposed 20-session blocks, 10000 draws, seed 2002. Proposed one-sided null-centered tests and Holm familywise alpha 0.05 across full-versus-momentum, full-versus-momentum-plus-insider and full-versus-momentum-plus-institutional in all confirmatory windows. Exact inventory and p-value implementation UNRESOLVED; existing percentile intervals do not supply adjusted p-values.",
+    "Proposed aggregate ceiling 500 remote evaluation units including all controls, failures, fold internals, stresses and ancillary simulations. Preliminary 453-unit plan is not a server preview or guaranteed upper bound. Require audited ledger enforcement before freeze; current generic 1000-unit planner guard is not proof of this experiment-level ceiling.",
+    "Complete coarse parameter surface, neighbouring-cell stability and fold-rank stability; retain failed and unresolved cells",
+    "All single signals, all three leave-one-out pairs, full composite, explicit SPY and equal-weight dynamic universe controls",
+    "Coverage, missingness and stale-age diagnostics with common-universe and broader momentum-only comparisons",
+    "Sector/size/liquidity exposure and contribution diagnostics; no causal alpha claim from Sharpe alone",
+    "Costs, prospective turnover and additional disclosure delays; verify prospective gates use no realized future returns"
+  ],
+  "multiple_testing": {
+    "method": "holm",
+    "record_all_trials": true
+  },
+  "stress_scenarios": [
+    "double_cost",
+    "one_bar_delay",
+    "changed_universe",
+    "alternate_cadence",
+    "bull_bear",
+    "high_low_volatility",
+    "rising_falling_rates",
+    "additional_filing_delay"
+  ],
+  "approval_state": "DRAFT",
+  "sealed_ranges": [],
+  "temporal_contamination_note": "All dates are provisional pending common point-in-time coverage. Historical Test boundaries are UNRESOLVED and no historical Test is currently designated or authorized. EXP001 already exposed SPY performance in 2015-2026; modern AI may know other historical outcomes. Any eventual historical lockbox is only workflow-held-out, never genuinely unseen. During research, no market/performance observations after the proposed 2020-12-31 cutoff are authorized, including outer Validation. Only forward paper observations after freeze can be genuinely forward unseen.",
+  "historical_evidence_class": "workflow_held_out",
+  "research_cutoff": "2020-12-31",
+  "budget": {
+    "aurora": 0,
+    "candidate_backtests": 0,
+    "parameter_sweeps": 0,
+    "walk_forward": 0,
+    "intraday_confirmation": 0
+  }
+}

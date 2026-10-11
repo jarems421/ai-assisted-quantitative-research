@@ -1,0 +1,47 @@
+{
+  "experiment_id": "EXP002",
+  "status": "DRAFT_RESEARCH_DESIGN_ONLY",
+  "prepared_on": "2026-10-11",
+  "nexus_calls": 0,
+  "aurora_memo_received": false,
+  "frozen": false,
+  "execution_authorized": false,
+  "sources": [
+    {"id": "owner_question", "kind": "owner_instruction", "reference": "User request: EXP002 research design only, 2026-10-11", "supports": "Research question, signal families, no execution or freeze"},
+    {"id": "repository_methodology", "kind": "local_methodology", "reference": "AGENTS.md; docs/research_os.md; experiments/_template/README.md; src/research/spec.py; src/research/analysis.py", "supports": "PIT gates, chronology, all three pair ablations, immutable metrics, Holm policy, approvals, provenance and paper distinction"},
+    {"id": "local_capabilities", "kind": "previous_local_inventory", "reference": "docs/nexus_capabilities.md; docs/nexus_sdk_inventory.json; docs/nexus_mcp_inventory.json; src/research/dynamic.py", "supports": "Observed builder and prospective metric names only; not account-specific historical coverage or PIT verification"},
+    {"id": "pricing_metadata", "kind": "dated_local_metadata", "reference": "config/research_pricing.json", "supports": "Planning inputs only; no live quote, entitlement or spending approval"},
+    {"id": "design_proposal", "kind": "unfrozen_methodological_choice", "reference": "experiments/EXP002/README.md; experiments/EXP002/spec.json", "supports": "Preliminary dates, grids, baseline construction, eligibility, inference proposal, cost assumptions, trial ceiling and paper monitoring; not empirical evidence"}
+  ],
+  "evidence_matrix": [
+    {"claim": "ROC / prices / volume / corporate actions", "status": "UNRESOLVED", "required": "Exact indicator units; bar publication; adjustment vintages; historical coverage; missingness; benchmark and execution semantics"},
+    {"claim": "Insider DistinctBuyers, BuyCount, BuyValue", "status": "UNRESOLVED", "required": "Actual signatures, purchase classification, distinct-person IDs, filing/publication and ingestion timestamps, amendments, deduplication, historical coverage and missingness"},
+    {"claim": "Institutional NewHolders, NetHolderChange, NetShareChange", "status": "UNRESOLVED", "required": "Actual signatures, disclosure threshold/filer universe, asynchronous filing comparison, public availability, revision vintages, coverage and missingness"},
+    {"claim": "Dynamic historical liquid U.S. common-equity universe", "status": "UNRESOLVED", "required": "Historical listings and dead stocks; stable IDs; security types; then-known shares/market cap; corporate actions and delistings; matched coverage universe"},
+    {"claim": "Proposed rank composite and next-session execution", "status": "UNRESOLVED", "required": "Reviewed implementable SDK snapshot; cross-sectional arithmetic and ties; cadence; missing/stale policy; warmup units; execution and event audit fields"},
+    {"claim": "Prospective turnover/cost/benefit gating", "status": "UNRESOLVED", "required": "Decision-time availability, units, formulas and no realized future inputs; supported slippage/capacity assumptions"},
+    {"claim": "Historical windows and lockbox", "status": "PROVISIONAL_UNVERIFIED", "required": "Joint coverage supports chronological splits/warmup; record coverage-only changes; set and seal exact Test dates before freeze; acknowledge prior historical knowledge"},
+    {"claim": "453 proposed evaluation units, cap 500", "status": "PROPOSAL_NOT_SERVER_PREVIEW", "required": "Compiled job mappings; complete counts including folds, stress internals, failures and diagnostics; current server preview and human budget"},
+    {"claim": "Holm-adjusted confirmatory evidence", "status": "UNRESOLVED_IMPLEMENTATION", "required": "Null-centered paired test, p-value validation and complete comparison/window inventory; current helper provides percentile intervals only"},
+    {"claim": "Forward paper design", "status": "PROVISIONAL_NOT_AUTHORIZED", "required": "Frozen portfolio, final owner review, funding/start date, monitoring schedule and operational stop criteria"}
+  ],
+  "window_status": {
+    "development": "PROVISIONAL_COVERAGE_NOT_VERIFIED",
+    "inner_validation": "PROVISIONAL_COVERAGE_NOT_VERIFIED",
+    "outer_validation": "PROVISIONAL_NOT_AUTHORIZED_FOR_RESEARCH_ACCESS",
+    "historical_test": "UNRESOLVED_NO_PERIOD_DESIGNATED",
+    "research_cutoff": "PROVISIONAL_2020-12-31_NO_LATER_MARKET_OR_PERFORMANCE_ACCESS",
+    "forward_paper": "UNRESOLVED_START_AFTER_FREEZE_AND_SEPARATE_OWNER_APPROVAL"
+  },
+  "spending": {"approved_tokens": 0, "current_quote": null, "estimated_tokens": null},
+  "checks": {
+    "json_schema": "PASSED",
+    "draft_guards_and_local_links": "PASSED",
+    "research_audit": "BLOCKED_AS_INTENDED",
+    "audit_reason": "Point-in-time availability unestablished: Nexus daily prices, volume and corporate actions",
+    "local_unittest": {"passed": 76, "failed": 0},
+    "backtests_or_remote_research_run": false
+  },
+  "ready_for_human_freeze_approval": false,
+  "next_action": "Owner may use saved prompt manually only within an auditable read-only research scope; ingest a supplied memo locally and verify claims before any freeze decision"
+}
