@@ -114,6 +114,42 @@
       "evidence": "2014 ownership exists but feed PIT, price warmup and matched cohort implementation unresolved",
       "reason": "Never choose final start from returns",
       "performance_informed": false
+    },
+    {
+      "assumption": "insider",
+      "new_value": "Qualifying P/A purchasers including private, local version control",
+      "performance_informed": false,
+      "evidence": "custom_signal_spec.md / custom_signal_manifest.json"
+    },
+    {
+      "assumption": "institutional",
+      "new_value": "Locally reconstructed matched-manager adjacent eligible cohorts",
+      "performance_informed": false,
+      "evidence": "custom_signal_spec.md / custom_signal_manifest.json"
+    },
+    {
+      "assumption": "primary universe",
+      "new_value": "Proposed historical GSPC/CS; ADV and cap removed",
+      "performance_informed": false,
+      "evidence": "custom_signal_spec.md / custom_signal_manifest.json"
+    },
+    {
+      "assumption": "disclosure cutoff",
+      "new_value": "Reject native custom lag; proposed precomputed decision values + validity",
+      "performance_informed": false,
+      "evidence": "custom_signal_spec.md / custom_signal_manifest.json"
+    },
+    {
+      "assumption": "warmup",
+      "new_value": "Minimum additional 2013-12-31 session; joint inception unresolved",
+      "performance_informed": false,
+      "evidence": "custom_signal_spec.md / custom_signal_manifest.json"
+    },
+    {
+      "assumption": "deployment",
+      "new_value": "95% nominal, 93.5% observed single probe; reserve formula unresolved",
+      "performance_informed": false,
+      "evidence": "custom_signal_spec.md / custom_signal_manifest.json"
     }
   ]
 }

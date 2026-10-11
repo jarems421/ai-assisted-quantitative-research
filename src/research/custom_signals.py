@@ -24,25 +24,31 @@ def export_dataset(directory: Path, *, version: str, name: str, rows: list[dict]
     if not version or not source_hashes or not git_sha:
         raise ValueError("Version, code revision and source hashes required")
     points = []
+    validity_points = []
     seen = set()
     source_times = []
     for row in rows:
         at = validate_decision(row["decision_timestamp"])
         assert_pit(row, at)
         source_times.extend(instant(c["availableAt"]) for c in row["contributors"])
-        if row["value"] is None:
-            continue  # Missingness audit is separate; no carry-forward or zero point.
-        if not math.isfinite(row["value"]) or not row.get("identity_certified"):
-            raise ValueError("Nonfinite value or uncertified identity")
         key = (row["ticker"], at)
         if key in seen:
             raise ValueError("Duplicate asset/decision point")
         seen.add(key)
         iso = at.isoformat().replace("+00:00", "Z")
+        validity_points.append({"ticker": row["ticker"], "timestamp": iso,
+                                "availableAt": iso, "value": int(row["value"] is not None)})
+        if row["value"] is None:
+            continue  # Missingness audit is separate; no carry-forward or zero point.
+        if not math.isfinite(row["value"]) or not row.get("identity_certified"):
+            raise ValueError("Nonfinite value or uncertified identity")
         points.append({"ticker": row["ticker"], "timestamp": iso, "availableAt": iso, "value": row["value"]})
     points.sort(key=lambda r: (r["timestamp"], r["ticker"]))
+    validity_points.sort(key=lambda r: (r["timestamp"], r["ticker"]))
     emitted = [p["timestamp"] for p in points]
     manifest = {"dataset_version": version, "name": name, "git_sha": git_sha,
+                "code_hashes": {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                                for p in (Path(__file__), Path(__file__).with_name("pit_signals.py"))},
                 "generated_at": generated_at, "source_hashes": source_hashes,
                 "methodology_sha256": digest(methodology), "row_count": len(points),
                 "min_source_availableAt": min(source_times).isoformat() if source_times else None,
@@ -51,9 +57,12 @@ def export_dataset(directory: Path, *, version: str, name: str, rows: list[dict]
                 "max_emitted_timestamp": max(emitted) if emitted else None,
                 "points_sha256": digest(points), "diagnostic_only": diagnostic_only,
                 "production_ready": False, "missing_rows": sum(r["value"] is None for r in rows),
-                "point_kind": "disclosed", "missingness_transport_certified": False}
+                "point_kind": "disclosed", "missingness_transport_certified": False,
+                "validity_points_sha256": digest(validity_points),
+                "decision_row_count": len(rows)}
     directory.mkdir(parents=True)
-    for filename, value in [("points.json", points), ("audit.json", rows), ("manifest.json", manifest)]:
+    for filename, value in [("points.json", points), ("validity_points.json", validity_points),
+                            ("audit.json", rows), ("manifest.json", manifest)]:
         (directory / filename).write_bytes(canonical(value) + b"\n")
     return manifest
 

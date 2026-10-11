@@ -1,3 +1,11 @@
+# Current custom-PIT revision â€” 2026-10-11
+
+**NEEDS DESIGN REVISION; DRAFT.** The current primary design is [custom_signal_spec.md](research/custom_signal_spec.md): locally controlled qualifying P/A insider purchasers and matched-manager institutional cohorts, proposed historical GSPC/CS universe, no primary ADV or cap, eight cells unchanged. No production numeric signal panel is certified. Synthetic lagging failed the intended disclosure cutoff; fills were at 09:30 in the sampled windows. See [manifest](research/custom_signal_manifest.json), [runtime summary](research/custom_runtime_summary.json) and [owner request](research/custom_signal_authorization_20261011.md).
+
+The design below is historical draft context. This current revision and spec.json supersede its native ownership fields, strict open-market wording, cap/ADV and prospective-gate proposals. Development inception remains unresolved and no freeze/execution is authorized.
+
+---
+
 # EXP002 — research design draft
 
 **DRAFT - NEEDS DESIGN REVISION; not frozen.** [Final bounded design/runtime audit](research/design_revision.md) removes unsupported market-cap and institutional-recency axes, fixes monthly cadence and USD 10m liquidity, and proposes a 60-day public-cohort gate. Eight full-composite cells remain. All critical PIT flags remain false. Cumulative audit: 24 Lake jobs, two rejected submissions and eight diagnostic backtests; actual token debit is unknown. Candidate-stage budgets remain zero.

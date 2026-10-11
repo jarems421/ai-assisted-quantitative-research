@@ -23,8 +23,9 @@
   "server_preview": false,
   "actual_candidate_evaluations": 0,
   "limits": "Conditional on five coverage-supported folds and successful primary implementation. Reconcile all nested/server amplification before freeze. Reserve is a hard planning allocation, not permission to omit failed trials.",
-  "known_diagnostic_backtests": 8,
-  "total_backtest_ceiling_including_known_audits": 289,
-  "failed_lake_attempts_counted_separately": 5,
-  "hypothesis_freeze_ready": false
+  "known_diagnostic_backtests": 13,
+  "total_backtest_ceiling_including_known_audits": 294,
+  "failed_lake_attempts_counted_separately": 7,
+  "hypothesis_freeze_ready": false,
+  "revision_note": "Five additional custom visibility/allocation diagnostics; eight-cell grid unchanged. Six robustness slots remain provisional; remove ADV scenario, propose independent slippage-cost scenario instead, no increased grid. No final chronology/server amplification or execution authorization."
 }

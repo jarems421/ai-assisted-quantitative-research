@@ -2515,5 +2515,20 @@
   },
   "ownership_warmup_included": true,
   "primary_market_cap_required": false,
-  "native_joint_signal_coverage_verified": false
+  "native_joint_signal_coverage_verified": false,
+  "custom_signal_revision": {
+    "outcome": "NEEDS DESIGN REVISION",
+    "usable_joint_start_date": null,
+    "primary_adv_removed": true,
+    "primary_cap_removed": true,
+    "universe": "PROPOSED historical GSPC intersection with CS effective listing spans; uncertified publication/revision/coverage",
+    "historical_membership_rows": 559,
+    "minimum_extra_price_session": "2013-12-31",
+    "minimum_extra_price_rows": 7134,
+    "certified_numeric_insider_points": 0,
+    "certified_numeric_institutional_points": 0,
+    "insider_short_sample_rows": 79,
+    "missing_identity_date_rows": 79,
+    "older_liquid_counts": "Retained as historical provisional diagnostics; no longer primary eligibility counts"
+  }
 }

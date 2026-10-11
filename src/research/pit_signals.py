@@ -93,8 +93,14 @@ def insider_score(rows: list[dict], security_id: str, decision: datetime, window
         if len(unique) != 1:
             return missing("ambiguous_active_versions")
         row = next(iter(unique.values()))
-        if row.get("rowKind") == "nonderiv" and row.get("transactionCode") == "P" and row.get("acquiredDisposed") == "A" and row.get("shares") is not None and row["shares"] > 0:
-            qualified.append(row)
+        if row.get("rowKind") == "nonderiv" and row.get("transactionCode") == "P" and row.get("acquiredDisposed") == "A":
+            shares = row.get("shares")
+            if type(shares) not in (int, float) or not isfinite(shares) or shares < 0:
+                return missing("unresolved_purchase_quantity")
+            if shares > 0:
+                qualified.append(row)
+            else:
+                exclusions.add("nonpositive_purchase_quantity")
         else:
             exclusions.add("nonqualifying_leg")
     result = {"value": len({r["ownerCik"] for r in qualified}), "status": "USABLE",

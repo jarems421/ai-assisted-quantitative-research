@@ -1,8 +1,8 @@
 {
   "experiment_id": "EXP002",
-  "status": "DRAFT_FINAL_PRE_FREEZE_AUDIT_NEEDS_DESIGN_REVISION",
+  "status": "DRAFT_CUSTOM_PIT_NEEDS_DESIGN_REVISION",
   "prepared_on": "2026-10-11",
-  "nexus_calls": 261,
+  "nexus_calls": null,
   "aurora_memo_received": true,
   "frozen": false,
   "execution_authorized": false,
@@ -1500,5 +1500,54 @@
       "tests/test_exp002_cohorts.py": "45fd0dfe62afcec7feba697ec9513fa6ecd3ca7de9562c11d6b34c4cfd0b96e9",
       "tests/test_exp002_design.py": "0e90f98cc87ac9b93b40731f284cface95cac073dd129d11cb982043528f284c"
     }
+  },
+  "nexus_calls_before_custom_revision": 261,
+  "custom_pit_revision": {
+    "owner_request": "research/custom_signal_authorization_20261011.md",
+    "request_sha256": "bfab4ca547a39f77791a39676653516f98f6fa37b94f2cb2bfd6ee46ea9c4df0",
+    "code_checkpoint": "befbb76",
+    "generated_on": "2026-10-11T14:40:43.691586+00:00",
+    "claims": [
+      {
+        "status": "VERIFIED",
+        "claim": "Local PIT invariance, stable dedup, versioned amendments and guarded immutable export under supplied certification assumptions",
+        "evidence": "src/research/pit_signals.py; src/research/custom_signals.py; tests/test_pit_signals.py"
+      },
+      {
+        "status": "VERIFIED",
+        "claim": "Bounded source/event counts and failed lag composition",
+        "evidence": "research/custom_signal_manifest.json; research/custom_runtime_summary.json"
+      },
+      {
+        "status": "PROPOSED",
+        "claim": "Narrower historical GSPC/CS universe without ADV, controlled P/A signals, precomputed decision streams, 20-manager/95% quality floors, 10/20-bps cost stress",
+        "evidence": "research/custom_signal_spec.md"
+      },
+      {
+        "status": "UNRESOLVED",
+        "claim": "Production source coverage/identity/timezone, amended cohort raw reconstruction, staleness limits, universe vintages, price/corporate actions, direct decision/validity transport, reserve, inception, lockbox and inference",
+        "evidence": "research/custom_signal_spec.md"
+      }
+    ],
+    "freeze": false,
+    "candidate_performance": false,
+    "published_production_indicators": 0,
+    "software_tests": "104 passed",
+    "semantic_audit": "unchanged; expected rejection until PIT flags certified",
+    "actual_token_debit": null,
+    "shared_included_allowance": 1000,
+    "artifacts": {
+      "research/custom_signal_manifest.json": "ec992854e055834c857123df52b40030b7887097e2110782e891f5f6cc2ed75b",
+      "research/custom_signal_spec.md": "5efdd2d47719618ad5d5280d6834d478335d343f0dd72fbbcd48ce57c3c9918b",
+      "research/custom_runtime_summary.json": "51d39124c000bcd811f49e04053761042b475bf0106838d4ebc1543289372445"
+    },
+    "logging_incidents": [
+      "Two launches stopped before network submission because concurrent receipt names collided. Existing submission IDs were preserved; logger isolated per run before the remaining submissions.",
+      "One GET timed out; existing normal run was later polled, not resubmitted.",
+      "Original pre-logging-fix fixture script recovered exactly; SHA-256 verified against immutable original manifest.",
+      "Raw Parquet availability timestamps lack timezone annotation; source UTC semantics remain uncertified."
+    ],
+    "semantic_audit_exit_code": 1,
+    "spec_sha256": "62b66ad75fbeadb5253a5b761a4dc698e31af5760d72a69ba9e264e000b50170"
   }
 }

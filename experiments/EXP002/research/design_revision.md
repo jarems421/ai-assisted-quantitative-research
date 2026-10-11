@@ -74,3 +74,8 @@ The full software suite passes **86 tests**. The unchanged semantic audit still 
 Strict open-market classification, executable as-of amended matched cohorts, historical exchange/OTC, compatible price/volume/adjustments, complete execution/disclosure timing, sufficient warmup and final chronology remain critical blockers. They cannot be resolved by confident documentation or passing software tests.
 
 **NEEDS DESIGN REVISION**
+
+
+## Current custom-PIT revision
+
+The owner-approved pre-performance change replaces native ownership indicators with local reconstruction and renames insider activity to **Distinct Qualifying Insider Purchasers**, explicitly including private P purchases. ADV is removed from primary eligibility; historical GSPC/CS is a proposed narrower universe. Eight composite cells remain. The detailed current contract and remaining blockers are in [custom_signal_spec.md](custom_signal_spec.md). Five completed artificial runtime diagnostics yielded 170 events/five pages; the custom indicator lag failed the 21:00 cutoff. One artificial indicator was created; zero production indicators were uploaded. Three immutable unavailable-panel gap ledgers each have 4384 audit decisions and zero numeric points. They are not complete Development data. The updated ledger has 13 attempted diagnostic backtests and 294 projected total including conditional future runs; no candidate study. Full suite: 104 passing; semantic PIT audit still rejects. **NEEDS DESIGN REVISION.**

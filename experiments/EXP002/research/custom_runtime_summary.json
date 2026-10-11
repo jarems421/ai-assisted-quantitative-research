@@ -1,0 +1,612 @@
+{
+  "kind": "VISIBILITY_AND_ALLOCATION_ONLY",
+  "candidate_performance": false,
+  "cutoff": "2020-12-31",
+  "runs": {
+    "normal": {
+      "id": "6acb9cfa8c2f7fb888b44486",
+      "event_rows": 40,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2016-01-07",
+          "mode": "direct",
+          "decision": "2016-01-06T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 1,
+          "expected_at_runtime": 2,
+          "matches_cutoff": false,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-01-07",
+          "mode": "cutoff_lag",
+          "decision": "2016-01-06T21:00:00-05:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 1,
+          "expected_at_runtime": 2,
+          "matches_cutoff": false,
+          "matches_runtime": false
+        },
+        {
+          "session": "2016-01-08",
+          "mode": "direct",
+          "decision": "2016-01-07T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 2,
+          "expected_at_runtime": 2,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-01-08",
+          "mode": "cutoff_lag",
+          "decision": "2016-01-07T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 2,
+          "expected_at_runtime": 2,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-01-11",
+          "mode": "direct",
+          "decision": "2016-01-10T21:00:00-05:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 3,
+          "expected_at_runtime": 4,
+          "matches_cutoff": false,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-01-11",
+          "mode": "cutoff_lag",
+          "decision": "2016-01-10T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 3,
+          "expected_at_runtime": 4,
+          "matches_cutoff": false,
+          "matches_runtime": false
+        },
+        {
+          "session": "2016-01-12",
+          "mode": "direct",
+          "decision": "2016-01-11T21:00:00-05:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 4,
+          "expected_at_runtime": 4,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-01-12",
+          "mode": "cutoff_lag",
+          "decision": "2016-01-11T21:00:00-05:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 4,
+          "expected_at_runtime": 4,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        }
+      ],
+      "fills": [
+        {
+          "asset": "AAPL",
+          "time": "2016-01-07T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-01-07T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-01-08T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-01-08T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-01-11T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-01-11T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-01-12T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-01-12T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        }
+      ],
+      "min_simulated": "2016-01-07T14:30:00+00:00",
+      "max_simulated": "2016-01-12T21:00:00+00:00"
+    },
+    "holiday": {
+      "id": "6acb9d048c2f7fb888b4448d",
+      "event_rows": 38,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2015-02-12",
+          "mode": "direct",
+          "decision": "2015-02-11T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 1,
+          "expected_at_runtime": 2,
+          "matches_cutoff": false,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-02-12",
+          "mode": "cutoff_lag",
+          "decision": "2015-02-11T21:00:00-05:00",
+          "observed": null,
+          "error": "Data not available",
+          "expected_at_cutoff": 1,
+          "expected_at_runtime": 2,
+          "matches_cutoff": false,
+          "matches_runtime": false
+        },
+        {
+          "session": "2015-02-13",
+          "mode": "direct",
+          "decision": "2015-02-12T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 2,
+          "expected_at_runtime": 2,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-02-13",
+          "mode": "cutoff_lag",
+          "decision": "2015-02-12T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 2,
+          "expected_at_runtime": 2,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-02-17",
+          "mode": "direct",
+          "decision": "2015-02-16T21:00:00-05:00",
+          "observed": 5,
+          "error": null,
+          "expected_at_cutoff": 5,
+          "expected_at_runtime": 5,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-02-17",
+          "mode": "cutoff_lag",
+          "decision": "2015-02-16T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 5,
+          "expected_at_runtime": 5,
+          "matches_cutoff": false,
+          "matches_runtime": false
+        },
+        {
+          "session": "2015-02-18",
+          "mode": "direct",
+          "decision": "2015-02-17T21:00:00-05:00",
+          "observed": 6,
+          "error": null,
+          "expected_at_cutoff": 6,
+          "expected_at_runtime": 6,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-02-18",
+          "mode": "cutoff_lag",
+          "decision": "2015-02-17T21:00:00-05:00",
+          "observed": 6,
+          "error": null,
+          "expected_at_cutoff": 6,
+          "expected_at_runtime": 6,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        }
+      ],
+      "fills": [
+        {
+          "asset": "AAPL",
+          "time": "2015-02-12T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-02-13T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-02-13T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-02-17T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-02-17T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-02-18T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-02-18T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        }
+      ],
+      "min_simulated": "2015-02-12T14:30:00+00:00",
+      "max_simulated": "2015-02-18T21:00:00+00:00"
+    },
+    "early": {
+      "id": "6acb9d1b8c2f7fb888b44493",
+      "event_rows": 40,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2015-11-25",
+          "mode": "direct",
+          "decision": "2015-11-24T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 1,
+          "expected_at_runtime": 2,
+          "matches_cutoff": false,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-11-25",
+          "mode": "cutoff_lag",
+          "decision": "2015-11-24T21:00:00-05:00",
+          "observed": 6,
+          "error": null,
+          "expected_at_cutoff": 1,
+          "expected_at_runtime": 2,
+          "matches_cutoff": false,
+          "matches_runtime": false
+        },
+        {
+          "session": "2015-11-27",
+          "mode": "direct",
+          "decision": "2015-11-26T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 2,
+          "expected_at_runtime": 2,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-11-27",
+          "mode": "cutoff_lag",
+          "decision": "2015-11-26T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 2,
+          "expected_at_runtime": 2,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-11-30",
+          "mode": "direct",
+          "decision": "2015-11-29T21:00:00-05:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 3,
+          "expected_at_runtime": 4,
+          "matches_cutoff": false,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-11-30",
+          "mode": "cutoff_lag",
+          "decision": "2015-11-29T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 3,
+          "expected_at_runtime": 4,
+          "matches_cutoff": false,
+          "matches_runtime": false
+        },
+        {
+          "session": "2015-12-01",
+          "mode": "direct",
+          "decision": "2015-11-30T21:00:00-05:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 4,
+          "expected_at_runtime": 4,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2015-12-01",
+          "mode": "cutoff_lag",
+          "decision": "2015-11-30T21:00:00-05:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 4,
+          "expected_at_runtime": 4,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        }
+      ],
+      "fills": [
+        {
+          "asset": "AAPL",
+          "time": "2015-11-25T09:30:00-05:00",
+          "notional": 0.9999999999999999,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-11-25T09:30:00-05:00",
+          "notional": 0.9999999999999999,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-11-27T09:30:00-05:00",
+          "notional": 0.9999999999999999,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-11-27T09:30:00-05:00",
+          "notional": 0.9999999999999999,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-11-30T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-11-30T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-12-01T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2015-12-01T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        }
+      ],
+      "min_simulated": "2015-11-25T14:30:00+00:00",
+      "max_simulated": "2015-12-01T21:00:00+00:00"
+    },
+    "dst": {
+      "id": "6acb9de08c2f7fb888b444eb",
+      "event_rows": 40,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2016-03-10",
+          "mode": "direct",
+          "decision": "2016-03-09T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 1,
+          "expected_at_runtime": 2,
+          "matches_cutoff": false,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-03-10",
+          "mode": "cutoff_lag",
+          "decision": "2016-03-09T21:00:00-05:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 1,
+          "expected_at_runtime": 2,
+          "matches_cutoff": false,
+          "matches_runtime": false
+        },
+        {
+          "session": "2016-03-11",
+          "mode": "direct",
+          "decision": "2016-03-10T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 2,
+          "expected_at_runtime": 2,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-03-11",
+          "mode": "cutoff_lag",
+          "decision": "2016-03-10T21:00:00-05:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 2,
+          "expected_at_runtime": 2,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-03-14",
+          "mode": "direct",
+          "decision": "2016-03-13T21:00:00-04:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 3,
+          "expected_at_runtime": 4,
+          "matches_cutoff": false,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-03-14",
+          "mode": "cutoff_lag",
+          "decision": "2016-03-13T21:00:00-04:00",
+          "observed": 2,
+          "error": null,
+          "expected_at_cutoff": 3,
+          "expected_at_runtime": 4,
+          "matches_cutoff": false,
+          "matches_runtime": false
+        },
+        {
+          "session": "2016-03-15",
+          "mode": "direct",
+          "decision": "2016-03-14T21:00:00-04:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 4,
+          "expected_at_runtime": 4,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        },
+        {
+          "session": "2016-03-15",
+          "mode": "cutoff_lag",
+          "decision": "2016-03-14T21:00:00-04:00",
+          "observed": 4,
+          "error": null,
+          "expected_at_cutoff": 4,
+          "expected_at_runtime": 4,
+          "matches_cutoff": true,
+          "matches_runtime": true
+        }
+      ],
+      "fills": [
+        {
+          "asset": "AAPL",
+          "time": "2016-03-10T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-03-10T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-03-11T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-03-11T09:30:00-05:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-03-14T09:30:00-04:00",
+          "notional": 0.9999999999999999,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-03-14T09:30:00-04:00",
+          "notional": 0.9999999999999999,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-03-15T09:30:00-04:00",
+          "notional": 1.0,
+          "fees": 0.001
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-03-15T09:30:00-04:00",
+          "notional": 1.0,
+          "fees": 0.001
+        }
+      ],
+      "min_simulated": "2016-03-10T14:30:00+00:00",
+      "max_simulated": "2016-03-15T20:00:00+00:00"
+    },
+    "deployment": {
+      "id": "6acb9de18c2f7fb888b444ed",
+      "event_rows": 12,
+      "pages": 1,
+      "audits": [],
+      "fills": [
+        {
+          "asset": "SPY",
+          "time": "2016-01-07T09:30:00-05:00",
+          "notional": 467.49999999999994,
+          "fees": 0.4675
+        },
+        {
+          "asset": "AAPL",
+          "time": "2016-01-07T09:30:00-05:00",
+          "notional": 467.49999999999994,
+          "fees": 0.4675
+        }
+      ],
+      "min_simulated": "2016-01-07T14:30:00+00:00",
+      "max_simulated": "2016-01-07T21:00:00+00:00"
+    }
+  },
+  "lag_composition_certified": false
+}

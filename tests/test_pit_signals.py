@@ -48,6 +48,11 @@ class PITSignalTests(unittest.TestCase):
         self.assertIsNone(insider_score([],"stable1",t,30,coverage_certified=False)["value"])
         self.assertIsNone(insider_score([event(),event(shares=20)],"stable1",t,30,coverage_certified=True)["value"])
 
+    def test_unknown_purchase_quantity_is_not_certified_zero(self):
+        t=decision_for_session(date(2015,1,5))
+        for quantity in (None,float("nan"),float("inf"),-1,"10",True):
+            self.assertIsNone(insider_score([event(shares=quantity)],"stable1",t,30,coverage_certified=True)["value"])
+
     def test_after_cutoff_and_weekend_publication(self):
         friday=decision_for_session(date(2015,1,9));monday=decision_for_session(date(2015,1,12))
         after=event(availableAt="2015-01-09T03:00:00Z",firstAvailableAt="2015-01-09T03:00:00Z")
@@ -93,6 +98,27 @@ class PITSignalTests(unittest.TestCase):
 
 
 class CustomExportTests(unittest.TestCase):
+    def test_missing_rows_emit_validity_not_zero_signal(self):
+        with TemporaryDirectory() as tmp:
+            p=Path(tmp)/"missing"
+            row=dict(ticker="AAPL",decision_timestamp="2015-01-04T21:00:00-05:00",
+                     value=None,contributors=[],status="UNAVAILABLE")
+            manifest=export_dataset(p,version="v1",name="missing",rows=[row],
+                                    source_hashes={"source":"abc"},methodology={},git_sha="abc",
+                                    generated_at="2026-10-11T00:00:00Z",diagnostic_only=False)
+            self.assertEqual(json.loads((p/"points.json").read_text()),[])
+            self.assertEqual(json.loads((p/"validity_points.json").read_text())[0]["value"],0)
+            self.assertEqual(manifest["missing_rows"],1)
+            self.assertFalse(manifest["production_ready"])
+
+    def test_duplicate_missing_decisions_and_future_contributors_rejected(self):
+        with TemporaryDirectory() as tmp:
+            row=dict(ticker="AAPL",decision_timestamp="2015-01-04T21:00:00-05:00",value=None,contributors=[])
+            kw=dict(version="v1",name="audit",source_hashes={"source":"abc"},methodology={},git_sha="abc",generated_at="2026-10-11T00:00:00Z",diagnostic_only=False)
+            with self.assertRaises(ValueError):export_dataset(Path(tmp)/"duplicates",rows=[row,row],**kw)
+            row["contributors"]=[dict(availableAt="2015-01-05T03:00:00Z")]
+            with self.assertRaises(ValueError):export_dataset(Path(tmp)/"future",rows=[row],**kw)
+
     def make(self,path):
         row=insider_score([event()],"stable1",decision_for_session(date(2015,1,5)),30,coverage_certified=True)
         row.update(ticker="OLD",security_id="stable1",identity_certified=True,decision_timestamp=decision_for_session(date(2015,1,5)).isoformat())

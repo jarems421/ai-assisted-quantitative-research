@@ -1,0 +1,513 @@
+{
+  "experiment_id": "EXP002",
+  "state": "DRAFT",
+  "audit_outcome": "NEEDS DESIGN REVISION",
+  "formation_cutoff": "2020-12-31",
+  "production_dataset_complete": false,
+  "published_production_indicators": 0,
+  "artificial_dataset": {
+    "dataset_version": "artificial_disclosed_v001",
+    "diagnostic_only": true,
+    "generated_at": "2026-10-11T14:27:42.950503+00:00",
+    "git_sha": "befbb7624c3dba3cf384cebc792080760ab2ee68",
+    "max_emitted_timestamp": "2016-03-13T20:30:00-04:00",
+    "max_source_availableAt": "2016-03-13T22:00:00-04:00",
+    "methodology_sha256": "ffdddaba1de13e204816c34e956b6e1e310a8d695a12f8296c55983ac23e7f87",
+    "min_emitted_timestamp": "2015-02-11T20:00:00-05:00",
+    "min_source_availableAt": "2015-02-11T20:00:00-05:00",
+    "missingness_transport_certified": false,
+    "name": "EXP002 artificial PIT visibility audit",
+    "point_kind": "disclosed",
+    "points_sha256": "5c5f74673eec5d6253dd5ec53c3e2be50c55cedf011026a2dad3011548faff21",
+    "production_ready": false,
+    "row_count": 19,
+    "source_hashes": {
+      "fixture_code": "74b89cb27292a026f3479aaec80bbf34e7264dd772adf0865c5b347db255493f"
+    }
+  },
+  "artificial_publication": {
+    "id": "6acb9cecd666695bf65bebbe",
+    "purpose": "synthetic visibility only"
+  },
+  "unavailable_gap_ledgers": {
+    "insider_30": {
+      "dataset_version": "unavailable_v002",
+      "name": "insider_30",
+      "git_sha": "befbb7624c3dba3cf384cebc792080760ab2ee68",
+      "code_hashes": {
+        "custom_signals.py": "f3d4d907c30b872779a9adcb2628e63e8cef24dd185b9bff236c3d91fe894e63",
+        "pit_signals.py": "d413f1fd1c06b5196a8f071a9699c8e03ce6b17979d3efb08113b7f422e084a5"
+      },
+      "generated_at": "2026-10-11T14:40:42.452796+00:00",
+      "source_hashes": {
+        "owner_sample_short": "00836c8b425389e2801b82dfeaae03f047224a1ce05bf77ea2504ef228328df9"
+      },
+      "methodology_sha256": "29df0808930beed01ab40466050289ee963b8842af394b28051bae8f25968661",
+      "row_count": 0,
+      "min_source_availableAt": null,
+      "max_source_availableAt": null,
+      "min_emitted_timestamp": null,
+      "max_emitted_timestamp": null,
+      "points_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnostic_only": false,
+      "production_ready": false,
+      "missing_rows": 4384,
+      "point_kind": "disclosed",
+      "missingness_transport_certified": false,
+      "validity_points_sha256": "8713bd22f012119d8cbeba62efafaefd5c00b2796284d1ab023d6b49de473ef7",
+      "decision_row_count": 4384
+    },
+    "insider_90": {
+      "dataset_version": "unavailable_v002",
+      "name": "insider_90",
+      "git_sha": "befbb7624c3dba3cf384cebc792080760ab2ee68",
+      "code_hashes": {
+        "custom_signals.py": "f3d4d907c30b872779a9adcb2628e63e8cef24dd185b9bff236c3d91fe894e63",
+        "pit_signals.py": "d413f1fd1c06b5196a8f071a9699c8e03ce6b17979d3efb08113b7f422e084a5"
+      },
+      "generated_at": "2026-10-11T14:40:42.452796+00:00",
+      "source_hashes": {
+        "owner_sample_short": "00836c8b425389e2801b82dfeaae03f047224a1ce05bf77ea2504ef228328df9"
+      },
+      "methodology_sha256": "29df0808930beed01ab40466050289ee963b8842af394b28051bae8f25968661",
+      "row_count": 0,
+      "min_source_availableAt": null,
+      "max_source_availableAt": null,
+      "min_emitted_timestamp": null,
+      "max_emitted_timestamp": null,
+      "points_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnostic_only": false,
+      "production_ready": false,
+      "missing_rows": 4384,
+      "point_kind": "disclosed",
+      "missingness_transport_certified": false,
+      "validity_points_sha256": "8713bd22f012119d8cbeba62efafaefd5c00b2796284d1ab023d6b49de473ef7",
+      "decision_row_count": 4384
+    },
+    "institutional": {
+      "dataset_version": "unavailable_v002",
+      "name": "institutional",
+      "git_sha": "befbb7624c3dba3cf384cebc792080760ab2ee68",
+      "code_hashes": {
+        "custom_signals.py": "f3d4d907c30b872779a9adcb2628e63e8cef24dd185b9bff236c3d91fe894e63",
+        "pit_signals.py": "d413f1fd1c06b5196a8f071a9699c8e03ce6b17979d3efb08113b7f422e084a5"
+      },
+      "generated_at": "2026-10-11T14:40:42.452796+00:00",
+      "source_hashes": {
+        "owner_sample_short": "00836c8b425389e2801b82dfeaae03f047224a1ce05bf77ea2504ef228328df9"
+      },
+      "methodology_sha256": "29df0808930beed01ab40466050289ee963b8842af394b28051bae8f25968661",
+      "row_count": 0,
+      "min_source_availableAt": null,
+      "max_source_availableAt": null,
+      "min_emitted_timestamp": null,
+      "max_emitted_timestamp": null,
+      "points_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnostic_only": false,
+      "production_ready": false,
+      "missing_rows": 4384,
+      "point_kind": "disclosed",
+      "missingness_transport_certified": false,
+      "validity_points_sha256": "8713bd22f012119d8cbeba62efafaefd5c00b2796284d1ab023d6b49de473ef7",
+      "decision_row_count": 4384
+    }
+  },
+  "gap_ledger_scope": "AAPL/MSFT only; daily calendar decisions across provisional 2015-2020, not universe coverage or a trading calendar; zero numeric points; not uploaded",
+  "prior_versions_preserved": [
+    "unavailable_v001"
+  ],
+  "immutable": true,
+  "private_artifact_hashes": {
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/describe_daily_ohlc.json": "1463d4765fd93c6f253d429e440b7cbfbe0bb3141b515001701a9c45942a1a7d",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/describe_index_constituents.json": "5e8cd50d21ff961f800026dae8536013d466e91d132fe4b833a87b2c5ab83165",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/describe_insider_owner_events.json": "a0bca8e11902ef17ba677d53b8369f8f81f775b9161ac7388bf31a57f329d8bf",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history_request.json": "8b74817ee511c4585e550869017db7ba04c465b594ae6a391192cd2df3486f86",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup_request.json": "a7a601ae46d096e6ca87a63b6432c28111ccfc24e0545da16dbc8ade6346513e",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage_request.json": "1d1f48d549c20f6975ec72cbe4df9c72ca856b9e401c8815d9686b718afa94c7",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_request.json": "68abb9b354a9629d123f134f838b930713942a812b37bd041d772bf700481926",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short_request.json": "36a220500ca5644359d9d92953b0902f0d4b9df95e501a9d02ba7fe79d2bad67",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/unavailable_manifests.json": "7f16b669fecf20dd36af6c8501ebb9aaa788c7af2024abf350ebb6452c451f11",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/unavailable_manifests_v002.json": "756df610891dc55815082ab6c68215d1776794c1fef5237b8d0444e35a9ae357",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/artificial_disclosed_v001/manifest.json": "77f7301ab70bf5b7df2d7de7a70f3d6117fd2b1122cdf14ce1fa02f9d2d33c11",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/artificial_disclosed_v001/points.json": "134260633762cdf867baa278fa0694baf17e93bf5ba1f03560bbd1d2fe631aed",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/artificial_disclosed_v001/publication.json": "71b7bcf67350995d7b241d5c217982089dd3841c33cc241f195e971b895d449f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/deployment/events_0001.json": "3d17d01a5f2551da5189a31bb19fcd4d4db432433e5577ba43b5834e740f5229",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/deployment/intent.json": "af190b7a3af07c6c044ca3d0dacf6123f9f0b677ec69547b83bdd6825aeca262",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/deployment/poll_0001.json": "606ce68d6d93fc8a2f9525c49e5523f5dde1d856e6094ba200eeab6b04044aac",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/deployment/poll_0002.json": "6efa82b8343a678e6ad25c7c57c264d5c071fcb7bcd5394bd3a34efb8495feed",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/deployment/submission.json": "606ce68d6d93fc8a2f9525c49e5523f5dde1d856e6094ba200eeab6b04044aac",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/dst/events_0001.json": "a24e869f5a046793e4f0319a4591bd5fab5f3b9ba365b7999370fe4248507462",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/dst/intent.json": "275a4737dc01e5074b4aa6b2c4000daaa19ec1ef391528fcbdd2bb0c685ec3ae",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/dst/poll_0001.json": "7a9357382d736e4980ad64b39b05ec28a7b4fea1abd70b766e069302ef4605ed",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/dst/poll_0002.json": "52ad3e3e019fda6afe893252f0623fa199309058d256f3f441cd66d36b8f03b2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/dst/submission.json": "5bdea5e603a98ed0d7edb54a5cf35919b0e3f79a55646672b4d17dadfbcc0a3c",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/early/events_0001.json": "1acd5260b92c8f24084057b02dfdf099aa81f15146341109347f7d5bf339b8b9",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/early/intent.json": "feb9c1d9902c3f587efad8d26e18075e7229c1a71bd5e126033bd060d1d919ce",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/early/poll_0001.json": "e0b1504d5d8b1215d96d4da593e2764829626881623b6fccae4fda735d401d83",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/early/poll_0002.json": "4d824079bf2b4e76c1ede41cf584e69baada316fc80c111590edcccbf3f1a849",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/early/submission.json": "89e08415fb636c10774529041f6cef6c91474c0d5298b17cfcb6a4765c0e7b07",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/holiday/events_0001.json": "969ee8cd283098e4b308379857be5da8797caec340bf456f5e16b9c241bf031d",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/holiday/intent.json": "d4409741778c11570d989d2d70323c724eed286f0e687312541e80443ae2e2a3",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/holiday/poll_0001.json": "693d643b4a56cc926f85e3e825ceba83a42f2d13585a5cbf014d99f0a8654403",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/holiday/poll_0002.json": "ba33fa9cc77b3da4b2faf43e010e7352535d327fd6e5238c27e1780622284e59",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/holiday/submission.json": "3b17ec115c6507ff1adc36b9909ccc6887731b5ef5a434dd6e27aadb5f76f741",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/intent.json": "59904b5332ef47043a6cc8d546a44c811d35691295ab7d4069e02f5c069b4331",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0001.json": "7fb395b1f74d2698b4ecb5fa88296677b641e0baecf0254c7a9c137b99c66ab9",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0002.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0003.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0004.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0005.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0006.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0007.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0008.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0009.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0010.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0011.json": "199b57ccbf12f5cad29977e767b7bfd771918d9a92c88a6d9a8e50f67efe39ef",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/result_receipt.json": "6004d76e9cbc22c0551c911b8e78caa6e41f45ccad58836f6eccc2bd3a8b6c41",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/rows.json": "a8550292e1974f5afd91a00d8ccc446e3ed801fff096048f65b1ae7234909e06",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/submission.json": "c0af590443b3f9ada9f5fa25e64b6d5375e9d48d8a24b361a5bbee997dfc9708",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_30_unavailable_v001/audit.json": "3e7925a3650cb4e645d4be330884f99e50236084235c82e89d0d734ba8d56351",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_30_unavailable_v001/manifest.json": "f10d5bf59606898c1de2b110e93f691dd4c23b35a94bf90f598587c964bef0b8",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_30_unavailable_v001/points.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_30_unavailable_v001/validity_points.json": "2d943fa99969bc9cc13f3751aca4f2877e380963e320db745a8177c018f7050f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_30_unavailable_v002/audit.json": "3e7925a3650cb4e645d4be330884f99e50236084235c82e89d0d734ba8d56351",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_30_unavailable_v002/manifest.json": "5287b9ca0dca136f91cc5a997fab3f9f08eb23346cb08bdadd094fff50052613",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_30_unavailable_v002/points.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_30_unavailable_v002/validity_points.json": "2d943fa99969bc9cc13f3751aca4f2877e380963e320db745a8177c018f7050f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_90_unavailable_v001/audit.json": "3e7925a3650cb4e645d4be330884f99e50236084235c82e89d0d734ba8d56351",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_90_unavailable_v001/manifest.json": "cb45b3c01f02e2916ac5691795f2b89f4f9233fb5fdc1e667c10d06870f6de33",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_90_unavailable_v001/points.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_90_unavailable_v001/validity_points.json": "2d943fa99969bc9cc13f3751aca4f2877e380963e320db745a8177c018f7050f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_90_unavailable_v002/audit.json": "3e7925a3650cb4e645d4be330884f99e50236084235c82e89d0d734ba8d56351",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_90_unavailable_v002/manifest.json": "31f822902a9f7c787a68f1b8d7fc3cb7c754520f92c4e65dd0d6ae03f988cb86",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_90_unavailable_v002/points.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/insider_90_unavailable_v002/validity_points.json": "2d943fa99969bc9cc13f3751aca4f2877e380963e320db745a8177c018f7050f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/institutional_unavailable_v001/audit.json": "df07c33e49654efa0135e04c71c5ee06298bfd0a3acc0049268120ff4ecdb561",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/institutional_unavailable_v001/manifest.json": "11a66080cd33488ccd363735ca85f219d6450893c96c2463066460d50cf13f7f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/institutional_unavailable_v001/points.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/institutional_unavailable_v001/validity_points.json": "2d943fa99969bc9cc13f3751aca4f2877e380963e320db745a8177c018f7050f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/institutional_unavailable_v002/audit.json": "df07c33e49654efa0135e04c71c5ee06298bfd0a3acc0049268120ff4ecdb561",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/institutional_unavailable_v002/manifest.json": "6e5016013150e87f2a3b2794b6fd84adcae69b8ca8cc18c5fff966a0f143da16",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/institutional_unavailable_v002/points.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/institutional_unavailable_v002/validity_points.json": "2d943fa99969bc9cc13f3751aca4f2877e380963e320db745a8177c018f7050f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/intent.json": "6c273224eaa296820f2dcaa505bbfa32122dccdfaf4ea0a116f45d31b14fa45f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/response_0001.json": "f4cfa3d33e18b1cb15834889ff63d2cbde9dde6869fcdb42e4fb8eb4ebcd05d0",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/response_0002.json": "98d47ffc7f5f2e97e2ec85fe7fef183a96c848382109248768cf88b73e019b74",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/response_0003.json": "98d47ffc7f5f2e97e2ec85fe7fef183a96c848382109248768cf88b73e019b74",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/response_0004.json": "3cb9086ceb14481683667b384cc16e31d0a54615385339770f036bd440bf1e8b",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/result_receipt.json": "5f01ecb2f115f2a0aa166fc78fcd19f12a2ac782fe4ebccbe22d3db579617488",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/rows.json": "8300f0f8763178f0086a365b77d6df59e0f98165fa8aad0e248df23b628addd1",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/submission.json": "765857c467cf23572ef4b1368f54e96852c3139bd6f512eb5e0d4e7d1f30aef9",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/normal/events_0001.json": "876aae07d3057f60ddca50524d882e66b8310d12bd1d0e01bfe6fc4a303fc649",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/normal/intent.json": "9598ed3f54bd7f20b5589db133edb4067e90cc77c0fcbf917f9cdbf9da5be50e",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/normal/poll_0001.json": "3bff718ed31ebd411a45cba26510f842b6a91d668eb57e68babb04e906141445",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/normal/submission.json": "785fcefa4abfae6eecc7ca65c030e2fb11891c74a03618945eef9c6ce93b855a",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/intent.json": "71531e34a54a7440afd3bcb435809c70d4fb181ea28c019cf688b60bb89a6ac0",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0001.json": "2e238afdcdea7d3bd637d724f4968cfeca6b33495cdf5779aace1d3f2e10e592",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0002.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0003.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0004.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0005.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0006.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0007.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0008.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0009.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0010.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0011.json": "ba8e8e982c25ba6ae2aef42f0f0139d96de669c802c0f13ecb886022bc795db0",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0012.json": "ba8e8e982c25ba6ae2aef42f0f0139d96de669c802c0f13ecb886022bc795db0",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/submission.json": "f90a1e55acf404b2c7a74a199d03a7d6baa59379752a9a24494b09955f52ef83",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/intent.json": "d5bc28d6901702e4dcddecce76ee82cad3ad63deca48848ae1fe5edf8e9d5ed7",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0001.json": "07421aceac292ffaf1f8023484809b3433f72d6b2e7177f11c1291d73d6fe912",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0002.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0003.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0004.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0005.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0006.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0007.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0008.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0009.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0010.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0011.json": "26bb49b54e2669dc61cef4076c50d03a2090c64640c51ec80e3d98b8cb75c560",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0012.json": "26bb49b54e2669dc61cef4076c50d03a2090c64640c51ec80e3d98b8cb75c560",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/submission.json": "985a89d516dd5273ed5cc06a5c43899ea9559500885f84dded6c479dd6f5eced",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/intent.json": "dcb20e66659b1b62618e5e7898d822f7be517d627a430871112eb25d5a45b500",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0001.json": "945b60dc63327a057983b7e3f460875a3d03b8c99b7d4bf6eae0197a1e77ada2",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0002.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0003.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0004.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0005.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0006.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0007.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0008.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0009.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0010.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0011.json": "3c72ed77545f376eea31e56babbd71e2a6314398bd9ac8090c1dbb383e5b8061",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/result_receipt.json": "bc43dfb8c93235ca1e5b49253c5b769683875f9af3b755449bb99bde94dd57b3",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/rows.json": "00836c8b425389e2801b82dfeaae03f047224a1ce05bf77ea2504ef228328df9",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/submission.json": "90d4bff338645773d459d12bd50f9b07fa3a75174874842c1e15293608ac6c8b",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/request_0001.json": "7a409a7459154650573e61fafe89ecc2716b9c0790478ecc662f93e5031f7540",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/request_0002.json": "57fa5661c918ca553bb1b399faaac775882e0ede61d4fbbb48e4b5a5ba2fd41c",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/request_0003.json": "688514e013b0ce76cdc417e3301e90f084adbf82731baa0a39ff8dba1e9fc140",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/request_0005.json": "706359880f342d2721af38a69e8527c4c347698a0081753096f0bd3c90c4d4be",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/response_0001.json": "7c7fd8b17ed5cef4371b2c164871021dd0b6853967be53a02c28d6f6401e2820",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/response_0002.json": "995bc6785442b0aee41354dcef8d263b9f52486f6986c0fd669d728cd8235d6d",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/response_0003.json": "aec082c49ca385e95dcefddfeca81a9624e780956617f20abf3f8ff728998827",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/response_0004.json": "20c6aaeffc8663f6b6f40bfee0b41bcca8536fd567ff0f6e4bb1379071f262cc",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/response_0005.json": "796dce22069c6270f0fbbd72635d90126384a333b9fc0621a7fe5a60b35469b5",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/response_0006.json": "1c932b76a1c187b67a6d22c1980ba0d64d78609e75f8c2245db1c5f29539beda",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/deployment/request_0001.json": "8e146f74dda74522412b20a764b11c39e9e2c5fd3f14cbff0879114384a7dee8",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/deployment/response_0001.json": "94cab2b6a19608dff937f1ca99c2eb0c0978198b5bb81fdf28e9eaeefe70bcb9",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/deployment/response_0002.json": "8cd0d254ffef2903aad28f4cf84d4bb2fd2a6f68b220c42df1ae59851e113459",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/deployment/response_0003.json": "edb2d403947cca07a17482c3566ef4af5d370ad88485661ff608feb3b94d48a3",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/dst/request_0001.json": "ca6893ec8287eaea06c2bceab7bddd7c954ffc068bc90b8f7f6cfcf9f5a01a08",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/dst/response_0001.json": "8e854a6e5bdf2502ca0a0f99878ef66dafe704db92b647c139526def0ea38056",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/dst/response_0002.json": "0dc22e7bb7c0e68e28a111b2673bd6e3318528f7f978c1e002fecf72ee5ea309",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/dst/response_0003.json": "287ca22c0e962306a27e01e22d36209053ffcc672991e4446337eb1af0bd4288",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/early/response_0001.json": "16d99a429b8235f444d649e93897170862251c355448d23e05f02baccc8e324f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/holiday/response_0001.json": "dee8523e0dcd4da52477c27077b7e18bb9cbb6302918ec6d1c55cf2180849366",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/transport/normal/response_0001.json": "6e75ac66a07889ed8cb384b0f4adf44440418416e7a0d81a61488521ddf4ad54",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/parts/lq_43be3afe73050b0b1a5d6824/download_manifest.json": "bec6d1b888bcd3512ec15413883ed81b3dc4b1bb78cd59defb2882ca7e674916",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/parts/lq_43be3afe73050b0b1a5d6824/part-00000.parquet": "7195ba139c6f1e1e4a1359cc6f72f285e7648643779a74436c37dfffce9e41b7",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/parts/lq_0874cb1b37110b9f72b68b93/download_manifest.json": "71440519ea076e183c53fce4e2185b1dd5978199c1b5c9abfc120b47eff525f1",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/parts/lq_0874cb1b37110b9f72b68b93/part-00000.parquet": "f0460eefc6efc1638c4e6c16c5a9f7001c0f56e9d2ac440871866ae14abeb3fe",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/parts/lq_6e31da4bf2b1f94a7474036a/download_manifest.json": "40bc90aa018b0c17a1a10dbf914377c7f8fff6e9386fa7b6578ad946ff189567",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/parts/lq_6e31da4bf2b1f94a7474036a/part-00000.parquet": "99f9d4c14da5ebe83b354b3da815a966d82902765fc9fe340b2510044220480f",
+    "data/raw/EXP002/audit/raw/custom_pit_20261011/artificial_disclosed_v001/fixture_code_original.py": "74b89cb27292a026f3479aaec80bbf34e7264dd772adf0865c5b347db255493f"
+  },
+  "runtime_event_rows": 170,
+  "runtime_pages": 5,
+  "lake_jobs": [
+    {
+      "name": "index_history",
+      "id": "lq_6e31da4bf2b1f94a7474036a",
+      "request": {
+        "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi) SELECT indexCode,componentCode,CASE WHEN CAST(startDate AS DATE)<lo THEN CAST(lo AS TIMESTAMP) ELSE startDate END AS bounded_start,CASE WHEN endDate IS NULL OR CAST(endDate AS DATE)>hi THEN CAST(hi AS TIMESTAMP) ELSE endDate END AS bounded_end,startDate IS NOT NULL AS start_known,endDate IS NOT NULL AND CAST(endDate AS DATE)<=hi AS ended_in_window FROM lake.index_constituents,bounds WHERE indexCode='GSPC' AND startDate IS NOT NULL AND CAST(startDate AS DATE)<=hi AND (endDate IS NULL OR CAST(endDate AS DATE)>=lo) ORDER BY componentCode,bounded_start",
+        "params": [
+          "2014-01-01",
+          "2020-12-31"
+        ],
+        "limits": {
+          "timeoutSeconds": 180,
+          "maxRows": 500000,
+          "maxResultBytes": 134217728
+        }
+      },
+      "status": "completed",
+      "rows": 559,
+      "private_receipt_hashes": {
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/intent.json": "59904b5332ef47043a6cc8d546a44c811d35691295ab7d4069e02f5c069b4331",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0001.json": "7fb395b1f74d2698b4ecb5fa88296677b641e0baecf0254c7a9c137b99c66ab9",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0002.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0003.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0004.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0005.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0006.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0007.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0008.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0009.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0010.json": "82f17e7476955987e5ce6611df0a34e9509e799829391fc556a299c5a1c2c3db",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/response_0011.json": "199b57ccbf12f5cad29977e767b7bfd771918d9a92c88a6d9a8e50f67efe39ef",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/result_receipt.json": "6004d76e9cbc22c0551c911b8e78caa6e41f45ccad58836f6eccc2bd3a8b6c41",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/rows.json": "a8550292e1974f5afd91a00d8ccc446e3ed801fff096048f65b1ae7234909e06",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/submission.json": "c0af590443b3f9ada9f5fa25e64b6d5375e9d48d8a24b361a5bbee997dfc9708",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/parts/lq_6e31da4bf2b1f94a7474036a/download_manifest.json": "40bc90aa018b0c17a1a10dbf914377c7f8fff6e9386fa7b6578ad946ff189567",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/index_history/parts/lq_6e31da4bf2b1f94a7474036a/part-00000.parquet": "99f9d4c14da5ebe83b354b3da815a966d82902765fc9fe340b2510044220480f"
+      }
+    },
+    {
+      "name": "minimum_price_warmup",
+      "id": "lq_0874cb1b37110b9f72b68b93",
+      "request": {
+        "query": "SELECT ticker,date,closingPrice,unadjustedClose,volume FROM lake.sec_daily_ohlc WHERE CAST(date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) ORDER BY ticker,date",
+        "params": [
+          "2013-12-31",
+          "2013-12-31"
+        ]
+      },
+      "status": "completed",
+      "rows": 7134,
+      "private_receipt_hashes": {
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/intent.json": "6c273224eaa296820f2dcaa505bbfa32122dccdfaf4ea0a116f45d31b14fa45f",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/response_0001.json": "f4cfa3d33e18b1cb15834889ff63d2cbde9dde6869fcdb42e4fb8eb4ebcd05d0",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/response_0002.json": "98d47ffc7f5f2e97e2ec85fe7fef183a96c848382109248768cf88b73e019b74",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/response_0003.json": "98d47ffc7f5f2e97e2ec85fe7fef183a96c848382109248768cf88b73e019b74",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/response_0004.json": "3cb9086ceb14481683667b384cc16e31d0a54615385339770f036bd440bf1e8b",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/result_receipt.json": "5f01ecb2f115f2a0aa166fc78fcd19f12a2ac782fe4ebccbe22d3db579617488",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/rows.json": "8300f0f8763178f0086a365b77d6df59e0f98165fa8aad0e248df23b628addd1",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/submission.json": "765857c467cf23572ef4b1368f54e96852c3139bd6f512eb5e0d4e7d1f30aef9",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/parts/lq_0874cb1b37110b9f72b68b93/download_manifest.json": "71440519ea076e183c53fce4e2185b1dd5978199c1b5c9abfc120b47eff525f1",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/minimum_price_warmup/parts/lq_0874cb1b37110b9f72b68b93/part-00000.parquet": "f0460eefc6efc1638c4e6c16c5a9f7001c0f56e9d2ac440871866ae14abeb3fe"
+      }
+    },
+    {
+      "name": "owner_coverage",
+      "id": "lq_7e0103b24cafbe96b6cc59a3",
+      "request": {
+        "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi) SELECT EXTRACT(YEAR FROM availableAt) AS year,COUNT(*) AS rows,COUNT(DISTINCT eventId) AS events,COUNT(DISTINCT ownerCik) AS owners,COUNT(DISTINCT resolvedTicker) AS tickers,SUM(CASE WHEN ownerCik IS NULL OR eventId IS NULL OR resolvedTicker IS NULL THEN 1 ELSE 0 END) AS missing_identity FROM lake.insider_owner_events,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND transactionCode='P' AND acquiredDisposed='A' AND rowKind='nonderiv' GROUP BY 1 ORDER BY 1",
+        "params": [
+          "2014-01-01",
+          "2020-12-31"
+        ],
+        "limits": {
+          "timeoutSeconds": 180,
+          "maxRows": 500000,
+          "maxResultBytes": 134217728
+        }
+      },
+      "status": "unresolved",
+      "rows": null,
+      "private_receipt_hashes": {
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/intent.json": "71531e34a54a7440afd3bcb435809c70d4fb181ea28c019cf688b60bb89a6ac0",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0001.json": "2e238afdcdea7d3bd637d724f4968cfeca6b33495cdf5779aace1d3f2e10e592",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0002.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0003.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0004.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0005.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0006.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0007.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0008.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0009.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0010.json": "eb787950f479d27de91a6b2c8a4ff59d04f79e7021c5b91e6dd75983ef13b4d2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0011.json": "ba8e8e982c25ba6ae2aef42f0f0139d96de669c802c0f13ecb886022bc795db0",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/response_0012.json": "ba8e8e982c25ba6ae2aef42f0f0139d96de669c802c0f13ecb886022bc795db0",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_coverage/submission.json": "f90a1e55acf404b2c7a74a199d03a7d6baa59379752a9a24494b09955f52ef83"
+      }
+    },
+    {
+      "name": "owner_sample",
+      "id": "lq_bbe7c671801486b530af8c94",
+      "request": {
+        "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi) SELECT eventId,ownerCik,issuerCik,resolvedTicker,sourceAccession,versionAccession,rowKind,rowSk,firstAvailableAt,availableAt,CASE WHEN CAST(supersededAt AS DATE)<=hi THEN supersededAt ELSE NULL END AS supersededAt,CASE WHEN CAST(coverageUnverifiedAt AS DATE)<=hi THEN coverageUnverifiedAt ELSE NULL END AS coverageUnverifiedAt,transactionCode,acquiredDisposed,shares,eligibleShare,isOfficer,isDirector FROM lake.insider_owner_events,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND CAST(firstAvailableAt AS DATE)<=hi AND resolvedTicker IN ('AAPL','MSFT') ORDER BY availableAt,eventId,ownerCik",
+        "params": [
+          "2014-01-01",
+          "2020-12-31"
+        ],
+        "limits": {
+          "timeoutSeconds": 180,
+          "maxRows": 500000,
+          "maxResultBytes": 134217728
+        }
+      },
+      "status": "unresolved",
+      "rows": null,
+      "private_receipt_hashes": {
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/intent.json": "d5bc28d6901702e4dcddecce76ee82cad3ad63deca48848ae1fe5edf8e9d5ed7",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0001.json": "07421aceac292ffaf1f8023484809b3433f72d6b2e7177f11c1291d73d6fe912",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0002.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0003.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0004.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0005.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0006.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0007.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0008.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0009.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0010.json": "73f1453951b1ff222a5f3b00c6f2ee3ad17720aefdf8a7e9f0041e0b0b4e71ca",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0011.json": "26bb49b54e2669dc61cef4076c50d03a2090c64640c51ec80e3d98b8cb75c560",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/response_0012.json": "26bb49b54e2669dc61cef4076c50d03a2090c64640c51ec80e3d98b8cb75c560",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample/submission.json": "985a89d516dd5273ed5cc06a5c43899ea9559500885f84dded6c479dd6f5eced"
+      }
+    },
+    {
+      "name": "owner_sample_short",
+      "id": "lq_43be3afe73050b0b1a5d6824",
+      "request": {
+        "query": "WITH bounds AS (SELECT CAST(? AS DATE) AS lo,CAST(? AS DATE) AS hi) SELECT eventId,ownerCik,issuerCik,resolvedTicker,sourceAccession,versionAccession,rowKind,rowSk,tickerIdentityDate,firstAvailableAt,availableAt,CASE WHEN CAST(supersededAt AS DATE)<=hi THEN supersededAt ELSE NULL END AS supersededAt,CASE WHEN CAST(coverageUnverifiedAt AS DATE)<=hi THEN coverageUnverifiedAt ELSE NULL END AS coverageUnverifiedAt,transactionCode,acquiredDisposed,shares,eligibleShare,isOfficer,isDirector FROM lake.insider_owner_events,bounds WHERE CAST(availableAt AS DATE) BETWEEN lo AND hi AND CAST(firstAvailableAt AS DATE)<=hi AND resolvedTicker IN ('AAPL','MSFT') ORDER BY availableAt,eventId,ownerCik",
+        "params": [
+          "2014-10-01",
+          "2015-01-31"
+        ],
+        "limits": {
+          "timeoutSeconds": 180,
+          "maxRows": 500000,
+          "maxResultBytes": 134217728
+        }
+      },
+      "status": "completed",
+      "rows": 79,
+      "private_receipt_hashes": {
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/intent.json": "dcb20e66659b1b62618e5e7898d822f7be517d627a430871112eb25d5a45b500",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0001.json": "945b60dc63327a057983b7e3f460875a3d03b8c99b7d4bf6eae0197a1e77ada2",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0002.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0003.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0004.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0005.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0006.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0007.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0008.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0009.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0010.json": "b108aa4119f8ddd389f81e46df3c102c3a002cd76534d667b702878e5ff47c35",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/response_0011.json": "3c72ed77545f376eea31e56babbd71e2a6314398bd9ac8090c1dbb383e5b8061",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/result_receipt.json": "bc43dfb8c93235ca1e5b49253c5b769683875f9af3b755449bb99bde94dd57b3",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/rows.json": "00836c8b425389e2801b82dfeaae03f047224a1ce05bf77ea2504ef228328df9",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/submission.json": "90d4bff338645773d459d12bd50f9b07fa3a75174874842c1e15293608ac6c8b",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/parts/lq_43be3afe73050b0b1a5d6824/download_manifest.json": "bec6d1b888bcd3512ec15413883ed81b3dc4b1bb78cd59defb2882ca7e674916",
+        "data/raw/EXP002/audit/raw/custom_pit_20261011/owner_sample_short/parts/lq_43be3afe73050b0b1a5d6824/part-00000.parquet": "7195ba139c6f1e1e4a1359cc6f72f285e7648643779a74436c37dfffce9e41b7"
+      }
+    }
+  ],
+  "diagnostic_jobs": [
+    {
+      "name": "normal",
+      "id": "6acb9cfa8c2f7fb888b44486",
+      "status": "completed",
+      "pages": 1,
+      "events": 40
+    },
+    {
+      "name": "holiday",
+      "id": "6acb9d048c2f7fb888b4448d",
+      "status": "completed",
+      "pages": 1,
+      "events": 38
+    },
+    {
+      "name": "early",
+      "id": "6acb9d1b8c2f7fb888b44493",
+      "status": "completed",
+      "pages": 1,
+      "events": 40
+    },
+    {
+      "name": "dst",
+      "id": "6acb9de08c2f7fb888b444eb",
+      "status": "completed",
+      "pages": 1,
+      "events": 40
+    },
+    {
+      "name": "deployment",
+      "id": "6acb9de18c2f7fb888b444ed",
+      "status": "completed",
+      "pages": 1,
+      "events": 12
+    }
+  ],
+  "actual_token_debit": null,
+  "shared_included_token_authorization": 1000,
+  "credit_purchases": 0,
+  "logging_incidents": [
+    "Two launches stopped before network submission because concurrent receipt names collided. Existing submission IDs were preserved; logger isolated per run before the remaining submissions.",
+    "One GET timed out; existing normal run was later polled, not resubmitted.",
+    "Original pre-logging-fix fixture script recovered exactly; SHA-256 verified against immutable original manifest.",
+    "Raw Parquet availability timestamps lack timezone annotation; source UTC semantics remain uncertified."
+  ],
+  "source_row_counts": {
+    "owner_sample_short": 79,
+    "owner_sample_qualifying_P_A_nonderiv": 1,
+    "owner_sample_null_tickerIdentityDate": 79,
+    "historical_GSPC_membership": 559,
+    "minimum_20131231_price_warmup": 7134
+  },
+  "checks": {
+    "full_suite": 104,
+    "semantic_audit_exit_code": 1,
+    "semantic_audit_block": "Point-in-time availability unestablished: Nexus daily prices, volume and corporate actions",
+    "gates_weakened": false,
+    "verified_private_artifacts": 155,
+    "exp001_unchanged": true,
+    "json_schema_valid": true,
+    "direct_runtime_matches": "16/16",
+    "lag_cutoff_matches": "8/16",
+    "presentation_check": "6 deterministic artifacts"
+  }
+}

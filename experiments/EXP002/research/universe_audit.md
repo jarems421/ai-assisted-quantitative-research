@@ -24,3 +24,8 @@ Prefer explicit effective historical security spans to native ALL_US_STOCKS. Pri
 Market cap is removed from the primary universe and grid; USD 25m liquidity is robustness only. Existing liquid-ID counts use unverified price-volume units and must not be treated as finalized eligibility. AAPL unadjustedClose/closingPrice = 4 before its split and 1 afterward; reported volume basis remains unresolved.
 
 The CQB/SPY diagnostic pruned CQB after its final January 6, 2015 source session and sold it January 7 at 90% of the prior close. This is event-level evidence for one native delisting mechanism, not proof of merger consideration, all security types, complete historic membership or exchange vintages. See [design revision](design_revision.md).
+
+
+## Narrower proposed universe; ADV removed
+
+Current proposal is historical GSPC effective membership intersected with certified CS listing/security-ID spans, nominal unadjustedClose >= $5; no primary market-cap/ADV filter. 559 bounded index_constituents rows retain ended spans, with endpoints clipped to authorized dates; present-day isActive is unused. This is a reproducible narrower proposal, not evidence of public membership vintages, complete dead-stock coverage, identifier lineage or exchange/OTC classification. Existing monthly exclusion counts remain available; certified exclusions for the narrower primary universe cannot yet be computed and remain null. No replacement liquidity gate was selected. Final universe is unresolved.
