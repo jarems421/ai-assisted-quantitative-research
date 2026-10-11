@@ -10,7 +10,7 @@ TABLES = ('source_documents', 'filing_versions', 'facts', 'text_sections', 'secu
 def records(snapshot, job):
     return {'source_documents': [{'role': role, **record} for role, record in sorted(job['sources'].items())],
             'filing_versions': [{k: v for k, v in snapshot.items() if k not in ('facts', 'text_sections', 'security_bindings', 'asof_views')}],
-            **{name: snapshot[name] for name in TABLES[2:]}}
+            **{name: job.get('asof_views', snapshot[name]) if name == 'asof_views' else snapshot[name] for name in TABLES[2:]}}
 
 
 def exact(expected, observed):

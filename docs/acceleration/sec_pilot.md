@@ -1,5 +1,7 @@
 # Minimal SEC filing pilot specification
 
+Implementation status (2026-10-12): see the [Phase 2 outcome report](phase2_report.md) and [canonical summary](phase2_summary.json). The original pre-implementation acceptance specification below remains the historical scope contract; its original “not acquired” statements describe the preparation checkpoint.
+
 **Specification only, 2026-10-11.** Implement next only with owner authorization. This pilot tests provenance and as-of reconstruction, not forecasts, insider feed completeness or strategy performance. No full backfill, EXP005 creation/freeze, Nexus publication or backtest is included.
 
 ## Fixed scope and environment

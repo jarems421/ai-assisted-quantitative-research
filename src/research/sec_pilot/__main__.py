@@ -125,8 +125,9 @@ def process(*, replay=False):
         else:
             ingestion = json.loads((run/'ingestion.json').read_bytes())
             if ingestion['snapshot_sha256'] != snapshot['snapshot_sha256']: raise ValueError('Ingestion snapshot mismatch')
-        checks = reconcile(snapshot, job, run/'tables')
         view = asof(snapshot, '2020-12-31T23:59:59Z', snapshot_sha256=snapshot['snapshot_sha256'])
+        archive.receipts.write((run/'asof_20201231.json').relative_to(RAW).as_posix(), view)
+        checks = reconcile(snapshot, dict(job, asof_views=[view]), run/'tables_v002')
         summary.append({'accession': accession, 'acquisition': 'PASS', 'parsing': 'PASS_OFFLINE',
                         'source_documents': [{ 'role': role, 'sha256': record['body']['sha256'], 'bytes': record['body']['bytes']}
                                              for role, record in sorted(job['sources'].items())],
@@ -138,8 +139,9 @@ def process(*, replay=False):
                         'reconciliation': checks, 'accepted_raw': snapshot['acceptance_raw'],
                         'accepted_at_utc': snapshot['accepted_at_utc'], 'public_availability': 'UNKNOWN',
                         'identity': 'UNRESOLVED', 'trading_eligible_facts': len(view['usable']),
-                        'examples': [{k: f[k] for k in ('concept', 'namespace', 'exact_value', 'context_ref', 'fact_locator', 'source_sha256')}
-                                     for f in snapshot['facts'] if f['concept'] in ('Assets', 'Revenues', 'RevenueFromContractWithCustomerExcludingAssessedTax')][:3]})
+                        'examples': [{k: f[k] for k in ('concept', 'namespace', 'exact_value', 'context_ref', 'unit_ref', 'unit_xml', 'fact_locator', 'source_sha256')}
+                                     for f in snapshot['facts'] if not f['context']['dimensions'] and f['concept'] in
+                                     ('Assets', 'Revenues', 'RevenueFromContractWithCustomerExcludingAssessedTax')][:3]})
     stop = json.loads((RAW/'acquisition_stop.json').read_bytes()) if (RAW/'acquisition_stop.json').exists() else None
     attempts = []
     for path in RAW.glob('*/attempts/*.json'):
@@ -160,11 +162,19 @@ def process(*, replay=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('operation', choices=('plan', 'acquire', 'parse', 'replay', 'audit', 'report'))
-    parser.add_argument('--execute', action='store_true'); args = parser.parse_args()
+    parser.add_argument('--execute', action='store_true'); parser.add_argument('--check', action='store_true'); args = parser.parse_args()
     if args.operation == 'plan': print(json.dumps(plan(), indent=2)); return
     if args.operation == 'acquire':
         if not args.execute: raise ValueError('Acquisition requires --execute and existing owner authorization')
         acquire(); return
+    if args.operation == 'report':
+        from src.research.sec_pilot.report import render
+        text = render(json.loads(SUMMARY.read_bytes()), json.loads((SUMMARY.parent/'phase2_validation.json').read_bytes()))
+        path = SUMMARY.parent/'phase2_report.md'
+        if args.check:
+            if path.read_text(encoding='utf-8') != text: raise ValueError('Phase 2 report differs from canonical summaries')
+        else: path.write_text(text, encoding='utf-8')
+        print('PASS canonical Phase 2 report'); return
     result = process(replay=args.operation in ('replay', 'audit'))
     print(json.dumps({'source_fidelity': result['source_fidelity'], 'filings': len(result['filings']), 'nexus_calls': 0}))
 

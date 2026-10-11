@@ -1,0 +1,20 @@
+{
+  "as_of": "2026-10-12",
+  "tests_passed": 191,
+  "tests_skipped": 0,
+  "test_log_sha256": "06d82d38d35d1a5eba0d6290d689d3b4c29f70f8a31d42e79f9685612fa5ec63",
+  "historical_files_unchanged": 111,
+  "checks": {
+    "research_suite": "PASS",
+    "exp004_semantic_audit": "PASS HYPOTHESIS_FROZEN",
+    "support_receipt_hashes": "PASS",
+    "isolated_pip_check": "PASS",
+    "arrow23_to_arrow20_duckdb_read": "PASS",
+    "pilot_replay": "PASS",
+    "presentation": "PASS six artifacts",
+    "report_consistency": "PASS"
+  },
+  "nexus_calls": 0,
+  "personal_contact_exported": false,
+  "research_dependencies_changed": false
+}
