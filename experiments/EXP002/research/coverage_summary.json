@@ -2530,5 +2530,12 @@
     "insider_short_sample_rows": 79,
     "missing_identity_date_rows": 79,
     "older_liquid_counts": "Retained as historical provisional diagnostics; no longer primary eligibility counts"
+  },
+  "final_blocker_pass": {
+    "source_summary": "final_source_summary.json",
+    "joint_usable_inception": null,
+    "historical_universe_certified": false,
+    "institutional_production_certified": false,
+    "warmup_only_not_joint_coverage": true
   }
 }

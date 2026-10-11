@@ -1549,5 +1549,173 @@
     ],
     "semantic_audit_exit_code": 1,
     "spec_sha256": "62b66ad75fbeadb5253a5b761a4dc698e31af5760d72a69ba9e264e000b50170"
+  },
+  "final_blocker_pass": {
+    "owner_request": "research/final_blocker_authorization_20261011.md",
+    "request_sha256": "9221eb4097c0f4f3bf55cfe877a868d1e2e26945f0952b393d0314fa105ba99c",
+    "formation_cutoff": "2020-12-31",
+    "code_checkpoint": "4ab7959",
+    "freeze": false,
+    "candidate_performance": false,
+    "held_out_observations": false,
+    "production_uploads": 0,
+    "custom_indicator_creates": 3,
+    "lake_submissions": [
+      {
+        "name": "insider_versions",
+        "id": "lq_b8b122701f821b88825ca05c",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi) SELECT f.accession,f.formType,f.filingDate,f.availableAt,f.availabilitySource,f.issuerCik,f.ownerCik,f.resolvedTicker,f.dateOfOriginalSubmission,s.security_id,s.cik,s.asset_type,GREATEST(s.from_date,lo) listing_from,LEAST(COALESCE(s.to_date,hi),hi) listing_to FROM lake.insider_filings f LEFT JOIN lake.security_segments s ON f.resolvedTicker=s.ticker AND CAST(f.availableAt AS DATE) BETWEEN s.from_date AND COALESCE(s.to_date,DATE '2020-12-31'),bounds WHERE f.resolvedTicker IN ('AAPL','MSFT') AND CAST(f.availableAt AS DATE) BETWEEN lo AND hi ORDER BY f.accession,f.ownerCik",
+          "params": [
+            "2014-10-01",
+            "2015-01-31"
+          ]
+        },
+        "status": "COMPLETED",
+        "raw_request_sha256": "b1a2456e9b76c8bd61f87ad8692b848e8483f0e8a78aa22b1c2ec0a632c6690d"
+      },
+      {
+        "name": "institutional_full_filings_bounded",
+        "id": "lq_2d5f89df0db3ebb147acd804",
+        "request": {
+          "query": "SELECT f.accession,f.cik,f.periodOfReport,f.submissionType,f.filingDate,f.availableAt,f.isAmendment,f.amendmentType,h.infoTableSk,h.cusip,h.resolvedTicker,h.sharesAmount,h.sharesType,h.putCall,h.value,h.availabilitySource FROM lake.institutional_filings f LEFT JOIN lake.institutional_holdings h ON f.accession=h.accession WHERE f.accession IN ('0000002230-14-000072','0000002230-14-000083','0000909012-14-000238','0000909012-14-000247','0001140361-14-018730','0001140361-15-007202') AND CAST(h.availableAt AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND CAST(f.availableAt AS DATE) BETWEEN DATE '2014-01-01' AND DATE '2015-12-31' ORDER BY f.accession,h.infoTableSk",
+          "params": [
+            "2014-01-01",
+            "2015-12-31"
+          ]
+        },
+        "status": "COMPLETED",
+        "raw_request_sha256": "b5adc46383c14e7f9120644cde36100725360abfdbbc803a65a16885b7c7e909"
+      },
+      {
+        "name": "institutional_full_filings",
+        "id": "lq_6349ede3259c9e161328c4c7",
+        "request": {
+          "query": "SELECT f.accession,f.cik,f.periodOfReport,f.submissionType,f.filingDate,f.availableAt,f.isAmendment,f.amendmentType,h.infoTableSk,h.cusip,h.resolvedTicker,h.sharesAmount,h.sharesType,h.putCall,h.value,h.availabilitySource FROM lake.institutional_filings f LEFT JOIN lake.institutional_holdings h ON f.accession=h.accession WHERE f.accession IN ('0000002230-14-000072','0000002230-14-000083','0000909012-14-000238','0000909012-14-000247','0001140361-14-018730','0001140361-15-007202') AND CAST(f.availableAt AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) ORDER BY f.accession,h.infoTableSk",
+          "params": [
+            "2014-01-01",
+            "2020-12-31"
+          ]
+        },
+        "status": "FAILED_SERVER_TIMEOUT",
+        "raw_request_sha256": "e1dffb3b8c376ac5d1d00a420af0a181ade1694cdb3f119ca0559082df3eec7e"
+      },
+      {
+        "name": "price_actions",
+        "id": "lq_36eb41d0ca2c13bd80e4bce7",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi) SELECT 'dividend' kind,ticker,CAST(exDividendDate AS DATE) action_date,cashAmount amount,NULL ratio_from,NULL ratio_to FROM lake.dividends,bounds WHERE ticker='AAPL' AND CAST(exDividendDate AS DATE) BETWEEN lo AND hi UNION ALL SELECT 'split',ticker,CAST(executionDate AS DATE),NULL,splitFrom,splitTo FROM lake.stock_splits,bounds WHERE ticker='AAPL' AND CAST(executionDate AS DATE) BETWEEN lo AND hi",
+          "params": [
+            "2020-08-03",
+            "2020-09-03"
+          ]
+        },
+        "status": "COMPLETED",
+        "raw_request_sha256": "05281359050b599c3d5edfcc46cc8e2b4ac2da6563b9658abfc6d8ab8221d881"
+      },
+      {
+        "name": "price_cases",
+        "id": "lq_1f78f1ecb5bedd1cf005af7d",
+        "request": {
+          "query": "SELECT ticker,date,openingPrice,closingPrice,unadjustedClose,volume,priceSource,priceSourceCheckedAt FROM lake.sec_daily_ohlc WHERE CAST(date AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE) AND ((ticker='AAPL' AND CAST(date AS DATE) BETWEEN DATE '2020-08-03' AND DATE '2020-09-03') OR (ticker='MSFT' AND CAST(date AS DATE) BETWEEN DATE '2016-01-06' AND DATE '2016-01-13') OR (ticker IN ('NU','ES') AND CAST(date AS DATE) BETWEEN DATE '2015-02-12' AND DATE '2015-02-25')) ORDER BY ticker,date",
+          "params": [
+            "2015-01-01",
+            "2020-12-31"
+          ]
+        },
+        "status": "COMPLETED",
+        "raw_request_sha256": "e03c1265025418b375f810f65aac1a0abd3e984efa2f5cf9328aaf8f25ec1a30"
+      },
+      {
+        "name": "rename_identity",
+        "id": "lq_e8a36d6e953692e9fb9db18a",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi) SELECT ticker,security_id,cik,asset_type,GREATEST(from_date,lo) listing_from,LEAST(COALESCE(to_date,hi),hi) listing_to FROM lake.security_segments,bounds WHERE ticker IN ('NU','ES') AND from_date<=hi AND COALESCE(to_date,hi)>=lo ORDER BY ticker,listing_from",
+          "params": [
+            "2013-12-31",
+            "2020-12-31"
+          ]
+        },
+        "status": "COMPLETED",
+        "raw_request_sha256": "ac293ff8b1c3f5c5f511dd4151d1c9865aafe85e422510f9ca387a056737b941"
+      },
+      {
+        "name": "universe_identity",
+        "id": "lq_67016e908cf90d286ee10d19",
+        "request": {
+          "query": "WITH bounds AS (SELECT CAST(? AS DATE) lo,CAST(? AS DATE) hi) SELECT i.componentCode ticker,GREATEST(CAST(i.startDate AS DATE),lo) member_from,LEAST(COALESCE(CAST(i.endDate AS DATE),hi),hi) member_to,s.security_id,s.cik,s.asset_type,GREATEST(s.from_date,lo) listing_from,LEAST(COALESCE(s.to_date,hi),hi) listing_to FROM lake.index_constituents i LEFT JOIN lake.security_segments s ON i.componentCode=s.ticker AND s.from_date<=COALESCE(CAST(i.endDate AS DATE),DATE '2020-12-31') AND COALESCE(s.to_date,DATE '2020-12-31')>=CAST(i.startDate AS DATE),bounds WHERE i.indexCode='GSPC' AND CAST(i.startDate AS DATE)<=hi AND COALESCE(CAST(i.endDate AS DATE),hi)>=lo AND (s.from_date IS NULL OR s.from_date<=hi) ORDER BY ticker,member_from,listing_from",
+          "params": [
+            "2013-12-31",
+            "2020-12-31"
+          ]
+        },
+        "status": "COMPLETED",
+        "raw_request_sha256": "f40d142da635ea5dfa987b6a558a339ebee31f41d420d22c8da54dc67d3017ee"
+      }
+    ],
+    "administrative_timestamps": "Generation and priceSourceCheckedAt dates retained separately from pre-cutoff source/market availability.",
+    "actual_token_debit": null,
+    "global_nexus_call_count": null,
+    "critical": [
+      "historical constituent/identifier completeness",
+      "institutional eligible-security identity and omission-to-zero certification"
+    ],
+    "noncritical": [
+      "vendor revision immutability",
+      "exact SEC acceptance/ingestion delay",
+      "private purchases/source omissions",
+      "merger/delisting approximation",
+      "reserve/capacity/slippage/taxes",
+      "fixed-fill cost stress",
+      "historical knowledge and bootstrap selection bias",
+      "unobservable debit"
+    ],
+    "claims": [
+      {
+        "status": "VERIFIED",
+        "claim": "Bounded timezone, guarded artificial decision transport, price/dividend units and deployment feasibility",
+        "evidence": "research/final_runtime_summary.json; research/final_source_summary.json"
+      },
+      {
+        "status": "PROPOSED",
+        "claim": "Conditional chronology, fixed quality thresholds/cost stresses and descriptive inference",
+        "evidence": "research/final_freeze_review.md; research/statistical_contract.md"
+      },
+      {
+        "status": "UNRESOLVED",
+        "claim": "Trustworthy historical membership and production institutional identity/zero gates; downstream joint inception",
+        "evidence": "research/final_source_summary.json"
+      }
+    ],
+    "software_tests": "114 passed",
+    "semantic_audit_exit_code": 1,
+    "semantic_audit": "unchanged: institutional production PIT/zero gate rejects draft",
+    "spec_sha256": "1b4a0869d07505c94ea4d23ce74b660da1dc675f650e09bbc60bd950babecb2b",
+    "source_hash_manifest": "research/custom_signal_manifest.json",
+    "code_sha256": {
+      "src/research/final_exp002.py": "38f3258ba5923b2667b3292c18192585c0378b53b325ae402457b0718906cdd0",
+      "src/research/pit_signals.py": "1228f9bd8f88f7dc69cf9d49679e432cb2d244be97d5536eed9bd87e33f05d04",
+      "src/research/custom_signals.py": "5d007c2e0939e4c38de671ac73f94c18f792e6b4c3143cf4f9011fe9d0e089ac",
+      "src/research/exp002_contracts.py": "2965778c139b82aaf0798c358bd43aa933dec84fbfd3103b4cde86b22670abbb",
+      "src/research/exp002_inference.py": "d8ae1debcfdf78d215ff75f708f44c043f61a45528b8f754a1f0218d7d5437d8",
+      "src/research/design_exp002.py": "a3475095078052c7975b434f50de3ed43b463ef931400735ae73775eba3b448d"
+    },
+    "artifacts": {
+      "research/final_blocker_authorization_20261011.md": "9221eb4097c0f4f3bf55cfe877a868d1e2e26945f0952b393d0314fa105ba99c",
+      "research/final_freeze_review.md": "504c4959e58476d0aeb930257be237cc21e02fb54e8692ad1e83835f74de7f05",
+      "research/final_runtime_summary.json": "3d70bc1980760a0134ede493f64cd865ffc3131f604dd4cce2bb5d6e2c309b79",
+      "research/final_source_summary.json": "c23b8ac62876c344667a63252b5b32f8a60adc12b80f2155bfa3ac1490e1f594",
+      "research/custom_signal_manifest.json": "a79f81640e54805114f23efd401bf1e47976bac4ed5f32b1efc3cc381ff7fe45"
+    },
+    "private_hashes_verified": 502,
+    "checks": [
+      "114 software tests passed",
+      "schema validation passed",
+      "semantic audit intentionally rejects institutional PIT; unchanged implementation",
+      "source/runtime byte determinism",
+      "EXP001 tracked bytes unchanged after newline normalization",
+      "presentation check: six deterministic artifacts",
+      "private hash verification"
+    ]
   }
 }

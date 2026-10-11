@@ -1,0 +1,240 @@
+{
+  "performance_calculated": false,
+  "transport": {
+    "transport_nov": {
+      "id": "6acbb2778c2f7fb888b44fd6",
+      "events": 15,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2015-11-04",
+          "used": null,
+          "expected": null,
+          "validity": 1,
+          "freshness": 20151102
+        },
+        {
+          "session": "2015-11-03",
+          "used": null,
+          "expected": null,
+          "validity": 1,
+          "freshness": 20151102
+        },
+        {
+          "session": "2015-11-02",
+          "used": 5,
+          "expected": 5,
+          "validity": 1,
+          "freshness": 20151102
+        }
+      ],
+      "fills": [
+        "2015-11-02T09:30:00-05:00"
+      ],
+      "pass": true
+    },
+    "transport_dec": {
+      "id": "6acbb2788c2f7fb888b44fd8",
+      "events": 15,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2015-12-03",
+          "used": null,
+          "expected": null,
+          "validity": 1,
+          "freshness": 20151201
+        },
+        {
+          "session": "2015-12-02",
+          "used": null,
+          "expected": null,
+          "validity": 1,
+          "freshness": 20151201
+        },
+        {
+          "session": "2015-12-01",
+          "used": 7,
+          "expected": 7,
+          "validity": 1,
+          "freshness": 20151201
+        }
+      ],
+      "fills": [
+        "2015-12-01T09:30:00-05:00"
+      ],
+      "pass": true
+    },
+    "transport_mar": {
+      "id": "6acbb2798c2f7fb888b44fda",
+      "events": 15,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2016-03-03",
+          "used": null,
+          "expected": null,
+          "validity": 1,
+          "freshness": 20160301
+        },
+        {
+          "session": "2016-03-02",
+          "used": null,
+          "expected": null,
+          "validity": 1,
+          "freshness": 20160301
+        },
+        {
+          "session": "2016-03-01",
+          "used": 9,
+          "expected": 9,
+          "validity": 1,
+          "freshness": 20160301
+        }
+      ],
+      "fills": [
+        "2016-03-01T09:30:00-05:00"
+      ],
+      "pass": true
+    },
+    "transport_may": {
+      "id": "6acbb27a8c2f7fb888b44fdc",
+      "events": 15,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2016-05-04",
+          "used": null,
+          "expected": null,
+          "validity": 1,
+          "freshness": 20160502
+        },
+        {
+          "session": "2016-05-03",
+          "used": null,
+          "expected": null,
+          "validity": 1,
+          "freshness": 20160502
+        },
+        {
+          "session": "2016-05-02",
+          "used": 11,
+          "expected": 11,
+          "validity": 1,
+          "freshness": 20160502
+        }
+      ],
+      "fills": [
+        "2016-05-02T09:30:00-04:00"
+      ],
+      "pass": true
+    },
+    "transport_invalid": {
+      "id": "6acbb27b8c2f7fb888b44fde",
+      "events": 12,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2016-06-03",
+          "used": null,
+          "expected": null,
+          "validity": 0,
+          "freshness": 20160601
+        },
+        {
+          "session": "2016-06-02",
+          "used": null,
+          "expected": null,
+          "validity": 0,
+          "freshness": 20160601
+        },
+        {
+          "session": "2016-06-01",
+          "used": null,
+          "expected": null,
+          "validity": 0,
+          "freshness": 20160601
+        }
+      ],
+      "fills": [],
+      "pass": true
+    },
+    "transport_absent": {
+      "id": "6acbb27c8c2f7fb888b44fe0",
+      "events": 8,
+      "pages": 1,
+      "audits": [
+        {
+          "session": "2016-07-05",
+          "used": null,
+          "expected": null,
+          "validity": 0,
+          "freshness": 20160601
+        },
+        {
+          "session": "2016-07-01",
+          "used": null,
+          "expected": null,
+          "validity": 0,
+          "freshness": 20160601
+        }
+      ],
+      "fills": [],
+      "pass": true
+    }
+  },
+  "deployment": {
+    "deployment_90": {
+      "id": "6acbb27c8c2f7fb888b44fe2",
+      "nominal_percent": 90.0,
+      "stock_notional": 22125.0,
+      "observed_percent": 88.5,
+      "fees": 22.125,
+      "rejected_orders": 0,
+      "fills": 2,
+      "events": 20,
+      "pages": 1,
+      "pass": true
+    },
+    "deployment_92_5": {
+      "id": "6acbb27d8c2f7fb888b44fe4",
+      "nominal_percent": 92.5,
+      "stock_notional": 22750.0,
+      "observed_percent": 91.0,
+      "fees": 22.75,
+      "rejected_orders": 0,
+      "fills": 2,
+      "events": 20,
+      "pages": 1,
+      "pass": true
+    },
+    "deployment_95": {
+      "id": "6acbb27f8c2f7fb888b44fe6",
+      "nominal_percent": 95.0,
+      "stock_notional": 23375.0,
+      "observed_percent": 93.5,
+      "fees": 23.375,
+      "rejected_orders": 0,
+      "fills": 2,
+      "events": 20,
+      "pages": 1,
+      "pass": true
+    }
+  },
+  "corporate": {
+    "id": "6acbb2808c2f7fb888b44fe8",
+    "events": 100,
+    "pages": 3,
+    "sampled_market_observations": 48,
+    "source_sessions": 24,
+    "max_native_source_price_difference": 7.32421875682121e-06,
+    "buy_quantity": 0.9242144438121871,
+    "fill_price": 108.19999694824219,
+    "native_dividend_per_adjusted_share": 0.20499999821186066,
+    "source_dividend_per_nominal_share": 0.82,
+    "dividend_share_units_match": true,
+    "split_safe_ratio_matches_native": true,
+    "no_separate_split_quantity_adjustment": true,
+    "complete_market_sessions": true
+  }
+}

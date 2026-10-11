@@ -2,12 +2,12 @@
   "schema_version": 1,
   "experiment_id": "EXP002",
   "title": "Momentum with PIT qualifying insider purchases and matched-cohort institutional holdings",
-  "hypothesis": "PROPOSED, not frozen: in a historical GSPC common-stock universe reconstructed point in time, combining 180/365-calendar-day price momentum with recent publicly available Distinct Qualifying Insider Purchasers (nonderivative P/A, including private purchases) and matched-manager institutional holder-count change improves net mean daily excess return and independent zero-RF Sharpe versus momentum alone on the same certified coverage universe, robustly across chronological Development folds and later frozen windows. Universe and transport remain uncertified; no candidate performance has been observed.",
+  "hypothesis": "PROPOSED, not frozen: in a historical GSPC common-stock universe reconstructed point in time, combining 180/365-calendar-day price momentum with recent publicly available Distinct Qualifying Insider Purchasers (nonderivative P/A, including private purchases) and matched-manager institutional holder-count change improves net mean daily excess return and independent zero-RF Sharpe versus momentum alone on the same certified coverage universe, robustly across chronological Development folds and later frozen windows. Historical membership and institutional production identity/zero semantics remain uncertified; guarded artificial transport passes; no candidate performance has been observed.",
   "rationale": "Proposed economic mechanism, not an established result: momentum may reflect gradual information incorporation; publicly disclosed insider purchases may indicate management conviction; changes in disclosed institutional positions may indicate sustained demand. Their information may be complementary, but disclosure delays, crowding, confounding and trading costs could remove any incremental value.",
   "expected_effect": "Positive incremental net daily return and Sharpe for the full composite versus momentum alone. Lower volatility or drawdown alone does not confirm the return hypothesis. No unconditional promise of market outperformance or alpha.",
   "falsification_conditions": [
     "Economic failure: full composite net mean daily excess return versus matched momentum-only is nonpositive, or its zero-RF Sharpe is no higher, in a later frozen evaluation window.",
-    "Statistical nonconfirmation: the predeclared paired moving-block excess-return test does not reject the nonpositive-effect null after Holm adjustment; lack of significance is not proof of no effect.",
+    "Statistical uncertainty: report predeclared paired block percentile intervals descriptively. No null-centered p-values or significance claims in v1; Holm remains reserved and inactive. Directional improvement requires positive paired mean excess and Sharpe difference.",
     "Robustness failure: the incremental effect is an isolated parameter optimum, dominated by one stock or regime, or disappears under predeclared cost and disclosure-delay stresses.",
     "Incremental-information failure: the full composite adds no stable value beyond either momentum-plus-insider or momentum-plus-institutional ablation.",
     "Design invalidation, not economic falsification: historical membership, filing availability, revisions or missingness cannot be audited point in time. Stop rather than substitute current snapshots."
@@ -22,10 +22,10 @@
     "Selection over families and parameters; modern model knowledge of historical events"
   ],
   "asset_universe": [
-    "PROPOSED historical GSPC membership intersected with certified historical CS listing spans; nominal unadjusted price >= USD 5; retain later-delisted histories; historical membership publication/revision evidence UNRESOLVED"
+    "Historical large-cap US common-equity GSPC concept; production membership/identity FAILED, not an executable universe. Nominal unadjusted price >= USD 5."
   ],
   "dynamic_universe": {
-    "definition": "PROPOSED narrower universe: historical GSPC constituent effective spans intersected with unambiguous historical CS/security-ID listing spans, nominal unadjustedClose >= USD 5, retaining later-ended histories. Exclude non-CS ADR/ETF/preferred/fund/unknown and unresolved identities. 559 bounded membership rows are evidence of effective dates, not certified PIT public membership, exchange/OTC status or complete delisted coverage. Remove ADV and market cap from primary eligibility: no compatible historical price-volume or cap-vintage contract certified. No substitute filter chosen from performance. Apply the same joint-certified insider/institutional/price coverage exclusions across seven families. Actual eligibility remains blocked.",
+    "definition": "PROPOSED historical GSPC/common-stock universe with contemporaneous listing spans, stable IDs and nominal unadjustedClose >= USD 5. CRITICAL FAILED: supplied memberships contain only 380 symbols at 2015 inception and 482 at 2020 end; literal symbol joins include type mismatches and 19 missing IDs. Obtain trustworthy constituent history and identity bridge, never use modern symbols backwards. Retain later-ended histories. Same joint-certified exclusions across all seven families. No cap, ADV or prospective gates. Narrowness is not the blocker; survivorship/identity is.",
     "point_in_time_verified": false
   },
   "benchmarks": [
@@ -36,7 +36,7 @@
   "candidate_family_budget": 9,
   "maximum_complexity": 3,
   "permitted_indicators": [
-    "VERIFIED sample declaration: PriceRateOfChange(asset,length,interval=Day); revised 180/365 calendar-day horizons evaluated natively. Prior-completed-price lag requires explicit verified composition; four regular January opens support IndicatorWindowAgo(operand,12.5,Hour), including weekend carry-forward, not comprehensive guarantees.",
+    "VERIFIED native declaration PriceRateOfChange(asset,length,interval=Day) uses elapsed-calendar semantics. Primary proposed local 180/365-calendar-day momentum from completed nominal prices with only effective splits, first completed source bar on/after the calendar boundary; precomputed at preceding-day 21:00 NY. No dividends in the price ratio; cash dividends remain in engine equity. No future split changes an earlier prefix.",
     "PROPOSED locally reconstructed Distinct Qualifying Insider Purchasers, nonderivative P/A positive shares, stable event/owner dedup, firstAvailableAt 30/90 calendar-day windows, versioned availableAt corrections; private purchases included. Native DistinctBuyers excluded from primary.",
     "PROPOSED locally reconstructed matched-manager holder-count change between adjacent eligible quarters, fixed 60-calendar-day EOD buffer and actual public filing, as-of original/restatement/disjoint addition states. No native NetHolderChange primary fallback.",
     "PROPOSED eligibility only: historical GSPC/CS identity and listing validity, nominal USD 5 unadjusted floor. No primary ADV/cap or prospective rebalance gate."
@@ -44,32 +44,32 @@
   "data_sources": [
     {
       "name": "Nexus daily prices, volume and corporate actions",
-      "availability_timestamp": "VERIFIED live catalog guidance: finalized EOD refresh at 21:00 New York; observed source schemas include unadjustedClose, sharesAsOf, sharesAvailableAt and sharesAccession. Source samples exist pre-cutoff. Native completed-bar lag, revision vintages and price/volume adjustment compatibility remain UNRESOLVED.",
-      "point_in_time_verified": false,
-      "revision_policy": "Observed catalog describes closingPrice as split/dividend-adjusted and marketCap as unadjustedClose*sharesOutstanding. Use unadjustedClose for the nominal USD 5 threshold. Historical adjustment vintages and volume basis remain UNRESOLVED; corporate probe did not emit a split event. REVISION: AAPL sampled closingPrice is exactly unadjustedClose/4 before its 2020 split, and equal afterward. Source volume adjustment contract is unverified; nominal unadjustedClose times possibly split-adjusted volume is not certified ADV. Four prior-close lag samples are verified, not full historic-vintage safety."
+      "availability_timestamp": "VERIFIED scoped contract: observed catalog final EOD refresh 21:00 NY; only fully completed prior sessions at preceding-calendar-day 21:00 decision. Local nominal prices and splits effective no later than completed T; administrative priceSourceCheckedAt kept separate. Evidence final_runtime_summary.json; no claim of immutable vendor vintages.",
+      "point_in_time_verified": true,
+      "revision_policy": "Nominal unadjustedClose for USD 5 floor. Local split-only continuity for momentum, never use future split factors or total-return-adjusted prices plus cash dividends. AAPL 48 native bars match 24 source sessions within USD 0.000008; nominal USD 0.82 dividend maps to USD 0.205 adjusted-share units. Polygon/Massive split-adjustment documentation plus bounded samples support contract, not every corporate action. Vendor revisions and merger accounting are disclosed NONCRITICAL limitations. Volume/cap removed."
     },
     {
       "name": "Nexus insider_owner_events -> locally controlled Distinct Qualifying Insider Purchasers",
-      "availability_timestamp": "Observed insider_owner_events firstAvailableAt/availableAt/supersededAt/coverageUnverifiedAt declare source-public as-of state; raw Parquet timestamp columns lack timezone annotation. Exact normalization, coverage and vendor ingestion/publication timing remain UNRESOLVED.",
-      "point_in_time_verified": false,
-      "revision_policy": "VERIFIED observed catalog requires eventId/ownerCik version relations, firstAvailableAt windows, availableAt/supersededAt/coverageUnverifiedAt as-of validity. Local kernel and adversarial tests implement that policy. P includes private purchases; rename replaces strict open-market restriction before performance. Bounded sample 79 rows, one qualifying leg, all tickerIdentityDate null; timezone annotation, source completeness and identities remain UNRESOLVED. Unknown corrections/conflicting active versions unavailable, never fresh purchases or zero. No production numeric dataset uploaded."
+      "availability_timestamp": "VERIFIED bounded source contract: naive availability represents UTC corresponding to filing-date NY end of day. 60 filing-owner records match this convention and link all 79 owner events. Normalize explicitly; firstAvailableAt windows and availableAt version validity. Exact SEC acceptance and vendor ingestion are not claimed.",
+      "point_in_time_verified": true,
+      "revision_policy": "Local stable eventId/ownerCIK dedup, positive-share nonderivative P/A purchases (including private), first-disclosure windows, corrections only from public availability, fail closed for conflicting versions/identities/uncertified coverage. 60 issuer/security CIK matches. Scoped contract and software verified; no universal completeness or production numeric panel claimed. Other transaction types excluded."
     },
     {
       "name": "Nexus institutional filings/holdings -> locally controlled matched-manager quarterly change",
-      "availability_timestamp": "VERIFIED catalog: institutional_filings/holdings.availableAt and availabilitySource; actual filing-public availability, effective periods and engine timestamp mapping UNRESOLVED.",
+      "availability_timestamp": "VERIFIED 130308 filing-date NY end-of-day values stored as naive UTC. Fixed 60-day cohort EOD maturity and actual public availability. CRITICAL production security/CUSIP completeness remains unresolved.",
       "point_in_time_verified": false,
-      "revision_policy": "Local kernel applies fixed 60-day EOD buffer plus public availability, matched manager set, certified complete omission only, original/restatement/disjoint-addition as-of states. Proposed 20-manager/95%-known-public-denominator quality floors not finalized; stale ceiling and complete raw filing/holding/identity reconstruction remain unresolved. Software invariance is verified, source/native parity is not. No complete production dataset exists."
+      "revision_policy": "Fixed 20 matched managers, 95% known-public union coverage and maximum 180-calendar-day current-quarter/publication age, chosen from chronology/coverage only. Adjacent global pairs pass 95% in 16/23; lower 90% adds only one pair. Six bounded complete-source extracts (629 rows) exercise CUSIP-only originals/restatements/additions, not certified eligible-security absence. Unknown identities cannot produce zero; no usable certified 20-manager cohort demonstrated. Keep PIT false."
     },
     {
       "name": "Historical GSPC membership and historical CS security/listing spans",
-      "availability_timestamp": "Observed lake.index_constituents startDate/endDate historical effective spans and historical CS security-ID listing spans. No membership availableAt or exchange/OTC publication/revision vintage is established; certification UNRESOLVED.",
+      "availability_timestamp": "Historical effective spans observed but underfilled membership and modern/reused symbol mappings fail certification. NU/ES same stable ID transition verified individually, not whole panel.",
       "point_in_time_verified": false,
-      "revision_policy": "Bounded index_constituents startDate/endDate rows demonstrate historical effective memberships, not publication/revision lineage or complete exchange/OTC/dead-stock coverage. No present-day isActive filter. Narrower GSPC intersection proposed instead of unsupported all-US exchange membership. Cap/ADV removed. All PIT flags remain false."
+      "revision_policy": "CRITICAL failed historical identity/completeness gate. 365 symbols in 2014, 380 in 2015, 482 at 2020 end; 19 missing IDs and mismatched subtypes. No current-active filter or available-subset substitution. Obtain trustworthy membership/identifier history; keep PIT false."
     }
   ],
   "windows": {
     "development": {
-      "start": "2015-01-01",
+      "start": "2015-01-02",
       "end": "2020-12-31"
     },
     "inner_validation": {
@@ -78,9 +78,12 @@
     },
     "outer_validation": {
       "start": "2021-01-01",
-      "end": "2024-12-31"
+      "end": "2023-12-31"
     },
-    "test": null
+    "test": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    }
   },
   "forward_paper": {
     "start_state": "Not deployed. Separate owner approval required after frozen historical evaluation; start with the frozen candidate and recorded funding/holdings. Proposed minimum six calendar months and six monthly rebalance opportunities, extended to twelve months if event coverage is insufficient. No live orders.",
@@ -89,7 +92,7 @@
   "costs": {
     "initial_value": 25000,
     "fee_percent": 0.1,
-    "slippage_note": "Base engine Stock fee 0.10% per fill, cash dividends; no verified native daily stock-slippage declaration. PROPOSED independent execution-cost stress adds 10 bps per traded notional on both buys/sells, severe scenario 20 bps, beyond recorded fees. Uncalibrated and not yet implemented or frozen; does not model market impact or alter engine fill timing. Dividend/price adjustment and reserve formulas remain unresolved. Never substitute fee for all trading costs.",
+    "slippage_note": "Base 0.10% per fill, cash dividends. Fixed local +10/+20-bps absolute traded-notional costs for buys and sells, beyond engine fees. Implemented synthetic tests; no candidate performance calculated. Fixed-fill-tape sensitivity, not literal slippage, capacity, altered sizing or market-impact simulation. No native daily-stock slippage required for v1.",
     "dividend_policy": "cash",
     "fee_contract": {
       "Stock": {
@@ -104,7 +107,7 @@
     "requires_events": true,
     "event_rationale": "Required to audit dynamic membership decisions, timestamped signal inputs, holdings, submitted/filled orders, costs and corporate actions. Verify that Nexus events actually expose this evidence; missing fields remain unresolved. Events must be extracted first when authorized jobs eventually complete.",
     "warmup_days": 366,
-    "assumptions": "PROPOSED fixed monthly first audited tradable session; decision preceding-calendar-day 21:00 New York, execution 09:30. Precompute immutable decision-value disclosed streams with a companion validity/freshness gate; do not directly read arbitrary raw disclosures or use IndicatorWindowAgo(CustomIndicator,12.5,Hour), which failed synthetic cutoff diagnostics. Five diagnostics completed; sampled fills were at 09:30 across weekday/weekend/holiday/early-close-week/DST windows. Direct availableAt sample passed, full decision/identity/missingness transport not certified. Equal ranks and security weights, no shorts/leverage. Nominal 95% deployment remains proposed: 1000 funding/950 target/935 filled/0.935 fees leaves unexplained 15 buffer. Prior 400-day warmup replaced by minimal 366-day planning bound including 2013-12-31 source session; 7134 extra rows do not certify PIT or joint inception. Development dates remain placeholders pending coverage, never chosen from performance. No candidate execution/freeze authorized."
+    "assumptions": "Fixed monthly first audited tradable session; decision previous calendar day 21:00 NY, intended fill 09:30. Precomputed numeric, validity==1 and exact YYYYMMDD session-key disclosed streams; native CurrentTimeHours()==9.5 plus full-date guard. Four valid monthly artificial fixtures trade once at correct values, invalid and omitted updates never trade. Never use rejected 12.5-hour CustomIndicator lag. Nominal deployment fixed 95%; observed two-asset USD 25000 fixture deploys USD 23375 (93.5%) before USD 23.375 fees, no rejections. Internal reserve/account generality noncritical limitation. Equal ranks/security weights, no leverage/shorts. 366-calendar-day minimum planning warmup; actual joint inception unresolved due critical source gates. Calendar/folds only activated after certified coverage. No candidate execution or freeze authorized."
   },
   "optimization_ranges": {
     "momentum_lookback_calendar_days": [
@@ -139,16 +142,12 @@
     "minimum_breadth": 20
   },
   "robustness_tests": [
-    "Chronological inner selection and five proposed expanding Development-only walk-forward folds with audited warmup/embargo; exact boundaries unresolved; no outer Validation tuning",
-    "Paired moving-block bootstrap of aligned daily excess returns: proposed 20-session blocks, 10000 draws, seed 2002. Proposed one-sided null-centered tests and Holm familywise alpha 0.05 across full-versus-momentum, full-versus-momentum-plus-insider and full-versus-momentum-plus-institutional in all confirmatory windows. Exact inventory and p-value implementation UNRESOLVED; existing percentile intervals do not supply adjusted p-values.",
-    "Proposed aggregate ceiling 500 remote evaluation units including all controls, failures, fold internals, stresses and ancillary simulations. Superseded 453-unit plan is not a server preview or guaranteed upper bound. Require audited ledger enforcement before freeze; current generic 1000-unit planner guard is not proof of this experiment-level ceiling.",
-    "Complete coarse parameter surface, neighbouring-cell stability and fold-rank stability; retain failed and unresolved cells",
-    "All single signals, all three leave-one-out pairs, full composite, explicit SPY and equal-weight dynamic universe controls",
-    "Coverage, missingness and stale-age diagnostics with common-universe and broader momentum-only comparisons",
-    "Sector/size/liquidity exposure and contribution diagnostics; no causal alpha claim from Sharpe alone",
-    "Costs and additional disclosure delays; all prospective turnover/cost/benefit gates excluded",
-    "Revised conditional ledger: 34 distinct signal-family cells plus two benchmarks per expanding fold, five folds; 281 future evaluations including 20 failed/unresolved reserve, plus thirteen already attempted diagnostic backtests = 294 projected total backtest evaluations. Lake jobs are counted separately. No server preview or execution authorization. Six Development-only robustness scenarios x all nine families: doubled fee, extra session delay, independent extra fill-notional cost stress, weekly cadence, extra filing delay, alternate audited universe; sizes/definitions unresolved. Regime labels are local partition diagnostics, not additional jobs; any extra job consumes reserve and must enter the ledger.",
-    "Custom revision: primary full-composite remains exactly eight cells. ADV stress superseded by proposed 10/20-bps independent fill-cost stresses; magnitudes fixed from conservative policy, not returns, still pending human review/implementation. Five new diagnostic simulations are counted; no performance tuning or primary axis added. Data/transport/universe/corporate-action and inference gates block freeze."
+    "Conditional four expanding Development folds: train 2015-2016/evaluate 2017, then expand to evaluate 2018, 2019 and 2020. Active folds and inception unapproved until joint source coverage passes. Inner 2019-2020 is Development, not separate confirmation.",
+    "Paired noncircular moving-block percentile bootstrap: 20 returns/block, 10000 draws, seed 2002001, aligned dates, separate zero-RF Sharpes, 95% intervals. Descriptive only; no p-values, inactive reserved Holm four-effect family at alpha 0.05. See statistical_contract.md.",
+    "Exactly eight composite cells; 34 reduced family cells plus two benchmarks per fold. Conditional 218 future remote evaluations, 23 past diagnostic attempts = 241 total including 20 failure reserve. No server preview or candidate execution authorization. Ledger counts every failure/extra amplification.",
+    "Three fixed Development-only remote stresses across nine selected families: doubled fee, one additional execution session delay, one additional filing calendar-day delay. Two +10/+20-bps fill-cost scenarios across nine families are 18 local analyses, not remote jobs. Weekly/alternate-universe scenarios excluded from v1; no additional tuning axis.",
+    "Complete parameter surface and chronological fold stability, all seven signal families plus explicit SPY and equal-weight eligible universe; retain failed/poor cells. Matched primary source exclusions, broader momentum coverage diagnostic only.",
+    "Coverage/staleness and contribution/exposure diagnostics; regime partitions local, no extra simulations. Historical selection bias and model knowledge disclosed; forward paper minimum six months and six monthly opportunities after separate approval."
   ],
   "multiple_testing": {
     "method": "holm",
@@ -157,16 +156,19 @@
   "stress_scenarios": [
     "double_cost",
     "one_bar_delay",
-    "changed_universe",
-    "alternate_cadence",
-    "bull_bear",
-    "high_low_volatility",
-    "rising_falling_rates",
-    "additional_filing_delay"
+    "additional_filing_delay",
+    "local_cost_10bps",
+    "local_cost_20bps",
+    "local_regime_and_contribution_diagnostics"
   ],
   "approval_state": "DRAFT",
-  "sealed_ranges": [],
-  "temporal_contamination_note": "All dates are provisional pending common point-in-time coverage. Historical Test boundaries are UNRESOLVED and no historical Test is currently designated or authorized. EXP001 already exposed SPY performance in 2015-2026; modern AI may know other historical outcomes. Any eventual historical lockbox is only workflow-held-out, never genuinely unseen. During research, no market/performance observations after the proposed 2020-12-31 cutoff are authorized, including outer Validation. Only forward paper observations after freeze can be genuinely forward unseen.",
+  "sealed_ranges": [
+    {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    }
+  ],
+  "temporal_contamination_note": "Exact chronological workflow-held-out Validation 2021-2023 and sealed Test 2024 designated before EXP002 performance, coverage subject to future confirmation without early observations. EXP001 and human/model knowledge already exposed these historical SPY outcomes; never genuinely unseen. Development 2015-01-02 remains an uncertified planning placeholder, end/cutoff 2020-12-31. No 2021+ Nexus observations accessed. Forward paper requires separate owner approval after freeze.",
   "historical_evidence_class": "workflow_held_out",
   "research_cutoff": "2020-12-31",
   "budget": {

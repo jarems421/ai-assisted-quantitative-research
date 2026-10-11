@@ -1,3 +1,9 @@
+# Current EXP002 status — final bounded pass
+
+**NEEDS DESIGN REVISION; DRAFT, not frozen or executable.** [Final review](research/final_freeze_review.md) distinguishes two critical source failures (historical membership/identity and institutional omission-to-zero) from noncritical execution/vendor limitations. Timezone, artificial exact-session transport, price/dividend units and deployment fixtures pass within their recorded bounds. No candidate performance or held-out access occurred. Validation 2021–2023; sealed workflow Test 2024. Development inception remains uncertified.
+
+Reproduce bounded evidence locally: `python -m src.research.final_exp002`. Audit: `python -m src.research audit EXP002` (expected failure until critical PIT gates pass). [Inference contract](research/statistical_contract.md), [conditional evaluation ledger](research/evaluation_plan.json). Historical reports follow unchanged.
+
 # Current custom-PIT revision â€” 2026-10-11
 
 **NEEDS DESIGN REVISION; DRAFT.** The current primary design is [custom_signal_spec.md](research/custom_signal_spec.md): locally controlled qualifying P/A insider purchasers and matched-manager institutional cohorts, proposed historical GSPC/CS universe, no primary ADV or cap, eight cells unchanged. No production numeric signal panel is certified. Synthetic lagging failed the intended disclosure cutoff; fills were at 09:30 in the sampled windows. See [manifest](research/custom_signal_manifest.json), [runtime summary](research/custom_runtime_summary.json) and [owner request](research/custom_signal_authorization_20261011.md).

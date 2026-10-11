@@ -1,0 +1,15 @@
+# EXP002 statistical confirmation contract — proposed for owner review
+
+DRAFT. Fixed before any EXP002 candidate performance; no inference has been run on research returns.
+
+The scientific comparison is full composite versus matched momentum-only with identical contemporaneous universe, source-coverage exclusions, funding, execution and fees. Require positive mean paired daily excess return and positive independent zero-RF Sharpe difference. Lower volatility/drawdown alone does not confirm the hypothesis. Keep the existing simple close-to-close return, RF=0, 252-session, sample-SD definitions; do not change EXP001.
+
+Use a paired **noncircular moving-block percentile bootstrap**, block length **20 trading returns**, **10,000 draws**, seed **2,002,001**. Sample the same block indices for both return tapes, preserve order inside blocks, concatenate and truncate to the original length. Recompute both mean excess return and the difference between separate zero-RF Sharpes in each draw. Report two-sided 2.5%/97.5% percentile intervals. Source dates must align one to one; never stitch nonadjacent observations or resample portfolios independently. Undefined original Sharpe rejects the calculation; any undefined bootstrap Sharpe suppresses its interval and is explicitly counted.
+
+These intervals describe conditional historical uncertainty. **No p-values or significance claim are authorized by this v1 contract.** No null-centered test is implemented, and bootstrap draw signs are not a null distribution. The schema's existing Holm policy remains intact: should a later separately reviewed inferential implementation be added, the reserved confirmatory family is four one-sided effects (mean excess and Sharpe difference, each in outer Validation and historical Test), alpha 0.05 with Holm. It is inactive here. Do not change the method after outcomes to obtain significance.
+
+The seven families, reduced ablation cells, two benchmarks, failures, replays and diagnostics all remain in the ledger. Development grid selection creates bias not removed by these intervals. Outer periods are chronological workflow-held-out comparisons, not proof that researchers or AI have never encountered their history. Forward paper after separate owner authorization remains the strongest new evidence.
+
+Implementation-cost stresses add **10 or 20 bps of absolute filled notional** for every buy and sell, beyond recorded engine fees. The local fixed-fill-tape calculation does not create fills or simulate market impact, price slippage, altered future position sizing or rejected orders. Report those approximations. These calculations are local analyses, not additional Nexus backtests; both scenarios are predeclared and counted as analysis choices.
+
+Implementation: [exp002_inference.py](../../../src/research/exp002_inference.py). Tested with synthetic inputs only. Dates and fold activation still depend on critical source gates; this document does not authorize performance evaluation or freeze.

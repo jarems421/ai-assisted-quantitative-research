@@ -5,7 +5,7 @@ vendor completeness or immutable historical database vintages.
 """
 from datetime import date, datetime, time, timedelta, timezone
 from math import isfinite, prod
-from src.research.pit_signals import NY, instant, validate_decision, decision_for_session
+from src.research.pit_signals import NY, LIMIT, instant, validate_decision, decision_for_session
 
 
 def sec_filing_availability(value, filing_date):
@@ -31,6 +31,8 @@ def session_key(day):
 
 def decision_points(day, value, *, valid):
     """Atomic sidecar bundle. Numeric missingness is NEVER a zero alpha value."""
+    if day > LIMIT:
+        raise ValueError("Post-cutoff execution session")
     at = validate_decision(decision_for_session(day)).isoformat()
     result = {"validity": {"timestamp": at, "availableAt": at, "value": int(valid)},
               "session_key": {"timestamp": at, "availableAt": at, "value": session_key(day)}}

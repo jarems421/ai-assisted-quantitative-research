@@ -1,5 +1,5 @@
 {
-  "status": "PROPOSED_NOT_AUTHORIZED",
+  "status": "CONDITIONAL_SOURCE_GATES_FAILED",
   "family_cells": {
     "momentum": 4,
     "insider": 4,
@@ -10,22 +10,88 @@
     "full_composite": 8
   },
   "benchmarks_per_fold": 2,
-  "fold_count": 5,
+  "fold_count": 4,
   "components": {
-    "development_grid_folds": 180,
+    "development_grid_folds": 144,
     "development_selected_family_replays": 9,
-    "six_development_robustness_scenarios": 54,
+    "development_robustness_scenarios": 27,
     "outer_validation": 9,
     "eventual_test": 9,
     "failed_unresolved_reserve": 20
   },
-  "projected_ceiling_with_reserve": 281,
+  "projected_ceiling_with_reserve": 218,
   "server_preview": false,
   "actual_candidate_evaluations": 0,
-  "limits": "Conditional on five coverage-supported folds and successful primary implementation. Reconcile all nested/server amplification before freeze. Reserve is a hard planning allocation, not permission to omit failed trials.",
-  "known_diagnostic_backtests": 13,
-  "total_backtest_ceiling_including_known_audits": 294,
-  "failed_lake_attempts_counted_separately": 7,
+  "limits": "Conditional on 4 coverage-supported folds and successful primary implementation. Reconcile all nested/server amplification before freeze. Reserve is a hard planning allocation, not permission to omit failed trials.",
+  "known_diagnostic_backtests": 23,
+  "total_backtest_ceiling_including_known_audits": 241,
+  "certified_inception": null,
+  "active_fold_count": null,
   "hypothesis_freeze_ready": false,
-  "revision_note": "Five additional custom visibility/allocation diagnostics; eight-cell grid unchanged. Six robustness slots remain provisional; remove ADV scenario, propose independent slippage-cost scenario instead, no increased grid. No final chronology/server amplification or execution authorization."
+  "local_cost_analyses": 18,
+  "remote_stresses": [
+    "double_fee",
+    "one_session_delay",
+    "one_calendar_day_filing_delay"
+  ],
+  "historical_plans": [
+    {
+      "status": "PROPOSED_NOT_AUTHORIZED",
+      "family_cells": {
+        "momentum": 4,
+        "insider": 4,
+        "institutional": 2,
+        "momentum_insider": 8,
+        "momentum_institutional": 4,
+        "insider_institutional": 4,
+        "full_composite": 8
+      },
+      "benchmarks_per_fold": 2,
+      "fold_count": 5,
+      "components": {
+        "development_grid_folds": 180,
+        "development_selected_family_replays": 9,
+        "six_development_robustness_scenarios": 54,
+        "outer_validation": 9,
+        "eventual_test": 9,
+        "failed_unresolved_reserve": 20
+      },
+      "projected_ceiling_with_reserve": 281,
+      "server_preview": false,
+      "actual_candidate_evaluations": 0,
+      "limits": "Conditional on five coverage-supported folds and successful primary implementation. Reconcile all nested/server amplification before freeze. Reserve is a hard planning allocation, not permission to omit failed trials.",
+      "known_diagnostic_backtests": 13,
+      "total_backtest_ceiling_including_known_audits": 294,
+      "failed_lake_attempts_counted_separately": 7,
+      "hypothesis_freeze_ready": false,
+      "revision_note": "Five additional custom visibility/allocation diagnostics; eight-cell grid unchanged. Six robustness slots remain provisional; remove ADV scenario, propose independent slippage-cost scenario instead, no increased grid. No final chronology/server amplification or execution authorization."
+    }
+  ],
+  "failed_lake_attempts_counted_separately": 8,
+  "conditional_folds": [
+    {
+      "train_start": "2015-01-02",
+      "train_end": "2016-12-31",
+      "evaluation_start": "2017-01-01",
+      "evaluation_end": "2017-12-31"
+    },
+    {
+      "train_start": "2015-01-02",
+      "train_end": "2017-12-31",
+      "evaluation_start": "2018-01-01",
+      "evaluation_end": "2018-12-31"
+    },
+    {
+      "train_start": "2015-01-02",
+      "train_end": "2018-12-31",
+      "evaluation_start": "2019-01-01",
+      "evaluation_end": "2019-12-31"
+    },
+    {
+      "train_start": "2015-01-02",
+      "train_end": "2019-12-31",
+      "evaluation_start": "2020-01-01",
+      "evaluation_end": "2020-12-31"
+    }
+  ]
 }

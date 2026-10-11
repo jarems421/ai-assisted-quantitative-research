@@ -5,7 +5,7 @@ import hashlib
 import json
 import math
 
-from src.research.pit_signals import NY, assert_pit, instant, validate_decision
+from src.research.pit_signals import NY, LIMIT, assert_pit, instant, validate_decision
 from src.research.exp002_contracts import session_key
 
 
@@ -34,6 +34,8 @@ def export_dataset(directory: Path, *, version: str, name: str, rows: list[dict]
         local = at.astimezone(NY)
         if (local.hour, local.minute, local.second, local.microsecond) != (21, 0, 0, 0):
             raise ValueError("Decision must be exactly 21:00 New York")
+        if local.date()+timedelta(days=1) > LIMIT:
+            raise ValueError("Post-cutoff execution session")
         assert_pit(row, at)
         source_times.extend(instant(c["availableAt"]) for c in row["contributors"])
         key = (row["ticker"], at)

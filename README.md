@@ -164,7 +164,7 @@ EXP001 establishes an auditable pilot research pipeline, not a market-beating sy
 
 ## Proposed next work
 
-EXP002 remains a pre-performance DRAFT. Its [custom PIT signal contract](experiments/EXP002/research/custom_signal_spec.md) replaces ambiguous native ownership indicators with locally controlled definitions. Synthetic diagnostics found that the proposed custom-indicator lag does not enforce the disclosure cutoff. Source lineage, historical universe, corporate-action price basis and execution details still block freeze review; no EXP002 candidate study has begun.
+EXP002 remains a pre-performance DRAFT. Its [final bounded review](experiments/EXP002/research/final_freeze_review.md) records passing timezone and guarded artificial decision-transport evidence. Two critical source gates remain: trustworthy historical constituent identities and institutional eligible-security omission-to-zero certification. Development inception is unresolved; no EXP002 candidate study or held-out access has occurred. Execution approximations are disclosed separately.
 
 Future research could investigate richer cross-sectional signals, fundamentals and insider/institutional data; regime-aware models and systematic optimization; walk-forward and bootstrap robustness checks; multi-strategy ensembles; and eventually forward paper testing. These are proposals, not completed capabilities or authorized new experiments.
 

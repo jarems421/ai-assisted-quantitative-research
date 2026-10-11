@@ -3,6 +3,12 @@ from src.research.design_exp002 import evaluation_plan
 
 
 class DesignPlanTests(unittest.TestCase):
+    def test_four_conditional_folds_and_three_remote_stresses_count_every_trial(self):
+        plan=evaluation_plan({"momentum_lookback_calendar_days":[180,365],"insider_lookback_calendar_days":[30,90],"number_of_holdings":[20,40]},folds=4,robustness_scenarios=3)
+        self.assertEqual(plan['components']['development_grid_folds'],144)
+        self.assertEqual(plan['components']['development_robustness_scenarios'],27)
+        self.assertEqual(plan['projected_ceiling_with_reserve'],218)
+
     def test_ablation_families_do_not_repeat_irrelevant_axes(self):
         plan = evaluation_plan({"momentum_lookback_calendar_days": [180, 365], "insider_lookback_calendar_days": [30, 90], "number_of_holdings": [20, 40]})
         self.assertEqual(plan["family_cells"]["institutional"], 2)

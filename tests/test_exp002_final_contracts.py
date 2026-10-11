@@ -6,6 +6,9 @@ from src.research.pit_signals import filing_state,decision_for_session
 
 
 class FinalContracts(unittest.TestCase):
+    def test_session_freshness_cannot_cross_formation_cutoff(self):
+        with self.assertRaises(ValueError):decision_points(date(2021,1,1),5,valid=True)
+
     def test_same_day_restatement_needs_explicit_amendment_sequence(self):
         base=dict(availableAt='2015-05-15T03:59:59.999Z',kind='ORIGINAL',accession='original',
                   complete=True,identity_certified=True,holdings={'s':1})

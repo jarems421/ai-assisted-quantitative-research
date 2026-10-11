@@ -1,0 +1,268 @@
+{
+  "timezone": {
+    "institutional_matches": 130308,
+    "insider_matches": 60,
+    "naive_representation": "UTC",
+    "semantic": "SEC filing-date end-of-day America/New_York; conservative availability, not exact acceptance time"
+  },
+  "insider": {
+    "events": 79,
+    "linked_events": 79,
+    "filing_issuer_security_cik_matches": 60,
+    "filing_rows": 60,
+    "scope": "bounded AAPL/MSFT sample only; no production alpha dataset"
+  },
+  "universe": {
+    "joined_rows": 596,
+    "membership_sizes": {
+      "2014-01-02": 365,
+      "2015-01-02": 380,
+      "2016-01-04": 402,
+      "2017-01-03": 423,
+      "2018-01-02": 443,
+      "2019-01-02": 459,
+      "2020-01-02": 473,
+      "2020-12-31": 482
+    },
+    "missing_security_ids": 19,
+    "types": {
+      "CS": 567,
+      "null": 26,
+      "FUND": 1,
+      "ADRC": 1,
+      "ETF": 1
+    },
+    "ended_membership_rows": 75,
+    "rename_NU_ES": [
+      {
+        "ticker": "ES",
+        "security_id": "cik:72741:?:NU@2003-09-30",
+        "cik": "72741",
+        "asset_type": "CS",
+        "listing_from": "2015-02-19",
+        "listing_to": "2020-12-31"
+      },
+      {
+        "ticker": "NU",
+        "security_id": "cik:72741:?:NU@2003-09-30",
+        "cik": "72741",
+        "asset_type": "CS",
+        "listing_from": "2013-12-31",
+        "listing_to": "2015-02-18"
+      }
+    ],
+    "critical": "Underfilled historical membership and anachronistic/reused symbols; absent members cannot be explained as contemporaneous exclusions"
+  },
+  "institutional": {
+    "full_source_rows": 629,
+    "filings": {
+      "0000002230-14-000072": {
+        "rows": 86,
+        "unresolved_ticker_rows": 9,
+        "type": "13F-HR",
+        "amendment": null
+      },
+      "0000002230-14-000083": {
+        "rows": 86,
+        "unresolved_ticker_rows": 9,
+        "type": "13F-HR",
+        "amendment": null
+      },
+      "0000909012-14-000238": {
+        "rows": 87,
+        "unresolved_ticker_rows": 18,
+        "type": "13F-HR",
+        "amendment": null
+      },
+      "0000909012-14-000247": {
+        "rows": 84,
+        "unresolved_ticker_rows": 16,
+        "type": "13F-HR/A",
+        "amendment": "RESTATEMENT"
+      },
+      "0001140361-14-018730": {
+        "rows": 285,
+        "unresolved_ticker_rows": 61,
+        "type": "13F-HR",
+        "amendment": null
+      },
+      "0001140361-15-007202": {
+        "rows": 1,
+        "unresolved_ticker_rows": 0,
+        "type": "13F-HR/A",
+        "amendment": "NEW HOLDINGS"
+      }
+    },
+    "cusip_only_chain_diagnostics": {
+      "0000002230/2014-06-30": {
+        "state": "RECONSTRUCTED_CUSIP_ONLY",
+        "positions": 86,
+        "public_versions": 1,
+        "listed_identity_certified": false
+      },
+      "0000002230/2014-09-30": {
+        "state": "RECONSTRUCTED_CUSIP_ONLY",
+        "positions": 86,
+        "public_versions": 1,
+        "listed_identity_certified": false
+      },
+      "0000050672/2014-03-31": {
+        "state": "RECONSTRUCTED_CUSIP_ONLY",
+        "positions": 42,
+        "public_versions": 2,
+        "listed_identity_certified": false
+      },
+      "0000313807/2014-03-31": {
+        "state": "RECONSTRUCTED_CUSIP_ONLY",
+        "positions": 286,
+        "public_versions": 2,
+        "listed_identity_certified": false
+      }
+    },
+    "adjacent_global_cohort_metrics": [
+      {
+        "prior": "2014-03-31",
+        "current": "2014-06-30",
+        "matched": 3665,
+        "coverage": 0.9700899947061937
+      },
+      {
+        "prior": "2014-06-30",
+        "current": "2014-09-30",
+        "matched": 3681,
+        "coverage": 0.9691943127962085
+      },
+      {
+        "prior": "2014-09-30",
+        "current": "2014-12-31",
+        "matched": 3607,
+        "coverage": 0.8691566265060241
+      },
+      {
+        "prior": "2014-12-31",
+        "current": "2015-03-31",
+        "matched": 3929,
+        "coverage": 0.9545675413022352
+      },
+      {
+        "prior": "2015-03-31",
+        "current": "2015-06-30",
+        "matched": 3974,
+        "coverage": 0.9676162649135622
+      },
+      {
+        "prior": "2015-06-30",
+        "current": "2015-09-30",
+        "matched": 3989,
+        "coverage": 0.9707958140666829
+      },
+      {
+        "prior": "2015-09-30",
+        "current": "2015-12-31",
+        "matched": 3885,
+        "coverage": 0.8894230769230769
+      },
+      {
+        "prior": "2015-12-31",
+        "current": "2016-03-31",
+        "matched": 4082,
+        "coverage": 0.9495231449174226
+      },
+      {
+        "prior": "2016-03-31",
+        "current": "2016-06-30",
+        "matched": 4110,
+        "coverage": 0.9654686398872445
+      },
+      {
+        "prior": "2016-06-30",
+        "current": "2016-09-30",
+        "matched": 4109,
+        "coverage": 0.9684185717652605
+      },
+      {
+        "prior": "2016-09-30",
+        "current": "2016-12-31",
+        "matched": 3964,
+        "coverage": 0.8771852179685771
+      },
+      {
+        "prior": "2016-12-31",
+        "current": "2017-03-31",
+        "matched": 4221,
+        "coverage": 0.9538983050847457
+      },
+      {
+        "prior": "2017-03-31",
+        "current": "2017-06-30",
+        "matched": 4254,
+        "coverage": 0.9659400544959128
+      },
+      {
+        "prior": "2017-06-30",
+        "current": "2017-09-30",
+        "matched": 4273,
+        "coverage": 0.9749030344512891
+      },
+      {
+        "prior": "2017-09-30",
+        "current": "2017-12-31",
+        "matched": 4176,
+        "coverage": 0.8732747804265998
+      },
+      {
+        "prior": "2017-12-31",
+        "current": "2018-03-31",
+        "matched": 4533,
+        "coverage": 0.9507130872483222
+      },
+      {
+        "prior": "2018-03-31",
+        "current": "2018-06-30",
+        "matched": 4584,
+        "coverage": 0.9646464646464646
+      },
+      {
+        "prior": "2018-06-30",
+        "current": "2018-09-30",
+        "matched": 4616,
+        "coverage": 0.9717894736842105
+      },
+      {
+        "prior": "2018-09-30",
+        "current": "2018-12-31",
+        "matched": 4542,
+        "coverage": 0.8814282941975549
+      },
+      {
+        "prior": "2018-12-31",
+        "current": "2019-03-31",
+        "matched": 4885,
+        "coverage": 0.9533567525370804
+      },
+      {
+        "prior": "2019-03-31",
+        "current": "2019-06-30",
+        "matched": 4922,
+        "coverage": 0.9708086785009862
+      },
+      {
+        "prior": "2019-06-30",
+        "current": "2019-09-30",
+        "matched": 4910,
+        "coverage": 0.9715077166600712
+      },
+      {
+        "prior": "2019-09-30",
+        "current": "2019-12-31",
+        "matched": 4810,
+        "coverage": 0.868231046931408
+      }
+    ],
+    "min_global_matched_coverage": 0.868231046931408,
+    "median_global_matched_coverage": 0.9646464646464646,
+    "quarters_pass_95": 16,
+    "quality_policy": "20 matched managers, 95% public-known matched coverage, max 180-day current-quarter/publication age; fixed before returns",
+    "critical": "Complete-filing omission cannot yet certify zero for eligible securities when security/CUSIP reconciliation is unresolved"
+  }
+}
