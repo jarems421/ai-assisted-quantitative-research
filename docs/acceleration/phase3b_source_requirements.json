@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "status": "DRAFT_NOT_REGISTERED_NOT_FROZEN",
+  "as_of": "2026-10-12",
+  "purpose": "Non-executable source requirements for one revenue acceleration hypothesis",
+  "authorizations": {
+    "design_only": true,
+    "acquisition": false,
+    "signal_series": false,
+    "performance_access": false,
+    "nexus_operations": false,
+    "experiment_registration": false,
+    "policy_approval": false,
+    "validation_or_test_opening": false
+  },
+  "availability": {
+    "required_reference": "approved_availability_policy_id",
+    "approved_availability_policy_id": null,
+    "approval_artifact_sha256": null,
+    "current_policy": "sec_later_session_v001",
+    "current_policy_status": "PROPOSED_NOT_APPROVED",
+    "current_policy_sha256": "f215bf4bdf0beffbccc94c11ec58724116154f5d74e660cf8d033cf845a0b231",
+    "current_calendar_scope": ["2015-01-01", "2020-12-31"],
+    "public_available_at_utc": null,
+    "exact_public_availability": "UNKNOWN",
+    "future_alternatives": [
+      "Certified acceptance interpretation and independently approved availability policy",
+      "Separately versioned owner-approved ambiguity-tolerant modeled policy with exhaustive contributor calendar invariance and no conflicting timing evidence"
+    ],
+    "probe_scope": "Calendar equality only; no observed public availability or policy approval",
+    "preserve_raw_evidence_when_policy_changes": true
+  },
+  "signal_contract": {
+    "family": "annual_consolidated_revenue_growth_acceleration",
+    "secondary_families": [],
+    "original_annual_filings_per_event": 3,
+    "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "namespace_contract": "Exact declared FASB US-GAAP annual taxonomy URI and vintage hash",
+    "dimensions": "none_explicit_or_typed",
+    "unit": "USD",
+    "values": "finite_strictly_positive_decimal",
+    "duration_inclusive_days": [350, 380],
+    "successive_period_end_gap_days": [350, 380],
+    "fiscal_periods_contiguous": true,
+    "denominator_policy": "Pinned preceding original current-period observation; never later comparative overwrite",
+    "comparability": "Later comparable reconciles to prior pinned value within combined rounding intervals AND independently certified reporting entity/accounting basis; otherwise unavailable",
+    "duplicate_policy": "retain_equivalent_elements_conflicts_unavailable",
+    "amendment_policy": "retain_separately_no_signal_event_prospective_invalidation_only",
+    "reentry": "new_unaffected_three_original_sequence",
+    "missing_policy": "unavailable_not_zero_no_interpolation",
+    "staleness_calendar_days": 400,
+    "current_longitudinal_certificate": "NOT_ESTABLISHED"
+  },
+  "minimum_coverage": {
+    "population": "Dated US ordinary common equities on NYSE, NYSE American or Nasdaq, including ended histories",
+    "one_class_per_issuer": "highest_prior_60_session_median_dollar_volume_then_stable_id",
+    "resolved_status_fraction_per_month": 0.95,
+    "usable_chain_fraction_per_month": 0.80,
+    "eligible_issuers_per_participating_month": 100,
+    "scheduled_participation_fraction_per_window": 0.90,
+    "distinct_issuers_per_three_year_window": 500,
+    "distinct_usable_issuer_year_events_per_three_year_window": 2000,
+    "distinct_events_development": 4000,
+    "price_completed_closing_observations": 253,
+    "liquidity_completed_sessions": 60,
+    "median_daily_dollar_volume_usd": 5000000,
+    "maximum_order_fraction_of_median_dollar_volume": 0.01,
+    "source_defined_denominator_required": true,
+    "measured_coverage": null,
+    "source_requests_authorized": false
+  },
+  "conditional_windows": {
+    "warmup_fiscal_years": [2018, 2019, 2020],
+    "development": ["2021-01-01", "2026-12-31"],
+    "validation": ["2027-01-01", "2029-12-31"],
+    "test": ["2030-01-01", "2032-12-31"],
+    "window_access_granted": false,
+    "future_and_retrospective_evidence_must_be_distinguished": true,
+    "minimum_confirmation_annual_block_equivalents": 6,
+    "minimum_confirmation_annual_blocks_per_window": 3,
+    "minimum_estimated_effective_daily_observations": 20,
+    "effective_sample_hac_lags": [252, 504],
+    "independent_funding_per_window": true,
+    "dates_require_source_only_feasibility_review": true
+  },
+  "must_have_before_freeze": [
+    {
+      "id": "filing_universe",
+      "current_status": "PARTIAL",
+      "required": "Independent dated listing/filing-obligation denominator, three original annual snapshots per event and amendments/non-reliance coverage; unknown retrieval cannot be absence",
+      "keys": ["issuer_cik", "fiscal_period", "accession", "form", "filing_status"],
+      "evidence": ["enumeration_source", "vintage", "source_sha256", "coverage_receipt"]
+    },
+    {
+      "id": "original_bytes",
+      "current_status": "PARTIAL",
+      "required": "Immutable original submission, header/index, primary annual document and XBRL required for each contributor/comparative/policy evidence; offline deterministic parse",
+      "keys": ["accession", "document_name", "source_sha256"],
+      "evidence": ["url", "retrieved_at_utc", "byte_length", "immutable_archive_path", "parser_hash", "config_hash", "code_hash"]
+    },
+    {
+      "id": "revenue_sequence_semantics",
+      "current_status": "PARTIAL",
+      "required": "Certify exact revenue contract and comparative/rounding/accounting perimeter checks across three originals; no post-decision backpatch",
+      "keys": ["issuer_cik", "accession", "fact_locator", "context_ref", "period_start", "period_end"],
+      "evidence": ["namespace", "taxonomy_hash", "entity", "dimensions", "unit_qname", "exact_value", "decimals", "inline_scale", "accounting_basis_evidence", "source_sha256"]
+    },
+    {
+      "id": "pit_versions_and_availability",
+      "current_status": "PROPOSED_NOT_APPROVED",
+      "required": "Approved policy and contributor-scoped authority artifact; raw acceptance, interpretation candidates, filing date, modeled bound, unknown observed public time, amendment chronology, reconstruction and local ingestion separate",
+      "keys": ["issuer_cik", "accession", "source_sha256", "policy_hash", "decision_utc"],
+      "evidence": ["acceptance_evidence", "approval_artifact", "contributor_hashes", "full_population_invariance_or_certified_conversion", "no_contrary_evidence"]
+    },
+    {
+      "id": "historical_class_bridge",
+      "current_status": "PARTIAL",
+      "required": "Uniquely effective class-level stable ID with issuer linkage, listing spans, rename/reuse/merger/spin-off/delisting lineage; no current-symbol fallback",
+      "keys": ["issuer_cik", "submitting_cik_or_explicit_unknown_reason", "security_class", "security_id", "identifier_level", "historical_ticker", "exchange", "effective_from", "effective_to"],
+      "evidence": ["source", "vintage", "source_sha256", "corporate_action_lineage", "listing_evidence"]
+    },
+    {
+      "id": "prices_liquidity_and_terminal_values",
+      "current_status": "BLOCKED",
+      "required": "Dated nominal open/close/volume, complete total-return lookback using only effective factors, cash dividends and delisting/merger cash-or-stock consideration; missing terminal value blocks rather than zero or stale carry",
+      "keys": ["security_id", "session", "bar_available_at", "corporate_action_id"],
+      "evidence": ["price_vintage_hash", "factor_lineage", "cash_and_position_transitions", "terminal_value_evidence", "liquidity_and_spread_justification"]
+    },
+    {
+      "id": "exchange_calendar",
+      "current_status": "PARTIAL",
+      "required": "Certified complete NYSE/Nasdaq calendar covering all warm-up, decision, eligible and execution dates; holidays, extraordinary closures, DST and opens; current v001 scope insufficient",
+      "keys": ["exchange", "session", "open_utc", "close_utc"],
+      "evidence": ["calendar_source", "vintage", "source_sha256", "timezone_version"]
+    },
+    {
+      "id": "execution_route",
+      "current_status": "BLOCKED",
+      "required": "Exact publication and exhaustive pre-filter runtime identity/value/availability reconciliation, costs, ranks, holding transitions and ended histories under a scoped route/engine certificate",
+      "keys": ["source_snapshot_hash", "route", "engine_version", "payload_hash", "decision_utc", "security_id"],
+      "evidence": ["complete_request_receipt", "complete_publication_receipt", "runtime_population_audit", "corporate_action_terminal_fixture_audit", "cost_timing_funding_fixture_audit"]
+    },
+    {
+      "id": "inference_and_stage_isolation",
+      "current_status": "BLOCKED",
+      "required": "Independently calibrated null-centered paired block test, joint confirmation boundaries, existing ledger integration and date/tool isolation with owner-only Test gate; no retrospective standalone-Sharpe selection",
+      "keys": ["protocol_hash", "stage", "trial_key", "window"],
+      "evidence": ["synthetic_null_calibration", "serial_dependence_checks", "temporal_access_audit", "selection_adapter_review", "current_cost_metadata", "owner_execution_authorization"]
+    }
+  ],
+  "useful_later": [
+    "Dated sector and size classifications for descriptive exposure attribution",
+    "Certified item-level text segmentation; not used by revenue family",
+    "Separate historical expectations source for a future surprise hypothesis",
+    "Optional SPY descriptive benchmark with its own certified source/execution slot",
+    "Provider-independent engine after separate owner authorization",
+    "Forward paper evidence after actual freeze and separate owner confirmation",
+    "Risk-aware optimizer after independent incremental-alpha evidence"
+  ],
+  "trial_limits": {
+    "filing_families": 1,
+    "secondary_families": 0,
+    "strategy_path_evaluations": 36,
+    "planned_strategy_paths": 30,
+    "failure_reserve": 6,
+    "contribution_diagnostics": 9,
+    "total_performance_evaluation_ceiling": 45,
+    "executed": 0,
+    "execution_authorized": false
+  },
+  "gates": {
+    "HYPOTHESIS_DESIGN": "READY",
+    "PRIMARY_SIGNAL_SEMANTICS": "PARTIAL",
+    "SOURCE_COVERAGE": "PARTIAL",
+    "PUBLIC_ELIGIBILITY_POLICY": "PROPOSED",
+    "HISTORICAL_SECURITY_IDENTITY": "PARTIAL",
+    "HISTORICAL_UNIVERSE": "BLOCKED",
+    "EXECUTION_ROUTE": "BLOCKED",
+    "TRIAL_AND_INFERENCE_DESIGN": "PARTIAL",
+    "EXP005_FREEZE_READINESS": "NOT_READY"
+  }
+}
