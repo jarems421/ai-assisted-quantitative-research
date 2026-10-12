@@ -1,0 +1,1988 @@
+{
+  "materiality_boundary": "At true effect0.02, symmetric estimated-floor acceptance cannot exceed50%; primary-test and full-support power are separately reported",
+  "real_tracking_error": "UNKNOWN",
+  "rows": [
+    {
+      "geometry": "A",
+      "iid_annual_tracking_error": 0.01,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.02,
+      "mde_grid_upper_bound": 0.05,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.285,
+            0.31833333333333336
+          ],
+          "mean95_interval_width_range": [
+            0.04512165250555897,
+            0.04603516466561994
+          ],
+          "minimum_full_support_lower95": 0.2503362477888953,
+          "primary_rejection_range": [
+            0.65,
+            0.7083333333333334
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.9566666666666667,
+            0.9683333333333334
+          ],
+          "mean95_interval_width_range": [
+            0.04512165250555897,
+            0.04603516466561994
+          ],
+          "minimum_full_support_lower95": 0.9372635612213899,
+          "primary_rejection_range": [
+            0.9966666666666667,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.04512165250555897,
+            0.04603516466561994
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.04512165250555897,
+            0.04603516466561994
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.04512165250555897,
+            0.04603516466561994
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "A",
+      "iid_annual_tracking_error": 0.025,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.05,
+      "mde_grid_upper_bound": 0.1,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.06166666666666667,
+            0.105
+          ],
+          "mean95_interval_width_range": [
+            0.11375151378733897,
+            0.11761077064810205
+          ],
+          "minimum_full_support_lower95": 0.045067102283661675,
+          "primary_rejection_range": [
+            0.21666666666666667,
+            0.24333333333333335
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.4216666666666667,
+            0.4633333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.11375151378733897,
+            0.11761077064810205
+          ],
+          "minimum_full_support_lower95": 0.38277346880846685,
+          "primary_rejection_range": [
+            0.655,
+            0.6933333333333334
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.88,
+            0.8983333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.11375151378733898,
+            0.11761077064810205
+          ],
+          "minimum_full_support_lower95": 0.8515504728392347,
+          "primary_rejection_range": [
+            0.9833333333333333,
+            0.985
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.9883333333333333,
+            0.9933333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.11375151378733898,
+            0.11761077064810205
+          ],
+          "minimum_full_support_lower95": 0.9761156900024707,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.11375151378733898,
+            0.11761077064810205
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "A",
+      "iid_annual_tracking_error": 0.05,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.15,
+      "mde_grid_upper_bound": 0.2,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.03166666666666667,
+            0.045
+          ],
+          "mean95_interval_width_range": [
+            0.23116877269572314,
+            0.23445191293751805
+          ],
+          "minimum_full_support_lower95": 0.020364748182018035,
+          "primary_rejection_range": [
+            0.10333333333333333,
+            0.125
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.13666666666666666,
+            0.17666666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.23116877269572314,
+            0.23445191293751805
+          ],
+          "minimum_full_support_lower95": 0.11148306976186023,
+          "primary_rejection_range": [
+            0.30666666666666664,
+            0.33666666666666667
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.43666666666666665,
+            0.455
+          ],
+          "mean95_interval_width_range": [
+            0.23116877269572314,
+            0.23445191293751805
+          ],
+          "minimum_full_support_lower95": 0.397507899851003,
+          "primary_rejection_range": [
+            0.685,
+            0.7083333333333334
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.7,
+            0.7283333333333334
+          ],
+          "mean95_interval_width_range": [
+            0.23116877269572314,
+            0.23445191293751805
+          ],
+          "minimum_full_support_lower95": 0.662154057768196,
+          "primary_rejection_range": [
+            0.9033333333333333,
+            0.9116666666666666
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.875,
+            0.8866666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.23116877269572314,
+            0.234451912937518
+          ],
+          "minimum_full_support_lower95": 0.8461278984747422,
+          "primary_rejection_range": [
+            0.9833333333333333,
+            0.99
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "A",
+      "iid_annual_tracking_error": 0.1,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.011666666666666667,
+            0.045
+          ],
+          "mean95_interval_width_range": [
+            0.44940877387928635,
+            0.46457315349216866
+          ],
+          "minimum_full_support_lower95": 0.005662511553023055,
+          "primary_rejection_range": [
+            0.07833333333333334,
+            0.08166666666666667
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.041666666666666664,
+            0.08166666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.44940877387928624,
+            0.46457315349216877
+          ],
+          "minimum_full_support_lower95": 0.02837953071156377,
+          "primary_rejection_range": [
+            0.13833333333333334,
+            0.15833333333333333
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.14,
+            0.18166666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.44940877387928635,
+            0.46457315349216866
+          ],
+          "minimum_full_support_lower95": 0.11451940785111017,
+          "primary_rejection_range": [
+            0.30333333333333334,
+            0.31166666666666665
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.2816666666666667,
+            0.305
+          ],
+          "mean95_interval_width_range": [
+            0.44940877387928635,
+            0.46457315349216866
+          ],
+          "minimum_full_support_lower95": 0.247151052765048,
+          "primary_rejection_range": [
+            0.495,
+            0.5133333333333333
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.4216666666666667,
+            0.4583333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.44940877387928624,
+            0.46457315349216854
+          ],
+          "minimum_full_support_lower95": 0.38277346880846685,
+          "primary_rejection_range": [
+            0.665,
+            0.6933333333333334
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "A",
+      "iid_annual_tracking_error": 0.01,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "A",
+      "iid_annual_tracking_error": 0.025,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "A",
+      "iid_annual_tracking_error": 0.05,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "A",
+      "iid_annual_tracking_error": 0.1,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "B",
+      "iid_annual_tracking_error": 0.01,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.02,
+      "mde_grid_upper_bound": 0.05,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.42833333333333334,
+            0.4633333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.029726612222129134,
+            0.03137774407969011
+          ],
+          "minimum_full_support_lower95": 0.389317565368996,
+          "primary_rejection_range": [
+            0.8716666666666667,
+            0.905
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.029726612222129134,
+            0.03137774407969011
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.029726612222129134,
+            0.03137774407969011
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.029726612222129134,
+            0.03137774407969011
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.029726612222129134,
+            0.031377744079690115
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "B",
+      "iid_annual_tracking_error": 0.025,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.05,
+      "mde_grid_upper_bound": 0.1,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.10833333333333334,
+            0.165
+          ],
+          "mean95_interval_width_range": [
+            0.0754303012713962,
+            0.07772081177329097
+          ],
+          "minimum_full_support_lower95": 0.08591015644742284,
+          "primary_rejection_range": [
+            0.315,
+            0.32166666666666666
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.72,
+            0.7483333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.0754303012713962,
+            0.07772081177329097
+          ],
+          "minimum_full_support_lower95": 0.6827601080666954,
+          "primary_rejection_range": [
+            0.89,
+            0.8933333333333333
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.9966666666666667,
+            0.9983333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.0754303012713962,
+            0.07772081177329099
+          ],
+          "minimum_full_support_lower95": 0.9879283904323899,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.0754303012713962,
+            0.07772081177329097
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.0754303012713962,
+            0.07772081177329097
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "B",
+      "iid_annual_tracking_error": 0.05,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.1,
+      "mde_grid_upper_bound": 0.15,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.018333333333333333,
+            0.085
+          ],
+          "mean95_interval_width_range": [
+            0.14979108616346437,
+            0.15452701793553356
+          ],
+          "minimum_full_support_lower95": 0.010267199437239104,
+          "primary_rejection_range": [
+            0.14166666666666666,
+            0.145
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.22333333333333333,
+            0.2683333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.14979108616346437,
+            0.15452701793553356
+          ],
+          "minimum_full_support_lower95": 0.19182770872738192,
+          "primary_rejection_range": [
+            0.4083333333333333,
+            0.4583333333333333
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.725,
+            0.7433333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.14979108616346437,
+            0.15452701793553356
+          ],
+          "minimum_full_support_lower95": 0.6879250597937813,
+          "primary_rejection_range": [
+            0.8883333333333333,
+            0.9033333333333333
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.9566666666666667,
+            0.9616666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.14979108616346437,
+            0.15452701793553353
+          ],
+          "minimum_full_support_lower95": 0.9372635612213899,
+          "primary_rejection_range": [
+            0.99,
+            0.995
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.9966666666666667,
+            0.9983333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.14979108616346437,
+            0.15452701793553356
+          ],
+          "minimum_full_support_lower95": 0.9879283904323899,
+          "primary_rejection_range": [
+            0.9983333333333333,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "B",
+      "iid_annual_tracking_error": 0.1,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.008333333333333333,
+            0.043333333333333335
+          ],
+          "mean95_interval_width_range": [
+            0.2991021754484274,
+            0.3038729844438858
+          ],
+          "minimum_full_support_lower95": 0.0035645513465728095,
+          "primary_rejection_range": [
+            0.08,
+            0.12166666666666667
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.06833333333333333,
+            0.10833333333333334
+          ],
+          "mean95_interval_width_range": [
+            0.2991021754484274,
+            0.3038729844438857
+          ],
+          "minimum_full_support_lower95": 0.050767817082089134,
+          "primary_rejection_range": [
+            0.18166666666666667,
+            0.20833333333333334
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.2633333333333333,
+            0.2866666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.2991021754484274,
+            0.3038729844438857
+          ],
+          "minimum_full_support_lower95": 0.2296763490330645,
+          "primary_rejection_range": [
+            0.45166666666666666,
+            0.4633333333333333
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.5116666666666667,
+            0.5216666666666666
+          ],
+          "mean95_interval_width_range": [
+            0.2991021754484274,
+            0.3038729844438857
+          ],
+          "minimum_full_support_lower95": 0.47172236872591145,
+          "primary_rejection_range": [
+            0.71,
+            0.715
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.7283333333333334,
+            0.7366666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.2991021754484274,
+            0.3038729844438857
+          ],
+          "minimum_full_support_lower95": 0.6913714390630237,
+          "primary_rejection_range": [
+            0.8783333333333333,
+            0.9133333333333333
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "B",
+      "iid_annual_tracking_error": 0.01,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "B",
+      "iid_annual_tracking_error": 0.025,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "B",
+      "iid_annual_tracking_error": 0.05,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "B",
+      "iid_annual_tracking_error": 0.1,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "C",
+      "iid_annual_tracking_error": 0.01,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.02,
+      "mde_grid_upper_bound": 0.05,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.465,
+            0.48833333333333334
+          ],
+          "mean95_interval_width_range": [
+            0.023435092032475086,
+            0.024248277135383987
+          ],
+          "minimum_full_support_lower95": 0.42543900840020976,
+          "primary_rejection_range": [
+            0.9666666666666667,
+            0.975
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.023435092032475086,
+            0.024248277135383987
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.023435092032475086,
+            0.024248277135383984
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.023435092032475086,
+            0.024248277135383987
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.023435092032475086,
+            0.024248277135383984
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "C",
+      "iid_annual_tracking_error": 0.025,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.02,
+      "mde_grid_upper_bound": 0.05,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.185,
+            0.24166666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.058191132393003595,
+            0.06135326823528086
+          ],
+          "minimum_full_support_lower95": 0.15596795658145413,
+          "primary_rejection_range": [
+            0.415,
+            0.4666666666666667
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.8883333333333333,
+            0.9233333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.058191132393003595,
+            0.06135326823528086
+          ],
+          "minimum_full_support_lower95": 0.8606201651168511,
+          "primary_rejection_range": [
+            0.9683333333333334,
+            0.9766666666666667
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.058191132393003595,
+            0.06135326823528086
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.058191132393003595,
+            0.06135326823528086
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.058191132393003595,
+            0.06135326823528086
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "C",
+      "iid_annual_tracking_error": 0.05,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.05,
+      "mde_grid_upper_bound": 0.1,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.028333333333333332,
+            0.085
+          ],
+          "mean95_interval_width_range": [
+            0.1190798960480631,
+            0.12182368939568462
+          ],
+          "minimum_full_support_lower95": 0.0177637898515876,
+          "primary_rejection_range": [
+            0.14833333333333334,
+            0.205
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.345,
+            0.37166666666666665
+          ],
+          "mean95_interval_width_range": [
+            0.11907989604806313,
+            0.12182368939568462
+          ],
+          "minimum_full_support_lower95": 0.30805708338027116,
+          "primary_rejection_range": [
+            0.5116666666666667,
+            0.57
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.865,
+            0.8816666666666667
+          ],
+          "mean95_interval_width_range": [
+            0.1190798960480631,
+            0.12182368939568462
+          ],
+          "minimum_full_support_lower95": 0.8353226948455217,
+          "primary_rejection_range": [
+            0.9566666666666667,
+            0.97
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.9916666666666667,
+            0.9983333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.1190798960480631,
+            0.12182368939568462
+          ],
+          "minimum_full_support_lower95": 0.9806419835738325,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            1.0,
+            1.0
+          ],
+          "mean95_interval_width_range": [
+            0.11907989604806309,
+            0.12182368939568462
+          ],
+          "minimum_full_support_lower95": 0.9936380666717896,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "C",
+      "iid_annual_tracking_error": 0.1,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.15,
+      "mde_grid_upper_bound": 0.2,
+      "method": "session_weighted_group_student",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.018333333333333333,
+            0.043333333333333335
+          ],
+          "mean95_interval_width_range": [
+            0.235494911150505,
+            0.24030571510337267
+          ],
+          "minimum_full_support_lower95": 0.010267199437239104,
+          "primary_rejection_range": [
+            0.10333333333333333,
+            0.10833333333333334
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.09333333333333334,
+            0.13
+          ],
+          "mean95_interval_width_range": [
+            0.235494911150505,
+            0.24030571510337267
+          ],
+          "minimum_full_support_lower95": 0.07257411793779556,
+          "primary_rejection_range": [
+            0.23,
+            0.24166666666666667
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.3616666666666667,
+            0.4033333333333333
+          ],
+          "mean95_interval_width_range": [
+            0.235494911150505,
+            0.24030571510337267
+          ],
+          "minimum_full_support_lower95": 0.3242124780499538,
+          "primary_rejection_range": [
+            0.5516666666666666,
+            0.575
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.6883333333333334,
+            0.6933333333333334
+          ],
+          "mean95_interval_width_range": [
+            0.235494911150505,
+            0.24030571510337267
+          ],
+          "minimum_full_support_lower95": 0.6501721513736761,
+          "primary_rejection_range": [
+            0.8516666666666667,
+            0.86
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.895,
+            0.9116666666666666
+          ],
+          "mean95_interval_width_range": [
+            0.235494911150505,
+            0.24030571510337267
+          ],
+          "minimum_full_support_lower95": 0.8679070104830839,
+          "primary_rejection_range": [
+            0.965,
+            0.9766666666666667
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "C",
+      "iid_annual_tracking_error": 0.01,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.8683333333333333,
+            0.8966666666666666
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "C",
+      "iid_annual_tracking_error": 0.025,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.2833333333333333,
+            0.34
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.8566666666666667,
+            0.8833333333333333
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "C",
+      "iid_annual_tracking_error": 0.05,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.10166666666666667,
+            0.13333333333333333
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.35,
+            0.4
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.85,
+            0.865
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.9866666666666667,
+            0.9883333333333333
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "geometry": "C",
+      "iid_annual_tracking_error": 0.1,
+      "interpretation": "Fixed-grid complete-support80% Wilson-lower threshold; not interpolated or real power",
+      "mde_grid_lower_bound": 0.2,
+      "mde_grid_upper_bound": null,
+      "method": "symmetric_group_sign",
+      "points": [
+        {
+          "effect": 0.02,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.06333333333333334,
+            0.07333333333333333
+          ]
+        },
+        {
+          "effect": 0.05,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.14333333333333334,
+            0.16
+          ]
+        },
+        {
+          "effect": 0.1,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.40166666666666667,
+            0.43
+          ]
+        },
+        {
+          "effect": 0.15,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.6733333333333333,
+            0.685
+          ]
+        },
+        {
+          "effect": 0.2,
+          "full_support_range": [
+            0.0,
+            0.0
+          ],
+          "mean95_interval_width_range": null,
+          "minimum_full_support_lower95": 0.0,
+          "primary_rejection_range": [
+            0.875,
+            0.8866666666666667
+          ]
+        }
+      ]
+    }
+  ],
+  "target_power": 0.8,
+  "version": "phase3er_power_mde_v003"
+}

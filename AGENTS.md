@@ -86,3 +86,10 @@ This repository builds Research OS, an evidence-native quantitative intelligence
 - The owner-authorized Phase 3E is separate from Phase 3D. Its complete request is archived in `docs/acceleration/owner_phase3e_2026-10-12.md`; the bounded plan and early-stop report use a new namespace and preserve all earlier evidence.
 - Phase 3E stopped under owner section 37 at incompatibility between the existing twelve-year programme and the approved 2015–2021 pilot policy. EXP005 feasibility is REDESIGN_REQUIRED, freeze readiness NOT_READY. Source acquisition and inference v003 were deferred, not performed or certified.
 - Reuse the exact approved pilot policy without requesting its approval again. A wider policy or a reviewed staged horizon is a separate owner decision; do not infer it from this roadmap. No real signal/performance, EXP004 resume, EXP005 creation or Phase 4A is authorized by the early-stop artifacts.
+
+## Phase 3E-R redesign
+
+- The owner authorized replacing the old mandatory 6/3/3 programme, bounded filing/header/calendar acquisition and synthetic stage/inference comparison. Preserve earlier Phase 3E reports as historical evidence; use `docs/acceleration/phase3e_redesign_report.md` and the exact owner request for this new scope.
+- V003 is a separately versioned modeled policy proposal, not approved or activated. Preserve v002 and its approval unchanged. New policy scope and conditional Stage C architecture require the exact owner decision packet; no real eligibility/performance or next-phase permission is implied.
+- Preserve both v003 calibration runs and the analytical AR-generator correction receipt. Do not remove failed methods/worlds or claim synthetic power certifies real annual independence, accounting, class identity, population coverage or execution.
+- Stop after verified reporting/commits/pushes for owner review. EXP004 remains paused and EXP005 absent/NOT_READY; no real source-certification campaign, strategy calculation, heldout opening, Nexus/Aurora, purchase, optimizer, paper/live or Phase 4A is authorized by the redesign recommendation.

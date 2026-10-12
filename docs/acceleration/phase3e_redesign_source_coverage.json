@@ -1,0 +1,137 @@
+{
+  "mechanical_counts": "Upper-bound possible contributor states, not latest-signal eligibility; newer missing/amended facts can invalidate states",
+  "metadata_original_count": 250,
+  "original_financial_body_count": 89,
+  "population": "Selected30-issuer feasibility frame, not full US equity denominator; minimum100/500 production requirements unestablished",
+  "rows": [
+    {
+      "accounting_certified": 0,
+      "bounds": [
+        "2020-03-02",
+        "2023-12-31"
+      ],
+      "events_with_all_three_old_financial_original_bodies": 28,
+      "financial_body_coverage_for_new_headers": "NOT_ACQUIRED",
+      "fixed_frame_denominator": 30,
+      "geometry": "A",
+      "maximum_mechanical_issuer_count": 30,
+      "metadata_events_with_predecessors": 101,
+      "minimum_mechanical_issuer_count": 1,
+      "role": "Development",
+      "trading_eligible": 0
+    },
+    {
+      "accounting_certified": 0,
+      "bounds": [
+        "2024-01-01",
+        "2024-12-31"
+      ],
+      "events_with_all_three_old_financial_original_bodies": 0,
+      "financial_body_coverage_for_new_headers": "NOT_ACQUIRED",
+      "fixed_frame_denominator": 30,
+      "geometry": "A",
+      "maximum_mechanical_issuer_count": 30,
+      "metadata_events_with_predecessors": 30,
+      "minimum_mechanical_issuer_count": 29,
+      "role": "Validation",
+      "trading_eligible": 0
+    },
+    {
+      "accounting_certified": 0,
+      "bounds": [
+        "2025-01-01",
+        "2026-09-30"
+      ],
+      "events_with_all_three_old_financial_original_bodies": 0,
+      "financial_body_coverage_for_new_headers": "NOT_ACQUIRED",
+      "fixed_frame_denominator": 30,
+      "geometry": "A",
+      "maximum_mechanical_issuer_count": 30,
+      "metadata_events_with_predecessors": 55,
+      "minimum_mechanical_issuer_count": 30,
+      "role": "Owner-only Test",
+      "trading_eligible": 0
+    },
+    {
+      "accounting_certified": 0,
+      "bounds": [
+        "2020-03-02",
+        "2022-12-31"
+      ],
+      "events_with_all_three_old_financial_original_bodies": 28,
+      "financial_body_coverage_for_new_headers": "NOT_ACQUIRED",
+      "fixed_frame_denominator": 30,
+      "geometry": "B",
+      "maximum_mechanical_issuer_count": 30,
+      "metadata_events_with_predecessors": 72,
+      "minimum_mechanical_issuer_count": 1,
+      "role": "Development",
+      "trading_eligible": 0
+    },
+    {
+      "accounting_certified": 0,
+      "bounds": [
+        "2023-01-01",
+        "2024-12-31"
+      ],
+      "events_with_all_three_old_financial_original_bodies": 0,
+      "financial_body_coverage_for_new_headers": "NOT_ACQUIRED",
+      "fixed_frame_denominator": 30,
+      "geometry": "B",
+      "maximum_mechanical_issuer_count": 30,
+      "metadata_events_with_predecessors": 59,
+      "minimum_mechanical_issuer_count": 29,
+      "role": "Validation",
+      "trading_eligible": 0
+    },
+    {
+      "accounting_certified": 0,
+      "bounds": [
+        "2025-01-01",
+        "2026-09-30"
+      ],
+      "events_with_all_three_old_financial_original_bodies": 0,
+      "financial_body_coverage_for_new_headers": "NOT_ACQUIRED",
+      "fixed_frame_denominator": 30,
+      "geometry": "B",
+      "maximum_mechanical_issuer_count": 30,
+      "metadata_events_with_predecessors": 55,
+      "minimum_mechanical_issuer_count": 30,
+      "role": "Owner-only Test",
+      "trading_eligible": 0
+    },
+    {
+      "accounting_certified": 0,
+      "bounds": [
+        "2020-03-02",
+        "2021-12-31"
+      ],
+      "events_with_all_three_old_financial_original_bodies": 28,
+      "financial_body_coverage_for_new_headers": "NOT_ACQUIRED",
+      "fixed_frame_denominator": 30,
+      "geometry": "C",
+      "maximum_mechanical_issuer_count": 30,
+      "metadata_events_with_predecessors": 43,
+      "minimum_mechanical_issuer_count": 1,
+      "role": "Development",
+      "trading_eligible": 0
+    },
+    {
+      "accounting_certified": 0,
+      "bounds": [
+        "2022-01-01",
+        "2026-09-30"
+      ],
+      "events_with_all_three_old_financial_original_bodies": 0,
+      "financial_body_coverage_for_new_headers": "NOT_ACQUIRED",
+      "fixed_frame_denominator": 30,
+      "geometry": "C",
+      "maximum_mechanical_issuer_count": 30,
+      "metadata_events_with_predecessors": 143,
+      "minimum_mechanical_issuer_count": 29,
+      "role": "Proposed owner-held confirmation; future stage adapter required",
+      "trading_eligible": 0
+    }
+  ],
+  "version": "phase3er_source_coverage_annotation_v001"
+}

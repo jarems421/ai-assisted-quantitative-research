@@ -1,0 +1,78 @@
+{
+  "archived_existing_header_hits": 89,
+  "delivery_network": "Git push / hosted CI metadata observations recorded separately from source research",
+  "new_original_calendar_responses": 4,
+  "new_original_header_receipts": 161,
+  "price_or_financial_fact_acquisition": false,
+  "providers": {
+    "Aurora": {
+      "account_wide_debit": "UNKNOWN",
+      "failures": 0,
+      "purchase_or_upgrade": false,
+      "request_starts": 0,
+      "successes": 0
+    },
+    "Documentation": {
+      "account_wide_debit": "UNKNOWN",
+      "failures": 0,
+      "minimum_observed_start_gap_seconds": 0.550051,
+      "purchase_or_upgrade": false,
+      "request_starts": 4,
+      "required_gap_seconds": 0.55,
+      "successes": 4
+    },
+    "FMP": {
+      "account_wide_debit": "UNKNOWN",
+      "failures": 0,
+      "purchase_or_upgrade": false,
+      "request_starts": 0,
+      "successes": 0
+    },
+    "Nexus": {
+      "account_wide_debit": "UNKNOWN",
+      "failures": 0,
+      "purchase_or_upgrade": false,
+      "request_starts": 0,
+      "successes": 0
+    },
+    "OpenFIGI": {
+      "account_wide_debit": "UNKNOWN",
+      "failures": 0,
+      "purchase_or_upgrade": false,
+      "request_starts": 0,
+      "successes": 0
+    },
+    "Orbis": {
+      "account_wide_debit": "UNKNOWN",
+      "failures": 0,
+      "purchase_or_upgrade": false,
+      "request_starts": 0,
+      "successes": 0
+    },
+    "SEC": {
+      "account_wide_debit": "UNKNOWN",
+      "failures": 0,
+      "minimum_observed_start_gap_seconds": 0.550009,
+      "purchase_or_upgrade": false,
+      "request_starts": 161,
+      "required_gap_seconds": 0.55,
+      "successes": 161
+    },
+    "Tiingo": {
+      "account_wide_debit": "UNKNOWN",
+      "failures": 0,
+      "purchase_or_upgrade": false,
+      "request_starts": 0,
+      "successes": 0
+    },
+    "documentation/browser": {
+      "operations": 10,
+      "original_byte_hash": "NOT_AVAILABLE_FROM_BROWSER_TOOL",
+      "page_opens": 5,
+      "pdf_screenshots": 2,
+      "search_queries": 3,
+      "source": "Official calendar and primary statistical-method references; independent of original-byte HTTP receipts"
+    }
+  },
+  "version": "phase3er_source_registry_v001"
+}

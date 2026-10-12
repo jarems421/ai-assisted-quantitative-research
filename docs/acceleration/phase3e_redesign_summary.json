@@ -1,0 +1,170 @@
+{
+  "EXP004": "PAUSED",
+  "EXP005": "ABSENT_NOT_READY",
+  "Nexus_Aurora_operations": 0,
+  "baseline": "87f23f6198f096d611918b24eac0080b3350aa60",
+  "both_runs_preserved": true,
+  "clock_denominator": 250,
+  "clock_status_counts": {
+    "INVARIANT": 249,
+    "UNAVAILABLE_CLOCK_CALENDAR_OR_SCOPE": 1
+  },
+  "corrected_non_ar_and_null_invariants_exact": true,
+  "correction_disclosure": "phase3e_v003_generator_correction.md",
+  "gates": {
+    "CURRENT_POLICY": "V002_APPROVED_PILOT_PRESERVED_NOT_ACTIVATED",
+    "EXP005_FEASIBILITY": "CONDITIONAL_STAGE_PLAN_ONLY_SCIENTIFIC_CERTIFICATION_REMAINS_INCOMPLETE",
+    "EXP005_FREEZE_READINESS": "NOT_READY",
+    "INFERENCE_CALIBRATION": "CONDITIONAL_MODEL_GATES_PASS_CORRECTED_RUN",
+    "INFERENCE_HYPOTHESIS_STRUCTURE": "FROZEN_SINGLE_PRIMARY_PLUS_MANDATORY_STRESSES_PROPOSAL",
+    "INFERENCE_POWER": "C_PASSES_FIXED_FIVE_POINT_SYNTHETIC_SCREEN_REAL_POWER_UNKNOWN",
+    "INFERENCE_RESOLUTION": "STUDENT_CONTINUOUS_SIGN95_INTERVAL_INFEASIBLE",
+    "MATERIALITY_RULE": "ESTIMATED_TWO_POINT_FLOOR_PLUS_EVIDENCE_AGAINST_ZERO",
+    "MINIMUM_DETECTABLE_EFFECT": "NO_REAL_MDE_IID_SENSITIVITY_REPORTED",
+    "NEXUS_EXECUTION": "BLOCKED",
+    "POLICY_CLOCK_INVARIANCE": "249_INVARIANT_1_SOURCE_CHRONOLOGY_CONFLICT",
+    "POLICY_SCOPE_COMPATIBILITY": "COVERED_FOR_PROPOSED_BOUNDED_GEOMETRY_NOT_AUTHORIZATION",
+    "PROPOSED_POLICY_V003": "PROPOSED_NOT_APPROVED",
+    "PUBLIC_ELIGIBILITY_ACTIVATION_READINESS": "BLOCKED_OWNER_AND_SOURCE_IDENTITY_CALENDAR_GATES",
+    "STAGE_DESIGN_FEASIBILITY": "STAGE_DESIGN_READY_FOR_OWNER_REVIEW",
+    "STAGE_HOLDOUT_INTEGRITY": "CANDIDATE_SPECIFIC_WORKFLOW_HELD_OUT_WITH_DISCLOSED_PRIOR_KNOWLEDGE",
+    "STAGE_SOURCE_GEOMETRY": "METADATA_REFERENCE_CALENDAR_ONLY_CERTIFIED_TRADING_COUNT_ZERO"
+  },
+  "inference_runs": 2,
+  "inputs": {
+    "availability_policy_v003_proposed.json": "c6d99fbde71b1b7e9ffa7e18ae5abd8d7e34ac78d1600191dc558d3437efff5a",
+    "phase3e_inference_calibration_v003.json": "9dcb8c2e037ffe9f3d3bebb253747cf10783735accca7ba291b5bbe1ea92d236",
+    "phase3e_inference_calibration_v003_correction_001.json": "3c59a792dead455a5672c429e89801bc96c183ccacbd79cee6ccc432e0672775",
+    "phase3e_inference_protocol_v003.json": "fd279844a4a3bee90e78e2918bfb4f75d8cb3ccae9599615ed970700f02103f1",
+    "phase3e_policy_v003_invariance.json": "e6bc47a2038c6300a68df6e8f165b48bdd80605c4d70870480e24408ad562581",
+    "phase3e_stage_geometry.json": "59496ebeaa0670877136ea89c7c28fa96f8b7f81adc57ea3d8ea74597d4cec4f"
+  },
+  "next_phase_started": false,
+  "real_certified_identity_spans": 0,
+  "real_certified_triples": 0,
+  "real_terminal_nav_paths": 0,
+  "recommendation": {
+    "EXP005_FREEZE_READINESS": "NOT_READY",
+    "design_metadata_cutoff": "2026-09-30",
+    "development": [
+      "2020-03-02",
+      "2021-12-31"
+    ],
+    "formation_research_cutoff": "2021-12-31",
+    "historical_owner_held_confirmation": [
+      "2022-01-01",
+      "2026-09-30"
+    ],
+    "inference_architecture": "One primary one-sided alpha0.05; positive two-sided95 lower bound; estimated mean>=0.02; positive double-cost/delay stresses",
+    "inference_prerequisite_revision": "Proposed group-reference/calibration contract replaces old six annual-equivalent, three/window and HAC252/504 effective-size prerequisites; old artifacts and real gates unchanged",
+    "method": "session_weighted_group_student",
+    "method_certification": "CONDITIONAL_SYNTHETIC_ONLY_REAL_ASSUMPTIONS_UNESTABLISHED",
+    "performance_authorized": false,
+    "policy_activated": false,
+    "policy_scope": [
+      "2018-02-28",
+      "2026-09-30"
+    ],
+    "policy_sha256": "438d7bcf7d091f596009ba841e6dacbd960c18493c34ffec798d8c1aaf1dacbd",
+    "policy_status": "PROPOSED_NOT_APPROVED",
+    "power_scope": "Conditional confirmation statistical/materiality/stress-mean support only; excludes Development advancement, year-sign/contributor-concentration and all source/execution gates",
+    "price_warmup_start": "2019-02-28",
+    "recommended_geometry": "C",
+    "research_date": "2026-10-12",
+    "source_warmup_start": "2018-02-28",
+    "stage_adapter": "NOT_IMPLEMENTED; owner-held confirmation must retain human Test/paper controls; old real stage gates unchanged",
+    "tradeoffs": [
+      "Only22 Development decisions; weaker diagnosis/regime breadth",
+      "No separate independent historical Validation/Test replication",
+      "Largest candidate-specific workflow-held-out tape; prior market/cross-experiment knowledge remains",
+      "One CRM chronology conflict retained; all accounting/class/terminal/source coverage uncertified",
+      "Reference calendar only; actual per-security/exchange calendars require class certification",
+      "Synthetic80% screen at5points/2.5point noise; no80% two-point real-alpha claim"
+    ],
+    "trial_ceiling": "Prior45 ceiling retained; no real trials or new signals; revised stage inventory needs explicit later review",
+    "verdict": "STAGE_DESIGN_READY_FOR_OWNER_REVIEW",
+    "version": "phase3er_stage_recommendation_v001",
+    "year_sign_proposal": "At least ceil(two-thirds of year parts) positive: both2 Development parts;4/5 holdout parts including partial2026"
+  },
+  "source_financial_originals_unchanged": 89,
+  "sources": {
+    "archived_existing_header_hits": 89,
+    "delivery_network": "Git push / hosted CI metadata observations recorded separately from source research",
+    "new_original_calendar_responses": 4,
+    "new_original_header_receipts": 161,
+    "price_or_financial_fact_acquisition": false,
+    "providers": {
+      "Aurora": {
+        "account_wide_debit": "UNKNOWN",
+        "failures": 0,
+        "purchase_or_upgrade": false,
+        "request_starts": 0,
+        "successes": 0
+      },
+      "Documentation": {
+        "account_wide_debit": "UNKNOWN",
+        "failures": 0,
+        "minimum_observed_start_gap_seconds": 0.550051,
+        "purchase_or_upgrade": false,
+        "request_starts": 4,
+        "required_gap_seconds": 0.55,
+        "successes": 4
+      },
+      "FMP": {
+        "account_wide_debit": "UNKNOWN",
+        "failures": 0,
+        "purchase_or_upgrade": false,
+        "request_starts": 0,
+        "successes": 0
+      },
+      "Nexus": {
+        "account_wide_debit": "UNKNOWN",
+        "failures": 0,
+        "purchase_or_upgrade": false,
+        "request_starts": 0,
+        "successes": 0
+      },
+      "OpenFIGI": {
+        "account_wide_debit": "UNKNOWN",
+        "failures": 0,
+        "purchase_or_upgrade": false,
+        "request_starts": 0,
+        "successes": 0
+      },
+      "Orbis": {
+        "account_wide_debit": "UNKNOWN",
+        "failures": 0,
+        "purchase_or_upgrade": false,
+        "request_starts": 0,
+        "successes": 0
+      },
+      "SEC": {
+        "account_wide_debit": "UNKNOWN",
+        "failures": 0,
+        "minimum_observed_start_gap_seconds": 0.550009,
+        "purchase_or_upgrade": false,
+        "request_starts": 161,
+        "required_gap_seconds": 0.55,
+        "successes": 161
+      },
+      "Tiingo": {
+        "account_wide_debit": "UNKNOWN",
+        "failures": 0,
+        "purchase_or_upgrade": false,
+        "request_starts": 0,
+        "successes": 0
+      },
+      "documentation/browser": {
+        "operations": 10,
+        "original_byte_hash": "NOT_AVAILABLE_FROM_BROWSER_TOOL",
+        "page_opens": 5,
+        "pdf_screenshots": 2,
+        "search_queries": 3,
+        "source": "Official calendar and primary statistical-method references; independent of original-byte HTTP receipts"
+      }
+    },
+    "version": "phase3er_source_registry_v001"
+  },
+  "unique_synthetic_noise_realizations_per_run": 86400,
+  "version": "phase3er_redesign_summary_v001"
+}

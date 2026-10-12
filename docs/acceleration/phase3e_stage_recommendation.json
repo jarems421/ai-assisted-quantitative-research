@@ -1,0 +1,43 @@
+{
+  "EXP005_FREEZE_READINESS": "NOT_READY",
+  "design_metadata_cutoff": "2026-09-30",
+  "development": [
+    "2020-03-02",
+    "2021-12-31"
+  ],
+  "formation_research_cutoff": "2021-12-31",
+  "historical_owner_held_confirmation": [
+    "2022-01-01",
+    "2026-09-30"
+  ],
+  "inference_architecture": "One primary one-sided alpha0.05; positive two-sided95 lower bound; estimated mean>=0.02; positive double-cost/delay stresses",
+  "inference_prerequisite_revision": "Proposed group-reference/calibration contract replaces old six annual-equivalent, three/window and HAC252/504 effective-size prerequisites; old artifacts and real gates unchanged",
+  "method": "session_weighted_group_student",
+  "method_certification": "CONDITIONAL_SYNTHETIC_ONLY_REAL_ASSUMPTIONS_UNESTABLISHED",
+  "performance_authorized": false,
+  "policy_activated": false,
+  "policy_scope": [
+    "2018-02-28",
+    "2026-09-30"
+  ],
+  "policy_sha256": "438d7bcf7d091f596009ba841e6dacbd960c18493c34ffec798d8c1aaf1dacbd",
+  "policy_status": "PROPOSED_NOT_APPROVED",
+  "power_scope": "Conditional confirmation statistical/materiality/stress-mean support only; excludes Development advancement, year-sign/contributor-concentration and all source/execution gates",
+  "price_warmup_start": "2019-02-28",
+  "recommended_geometry": "C",
+  "research_date": "2026-10-12",
+  "source_warmup_start": "2018-02-28",
+  "stage_adapter": "NOT_IMPLEMENTED; owner-held confirmation must retain human Test/paper controls; old real stage gates unchanged",
+  "tradeoffs": [
+    "Only22 Development decisions; weaker diagnosis/regime breadth",
+    "No separate independent historical Validation/Test replication",
+    "Largest candidate-specific workflow-held-out tape; prior market/cross-experiment knowledge remains",
+    "One CRM chronology conflict retained; all accounting/class/terminal/source coverage uncertified",
+    "Reference calendar only; actual per-security/exchange calendars require class certification",
+    "Synthetic80% screen at5points/2.5point noise; no80% two-point real-alpha claim"
+  ],
+  "trial_ceiling": "Prior45 ceiling retained; no real trials or new signals; revised stage inventory needs explicit later review",
+  "verdict": "STAGE_DESIGN_READY_FOR_OWNER_REVIEW",
+  "version": "phase3er_stage_recommendation_v001",
+  "year_sign_proposal": "At least ceil(two-thirds of year parts) positive: both2 Development parts;4/5 holdout parts including partial2026"
+}

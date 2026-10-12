@@ -111,6 +111,8 @@ The [closure continuation](docs/acceleration/phase3d_closure_report.md) adds bou
 
 The [Phase 3E feasibility review](docs/acceleration/phase3e_report.md) concludes **REDESIGN_REQUIRED** for EXP005. The existing twelve-year staged programme cannot fit the approved 2015–2021 modeled policy; the fixed original filings also cannot supply a 2015 inception. Phase 3E stopped under the owner's explicit scope condition before new acquisition or calibration. A staged horizon/policy decision is required; EXP004 remains paused and EXP005 absent.
 
+The owner-authorized [Phase 3E-R redesign](docs/acceleration/phase3e_redesign_report.md) compares three historical structures using metadata and synthetic evidence. It conditionally prefers a shorter Development stage plus one larger historical confirmation through 2026-09-30. The [v003 modeled-policy packet](docs/acceleration/availability_policy_v003_review_packet.md) awaits owner review. Both calibration runs and the analytical generator correction are preserved; real source/inference/execution certification and EXP005 freeze remain incomplete.
+
 ## Research OS compatibility infrastructure
 
 Reusable infrastructure now supports validated experiment specifications, frozen hashes, sequential stage gates, bounded job planning, durable submission/trial journals, resumable raw extraction, parameter stability, paired resampling, and generated experiment cards. EXP001 remains the only completed economic evaluation; later experiments record feasibility and execution limits.

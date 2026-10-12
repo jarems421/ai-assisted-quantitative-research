@@ -1,0 +1,169 @@
+{
+  "EXP004_operational_pause_hash_unchanged": true,
+  "EXP004_registered_stage": "HYPOTHESIS_FROZEN",
+  "EXP005_directory_exists": false,
+  "EXP005_state_counts": {
+    "experiments": 0,
+    "jobs": 0,
+    "trials": 0
+  },
+  "baseline": "87f23f6198f096d611918b24eac0080b3350aa60",
+  "calibration": "Original and correction001 archive/freeze/invariance verified; no additional simulation during validation",
+  "calibration_repetitions": 2,
+  "check_scope": "Full suite includes already-opened EXP001 regression fixtures; no new held-out or EXP005 performance inspected.",
+  "checked_at_utc": "2026-10-12T21:05:13Z",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "f17ea96870b173f153632dd7dc50dc7955c5bb6dbfe4318db8c5f7c76cb2d318"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "b41e95c4b7a9ce93f42a9d7f28f5c7a4f9bdb8656f4bccc8939d29d5cd627465"
+    },
+    {
+      "command": "python -m src.research.phase3er report --check",
+      "exit_code": 0,
+      "log_sha256": "3c5fa625ac94ccc16d3d5afc42b617a7b6672bacd3cce96e4d2a2628c311179e"
+    },
+    {
+      "command": "python -m src.research.phase3er geometry --check",
+      "exit_code": 0,
+      "log_sha256": "436d5ac104f4504c699d6ccc310becac45ee6f93aa4b48bd997339b3d290d958"
+    },
+    {
+      "command": "python -m src.research.phase3er audit",
+      "exit_code": 0,
+      "log_sha256": "b5c5f84e38fca28753fcd45c59a6f8b594d44caea354f6207132be926b9422ee"
+    },
+    {
+      "command": "python -m src.research.phase3e report --check",
+      "exit_code": 0,
+      "log_sha256": "9494088d0d5381176f8dea1eae3f58fc3ae73096c28c5b3cdc22a899d309a192"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0,
+      "log_sha256": "4eb72f543a99004f7859038744e12b431a232dc54ec79993862186b82a7c2a8e"
+    },
+    {
+      "command": "python -m src.research.phase3d report --check",
+      "exit_code": 0,
+      "log_sha256": "08942af9194493cca14a11b820ff2cca500d48b50fdda5994585285023b7bf71"
+    },
+    {
+      "command": "python -m src.research.phase3d check",
+      "exit_code": 0,
+      "log_sha256": "7bd624ce2f5362d7faf8d3efe726272958ba1a1bac5f6b3982587a3d5ff63612"
+    },
+    {
+      "command": "python -m src.research.sec_pilot.phase3a --check",
+      "exit_code": 0,
+      "log_sha256": "aab42aefb7341fa7a198f17c10dfcb3743c441378aa171da94841b124196eb84"
+    },
+    {
+      "command": "python -m src.research.sec_pilot replay",
+      "exit_code": 0,
+      "log_sha256": "90b9502002aeb081f67503820fb88701c809e39f9501703328dc4086227db006"
+    },
+    {
+      "command": "python -m src.research.sec_pilot audit",
+      "exit_code": 0,
+      "log_sha256": "90b9502002aeb081f67503820fb88701c809e39f9501703328dc4086227db006"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "8e01f82f7836d59e10a1986db39138393666d7257e16bec97ada75e2244ec2c0"
+    },
+    {
+      "command": "python -m src.research.phase3c.report --check",
+      "exit_code": 0,
+      "log_sha256": "343d8227d5be128e36e03637689adf046be903eb32b62ecaf83d2604b404fa05"
+    },
+    {
+      "command": "python -m src.research.support_case --check",
+      "exit_code": 0,
+      "log_sha256": "90d7ad6112326cbe78d53b3ad7ef782079b4d1443771cb6f5176a4bb6dd86035"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "df14503a8290a5981e2d0b89782247a1f2ec57f00d1faa7c895cd0f2eacc9ffa"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "a54bbb017886315339fd0a80c6eed87ecfd8d2183033af18fe9d9b40ee6f5dde"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure sources --check",
+      "exit_code": 0,
+      "log_sha256": "872dec90e56236d9da5778a7b92b2dfece67d862411cf15d8dd1878a3923b2a4"
+    },
+    {
+      "command": "python -m pip check",
+      "exit_code": 0,
+      "log_sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+    }
+  ],
+  "corrected_calibration": "One predeclared analytical AR-noise correction; non-AR and all null rejection/coverage outputs invariant.",
+  "delivery_metadata_accounting": "Git push and GitHub hosted-CI status reads are separate delivery metadata operations, not source data acquisitions.",
+  "final_report_annotation": "Literal metadata ISO sensitivity added after full suite; report regeneration/check covers this metadata-only annotation.",
+  "hosted_ci": [
+    {
+      "conclusion": "success",
+      "head_sha": "18ea60d938694a57e156868f2f2e444d39beb795",
+      "id": 38309758298,
+      "status": "completed",
+      "url": "https://github.com/jarems421/ai-assisted-quantitative-research/actions/runs/38309758298"
+    }
+  ],
+  "hosted_ci_scope": "Verified code checkpoint; final documentation HEAD observation supplied in delivery message.",
+  "isolated_dependency_consistency": {
+    "command": ".research/sec-pilot-venv/Scripts/python.exe -m pip check",
+    "exit_code": 0,
+    "result": "No broken requirements found."
+  },
+  "original_calibration_preserved": true,
+  "owner_instruction_verbatim_sha256": "820ede58cf482ce2d29a5b551bb4d90ac28e1a394ba1b2cec3e4196291374b50",
+  "policy_status": "PROPOSED_NOT_APPROVED_NOT_ACTIVATED",
+  "preservation": {
+    "deliberate_changed": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "src/presentation/exp001.py",
+      "src/research/public_checks.py"
+    ],
+    "files": 7361,
+    "unchanged": 7356,
+    "unexpected_changes": []
+  },
+  "public_tests_passed": 49,
+  "real_eligibility_activations": 0,
+  "real_performance_inputs": 0,
+  "source_records": 250,
+  "source_request_accounting": {
+    "Aurora": 0,
+    "Documentation_HTTP": 4,
+    "FMP": 0,
+    "Nexus": 0,
+    "OpenFIGI": 0,
+    "Orbis": 0,
+    "SEC": 161,
+    "Tiingo": 0,
+    "documentation_browser_operations": 10,
+    "source_debit": "UNKNOWN_ACCOUNT_WIDE; no purchase or upgrade"
+  },
+  "source_starts": {
+    "Documentation": 4,
+    "SEC": 161,
+    "browser_operations": 10
+  },
+  "tests_passed": 275,
+  "tests_skipped": 0,
+  "version": "phase3er_redesign_validation_v001"
+}
