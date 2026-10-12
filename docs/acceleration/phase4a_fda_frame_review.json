@@ -1,0 +1,184 @@
+{
+  "access_stop_scope": "Unvisited sources are not observed approval-only or absent-negative sources",
+  "gate1_verdict": "SOURCE_FRAME_AUDIT_INCOMPLETE_REDIRECT_BOUNDARY_STOP",
+  "gate2_authorized": false,
+  "outcome_complete_certified": false,
+  "questions": {
+    "action_application_types": "PARTIAL_DOC_ONLY",
+    "action_vs_update_date": "Current update/derivative behavior located where supported; no date made into first-public timestamp",
+    "denominator_completeness": "NOT_CERTIFIED",
+    "eventual_approval_conditioning": "Approval-oriented documented universe; individual application selection/history not audited",
+    "nonapproval_actions": "UNKNOWN; nonapproval/unresolved completeness not established. Previous negative actions of eventually approved applications would not suffice.",
+    "observable_before_outcome": "UNKNOWN; no authoritative complete pre-outcome application frame established",
+    "original_documents": "Our new response bytes retained; historical source version preservation UNKNOWN",
+    "revision_reconstruction": "Current documentation/API transformation is not historical application/action version replay",
+    "source_universe": "Approved-product scope located in original docs",
+    "unconditioned_comparisons": "NOT_CERTIFIED; approval-only sampling and generic sector peers cannot establish an outcome-independent eligible denominator"
+  },
+  "source_findings": [
+    {
+      "findings": {
+        "locator_scope": "Decoded visible-text offsets; source original-byte hash retained. Located text does not certify denominator completeness.",
+        "locators": {
+          "approved_product_categories": [
+            {
+              "normalized_end": 318,
+              "normalized_start": 283,
+              "source_sha256": "85215a5be47af1a0a523edba0a4787cf1c42e5f81c36f07b04a2079619c9f525",
+              "span_sha256": "c4ea8d2b8dcaaa9a8b014d19fa06be4cee5ab9728e1df53c864d53ee2f80da3d"
+            }
+          ],
+          "approved_product_scope": [
+            {
+              "normalized_end": 83,
+              "normalized_start": 19,
+              "source_sha256": "85215a5be47af1a0a523edba0a4787cf1c42e5f81c36f07b04a2079619c9f525",
+              "span_sha256": "f819f76e390a8d9ee5d0eb6800b46c170d5703d4855b82b8b9c90721dc3d3a32"
+            }
+          ],
+          "current_updates": [
+            {
+              "normalized_end": 747,
+              "normalized_start": 726,
+              "source_sha256": "85215a5be47af1a0a523edba0a4787cf1c42e5f81c36f07b04a2079619c9f525",
+              "span_sha256": "72142e6c2aff5dfb1017dc21b373bc1545b5a5e4388970375ae46999727ee54f"
+            }
+          ],
+          "derivative_transform": [
+            {
+              "normalized_end": 604,
+              "normalized_start": 577,
+              "source_sha256": "85215a5be47af1a0a523edba0a4787cf1c42e5f81c36f07b04a2079619c9f525",
+              "span_sha256": "becca763d64dffee75b628243b8d4b27f28f437f5ef06b4323a03bbd9c0d2c37"
+            }
+          ],
+          "negative_document_reference": [],
+          "sponsor_field": [],
+          "submission_status_field": []
+        },
+        "normalized_text_sha256": "a6a3bd284ca897d0268852b361b49f28c4999241318912efe72e7dba6c8c2512",
+        "transform": "HTML_visible_text_whitespace_fda_v001"
+      },
+      "id": "F01",
+      "question": "Drugs@FDA source scope and transformed update behavior",
+      "receipt": {
+        "attempt": 1,
+        "body": {
+          "bytes": 120359,
+          "path": "0000000000-00-000000/85215a5be47af1a0a523edba0a4787cf1c42e5f81c36f07b04a2079619c9f525/body.bin",
+          "sha256": "85215a5be47af1a0a523edba0a4787cf1c42e5f81c36f07b04a2079619c9f525"
+        },
+        "content_type": "text/html; charset=utf-8",
+        "decoding": "Original response bytes; no text interpretation yet",
+        "final_url": "https://open.fda.gov/apis/drug/drugsfda/",
+        "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+        "purpose": "FDA_GATE1_FRAME_DOCUMENTATION",
+        "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+        "request_started_at_utc": "2026-10-12T23:29:08.012720+00:00",
+        "response_headers": {
+          "content-length": "120359",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Mon, 12 Oct 2026 23:29:23 GMT",
+          "last-modified": "Fri, 09 Oct 2026 15:48:34 GMT"
+        },
+        "retrieved_at_utc": "2026-10-12T23:29:08.612903+00:00",
+        "slot": null,
+        "status": 200,
+        "url": "https://open.fda.gov/apis/drug/drugsfda/"
+      }
+    },
+    {
+      "findings": {
+        "locator_scope": "Decoded visible-text offsets; source original-byte hash retained. Located text does not certify denominator completeness.",
+        "locators": {
+          "approved_product_categories": [],
+          "approved_product_scope": [],
+          "current_updates": [
+            {
+              "normalized_end": 2030,
+              "normalized_start": 1987,
+              "source_sha256": "b9663ee11630b10d69fcdd7766dd334eddfabbef212928ad1801131f9a7ae824",
+              "span_sha256": "67e4a6fcb5d122c349e881dc7836a3ed70cf502c82bf32f13de9f77118b23466"
+            }
+          ],
+          "derivative_transform": [],
+          "negative_document_reference": [],
+          "sponsor_field": [
+            {
+              "normalized_end": 3294,
+              "normalized_start": 3283,
+              "source_sha256": "b9663ee11630b10d69fcdd7766dd334eddfabbef212928ad1801131f9a7ae824",
+              "span_sha256": "1b314089da35cafd998c78d378b523071cfdf5500d46289b1130073cca42ee88"
+            }
+          ],
+          "submission_status_field": [
+            {
+              "normalized_end": 4778,
+              "normalized_start": 4758,
+              "source_sha256": "b9663ee11630b10d69fcdd7766dd334eddfabbef212928ad1801131f9a7ae824",
+              "span_sha256": "2101b668dad913b993406532aa1ec78d9de95c1dce06909b8de813eeb93f72f6"
+            }
+          ]
+        },
+        "normalized_text_sha256": "12feb051367947062835b21894a1c66af5fa9bc3d3fcea4b4e9de7a1d2cc1d23",
+        "transform": "HTML_visible_text_whitespace_fda_v001"
+      },
+      "id": "F02",
+      "question": "Application/action/status/document schema and file revision behavior",
+      "receipt": {
+        "attempt": 1,
+        "body": {
+          "bytes": 34324,
+          "path": "0000000000-00-000000/b9663ee11630b10d69fcdd7766dd334eddfabbef212928ad1801131f9a7ae824/body.bin",
+          "sha256": "b9663ee11630b10d69fcdd7766dd334eddfabbef212928ad1801131f9a7ae824"
+        },
+        "content_type": "text/html; charset=UTF-8",
+        "decoding": "Original response bytes; no text interpretation yet",
+        "final_url": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files",
+        "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+        "purpose": "FDA_GATE1_FRAME_DOCUMENTATION",
+        "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+        "request_started_at_utc": "2026-10-12T23:29:08.621518+00:00",
+        "response_headers": {
+          "content-length": "34324",
+          "content-type": "text/html; charset=UTF-8",
+          "date": "Mon, 12 Oct 2026 23:29:22 GMT",
+          "last-modified": "Mon, 12 Oct 2026 23:19:58 GMT"
+        },
+        "retrieved_at_utc": "2026-10-12T23:29:08.903233+00:00",
+        "slot": null,
+        "status": 200,
+        "url": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files"
+      }
+    },
+    {
+      "findings": null,
+      "id": "F03",
+      "question": "Official application universe and historical coverage overview",
+      "receipt": {
+        "attempt": 1,
+        "body": {
+          "bytes": 15991,
+          "path": "0000000000-00-000000/853b9e97ea2a248755ccf0a1e007463ae0e34640b9cc35b3e2fda498cfec4113/body.bin",
+          "sha256": "853b9e97ea2a248755ccf0a1e007463ae0e34640b9cc35b3e2fda498cfec4113"
+        },
+        "content_type": "text/html;charset=UTF-8",
+        "decoding": "Original response bytes; no text interpretation yet",
+        "final_url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process",
+        "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+        "purpose": "FDA_GATE1_FRAME_DOCUMENTATION",
+        "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+        "request_started_at_utc": "2026-10-12T23:29:09.221678+00:00",
+        "response_headers": {
+          "content-type": "text/html;charset=UTF-8",
+          "date": "Mon, 12 Oct 2026 23:29:23 GMT"
+        },
+        "retrieved_at_utc": "2026-10-12T23:29:09.624476+00:00",
+        "slot": null,
+        "status": 302,
+        "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process"
+      },
+      "status": "REDIRECT_BOUNDARY_REJECTED_NOT_ACCESS_DENIAL"
+    }
+  ]
+}

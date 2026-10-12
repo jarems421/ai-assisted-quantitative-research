@@ -1,5 +1,5 @@
 """Gate 1 FDA frame audit using existing transport/archive; no event or price loader."""
-import argparse,json,re
+import argparse,hashlib,json,re
 from html.parser import HTMLParser
 from pathlib import Path
 from src.research.procurement_pilot import PilotHTTP,contract as procurement_contract,MONTHS
@@ -126,6 +126,9 @@ def acquire():
 
 def report(check=False):
     m=frozen();r=json.loads((RAW/'gate1_result.json').read_bytes());h=FrameHTTP(m)
+    review=json.loads((DOCS/'phase4a_fda_disposition_review.json').read_bytes())
+    if review['raw_result_sha256']!=hashlib.sha256((RAW/'gate1_result.json').read_bytes()).hexdigest() or review['manifest_sha256']!=digest(m):
+        raise ValueError('Scientific disposition lineage changed')
     receipts=[json.loads(p.read_bytes()) for p in sorted((RAW/'receipts').glob('*.json'))]
     for x in receipts:h.archive.read(x['body'])
     starts=len(h.starts())
@@ -133,7 +136,13 @@ def report(check=False):
     registry={'gate1_ceiling':10,'total_pilot_ceiling':60,'starts':starts,'response_receipts':receipts,
               'unresponded_reserved_attempts':starts-len(receipts),'counts':{'FDA':starts,'SEC':0,'OpenFIGI':0,'price':0,'procurement':0,'Nexus':0,'Aurora':0,'browser':0},
               'cost':'No purchase/upgrade; account-wide debit unknown','archive':'Original bytes/error receipts ignored; contact/auth headers excluded'}
-    sources=r['sources'];scope=any(s['findings'] and s['findings']['locators']['approved_product_scope'] for s in sources)
+    sources=list(r['sources']);seen={s['receipt']['url'] for s in sources}
+    for receipt in receipts:
+        if receipt['url'] not in seen:
+            page=next(p for p in m['FDA_documentation'] if p['url']==receipt['url'])
+            sources.append({'id':page['id'],'question':page['question'],'receipt':receipt,'findings':None,'status':'REDIRECT_BOUNDARY_REJECTED_NOT_ACCESS_DENIAL'})
+    sources.sort(key=lambda s:s['id'])
+    scope=any(s['findings'] and s['findings']['locators']['approved_product_scope'] for s in sources)
     questions={
       'Q1':'Official documentation accessible for '+str(sum(x['status']==200 for x in receipts))+' responses; historical corpus completeness not certified',
       'Q2':'Approved-product scope documented; full negative/unresolved application frame not certified' if scope else 'UNKNOWN: no outcome-complete frame certified',
@@ -156,14 +165,14 @@ def report(check=False):
       'revision_reconstruction':'Current documentation/API transformation is not historical application/action version replay',
       'denominator_completeness':'NOT_CERTIFIED',
       'unconditioned_comparisons':'NOT_CERTIFIED; approval-only sampling and generic sector peers cannot establish an outcome-independent eligible denominator'}
-    summary={'family_status':'FDA_FAMILY_APPROVED_FOR_SOURCE_FEASIBILITY','family_verdict':r['family_verdict'],
-             'source_frame_verdict':r['source_frame_verdict'],'gate1':'FAIL_CLOSED','gate2_ran':False,'event_manifest_created':False,
+    summary={'family_status':'FDA_FAMILY_APPROVED_FOR_SOURCE_FEASIBILITY','family_verdict':review['family_verdict'],
+             'source_frame_verdict':review['source_frame_verdict'],'gate1':'FAIL_CLOSED','gate2_ran':False,'event_manifest_created':False,
              'gate1_manifest_sha256':digest(m),'total_requests':starts,'selected_events':0,'usable_applications':None,
              'effective_sample_size':None,'public_timing':'UNAVAILABLE','identity':'NOT_TESTED','questions':questions,
-             'verdict_scope':r['verdict_scope'],'date':'2026-10-13','Phase4A':'ACTIVE_EXPERIMENT_SELECTION',
+             'verdict_scope':'Incomplete denominator audit stopped at a frozen redirect boundary; one bounded source-route correction required, no outcome-complete frame certified','date':'2026-10-13','Phase4A':'ACTIVE_EXPERIMENT_SELECTION',
              'next_experiment':'NOT_YET_FROZEN','performance_authorized':False,'EXP004':'PAUSED','EXP005':'ABANDONED_ABSENT',
              'timing_policy_approved':False,'merger_family_automatic_launch':False}
-    outputs={'phase4a_fda_source_registry.json':registry,'phase4a_fda_frame_review.json':{'gate1_verdict':r['source_frame_verdict'],'questions':frame_questions,'source_findings':sources,
+    outputs={'phase4a_fda_source_registry.json':registry,'phase4a_fda_frame_review.json':{'gate1_verdict':review['source_frame_verdict'],'questions':frame_questions,'source_findings':sources,
               'outcome_complete_certified':False,'access_stop_scope':'Unvisited sources are not observed approval-only or absent-negative sources','gate2_authorized':False},
              'phase4a_fda_pilot_summary.json':summary}
     validation=DOCS/'phase4a_fda_validation.json';v=json.loads(validation.read_bytes()) if validation.exists() else {}
@@ -171,7 +180,7 @@ def report(check=False):
     status_md='| Official documentation route | HTTP response | Scope evidence |\n| --- | --- | --- |\n'+'\n'.join('| '+s['id']+' | '+str(s['receipt']['status'])+' | '+('Original bytes/locators retained' if s['findings'] else 'Unavailable, no scope inferred')+' |' for s in sources)
     md=f'''# FDA pilot: Gate 1 source-frame disposition
 
-**{r['family_verdict']}. Gate1 = FAIL_CLOSED; {r['source_frame_verdict']}.** As of 2026-10-13. Frozen manifest SHA-256 `{digest(m)}`. The [owner instruction](owner_fda_pilot_2026-10-13.md) and [plan](phase4a_fda_pilot_plan.md) require the denominator gate before individual events. No event was selected, no Gate2 manifest was created and the 12 conditional monthly slots were not instantiated as observed cases.
+**{review['family_verdict']}. Gate1 = FAIL_CLOSED; {review['source_frame_verdict']}.** As of 2026-10-13. Frozen manifest SHA-256 `{digest(m)}`. The [owner instruction](owner_fda_pilot_2026-10-13.md) and [plan](phase4a_fda_pilot_plan.md) require the denominator gate before individual events. No event was selected, no Gate2 manifest was created and the 12 conditional monthly slots were not instantiated as observed cases.
 
 {status_md}
 
@@ -179,7 +188,9 @@ Gate1 used {starts} starts of its maximum10, including retries; the total60 ceil
 
 Where located, the official Drugs@FDA description enumerates approved products and describes current updates/transformation. That supports an approval-oriented scope finding, not a complete historical decision denominator. It does not prove the absence of all negative actions: earlier failures for subsequently approved applications may exist and still leave never-approved/unresolved applications unrepresented. Conversely a negative-letter archive would need its own coverage/selection audit before it could repair the frame.
 
-If the source audit stopped on access, its negative-decision documentation routes remain **unreviewed**, not proven empty. We do not promote this incomplete audit to proof of irreparable approval selection or the impossibility of every official FDA frame. The verdict rejects expansion under this bounded source audit because the mandatory outcome-independent frame was not established. [Detailed ten-question frame audit](phase4a_fda_frame_review.json) retains source-hash/text-transformation locators and UNKNOWN fields.
+The third request returned **HTTP302**, not403/429. The inherited frozen transport rejects redirects, so it archived the response then stopped before following any target. The first two routes were accessible. This is a **routing/boundary stop**, not evidence that FDA is inaccessible. The negative-decision documentation routes F04/F05 remain **unreviewed**, not proven empty. We do not promote this incomplete audit to proof of irreparable approval selection or the impossibility of every official FDA frame. [Detailed ten-question frame audit](phase4a_fda_frame_review.json) retains source-hash/text-transformation locators and UNKNOWN fields.
+
+The acquisition receipt's automatic draft FDA_FAMILY_REJECT remains unchanged privately. That default was too strong for an incomplete redirect-stopped audit. A separate [scientific disposition](phase4a_fda_disposition_review.json) records FDA_FAMILY_REDESIGN with the original-result hash. The bounded correction is to replace the unconfirmed overview query with the official landing path linked by the acquired FDA data-file page, then review the originally specified negative-decision documentation within the **seven remaining Gate1 starts**. The original href uses HTTP; a proposed HTTPS scheme upgrade is explicitly untested and is not an already-acquired source. No request ceiling resets, scope expansion, redirect following or Gate2 permission is implied. This amendment needs a new exact freeze/owner instruction; it was not executed here.
 
 ## Required pilot questions
 
@@ -195,9 +206,9 @@ Validation: {v.get('local_tests_passed','pending')} local tests; {v.get('public_
 
 Phase4A remains ACTIVE_EXPERIMENT_SELECTION; next experiment NOT_YET_FROZEN, performance false. Procurement, Phase3, EXP004 pause, EXP005 abandonment/absence, original scorecard/FDA/merger evidence and v002/v003 approvals remain unchanged. No prices, returns, event studies, signals, ranking, experiment, SEC/OpenFIGI work, graph, causal lab, Nexus/Aurora or paper/live operation occurred.
 
-**Stopped at Gate1.** No larger FDA campaign or approval-only event sample is authorized. No owner decision is needed to retain this negative result. The remaining predeclared merger-enforcement family may receive one bounded pass only under a new explicit instruction. Do not launch it automatically; after the original three candidates, stop and reassess hypothesis generation instead of adding families indefinitely. No Phase4B/4C begins here.
+**Stopped at Gate1.** No larger FDA campaign or approval-only event sample is authorized. The exact next owner decision is whether to authorize only the separately versioned Gate1 route amendment and at most seven remaining request starts; alternatively close FDA without further retrieval. An official landing link does not prove that a negative/outcome-independent frame exists. Gate2 remains blocked until actual frame evidence passes and a new event manifest is frozen. The remaining predeclared merger-enforcement family may receive one bounded pass only under a separate instruction, never automatically. After the original three candidates, stop and reassess hypothesis generation instead of adding families indefinitely. No Phase4B/4C begins here.
 '''
-    for a,b in [('Gate1','Gate 1'),('Gate2','Gate 2'),('maximum10','maximum 10'),('total60','total 60'),('Phase4A','Phase 4A'),('Phase3','Phase 3'),('Phase4B/4C','Phase 4B/4C')]:md=md.replace(a,b)
+    for a,b in [('Gate1','Gate 1'),('Gate2','Gate 2'),('maximum10','maximum 10'),('total60','total 60'),('Phase4A','Phase 4A'),('Phase3','Phase 3'),('Phase4B/4C','Phase 4B/4C'),('HTTP302','HTTP 302'),('not403/429','not 403/429')]:md=md.replace(a,b)
     texts={k:json.dumps(obj,sort_keys=True,indent=2)+'\n' for k,obj in outputs.items()};texts['phase4a_fda_pilot_report.md']=md
     for name,text in texts.items():
         p=DOCS/name

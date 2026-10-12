@@ -1,0 +1,37 @@
+{
+  "budget_resets": false,
+  "family_verdict": "FDA_FAMILY_REDESIGN",
+  "gate1": "FAIL_CLOSED",
+  "gate2_authorized": false,
+  "gate2_ran": false,
+  "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+  "merger_automatic_launch": false,
+  "negative_unresolved_frame_status": "UNKNOWN_UNREVIEWED",
+  "next_owner_authorization_required": true,
+  "next_owner_decision": "Authorize only a separately frozen Gate1 route amendment and at most7 remaining request starts, no automatic redirect following or Gate2; review outcome-independent denominator evidence before any further scope.",
+  "no_certified_alternative_frame_claim": "The official landing route is evidenced, but it is not an outcome-complete negative frame certificate or a guarantee of access.",
+  "performance_authorized": false,
+  "provisional_machine_family_verdict": "FDA_FAMILY_REJECT",
+  "provisional_scope": "Unreviewed automatic default in acquisition receipt, preserved unchanged; not the final scientific decision",
+  "raw_result_sha256": "41997b4977059ecbff7cf024375f75e0ea272a340fd90c27087a2e192c9400f7",
+  "reason": "Two official sources accessible, approval-oriented product universe documented; a302 stopped before negative-frame documentation. No completed absence/irreparability audit. Correct the exact source-audit route before any expansion.",
+  "remaining_gate1_starts": 7,
+  "reviewed_at_utc": "2026-10-12T23:32:18.443328+00:00",
+  "reviewer": "Codex source-frame review",
+  "route_evidence": {
+    "locator_semantics": "Original UTF8 HTML href; source original-byte hash retained",
+    "proposal_transformation": "HTTP source href scheme upgraded to HTTPS; same publisher/path, not fetched, no redirect or host rotation",
+    "proposed_secure_url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm",
+    "publisher_linked_routes": [
+      "http://www.accessdata.fda.gov/scripts/cder/daf/index.cfm",
+      "http://www.accessdata.fda.gov/scripts/cder/daf/index.cfm"
+    ],
+    "source_sha256": "b9663ee11630b10d69fcdd7766dd334eddfabbef212928ad1801131f9a7ae824",
+    "source_url": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files"
+  },
+  "source_frame_complete": false,
+  "source_frame_verdict": "SOURCE_FRAME_AUDIT_INCOMPLETE_REDIRECT_BOUNDARY_STOP",
+  "specific_bounded_change": "A separately frozen Gate1 route amendment: propose the HTTPS version of the source-linked Drugs@FDA index.cfm landing path instead of the unconfirmed overview query, followed by the originally named negative-decision documentation if accessible.",
+  "total_pilot_starts_consumed": 3,
+  "version": "fda_gate1_scientific_disposition_v001"
+}
