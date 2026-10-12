@@ -5,6 +5,7 @@ import json
 import platform
 import re
 import subprocess
+from datetime import date
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -35,6 +36,10 @@ def environment():
 def code_state():
     names = [*sorted((ROOT / 'src/research/phase3d').glob('*.py')),
              ROOT / 'src/research/spec.py', ROOT / 'src/research/capabilities.py',
+             ROOT / 'src/research/analysis.py', ROOT / 'src/research/phase3c/sources.py',
+             ROOT / 'src/research/phase3c/quality.py', ROOT / 'src/research/phase3c/inference.py',
+             ROOT / 'src/research/sec_pilot/acquisition.py', ROOT / 'src/research/sec_pilot/parsing.py',
+             ROOT / 'src/research/sec_pilot/provenance.py',
              ROOT / 'docs/acceleration/phase3d_experiment.schema.json']
     return {p.relative_to(ROOT).as_posix(): file_hash(p) for p in names}
 
@@ -48,6 +53,8 @@ def compile_manifest(spec, root, output, *, authority):
     canonical(spec)
     schema = json.loads((ROOT / 'docs/acceleration/phase3d_experiment.schema.json').read_bytes())
     Draft202012Validator(schema).validate(spec)
+    date.fromisoformat(spec['research_cutoff'])
+    for snapshot in spec['source_snapshots']: date.fromisoformat(snapshot['source_end'])
     if spec['experiment_id'] != 'EXP999' or spec['mode'] != 'SYNTHETIC_INFRASTRUCTURE':
         raise ValueError('Real compilation not authorized or integrated in Phase 3D')
     if spec['research_stage'] != 'DRAFT' or authority.get('stage') != 'DRAFT':

@@ -1,0 +1,792 @@
+{
+  "all_candidates_retained": true,
+  "freeze_receipt_sha256": "99f74baafcb7961ce508572abaf24d18b35695ffb2291ba897e7736fd0809758",
+  "protocol_sha256": "c075b3321349d9869bccb6265bd7d32221faa6c08205bfb79fe39157d33227d7",
+  "real_performance_inputs": 0,
+  "reason": "Neither candidate can reject any of the four-effect Holm family at six/two clusters; power criterion structurally impossible. Real cluster independence/symmetry also unestablished.",
+  "rows": [
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.942114344143788,
+        0.9790389000985089
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.965,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.035,
+      "raw_wilson95": [
+        0.0209610999014911,
+        0.05788565585621193
+      ],
+      "replicates": 400,
+      "world": "iid_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "iid_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.951434030711826,
+        0.984576523921476
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.9725,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.0475,
+      "raw_wilson95": [
+        0.030616832107668652,
+        0.07299210763504237
+      ],
+      "replicates": 400,
+      "world": "ar1_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "ar1_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9181319717303434,
+        0.9634017781359406
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.945,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.0625,
+      "raw_wilson95": [
+        0.04268884343581125,
+        0.09063471708890933
+      ],
+      "replicates": 400,
+      "world": "persistent_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "persistent_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9360172183709143,
+        0.9752311522773793
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.96,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.045,
+      "raw_wilson95": [
+        0.028651223384090457,
+        0.07000527956161895
+      ],
+      "replicates": 400,
+      "world": "annual_shock_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "annual_shock_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9360172183709143,
+        0.9752311522773793
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.96,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.0675,
+      "raw_wilson95": [
+        0.046801154899328234,
+        0.09642727921939556
+      ],
+      "replicates": 400,
+      "world": "overlap_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "overlap_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "window_shift_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "window_shift_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9390556322866757,
+        0.9771451751586198
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.9625,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.045,
+      "raw_wilson95": [
+        0.028651223384090457,
+        0.07000527956161895
+      ],
+      "replicates": 400,
+      "world": "heteroskedastic_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "heteroskedastic_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9483009668703324,
+        0.9827571509659678
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.97,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.03,
+      "raw_wilson95": [
+        0.017242849034032177,
+        0.05169903312966765
+      ],
+      "replicates": 400,
+      "world": "skewed_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "skewed_null"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9577968763972683,
+        0.9881185518300367
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.9775,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.9375,
+      "raw_wilson95": [
+        0.9093652829110908,
+        0.9573111565641887
+      ],
+      "replicates": 400,
+      "world": "positive"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "positive"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9270078923649577,
+        0.9693831678923314
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 0.9525,
+      "method": "annual_cluster_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "negative"
+    },
+    {
+      "coverage_assumptions": "Heterogeneous shift, skew, and cross-cluster dependence may violate inversion assumptions; retain as diagnostic",
+      "coverage_wilson95": [
+        0.9904873594003194,
+        1.0
+      ],
+      "family_rejection": {
+        "fully_correlated": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "independent": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        },
+        "mixed_common_shock": {
+          "fraction": 0.0,
+          "wilson95": [
+            0.0,
+            0.009512640599680667
+          ]
+        }
+      },
+      "location_coverage": 1.0,
+      "method": "funding_window_sign",
+      "raw_rejection": 0.0,
+      "raw_wilson95": [
+        0.0,
+        0.009512640599680667
+      ],
+      "replicates": 400,
+      "world": "negative"
+    }
+  ],
+  "selected_method": null,
+  "verdict": "BLOCKED",
+  "version": "phase3d_calibration_results_v001"
+}

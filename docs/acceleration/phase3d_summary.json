@@ -1,0 +1,57 @@
+{
+  "EXP004": "OPERATIONALLY_PAUSED",
+  "EXP005": "ABSENT_NOT_REGISTERED_NOT_FROZEN",
+  "as_of": "2026-10-12",
+  "availability_policy_sha256": "7cb18aca01fdb9ccab41fb178a5f5439582d9334b067737626fbe56c55427926",
+  "baseline_git_sha": "da35f25",
+  "canonical_candidate_presence_upper_bound": 25,
+  "certified_triples": 0,
+  "documentation_browser": {
+    "search_queries": 2,
+    "source_dataset_requests": 0,
+    "tool_calls": 1
+  },
+  "exact_public_availability": "UNKNOWN",
+  "gates": {
+    "ACCOUNTING_PERIMETER_CERTIFICATION": "BLOCKED",
+    "CORPORATE_ACTION_LIFECYCLE": "PARTIAL",
+    "EXP005_FREEZE_READINESS": "NOT_READY",
+    "HISTORICAL_SECURITY_IDENTITY": "PARTIAL",
+    "HISTORICAL_UNIVERSE_FEASIBILITY": "BLOCKED",
+    "INFERENCE_IMPLEMENTATION": "BLOCKED",
+    "LOCAL_EXECUTION_ROUTE": "PARTIAL_SYNTHETIC_VERIFIED",
+    "MANIFEST_REPLAY": "PASS_EXACT_INPUT_BYTES_SYNTHETIC",
+    "NEXUS_ADAPTER_INTERFACE": "DEFINED_DISABLED",
+    "NEXUS_EXECUTION": "BLOCKED",
+    "PROOF_COMPILER": "PASS_SYNTHETIC_ONLY",
+    "PUBLIC_ELIGIBILITY_POLICY": "READY_FOR_OWNER_REVIEW",
+    "REVENUE_CANONICALIZATION": "PARTIAL",
+    "TERMINAL_VALUE_EVIDENCE": "BLOCKED"
+  },
+  "inference_selected_method": null,
+  "limitations": [
+    "Synthetic proofs are not real scientific certificates",
+    "No source/calendar/execution universe certificate",
+    "No full backfill or independent remote-engine reconciliation",
+    "Existing stage ledger real EXP005 adapter still required"
+  ],
+  "new_source_requests": {
+    "FMP": 0,
+    "Nexus": 0,
+    "OpenFIGI": 0,
+    "Orbis": 0,
+    "SEC": 0,
+    "Tiingo": 0
+  },
+  "originals": 89,
+  "owner_decision": "PENDING_NOT_APPROVED",
+  "real_acceleration_or_performance_computed": false,
+  "real_identity_spans": 0,
+  "real_terminal_certificates": 0,
+  "source_cases": 60,
+  "stopped_before": "PHASE4A",
+  "synthetic_replicates_per_world": 400,
+  "three_original_denominator": 29,
+  "timing_invariant": 89,
+  "version": "phase3d_evidence_v001"
+}

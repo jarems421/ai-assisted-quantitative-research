@@ -1,0 +1,10 @@
+{
+  "version": "historical_identity_v001",
+  "key": ["security_id", "effective_from", "effective_to"],
+  "fields": ["issuer_cik", "class", "exchange", "ticker", "security_id", "identifier_level", "effective_from", "effective_to", "start_evidence_sha256", "end_evidence_sha256"],
+  "interval": "Half-open effective spans; distinct issuer/classes remain distinct; overlapping security/ticker mappings fail. Independent dated endpoint evidence required; a cover page or current OpenFIGI candidate is a point only.",
+  "terminal_receipt": ["security_id", "class", "kind", "effective_at", "source_sha256", "evidence_locator", "reviewer", "reviewed_at", "class_position_status", "explicit cash/stock/recovery and payment terms"],
+  "supported_review_kinds": ["cash_merger", "stock_merger", "spinoff", "cancellation with evidenced zero recovery"],
+  "unresolved": "OTC continuation, deferred consideration, election/proration, fractional cash-in-lieu, litigation recoveries, liquidation distributions or class terms require separately reviewed evidence/models. Never zero-fill or silently remove.",
+  "actual_pilot_status": "PARTIAL: zero complete real listing-span or terminal-class certificates; current point evidence retained for all60 cases"
+}

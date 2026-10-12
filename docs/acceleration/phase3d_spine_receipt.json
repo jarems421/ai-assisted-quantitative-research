@@ -1,0 +1,179 @@
+{
+  "environment_sha256": "4445916f2b2ebc064942d09189d6cb5ad4a0b40cc3de9f96a8dabdf9a7831793",
+  "exact_output_reproducibility": "Fixture arithmetic only; not a real source or remote-engine certificate",
+  "expected_failure_receipts": {
+    "disabled_nexus": {
+      "input_sha256": "799d31e08fe0755bb0e54ac1dcfc9b97fdc06bd91f72045168d89db0bfed9931",
+      "reason": "NEXUS_EXECUTION_BLOCKED: no transport implemented",
+      "status": "EXPECTED_REJECTION"
+    },
+    "disappearance": {
+      "input_sha256": "976b4539da0741709184bb19624758d708cf138e48313918ea6d0517e3e7c1ea",
+      "reason": "Disappearing security lacks exact terminal instruction",
+      "status": "EXPECTED_REJECTION"
+    },
+    "unresolved_terminal": {
+      "input_sha256": "e99768482ff3e0d7edf073c336384569060624f4aead68497e69688c2678e43d",
+      "reason": "Unknown or future lifecycle evidence",
+      "status": "EXPECTED_REJECTION"
+    }
+  },
+  "ledgers": {
+    "cash_acquisition": {
+      "action_count": 1,
+      "input_sha256": "bfb931535e0836c2ca91bcd9fa0fc9b41ed86b460c1f2e19c378be787b58332f",
+      "nav": [
+        {
+          "cash": "500.0",
+          "nav": "1000.0",
+          "receivables": "0",
+          "session": "2020-01-02"
+        },
+        {
+          "cash": "1250.0",
+          "nav": "1250.0",
+          "receivables": "0",
+          "session": "2020-01-03"
+        },
+        {
+          "cash": "1250.0",
+          "nav": "1250.0",
+          "receivables": "0",
+          "session": "2020-01-06"
+        }
+      ],
+      "receipt_sha256": "0e7f68cecc6020bade3f81d72cb8dc59bf9d1612e71802a80de7a2b785fd0722"
+    },
+    "dividend": {
+      "action_count": 1,
+      "input_sha256": "180b711e617a23e7aa20dbca56ff7599285724ffb656e41425649e0551045602",
+      "nav": [
+        {
+          "cash": "500.0",
+          "nav": "1000.0",
+          "receivables": "0",
+          "session": "2020-01-02"
+        },
+        {
+          "cash": "500.0",
+          "nav": "1150.0",
+          "receivables": "50.0",
+          "session": "2020-01-03"
+        },
+        {
+          "cash": "550.0",
+          "nav": "1100.0",
+          "receivables": "0",
+          "session": "2020-01-06"
+        }
+      ],
+      "receipt_sha256": "9d680f8db963bb04861ed4a8629ada7294a91169d37051be2d2259dab5fcd5d5"
+    },
+    "ordinary": {
+      "action_count": 0,
+      "input_sha256": "3ffef27bb3216d64fdf86c163b8b2351b6ad63bd953d6029a7d5f23d771b78d1",
+      "nav": [
+        {
+          "cash": "500.0",
+          "nav": "1000.0",
+          "receivables": "0",
+          "session": "2020-01-02"
+        },
+        {
+          "cash": "500.0",
+          "nav": "1100.0",
+          "receivables": "0",
+          "session": "2020-01-03"
+        },
+        {
+          "cash": "1050.0",
+          "nav": "1050.0",
+          "receivables": "0",
+          "session": "2020-01-06"
+        }
+      ],
+      "receipt_sha256": "56eacd274acd6055bc2b2ada3e1de2cdbab759d40fbf9cf533f3186ef54f2570"
+    },
+    "rename": {
+      "action_count": 0,
+      "input_sha256": "556a9c8cb7bc57d38a8adaf5301ab6b92386aae9d25b4f02bef920f8fa819993",
+      "nav": [
+        {
+          "cash": "500.0",
+          "nav": "1000.0",
+          "receivables": "0",
+          "session": "2020-01-02"
+        },
+        {
+          "cash": "500.0",
+          "nav": "1100.0",
+          "receivables": "0",
+          "session": "2020-01-03"
+        },
+        {
+          "cash": "500.0",
+          "nav": "1050.0",
+          "receivables": "0",
+          "session": "2020-01-06"
+        }
+      ],
+      "receipt_sha256": "3a4c60cd7296c8986564a8fd155d62ad8bd3d8ffd9790f77a78b5f8ac59dde3a"
+    },
+    "split": {
+      "action_count": 1,
+      "input_sha256": "64ddffec4c9d189efe21c2063ba721a391467223c5dc9ecd870a284f360a2530",
+      "nav": [
+        {
+          "cash": "500.0",
+          "nav": "1000.0",
+          "receivables": "0",
+          "session": "2020-01-02"
+        },
+        {
+          "cash": "500.0",
+          "nav": "1000.0",
+          "receivables": "0",
+          "session": "2020-01-03"
+        },
+        {
+          "cash": "500.0",
+          "nav": "1000.0",
+          "receivables": "0",
+          "session": "2020-01-06"
+        }
+      ],
+      "receipt_sha256": "1f6ce52b4c7fbcf38fa385099a7844ee1fb0fc5cc9c5f5e5f8a239db45766bff"
+    }
+  },
+  "manifest_code_commit": "5824c964c29014170c909510b5762771f5684e57",
+  "manifest_code_hashes": {
+    "docs/acceleration/phase3d_experiment.schema.json": "5d86c91188b2a9afc5a2a6c0f5f17be5ea2338311187230494b12f8add68150c",
+    "src/research/analysis.py": "80813779d1ac3e36336a407b241711360ecc7fe3ce89f986f69c25799727bd76",
+    "src/research/capabilities.py": "348e5ab769fe78caa8fc25fe56c47e9e352ada208baf52e63817faa725ccac8d",
+    "src/research/phase3c/inference.py": "a4f94a2ca3c25b172331efc2f0c7eda7565cad09a5346658d01c0dc9e254c4f1",
+    "src/research/phase3c/quality.py": "62bed227243cc8847ac45cbf75aa9b080a55adf65c67469786b7a1bc7c75dc1b",
+    "src/research/phase3c/sources.py": "5af9767862e487d121f44007e8b7ec7239b25f8065064ed6a623286e90c90176",
+    "src/research/phase3d/__init__.py": "2b65bc34211c1ab25bb00677a1d0652baf04accc2dd09d7124471bf845c03bfc",
+    "src/research/phase3d/__main__.py": "21499b4ae6cf74b6c708c2947c2def914722c51fc99e9f216928c41fe9d52ca1",
+    "src/research/phase3d/certification.py": "02e124ae3f102646817f245ca3cc8aa84aa7aa7e93d7b6e8d9aadcf8bdcba267",
+    "src/research/phase3d/execution.py": "d0ab6262f7ca0e4de00b1a624bfa88fa7f45d1ef1c3c1ca384b169fc08ffe6e0",
+    "src/research/phase3d/fixtures.py": "947d45095ef6b747ffcae5917e0a31c96a28b75c4ec50eaa3dc66898ffc0a840",
+    "src/research/phase3d/inference.py": "bce5fd15a38a914ca73b2e288eb6e955321b3664138038bfc5017eb4a4b9e901",
+    "src/research/phase3d/proof.py": "83b920d2d9def97c65ee2918aebfb6f16cf094c38ce1b1c5b85d563c589e8ca6",
+    "src/research/phase3d/report.py": "b23ad67c93c1e38ff177a2e8c51dac7290d8f0a823c99d389bdbebecc60646cf",
+    "src/research/phase3d/review.py": "7a16447e0068d1113d0fff027fdfff7ae0069d9b1459ce5243ae3cea77701c1b",
+    "src/research/sec_pilot/acquisition.py": "0819668e96f03b716b088094cbfb1d3a22dec1398a796b3f458df9592a374bcf",
+    "src/research/sec_pilot/parsing.py": "512d1c1f1baaaeaf8b33b1c51525958ebf869c7032f84b3b5cd26f8458a57ed8",
+    "src/research/sec_pilot/provenance.py": "508b5a86ecb074821e7008a1874a59363741b4dc7d9d761b1c7aed8dd4f281d7",
+    "src/research/spec.py": "98f0209817bc2669301f3017e04f246d5d1b8ed4ef5bb7cd1880d22105fd711a"
+  },
+  "nexus_adapter": "DISABLED_NO_TRANSPORT",
+  "proof_replay": {
+    "environment_exact": true,
+    "manifest_sha256": "76d0afa47872f81d0b6d157dfea5b4ea2a9293d075151ada849fd1b5a99285cb",
+    "output_bit_reproducibility_certified": false,
+    "status": "PASS_EXACT_INPUT_REPLAY"
+  },
+  "temporary_EXP999_only": true,
+  "version": "phase3d_synthetic_spine_receipt_v001"
+}

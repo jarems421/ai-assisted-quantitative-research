@@ -1,8 +1,10 @@
-# Research OS v1
+# Research OS architecture and operating contracts
 
 Research OS now follows the [governing roadmap](acceleration/master_plan.md). Phase 3D adds engine-independent proof manifests and a synthetic local reference spine; the v1 commands below describe existing compatibility infrastructure, not authorization to reopen closed experiments. Research OS remains canonical; Nexus is downstream and historical execution is blocked.
 
-Research OS is a local control and provenance layer around observed Nexus capabilities. It does not infer alpha, change EXP001, or authorize trading. This implementation was exercised with synthetic EXP999 and fake transports only: no new Nexus portfolio, Aurora run, backtest, sweep, study, or deployment was submitted.
+Research OS controls canonical evidence, contracts, scientific gates, trials and reproducible execution. Its [Phase 3D checkpoint](acceleration/phase3d_report.md) adds reviewed revenue/identity contracts, a declarative proof schema/compiler, exact input replay and a synthetic local reference ledger with a disabled Nexus adapter. These software passes do not certify a real historical universe or alpha. EXP004 remains paused; EXP005 is absent and NOT_READY. Availability needs explicit owner review.
+
+The v1 architecture and commands below remain compatibility infrastructure; no old experiment is migrated or reopened. The new minimal spine uses existing hashes, immutable stores, population reconciliation and stage principles. Real compiler-to-Store/selection integration remains blocked pending scientific certificates and separate Phase 4A authorization. Synthetic commands are `python -m src.research.phase3d check` and `python -m src.research.phase3d report --check`; private source reconciliation adds `python -m src.research.phase3d review --check`.
 
 ## Architecture and responsibility
 
@@ -133,10 +135,4 @@ python -m src.presentation.exp001 --check
 
 The EXP999 demonstration writes only to a temporary directory and submits to in-process fake transports. Existing EXP001 tests still require the private raw files; public clones can run `python -m unittest discover -s tests -p test_research_os.py -v` and the synthetic demo. Completed future reports update `experiments/registry.json`, and README generation consumes those cards without altering EXP001 metrics or its final report.
 
-To begin designing EXP002 locally when the owner chooses to do so:
-
-```sh
-python -m src.research propose EXP002
-```
-
-This creates a DRAFT with intentionally incomplete audit fields; it neither runs EXP002 nor calls Nexus. Replace all TODO/synthetic content, audit, and freeze before planning Development.
+Legacy command examples use historical identifiers to document the interface. EXP002/EXP003 remain closed, EXP004 paused, and no EXP005 draft is authorized. Follow the active roadmap for the next separately approved milestone.

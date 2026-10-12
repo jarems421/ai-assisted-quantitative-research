@@ -1,0 +1,1552 @@
+{
+  "concept_presence_upper_bound_triples": 25,
+  "contract_sha256": "68db15a1fa37057218448eee76920a009cf6d6b3a15a71bf32d3e05a969afb7b",
+  "fully_certified_triples": 0,
+  "issuer_denominator": 30,
+  "issuers": [
+    {
+      "candidate_in_every_original": false,
+      "case_key": "0000004962|AXP",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000021344|KO",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000027419|TGT",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": false,
+      "case_key": "0000050863|INTC",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000051143|IBM",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000077476|PEP",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000078003|PFE",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000080424|PG",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000104169|WMT",
+      "certified_triple": false,
+      "competing_line_in_any_original": true,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": false,
+      "case_key": "0000200406|JNJ",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 2
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000310158|MRK",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000320187|NKE",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000320193|AAPL",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000354950|HD",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000731766|UNH",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000789019|MSFT",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": false,
+      "case_key": "0000796343|ADBE",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000804328|QCOM",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000829224|SBUX",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000858877|CSCO",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0000909832|COST",
+      "certified_triple": false,
+      "competing_line_in_any_original": true,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0001018724|AMZN",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0001045810|NVDA",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0001067983|BRK.B",
+      "certified_triple": false,
+      "competing_line_in_any_original": true,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": false,
+      "case_key": "0001108524|CRM",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0001141391|MA",
+      "certified_triple": false,
+      "competing_line_in_any_original": true,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0001326801|FB",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0001341439|ORCL",
+      "certified_triple": false,
+      "competing_line_in_any_original": true,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0001403161|V",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    },
+    {
+      "candidate_in_every_original": true,
+      "case_key": "0001652044|GOOGL",
+      "certified_triple": false,
+      "competing_line_in_any_original": false,
+      "selected_originals": 3
+    }
+  ],
+  "limitations": "Candidate presence only; no source line chosen, statement/Inline reconciliation, historic taxonomy mapping, accounting or perimeter certification inferred. Census not an alpha feature; old parser snapshots preserved.",
+  "new_source_requests": 0,
+  "original_denominator": 89,
+  "prior_evidence_sha256": "46c631b46c8587ddc8d7d5fa3ac1bdf9d859e4f08d0dcb379861d7c3b8d808de",
+  "real_acceleration_computed": false,
+  "records": [
+    {
+      "accession": "0000004962-19-000018",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000004962|AXP",
+      "certified_source_line": false,
+      "concept_candidates": {},
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "fad259b2b8d87ae388302f7ab8ac8bd25055e2ab9b7a4b5d8c369bf42f2015e8",
+      "source_manifest_sha256": "da3523bc8e878210864563d9104c20a904b7bd87dcab3dc331a0d80ea51f0ce2",
+      "source_sha256": "5b4a8040459e4d9cedf1683577c08c298217b51f565dbff2341e7816ecf09e3e",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000004962-20-000030",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000004962|AXP",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "ef1542bc3d44b06f8eb5dcc0e38ed8908a98dac1e3177b49215e6c3446e01f76",
+      "source_manifest_sha256": "9422a0c5febfe4e7fa74063bc97d5c1b17d19650b27340e34a10e33e468b19f2",
+      "source_sha256": "2ee98741a876dc1dcd2bafb4f4447133eaffbb0b3ab3a6e0062fad1f6faf8b52",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000004962-21-000013",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000004962|AXP",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "004b7cbc5a2b2a7f3fb1356b115aa631fb64178c1f464ef1c9fa2c98fddea76b",
+      "source_manifest_sha256": "1bb7d3214d77b41ece7005678e137e5f2469857c01592e55bed53c6856db3272",
+      "source_sha256": "d1e940d8c42fd2cd90402e2853663c9e443eb9412129b1c32bff3e4344079c23",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000021344-19-000014",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000021344|KO",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "56d6648d96e0c2d25e4473a443a37d23bbc6837e89b1cf007eca67da8ec01c84",
+      "source_manifest_sha256": "77916fa3f4cc52021b51aef78c49f2290d31753929f739a2915710948aa22923",
+      "source_sha256": "2218cbbf89e926829f03aefed27c2ddea698daa1a115cef69e7dcb6153b289a5",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000021344-20-000006",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000021344|KO",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "511042903f2e9724e3ecc04ec3bb8e9ae7444c84be8e727035d58cefdfea65c5",
+      "source_manifest_sha256": "a68ab517a0e734d1c6264871aecfa2e83525cfa70fbeb6e563af78f3e41c5b4a",
+      "source_sha256": "5cd02d40ff0bd0826587dc6cf67fbf9d41facfa56033dd18c4dd6cba385890ed",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000021344-21-000008",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000021344|KO",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "d88b47188c3c02877c458960a5bdec6f2db0616d260989fe47335e7506074ac4",
+      "source_manifest_sha256": "1e9f453b3b299f9ed28d494998374cd0ab50c0002b5405a200116a04fd5130b7",
+      "source_sha256": "3a76992572d954c5b749a3ac6dd65d62863980e63d15ecb03dcfab131b38aa4c",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000027419-18-000010",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000027419|TGT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "SalesRevenueNet": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-02-03",
+      "primary_sha256": "92e31d270fdee2f261dec1148ad3f525ba7d82bfcbf10a955ece02190eac86a3",
+      "source_manifest_sha256": "c3495631277a59c07a2495085c4e250c1562588c79350c0686a4cd475046197d",
+      "source_sha256": "b9fa262e626ac341caeb5c428edd5dac7b094d463f4bd9aec70b1f37473934ab",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000027419-19-000006",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000027419|TGT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-02-02",
+      "primary_sha256": "dbd0354c6367fdbfd91658da133e0e49082281441e133e82d6d59cca9c1149d6",
+      "source_manifest_sha256": "43b34b9104c8306f3db734da042f4dff5d50684b1042a2fea2b96f240a0f68f5",
+      "source_sha256": "f84c176c468cfc7e15b7b995f85e3388b668f5b75117011d021075b2b725eca0",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000027419-20-000008",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000027419|TGT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-02-01",
+      "primary_sha256": "6f4a56df7d24746bbe3f93224f985744b88dd94726adbfd971337ff9de0449a2",
+      "source_manifest_sha256": "606b6f4c5e7253f360b95c417b79c63f1cd7618b56dc409fc8699ab24881fb3b",
+      "source_sha256": "4f9b073e97afc60cae7b7ec8f7489b4513b6728e510d7f7509c3929c311cc7d0",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000050863-19-000007",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000050863|INTC",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-29",
+      "primary_sha256": "59656d276d094bdfa11f1d212d29dcaf734ac20073fd1eb0bd6c44ca7fdcaeb2",
+      "source_manifest_sha256": "bc48809f2b85bf36d9862c54649819ab6699966d54926807a1a1f516a213f3c8",
+      "source_sha256": "d0c23044105ac3ea4e1bc9ae9ef27add9c6cc13a4e6691139d0076e05f939f52",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000050863-20-000011",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000050863|INTC",
+      "certified_source_line": false,
+      "concept_candidates": {},
+      "filing_period": "2019-12-28",
+      "source_manifest_sha256": "b923daf0181d54a7cc8be699c6528c92eb18870dbbd75ec1c20a5210bbd31220",
+      "status": "UNAVAILABLE_INSTANCE"
+    },
+    {
+      "accession": "0000050863-21-000010",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000050863|INTC",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-26",
+      "primary_sha256": "861fd9ac97b026ba748cb8c403e2e213d80dec4165d53c8d6ae931cdb5466636",
+      "source_manifest_sha256": "0d9652c69dce4eeeb374f7731d9378366d78ff5436fd5f2e968031efe958b216",
+      "source_sha256": "86c01209aa7e9ac0234dc2035b9cac979d40eb426fb3b10466101fdae5a74cac",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000077476-19-000017",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000077476|PEP",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-29",
+      "primary_sha256": "0b4853322d71c20edad82a44e8e2f9b37d7e0d9b5e08c4684d47fcdf62ca5c0d",
+      "source_manifest_sha256": "6f1a62a703840cc77c634b4dfe6ef9b50aae353a9194169903b30013f2392689",
+      "source_sha256": "bb765744a0462225918bc7e7caa5561cb1dbd30013ae44a2788562973b333aa1",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000077476-20-000015",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000077476|PEP",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-28",
+      "primary_sha256": "081eb51077022a3346554d8bb900cbd572e1c8344811f89298cad4256dff5a22",
+      "source_manifest_sha256": "a5edb85dbae2dd2d490f2379b9efc4de08d134c569eef23c3b83bb6d161f93e0",
+      "source_sha256": "de656d2140b6973feba93c62b58335d961abadc4cf75806fc3255ddb7a429f0a",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000077476-21-000007",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000077476|PEP",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-26",
+      "primary_sha256": "70c0066c694d4fce6246f90f1a71bd774e870b73e050ef5ddf78130414fb901c",
+      "source_manifest_sha256": "0822c976e1e43cb4f0d4a24c66636b643bbef9fc45ab92e04c2a79d2aaa93747",
+      "source_sha256": "e56923b86b838ae297c3f032a38d005532db57c933115ddbc76bb51af5700498",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000078003-19-000015",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000078003|PFE",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "f02d47a47bed1edc4d45f4b9dffeef0748c7bb7a755f6ef06078c0b8e2ea59e5",
+      "source_manifest_sha256": "3d37fe8f15761925b0cf7dad3c79244372f67bbda064b752eebc89014233d1d4",
+      "source_sha256": "8af124efa349b8760c2ae7eb53f8677cfed073d5738b42ce2adc99b92d9b0039",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000078003-20-000014",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000078003|PFE",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "463bf1841a188117d5b4b0503568380eb9c96ec5b6b45f2e69b27baf6ca01663",
+      "source_manifest_sha256": "d568d53f42d08c51cd078fdbc3f94181ad470b2104b922037ef4c98cdfd4928f",
+      "source_sha256": "bcf77e588bed0951cb7948a5e58d7d3d73f417e265fa44ed84c7163cbadfc9bf",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000078003-21-000038",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000078003|PFE",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "e0d94a0ad288026ff13ad5cbd2fad7fce72cc29469af3442dcc802867bca1692",
+      "source_manifest_sha256": "6a1815ee8c7544006f1d482b20eca4694292778f9030322f48f63a5a4c494feb",
+      "source_sha256": "bd64d80ca1ba9f367a0f8dcdedb2bbd90d377d5c9f20b0dfda5285bf034e7170",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000080424-18-000055",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000080424|PG",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "SalesRevenueNet": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-06-30",
+      "primary_sha256": "2dfb064eb21309d9326afd6c13dd27c53a84f3dbe24c15f7349ce1440c94ae91",
+      "source_manifest_sha256": "f99bcce5b94665da1a81f40a0cf4f5f1cad6ea255868f1f8db396847f8b62752",
+      "source_sha256": "a817cbe23aa76f4201a7a111466269c72ec25b7ba1b81a940d670058600079f9",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000080424-19-000050",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000080424|PG",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-06-30",
+      "primary_sha256": "e7347f96bc45ecb41193593b9b96b1710fb68e5a69f856c87eca725240b50859",
+      "source_manifest_sha256": "a5bf5c060cc2c5a59ba0cc66a5efc1511631a8f3c285a3de0b96a32b59ef6b8d",
+      "source_sha256": "b73a4aeca14290498a3244faca2d635a09c497f91fbd7880e7f6d1f041dfd122",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000080424-20-000053",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000080424|PG",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-06-30",
+      "primary_sha256": "ae615460c2b374fae6e60490a2a34a81283f256112d7ca1c08676a37a43215c9",
+      "source_manifest_sha256": "8c4935f560bf036ef66fe527a2ffa82c35fc1997c764fb62b36687a6c67c78c2",
+      "source_sha256": "4e445ef9d13b74eafcd09fce65b20f20996ce42c13f2ffb69fc4071621f39224",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000104169-18-000028",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000104169|WMT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1,
+        "SalesRevenueNet": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-01-31",
+      "primary_sha256": "69f96c2cd4686596c4cb7b3f09e1f1aa39a794d2168a6820a36448b452e72602",
+      "source_manifest_sha256": "5da5767fb6474bcf1766c37f84c29899770c171f93354cd486e11f335433b9f3",
+      "source_sha256": "12a8aef28053cbeae9c666f90b9511041cccaac4a819484b55f337798c6b2f14",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000104169-19-000016",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000104169|WMT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-01-31",
+      "primary_sha256": "b0a7dcff57edf946b0ba00e44c2aca3cbc258a2a03ba24c8a7d65e0cf203283b",
+      "source_manifest_sha256": "fe67f591f070bda7b3cd8a1bb7e7a23cc96dd2152e572f6463279bbb50866231",
+      "source_sha256": "7070647e8e6be64338084d917cd18811950865830022f7601491e64d595715b8",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000104169-20-000011",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000104169|WMT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3,
+        "Revenues": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-01-31",
+      "primary_sha256": "a2f6a4236cc171b85f9845a4de433d74dbc7a857677758bbcf8a2d32d0567154",
+      "source_manifest_sha256": "63944694b38cabde3a064f8f314ddf54fb2579c3af737ec0948465f8ff05ac32",
+      "source_sha256": "1ae5598f712abae4ff820137b68b03bae73e46a8ceeb8041f1006231b8753739",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000200406-19-000009",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000200406|JNJ",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-30",
+      "primary_sha256": "9a600421f3aa2589bc6f428d881fd518ad5bf22551d281c66adf2716828cc930",
+      "source_manifest_sha256": "af45b40bb290ef1ce320814df665e48a9d9d01d7889a9a5a5c4749e650868088",
+      "source_sha256": "974509dacc9c44f1bc391c3870afe2b3c075bc1fa642455c3aa2207c0538428b",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000200406-20-000010",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000200406|JNJ",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-29",
+      "primary_sha256": "562d959f2d8a0369784c0526100ff2222798c8e71827f05106adc8a197fd780f",
+      "source_manifest_sha256": "1576ed5e6d338b82e4767956b2b43f0cfa57da696ae8f1c820bfbb3b653b35a1",
+      "source_sha256": "6012b9d50dea0d0645ce40bc9e339f202cc1885a32b99b81b377c543c519e9f6",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000310158-19-000014",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000310158|MRK",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "0caff604fcc3fe56c88ede1bc8d584b3bc723f988b2fb69998883813f6ae23df",
+      "source_manifest_sha256": "7bf86b6e0f28c67109ab9f9bc48aef024569c156422e981f1de68e8f982654b4",
+      "source_sha256": "2288597b8b897066c1942f183b3ad3e912b9828693de7188ea95baa0759f5e7a",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000310158-20-000005",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000310158|MRK",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "dc450aff9fa3b99114d0461d2ba86bc355dfb5d941cf853dab000b2fbaf67b00",
+      "source_manifest_sha256": "302ffd63b96339ba1c0b697fb49809d1ae7926ff9de762687c05a01197cc283f",
+      "source_sha256": "94f25df7634bf7105676e7561542517a732d5e931fd2312ddaa60bba46502abf",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000310158-21-000004",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000310158|MRK",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "3af583d845a7817d8f7dc89ffb3975efd6ef6781cd652aa6bb2a5bb2cca1d7bc",
+      "source_manifest_sha256": "32ecd99eb70e4e033d33e153aa8965c8028ff673e2e5d8c72b168b0ec198d5cc",
+      "source_sha256": "16aad91c4061448cb1b01a8ba9c6b78f26fb6f4530f60985fd9340d39338bc7a",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000320187-18-000142",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000320187|NKE",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "SalesRevenueNet": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-05-31",
+      "primary_sha256": "1c0998cf6cb92980ba9d02cbd15733dc7dcb0bde9be4401ee57ee4fabaa50018",
+      "source_manifest_sha256": "4fd9c384813dfaf7b3e2735fb6e5a70eceeaca2ab35aab567f7cfc7402f572a4",
+      "source_sha256": "90626f66b6be080f8c7cd13f95bfaee52cb095ce899e9a40a6db864f5985e412",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000320187-19-000051",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000320187|NKE",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-05-31",
+      "primary_sha256": "5f28e382a4a4dd6e12e3b9c8667c81cfee315c677841e9983f241881b5537908",
+      "source_manifest_sha256": "a515e9eceef49758c33a57d9229bb5ef54398c909c281a9a8be55ff437d8d08b",
+      "source_sha256": "7964d245926cc8cbcfeea5067c39269ea4c4e0a2c9847a34f4a94c8813150477",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000320187-20-000047",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000320187|NKE",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-05-31",
+      "primary_sha256": "1c25e707f2fc9ef9b195eacb7aa8b71d7df38bbefa984f9671c74080bbab3243",
+      "source_manifest_sha256": "31ad22fe460b62a16755a178c4fcd259d1a589041c7a5801c30d634a216f0f80",
+      "source_sha256": "54afa4d9a4f386ec55fe10e0e5c92c7c8efa79df9512c48e302eeff75e594c5d",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000320193-18-000145",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000320193|AAPL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-09-29",
+      "primary_sha256": "b9c449cefffdb4d3a87e67e64f994ed978f5829d1684054a6c3a679ca2f9dc58",
+      "source_manifest_sha256": "b574af613ac40b3e7270249cd2765e704e2c8532523386f1c2bcb319c10b8536",
+      "source_sha256": "cdf52903e98be94d8735843dd06d06f0c7664f91a7e30e0d6978a118e77fc18e",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000320193-19-000119",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000320193|AAPL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-09-28",
+      "primary_sha256": "18d558a2e15707d9ccb54ffe78ec50b86f7efdd57dbb0ae92977f7e180caef83",
+      "source_manifest_sha256": "400a974f664251bf7d61fbc9686efa7b3d054c1dd24457a0c769394aefa4906e",
+      "source_sha256": "90cc42b5465d6bd93738c9b6b556e6d37de840423671cf82a3b81ff61dcd48e8",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000320193-20-000096",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000320193|AAPL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-09-26",
+      "primary_sha256": "dfb1270028b83a7fb88bbe609bbde81fbde185ff9d062e1b08fe233a23e2e27f",
+      "source_manifest_sha256": "a221ea8a584392155da1c0ed3419d7baee86609cfcc9c6d785eba7833a75b170",
+      "source_sha256": "b8bb01dc617abbf706cb9aa7c0c52603fc52697d822131e0167bbc43e9dd87c1",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000354950-18-000019",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000354950|HD",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "SalesRevenueNet": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-01-28",
+      "primary_sha256": "7dee72b0296b854c3cc46ce1db2f5abc7a2374420d28fd059339d1f96889b575",
+      "source_manifest_sha256": "3af092bcae912cae089f80ca379a6f19406f9f700b2f9da091aae88f176aa59e",
+      "source_sha256": "e75c1c10f326aa3fdd9748e80a2ecd61e09584eca53d28b725740d1bd2fbb22e",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000354950-19-000010",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000354950|HD",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-02-03",
+      "primary_sha256": "396afaf416a4f30c17ec5dc3614a08ff40d59fe77d9d48c2fb511d67e6551347",
+      "source_manifest_sha256": "e1e1be8aa35379be462423df0fc51b7c4614b3e2def3248c4434bf59f55e29ac",
+      "source_sha256": "699e25c6d597c9ff992c5939160aaf826a5fffd9f6d4e25cc6f5c6b340c0f02d",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000354950-20-000015",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000354950|HD",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-02-02",
+      "primary_sha256": "130137fb0b9ff3f3b237764eb2df6ba105a45e90f2b3d51c2878a5db9fc54366",
+      "source_manifest_sha256": "0312ef2b45261786720be71b3bf3216cd1c931ec47d5e8c619c5f317d3777f41",
+      "source_sha256": "e1344d615948962c9a5d5b26c7867a5341a88f03abceadf2f22a4625cff2db40",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000731766-19-000005",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000731766|UNH",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "b469c28af22cc3a8682219421aebc44937d041ba56fbe578cf098d015261bf82",
+      "source_manifest_sha256": "1cdb37e1b15fb4db8f138e8114195f111cbad3a0d0b1e65cbe54e55c22ece338",
+      "source_sha256": "a07b296fe8e934da4fa59063384e9af5cd64b9ef9184b03cc406b826157e77cb",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000731766-20-000006",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000731766|UNH",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 2
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "3e26f305a6b872d2762da5889cf28ef6f8be43fd4a268f11e056699c4fc33da0",
+      "source_manifest_sha256": "f8b7879b1f57288b6246a75657805606e679d3944e2e68988babac5d4b78ed21",
+      "source_sha256": "0c1edf6dcb63d8ce1f6962d58a1452a97bfbbdb164a4612e47adcfa3261deb81",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000731766-21-000013",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000731766|UNH",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 2
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "1bd7a02b4f6a462743a7347b0fa45d6e7ca4ee0ffd0b1a26ff498b86d96403d5",
+      "source_manifest_sha256": "ece1bd878b5268d17cbf79e50e6b71aeb439e73204b33d8a834a929c1188c24d",
+      "source_sha256": "afbd08758b74203a5b01242436cbbdb43f254959300db8924ed09b5c324c883c",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000796343-19-000019",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000796343|ADBE",
+      "certified_source_line": false,
+      "concept_candidates": {},
+      "filing_period": "2018-11-30",
+      "source_manifest_sha256": "3497c40899f282dccd5fe33880db4795d60fcf9d374b3d2697d9972c61d9f05e",
+      "status": "UNAVAILABLE_INSTANCE"
+    },
+    {
+      "accession": "0000796343-20-000013",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000796343|ADBE",
+      "certified_source_line": false,
+      "concept_candidates": {},
+      "filing_period": "2019-11-29",
+      "source_manifest_sha256": "b9c0759a559723b44a4085877d8231961924bd745976a73753f2b40043dc9fa4",
+      "status": "UNAVAILABLE_INSTANCE"
+    },
+    {
+      "accession": "0000796343-21-000004",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000796343|ADBE",
+      "certified_source_line": false,
+      "concept_candidates": {},
+      "filing_period": "2020-11-27",
+      "source_manifest_sha256": "b4ff1d1dff2977d32046a0fe6d2d69f2eb2e3e8da8f1f39d7ddebe2c0ca39b36",
+      "status": "UNAVAILABLE_INSTANCE"
+    },
+    {
+      "accession": "0000829224-18-000052",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000829224|SBUX",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-09-30",
+      "primary_sha256": "35704fc0e2d34c88a200bfa1e5434a3836d83bebf658c4485ef7fee164521fb9",
+      "source_manifest_sha256": "677e63ff55bda54c22b9a7da94a25b0e9c965f0a9bfb0ca32c1087145c27dbcd",
+      "source_sha256": "722408a1709e0a3da7a89a437fff0bb98a7d49129f997019ac1279b9751ddca9",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000829224-19-000051",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000829224|SBUX",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-09-29",
+      "primary_sha256": "9bf0d4ea5e8370e2175a526a7b06ee792da2b735847207c202e3dca96aa2805e",
+      "source_manifest_sha256": "ef7e8e49d5ccdbb65d2392baf0dc40ed3863117b687d33520b8d894698e91708",
+      "source_sha256": "6f0ad44d006a6bff02529a388591fbcf82b54ca79f02529499a60ce998d3676a",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000829224-20-000078",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000829224|SBUX",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-09-27",
+      "primary_sha256": "966fac936d54f74eb27c7e7299db758c2cddd13d071d7359abb129348c6d8dfe",
+      "source_manifest_sha256": "5f2c9c8492be5f69d59e81c7279b8d07d375d1e3c366bdae796451b917cbdaa9",
+      "source_sha256": "67acf9c4257cbfd98ec0e9f0505445a4a675214575471458206acd6592b4a3fa",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000858877-18-000011",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000858877|CSCO",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-07-28",
+      "primary_sha256": "7a1488ee1a7648febea237eecf41673a38d4ec05f626750d06446e3489c1107a",
+      "source_manifest_sha256": "107b11ac186b52ae7e6e258afcb95bafdef4292b0ffddf27ace203cde673f795",
+      "source_sha256": "7946c9db3f15adc7883f06ea338add7070e48b3859b03e8968622afdd970c4a8",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000858877-19-000012",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000858877|CSCO",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-07-27",
+      "primary_sha256": "072b49958e9d13add72c321e977ac4379436b0424b84de9da4316c930e49c64d",
+      "source_manifest_sha256": "51685c94daac6c936e3bb69b39c543a1399782d2b5dea13c24a18861988d3d4b",
+      "source_sha256": "a14c84d16a1b9e52d7d482328b61bc93812341c00d813d7a1e4a8aea4a086cab",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000858877-20-000010",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000858877|CSCO",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-07-25",
+      "primary_sha256": "dcc7427fed140a84f9cdfa0c09900b13cf46fa3982becdbbce6866cfeaea0278",
+      "source_manifest_sha256": "234f30d85579b2634ce22d179add358040169cc1ebc3c056cfcbbb9c0040310b",
+      "source_sha256": "a53c27953b27e29a6d1bdff19cfc316c41c699ca4abaf76d25e30c57e7e74f70",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000909832-18-000013",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000909832|COST",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-09-02",
+      "primary_sha256": "d93b39b8658ea9de83a65f0aa3eab98e99961e43c3722471e147dc9788deba4f",
+      "source_manifest_sha256": "c2dad3640c8e9a2519ebfb6f7d0540d24845c18568a1763e25b8fb8ab6e9af3d",
+      "source_sha256": "4cef8fa2ce152f4dbd42f5428469c71d1055df7a13ada337da5594fe744de9dc",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000909832-19-000019",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000909832|COST",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-09-01",
+      "primary_sha256": "cee58b2c904d9ef5e796c8c182daacaaa60be7259b0972fee03a5aef01d27ef1",
+      "source_manifest_sha256": "62a8389f19626cf490e99ceccb82e507770b8865853202c6a2e5a0696165b2b3",
+      "source_sha256": "d6ab0a8ccface68952cea09f7e00754968be71b4765526ddfe39ff32d3c125e5",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0000909832-20-000017",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000909832|COST",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 2,
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-08-30",
+      "primary_sha256": "4e02e9f5c3e709796c23fa2f9ce54f89c6b42386efb8b0f1d2e8a6ce96e0981c",
+      "source_manifest_sha256": "4dc57da937ccb503878f4c9cba2338eab70a0b159da2cf2aaf086e17ac812675",
+      "source_sha256": "6cd62eb5648eb68ce5e12babee9ca6ba2c7851d600d14facdd08ab591bde2ed8",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001018724-19-000004",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001018724|AMZN",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "23279f9755a1b0e723ffaf85a945205d5c2d64da6fbf84c87e39b471934e8dda",
+      "source_manifest_sha256": "cc25ce963b576dd2558696532b9c49f6a45e45f813a29e0f933edb80cd32ae4b",
+      "source_sha256": "88fa9e8116c8a75db1067120635b2e39898d43a5519c5c2534a1d250afeb4514",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001018724-20-000004",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001018724|AMZN",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "bf52a4745baa7428e3d30bf8dd867088e9216d0e58b88156aebdd965dd0218f8",
+      "source_manifest_sha256": "66b908dd9276b9b3dc65841f85cd5433f6c6c3aa0af97c058eafba7af83b922e",
+      "source_sha256": "0cd643f8bd3c19a9ef4f9d01e45444380f3a385bc49c963167a948a2592320bd",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001018724-21-000004",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001018724|AMZN",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "e08c5177fd2769a2df3abb7bc751647b567ba33587d4973e24f9539782bd22b7",
+      "source_manifest_sha256": "efd02849f15e771cc7812aad154a6239fd463164f60f51dfc7983ea2d7ff97e6",
+      "source_sha256": "a9a01da939ef8d0af1ddb762ccb4afbbd204e48dc413c41d926b8507dc195316",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001045810-18-000010",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001045810|NVDA",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-01-28",
+      "primary_sha256": "5ab18b664942b9b6e704755f4fe431696a14f5771a8678bc4b75993ea25f51dd",
+      "source_manifest_sha256": "0745a09631b13662f262821c350f5037e9ec04d21a6bd9720dafb8b06ee224f7",
+      "source_sha256": "187c882aa072b25206c2b9bcf379b92647e6d39c5909c9461842628eb48e7f2d",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001045810-19-000023",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001045810|NVDA",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-01-27",
+      "primary_sha256": "f2f8eca3caf4f0406ba9ab0d45541c9ea20480249ba8d80a627afe045ffcca54",
+      "source_manifest_sha256": "826dcfcd35af1bd02ecf0c8a9fc24278cd81b2414b29bbb24d28ee2d77daf640",
+      "source_sha256": "c6f9bbcaf3d8d67b3fde277900c4fb52382aae716334c767b4b565e0f1b4bebd",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001045810-20-000010",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001045810|NVDA",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-01-26",
+      "primary_sha256": "ec16a952de7cbf65c58370b24c84f46b8ab2ea9c31d2132c2d50890529da28f5",
+      "source_manifest_sha256": "ff25a3923096bc596cb00f33eb5b7c485831b91a4becb034fd5938e1818a3e0e",
+      "source_sha256": "027642676e544cbd94fdcada518ba597bc6e1c8ef34e2b1033b9e244f3496494",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001047469-19-000712",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000051143|IBM",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 6
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "92760baed5874a99e272a8eae1f9059263039833e65bef5a3de0dcf7415c0d22",
+      "source_manifest_sha256": "a1c29e1069ef4c64c7f0cb3f91ed9db22aaea43bf35e181233283be5d546c269",
+      "source_sha256": "76e981d9d4b679025b263538936056392b5d5b121140d8b661d5aa2123a931a6",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001108524-18-000011",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001108524|CRM",
+      "certified_source_line": false,
+      "concept_candidates": {},
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-01-31",
+      "primary_sha256": "278710930e0513f89e2aafabecc4a54b6aca1a8c5bb5488287812518489eca27",
+      "source_manifest_sha256": "4c8ee59a71ca02db9fb07cc0dffca0fcf50449c3447dfa0310bfc4baa6b4efd1",
+      "source_sha256": "537e13d4723c2826543fa6828b7ce31330991e991bbbe8ce03066ccfea7b08b9",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001108524-19-000009",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001108524|CRM",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-01-31",
+      "primary_sha256": "cf8c2fb1cb66ec55c8d6bdae1657ac11bcbc0e84dad676a92a373900aa84715a",
+      "source_manifest_sha256": "4c7c4758317c5fff522bf73168fdd716b1c164b3935623f9fc76bd4ce2cb6b2c",
+      "source_sha256": "1709f7af9eb082f9b8b6f6035aee1789976d0d5082ee319b559768c23dca0fed",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001108524-20-000014",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001108524|CRM",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-01-31",
+      "primary_sha256": "1a493604f922322a910ec534e67eb967aa9b56f22e0c32f1652e0346f2091b81",
+      "source_manifest_sha256": "8d9ff0a71c9db80a0fa2de1bf44da2ab2cde78d460d7518accbb12297f6cb3ce",
+      "source_sha256": "31c95cb554db8d39aa52de9b43ee90e963cecc7ea0a9dc1493c8f605efd39037",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001141391-19-000013",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001141391|MA",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "593f919023353cd5fe3444e02f0c626151c354fcb8a62a6f8f9bf5d0b103e212",
+      "source_manifest_sha256": "fa370f7b37a2d2e39ecad84f46aa4e591174a3177a4e6c160c98e29f9b5e3ca9",
+      "source_sha256": "c072840b968fa31f23bd1493a60ef935c20847adae2505d07c506866a2de34e2",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001141391-20-000032",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001141391|MA",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "9c7972550c0bad74e61b34db67b03f2d0925976aff49a266c4e3e61f3d88f881",
+      "source_manifest_sha256": "6ed0eacdb836008ecf9d04a04b60d01a5e5b1269eb7689f1e08962a3cf2bb640",
+      "source_sha256": "6534f179fad9b877bab46cd477b0b4f2d3cad8b564dcfabf302c46625fb87065",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001141391-21-000018",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001141391|MA",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "ca1df6cfe3c65963c0429aa7a8ab5c95f7fbfadf3ad09a344f8bb90aca7795a4",
+      "source_manifest_sha256": "1bdadfceb1fec1920e52eaba1a45e77dfc977cc9a035e93f0e5bd4487b25cc6e",
+      "source_sha256": "57ddc1d6fd7fda8e54de616637cbeba597048d07e07611f234590ac8a8be7645",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001193125-18-201034",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001341439|ORCL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-05-31",
+      "primary_sha256": "a3f0ec7838a2584aa256c88aab020faae373a70b07d34e2755fc2f28f0b6362d",
+      "source_manifest_sha256": "e80c333984a0daceb7235c9b64d979f90f966d5fe00fd65202c7d6ce865ca825",
+      "source_sha256": "4342f2de70bbccce684dcbb94eecd17d6e7cbdcfb96f4820db329e1269e031d7",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001193125-19-048926",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001067983|BRK.B",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "311132bafb61e68628bfbfcf8894001b2f1acda75b92cef61de0eb0cf6b4f06c",
+      "source_manifest_sha256": "d831b63d144f62ef43eadd08789c2034974337a3f15fb8d3d09de900b3fe431c",
+      "source_sha256": "55cb19bdddefa515cf2ecd0ed51594246d55d65c1c15b84dcca7bc92bca096ec",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001326801-19-000009",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001326801|FB",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "52d71b8856d0752489f8eb62430cc1d2d72b7e3696ca54097d1e75b45abcf876",
+      "source_manifest_sha256": "88630daf016f3847cc3139378d66ecb5d7cf4372132f33c346b3a146fe8582ac",
+      "source_sha256": "53f1d0fa5693731f163897cd46b8a4bcfbd948aec4c54aa80828bd7b2df55f27",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001326801-20-000013",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001326801|FB",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "27877dc5e4fa61b262268eaf05e6576de4f68b4a244c7be1bb0ff89a1fdd9633",
+      "source_manifest_sha256": "672169165e0101b7ef760d6086026d11101fb915122951eb5aa6f30bb8dc3e1d",
+      "source_sha256": "f7ce97840a23ac7a54c71579478e55ec9c4467509713ab12e386badf4f4b4fd2",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001326801-21-000014",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001326801|FB",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "eee6823758e1ad2153fd7559efe432309dbd05fca5b605030374d2524270994a",
+      "source_manifest_sha256": "6ed9498ce754ef171b48046b327d7810ca54c5a3d919e87cb20d8c665a1456df",
+      "source_sha256": "98625ba8334c76b69e962cec05ae2d977604be839b4fed9f31b8a5736986b58f",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001403161-18-000055",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001403161|V",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-09-30",
+      "primary_sha256": "af13e20cbcf62867ad0b9f0d7d08db03fbf0b2469bc23176b360d4abb69166a7",
+      "source_manifest_sha256": "fd67d13e17a17cc25813ac796754311d6030f4851cf79f3b71729e8fc0c9c502",
+      "source_sha256": "008fba50194b7f50d3c56db15d2f7deae9218be64ce9f96a68833f184b74cfea",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001403161-19-000050",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001403161|V",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-09-30",
+      "primary_sha256": "27c3b20abbb1332b7eceae899ec663c009b3f1bcafb418dfd0bc33b0440324a0",
+      "source_manifest_sha256": "5d43b5d026d386748f86c31d262b3495a01caee54ba2c9b3b56c46f4137cc1a9",
+      "source_sha256": "6410ef7ec375040886ca34f1b0cc53b5388743141723dd77194e9de5d111fe13",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001403161-20-000070",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001403161|V",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 4
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-09-30",
+      "primary_sha256": "2bc5c398f30649144954d554c2b0554f15e626adc3a4ed23dd5b9e5600dc13a4",
+      "source_manifest_sha256": "a1cc6bd3ba0b31a07872c9b0cef00668a495989e5ad9e2accea446f2712fb974",
+      "source_sha256": "78ef6c3c326a78aa430a79bd0746da533df63ba536ab2babb79b0f035b8e33ed",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001558370-20-001334",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000051143|IBM",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "86691235d27afc45ac4c723c6bdc2ca8e0989418af1404827dbd1582e4b0f303",
+      "source_manifest_sha256": "3c6e13841d8be8c44ea5bda4f5fff3d21c848e7b6d1627d98415658d71a23317",
+      "source_sha256": "fc20caf0ec24a58f966801b157cd5a8d5964e5ad3f8a0ee79df483e0251370d2",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001558370-21-001489",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000051143|IBM",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "3d73f722f7e26a33409620491d47caacfe5be27aa3f06b7085e52f631ef38e44",
+      "source_manifest_sha256": "dab874078c2d9e651962d014317bc109b1fad52df79a9ec87339797f42a9acd6",
+      "source_sha256": "db480d96f2bfddee997b614b415424eabcf2da7e59bc54e0cd947c104a4a23bb",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001564590-18-019062",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000789019|MSFT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-06-30",
+      "primary_sha256": "84c40fa78b527ad3af3e6ee659cb90004f385b91d97fc316fffde16b4a0b09d4",
+      "source_manifest_sha256": "4eab5c507d1c83f416c3da068a1be872701d98b0c90173f2149775921240e25e",
+      "source_sha256": "a6def703863717bcb3c0b95505492dd5dce9b2de0ee5b427522da7e5f23e9635",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001564590-19-023119",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001341439|ORCL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-05-31",
+      "primary_sha256": "1fcbe5a06a57b9e03ead48526f2af472ffb55d842f1de6a7be5681f26a278e8a",
+      "source_manifest_sha256": "657f4c9f222814e7c007f15cb27e1f57d67e0cd015550568fd09fa3fe03ca101",
+      "source_sha256": "909137da3e79195bffe89c5f77d5b27c3bee232b0806e3a30bdf9a7404962118",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001564590-19-027952",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000789019|MSFT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-06-30",
+      "primary_sha256": "5478e41e791b11eae0560dc804276879fe37a1e02ebf0f72fc147695c8f72733",
+      "source_manifest_sha256": "3f338e738be9d664970de75d3e21c72743732955513ea4a3daa3f001ffc8606a",
+      "source_sha256": "1ef11ecf0b62ce2bab5164ceb409c7bb31b5daf5163ee3b65f3d029ae45dd4f0",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001564590-20-005874",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001067983|BRK.B",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "d42cd05a6d5f7d8907e443c4afc681b7b4bbb6eaa15b156b154d19508cea6c26",
+      "source_manifest_sha256": "4c3ad1bf3b607d2988eb6273126a579f27503f670239bc7a467de0c66659d499",
+      "source_sha256": "f274a017ce9fa09da5e741731feb01c8ef1878c5269b73e42e3780418a0fb2d4",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001564590-20-030125",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001341439|ORCL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-05-31",
+      "primary_sha256": "a8a8dfb010374e36b548defed66de840b48f5de0f0fda63b8d0b42dab2d099fe",
+      "source_manifest_sha256": "128a97de52018397ca3ff6c8cca15fc89ecab474cf0179f29c8d61fe6c19676f",
+      "source_sha256": "bb9d52c05f1858468a99b0987a6916dbe551dec736a6d53e9a2bd08c9c81999c",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001564590-20-034944",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000789019|MSFT",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-06-30",
+      "primary_sha256": "06a16045da1129f878726384a5e51d5ba4944c3fb15d315f7b0d24d63b019d27",
+      "source_manifest_sha256": "16fd98cc54cd357925d898f630f4b6a5c3dd9d9f5d2330c45b7edc7fb56b398b",
+      "source_sha256": "fe507d61e76232d81902297598bb6bcca5406306ab99abcbd7f358be9a7bea83",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001564590-21-009611",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001067983|BRK.B",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1,
+        "Revenues": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "493dea5a3ad38614bf911387da90f00d23505be9f4eaee4425fc0803b7f84f5a",
+      "source_manifest_sha256": "1c9f195bff502d7b985fe4fb6ca796f7c0de10cac1789a2db2b53c87ae5a4a8a",
+      "source_sha256": "a6b38642bb0dc1ccf072baad7c36bd561fc550364507b489f8c36e3e9978c552",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001652044-19-000004",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001652044|GOOGL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-12-31",
+      "primary_sha256": "7fcbc71cf0a94d9279613d95e81bb16099ea8832010d471b6bfbb83cf83f165b",
+      "source_manifest_sha256": "956ce02f9b6ce265774b03b65c0ababe5a74708f3ad01bd4423f29b8f2461d84",
+      "source_sha256": "2ba9b195921e4362e8ed848f6b2ad9249f069a42f7d9a9fc83d97971ee248551",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001652044-20-000008",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001652044|GOOGL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-12-31",
+      "primary_sha256": "c07c11860e5281d4ff146c48d7ee677e64118fc7b3cad5a00989611c4299196b",
+      "source_manifest_sha256": "d376ccedf3930105912d107a816048a888d95df0f3017fe520fb2ccb4957ce24",
+      "source_sha256": "f33941cc2c1b39762b59df79d635e409359d51cacbb247215b1fd4e1c6bf3655",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001652044-21-000010",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0001652044|GOOGL",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 5
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-12-31",
+      "primary_sha256": "e7cc846149711d38426e48377916fe37fae3689f0729bb38cbcde7aa8378da92",
+      "source_manifest_sha256": "b7617865e97c53bd48b271968b95fac44e609d7089bd7088f1ce869c0d18dfe8",
+      "source_sha256": "af01be98f7082a4f102bbdba29ad1924d5885f64623252ea1b217b3465f4f954",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001728949-18-000095",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000804328|QCOM",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 1
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2018-09-30",
+      "primary_sha256": "2a4625c615fb1c4887398ff03db6b90d991f2edfcecc58f6194ccf8a42e74604",
+      "source_manifest_sha256": "8b47af67ffc6d97bb316a11c8b2b0ab344a6a673c2f874ca80c5cf96ac494a0c",
+      "source_sha256": "07ff45f3b8d7c66aeb2fb6632b865a9c032e957dedb3565dec74e1331b3370d3",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001728949-19-000072",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000804328|QCOM",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2019-09-29",
+      "primary_sha256": "85486ce5aecf401cc63c352dbf373797112e95b063f9acc8bcca71acc25ef11f",
+      "source_manifest_sha256": "0e8cba9681e170cd71d5048bbd0209ef2df9e591cce1d3c038a4fe70d8386f55",
+      "source_sha256": "0bef2b80ec49d54bce79194a2b377511e197073c5b240d35d2105706d77c1318",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    },
+    {
+      "accession": "0001728949-20-000067",
+      "accounting_perimeter_status": "UNRESOLVED",
+      "case_key": "0000804328|QCOM",
+      "certified_source_line": false,
+      "concept_candidates": {
+        "Revenues": 3
+      },
+      "conflicting_equivalent_contexts": 0,
+      "filing_period": "2020-09-27",
+      "primary_sha256": "c47b2072bce3705a89c5983db917649e6e1a9b9dfe3ed4b25643e1b412e8247a",
+      "source_manifest_sha256": "f844606850a87dc1dc0f0003895eeac0552f62011d5f68a64b02d35c0cf73445",
+      "source_sha256": "a2773d34684bbe77a46d2e1fae028125ccd4af215f1220bdeb04731fa18cf640",
+      "status": "CANDIDATE_CENSUS_ONLY_NOT_CERTIFIED"
+    }
+  ],
+  "review_receipts_accepted": 0,
+  "source_frame_sha256": "3aaaac0cad90dc5fbbe116132a97e4a2d6789f5dabb24dca2d6e2f14a0cb1199",
+  "version": "phase3d_candidate_census_v001"
+}

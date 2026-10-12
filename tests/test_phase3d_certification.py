@@ -2,7 +2,7 @@ import copy
 import json
 from pathlib import Path
 import unittest
-from src.research.phase3d.certification import canonical_revenue,revenue_triple,dated_identity
+from src.research.phase3d.certification import canonical_revenue,revenue_triple,dated_identity,terminal_event
 from src.research.spec import digest
 
 CONTRACT=json.loads(Path('docs/acceleration/phase3d_revenue_contract.json').read_bytes())
@@ -41,7 +41,8 @@ class CertificationTests(unittest.TestCase):
     def test_no_fuzzy_extension_segment_or_instant(self):
         for change in ({'concept':'AmazingRevenue'},{'namespace':'http://issuer.example/revenue'}, {'dimensions':['segment']},
                        {'period_start':'2020-12-31'},{'value':'0'},{'unit':'EUR'}, {'primary_reconciled':False},
-                       {'form':'10-K/A'},{'conflicting_duplicates':True},{'statement_locator':None}):
+                       {'form':'10-K/A'},{'conflicting_duplicates':True},{'statement_locator':None},
+                       {'primary_reconciled':'True'},{'source_sha256':'not-a-hash'},{'decimals':None}):
             row=observation(2020); row.update(change)
             self.assertEqual(certify(row)['status'],'UNAVAILABLE')
 
@@ -71,3 +72,11 @@ class CertificationTests(unittest.TestCase):
         self.assertEqual(dated_identity([row],at=row['effective_to'],trusted_evidence=trust)['rows'],[])
         for rows,evidence in [([row],set()),([row,row],trust),([dict(row,end_evidence_sha256=None)],trust)]:
             with self.assertRaises(ValueError): dated_identity(rows,at=at,trusted_evidence=evidence)
+
+    def test_terminal_review_is_not_delisting_zero_fill(self):
+        event={'security_id':'EXP999-A','class':'A','kind':'cash_merger','effective_at':'2020-01-03T00:00:00Z',
+               'source_sha256':'a'*64,'reviewer':'SYNTHETIC','reviewed_at':'2026-10-12T00:00:00Z','evidence_locator':'fixture',
+               'class_position_status':'CERTIFIED','currency':'USD','cash_per_share':'15','payment_at':'2020-01-03T14:30:00Z'}
+        self.assertIn('REVIEWED_TERMS_ONLY',terminal_event(event,trusted_receipts={digest(event)})['certificate_scope'])
+        for changed in (dict(event,kind='delisting'),dict(event,cash_per_share='NaN'),dict(event,class_position_status='PARTIAL')):
+            with self.assertRaises(ValueError): terminal_event(changed,trusted_receipts={digest(changed)})

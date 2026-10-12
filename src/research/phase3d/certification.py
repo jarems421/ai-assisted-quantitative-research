@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from decimal import Decimal
 import re
 from src.research.spec import digest
-from src.research.phase3c.quality import compatible
+from src.research.phase3c.quality import compatible,rounding
 from src.research.sec_pilot.provenance import instant
 
 
@@ -15,12 +15,15 @@ def canonical_revenue(row, contract, receipts, *, trusted_receipts):
     if any(k not in row for k in contract['mandatory_provenance']): return unavailable('INCOMPLETE_PROVENANCE')
     try:
         start=date.fromisoformat(row['period_start']); end=date.fromisoformat(row['period_end']); value=Decimal(row['value'])
+        rounding(row['value'],row['decimals']); int(row['scale'])
         invalid=(row['form']!='10-K' or row['original_version']!='ORIGINAL' or row['dimensions'] or row['unit']!='USD'
+                 or not isinstance(row['dimensions'],list)
                  or row['issuer_cik']!=row['entity_cik'] or row.get('period_role') not in ('CURRENT','COMPARATIVE')
                  or (row['period_role']=='CURRENT' and row['filing_period_end']!=row['period_end'])
                  or (row['period_role']=='COMPARATIVE' and row['filing_period_end']<=row['period_end'])
                  or not 350 <= (end-start).days+1 <=380 or not value.is_finite() or value<=0
-                 or row['conflicting_duplicates'] or not row['original_element_reconciled'] or not row['primary_reconciled']
+                 or row['conflicting_duplicates'] is not False or row['original_element_reconciled'] is not True or row['primary_reconciled'] is not True
+                 or any(not re.fullmatch('[a-f0-9]{64}',row[k]) for k in ('source_sha256','primary_sha256'))
                  or not row['statement_locator'] or not row['locator'] or row.get('nil'))
     except (ValueError,TypeError,ArithmeticError): return unavailable('INVALID_PERIOD_OR_VALUE')
     if invalid: return unavailable('CONTEXT_VERSION_SCALE_OR_STATEMENT')
@@ -81,3 +84,26 @@ def dated_identity(rows, *, at, trusted_evidence):
     if len(selected)!=len({r['security_id'] for r in selected}) or len(selected)!=len({r['ticker'] for r in selected}):
         raise ValueError('Overlapping identity/class or ticker reuse')
     return {'status':'CERTIFIED_FOR_EVIDENCED_INSTANT','at':at,'rows':selected,'identity_sha256':digest(rows)}
+
+
+def terminal_event(event, *, trusted_receipts):
+    """Validate reviewed terms; delisting is not an automatic zero-recovery event."""
+    if digest(event) not in trusted_receipts: raise ValueError('Terminal receipt not independently trusted')
+    if not all(event.get(k) for k in ('security_id','class','effective_at','source_sha256','reviewer','reviewed_at','evidence_locator')):
+        raise ValueError('Incomplete terminal provenance')
+    instant(event['effective_at']); instant(event['reviewed_at'])
+    if event.get('class_position_status')!='CERTIFIED': raise ValueError('Class/position terms unresolved')
+    kind=event['kind']
+    if kind=='cash_merger':
+        if event.get('currency')!='USD' or not event.get('payment_at'): raise ValueError('Cash timing/currency unresolved')
+        if instant(event['payment_at'])<instant(event['effective_at']): raise ValueError('Payment precedes terminal event')
+        value=Decimal(event['cash_per_share'])
+        if not value.is_finite() or value<=0: raise ValueError('Invalid consideration')
+    elif kind in ('stock_merger','spinoff'):
+        value=Decimal(event['ratio'])
+        if not value.is_finite() or value<=0 or not event.get('successor_security_id') or not event.get('successor_binding_sha256'):
+            raise ValueError('Successor/ratio unresolved')
+    elif kind=='cancellation':
+        if not event.get('explicit_zero_recovery_evidence_sha256'): raise ValueError('No evidenced zero recovery')
+    else: raise ValueError('Unresolved terminal event; retain OTC/liquidation/bankruptcy uncertainty')
+    return dict(event,certificate_scope='REVIEWED_TERMS_ONLY_NOT_AN_EXECUTION_CERTIFICATE')

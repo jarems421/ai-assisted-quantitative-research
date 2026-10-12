@@ -1,0 +1,5 @@
+# Phase 3D historical identity certification
+
+[Identity contract](phase3d_identity_contract.json) requires issuer → class → venue/ticker → stable ID with half-open effective intervals and independently trusted start/end evidence. Multiple classes and ticker reuse remain distinct. Tests reject overlaps and untrusted endpoints; boundary instants select the next interval without rewriting prior state.
+
+The existing 60-case [identity matrix](phase3c_identity_lifecycle.md) remains the source evidence. Current OpenFIGI candidates and filing cover points cannot establish full listing intervals. Real complete listing-span certificates remain 0/60; no ambiguous case was removed or replaced. Existing 8-A/25 and merger documents contain useful partial evidence, but some refer to unrelated preferred classes or a surviving issuer. No new requests or owner Orbis login occurred. A separately bounded primary-document/independent listing endpoint review is still necessary; this model is not itself an authoritative identity database.

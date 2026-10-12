@@ -2,6 +2,8 @@
 from copy import deepcopy
 from decimal import Decimal, InvalidOperation, localcontext
 from typing import Protocol
+import hashlib
+from pathlib import Path
 
 from src.research.spec import digest
 from src.research.capabilities import require_population
@@ -150,6 +152,7 @@ def _execute(data):
         previous_active=live
     if receivables: raise ValueError('Unpaid terminal receivable requires separately supported valuation')
     output.update(input_sha256=digest(data),engine={'name':'local_reference_v001','arithmetic':'Decimal34',
+                  'implementation_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   'scope':'SYNTHETIC_ONLY','settlement':'immediate fixtures','fractional_shares':True},warnings=[],errors=[])
     output['receipt_sha256']=digest(output)
     return output

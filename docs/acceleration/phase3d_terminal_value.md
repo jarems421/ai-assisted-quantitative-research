@@ -1,0 +1,7 @@
+# Phase 3D lifecycle and terminal value
+
+Canonical event receipts carry class/security ID, effective time, original source hash/locator, reviewer/time and independently trusted decision. Cash consideration needs currency/payment timing; stock conversion needs ratio and dated successor binding; spinoff needs distribution terms; cancellation needs explicit recovery evidence. Mere delisting, bankruptcy or a final price cannot establish zero. OTC continuation, elections/proration, cash-in-lieu, contingent recoveries and deferred distributions stay unresolved until modeled and evidenced.
+
+Synthetic ledgers prove no silent disappearance for held and unheld identities, cash merger accounting, stock conversion, explicit evidenced cancellation, dividends and splits. The engine refuses unresolved transitions and missing prices. Review supports a spinoff receipt model, but the v001 engine deliberately rejects spinoff execution and other unsupported events. Corporate-action evidence and mechanical execution are separate gates.
+
+Existing ten merger-document sets remain PARTIAL. Real terminal class/position certificates remain 0; no guessed amounts, terminal NAV, assumed cash election or immortal last-price marks were introduced. See [source evidence](phase3c_identity_lifecycle.md) and [execution contract](phase3d_execution_contract.json). Terminal-value evidence for a real universe stays BLOCKED.

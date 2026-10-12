@@ -81,7 +81,7 @@
       "lines": 2187
     }
   ],
-  "reading": "Owner plan lines 1–2187; differentiators pages 1–23 and blueprint pages 1–33, extracted in untruncated chunks. Vector diagram labels additionally extracted and images inspected on differentiators p18 and blueprint p26/p31.",
+  "reading": "Owner plan lines 1–2187; differentiators pages 1–23 and blueprint pages 1–33, extracted in untruncated chunks. Vector diagram labels additionally extracted and images inspected on differentiators p18 and blueprint p26/p31. Alternate extractor compared on every page; blueprint p1 additional architecture diagram inspected. All five earlier phase attachments also read in full (122/397/292/723/1415 lines). Alternate extractor compared on every page; blueprint p1 additional architecture diagram inspected. All five earlier phase attachments also read in full (122/397/292/723/1415 lines).",
   "authority": "Owner message and takeover plan govern; PDF suggestions are background and do not authorize remote operations or later phases.",
   "document_dispositions": {
     "AGENTS.md": "ACTIVE_UPDATED",
@@ -157,5 +157,37 @@
     "pymupdf": "1.28.2",
     "location": "ignored .research/pdf-reader; research pins unchanged"
   },
-  "private_inputs": "Original PDFs and extraction text stay local; no vendor body or credential enters documentation."
+  "private_inputs": "Original PDFs and extraction text stay local; no vendor body or credential enters documentation.",
+  "prior_owner_attachments": [
+    {
+      "id": "030f712b-8685-43e5-af58-698913324256",
+      "sha256": "b5ffbf8d716f2a5ff3f96fde6db6e5a9d9caed9f21670b91bf1876d7d6f0521f",
+      "lines": 122,
+      "disposition": "Historical phase scope; newer master plan governs current direction"
+    },
+    {
+      "id": "1c0d5e6f-2211-4efa-a1a5-adeaadff44bf",
+      "sha256": "280a062656b6865318dde6c8160dea85665c5c7406449f3e2b8912ee8bbace52",
+      "lines": 397,
+      "disposition": "Historical phase scope; newer master plan governs current direction"
+    },
+    {
+      "id": "2f113271-5096-4bb0-a336-bc485168fecd",
+      "sha256": "3292862c20790c54bc93fa65473aadce3473a2341860c609ea813c780705de56",
+      "lines": 292,
+      "disposition": "Historical phase scope; newer master plan governs current direction"
+    },
+    {
+      "id": "19b745c2-b136-4ba8-b067-49885ea18fdf",
+      "sha256": "9d25424f45ac437bd94941693ccef860539805bc0b5fbd19e3c9a2026b6028ee",
+      "lines": 723,
+      "disposition": "Historical phase scope; newer master plan governs current direction"
+    },
+    {
+      "id": "11b36379-f99c-4441-8f74-598a0d492121",
+      "sha256": "8c55a3c981dd2feed0404da938a96ebab0911ffef0d81a939a426a2c54173e47",
+      "lines": 1415,
+      "disposition": "Historical phase scope; newer master plan governs current direction"
+    }
+  ]
 }
