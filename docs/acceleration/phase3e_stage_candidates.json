@@ -1,0 +1,67 @@
+{
+  "candidates": [
+    {
+      "confirmation": [
+        [
+          "2024-01-01",
+          "2024-12-31"
+        ],
+        [
+          "2025-01-01",
+          "2026-09-30"
+        ]
+      ],
+      "confirmation_roles": [
+        "Validation",
+        "Owner-only Test"
+      ],
+      "description": "Longer Development, two funded historical confirmation windows",
+      "development": [
+        "2020-03-02",
+        "2023-12-31"
+      ],
+      "id": "A"
+    },
+    {
+      "confirmation": [
+        [
+          "2023-01-01",
+          "2024-12-31"
+        ],
+        [
+          "2025-01-01",
+          "2026-09-30"
+        ]
+      ],
+      "confirmation_roles": [
+        "Validation",
+        "Owner-only Test"
+      ],
+      "description": "Balanced Development with longer joint confirmation",
+      "development": [
+        "2020-03-02",
+        "2022-12-31"
+      ],
+      "id": "B"
+    },
+    {
+      "confirmation": [
+        [
+          "2022-01-01",
+          "2026-09-30"
+        ]
+      ],
+      "confirmation_roles": [
+        "Proposed owner-held confirmation; future stage adapter required"
+      ],
+      "description": "Short Development and one larger owner-held historical confirmation",
+      "development": [
+        "2020-03-02",
+        "2021-12-31"
+      ],
+      "id": "C"
+    }
+  ],
+  "performance_inputs": 0,
+  "version": "phase3er_stage_candidates_v001"
+}

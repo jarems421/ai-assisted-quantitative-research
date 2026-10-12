@@ -23,6 +23,7 @@ def open_utc(day):return datetime.combine(day,time(9,30),NY).astimezone(timezone
 
 def clock_probe(raw,filed,*,scope,evidence_sha256,contradictory_public_utc=None):
     """v002 ambiguity logic, fresh bounded calendar; never create an eligibility view."""
+    candidates=[];bounds=[]
     try:
         start,end=map(date.fromisoformat,scope);f=date.fromisoformat(filed)
         if not date(2018,1,1)<=start<=end<=MAX_STAGE:raise ValueError('Unsupported policy scope')
@@ -45,6 +46,7 @@ def clock_probe(raw,filed,*,scope,evidence_sha256,contradictory_public_utc=None)
                 'mechanical_bound_utc':bounds[0].isoformat() if invariant and in_scope else None,
                 'acceptance_certification':interpreted['status'],'exact_public_availability':'UNKNOWN',
                 'policy_approved':False,'trading_eligible':False}
-    except (ValueError,TypeError):
+    except (ValueError,TypeError) as error:
         return {'status':'UNAVAILABLE_CLOCK_CALENDAR_OR_SCOPE','acceptance_raw':raw,'filing_date':filed,
-                'mechanical_bound_utc':None,'policy_approved':False,'trading_eligible':False,'exact_public_availability':'UNKNOWN'}
+                'candidate_instants_utc':[d.isoformat() for d in candidates],'candidate_bounds_utc':[d.isoformat() for d in bounds],
+                'failure_reason':str(error),'mechanical_bound_utc':None,'policy_approved':False,'trading_eligible':False,'exact_public_availability':'UNKNOWN'}

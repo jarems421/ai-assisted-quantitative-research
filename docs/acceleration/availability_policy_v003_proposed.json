@@ -1,0 +1,48 @@
+{
+  "activation": "NOT_ACTIVATED",
+  "approval": null,
+  "calendar_code_sha256": "903d968d80346f1271f087a1bf2fed9126a6312c7d91496a5438397cdef42ae0",
+  "calendar_evidence": [
+    "70f5577eb43e60a9dbbecaae3cec23d0f02028c05c7f175013bb3e97816d394f",
+    "3e8b540ad74474bc12a0aba473dbca28f37e0a5c1795cf66701b9a506a34226e",
+    "79602f7be5a8f1d39c2b1cac4dd02c4c07f18cf9f92d70602834069154719bad",
+    "a4640ce5466cfa262cfe387a20f97b3bbc7ee213a9ce819c4ac7d3717db493c7"
+  ],
+  "calendar_role": "09:30 openings/full-day closures only; elapsed buffer dates beyond stage end never eligible within policy",
+  "calendar_scope": [
+    "2018-02-28",
+    "2026-10-09"
+  ],
+  "clock_interpretations": [
+    "Seasonal Eastern Time",
+    "Literal UTC-05:00 EST"
+  ],
+  "does_not_authorize": [
+    "Real eligibility activation",
+    "EXP005 creation/freeze/performance",
+    "EXP004 resume",
+    "Nexus/Aurora",
+    "heldout opening",
+    "Phase4A",
+    "paper/live"
+  ],
+  "exact_public_availability": "UNKNOWN",
+  "frame": "Fixed30 issuer metadata/header feasibility census; full production universe not certified",
+  "prerequisites": [
+    "Owner approval",
+    "Full accounting and effective class certification",
+    "Complete intended production-population contributor probe",
+    "Stage-safe adapter",
+    "No contradictory timing evidence"
+  ],
+  "reason": "Warm-up source receipts plus historical stages beyond the approved2021 pilot; no broader date than necessary",
+  "rule": "09:30NewYork second session strictly after later of filing date and each candidate acceptance civil date; require same raw-rule open for all candidates",
+  "scope": [
+    "2018-02-28",
+    "2026-09-30"
+  ],
+  "source_manifest_sha256": "f3b88f46bf7004562eed1af27304bb1d380750e940acfd4e00992d0acdc15cb1",
+  "status": "PROPOSED_NOT_APPROVED",
+  "v002_sha256": "7cb18aca01fdb9ccab41fb178a5f5439582d9334b067737626fbe56c55427926",
+  "version": "phase3er_ambiguity_buffer_v003"
+}
