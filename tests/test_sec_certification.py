@@ -1,7 +1,7 @@
 import copy
 from datetime import date
 import unittest
-from src.research.sec_pilot.certification import acceptance, local_time, proposed_bound, policy_view, resolve_class, semantic
+from src.research.sec_pilot.certification import acceptance, local_time, proposed_bound, policy_view, resolve_class, semantic, unit_name
 from src.research.sec_pilot.parsing import digest
 
 
@@ -69,6 +69,9 @@ class ClassTests(unittest.TestCase):
 
 
 class SemanticTests(unittest.TestCase):
+    def test_unit_default_qname_and_wrong_currency_namespace(self):
+        self.assertEqual(unit_name('<unit xmlns="http://www.xbrl.org/2003/instance"><measure>shares</measure></unit>'), 'shares')
+        self.assertIsNone(unit_name('<unit xmlns="http://www.xbrl.org/2003/instance" xmlns:fake="https://example.invalid"><measure>fake:USD</measure></unit>'))
     def fixture(self):
         return {'fixture': {'issuer_cik': '0000000999'}, 'report_period_raw': '20191231', 'facts': [
             {'concept': 'NetIncomeLoss', 'namespace': 'http://fasb.org/us-gaap/2019', 'exact_value': '0', 'decimals': '0',
@@ -89,3 +92,5 @@ class SemanticTests(unittest.TestCase):
         s = self.fixture(); s['facts'][0]['context']['period']['endDate'] = '2018-12-31'
         self.assertEqual(semantic(s, 'Net income')['status'], 'UNAVAILABLE')
         self.assertEqual(semantic(self.fixture(), 'Revenue')['status'], 'UNAVAILABLE')
+        s = self.fixture(); s['facts'].append(dict(s['facts'][0], status='AMBIGUOUS', fact_locator='ambiguous'))
+        self.assertEqual(semantic(s, 'Net income')['status'], 'AMBIGUOUS')

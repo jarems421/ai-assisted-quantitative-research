@@ -108,8 +108,8 @@ def unit_name(xml):
     if not xml: return None
     namespaces = dict(value for _, value in ET.iterparse(StringIO(xml), events=['start-ns']))
     def measure_name(text):
-        if not text or ':' not in text: return None
-        prefix, name = text.split(':', 1)
+        if not text: return None
+        prefix, name = text.split(':', 1) if ':' in text else ('', text)
         uri = namespaces.get(prefix)
         if name == 'USD' and uri == 'http://www.xbrl.org/2003/iso4217': return 'USD'
         if name == 'shares' and uri == 'http://www.xbrl.org/2003/instance': return 'shares'
@@ -131,7 +131,7 @@ def semantic(snapshot, family):
     concept, unit = CONCEPTS[family]
     end = datetime.strptime(snapshot['report_period_raw'], '%Y%m%d').date().isoformat()
     alternatives = [f for f in snapshot['facts'] if f['concept'] == concept]
-    eligible = []
+    eligible = []; scoped_ambiguity = False
     for f in alternatives:
         context = f['context']; period = context['period']
         if (not f['namespace'].startswith('http://fasb.org/us-gaap/') or context['dimensions']
@@ -140,7 +140,9 @@ def semantic(snapshot, family):
             continue
         length = (date.fromisoformat(end)-date.fromisoformat(period['startDate'])).days+1
         if not 350 <= length <= 380: continue  # Annual fiscal flows only; never infer a calendar quarter.
-        if unit_name(f.get('unit_xml')) != unit or f.get('nil') or f.get('status') != 'OBSERVED_SOURCE': continue
+        if unit_name(f.get('unit_xml')) != unit: continue
+        if f.get('status') == 'AMBIGUOUS': scoped_ambiguity = True
+        if f.get('nil') or f.get('status') != 'OBSERVED_SOURCE': continue
         try:
             value = Decimal(f['exact_value'].strip())
             if not value.is_finite(): continue
@@ -149,9 +151,9 @@ def semantic(snapshot, family):
     # Equivalent repeated original elements are retained, not rewritten.
     identities = {digest({k: f[k] for k in ('namespace', 'exact_value', 'decimals', 'unit_xml')} |
                          {'entity': f['context']['entity'], 'period': f['context']['period']}) for f in eligible}
-    status = 'SELECTED_PENDING_PRIMARY_RECONCILIATION' if len(identities) == 1 else 'AMBIGUOUS' if identities else 'UNAVAILABLE'
+    status = 'AMBIGUOUS' if scoped_ambiguity else 'SELECTED_PENDING_PRIMARY_RECONCILIATION' if len(identities) == 1 else 'AMBIGUOUS' if identities else 'UNAVAILABLE'
     return {'family': family, 'status': status, 'unit': unit, 'alternatives_count': len(alternatives),
-            'candidate_count': len(eligible), 'contributors': eligible if len(identities) == 1 else [],
+            'candidate_count': len(eligible), 'contributors': eligible if len(identities) == 1 and not scoped_ambiguity else [],
             'all_alternative_locators': [f['fact_locator'] for f in alternatives],
             'transformation': 'NONE; original annual reported amounts; no split adjustment or YTD differencing',
             'selection_rule': 'same accession/current annual period/issuer/no dimensions/exact US-GAAP tag and unit; repeated equal elements retained'}

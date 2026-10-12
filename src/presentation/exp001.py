@@ -111,6 +111,8 @@ EdgarTools and compatible PyArrow dependencies use an isolated environment with 
 
 The [Phase 2 SEC pilot report](docs/acceleration/phase2_report.md) records completed acquisition, immutable archival, offline XBRL/primary-text parsing and exact SQLite/Parquet/DuckDB reconciliation for the three fixed filings. Source fidelity is PARTIAL; precise public availability and historical tradable class identities remain unresolved, so trading eligibility and Nexus execution compatibility are BLOCKED. No alpha study or EXP005 was started. The earlier [implementation plan](docs/acceleration/phase2_plan.md) remains the planning checkpoint.
 
+The [Phase 3A certification report](docs/acceleration/phase3a_report.md) certifies scoped annual accounting observations against their original filing elements and records a proposed, unapproved availability policy. Historical class/listing bridges and the October acceptance-time convention remain partial; exact public availability remains unknown, item segmentation is deferred, and Nexus execution stays blocked. Conditional design readiness does not authorize Phase 3B, a strategy study or EXP005. Phase 2 snapshots and results remain unchanged.
+
 ```mermaid
 flowchart LR
     S["Specification and PIT audit"] --> D["Development and controls"] --> F["Frozen candidate"]

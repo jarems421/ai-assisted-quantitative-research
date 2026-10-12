@@ -1,0 +1,23 @@
+{
+  "activation_conditions": [
+    "Explicit owner artifact matching policy and interpretation snapshot hashes",
+    "Certified acceptance conversion and consistent SEC filing date",
+    "Complete supported session calendar",
+    "Certified historical class binding for every contributor",
+    "Explicit acknowledgement of modeled public-availability uncertainty; required source evidence complete and no contradictions; all contributing versions pass"
+  ],
+  "approval": null,
+  "buffer": "One complete subsequent exchange session before the eligible open, in addition to any SEC filing-date delay",
+  "calendar": "Existing frozen offline NYSE full-day session calendar; metadata only, no market observations",
+  "calendar_scope": [
+    "2015-01-01",
+    "2020-12-31"
+  ],
+  "calendar_source_sha256": "865db45d2e13abbb7be1ce4be1cc80818a3c68fd7bcd030ff5fe0c8fbf0b9218",
+  "limitations": "A modeled delay is not an observed public timestamp or guaranteed upper bound. SEC website lag has no guarantee. No real policy is approved.",
+  "public_available_at_utc": null,
+  "rule": "09:30 America/New_York on the second exchange session strictly after max(acceptance wall-clock date, official SEC filing date)",
+  "source_cutoff": "2020-12-31",
+  "status": "PROPOSED_NOT_APPROVED",
+  "version": "sec_later_session_v001"
+}

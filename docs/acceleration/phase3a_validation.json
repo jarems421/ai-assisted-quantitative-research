@@ -1,0 +1,32 @@
+{
+  "as_of": "2026-10-12",
+  "baseline_tests": 191,
+  "tests_passed": 203,
+  "tests_skipped": 0,
+  "test_log_sha256": "07100c791c2f3c70ba7bb65a8a05a7fd50c7db3673e8ab0e8383e92dbf92aa84",
+  "preserved_baseline_files": 235,
+  "phase2_and_frozen_bytes": "UNCHANGED",
+  "checks": {
+    "phase2_replay": "PASS",
+    "phase2_audit": "PASS",
+    "phase2_report_check": "PASS",
+    "exp004_audit": "PASS HYPOTHESIS_FROZEN",
+    "presentation": "PASS six artifacts",
+    "phase1_support_receipts": "PASS",
+    "phase3a_regeneration": "PASS",
+    "public_report_only_check": "PASS",
+    "isolated_dependency_check": "PASS"
+  },
+  "versions": {
+    "research_pyarrow": "20.0.0",
+    "duckdb": "1.3.2",
+    "tzdata": "2026.5",
+    "edgartools_isolated": "5.62.0",
+    "isolated_pyarrow": "23.0.1"
+  },
+  "documentation_responses": 4,
+  "new_sec_filings": 0,
+  "nexus_calls": 0,
+  "real_policy_approvals": 0,
+  "phase3b_started": false
+}
