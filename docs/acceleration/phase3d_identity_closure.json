@@ -1,0 +1,2236 @@
+{
+  "cases": [
+    {
+      "case_key": "0000004962|AXP",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "AXP",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000004962",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0000004962-26-000271"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000014693|BF.A",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "BF.A",
+      "identity_status": "UNRESOLVED",
+      "issuer_cik": "0000014693",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000021344|KO",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "KO",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000021344",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000027419|TGT",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "TGT",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000027419",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000031235|KODK",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "KODK",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000031235",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-19-243938"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000040545|GE",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "GE",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000040545",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000050863|INTC",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "INTC",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000050863",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000051143|IBM",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "IBM",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000051143",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001104659-26-009350"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000077476|PEP",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "PEP",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000077476",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000078003|PFE",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "PFE",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000078003",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-25-122529"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000080424|PG",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "PG",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000080424",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000098246|TIF",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "TIF",
+      "identity_status": "PARTIAL_END_ONLY",
+      "issuer_cik": "0000098246",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": {
+        "event_date": "2021-01-07",
+        "evidence_locator": {
+          "decoded_end": 26507,
+          "decoded_start": 26400,
+          "normalized_end": 6482,
+          "normalized_span_sha256": "cde76b9054ac798c0ef238c4008cd1daa63f797b6503a4a4ef0021ac062c535c",
+          "normalized_start": 6382,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        "listing_removal_distinct_from_trading_suspension": true,
+        "share_class": "Common stock, par value USD0.01; TIF/NYSE cover evidence",
+        "source_sha256": "725192fdf54ca1855feac24d8737de89823e5695319f466b3cc38cd0575b0c1f",
+        "timing_precision": "BEFORE_OPEN_NOT_EXACT_INSTANT"
+      },
+      "source_document_accessions": [
+        "0001193125-21-004213"
+      ],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "DISCLOSED_TERMS_ONLY"
+    },
+    {
+      "case_key": "0000101829|UTX",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "UTX",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000101829",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000104169|WMT",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "WMT",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000104169",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000200406|JNJ",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "JNJ",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000200406",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-25-036928"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000310158|MRK",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "MRK",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000310158",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000320187|NKE",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "NKE",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000320187",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000320193|AAPL",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "AAPL",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000320193",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000354950|HD",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "HD",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000354950",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000701985|LB",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "LB",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000701985",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000718877|ATVI",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "ATVI",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000718877",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001104659-23-108985"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000731766|UNH",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "UNH",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000731766",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000743988|XLNX",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "XLNX",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000743988",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001104659-22-021762"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000789019|MSFT",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "MSFT",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000789019",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000796343|ADBE",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "ADBE",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000796343",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000804328|QCOM",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "QCOM",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000804328",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000813828|CBS",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "CBS",
+      "identity_status": "UNRESOLVED",
+      "issuer_cik": "0000813828",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-19-306334"
+      ],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "DISCLOSED_TERMS_ONLY"
+    },
+    {
+      "case_key": "0000816284|CELG",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "CELG",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000816284",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001140361-19-021751",
+        "0001104659-19-065939"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "DISCLOSED_TERMS_ONLY"
+    },
+    {
+      "case_key": "0000829224|SBUX",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "SBUX",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000829224",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000858877|CSCO",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "CSCO",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000858877",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000865436|WFM",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "WFM",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000865436",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001144204-17-045261"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "DISCLOSED_TERMS_ONLY"
+    },
+    {
+      "case_key": "0000886158|BBBY",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "BBBY",
+      "identity_status": "UNRESOLVED",
+      "issuer_cik": "0000886158",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000899866|ALXN",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "ALXN",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000899866",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001104659-21-094624"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "DISCLOSED_TERMS_ONLY"
+    },
+    {
+      "case_key": "0000909832|COST",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "COST",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0000909832",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0000931336|DF",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "DF",
+      "identity_status": "UNRESOLVED",
+      "issuer_cik": "0000931336",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001004980|PCG",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "PCG",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001004980",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-24-271594"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001011006|YHOO",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "YHOO",
+      "identity_status": "UNRESOLVED",
+      "issuer_cik": "0001011006",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001018724|AMZN",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "AMZN",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001018724",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001104659-26-110227"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001045810|NVDA",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "NVDA",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001045810",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001067983|BRK.A",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "BRK.A",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001067983",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001067983|BRK.B",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "BRK.B",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001067983",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001108524|CRM",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "CRM",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001108524",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001141391|MA",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "MA",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001141391",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001166126|JCP",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "JCP",
+      "identity_status": "UNRESOLVED",
+      "issuer_cik": "0001166126",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "UNRESOLVED",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001310067|SHLD",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "SHLD",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001310067",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001326801|FB",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "FB",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001326801",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001339947|VIAB",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "VIAB",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001339947",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-19-306335"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "DISCLOSED_TERMS_ONLY"
+    },
+    {
+      "case_key": "0001341439|ORCL",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "ORCL",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001341439",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-26-039435"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001357204|DUNK",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "DUNK",
+      "identity_status": "AMBIGUOUS_CLASS",
+      "issuer_cik": "0001357204",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-20-317644"
+      ],
+      "stable_identifier_status": "AMBIGUOUS",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001403161|V",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "V",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001403161",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001418091|TWTR",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "TWTR",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001418091",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-22-272772"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001563922|SUNE",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "SUNE",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001563922",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001564708|NWSA",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "NWSA",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001564708",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-18-195651"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001652044|GOOG",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "GOOG",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001652044",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-26-259954"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001652044|GOOGL",
+      "class_point_identified": true,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "GOOGL",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001652044",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-26-259954"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001657853|HTZ",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "HTZ",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001657853",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001104659-21-135222"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001666700|DD",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "DD",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001666700",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001744489|DIS",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "DIS",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001744489",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001751788|DOW",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "DOW",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001751788",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    },
+    {
+      "case_key": "0001754301|FOXA",
+      "class_point_identified": false,
+      "complete_nav_capable": false,
+      "effective_from": null,
+      "effective_to": null,
+      "end_evidence_sha256": null,
+      "historical_symbol_candidate": "FOXA",
+      "identity_status": "POINT_OBSERVATION_ONLY",
+      "issuer_cik": "0001754301",
+      "reason": "Independent listing endpoints, dated stable class bridge and complete settlement/recovery terms missing",
+      "reviewed_end_evidence": null,
+      "source_document_accessions": [
+        "0001193125-19-079728"
+      ],
+      "stable_identifier_status": "IDENTIFIER_ONLY_NOT_HISTORICAL_INTERVAL",
+      "start_evidence_sha256": null,
+      "terminal_status": "UNRESOLVED"
+    }
+  ],
+  "certified_full_spans": 0,
+  "denominator": 60,
+  "new_source_requests": 0,
+  "outside_cutoff_documents": 11,
+  "source_documents": [
+    {
+      "accession": "0000004962-26-000271",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0000004962",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001104659-21-135222",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0001657853",
+      "review_receipt_sha256": null,
+      "status": "SOURCE_UNAVAILABLE"
+    },
+    {
+      "accession": "0001104659-26-009350",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0000051143",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001104659-26-110227",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0001018724",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001140361-19-021751",
+      "body_read": false,
+      "form": "25",
+      "issuer_cik": "0000816284",
+      "review_receipt_sha256": null,
+      "status": "SOURCE_UNAVAILABLE"
+    },
+    {
+      "accession": "0001193125-18-195651",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0001564708",
+      "review_receipt_sha256": null,
+      "status": "SOURCE_UNAVAILABLE"
+    },
+    {
+      "accession": "0001193125-19-079728",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0001754301",
+      "review_receipt_sha256": null,
+      "status": "SOURCE_UNAVAILABLE"
+    },
+    {
+      "accession": "0001193125-19-243938",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0000031235",
+      "review_receipt_sha256": null,
+      "status": "SOURCE_UNAVAILABLE"
+    },
+    {
+      "accession": "0001193125-24-271594",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0001004980",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001193125-25-036928",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0000200406",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001193125-25-122529",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0000078003",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001193125-26-039435",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0001341439",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001193125-26-259954",
+      "body_read": false,
+      "form": "8-A12B",
+      "issuer_cik": "0001652044",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001193125-22-272772",
+      "body_read": false,
+      "form": "8-K",
+      "issuer_cik": "0001418091",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001104659-23-108985",
+      "body_read": false,
+      "form": "8-K",
+      "issuer_cik": "0000718877",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001104659-22-021762",
+      "body_read": false,
+      "form": "8-K",
+      "issuer_cik": "0000743988",
+      "review_receipt_sha256": null,
+      "status": "OUTSIDE_CLOSURE_CUTOFF_METADATA_ONLY"
+    },
+    {
+      "accession": "0001104659-19-065939",
+      "body_read": true,
+      "disclosed_facts": {
+        "cash_per_share": "50.00",
+        "contingent_right": "One CVR; contingent USD9, never assumed payable",
+        "currency": "USD",
+        "kind": "mixed_cash_stock_contingent",
+        "stock_ratio": "1"
+      },
+      "endpoint_candidates": [
+        {
+          "decoded_end": 20846,
+          "decoded_start": 14631,
+          "normalized_end": 1994,
+          "normalized_span_sha256": "8d5f919c74d6d4db08131bbdfc11126a213c97eee8d1a2e3ddd1af64ea2a0a46",
+          "normalized_start": 1084,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22316,
+          "decoded_start": 15406,
+          "normalized_end": 2112,
+          "normalized_span_sha256": "6b932f62d9decf12acf967bb9b8c3dfa2966b2181a60416b49b3b12d6600e73b",
+          "normalized_start": 1202,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26300,
+          "decoded_start": 24926,
+          "normalized_end": 4377,
+          "normalized_span_sha256": "050d4e633dce1d214019f1e5a04eb9f8090e41e0878c500cfb7d1e4a39fac0c2",
+          "normalized_start": 3468,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26300,
+          "decoded_start": 24926,
+          "normalized_end": 4413,
+          "normalized_span_sha256": "6d7a72390708305bbb8e31dfbc297b2992d240ed82c8978c40de225512d89517",
+          "normalized_start": 3504,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26906,
+          "decoded_start": 24926,
+          "normalized_end": 4541,
+          "normalized_span_sha256": "f2a147b233694f40900237ac3dfb9a0111219faea984f9f9ce3ae2a48d566d05",
+          "normalized_start": 3632,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 30239,
+          "decoded_start": 28486,
+          "normalized_end": 6094,
+          "normalized_span_sha256": "dc254065f740c92be21690e02e5393223b4a439b4b0367d6fa594b970f7e8e51",
+          "normalized_start": 5178,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 30239,
+          "decoded_start": 28486,
+          "normalized_end": 6177,
+          "normalized_span_sha256": "0365d425978fce7aff71912969240450c11fbdab3ee3c9144c8bb8275272f9c5",
+          "normalized_start": 5268,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 30660,
+          "decoded_start": 29202,
+          "normalized_end": 6612,
+          "normalized_span_sha256": "32d809ce4817f647c8cb7b7285e8cc8bf4032886544ba1ef3aefc7396d7ab068",
+          "normalized_start": 5703,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "form": "8-K",
+      "issuer_cik": "0000816284",
+      "review_receipt_sha256": "f1392dc2028644800557a3afe4a77e50b08e135c083eeb55d19a48c2f8f058f4",
+      "source_sha256": "ee1b6f877b9e18a6fd90ff51a192655cdf1f7fe536d4a6b2b3516bfd57c237b3",
+      "status": "DISCLOSED_TERMS_REVIEWED_PATH_UNRESOLVED",
+      "term_candidates": [
+        {
+          "decoded_end": 22316,
+          "decoded_start": 15406,
+          "normalized_end": 2125,
+          "normalized_span_sha256": "83a9945d3a41b803bd43d423e171820bbfd1333ae6e4ca4abb7a86c6851d43f9",
+          "normalized_start": 1213,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22316,
+          "decoded_start": 15474,
+          "normalized_end": 2151,
+          "normalized_span_sha256": "70079366eca21f2a7b330eb3e9ff42d5752844530c7eb3bc8addfcc9c3429f44",
+          "normalized_start": 1242,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26803,
+          "decoded_start": 24926,
+          "normalized_end": 4458,
+          "normalized_span_sha256": "6fc10a075e5b3c051a96d125410f20effe4c8a6f1a6bc7e46a765f83c87b8cbb",
+          "normalized_start": 3546,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27462,
+          "decoded_start": 25461,
+          "normalized_end": 4635,
+          "normalized_span_sha256": "79e1cfe868242a72e9196ff452f503deae2b5014317ab7e28bcc376a321ee0df",
+          "normalized_start": 3721,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27941,
+          "decoded_start": 25579,
+          "normalized_end": 4745,
+          "normalized_span_sha256": "8a1c56d1e037f0c555890ce78cc7ae60e1526d4f60a49e7fbb598addbb3d2db0",
+          "normalized_start": 3833,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 30239,
+          "decoded_start": 28832,
+          "normalized_end": 6291,
+          "normalized_span_sha256": "a4aa44837a91f2c40ea5c248d5acc5df9193ef987eae111331ed4fddfca2d266",
+          "normalized_start": 5377,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 37279,
+          "decoded_start": 35813,
+          "normalized_end": 10526,
+          "normalized_span_sha256": "3f85aad87146055fb437dd6acbe7f2f0528d707b6b4e916db3e60b8cd3ee2bb2",
+          "normalized_start": 9617,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/816284/000110465919065939/tm1923405d1_8k.htm"
+    },
+    {
+      "accession": "0001104659-21-094624",
+      "body_read": true,
+      "disclosed_facts": {
+        "cash_per_share": "60",
+        "currency": "USD",
+        "kind": "mixed_cash_stock_election",
+        "stock_instrument": "AstraZeneca ADS, with ordinary-share election",
+        "stock_ratio": "2.1243"
+      },
+      "endpoint_candidates": [
+        {
+          "decoded_end": 17900,
+          "decoded_start": 13253,
+          "normalized_end": 1965,
+          "normalized_span_sha256": "5fcd96a287311977b93f1bbfa877ade0966b5e7f647c375cacfd6d9a534630e2",
+          "normalized_start": 1055,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 19315,
+          "decoded_start": 13802,
+          "normalized_end": 2083,
+          "normalized_span_sha256": "4b1e743cda9d0d7345b122fab79ccff1ad09b8157b7bce331972500110153217",
+          "normalized_start": 1173,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22078,
+          "decoded_start": 20598,
+          "normalized_end": 3916,
+          "normalized_span_sha256": "fe9970dce863857b7d6f496fc4c4dbb7769ca04b07307f92940d6f10d9641d63",
+          "normalized_start": 3007,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22114,
+          "decoded_start": 20719,
+          "normalized_end": 3964,
+          "normalized_span_sha256": "5e64a9de61e3f54fc35132816701c532fdb48a62dac1a82cf9fdec5c94582a82",
+          "normalized_start": 3055,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22625,
+          "decoded_start": 20719,
+          "normalized_end": 4033,
+          "normalized_span_sha256": "9a121a340c72ed19f41bd45afc7a0a08bdf0b412b45b0df8ab9740b119ca9408",
+          "normalized_start": 3124,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 23047,
+          "decoded_start": 20853,
+          "normalized_end": 4062,
+          "normalized_span_sha256": "206c910b502d7d55406cbf2da95b16bf7d6547c5ffac96f5d07aef7b3ee2e571",
+          "normalized_start": 3153,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 23340,
+          "decoded_start": 21418,
+          "normalized_end": 4498,
+          "normalized_span_sha256": "579e7340e28cc13e4c0241e7fd74fbfb9ff07ff290d2c3433f8cdeb2e8786a90",
+          "normalized_start": 3589,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 23594,
+          "decoded_start": 21614,
+          "normalized_end": 4526,
+          "normalized_span_sha256": "50c9c09fc1044b330cd9356ca42aa2fadda80b9eaf3f14f36743275854553324",
+          "normalized_start": 3617,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "form": "8-K",
+      "issuer_cik": "0000899866",
+      "review_receipt_sha256": "53d4ba3318c897994b15d329b0df2b3ee1a723bd0e97f59acae5cb2b0ea3babc",
+      "source_sha256": "cdae14750dd7821aa57cfabdef5e8fd49e9830b7c697f76e59afec1baf3c6928",
+      "status": "DISCLOSED_TERMS_REVIEWED_PATH_UNRESOLVED",
+      "term_candidates": [
+        {
+          "decoded_end": 19315,
+          "decoded_start": 13802,
+          "normalized_end": 2096,
+          "normalized_span_sha256": "b4fc7a4118c9b03b1cab6b4c1d1b3f47df69b19dc57fbbfa368936cd47e20f3b",
+          "normalized_start": 1184,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 19490,
+          "decoded_start": 13802,
+          "normalized_end": 2125,
+          "normalized_span_sha256": "a1b7f240342fa5a1e6e1275404270ddc97b9ee59a3afe4632f05ccd56a02883c",
+          "normalized_start": 1216,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26481,
+          "decoded_start": 24843,
+          "normalized_end": 6141,
+          "normalized_span_sha256": "8d8a2b459b09401fac523569c0ff945ffc62d0e48a1547fcda43da05e38e779a",
+          "normalized_start": 5229,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26481,
+          "decoded_start": 24843,
+          "normalized_end": 6170,
+          "normalized_span_sha256": "77923782801cf4d49e2eca497b1514f4920bda42d4ed54e0914cffa4fb4b00d6",
+          "normalized_start": 5261,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26766,
+          "decoded_start": 25220,
+          "normalized_end": 6362,
+          "normalized_span_sha256": "7438d84cb1398370121f9a756168455924042e8cea1f16f7e2b5fd9c3cea69cc",
+          "normalized_start": 5448,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27501,
+          "decoded_start": 25583,
+          "normalized_end": 6816,
+          "normalized_span_sha256": "c960b7c9d8693590067b0ba18341c1f28c8bbbdc4faad67904eae10353db3067",
+          "normalized_start": 5910,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27501,
+          "decoded_start": 26220,
+          "normalized_end": 7166,
+          "normalized_span_sha256": "2924e912d8dcdce0c9d8c1064a92f7ecdf7652b8079d55650aa9233143c90b43",
+          "normalized_start": 6260,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27501,
+          "decoded_start": 26487,
+          "normalized_end": 7279,
+          "normalized_span_sha256": "3245ab31c5625cb1f7ca366f8339e3b4bdd129377a0bda7b2b750c4b4ced354b",
+          "normalized_start": 6367,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/899866/000110465921094624/tm2122733d25_8k.htm"
+    },
+    {
+      "accession": "0001193125-20-317644",
+      "body_read": true,
+      "endpoint_candidates": [
+        {
+          "decoded_end": 17160,
+          "decoded_start": 9771,
+          "normalized_end": 1412,
+          "normalized_span_sha256": "f81d905d5a356dbd530172ccd97f2a4d684e2329b62ff7431b644a618e5f47ca",
+          "normalized_start": 502,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 17551,
+          "decoded_start": 10632,
+          "normalized_end": 1530,
+          "normalized_span_sha256": "3b73ac645e0d7da8fc2c9b66fd4cdbda0e6e8c514e2f318feafc57599a4baa9d",
+          "normalized_start": 620,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 23259,
+          "decoded_start": 22216,
+          "normalized_end": 5143,
+          "normalized_span_sha256": "ecba2794803291b52585ea305f40a0b93e27649e3a40941835ccbe0f36e2ae4c",
+          "normalized_start": 4234,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 24841,
+          "decoded_start": 22800,
+          "normalized_end": 5778,
+          "normalized_span_sha256": "65bc03a059543f50ec4ee1e772484e0d5fe4557975d8fc6c8a22594c015fa24f",
+          "normalized_start": 4869,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27314,
+          "decoded_start": 24590,
+          "normalized_end": 6956,
+          "normalized_span_sha256": "b84eefb4907c185fd12206a94a517bcaac12742368ace3823117dd66b6f5d851",
+          "normalized_start": 6008,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 30101,
+          "decoded_start": 28351,
+          "normalized_end": 8702,
+          "normalized_span_sha256": "b4d4431bf52ea18c7a7903d0c859067a92efb96597d55411f9088dcbc7ecfd75",
+          "normalized_start": 7793,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 30839,
+          "decoded_start": 29228,
+          "normalized_end": 9221,
+          "normalized_span_sha256": "77fdccd5abe0e4d1937b21715498631b021308bbb0fabde1a287440a6d00db2f",
+          "normalized_start": 8312,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 31065,
+          "decoded_start": 29707,
+          "normalized_end": 9360,
+          "normalized_span_sha256": "d8a8d5b824a4f881f2d038fb174b62139c2de316d7dc75c42af303905e82e10f",
+          "normalized_start": 8451,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "form": "8-K",
+      "issuer_cik": "0001357204",
+      "review_receipt_sha256": null,
+      "source_sha256": "b8f9503ea37f25315ad6d3fa2d32be8e167f85f64d2d3a30d7e7be22e817fcbe",
+      "status": "EVIDENCE_PACKET_NOT_SPAN_CERTIFIED",
+      "term_candidates": [
+        {
+          "decoded_end": 17551,
+          "decoded_start": 10793,
+          "normalized_end": 1543,
+          "normalized_span_sha256": "24f47de7e00abb057fb8d89247d64e49d33e13774d2441cbc914f9ffd6a2687c",
+          "normalized_start": 631,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 17551,
+          "decoded_start": 10793,
+          "normalized_end": 1571,
+          "normalized_span_sha256": "babf9f971c065592b60461bc9ca8b06dbf07843d3e61be1a34688f8f5bd73db4",
+          "normalized_start": 662,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 21854,
+          "decoded_start": 20241,
+          "normalized_end": 3454,
+          "normalized_span_sha256": "c73faaa428c40ec8475a59090d3097f39ac1625c4721f5551a9682dd305a3723",
+          "normalized_start": 2542,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 21854,
+          "decoded_start": 20241,
+          "normalized_end": 3482,
+          "normalized_span_sha256": "e82a7446c07217d17bfa0c618b879a78ec6135e1d002a8876568baf56d0a24f7",
+          "normalized_start": 2573,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 21854,
+          "decoded_start": 20350,
+          "normalized_end": 3538,
+          "normalized_span_sha256": "564259a14f623c9b6ad0360ccf0eb8824027f0e1d69a43214f6bff7c21d2d6bb",
+          "normalized_start": 2629,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 24570,
+          "decoded_start": 22800,
+          "normalized_end": 5707,
+          "normalized_span_sha256": "814745e2b2b8eab1ed4b22b9fd0a57c55f3fae33b5890993a448a5c7337d6425",
+          "normalized_start": 4793,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 29700,
+          "decoded_start": 27778,
+          "normalized_end": 8257,
+          "normalized_span_sha256": "37673f3969338164a45e4fdb8c547492b74c3ffeb881b21763b11f1b6d5e54e9",
+          "normalized_start": 7349,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1357204/000119312520317644/d99481d8k.htm"
+    },
+    {
+      "accession": "0001144204-17-045261",
+      "body_read": true,
+      "disclosed_facts": {
+        "cash_per_share": "42.00",
+        "currency": "USD",
+        "kind": "cash_acquisition"
+      },
+      "endpoint_candidates": [
+        {
+          "decoded_end": 14144,
+          "decoded_start": 12175,
+          "normalized_end": 4218,
+          "normalized_span_sha256": "249f3e95f68e1483935a358533c543eb9df777ee89e4055213afb299c5178644",
+          "normalized_start": 3309,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 14144,
+          "decoded_start": 12570,
+          "normalized_end": 4254,
+          "normalized_span_sha256": "ddfcc4edd7e0f2c0ec0599d059d7011beca88e0ccfe4de9586ccfc475e4a9819",
+          "normalized_start": 3345,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 15478,
+          "decoded_start": 13522,
+          "normalized_end": 5086,
+          "normalized_span_sha256": "e0328a070e7ffd0da64c3c03efaa28cf50325db9d4118a20139a1c5350cf8006",
+          "normalized_start": 4177,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 17467,
+          "decoded_start": 16081,
+          "normalized_end": 6491,
+          "normalized_span_sha256": "c96d5a772f93889a045ac65bb6bed0333d0d3ed112c3a105d303bb23c90767c8",
+          "normalized_start": 5582,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 21627,
+          "decoded_start": 20469,
+          "normalized_end": 9182,
+          "normalized_span_sha256": "f9c6db35fba9cec2cce51309c4e6668acd990100d0b7a0c636043e0e8785f088",
+          "normalized_start": 8267,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 25765,
+          "decoded_start": 24056,
+          "normalized_end": 10813,
+          "normalized_span_sha256": "0c5a64b5421abb1aa76b4c4b154fa50aa57a5e9a2f7eb6c2344452ba4eef5ed9",
+          "normalized_start": 9904,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26180,
+          "decoded_start": 24130,
+          "normalized_end": 10873,
+          "normalized_span_sha256": "c02925771af37cf58910abf5c84605cb6f9daf9e637358014ed270f048674a1b",
+          "normalized_start": 9964,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27842,
+          "decoded_start": 25408,
+          "normalized_end": 11539,
+          "normalized_span_sha256": "2a73801ec71e3d21e1193fbc5c13cf7ad6eebc777f264e422a7b7dc91c8895ad",
+          "normalized_start": 10630,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "form": "8-K",
+      "issuer_cik": "0000865436",
+      "review_receipt_sha256": "83ee389be6f61467111066cbe1fc00a64b9c421d4680cc1366875d8a88263268",
+      "source_sha256": "3076d5e4483e065b5a224de2824d658e2f72e052f7a77c7e84016fd9ca41f5ee",
+      "status": "DISCLOSED_TERMS_REVIEWED_PATH_UNRESOLVED",
+      "term_candidates": [
+        {
+          "decoded_end": 13515,
+          "decoded_start": 12175,
+          "normalized_end": 4089,
+          "normalized_span_sha256": "9e6d3e6f5479b83a9ec49127885dfadd12764ad39044dc71e7f7f9dd5bcc3548",
+          "normalized_start": 3177,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 14144,
+          "decoded_start": 12814,
+          "normalized_end": 4618,
+          "normalized_span_sha256": "ab1de8de76b6ee7f0640e7e638ca37ee10e400459bb3c0b28a16b51191f8bf88",
+          "normalized_start": 3704,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 15256,
+          "decoded_start": 12814,
+          "normalized_end": 4884,
+          "normalized_span_sha256": "ad8a25181e62df56c3b60a1af3203066a1fd6f16d563be4a1a8ad3524cdc53a3",
+          "normalized_start": 3970,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 15795,
+          "decoded_start": 13522,
+          "normalized_end": 5399,
+          "normalized_span_sha256": "9e016a93fd17114c127bf4f6bae77dca7dce99cb27f6a2ef860e1a8db416cdfa",
+          "normalized_start": 4493,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 16074,
+          "decoded_start": 13522,
+          "normalized_end": 5561,
+          "normalized_span_sha256": "0a7e058db7c8bfa88e7bd77717fc19d14d072f997b707996dffd36db5e641af3",
+          "normalized_start": 4647,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 16632,
+          "decoded_start": 15031,
+          "normalized_end": 5953,
+          "normalized_span_sha256": "aaf021cb1d0c28930893ec76db76652ae01d7221837432f659badf34e4070a07",
+          "normalized_start": 5039,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 17093,
+          "decoded_start": 15520,
+          "normalized_end": 6291,
+          "normalized_span_sha256": "74e044839fedb8ca83e12eb0a198e57d65a346175f719c947b92b25c1e88d690",
+          "normalized_start": 5377,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 19203,
+          "decoded_start": 16081,
+          "normalized_end": 6798,
+          "normalized_span_sha256": "cf9fe8225e35d73488a41f1d6dcb28feb59dc5bc4fb66eb0b93403807093649e",
+          "normalized_start": 5892,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/865436/000114420417045261/v474128_8k.htm"
+    },
+    {
+      "accession": "0001193125-21-004213",
+      "body_read": true,
+      "disclosed_facts": {
+        "cash_per_share": "131.50",
+        "currency": "USD",
+        "kind": "cash_acquisition"
+      },
+      "endpoint_candidates": [
+        {
+          "decoded_end": 17309,
+          "decoded_start": 12466,
+          "normalized_end": 1922,
+          "normalized_span_sha256": "a4728493387bfe1af18725f0d4e91fdaca2c7351fff13eb5d0dd44b3f6d1c9cc",
+          "normalized_start": 1012,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 18328,
+          "decoded_start": 13334,
+          "normalized_end": 2041,
+          "normalized_span_sha256": "8a3b53a2c07af792c064585c670b273ef8012f451ce11877a50b1eef728586cd",
+          "normalized_start": 1131,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 20781,
+          "decoded_start": 19301,
+          "normalized_end": 3664,
+          "normalized_span_sha256": "4e4fdec0f3bd78af77b531d02da4cffce26af9d6a4a7103c84acdc6740dc3a5d",
+          "normalized_start": 2755,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 20781,
+          "decoded_start": 19301,
+          "normalized_end": 3700,
+          "normalized_span_sha256": "42e89a919a83ae4b52a4704409a7f8ac8d660e4fd306c5d0fa858b5cca384fe9",
+          "normalized_start": 2791,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 20994,
+          "decoded_start": 19619,
+          "normalized_end": 3848,
+          "normalized_span_sha256": "c8abfc26ea0ef5eb48a72e67a51b20228147b841831993ce0b9d4c705d24a5df",
+          "normalized_start": 2939,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22371,
+          "decoded_start": 19950,
+          "normalized_end": 4304,
+          "normalized_span_sha256": "4f4fa13d6e3be92993c7c6ab74926ee03cd6c2b3da434edcc459d07a8a499d9f",
+          "normalized_start": 3395,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 28458,
+          "decoded_start": 26175,
+          "normalized_end": 7163,
+          "normalized_span_sha256": "a0477b583b384b89bb33f1f9bd1e7ebafb2d0dcaeea9659a3b59f3f64b083dac",
+          "normalized_start": 6222,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 29828,
+          "decoded_start": 27827,
+          "normalized_end": 7887,
+          "normalized_span_sha256": "8ca8878959f655d0c4c377f644e5ac232129bcdc909809bcd5fe314774bc8b0f",
+          "normalized_start": 6978,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "form": "8-K",
+      "issuer_cik": "0000098246",
+      "review_receipt_sha256": "c6e1faa8280451bfd747dcaf22149970a7f745523ffbd1657182165e316b58b1",
+      "source_sha256": "725192fdf54ca1855feac24d8737de89823e5695319f466b3cc38cd0575b0c1f",
+      "status": "DISCLOSED_TERMS_REVIEWED_PATH_UNRESOLVED",
+      "term_candidates": [
+        {
+          "decoded_end": 18328,
+          "decoded_start": 13334,
+          "normalized_end": 2054,
+          "normalized_span_sha256": "5d616fe38840e9f0f6a7407553650c299879c402db3a26f9ea65e7b3a06b9aac",
+          "normalized_start": 1142,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 18328,
+          "decoded_start": 13415,
+          "normalized_end": 2081,
+          "normalized_span_sha256": "bf228b6837730615439802816134311bd5e5c3c260bd09b3f2a82d91ab128089",
+          "normalized_start": 1172,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 20781,
+          "decoded_start": 19301,
+          "normalized_end": 3737,
+          "normalized_span_sha256": "ffcf09a32c19de97fecfaa039d175c43888f546c7466cc02407fa7ef7c2734c3",
+          "normalized_start": 2825,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 20904,
+          "decoded_start": 19619,
+          "normalized_end": 3786,
+          "normalized_span_sha256": "dcc88111ea085f70a7d993b393c92bc380527d3c731d3f2b7e5176f88233088e",
+          "normalized_start": 2874,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 20994,
+          "decoded_start": 19619,
+          "normalized_end": 3888,
+          "normalized_span_sha256": "76a50683e65758d0d4457e06f15ed0ea0ac6be43a33cbf897d7666c87eaf8d1e",
+          "normalized_start": 2976,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 21135,
+          "decoded_start": 19924,
+          "normalized_end": 3995,
+          "normalized_span_sha256": "c2b28b630f66e8d42db0086e99f6db5a3e03a5083ed4a5f23941daf4d05efac3",
+          "normalized_start": 3083,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 21339,
+          "decoded_start": 19950,
+          "normalized_end": 4145,
+          "normalized_span_sha256": "ad17f3f2e4887f9fefd799e3f861743b53037afec79f91d65f10d1205d6bfece",
+          "normalized_start": 3231,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22056,
+          "decoded_start": 19950,
+          "normalized_end": 4255,
+          "normalized_span_sha256": "dff69f1cfcfda8a5a1e798fdd74b1deb627d5cef4374fc0bc0e5e6701bb109cc",
+          "normalized_start": 3346,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/98246/000119312521004213/d301758d8k.htm"
+    },
+    {
+      "accession": "0001193125-19-306334",
+      "body_read": true,
+      "disclosed_facts": {
+        "kind": "surviving_issuer_rename_exchange_change"
+      },
+      "endpoint_candidates": [
+        {
+          "decoded_end": 22408,
+          "decoded_start": 16213,
+          "normalized_end": 2014,
+          "normalized_span_sha256": "b607eb2e73db03cb738d4de0be0c9bf90896429f4e8f313c61aa457e3fed9c42",
+          "normalized_start": 1104,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 23344,
+          "decoded_start": 17018,
+          "normalized_end": 2130,
+          "normalized_span_sha256": "45688e1fb8e9515e03034fda818174f37e1041efbaffa1edf4e9f681c6ce4aef",
+          "normalized_start": 1220,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 25764,
+          "decoded_start": 23707,
+          "normalized_end": 3396,
+          "normalized_span_sha256": "f32fe3c65b5e5a87c4f03b16c46545eb63e034aa3e09c7d0682f48ac1a34781c",
+          "normalized_start": 2487,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 25991,
+          "decoded_start": 23783,
+          "normalized_end": 3432,
+          "normalized_span_sha256": "3e107d604e3425afba8864643579d5140047d6e3af3e5c99fc094d279dca38d2",
+          "normalized_start": 2523,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26385,
+          "decoded_start": 24252,
+          "normalized_end": 3847,
+          "normalized_span_sha256": "f23b38f5a2a3f770bfaf95ded4b00e0ca7c9a0d7af48f16ba7ee9247797d13b6",
+          "normalized_start": 2938,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26769,
+          "decoded_start": 25439,
+          "normalized_end": 4191,
+          "normalized_span_sha256": "428e4cb405d06b7f50b334b1ed6fd50d7c64384f3f247b3f23a6a277ca69de5b",
+          "normalized_start": 3282,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26979,
+          "decoded_start": 25887,
+          "normalized_end": 4372,
+          "normalized_span_sha256": "ae4e49a870b80df85f5ebf2b43a8cc1d20b18210243902b06a9575f6a8cbecce",
+          "normalized_start": 3463,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27647,
+          "decoded_start": 26392,
+          "normalized_end": 4781,
+          "normalized_span_sha256": "2c5076ba456272928a07c1794b7addefde78a3cc32ddb14e367f870ae463775b",
+          "normalized_start": 3872,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "form": "8-K",
+      "issuer_cik": "0000813828",
+      "review_receipt_sha256": "9dd8b9d597d26fcdbaeafa316bcb5fa565952f3b87b9707fc4122bcd497b3429",
+      "source_sha256": "e777c2707bd41e31c6b81d6456e60c7e972cde5299d0705c8743a8dfe27b7361",
+      "status": "DISCLOSED_TERMS_REVIEWED_PATH_UNRESOLVED",
+      "term_candidates": [
+        {
+          "decoded_end": 23448,
+          "decoded_start": 17018,
+          "normalized_end": 2151,
+          "normalized_span_sha256": "cef62d8ae2d7ff93e53a2e70684cee13a21b957fd950650316342c7a5c4fc492",
+          "normalized_start": 1239,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 23550,
+          "decoded_start": 17262,
+          "normalized_end": 2224,
+          "normalized_span_sha256": "8e50b64e7a4c40dd6edba2a072ed3a8b548b46364598763bfe3b0b5c412635f9",
+          "normalized_start": 1312,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26837,
+          "decoded_start": 25554,
+          "normalized_end": 4236,
+          "normalized_span_sha256": "4eaa61bee994c70ec03ba21a0d670226e71ac760a2ab540091e4c67164230156",
+          "normalized_start": 3324,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26837,
+          "decoded_start": 25564,
+          "normalized_end": 4264,
+          "normalized_span_sha256": "543e68add4764269f0fa0f771c4d5dbe0a0badb1bbbfbde6fa7f425f9002624b",
+          "normalized_start": 3355,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26886,
+          "decoded_start": 25887,
+          "normalized_end": 4310,
+          "normalized_span_sha256": "36f923e52e8280bcbfa47a25c9126753836140fd0ff17fbb0af9144e4624d3c2",
+          "normalized_start": 3398,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27324,
+          "decoded_start": 26022,
+          "normalized_end": 4474,
+          "normalized_span_sha256": "cbe9f0156f15176f94094c53a1bdad8e9e003206be7888a742ac02961d3688bb",
+          "normalized_start": 3551,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27324,
+          "decoded_start": 26106,
+          "normalized_end": 4518,
+          "normalized_span_sha256": "358bb09c02ed7fd506969d00e707fd8601f190adf325f252aacbf89f6b66e233",
+          "normalized_start": 3606,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 27324,
+          "decoded_start": 26127,
+          "normalized_end": 4546,
+          "normalized_span_sha256": "be29cb6037fc1be64d16e91e0bfc5c6b4d643403ec4dc822571ffb3f5f72e24f",
+          "normalized_start": 3637,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/813828/000119312519306334/d842322d8k.htm"
+    },
+    {
+      "accession": "0001193125-19-306335",
+      "body_read": true,
+      "disclosed_facts": {
+        "kind": "stock_acquisition_fractional_cash",
+        "stock_instrument": "Viacom Class B to ViacomCBS Class B; cash-in-lieu required",
+        "stock_ratio": "0.59625"
+      },
+      "endpoint_candidates": [
+        {
+          "decoded_end": 22367,
+          "decoded_start": 16937,
+          "normalized_end": 2441,
+          "normalized_span_sha256": "14f6b4679a37474fef88ecf2b75211e7225b4ffd3a939e2e876f20ba11a16f22",
+          "normalized_start": 1531,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22600,
+          "decoded_start": 16937,
+          "normalized_end": 2557,
+          "normalized_span_sha256": "069d36dcb964c0dd407947274c8a484a1d70ca8e79360503922843b535006d9e",
+          "normalized_start": 1647,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 23987,
+          "decoded_start": 22431,
+          "normalized_end": 3376,
+          "normalized_span_sha256": "01812f5c7b567743fad7efc262f52d02160e21aacc25308dc1545ea198e648ae",
+          "normalized_start": 2467,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 24036,
+          "decoded_start": 22522,
+          "normalized_end": 3412,
+          "normalized_span_sha256": "ac58cc762166ebb12cb498bc9998c611c5e95f6a0853d35f891453fa9787b8c1",
+          "normalized_start": 2503,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 24264,
+          "decoded_start": 22667,
+          "normalized_end": 3515,
+          "normalized_span_sha256": "e32d07265d29eaa43268a47e182aaedcc8d33a4808c65e673971c5973cb7f5fb",
+          "normalized_start": 2606,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 25279,
+          "decoded_start": 23330,
+          "normalized_end": 3816,
+          "normalized_span_sha256": "9773473d174a90e746121277ab2a237b154a2c3fb19ebdc4d0926dfaecbf6718",
+          "normalized_start": 2907,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26529,
+          "decoded_start": 25199,
+          "normalized_end": 4723,
+          "normalized_span_sha256": "a71d789962d99df029d56a34a891ec6da0db696290709ea1fd02faf0e3daef85",
+          "normalized_start": 3814,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 26764,
+          "decoded_start": 25503,
+          "normalized_end": 4901,
+          "normalized_span_sha256": "6607518a26fd411354c2bff0315427409952a0a34b9d17a75165899db8203229",
+          "normalized_start": 3992,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "form": "8-K",
+      "issuer_cik": "0001339947",
+      "review_receipt_sha256": "949630404a62ecb7900c91a45d734d70a4f80e028f079fdc12ad4ffdbb359d3b",
+      "source_sha256": "50b4052e33d2feac549a7531cdab9e8242fa9057666f61dcc25d6b8d2ce88755",
+      "status": "DISCLOSED_TERMS_REVIEWED_PATH_UNRESOLVED",
+      "term_candidates": [
+        {
+          "decoded_end": 22667,
+          "decoded_start": 16937,
+          "normalized_end": 2578,
+          "normalized_span_sha256": "4a6faf82216f8fa03c3d895e7edd168698dedd86e33dfcd0c98e20e64dc3e960",
+          "normalized_start": 1666,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22720,
+          "decoded_start": 17166,
+          "normalized_end": 2606,
+          "normalized_span_sha256": "8a81a8b989e56cbab294c72d2512064909de5d6e070f84024110b601368c092f",
+          "normalized_start": 1697,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22846,
+          "decoded_start": 17388,
+          "normalized_end": 2659,
+          "normalized_span_sha256": "95bc83be0bae13fa3afcc97d4188b0765c65dbf53a3320922a3124cd6dfadaac",
+          "normalized_start": 1747,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 22846,
+          "decoded_start": 17435,
+          "normalized_end": 2687,
+          "normalized_span_sha256": "7ee4f414d9027d202f3268d3877f4f1de5b81fe3fec28e00def1ad69eb2e7748",
+          "normalized_start": 1778,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 24403,
+          "decoded_start": 22921,
+          "normalized_end": 3657,
+          "normalized_span_sha256": "125481c0db3ced7b3999a348fbfb81c6e649aa7210aa22485117d1187809a793",
+          "normalized_start": 2745,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 24483,
+          "decoded_start": 23027,
+          "normalized_end": 3685,
+          "normalized_span_sha256": "6edc4cd5d5303e5218d29a26b5d807fad2a1fdecc6f2113a926169552653c13f",
+          "normalized_start": 2776,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 24483,
+          "decoded_start": 23161,
+          "normalized_end": 3722,
+          "normalized_span_sha256": "e9dd1c4b421e13f51f6b0580be26f7fd46d5ca20c2670b07be68e05f2d20554d",
+          "normalized_start": 2810,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        },
+        {
+          "decoded_end": 25060,
+          "decoded_start": 23161,
+          "normalized_end": 3750,
+          "normalized_span_sha256": "d60bfffc76bb7b074f7a961955c2df577dc8f71bca18d8a909da7265413deb63",
+          "normalized_start": 2841,
+          "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+        }
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1339947/000119312519306335/d833313d8k.htm"
+    }
+  ],
+  "status_counts": {
+    "AMBIGUOUS_CLASS": 1,
+    "PARTIAL_END_ONLY": 1,
+    "POINT_OBSERVATION_ONLY": 52,
+    "UNRESOLVED": 6
+  },
+  "version": "identity_closure_v001"
+}

@@ -1,0 +1,128 @@
+{
+  "certified_position_terminal_cases": 0,
+  "claims": [
+    {
+      "accession": "0001104659-19-065939",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 28813,
+        "decoded_start": 24926,
+        "normalized_end": 5090,
+        "normalized_span_sha256": "fb1926e812b29b3e5a2402b4561070843445b4574eb4a262cdd4215913d0bbb0",
+        "normalized_start": 3461,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "cash_per_share": "50.00",
+        "contingent_right": "One CVR; contingent USD9, never assumed payable",
+        "currency": "USD",
+        "kind": "mixed_cash_stock_contingent",
+        "stock_ratio": "1"
+      },
+      "receipt_sha256": "f1392dc2028644800557a3afe4a77e50b08e135c083eeb55d19a48c2f8f058f4",
+      "source_sha256": "ee1b6f877b9e18a6fd90ff51a192655cdf1f7fe536d4a6b2b3516bfd57c237b3"
+    },
+    {
+      "accession": "0001104659-21-094624",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 27501,
+        "decoded_start": 24582,
+        "normalized_end": 6941,
+        "normalized_span_sha256": "d8ee049d8ef2db6ed71e9d45412f347d389f2618e9e61f6868e336fd7de2a179",
+        "normalized_start": 5188,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "cash_per_share": "60",
+        "currency": "USD",
+        "kind": "mixed_cash_stock_election",
+        "stock_instrument": "AstraZeneca ADS, with ordinary-share election",
+        "stock_ratio": "2.1243"
+      },
+      "receipt_sha256": "53d4ba3318c897994b15d329b0df2b3ee1a723bd0e97f59acae5cb2b0ea3babc",
+      "source_sha256": "cdae14750dd7821aa57cfabdef5e8fd49e9830b7c697f76e59afec1baf3c6928"
+    },
+    {
+      "accession": "0001144204-17-045261",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 15256,
+        "decoded_start": 12570,
+        "normalized_end": 4972,
+        "normalized_span_sha256": "232dde9e26f6aded4b83d8dcb0f70259a052ed4218413a61d17e5cabf4c5ac1d",
+        "normalized_start": 3404,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "cash_per_share": "42.00",
+        "currency": "USD",
+        "kind": "cash_acquisition"
+      },
+      "receipt_sha256": "83ee389be6f61467111066cbe1fc00a64b9c421d4680cc1366875d8a88263268",
+      "source_sha256": "3076d5e4483e065b5a224de2824d658e2f72e052f7a77c7e84016fd9ca41f5ee"
+    },
+    {
+      "accession": "0001193125-21-004213",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 22581,
+        "decoded_start": 19619,
+        "normalized_end": 4538,
+        "normalized_span_sha256": "30de4b505e9c96d3fc11b7345189581b1ea1bacba68fb42bfb73ecca693682cd",
+        "normalized_start": 2931,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "cash_per_share": "131.50",
+        "currency": "USD",
+        "kind": "cash_acquisition"
+      },
+      "receipt_sha256": "c6e1faa8280451bfd747dcaf22149970a7f745523ffbd1657182165e316b58b1",
+      "source_sha256": "725192fdf54ca1855feac24d8737de89823e5695319f466b3cc38cd0575b0c1f"
+    },
+    {
+      "accession": "0001193125-19-306334",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 26317,
+        "decoded_start": 23316,
+        "normalized_end": 3678,
+        "normalized_span_sha256": "d72eb09fb0be1fb620520d7cae14c94be0a732c1b9e91fc3f5861a075ff7f62a",
+        "normalized_start": 2134,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "kind": "surviving_issuer_rename_exchange_change"
+      },
+      "receipt_sha256": "9dd8b9d597d26fcdbaeafa316bcb5fa565952f3b87b9707fc4122bcd497b3429",
+      "source_sha256": "e777c2707bd41e31c6b81d6456e60c7e972cde5299d0705c8743a8dfe27b7361"
+    },
+    {
+      "accession": "0001193125-19-306335",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 27865,
+        "decoded_start": 25786,
+        "normalized_end": 5764,
+        "normalized_span_sha256": "47e4de3df41b0f12f350d6f2bc7d0c746b4e4ef1fee6ec21588cfb05aeb2d9f4",
+        "normalized_start": 4216,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "kind": "stock_acquisition_fractional_cash",
+        "stock_instrument": "Viacom Class B to ViacomCBS Class B; cash-in-lieu required",
+        "stock_ratio": "0.59625"
+      },
+      "receipt_sha256": "949630404a62ecb7900c91a45d734d70a4f80e028f079fdc12ad4ffdbb359d3b",
+      "source_sha256": "50b4052e33d2feac549a7531cdab9e8242fa9057666f61dcc25d6b8d2ce88755"
+    }
+  ],
+  "complete_nav_paths": 0,
+  "completion_document_denominator": 10,
+  "frame_denominator": 60,
+  "incomplete_frame_paths": 60,
+  "limitations": "Source consideration/surviving issuer facts are reviewed; payment, exact class intervals, successor and excluded-holder terms remain unresolved. No NAV calculated.",
+  "reviewed_disclosed_claims": 6,
+  "version": "terminal_closure_v001"
+}
