@@ -1,0 +1,226 @@
+{
+  "approved_method": "session_weighted_group_student",
+  "conditioning_limit": "Conditioning on realized Z changes the group mean to theta+Z; it does not supply the approved unconditional mean-null guarantee. No estimand change is adopted.",
+  "deterministic_counterexample": {
+    "base_mean": 0.0020882352941176473,
+    "base_se2": 3.437725531389026e-05,
+    "counts": [
+      251,
+      250,
+      252,
+      250,
+      187
+    ],
+    "performance_inputs": 0,
+    "source": "Fixed fabricated values; no real returns or new simulation",
+    "synthetic_group_values": [
+      -0.015,
+      0.01,
+      0.005,
+      -0.005,
+      0.02
+    ],
+    "translations": [
+      {
+        "estimated_mean_variance": 3.437725531389027e-05,
+        "mean": -0.09791176470588236,
+        "positive_95_lower_endpoint": false,
+        "synthetic_common_offset": -0.1
+      },
+      {
+        "estimated_mean_variance": 3.437725531389026e-05,
+        "mean": 0.0020882352941176473,
+        "positive_95_lower_endpoint": false,
+        "synthetic_common_offset": 0.0
+      },
+      {
+        "estimated_mean_variance": 3.437725531389027e-05,
+        "mean": 0.10208823529411765,
+        "positive_95_lower_endpoint": true,
+        "synthetic_common_offset": 0.1
+      }
+    ]
+  },
+  "economic_source_structure": [
+    "Recurring issuer membership",
+    "Annual signals can persist across year boundaries",
+    "Overlapping holdings and shared market/regime exposures",
+    "Matched momentum does not algebraically guarantee cancellation of differential factor loading"
+  ],
+  "estimand": "252 times mean aligned daily net candidate-minus-momentum arithmetic differences",
+  "evidence_limit": "These structural risks do not prove actual correlation or actual rejection probability. Source integrity and larger issuer counts do not establish time-group independence.",
+  "expected_estimated_mean_variance": "E(residual_se2)=sigma2/sum(n_g); common Z cancels from every residual",
+  "formal_hypothesis": "One primary H0: annual paired mean <=0; one-sided alpha0.05",
+  "group_structure": "Five Stage C calendar-year groups; 251,250,252,250,187 sessions; partial2026 retained",
+  "known_failure_rows": [
+    {
+      "annual_effect": 0.0,
+      "annual_tracking_error": 0.025,
+      "coverage": {
+        "fraction": 0.6883333333333334,
+        "hits": 413,
+        "total": 600,
+        "wilson95": [
+          0.6501721513736761,
+          0.724098187072698
+        ]
+      },
+      "failed_replications": 0,
+      "family_rejection": {
+        "fraction": 0.185,
+        "hits": 111,
+        "total": 600,
+        "wilson95": [
+          0.15596795658145413,
+          0.21804006141531856
+        ]
+      },
+      "finite_interval_fraction": 1.0,
+      "full_support": {
+        "fraction": 0.1,
+        "hits": 60,
+        "total": 600,
+        "wilson95": [
+          0.07848131824173886,
+          0.12660822842082964
+        ]
+      },
+      "geometry": "C",
+      "mean_interval_width": 0.06018857109484135,
+      "method": "session_weighted_group_student",
+      "primary_rejection": {
+        "fraction": 0.185,
+        "hits": 111,
+        "total": 600,
+        "wilson95": [
+          0.15596795658145413,
+          0.21804006141531856
+        ]
+      },
+      "role": "STRESS_DIAGNOSTIC",
+      "structure": "independent",
+      "unbounded_interval_replications": 0,
+      "world": "common_crossyear"
+    },
+    {
+      "annual_effect": 0.0,
+      "annual_tracking_error": 0.025,
+      "coverage": {
+        "fraction": 0.695,
+        "hits": 417,
+        "total": 600,
+        "wilson95": [
+          0.6570155820403987,
+          0.7305032639615991
+        ]
+      },
+      "failed_replications": 0,
+      "family_rejection": {
+        "fraction": 0.20166666666666666,
+        "hits": 121,
+        "total": 600,
+        "wilson95": [
+          0.17150445146519927,
+          0.23562483542063306
+        ]
+      },
+      "finite_interval_fraction": 1.0,
+      "full_support": {
+        "fraction": 0.14,
+        "hits": 84,
+        "total": 600,
+        "wilson95": [
+          0.11451940785111017,
+          0.17006118414520152
+        ]
+      },
+      "geometry": "C",
+      "mean_interval_width": 0.060260208522867016,
+      "method": "session_weighted_group_student",
+      "primary_rejection": {
+        "fraction": 0.20166666666666666,
+        "hits": 121,
+        "total": 600,
+        "wilson95": [
+          0.17150445146519927,
+          0.23562483542063306
+        ]
+      },
+      "role": "STRESS_DIAGNOSTIC",
+      "structure": "fully_correlated",
+      "unbounded_interval_replications": 0,
+      "world": "common_crossyear"
+    },
+    {
+      "annual_effect": 0.0,
+      "annual_tracking_error": 0.025,
+      "coverage": {
+        "fraction": 0.6883333333333334,
+        "hits": 413,
+        "total": 600,
+        "wilson95": [
+          0.6501721513736761,
+          0.724098187072698
+        ]
+      },
+      "failed_replications": 0,
+      "family_rejection": {
+        "fraction": 0.20833333333333334,
+        "hits": 125,
+        "total": 600,
+        "wilson95": [
+          0.17774324550020665,
+          0.24263454894124958
+        ]
+      },
+      "finite_interval_fraction": 1.0,
+      "full_support": {
+        "fraction": 0.14,
+        "hits": 84,
+        "total": 600,
+        "wilson95": [
+          0.11451940785111017,
+          0.17006118414520152
+        ]
+      },
+      "geometry": "C",
+      "mean_interval_width": 0.059202818718589054,
+      "method": "session_weighted_group_student",
+      "primary_rejection": {
+        "fraction": 0.20833333333333334,
+        "hits": 125,
+        "total": 600,
+        "wilson95": [
+          0.17774324550020665,
+          0.24263454894124958
+        ]
+      },
+      "role": "STRESS_DIAGNOSTIC",
+      "structure": "mixed_common",
+      "unbounded_interval_replications": 0,
+      "world": "common_crossyear"
+    }
+  ],
+  "limit_scope": "As common-factor variance grows with idiosyncratic variance fixed; analytical counterexample, not measured real error rates",
+  "limiting_false_primary_rejection": 0.5,
+  "limiting_two_sided_coverage": 0.0,
+  "materiality": "Estimated annual mean >=0.02 AND positive two-sided95 lower endpoint against zero",
+  "method_search": false,
+  "model": "X_g = theta + Z + epsilon_g; independent zero-mean Gaussian Z and epsilon; Var(epsilon_g)=sigma2/n_g",
+  "power_reference": "phase3e_power_mde_v003.json",
+  "power_scope": "Prior conditional synthetic evidence only; no real tracking error or power estimate",
+  "real_performance_inputs": 0,
+  "real_world_assumption_status": "NOT_ESTABLISHED; persistent common exposure admissible, not proven to be the actual return process",
+  "reference": "Student df4; session-weighted group mean and residual mean-variance estimate",
+  "required_assumptions": [
+    "Common group mean",
+    "Independent approximately Gaussian group means",
+    "Group variance inversely proportional to session counts"
+  ],
+  "robustness": "Double-cost/+1/+5-session estimated effects strictly positive; mandatory gates, not discoveries",
+  "scientific_conclusion": "No uniform certification over an unrestricted persistent-common-factor class. The design supplies no independently justified bound or cancellation restriction.",
+  "synthetic_calibration": "Prior frozen certification worlds pass conditionally; known common-crossyear stress fails; no new simulation",
+  "true_mean_variance": "Var(weighted_mean)=Var(Z)+sigma2/sum(n_g)",
+  "verdict": "BLOCKED",
+  "version": "phase3_final_inference_certificate_v001"
+}
