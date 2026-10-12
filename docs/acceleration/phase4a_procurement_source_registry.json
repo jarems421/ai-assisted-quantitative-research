@@ -1,0 +1,51 @@
+{
+  "cost": "No purchase or source upgrade; account-wide debit unknown",
+  "counts": {
+    "Aurora": 0,
+    "FMP": 0,
+    "Nexus": 0,
+    "Official_announcements": 1,
+    "OpenFIGI": 0,
+    "Orbis": 0,
+    "SEC": 0,
+    "Tiingo": 0,
+    "USAspending_data": 0,
+    "USAspending_documentation": 1,
+    "browser_search": 0
+  },
+  "original_bytes": "Ignored Archive bodies; public hashes/lengths, no source payload",
+  "request_ceiling": 60,
+  "requests": [
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 426,
+        "path": "0000000000-00-000000/ae95b3039685d30ab4dbc422b101f70a91a3915230a41da917c1484f5e132221/body.bin",
+        "sha256": "ae95b3039685d30ab4dbc422b101f70a91a3915230a41da917c1484f5e132221"
+      },
+      "content_type": "text/html",
+      "purpose": "publication_channel",
+      "request_started_at_utc": "2026-10-12T22:31:03.041256+00:00",
+      "retrieved_at_utc": "2026-10-12T22:31:03.462448+00:00",
+      "slot": "2019-01",
+      "status": 403,
+      "url": "https://www.defense.gov/News/Contracts/Year/2019/Month/1/"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 4581,
+        "path": "0000000000-00-000000/76a50f3445670d8ee5488770d6583a7f6399a093a903dabfbab77344f1eba078/body.bin",
+        "sha256": "76a50f3445670d8ee5488770d6583a7f6399a093a903dabfbab77344f1eba078"
+      },
+      "content_type": "text/plain; charset=utf-8",
+      "purpose": "alternative_documentation",
+      "request_started_at_utc": "2026-10-12T22:31:03.641408+00:00",
+      "retrieved_at_utc": "2026-10-12T22:31:03.998769+00:00",
+      "slot": null,
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/fedspendingtransparency/usaspending-api/master/usaspending_api/api_contracts/contracts/v2/transactions.md"
+    }
+  ],
+  "total_starts": 2
+}

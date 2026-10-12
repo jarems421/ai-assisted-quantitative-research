@@ -1,0 +1,101 @@
+{
+  "cases": [
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2019-01"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2019-03"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2019-05"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2019-07"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2019-09"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2019-11"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2020-01"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2020-03"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2020-05"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2020-07"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2020-09"
+    },
+    {
+      "issuer": null,
+      "parent_relation": "NOT_TESTED",
+      "public_private_status": "UNKNOWN",
+      "recipient_status": "UNAVAILABLE_NO_ANNOUNCEMENT",
+      "security": null,
+      "slot": "2020-11"
+    }
+  ],
+  "denominator": 12
+}
