@@ -1,0 +1,12 @@
+{
+  "collector_sha256": "c9b286b75b245a0eeaa591ca04d5bec4deb73d5be2e86b9bc62a3f52174af10d",
+  "frozen_at_utc": "2026-10-12T22:30:37.399800+00:00",
+  "manifest_sha256": "12c0afedc7e130588b996e83d28439639fa0353cefe7e745127820bc9f18c309",
+  "network_starts_before_freeze": 0,
+  "owner_authority": "FAMILY_APPROVED_FOR_SOURCE_FEASIBILITY",
+  "owner_request_sha256": "a46c2fb1857a2e6c3498c611dbc376f43481b866ae700910af9aacb9ab65cadb",
+  "performance_authorized": false,
+  "scope_review": "Implements fixed owner frame and source stack; preserves indicative allocation and authoritative total ceiling; no material deviation",
+  "self_check": "Exact contract structure,12 month keys,no issuer/amount/public/industry/price/effect filter,no fallback,no performance; total60 including retries",
+  "version": "procurement_manifest_freeze_v001"
+}

@@ -1,0 +1,167 @@
+{
+  "OpenFIGI_route": {
+    "role": "Identifier corroboration only; never historical span or parent proof; freeze payload before dispatch",
+    "url": "https://api.openfigi.com/v3/mapping"
+  },
+  "SEC_route": "Exact sec.gov/Archives/edgar/data identity document URLs evidenced by selected-source lineage; no companyfacts/latest/ticker lookup; freeze dispatch receipt",
+  "USAspending_route": {
+    "method": "POST",
+    "selection": "Exact selected printed contract identifier; no recipient/amount/current-public filters; freeze payload before dispatch",
+    "url": "https://api.usaspending.gov/api/v2/search/spending_by_award/"
+  },
+  "allocation_policy": "Total ceiling authoritative including listing discovery/retries; indicative allocation not additive permission; no unrelated-source expansion",
+  "alternative_channel_check": {
+    "purpose": "Official USAspending transaction documentation: evaluate whether it can substitute for an announcement; no event data query",
+    "url": "https://raw.githubusercontent.com/fedspendingtransparency/usaspending-api/master/usaspending_api/api_contracts/contracts/v2/transactions.md"
+  },
+  "announcement_source_family": "Official defense contract announcement pages; no rotated hosts or mirrors",
+  "discovery": "Exact official monthly URLs only; incomplete enumeration fails closed; no search or dynamic endpoint guess",
+  "fallback": null,
+  "forbidden": [
+    "Tiingo",
+    "FMP",
+    "Orbis",
+    "Nexus",
+    "Aurora",
+    "price data",
+    "returns",
+    "event studies",
+    "threshold/holding-period optimization",
+    "graph",
+    "causal claim",
+    "experiment creation/freeze",
+    "paper/live"
+  ],
+  "indicative_allocation": {
+    "Announcement_Documentation": 12,
+    "OpenFIGI": 12,
+    "SEC": 24,
+    "USAspending": 12
+  },
+  "output_questions": [
+    "accessibility",
+    "lineage",
+    "action semantics",
+    "public timing",
+    "historical identity",
+    "clustering",
+    "controls",
+    "variation",
+    "dependence",
+    "advance redesign or reject"
+  ],
+  "owner_authority": "FAMILY_APPROVED_FOR_SOURCE_FEASIBILITY",
+  "pacing": {
+    "OpenFIGI_minimum_seconds": 3,
+    "global_minimum_seconds": 0.6,
+    "workers": 1
+  },
+  "performance_authorized": false,
+  "request_ceiling": 60,
+  "research_cutoff": "2020-11-30",
+  "retry": {
+    "backoff_seconds": [
+      1,
+      2
+    ],
+    "maximum_attempts_per_request": 3,
+    "no_retry_statuses": [
+      403,
+      429
+    ],
+    "transient_statuses": [
+      500,
+      502,
+      503,
+      504
+    ],
+    "transport_unknown_submission": "Count reservation and stop; never blind resubmit"
+  },
+  "selection": {
+    "announcement": "Earliest official dated announcement in the fixed month from an exhaustive monthly index; ascending date then original URL tie-break",
+    "award": "First listed award in source document order; no easiest/public/amount selection",
+    "filters": {},
+    "month_replacement": false
+  },
+  "slots": [
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2019/Month/1/",
+      "slot": "2019-01"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2019/Month/3/",
+      "slot": "2019-03"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2019/Month/5/",
+      "slot": "2019-05"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2019/Month/7/",
+      "slot": "2019-07"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2019/Month/9/",
+      "slot": "2019-09"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2019/Month/11/",
+      "slot": "2019-11"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2020/Month/1/",
+      "slot": "2020-01"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2020/Month/3/",
+      "slot": "2020-03"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2020/Month/5/",
+      "slot": "2020-05"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2020/Month/7/",
+      "slot": "2020-07"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2020/Month/9/",
+      "slot": "2020-09"
+    },
+    {
+      "discovery_url": "https://www.defense.gov/News/Contracts/Year/2020/Month/11/",
+      "slot": "2020-11"
+    }
+  ],
+  "status_taxonomy": [
+    "OFFICIAL_PAGE_UNAVAILABLE",
+    "DEFERRED_SOURCE_CHANNEL_STOP",
+    "SOURCE_ENUMERATION_UNCERTIFIED",
+    "AWARD_SELECTED",
+    "PRIVATE_RECIPIENT",
+    "RECIPIENT_PARENT_AMBIGUOUS",
+    "PUBLIC_RECIPIENT_PLAUSIBLE",
+    "UNAVAILABLE",
+    "UNKNOWN",
+    "NOT_APPLICABLE",
+    "DATE_ONLY",
+    "OBSERVED_TIMESTAMP_SUPPORTED",
+    "CONTRADICTORY"
+  ],
+  "stop_conditions": [
+    "403/429/access denial",
+    "Redirect/encoding/source contradiction",
+    "Incomplete monthly enumeration",
+    "60 starts",
+    "Paid/evasive access",
+    "Performance information",
+    "Unapproved scope"
+  ],
+  "storage": {
+    "archive": "Existing Archive original-byte store",
+    "hash": "SHA256 original bytes; content-addressed versions; reserve request before transport; contact headers private/redacted",
+    "receipts": "Exclusive canonical JSON; original bodies never reserialized",
+    "root": "data/raw/procurement_pilot_v001"
+  },
+  "version": "procurement_source_pilot_v001"
+}
