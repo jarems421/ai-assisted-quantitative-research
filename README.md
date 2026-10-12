@@ -136,13 +136,14 @@ Verified environment: CPython 3.13; compatibility code supports Python 3.11+. De
 python -m pip install -r requirements-research.txt
 python -m pip install -r requirements-docs.txt
 python -m src.research.public_checks
+python -m src.research.phase4a --check
 python -m src.research demo EXP999 --dry-run
 python -m src.presentation.exp001 --check
 ```
 
 Public checks block external network and private data reads. EXP999 uses temporary directories and fake transports. Presentation regeneration (`python -m src.presentation.exp001`) uses published EXP001 processed records; it creates no remote job. These checks demonstrate software behavior, not certified market execution or alpha.
 
-Final Phase 3 verified baseline: **278 local tests, 52 public tests, 0 skipped**. See [validation receipt](docs/acceleration/phase3_final_validation.json).
+Latest transition validation: **278 local tests, 52 public tests, 0 skipped**. See [validation receipt](docs/acceleration/phase4a_validation.json).
 
 The complete local suite additionally needs ignored original archives:
 

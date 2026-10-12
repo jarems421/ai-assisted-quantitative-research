@@ -1,0 +1,17 @@
+{
+  "EXP004": "OPERATIONALLY_PAUSED",
+  "EXP005": "ABANDONED_FOR_APPROVED_DESIGN_ABSENT_UNREGISTERED_UNFROZEN_NO_REAL_PERFORMANCE",
+  "LIVE_TRADING": "NOT_AUTHORIZED",
+  "NEXT_EXPERIMENT": "NOT_YET_FROZEN",
+  "NEXUS_EXECUTION": "BLOCKED",
+  "PAPER_TRADING": "NOT_AUTHORIZED",
+  "PERFORMANCE_AUTHORIZED": false,
+  "PHASE3_COMPLETION": "COMPLETE_EXP005_ABANDONED",
+  "PHASE4A": "ACTIVE_EXPERIMENT_SELECTION",
+  "causal_lab_built": false,
+  "family_owner_approval": null,
+  "family_recommendation": "government_awards",
+  "graph_built": false,
+  "source_heavy_research_authorized": false,
+  "version": "phase4a_selection_status_v001"
+}

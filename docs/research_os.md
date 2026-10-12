@@ -6,7 +6,7 @@ Research OS controls canonical evidence, contracts, scientific gates, trials and
 
 The v1 architecture and commands below remain compatibility infrastructure; no old experiment is migrated or reopened. The minimal spine reuses hashes, immutable stores, population reconciliation and stage principles. Real compiler-to-Store/selection integration remains blocked pending scientific certificates and separate experiment authorization. Current Phase 4A allows only cheap family selection under the [feasibility checklist](acceleration/phase4a_feasibility_framework.md). Synthetic commands are `python -m src.research.phase3d check` and `python -m src.research.phase3d report --check`; private source reconciliation adds `python -m src.research.phase3d review --check`.
 
-## Architecture and responsibility
+## V1 compatibility architecture and responsibility
 
 ```mermaid
 flowchart TD

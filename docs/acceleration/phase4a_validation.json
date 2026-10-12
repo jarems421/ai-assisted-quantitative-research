@@ -1,0 +1,100 @@
+{
+  "EXP004_pause": "Baseline hashed operational pause/state unchanged",
+  "EXP005_state_counts": {
+    "experiments": 0,
+    "jobs": 0,
+    "trials": 0
+  },
+  "baseline": "9031af3132d3441b0d21a080beda20017fae0946",
+  "browser_documentation_operations": 15,
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "b5a3cb7a9ddda6961153963e991f226a3dd0407282d7339185feee3da0c7ab67"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "d8d9f7645a01d34fee88fbaa5edc72604813e4adc1048d19afcf6445a6f86846"
+    },
+    {
+      "command": "python -m src.research.phase4a --check",
+      "exit_code": 0,
+      "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "command": "python -m src.research.phase3_final --check",
+      "exit_code": 0,
+      "log_sha256": "da8a1670bbec618859a733b27ae698e5c3e327c84093759732f93dd73ef8d221"
+    },
+    {
+      "command": "python -m src.research.phase3er report --check",
+      "exit_code": 0,
+      "log_sha256": "fa4c28394cfcdf8c3fb22bc72e672f1948b97a0fe4e506c52040f061ec32ea08"
+    },
+    {
+      "command": "python -m src.research.phase3er geometry --check",
+      "exit_code": 0,
+      "log_sha256": "dfd17fb0e07c9b8bab9f672953932890ae2f7d986610726c30397e2a7fd85557"
+    },
+    {
+      "command": "python -m src.research.phase3er audit",
+      "exit_code": 0,
+      "log_sha256": "c02de9e38fd833f12baab30588f34080f47afcf67903c69f857664e7035bb94e"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0,
+      "log_sha256": "4658cb6d3bdeaaae22941052c2a45875edd652c10f566d3220a9ece9b4de4268"
+    },
+    {
+      "command": "python -m src.research.phase3e report --check",
+      "exit_code": 0,
+      "log_sha256": "6e832a9623f3e51b3e7bf23ac319087907e99bb67753cf96a4c969b2417347d5"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "a0beb5d2cc256cb53e33f1ab7846245cb472adbf894e2e453d4bc42e3ad49444"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    }
+  ],
+  "event_corpus_price_identifier_filing_requests": 0,
+  "experiment_manifests_metric_code_processed_results": "UNCHANGED",
+  "final_README_regeneration": "After this receipt, renderer consumes these executed counts; final presentation/consistency checks run again",
+  "hosted_ci": "Final HEAD observation supplied in delivery message; no self-referential commit embedded",
+  "local_tests_passed": 278,
+  "no_new_tests": "No new tests added for documentation changes; existing suites unchanged and read-only consistency check executed",
+  "owner_request_verbatim_sha256": "df18ddf08e3cebf265d5c69f47a6d3d2ecbcfdf87e4d922fb6b6c662775d089b",
+  "preservation": {
+    "deliberate_current_documentation_changes": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "docs/publishing.md",
+      "docs/research_os.md",
+      "experiments/_template/README.md",
+      "src/presentation/exp001.py"
+    ],
+    "files": 8474,
+    "unchanged": 8467,
+    "unexpected_changes": []
+  },
+  "public_tests_passed": 52,
+  "real_performance_inputs": 0,
+  "regression_scope": "Already-opened EXP001 local fixtures only; no new research/performance or held-out opening",
+  "source_review_file_sha256": "51ad9de44ff11e1533db7cbd9bce9a58502ac82b8cb50d809361f77ac1df7f8a",
+  "source_review_reference": "phase4a_source_review.json",
+  "tests_skipped": 0,
+  "version": "phase4a_transition_validation_v001"
+}

@@ -130,6 +130,7 @@ Verified environment: CPython 3.13; compatibility code supports Python 3.11+. De
 python -m pip install -r requirements-research.txt
 python -m pip install -r requirements-docs.txt
 python -m src.research.public_checks
+python -m src.research.phase4a --check
 python -m src.research demo EXP999 --dry-run
 python -m src.presentation.exp001 --check
 ```

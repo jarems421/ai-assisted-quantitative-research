@@ -1,0 +1,565 @@
+{
+  "candidates": [
+    {
+      "count_status": "NOT_MEASURED_DOCUMENTATION_ONLY",
+      "criteria": {
+        "access_cost": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Publisher documentation/API described public access; no purchase or account entitlement assumed",
+          "score": 2
+        },
+        "causal_identification": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Possible timing/competition designs require evidence; award assignment is not random",
+          "score": 1
+        },
+        "controls": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Industry/nonrecipient comparisons conceivable, but competition, anticipation and selection need review",
+          "score": 1
+        },
+        "dependence": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Repeated contractors, agencies, budgets and clustered dates can dominate effective observations",
+          "score": 1
+        },
+        "economic_mechanism": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Award may revise expected backlog/cashflows; expectation and issuer materiality unmeasured",
+          "score": 1
+        },
+        "frequency_potential": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Transaction-oriented source supports repeated-event potential; no usable count measured",
+          "score": 2
+        },
+        "graph_reuse": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Recipient-agency-contract relationships are directly reusable evidence concepts",
+          "score": 2
+        },
+        "historical_identity": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Recipient subsidiaries/UEI and award IDs are not dated traded-class mappings",
+          "score": 1
+        },
+        "inference": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "No event-cluster geometry, null reference or power certificate yet",
+          "score": null
+        },
+        "lifecycle_burden": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Awards do not inherently end listings, but ended recipients and mergers remain mandatory",
+          "score": 1
+        },
+        "negative_result_value": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Null/failed timing or mappings teach reusable source, parent-lineage and event-denominator contracts",
+          "score": 2
+        },
+        "novelty": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Procurement mechanism differs from prior trend/insider/annual-revenue research",
+          "score": 2
+        },
+        "primary_source": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Official API contracts specify award/transaction IDs, action types and revisions",
+          "score": 2
+        },
+        "survivorship": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Source-first sampling is possible; historical public-company mapping still unresolved",
+          "score": 1
+        },
+        "timing": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "Action/signature/update dates differ; first-public time and historical release coverage uncertified",
+          "score": 1
+        },
+        "usable_sample": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D01",
+            "D07",
+            "D08"
+          ],
+          "reason": "No public-issuer eligible population/event census has been acquired",
+          "score": null
+        }
+      },
+      "design_advance_eligible": false,
+      "effective_independent_count": null,
+      "family": "Government procurement award announcements",
+      "family_approved": false,
+      "id": "government_awards",
+      "known_subtotal": 20,
+      "mandatory_gate_verdicts": {
+        "controls": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "execution": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "identity": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "inference": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "population": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "power_resolution": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "source": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "timing": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "trial_budget": "DEFER_FOR_BOUNDED_EVIDENCE"
+      },
+      "maximum": 32,
+      "performance_authorized": false,
+      "possible_score_interval": [
+        20,
+        24
+      ],
+      "unknown_criteria": 2,
+      "usable_event_count": null
+    },
+    {
+      "count_status": "NOT_MEASURED_DOCUMENTATION_ONLY",
+      "criteria": {
+        "access_cost": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Official public download/API documentation exists; no subscription purchased",
+          "score": 2
+        },
+        "causal_identification": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Approval is evidence-selected and often anticipated; no as-if-random assignment established",
+          "score": 0
+        },
+        "controls": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Approved-product source does not establish a balanced rejection/withdrawal comparison frame",
+          "score": 0
+        },
+        "dependence": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Repeated products/sponsors, therapeutic classes and scheduled decisions are clustered",
+          "score": 1
+        },
+        "economic_mechanism": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Approval can change commercialization prospects; prior expectations and ownership economics unknown",
+          "score": 1
+        },
+        "frequency_potential": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Application/submission structure and long advertised approved-product history support event potential",
+          "score": 2
+        },
+        "graph_reuse": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Application-product-sponsor/rights lineage can be reused later",
+          "score": 2
+        },
+        "historical_identity": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Sponsor/licensing owner may differ from traded issuer; dated rights/class bridge needed",
+          "score": 1
+        },
+        "inference": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "No defensible independent-event count, calibration or power certificate",
+          "score": null
+        },
+        "lifecycle_burden": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Licensing transfers and biotech failures require lifecycle evidence",
+          "score": 1
+        },
+        "negative_result_value": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Negative findings could improve decision-timing and historical ownership/rights contracts",
+          "score": 2
+        },
+        "novelty": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Regulatory commercialization mechanism is new to this repository",
+          "score": 2
+        },
+        "primary_source": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "FDA defines application/sponsor/status/document structures; openFDA is a transformed derivative",
+          "score": 2
+        },
+        "survivorship": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Current sponsor/product tables do not certify all historical securities or ended owners",
+          "score": 1
+        },
+        "timing": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "Status/document dates and daily refreshed database do not certify historical first-public instants",
+          "score": 1
+        },
+        "usable_sample": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D04",
+            "D05"
+          ],
+          "reason": "No eligible public-owner original-event count or complete failure denominator measured",
+          "score": null
+        }
+      },
+      "design_advance_eligible": false,
+      "effective_independent_count": null,
+      "family": "FDA drug approval decisions",
+      "family_approved": false,
+      "id": "fda_approval",
+      "known_subtotal": 18,
+      "mandatory_gate_verdicts": {
+        "controls": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "execution": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "identity": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "inference": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "population": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "power_resolution": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "source": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "timing": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "trial_budget": "DEFER_FOR_BOUNDED_EVIDENCE"
+      },
+      "maximum": 32,
+      "performance_authorized": false,
+      "possible_score_interval": [
+        18,
+        22
+      ],
+      "unknown_criteria": 2,
+      "usable_event_count": null
+    },
+    {
+      "count_status": "NOT_MEASURED_DOCUMENTATION_ONLY",
+      "criteria": {
+        "access_cost": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Official public case/document directory accessible without a purchase",
+          "score": 2
+        },
+        "causal_identification": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Nonrandom challenges and endogenous settlements; no credible causal design established",
+          "score": 0
+        },
+        "controls": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Selection into enforcement, announced deals and litigation confound ordinary untreated cohorts",
+          "score": 0
+        },
+        "dependence": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Several updates per deal, agency policy regimes and overlapping parties create dependence",
+          "score": 1
+        },
+        "economic_mechanism": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Challenge/settlement can change deal probability and competitive outcomes",
+          "score": 1
+        },
+        "frequency_potential": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Official case directory exists; all-enforcement counts are not merger/public-issuer event counts",
+          "score": 1
+        },
+        "graph_reuse": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Case-party-deal relationships would enrich the later graph",
+          "score": 2
+        },
+        "historical_identity": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Targets, acquirers and multiple classes require dated relationships",
+          "score": 1
+        },
+        "inference": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "No independent-case geometry or scientifically defensible test yet",
+          "score": null
+        },
+        "lifecycle_burden": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "The event family directly involves cash/stock mergers and terminal conversions",
+          "score": 0
+        },
+        "negative_result_value": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Failure would document case-history, control and terminal-evidence limits",
+          "score": 2
+        },
+        "novelty": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Merger-policy mechanism differs from earlier experiments",
+          "score": 2
+        },
+        "primary_source": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Publisher directory supports matter/case, status and date navigation",
+          "score": 2
+        },
+        "survivorship": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Completed deals remove targets; active-ticker selection would bias the source frame",
+          "score": 0
+        },
+        "timing": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "Case updates and procedural dates do not establish first-public market knowledge",
+          "score": 1
+        },
+        "usable_sample": {
+          "assessment_type": "Qualitative design triage, not empirical certification",
+          "evidence_references": [
+            "D06"
+          ],
+          "reason": "No complete eligible merger-decision count or untreated-deal frame measured",
+          "score": null
+        }
+      },
+      "design_advance_eligible": false,
+      "effective_independent_count": null,
+      "family": "Public merger-enforcement decisions",
+      "family_approved": false,
+      "id": "merger_enforcement",
+      "known_subtotal": 15,
+      "mandatory_gate_verdicts": {
+        "controls": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "execution": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "identity": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "inference": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "population": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "power_resolution": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "source": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "timing": "DEFER_FOR_BOUNDED_EVIDENCE",
+        "trial_budget": "DEFER_FOR_BOUNDED_EVIDENCE"
+      },
+      "maximum": 32,
+      "performance_authorized": false,
+      "possible_score_interval": [
+        15,
+        19
+      ],
+      "unknown_criteria": 2,
+      "usable_event_count": null
+    }
+  ],
+  "criteria": [
+    "economic_mechanism",
+    "frequency_potential",
+    "timing",
+    "historical_identity",
+    "controls",
+    "usable_sample",
+    "dependence",
+    "inference",
+    "lifecycle_burden",
+    "survivorship",
+    "access_cost",
+    "primary_source",
+    "graph_reuse",
+    "causal_identification",
+    "novelty",
+    "negative_result_value"
+  ],
+  "government_awards_forced_winner": false,
+  "limitations": [
+    "Subjective equal ordinal weighting, no empirical rank significance",
+    "Intervals overlap; no dominant or certified winner",
+    "All mandatory gates unresolved",
+    "No event corpus/public-company mapping/price/return acquisition"
+  ],
+  "next_owner_decision": "Approve or reject government procurement as the next family and separately authorize the proposed bounded source-only pilot; no freeze or performance permission inferred",
+  "recommendation_reason": "Highest known triage subtotal, broad transaction-oriented source and direct agency-recipient graph reuse; less intrinsically terminal/control burden than merger events and less approval-only control-frame dependence than FDA. Timing and public-company independent-event counts remain decisive unknowns.",
+  "recommendation_scope": "NEXT_BOUNDED_SOURCE_ONLY_PILOT_FOR_OWNER_REVIEW",
+  "recommended_family": "government_awards",
+  "rubric_frozen_reference": "phase4a_plan.md",
+  "scale": {
+    "0": "Documented major obstacle",
+    "1": "Plausible; certification needed",
+    "2": "Documented useful primary-source capability",
+    "null": "Unknown"
+  },
+  "score_interpretation": "Descriptive ordinal judgments; totals do not certify gates and interval reflects unknown criteria, not statistical uncertainty",
+  "selection_basis": "Mechanism/source/design feasibility only; no real performance",
+  "version": "phase4a_qualitative_scorecard_v001"
+}
