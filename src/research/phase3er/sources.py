@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,re
 from html import unescape
-from src.research.phase3c.sources import RAW as OLD,SourceHTTP,put
+from src.research.phase3c.sources import RAW as OLD,SourceHTTP,put,require_cohort
 from src.research.sec_pilot.acquisition import ROOT,Archive,identity
 from src.research.phase3c.acquire import filing_rows
 from src.research.spec import digest
@@ -42,7 +42,8 @@ def header_url(cik,accession):
 
 def metadata(execute=False):
     old=cached();http=BoundedHTTP(set(),root=RAW);records=[]
-    cases=[r for r in json.loads((DOCS/'phase3c_pilot_cohort.json').read_bytes())['cases'] if r['revenue_candidate']]
+    cohort=json.loads((DOCS/'phase3c_pilot_cohort.json').read_bytes());require_cohort(cohort)
+    cases=[r for r in cohort['cases'] if r['revenue_candidate']]
     def load(url,case,reason):
         validate_url('SEC',url)
         q={'provider':'SEC','url':url,'case_key':case['case_key'],'reason':reason}
