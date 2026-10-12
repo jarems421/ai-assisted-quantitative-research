@@ -1,0 +1,5 @@
+# Public and synthetic CI scope
+
+`python -m src.research.public_checks` runs an explicit whitelist of Phase 3D proof, execution, accounting-contract, approval, inference and closure-source fixture tests. The runner denies repository data, private state, historical experiment files, `.env` reads and external socket connections. It uses no source/API credential. Tests use synthetic EXP999 temporary directories and public metadata; they neither call a source service nor execute an experiment.
+
+The GitHub Actions workflow pins official checkout/setup action commits, installs only NumPy 2.2.6/jsonschema4.26.0/tzdata2026.5 on Python 3.13/Windows, then runs that whitelist. Checkout credentials are not persisted and permissions are read-only. Normal checkout/action/package installation requires network; research tests do not. This is not the full local private suite, original-file parsing/source reconciliation, Monte Carlo calibration or a production execution certificate. Hosted status must be observed separately; local success is not a claim that GitHub has already passed.

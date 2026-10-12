@@ -13,6 +13,8 @@ The [governing roadmap](docs/acceleration/master_plan.md) defines an evidence-na
 
 The [Phase 3D checkpoint](docs/acceleration/phase3d_report.md) implements reviewed source contracts, a minimal proof compiler, exact input replay and a synthetic local execution ledger. Scientific closure remains incomplete: broader revenue-tag presence does not certify accounting comparability, historical listing/terminal coverage remains unresolved, and no replacement inference method qualifies. The owner approved the exact 2015–2021 pilot modeled availability policy; activation still requires independent source/calendar certification. Earlier phase evidence stays immutable; EXP004 remains paused and EXP005 absent/NOT_READY. No real strategy study, remote Nexus call or automatic Phase 4 transition occurred.
 
+The [closure continuation](docs/acceleration/phase3d_closure_report.md) adds bounded original-source review, inference feasibility guards and public synthetic CI. Both revised monthly inference candidates fail calibration. Scoped source disclosures improve evidence without certifying complete revenue triples, class spans or terminal position contracts. The earlier checkpoint and failures remain intact; work stops before Phase 4A.
+
 ## Research OS compatibility infrastructure
 
 Reusable infrastructure now supports validated experiment specifications, frozen hashes, sequential stage gates, bounded job planning, durable submission/trial journals, resumable raw extraction, parameter stability, paired resampling, and generated experiment cards. EXP001 remains the only completed economic evaluation; later experiments record feasibility and execution limits.

@@ -1,0 +1,3358 @@
+{
+  "candidate_verdicts": {
+    "monthly_hac12": {
+      "coverage_gate": false,
+      "power10_screen": false,
+      "power_at_materiality": false,
+      "selected": false,
+      "size_gate": false,
+      "statistical_assumptions_real": "UNESTABLISHED"
+    },
+    "monthly_studentized_circular12": {
+      "coverage_gate": false,
+      "power10_screen": false,
+      "power_at_materiality": false,
+      "selected": false,
+      "size_gate": false,
+      "statistical_assumptions_real": "UNESTABLISHED"
+    }
+  },
+  "freeze_receipt_sha256": "d7a09772737efc6dfce68240367f4badac9637d28fe7114f5ddab72cbfb17580",
+  "limitations": "Finite sample synthetic evidence, not certification of a real population or weak-dependence assumptions; failures retained",
+  "protocol_sha256": "73a6940ccb0b4f5fbad16a7a44b18457dc2a61f212acb9f580afba202cd364fc",
+  "real_strategy_inputs": 0,
+  "rows": [
+    {
+      "covered": {
+        "fraction": 0.875,
+        "wilson95": [
+          0.8219846471534161,
+          0.9138808484078432
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.16,
+        "wilson95": [
+          0.11567342208544587,
+          0.2171418619390124
+        ]
+      },
+      "median_annual_interval_width": 0.21560423069089585,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "raw": {
+        "fraction": 0.135,
+        "wilson95": [
+          0.09446507976920289,
+          0.18929250455117141
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "iid"
+    },
+    {
+      "covered": {
+        "fraction": 0.875,
+        "wilson95": [
+          0.8219846471534161,
+          0.9138808484078432
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "median_annual_interval_width": 0.21560423069089585,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "raw": {
+        "fraction": 0.135,
+        "wilson95": [
+          0.09446507976920289,
+          0.18929250455117141
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "iid"
+    },
+    {
+      "covered": {
+        "fraction": 0.875,
+        "wilson95": [
+          0.8219846471534161,
+          0.9138808484078432
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.13,
+        "wilson95": [
+          0.09028141365225628,
+          0.18366463072730121
+        ]
+      },
+      "median_annual_interval_width": 0.21560423069089585,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.085,
+        "wilson95": [
+          0.05374529946985246,
+          0.13189688544235392
+        ]
+      },
+      "raw": {
+        "fraction": 0.135,
+        "wilson95": [
+          0.09446507976920289,
+          0.18929250455117141
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "iid"
+    },
+    {
+      "covered": {
+        "fraction": 0.85,
+        "wilson95": [
+          0.7939430617334484,
+          0.892864734123727
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.18,
+        "wilson95": [
+          0.13294550662534108,
+          0.2391159371623843
+        ]
+      },
+      "median_annual_interval_width": 0.22518630871838555,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.075,
+        "wilson95": [
+          0.045974507057252416,
+          0.12004459797332034
+        ]
+      },
+      "raw": {
+        "fraction": 0.15,
+        "wilson95": [
+          0.107135265876273,
+          0.20605693826655166
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "iid"
+    },
+    {
+      "covered": {
+        "fraction": 0.85,
+        "wilson95": [
+          0.7939430617334484,
+          0.892864734123727
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "median_annual_interval_width": 0.22518630871838555,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "raw": {
+        "fraction": 0.15,
+        "wilson95": [
+          0.107135265876273,
+          0.20605693826655166
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "iid"
+    },
+    {
+      "covered": {
+        "fraction": 0.85,
+        "wilson95": [
+          0.7939430617334484,
+          0.892864734123727
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.145,
+        "wilson95": [
+          0.1028928513530641,
+          0.20048781284894374
+        ]
+      },
+      "median_annual_interval_width": 0.22518630871838555,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "raw": {
+        "fraction": 0.15,
+        "wilson95": [
+          0.107135265876273,
+          0.20605693826655166
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "iid"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "median_annual_interval_width": 0.4339201138176809,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "raw": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "ar05"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "median_annual_interval_width": 0.4339201138176809,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "raw": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "ar05"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.075,
+        "wilson95": [
+          0.045974507057252416,
+          0.12004459797332034
+        ]
+      },
+      "median_annual_interval_width": 0.4339201138176809,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.035,
+        "wilson95": [
+          0.017055324637357105,
+          0.07047146086668134
+        ]
+      },
+      "raw": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "ar05"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "median_annual_interval_width": 0.4433078868205048,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "raw": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "ar05"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "median_annual_interval_width": 0.4433078868205048,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "raw": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "ar05"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.095,
+        "wilson95": [
+          0.06166261364986359,
+          0.14360265114397636
+        ]
+      },
+      "median_annual_interval_width": 0.4433078868205048,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "raw": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "ar05"
+    },
+    {
+      "covered": {
+        "fraction": 0.865,
+        "wilson95": [
+          0.8107074954488287,
+          0.9055349202307972
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.165,
+        "wilson95": [
+          0.11996784122663977,
+          0.22265898273863527
+        ]
+      },
+      "median_annual_interval_width": 4.072886859488947,
+      "median_effective_months_diagnostic": 38.56492678906801,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.05,
+        "wilson95": [
+          0.027382349028644986,
+          0.08957905629784384
+        ]
+      },
+      "raw": {
+        "fraction": 0.085,
+        "wilson95": [
+          0.05374529946985246,
+          0.13189688544235392
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "persistent095"
+    },
+    {
+      "covered": {
+        "fraction": 0.865,
+        "wilson95": [
+          0.8107074954488287,
+          0.9055349202307972
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "median_annual_interval_width": 4.072886859488947,
+      "median_effective_months_diagnostic": 38.56492678906801,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "raw": {
+        "fraction": 0.085,
+        "wilson95": [
+          0.05374529946985246,
+          0.13189688544235392
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "persistent095"
+    },
+    {
+      "covered": {
+        "fraction": 0.865,
+        "wilson95": [
+          0.8107074954488287,
+          0.9055349202307972
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.12,
+        "wilson95": [
+          0.08197935023887545,
+          0.17234361425904846
+        ]
+      },
+      "median_annual_interval_width": 4.072886859488947,
+      "median_effective_months_diagnostic": 38.56492678906801,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "raw": {
+        "fraction": 0.085,
+        "wilson95": [
+          0.05374529946985246,
+          0.13189688544235392
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "persistent095"
+    },
+    {
+      "covered": {
+        "fraction": 0.855,
+        "wilson95": [
+          0.7995121871510563,
+          0.8971071486469359
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.135,
+        "wilson95": [
+          0.09446507976920289,
+          0.18929250455117141
+        ]
+      },
+      "median_annual_interval_width": 4.36824933230702,
+      "median_effective_months_diagnostic": 38.56492678906801,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.09,
+        "wilson95": [
+          0.05768697871453362,
+          0.13776674613848952
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "persistent095"
+    },
+    {
+      "covered": {
+        "fraction": 0.855,
+        "wilson95": [
+          0.7995121871510563,
+          0.8971071486469359
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "median_annual_interval_width": 4.36824933230702,
+      "median_effective_months_diagnostic": 38.56492678906801,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.09,
+        "wilson95": [
+          0.05768697871453362,
+          0.13776674613848952
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "persistent095"
+    },
+    {
+      "covered": {
+        "fraction": 0.855,
+        "wilson95": [
+          0.7995121871510563,
+          0.8971071486469359
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.125,
+        "wilson95": [
+          0.0861191515921568,
+          0.1780153528465839
+        ]
+      },
+      "median_annual_interval_width": 4.36824933230702,
+      "median_effective_months_diagnostic": 38.56492678906801,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.09,
+        "wilson95": [
+          0.05768697871453362,
+          0.13776674613848952
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "persistent095"
+    },
+    {
+      "covered": {
+        "fraction": 0.825,
+        "wilson95": [
+          0.7663545078991807,
+          0.8713955882539106
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.255,
+        "wilson95": [
+          0.19960402982802747,
+          0.3196305130719498
+        ]
+      },
+      "median_annual_interval_width": 1.1408579108863837,
+      "median_effective_months_diagnostic": 12.854483793095486,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "raw": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "annual_common"
+    },
+    {
+      "covered": {
+        "fraction": 0.825,
+        "wilson95": [
+          0.7663545078991807,
+          0.8713955882539106
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "median_annual_interval_width": 1.1408579108863837,
+      "median_effective_months_diagnostic": 12.854483793095486,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "raw": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "annual_common"
+    },
+    {
+      "covered": {
+        "fraction": 0.825,
+        "wilson95": [
+          0.7663545078991807,
+          0.8713955882539106
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.17,
+        "wilson95": [
+          0.12427835351105657,
+          0.22816001039503528
+        ]
+      },
+      "median_annual_interval_width": 1.1408579108863837,
+      "median_effective_months_diagnostic": 12.854483793095486,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "raw": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "annual_common"
+    },
+    {
+      "covered": {
+        "fraction": 0.88,
+        "wilson95": [
+          0.8276563857409517,
+          0.9180206497611246
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.24,
+        "wilson95": [
+          0.1860652685202468,
+          0.3037346545572801
+        ]
+      },
+      "median_annual_interval_width": 1.3413278262639656,
+      "median_effective_months_diagnostic": 12.854483793095486,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "raw": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "annual_common"
+    },
+    {
+      "covered": {
+        "fraction": 0.88,
+        "wilson95": [
+          0.8276563857409517,
+          0.9180206497611246
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "median_annual_interval_width": 1.3413278262639656,
+      "median_effective_months_diagnostic": 12.854483793095486,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "raw": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "annual_common"
+    },
+    {
+      "covered": {
+        "fraction": 0.88,
+        "wilson95": [
+          0.8276563857409517,
+          0.9180206497611246
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.145,
+        "wilson95": [
+          0.1028928513530641,
+          0.20048781284894374
+        ]
+      },
+      "median_annual_interval_width": 1.3413278262639656,
+      "median_effective_months_diagnostic": 12.854483793095486,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.05,
+        "wilson95": [
+          0.027382349028644986,
+          0.08957905629784384
+        ]
+      },
+      "raw": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "annual_common"
+    },
+    {
+      "covered": {
+        "fraction": 0.945,
+        "wilson95": [
+          0.9042120755340645,
+          0.9690149791986299
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "median_annual_interval_width": 0.49710397024963504,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.005,
+        "wilson95": [
+          0.0008831459893662054,
+          0.02777439986977148
+        ]
+      },
+      "raw": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "heteroskedastic"
+    },
+    {
+      "covered": {
+        "fraction": 0.945,
+        "wilson95": [
+          0.9042120755340645,
+          0.9690149791986299
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.005,
+        "wilson95": [
+          0.0008831459893662054,
+          0.02777439986977148
+        ]
+      },
+      "median_annual_interval_width": 0.49710397024963504,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.005,
+        "wilson95": [
+          0.0008831459893662054,
+          0.02777439986977148
+        ]
+      },
+      "raw": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "heteroskedastic"
+    },
+    {
+      "covered": {
+        "fraction": 0.945,
+        "wilson95": [
+          0.9042120755340645,
+          0.9690149791986299
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "median_annual_interval_width": 0.49710397024963504,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "raw": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "heteroskedastic"
+    },
+    {
+      "covered": {
+        "fraction": 0.8,
+        "wilson95": [
+          0.7391436038882958,
+          0.8495487925607118
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.28,
+        "wilson95": [
+          0.22236792842635128,
+          0.34592431417771
+        ]
+      },
+      "median_annual_interval_width": 0.480272764498564,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "raw": {
+        "fraction": 0.135,
+        "wilson95": [
+          0.09446507976920289,
+          0.18929250455117141
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "heteroskedastic"
+    },
+    {
+      "covered": {
+        "fraction": 0.8,
+        "wilson95": [
+          0.7391436038882958,
+          0.8495487925607118
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "median_annual_interval_width": 0.480272764498564,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "raw": {
+        "fraction": 0.135,
+        "wilson95": [
+          0.09446507976920289,
+          0.18929250455117141
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "heteroskedastic"
+    },
+    {
+      "covered": {
+        "fraction": 0.8,
+        "wilson95": [
+          0.7391436038882958,
+          0.8495487925607118
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.205,
+        "wilson95": [
+          0.15486094831106376,
+          0.26625819518074556
+        ]
+      },
+      "median_annual_interval_width": 0.480272764498564,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.075,
+        "wilson95": [
+          0.045974507057252416,
+          0.12004459797332034
+        ]
+      },
+      "raw": {
+        "fraction": 0.135,
+        "wilson95": [
+          0.09446507976920289,
+          0.18929250455117141
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "heteroskedastic"
+    },
+    {
+      "covered": {
+        "fraction": 0.89,
+        "wilson95": [
+          0.8390720169908702,
+          0.9262280983928396
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.12,
+        "wilson95": [
+          0.08197935023887545,
+          0.17234361425904846
+        ]
+      },
+      "median_annual_interval_width": 0.2228095927761891,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.025,
+        "wilson95": [
+          0.010724561470787711,
+          0.05717914415161715
+        ]
+      },
+      "raw": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "skewed"
+    },
+    {
+      "covered": {
+        "fraction": 0.89,
+        "wilson95": [
+          0.8390720169908702,
+          0.9262280983928396
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.025,
+        "wilson95": [
+          0.010724561470787711,
+          0.05717914415161715
+        ]
+      },
+      "median_annual_interval_width": 0.2228095927761891,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.025,
+        "wilson95": [
+          0.010724561470787711,
+          0.05717914415161715
+        ]
+      },
+      "raw": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "skewed"
+    },
+    {
+      "covered": {
+        "fraction": 0.89,
+        "wilson95": [
+          0.8390720169908702,
+          0.9262280983928396
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.09,
+        "wilson95": [
+          0.05768697871453362,
+          0.13776674613848952
+        ]
+      },
+      "median_annual_interval_width": 0.2228095927761891,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.035,
+        "wilson95": [
+          0.017055324637357105,
+          0.07047146086668134
+        ]
+      },
+      "raw": {
+        "fraction": 0.07,
+        "wilson95": [
+          0.04215178292291873,
+          0.11405578216683726
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "skewed"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.155,
+        "wilson95": [
+          0.11139568514638545,
+          0.211608058937256
+        ]
+      },
+      "median_annual_interval_width": 0.22276912317063924,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "skewed"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "median_annual_interval_width": 0.22276912317063924,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.03,
+        "wilson95": [
+          0.013820125830748327,
+          0.06389511973247333
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "skewed"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.145,
+        "wilson95": [
+          0.1028928513530641,
+          0.20048781284894374
+        ]
+      },
+      "median_annual_interval_width": 0.22276912317063924,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.035,
+        "wilson95": [
+          0.017055324637357105,
+          0.07047146086668134
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "skewed"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.115,
+        "wilson95": [
+          0.07786317221824318,
+          0.16664825233886393
+        ]
+      },
+      "median_annual_interval_width": 0.2262925138299779,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.035,
+        "wilson95": [
+          0.017055324637357105,
+          0.07047146086668134
+        ]
+      },
+      "raw": {
+        "fraction": 0.095,
+        "wilson95": [
+          0.06166261364986359,
+          0.14360265114397636
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "heavy_tail"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.035,
+        "wilson95": [
+          0.017055324637357105,
+          0.07047146086668134
+        ]
+      },
+      "median_annual_interval_width": 0.2262925138299779,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.035,
+        "wilson95": [
+          0.017055324637357105,
+          0.07047146086668134
+        ]
+      },
+      "raw": {
+        "fraction": 0.095,
+        "wilson95": [
+          0.06166261364986359,
+          0.14360265114397636
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "heavy_tail"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.09,
+        "wilson95": [
+          0.05768697871453362,
+          0.13776674613848952
+        ]
+      },
+      "median_annual_interval_width": 0.2262925138299779,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.035,
+        "wilson95": [
+          0.017055324637357105,
+          0.07047146086668134
+        ]
+      },
+      "raw": {
+        "fraction": 0.095,
+        "wilson95": [
+          0.06166261364986359,
+          0.14360265114397636
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "heavy_tail"
+    },
+    {
+      "covered": {
+        "fraction": 0.855,
+        "wilson95": [
+          0.7995121871510563,
+          0.8971071486469359
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.175,
+        "wilson95": [
+          0.12860441174608936,
+          0.23364549210081922
+        ]
+      },
+      "median_annual_interval_width": 0.2417405220880638,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.065,
+        "wilson95": [
+          0.03837598764975976,
+          0.10802003749917945
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "heavy_tail"
+    },
+    {
+      "covered": {
+        "fraction": 0.855,
+        "wilson95": [
+          0.7995121871510563,
+          0.8971071486469359
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.065,
+        "wilson95": [
+          0.03837598764975976,
+          0.10802003749917945
+        ]
+      },
+      "median_annual_interval_width": 0.2417405220880638,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.065,
+        "wilson95": [
+          0.03837598764975976,
+          0.10802003749917945
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "heavy_tail"
+    },
+    {
+      "covered": {
+        "fraction": 0.855,
+        "wilson95": [
+          0.7995121871510563,
+          0.8971071486469359
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.125,
+        "wilson95": [
+          0.0861191515921568,
+          0.1780153528465839
+        ]
+      },
+      "median_annual_interval_width": 0.2417405220880638,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.065,
+        "wilson95": [
+          0.03837598764975976,
+          0.10802003749917945
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "heavy_tail"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.17,
+        "wilson95": [
+          0.12427835351105657,
+          0.22816001039503528
+        ]
+      },
+      "median_annual_interval_width": 0.21835601693905637,
+      "median_effective_months_diagnostic": 63.33415034318622,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.12,
+        "wilson95": [
+          0.08197935023887545,
+          0.17234361425904846
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "overlap"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "median_annual_interval_width": 0.21835601693905637,
+      "median_effective_months_diagnostic": 63.33415034318622,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.12,
+        "wilson95": [
+          0.08197935023887545,
+          0.17234361425904846
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "overlap"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.125,
+        "wilson95": [
+          0.0861191515921568,
+          0.1780153528465839
+        ]
+      },
+      "median_annual_interval_width": 0.21835601693905637,
+      "median_effective_months_diagnostic": 63.33415034318622,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "raw": {
+        "fraction": 0.12,
+        "wilson95": [
+          0.08197935023887545,
+          0.17234361425904846
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "overlap"
+    },
+    {
+      "covered": {
+        "fraction": 0.895,
+        "wilson95": [
+          0.8448186177864638,
+          0.9302930375380627
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.22,
+        "wilson95": [
+          0.16816453539463405,
+          0.2823892279196257
+        ]
+      },
+      "median_annual_interval_width": 0.2279984569598547,
+      "median_effective_months_diagnostic": 63.33415034318622,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "overlap"
+    },
+    {
+      "covered": {
+        "fraction": 0.895,
+        "wilson95": [
+          0.8448186177864638,
+          0.9302930375380627
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "median_annual_interval_width": 0.2279984569598547,
+      "median_effective_months_diagnostic": 63.33415034318622,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "overlap"
+    },
+    {
+      "covered": {
+        "fraction": 0.895,
+        "wilson95": [
+          0.8448186177864638,
+          0.9302930375380627
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.16,
+        "wilson95": [
+          0.11567342208544587,
+          0.2171418619390124
+        ]
+      },
+      "median_annual_interval_width": 0.2279984569598547,
+      "median_effective_months_diagnostic": 63.33415034318622,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "raw": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "overlap"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.125,
+        "wilson95": [
+          0.0861191515921568,
+          0.1780153528465839
+        ]
+      },
+      "median_annual_interval_width": 0.46331237974754247,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.025,
+        "wilson95": [
+          0.010724561470787711,
+          0.05717914415161715
+        ]
+      },
+      "raw": {
+        "fraction": 0.075,
+        "wilson95": [
+          0.045974507057252416,
+          0.12004459797332034
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "rebalance_shock"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.025,
+        "wilson95": [
+          0.010724561470787711,
+          0.05717914415161715
+        ]
+      },
+      "median_annual_interval_width": 0.46331237974754247,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.025,
+        "wilson95": [
+          0.010724561470787711,
+          0.05717914415161715
+        ]
+      },
+      "raw": {
+        "fraction": 0.075,
+        "wilson95": [
+          0.045974507057252416,
+          0.12004459797332034
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "rebalance_shock"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "median_annual_interval_width": 0.46331237974754247,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.025,
+        "wilson95": [
+          0.010724561470787711,
+          0.05717914415161715
+        ]
+      },
+      "raw": {
+        "fraction": 0.075,
+        "wilson95": [
+          0.045974507057252416,
+          0.12004459797332034
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "rebalance_shock"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.16,
+        "wilson95": [
+          0.11567342208544587,
+          0.2171418619390124
+        ]
+      },
+      "median_annual_interval_width": 0.46923552019118986,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "rebalance_shock"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "median_annual_interval_width": 0.46923552019118986,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "rebalance_shock"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "median_annual_interval_width": 0.46923552019118986,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.08,
+        "wilson95": [
+          0.04984015517626642,
+          0.12599048979512317
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "rebalance_shock"
+    },
+    {
+      "covered": {
+        "fraction": 1.0,
+        "wilson95": [
+          0.9811539940816791,
+          1.0
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "median_annual_interval_width": 1.2049947054514831,
+      "median_effective_months_diagnostic": 9.226622088765257,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "raw": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "regime_shift"
+    },
+    {
+      "covered": {
+        "fraction": 1.0,
+        "wilson95": [
+          0.9811539940816791,
+          1.0
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "median_annual_interval_width": 1.2049947054514831,
+      "median_effective_months_diagnostic": 9.226622088765257,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "raw": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "regime_shift"
+    },
+    {
+      "covered": {
+        "fraction": 1.0,
+        "wilson95": [
+          0.9811539940816791,
+          1.0
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "median_annual_interval_width": 1.2049947054514831,
+      "median_effective_months_diagnostic": 9.226622088765257,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "raw": {
+        "fraction": 0.0,
+        "wilson95": [
+          0.0,
+          0.018846005918320894
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "regime_shift"
+    },
+    {
+      "covered": {
+        "fraction": 0.87,
+        "wilson95": [
+          0.8163353692726989,
+          0.9097185863477437
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.205,
+        "wilson95": [
+          0.15486094831106376,
+          0.26625819518074556
+        ]
+      },
+      "median_annual_interval_width": 0.19501069192112078,
+      "median_effective_months_diagnostic": 9.226622088765257,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.12,
+        "wilson95": [
+          0.08197935023887545,
+          0.17234361425904846
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "regime_shift"
+    },
+    {
+      "covered": {
+        "fraction": 0.87,
+        "wilson95": [
+          0.8163353692726989,
+          0.9097185863477437
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "median_annual_interval_width": 0.19501069192112078,
+      "median_effective_months_diagnostic": 9.226622088765257,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.04,
+        "wilson95": [
+          0.02040538715065641,
+          0.07693293829419882
+        ]
+      },
+      "raw": {
+        "fraction": 0.12,
+        "wilson95": [
+          0.08197935023887545,
+          0.17234361425904846
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "regime_shift"
+    },
+    {
+      "covered": {
+        "fraction": 0.87,
+        "wilson95": [
+          0.8163353692726989,
+          0.9097185863477437
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.115,
+        "wilson95": [
+          0.07786317221824318,
+          0.16664825233886393
+        ]
+      },
+      "median_annual_interval_width": 0.19501069192112078,
+      "median_effective_months_diagnostic": 9.226622088765257,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "raw": {
+        "fraction": 0.12,
+        "wilson95": [
+          0.08197935023887545,
+          0.17234361425904846
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "regime_shift"
+    },
+    {
+      "covered": {
+        "fraction": 0.88,
+        "wilson95": [
+          0.8276563857409517,
+          0.9180206497611246
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.235,
+        "wilson95": [
+          0.18157345326946356,
+          0.29841492986724655
+        ]
+      },
+      "median_annual_interval_width": 0.2250509308645829,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "raw": {
+        "fraction": 0.115,
+        "wilson95": [
+          0.07786317221824318,
+          0.16664825233886393
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "positive02"
+    },
+    {
+      "covered": {
+        "fraction": 0.88,
+        "wilson95": [
+          0.8276563857409517,
+          0.9180206497611246
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "median_annual_interval_width": 0.2250509308645829,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "raw": {
+        "fraction": 0.115,
+        "wilson95": [
+          0.07786317221824318,
+          0.16664825233886393
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "positive02"
+    },
+    {
+      "covered": {
+        "fraction": 0.88,
+        "wilson95": [
+          0.8276563857409517,
+          0.9180206497611246
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.18,
+        "wilson95": [
+          0.13294550662534108,
+          0.2391159371623843
+        ]
+      },
+      "median_annual_interval_width": 0.2250509308645829,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.045,
+        "wilson95": [
+          0.023852271724704166,
+          0.08329759366096785
+        ]
+      },
+      "raw": {
+        "fraction": 0.115,
+        "wilson95": [
+          0.07786317221824318,
+          0.16664825233886393
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "positive02"
+    },
+    {
+      "covered": {
+        "fraction": 0.845,
+        "wilson95": [
+          0.7883919410627441,
+          0.8886043148536146
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.235,
+        "wilson95": [
+          0.18157345326946356,
+          0.29841492986724655
+        ]
+      },
+      "median_annual_interval_width": 0.21495335899807103,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "raw": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "positive02"
+    },
+    {
+      "covered": {
+        "fraction": 0.845,
+        "wilson95": [
+          0.7883919410627441,
+          0.8886043148536146
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "median_annual_interval_width": 0.21495335899807103,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.055,
+        "wilson95": [
+          0.030985020801370097,
+          0.0957879244659355
+        ]
+      },
+      "raw": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "positive02"
+    },
+    {
+      "covered": {
+        "fraction": 0.845,
+        "wilson95": [
+          0.7883919410627441,
+          0.8886043148536146
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.195,
+        "wilson95": [
+          0.14605441564505764,
+          0.25544164796511815
+        ]
+      },
+      "median_annual_interval_width": 0.21495335899807103,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.06,
+        "wilson95": [
+          0.0346518499012715,
+          0.10193263530685089
+        ]
+      },
+      "raw": {
+        "fraction": 0.1,
+        "wilson95": [
+          0.06566994117157123,
+          0.14940686356308552
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "positive02"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.42,
+        "wilson95": [
+          0.3537348235017175,
+          0.48928053744521394
+        ]
+      },
+      "median_annual_interval_width": 0.22694564111554644,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.115,
+        "wilson95": [
+          0.07786317221824318,
+          0.16664825233886393
+        ]
+      },
+      "raw": {
+        "fraction": 0.235,
+        "wilson95": [
+          0.18157345326946356,
+          0.29841492986724655
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "positive05"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "median_annual_interval_width": 0.22694564111554644,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.11,
+        "wilson95": [
+          0.07377190160716048,
+          0.16092798300912986
+        ]
+      },
+      "raw": {
+        "fraction": 0.235,
+        "wilson95": [
+          0.18157345326946356,
+          0.29841492986724655
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "positive05"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.41,
+        "wilson95": [
+          0.34415559179081295,
+          0.4792366892744849
+        ]
+      },
+      "median_annual_interval_width": 0.22694564111554644,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.15,
+        "wilson95": [
+          0.107135265876273,
+          0.20605693826655166
+        ]
+      },
+      "raw": {
+        "fraction": 0.235,
+        "wilson95": [
+          0.18157345326946356,
+          0.29841492986724655
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "positive05"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.43,
+        "wilson95": [
+          0.36334204488394795,
+          0.49929639594461706
+        ]
+      },
+      "median_annual_interval_width": 0.23240734368677285,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.105,
+        "wilson95": [
+          0.0697069624619373,
+          0.15518138221353622
+        ]
+      },
+      "raw": {
+        "fraction": 0.215,
+        "wilson95": [
+          0.16371792563672208,
+          0.2770242977367209
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "positive05"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.095,
+        "wilson95": [
+          0.06166261364986359,
+          0.14360265114397636
+        ]
+      },
+      "median_annual_interval_width": 0.23240734368677285,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.095,
+        "wilson95": [
+          0.06166261364986359,
+          0.14360265114397636
+        ]
+      },
+      "raw": {
+        "fraction": 0.215,
+        "wilson95": [
+          0.16371792563672208,
+          0.2770242977367209
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "positive05"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.425,
+        "wilson95": [
+          0.35853495209243025,
+          0.4942919487953179
+        ]
+      },
+      "median_annual_interval_width": 0.23240734368677285,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.155,
+        "wilson95": [
+          0.11139568514638545,
+          0.211608058937256
+        ]
+      },
+      "raw": {
+        "fraction": 0.215,
+        "wilson95": [
+          0.16371792563672208,
+          0.2770242977367209
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "positive05"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.85,
+        "wilson95": [
+          0.7939430617334484,
+          0.892864734123727
+        ]
+      },
+      "median_annual_interval_width": 0.22687717778238517,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.43,
+        "wilson95": [
+          0.36334204488394795,
+          0.49929639594461706
+        ]
+      },
+      "raw": {
+        "fraction": 0.585,
+        "wilson95": [
+          0.5157378707263818,
+          0.6510583082675037
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "positive10"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.36,
+        "wilson95": [
+          0.29669087731339805,
+          0.42858600434373184
+        ]
+      },
+      "median_annual_interval_width": 0.22687717778238517,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.36,
+        "wilson95": [
+          0.29669087731339805,
+          0.42858600434373184
+        ]
+      },
+      "raw": {
+        "fraction": 0.585,
+        "wilson95": [
+          0.5157378707263818,
+          0.6510583082675037
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "positive10"
+    },
+    {
+      "covered": {
+        "fraction": 0.915,
+        "wilson95": [
+          0.8681031145576462,
+          0.9462547005301477
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.86,
+        "wilson95": [
+          0.8051000619915237,
+          0.9013308137472852
+        ]
+      },
+      "median_annual_interval_width": 0.22687717778238517,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.505,
+        "wilson95": [
+          0.4362687594824017,
+          0.5735427804584151
+        ]
+      },
+      "raw": {
+        "fraction": 0.585,
+        "wilson95": [
+          0.5157378707263818,
+          0.6510583082675037
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "positive10"
+    },
+    {
+      "covered": {
+        "fraction": 0.89,
+        "wilson95": [
+          0.8390720169908702,
+          0.9262280983928396
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.825,
+        "wilson95": [
+          0.7663545078991807,
+          0.8713955882539106
+        ]
+      },
+      "median_annual_interval_width": 0.22090366246273663,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.405,
+        "wilson95": [
+          0.3393765611244294,
+          0.4742041800000517
+        ]
+      },
+      "raw": {
+        "fraction": 0.565,
+        "wilson95": [
+          0.4957060908195922,
+          0.631843928411026
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "positive10"
+    },
+    {
+      "covered": {
+        "fraction": 0.89,
+        "wilson95": [
+          0.8390720169908702,
+          0.9262280983928396
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.35,
+        "wilson95": [
+          0.28728715939415395,
+          0.41836664238134236
+        ]
+      },
+      "median_annual_interval_width": 0.22090366246273663,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.35,
+        "wilson95": [
+          0.28728715939415395,
+          0.41836664238134236
+        ]
+      },
+      "raw": {
+        "fraction": 0.565,
+        "wilson95": [
+          0.4957060908195922,
+          0.631843928411026
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "positive10"
+    },
+    {
+      "covered": {
+        "fraction": 0.89,
+        "wilson95": [
+          0.8390720169908702,
+          0.9262280983928396
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.84,
+        "wilson95": [
+          0.7828581380609876,
+          0.8843265779145542
+        ]
+      },
+      "median_annual_interval_width": 0.22090366246273663,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.495,
+        "wilson95": [
+          0.4264572195415849,
+          0.5637312405175983
+        ]
+      },
+      "raw": {
+        "fraction": 0.565,
+        "wilson95": [
+          0.4957060908195922,
+          0.631843928411026
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "positive10"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 1.0,
+        "wilson95": [
+          0.9811539940816791,
+          1.0
+        ]
+      },
+      "median_annual_interval_width": 0.22637174437701618,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.99,
+        "wilson95": [
+          0.9642775148038205,
+          0.9972533993962251
+        ]
+      },
+      "raw": {
+        "fraction": 0.995,
+        "wilson95": [
+          0.9722256001302286,
+          0.999116854010634
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "positive25"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.945,
+        "wilson95": [
+          0.9042120755340645,
+          0.9690149791986299
+        ]
+      },
+      "median_annual_interval_width": 0.22637174437701618,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.945,
+        "wilson95": [
+          0.9042120755340645,
+          0.9690149791986299
+        ]
+      },
+      "raw": {
+        "fraction": 0.995,
+        "wilson95": [
+          0.9722256001302286,
+          0.999116854010634
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "positive25"
+    },
+    {
+      "covered": {
+        "fraction": 0.905,
+        "wilson95": [
+          0.8563973488560237,
+          0.9383373863501365
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 1.0,
+        "wilson95": [
+          0.9811539940816791,
+          1.0
+        ]
+      },
+      "median_annual_interval_width": 0.22637174437701618,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.995,
+        "wilson95": [
+          0.9722256001302286,
+          0.999116854010634
+        ]
+      },
+      "raw": {
+        "fraction": 0.995,
+        "wilson95": [
+          0.9722256001302286,
+          0.999116854010634
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "positive25"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 1.0,
+        "wilson95": [
+          0.9811539940816791,
+          1.0
+        ]
+      },
+      "median_annual_interval_width": 0.21989465611594705,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.97,
+        "wilson95": [
+          0.9361048802675267,
+          0.9861798741692518
+        ]
+      },
+      "raw": {
+        "fraction": 0.98,
+        "wilson95": [
+          0.9497121344948062,
+          0.9921956998236058
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "positive25"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.895,
+        "wilson95": [
+          0.8448186177864638,
+          0.9302930375380627
+        ]
+      },
+      "median_annual_interval_width": 0.21989465611594705,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.895,
+        "wilson95": [
+          0.8448186177864638,
+          0.9302930375380627
+        ]
+      },
+      "raw": {
+        "fraction": 0.98,
+        "wilson95": [
+          0.9497121344948062,
+          0.9921956998236058
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "positive25"
+    },
+    {
+      "covered": {
+        "fraction": 0.885,
+        "wilson95": [
+          0.8333517476611362,
+          0.9221368277817569
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 1.0,
+        "wilson95": [
+          0.9811539940816791,
+          1.0
+        ]
+      },
+      "median_annual_interval_width": 0.21989465611594705,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.97,
+        "wilson95": [
+          0.9361048802675267,
+          0.9861798741692518
+        ]
+      },
+      "raw": {
+        "fraction": 0.98,
+        "wilson95": [
+          0.9497121344948062,
+          0.9921956998236058
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "positive25"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "median_annual_interval_width": 0.22718954555034113,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "raw": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "negative10"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "median_annual_interval_width": 0.22718954555034113,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "raw": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "negative10"
+    },
+    {
+      "covered": {
+        "fraction": 0.9,
+        "wilson95": [
+          0.8505931364369146,
+          0.9343300588284289
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "median_annual_interval_width": 0.22718954555034113,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_hac12",
+      "primary": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "raw": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "negative10"
+    },
+    {
+      "covered": {
+        "fraction": 0.87,
+        "wilson95": [
+          0.8163353692726989,
+          0.9097185863477437
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "median_annual_interval_width": 0.22767215489037265,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "raw": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "replicates": 200,
+      "structure": "independent",
+      "world": "negative10"
+    },
+    {
+      "covered": {
+        "fraction": 0.87,
+        "wilson95": [
+          0.8163353692726989,
+          0.9097185863477437
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "median_annual_interval_width": 0.22767215489037265,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "raw": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "replicates": 200,
+      "structure": "fully_correlated",
+      "world": "negative10"
+    },
+    {
+      "covered": {
+        "fraction": 0.87,
+        "wilson95": [
+          0.8163353692726989,
+          0.9097185863477437
+        ]
+      },
+      "failed_replications": 0,
+      "family": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "median_annual_interval_width": 0.22767215489037265,
+      "median_effective_months_diagnostic": 72.0,
+      "method": "monthly_studentized_circular12",
+      "primary": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "raw": {
+        "fraction": 0.01,
+        "wilson95": [
+          0.0027466006037749346,
+          0.03572248519617954
+        ]
+      },
+      "replicates": 200,
+      "structure": "mixed_common",
+      "world": "negative10"
+    }
+  ],
+  "selected_method": null,
+  "version": "monthly_calibration_v002"
+}

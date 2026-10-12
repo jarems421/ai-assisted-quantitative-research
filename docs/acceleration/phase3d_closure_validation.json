@@ -1,0 +1,136 @@
+{
+  "EXP004": "PAUSED",
+  "EXP004_registered_stage": "HYPOTHESIS_FROZEN",
+  "EXP005": "ABSENT",
+  "EXP005_state_counts": {
+    "experiments": 0,
+    "jobs": 0,
+    "trials": 0
+  },
+  "additional_checks": [
+    {
+      "command": "python -m src.research.phase3d.closure sources --check",
+      "exit_code": 0,
+      "scope": "89 originals /60 cases; zero acquisition"
+    },
+    {
+      "command": "isolated python -m pip check",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --cached --check and scoped credential/contact scan",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0
+    }
+  ],
+  "calibration_integrity": {
+    "candidate_code_sha256": "cad85351c14d20e22b0940ace1e2360a76984cccb702f7eddf25b1844f776b5d",
+    "freeze_checkpoint": "87593c0",
+    "frozen_code_and_canonical_protocol_match": true,
+    "protocol_sha256": "a2dda7d1ec8f562133515d605189da45db4df044197cadbd396ce722a1442a0e",
+    "real_inputs": 0,
+    "selected_method": null
+  },
+  "checked_at_utc": "2026-10-12T18:12:42Z",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "fd3aad3b4ab2aa04a75e43032886c0dd818cbce956e3c7c443dc3d071cabf374"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "cb0753eaaa1234a40375380ba621320140aabb5149d801bd0f6812212cbd47a9"
+    },
+    {
+      "command": "python -m src.research.phase3d report --check",
+      "exit_code": 0,
+      "log_sha256": "08942af9194493cca14a11b820ff2cca500d48b50fdda5994585285023b7bf71"
+    },
+    {
+      "command": "python -m src.research.sec_pilot.phase3a --check",
+      "exit_code": 0,
+      "log_sha256": "aab42aefb7341fa7a198f17c10dfcb3743c441378aa171da94841b124196eb84"
+    },
+    {
+      "command": "python -m src.research.sec_pilot replay",
+      "exit_code": 0,
+      "log_sha256": "90b9502002aeb081f67503820fb88701c809e39f9501703328dc4086227db006"
+    },
+    {
+      "command": "python -m src.research.sec_pilot audit",
+      "exit_code": 0,
+      "log_sha256": "90b9502002aeb081f67503820fb88701c809e39f9501703328dc4086227db006"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "8e01f82f7836d59e10a1986db39138393666d7257e16bec97ada75e2244ec2c0"
+    },
+    {
+      "command": "python -m src.research.phase3c.report --check",
+      "exit_code": 0,
+      "log_sha256": "343d8227d5be128e36e03637689adf046be903eb32b62ecaf83d2604b404fa05"
+    },
+    {
+      "command": "python -m src.research.support_case --check",
+      "exit_code": 0,
+      "log_sha256": "90d7ad6112326cbe78d53b3ad7ef782079b4d1443771cb6f5176a4bb6dd86035"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "df14503a8290a5981e2d0b89782247a1f2ec57f00d1faa7c895cd0f2eacc9ffa"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "a54bbb017886315339fd0a80c6eed87ecfd8d2183033af18fe9d9b40ee6f5dde"
+    },
+    {
+      "command": "python -m pip check",
+      "exit_code": 0,
+      "log_sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+    }
+  ],
+  "hosted_ci": {
+    "observed_runs": [
+      {
+        "conclusion": null,
+        "head_sha": "2b1e43c8862407ffaea256cbc4a2585e08d67d68",
+        "id": 38289505185,
+        "status": "in_progress",
+        "url": "https://github.com/jarems421/ai-assisted-quantitative-research/actions/runs/38289505185"
+      }
+    ],
+    "scope": "Source-review checkpoint; final delivery SHA not yet created"
+  },
+  "preservation": {
+    "capture_checkpoint": "0c683a1",
+    "deliberate_changed": [
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "src/presentation/exp001.py",
+      "src/research/phase3d/fixtures.py",
+      "src/research/phase3d/proof.py"
+    ],
+    "files": 7007,
+    "owner_task_baseline": "7f89155",
+    "unchanged": 7002,
+    "unexpected_changes": []
+  },
+  "private_credentials_or_bodies_tracked": false,
+  "public_tests_passed": 37,
+  "source_requests": 0,
+  "tests_passed": 263,
+  "tests_skipped": 0,
+  "version": "phase3d_closure_validation_v001"
+}
