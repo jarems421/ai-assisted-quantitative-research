@@ -1,0 +1,19 @@
+# Phase 3C: conditional scale plan
+
+**Plan only; no full backfill authorized.** Pilot does not certify a survivor-free national listing denominator. SEC filers include nonlisted/noncommon securities, OpenFIGI output is current identifier metadata, and vendor supported-ticker directories are coverage lists. None alone supplies all historical ordinary listings, classes, obligations or terminal intervals.
+
+| Scenario, not observed population | Approximate volume |
+| --- | --- |
+| 3,000–6,000 issuer planning range over 15annual cohorts | 45,000–90,000original annuals before amendments/issuer churn |
+| Four original-document requests per annual | 180,000–360,000SECstarts plus index/discovery/lifecycle/error allowance |
+| Five identifier jobs/request | 600–1,200initial mapping requests, more for historical aliases/classes |
+| Two market calls per security,3,000–6,000 cases | 6,000–12,000Tiingo calls before lifecycle/coverage retries |
+| Assumed5–25MBarchived source set/annual | 225 GB–2.25 TB originals; explicit assumption, not a measured population estimate |
+
+SEC2 starts/second implies25–50 hours of request-start time alone, excluding bytes/retries/stop reviews. OpenFIGI conservative5 jobs/request and20 starts/minute implies30–60 minutes for one identifier pass, not historical interval completion. Tiingo50 starts/hour implies120–240 quota hours;500unique symbols/month requires6–12months at this assumed breadth, and1 GB/month may bind much earlier. These published free caps are not account-specific receipts; do not assume omitted account activity is zero. A pilot with zero certified intervals cannot estimate unresolved population probability; do not project its selected-frame fractions to all issuers. Actual counts/cost/duration remain unknown.
+
+Deterministic future manifest schema: population source/vintage/hash, issuerCIK, class/stableID and dated span evidence; required fiscal periods and original/amendment accessions; exact allowlisted document URLs/hashes; per-source request plan/quotas/byte ceiling; parser/code/config hash; approved policy hash; expected calendar sessions; lifecycle/terminal requirements; explicit completeness state; idempotency/cache/stop-review keys. Enumerate the independently sourced denominator before downloads, order by stable source key/hash, retain all failed/ended cases, and checkpoint immutable receipts. Resolve scientific identity/terminal/inference blockers before proposing a concrete full manifest.
+
+Current scope has original2018–2020 annual candidates, mostly filed2019–2021. Earliest possible triple-based decisions are after each2020annual becomes policy-eligible, often2021; this is chronology, not performance. Source breadth, exact-concept and accounting/perimeter certification are incomplete. Phase 3B windows remain unchanged planning artifacts. Development2026 is incomplete,2027+windows future; the pilot calendar does not certify future closures. No date alternative is activated. Any source-only date/contract revision needs owner review before performance. Later forward paper evidence remains a separate freeze/authorization/recording milestone.
+
+A coverage-only alternative for owner review is a bounded check of fiscal2019–2021 originals under the **same exact concept**, without approving broader acquisition now. If that separately reviewed sample established the required breadth/comparability, a planning-only warm-up2019–2021 / Development2022–2027 / Validation2028–2030 / Test2031–2033 could be reviewed. No assertion that those periods pass coverage is made; this does not solve bank/conglomerate revenue semantics, identity or inference. The present80% chain coverage target is not supported by the exact-concept count reported in [revenue QA](phase3c_revenue_chain_qa.md). No new source requests, window activation or parameter change follows this recommendation.

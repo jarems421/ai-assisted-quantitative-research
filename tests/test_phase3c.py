@@ -18,6 +18,23 @@ from src.nexus.process_exp001 import session_dates
 
 
 class SourceTests(unittest.TestCase):
+    def test_interrupted_http_stream_preserves_every_received_byte(self):
+        from http.client import IncompleteRead
+        class Response:
+            status=200; headers={}; calls=0
+            def __enter__(self): return self
+            def __exit__(self,*args): return None
+            def read(self,limit):
+                self.calls+=1
+                if self.calls==1: return b'first'
+                raise IncompleteRead(b'partial',20)
+        response=Response()
+        class Opener:
+            def open(self,*args,**kwargs): return response
+        with patch('src.research.phase3c.sources.build_opener',return_value=Opener()):
+            with self.assertRaises(IncompleteRead) as caught:
+                SourceHTTP._transport('https://example.invalid',{},None)
+        self.assertEqual(caught.exception.partial_body,b'firstpartial')
     def test_source_registry_classification_and_missing_fields(self):
         from src.research.phase3c.registry import validate_registry
         row = {k: 'documented' for k in ('name', 'authority', 'purpose', 'review_date', 'authentication', 'free_tier',
@@ -177,6 +194,8 @@ class PriceTests(unittest.TestCase):
         records[1].update(close=24, open=24, high=24, low=24, splitFactor=1, divCash=1, adjClose=24)
         records[0].update(close=25, open=25, high=25, low=25, adjClose=24)
         self.assertEqual(market_quality(records, expected)['dividend_reconciliation_candidates_passed'], 1)
+        records[0]['adjClose']=25/ (1+1/24)
+        self.assertEqual(market_quality(records, expected)['cash_exdate_price_internal_consistency_passed'],1)
         records[0]['close'] = float('nan')
         self.assertEqual(market_quality(records, expected)['session_status'], 'UNRESOLVED')
 

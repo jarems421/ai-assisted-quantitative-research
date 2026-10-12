@@ -21,6 +21,8 @@ The [Phase 3A certification report](docs/acceleration/phase3a_report.md) certifi
 
 The authorized [Phase 3B design](docs/acceleration/phase3b_design.md) proposes revenue growth acceleration from three comparable original annual filing snapshots, tested against matched momentum with a fixed small trial ceiling. Calendar-only tests show the pilot's one-hour timestamp ambiguity leaves proposed eligible sessions unchanged, without certifying timestamps or approving availability. Longitudinal semantics, universe coverage, historical identity, execution and inferential calibration still block EXP005 freeze. No signal series, strategy study or new experiment was started; work stops at the design milestone. See the [gate review](docs/acceleration/phase3b_gate_review.md) and [source requirements](docs/acceleration/phase3b_source_requirements.json).
 
+The [Phase 3C free-source pilot](docs/acceleration/phase3c_report.md) preserves a fixed source cohort, archives bounded SEC/OpenFIGI/Tiingo responses and tests original revenue chains, historical identity, market-source coverage and synthetic inference. The exact revenue concept is too narrow in the tested filing vintages, historical listing/terminal bindings remain incomplete, and the proposed inference method fails synthetic calibration. Availability is ready for owner review as an unapproved proposal; EXP005 freeze remains NOT_READY. No real signal series, strategy performance, new experiment or Nexus operation occurred. Source reports and [gate review](docs/acceleration/phase3c_gate_review.md) distinguish observations from certification; EXP004 remains paused.
+
 ```mermaid
 flowchart LR
     S["Specification and PIT audit"] --> D["Development and controls"] --> F["Frozen candidate"]

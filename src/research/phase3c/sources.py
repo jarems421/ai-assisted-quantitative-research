@@ -53,10 +53,18 @@ class SourceHTTP:
         try: response = build_opener(NoRedirect(), ProxyHandler({})).open(request, timeout=40)
         except HTTPError as error: response = error
         with response:
-            data = response.read(64 * 1024 * 1024 + 1)
-            if len(data) > 64 * 1024 * 1024:
-                error = ValueError('Source byte ceiling'); error.partial_body = data
-                error.reason_code = 'LOCAL_RESPONSE_BYTE_CEILING'; raise error
+            chunks=[]; size=0
+            while True:
+                try: part=response.read(min(1024*1024,64*1024*1024+1-size))
+                except Exception as error:
+                    error.partial_body=b''.join(chunks)+getattr(error,'partial',b'')
+                    raise
+                if not part: break
+                chunks.append(part); size+=len(part)
+                if size>64*1024*1024:
+                    error=ValueError('Source byte ceiling'); error.partial_body=b''.join(chunks)
+                    error.reason_code='LOCAL_RESPONSE_BYTE_CEILING'; raise error
+            data=b''.join(chunks)
             return response.status, dict(response.headers), data, response.geturl()
 
     def allow(self, url):

@@ -120,7 +120,7 @@ def figi_gate(response):
 def market_quality(rows, expected_sessions):
     dates = [r['date'][:10] for r in rows]
     expected = set(expected_sessions)
-    invalid = 0; split_checks = 0; dividend_checks = 0; transform_failed = 0
+    invalid = 0; split_checks = 0; dividend_checks = 0; transform_failed = 0; exdate_dividend_checks = 0
     for r in rows:
         fields = [r.get(k) for k in ('open', 'high', 'low', 'close', 'volume', 'splitFactor', 'divCash')]
         try:
@@ -136,6 +136,11 @@ def market_quality(rows, expected_sessions):
             ok = math.isclose(factor_ratio, expected_ratio, rel_tol=1e-6, abs_tol=1e-8)
             if split != 1: split_checks += ok
             if div != 0: dividend_checks += ok
+            # Keep the original failed pre-event probe. The publisher's indexed
+            # CRSP definition uses cash/ex-distribution-date price; this separate
+            # internal-consistency probe is not an independent event certificate.
+            if div != 0 and split == 1:
+                exdate_dividend_checks += math.isclose(factor_ratio,1+div/current['close'],rel_tol=1e-6,abs_tol=1e-8)
             if (split != 1 or div != 0) and not ok: transform_failed += 1
         except (KeyError, ZeroDivisionError, TypeError): transform_failed += 1
     return {'expected_sessions': len(expected), 'received_sessions': len(rows),
@@ -146,6 +151,7 @@ def market_quality(rows, expected_sessions):
             'dividend_event_rows': sum(r.get('divCash') not in (None,0) for r in rows),
             'split_reconciliation_candidates_passed': split_checks, 'dividend_reconciliation_candidates_passed': dividend_checks,
             'action_transform_failed_or_missing': transform_failed,
+            'cash_exdate_price_internal_consistency_passed': exdate_dividend_checks,
             'transform_status': 'PROPOSED_FORMULA_REQUIRES_PROVIDER_CONVENTION_CERTIFICATION',
             'session_status': 'PASS' if set(dates) == expected and len(dates) == len(set(dates)) and dates == sorted(dates) and not invalid else 'UNRESOLVED'}
 

@@ -57,7 +57,16 @@ def registry():
              free_tier='University listing documents availability; owner entitlement/export licence unverified',
              documented_rate=None, enforced_rate='0logins,0queries,0exports', fields=[], pit_limitations='Current profile is not a historical certificate',
              lifecycle_limitations='Must supply dated class/listing and source/vintage evidence', licensing='No scrape, licence bypass or programmatic redistribution',
-             authoritative_for='None without separately supplied dated evidence')]
+             authoritative_for='None without separately supplied dated evidence'),
+        dict(common, name='CRSP methodology documentation', role='SECONDARY_CROSS_CHECK', authority='Methodology reference only; no CRSP market data',
+             purpose='Ex-distribution-date adjustment factor definition referenced by Tiingo; indexed publisher definition motivates a separate consistency probe',
+             documentation=['https://www.crsp.org/wp-content/uploads/guides/CRSP_Calculations_and_Index_Methodologies.pdf',
+                            'https://www.crsp.org/crsp_pdf/crsp-us-stock-indexes-databases-data-descriptions-guide-crspaccess/'],
+             authentication='None for public documentation; no licensed database access', free_tier='Public documentation only; live links returned404, complete current guide not certified',
+             documented_rate=None, enforced_rate='Bounded browser documentation review only;0CRSP data calls',
+             fields=['Cash distribution/ex-date price factor definition'], pit_limitations='Publisher-indexed definition is not a contemporaneous Tiingo version certificate',
+             lifecycle_limitations='No event amounts, identities, listing spans or terminal terms acquired from CRSP',
+             licensing='No licensed market data downloaded/redistributed; reference attribution retained', authoritative_for='No pilot observation; interpretation remains provisional')]
     value = {'version': 'phase3c_source_registry_v001', 'as_of': '2026-10-12', 'sources': sources,
              'archived_documentation_receipts': json.loads((RAW/'documentation_summary.json').read_bytes())}
     validate_registry(value); return value

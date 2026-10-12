@@ -3,6 +3,7 @@ from collections import Counter
 import hashlib
 import json
 from pathlib import Path
+import re
 
 from src.research.phase3c.sources import RAW, DOCS
 from src.research.phase3c.registry import registry
@@ -38,6 +39,17 @@ def public_summary(private):
              'PUBLIC_ELIGIBILITY_POLICY': 'READY_FOR_OWNER_REVIEW',
              'INFERENCE_IMPLEMENTATION': 'BLOCKED', 'HISTORICAL_UNIVERSE_FEASIBILITY': 'BLOCKED',
              'NEXUS_EXECUTION': 'BLOCKED', 'LOCAL_EXECUTION_ROUTE': 'NOT_IMPLEMENTED', 'EXP005_FREEZE_READINESS': 'NOT_READY'}
+    market_metrics = {'price_http200_responses': sum(r['qa'] is not None for r in market),
+                     'nonempty_responses': sum(r['qa'] is not None and r['qa']['received_sessions']>0 for r in market),
+                     'diagnostic_full_calendar_passes': sum(r['qa'] is not None and r['qa']['session_status']=='PASS' for r in market),
+                     'received_rows': sum(r['qa']['received_sessions'] for r in market if r['qa']),
+                     'invalid_rows': sum(r['qa']['invalid_rows'] for r in market if r['qa']),
+                     'duplicate_sessions': sum(r['qa']['duplicate_sessions'] for r in market if r['qa']),
+                     'split_events': sum(r['qa']['split_event_rows'] for r in market if r['qa']),
+                     'split_probe_passed': sum(r['qa']['split_reconciliation_candidates_passed'] for r in market if r['qa']),
+                     'dividend_events': sum(r['qa']['dividend_event_rows'] for r in market if r['qa']),
+                     'original_pre_event_dividend_probe_passed': sum(r['qa']['dividend_reconciliation_candidates_passed'] for r in market if r['qa']),
+                     'separate_cash_exdate_internal_consistency_passed': sum(r['qa']['cash_exdate_price_internal_consistency_passed'] for r in market if r['qa'])}
     return {'version': 'phase3c_public_evidence_v001', 'baseline_git_sha': 'ec0c1e9', 'as_of': '2026-10-12',
             'cohort_sha256': private['cohort_sha256'], 'cases': cases, 'revenue_metrics': stats, 'chains': chains,
             'identity': identities, 'identity_status_counts': dict(Counter(r['status'] for r in identities)),
@@ -49,7 +61,7 @@ def public_summary(private):
             'merger_primary_evidence': [{'issuer_cik': r['issuer_cik'], 'accession': r.get('accession'), 'status': r['status'],
                  'source_sha256': r.get('sources',{}).get('primary',{}).get('body',{}).get('sha256'),
                  'url': r.get('sources',{}).get('primary',{}).get('url')} for r in private.get('merger_primary_receipts',[])],
-            'market': market, 'timing': private['timing'], 'policy': private['policy'], 'policy_sha256': private['policy_sha256'],
+            'market': market, 'market_metrics': market_metrics, 'timing': private['timing'], 'policy': private['policy'], 'policy_sha256': private['policy_sha256'],
             'calibration': calibrations, 'filing_year_counts': private['filing_year_counts'], 'taxonomy_versions': private['taxonomy_versions'],
             'request_counts': private['request_counts'], 'body_receipts': private['body_receipts'],
             'completeness_summary': {k:v for k,v in private['completeness'].items() if k != 'rows'}, 'gates': gates,
@@ -77,7 +89,10 @@ def render(s):
     cal_table = table(['Synthetic family', 'Raw null/effect rejection', 'Wilson 95%', '126 / 504 block rejection', 'Sample gate pass'],
                       [(r['family'], f"{100*r['rejection_fraction_raw_alpha05']:.1f}%", f"{r['wilson95'][0]:.3f}–{r['wilson95'][1]:.3f}",
                         f"{r['block_rejection_fractions']['126']:.3f} / {r['block_rejection_fractions']['504']:.3f}", f"{r['sample_gate_pass_fraction']:.3f}") for r in cal['families']]) if cal else 'No calibration receipt.'
-    gate_table = table(['Gate', 'Verdict'], list(s['gates'].items()))
+    gate_order = ('FREE_SOURCE_STACK','REVENUE_TRIPLE_SEMANTICS','SEC_SOURCE_COVERAGE','HISTORICAL_SECURITY_IDENTITY',
+                  'MARKET_DATA_COVERAGE','CORPORATE_ACTION_LIFECYCLE','TERMINAL_VALUE_EVIDENCE','PUBLIC_ELIGIBILITY_POLICY',
+                  'INFERENCE_IMPLEMENTATION','HISTORICAL_UNIVERSE_FEASIBILITY','NEXUS_EXECUTION','LOCAL_EXECUTION_ROUTE','EXP005_FREEZE_READINESS')
+    gate_table = table(['Gate', 'Verdict'], [(k,s['gates'][k]) for k in gate_order])
     id_metrics = s['identity_metrics']
     merger_table = table(['Issuer CIK', 'Primary accession', 'Evidence disposition'],
                          [(r['issuer_cik'], r['accession'], 'PARTIAL_CLASS_POSITION_TERMS_UNCERTIFIED') for r in s['merger_primary_evidence']])
@@ -86,6 +101,8 @@ def render(s):
 **PARTIAL free source stack; EXP005 freeze NOT_READY.** As of2026-10-12. The metadata-only cohort froze{s['cases']} unique case keys before price acquisition, hash `{s['cohort_sha256']}`. Thirty issuer revenue candidates and thirty lifecycle stress targets are retained, including failures. Named lifecycle categories remain stress targets until independently verified; the cohort is a deliberately selected feasibility frame, not a representative US equity sample or proof of30 certified complex histories.
 
 The exact annual revenue contract has{metrics['fully_certified']} fully certified triples of{metrics['three_originals']} discovered three-original candidates ({metrics['feasibility_band']} under the fixed source-feasibility rule). Parser and accounting/perimeter uncertainty contribute to this low certified fraction; it does **not** prove revenue acceleration has no alpha or that every rejected concept is economically unsuitable. No real acceleration, momentum or portfolio series was calculated.
+
+Only{metrics['exact_concept_three']}/{metrics['three_originals']} three-original candidates contain the exact concept throughout;{metrics['numeric_comparability_pass']} pass numeric comparability. That concept ceiling alone is below the80% source-feasibility target for this selected vintage/frame, even before accounting/perimeter review. Do not broaden the tag or move dates automatically.
 
 {gate_table}
 
@@ -141,6 +158,8 @@ Ten bounded merger completion8-Ks were selected by fixed metadata event-date hyp
     market_doc = f'''# Phase 3C: market-source QA
 
 **PARTIAL observations; zero cases fully certified for historical NAV.** All requests are tied to the frozen cohort and fixed2019–2020 range. No raw/adjusted price performance, signal return, strategy correlation, Sharpe, drawdown or alpha was calculated. Provider bodies/metadata remain ignored under internal-use restrictions.
+
+Aggregate source QA: `{json.dumps(s['market_metrics'],sort_keys=True)}`. HTTP200, nonempty response, diagnostic full-calendar match and certified listed-history completeness are distinct. Nine empty price responses do not become observed no-trading states. Split-only factor checks match the source's stated split multipliers. The original unverified pre-event cash-adjustment probe is retained with its failures; a separately labelled ex-date cash/price probe tests the CRSP convention referenced by Tiingo. Both use only adjustment factors, not security/portfolio returns. An internal same-vendor match cannot certify dividends independently. The [Tiingo ex-date definition](https://www.tiingo.com/documentation/corporate-actions/dividends) and publisher-indexed CRSP descriptions motivate the second probe, but the linked CRSP guide's live retrieval failed; no full current methodology certificate is claimed. Same-day split/distribution basis, payment timing and terminal transitions remain unresolved. No extra corporate-action API entitlement was assumed or queried.
 
 {market}
 
@@ -204,6 +223,8 @@ SEC2starts/second implies25–50hours of request-start time alone, excluding byt
 Deterministic future manifest schema: population source/vintage/hash, issuerCIK, class/stableID and dated span evidence; required fiscal periods and original/amendment accessions; exact allowlisted document URLs/hashes; per-source request plan/quotas/byte ceiling; parser/code/config hash; approved policy hash; expected calendar sessions; lifecycle/terminal requirements; explicit completeness state; idempotency/cache/stop-review keys. Enumerate the independently sourced denominator before downloads, order by stable source key/hash, retain all failed/ended cases, and checkpoint immutable receipts. Resolve scientific identity/terminal/inference blockers before proposing a concrete full manifest.
 
 Current scope has original2018–2020 annual candidates, mostly filed2019–2021. Earliest possible triple-based decisions are after each2020annual becomes policy-eligible, often2021; this is chronology, not performance. Source breadth, exact-concept and accounting/perimeter certification are incomplete. Phase3B windows remain unchanged planning artifacts. Development2026 is incomplete,2027+windows future; the pilot calendar does not certify future closures. No date alternative is activated. Any source-only date/contract revision needs owner review before performance. Later forward paper evidence remains a separate freeze/authorization/recording milestone.
+
+A coverage-only alternative for owner review is a bounded check of fiscal2019–2021 originals under the **same exact concept**, without approving broader acquisition now. If that separately reviewed sample established the required breadth/comparability, a planning-only warm-up2019–2021 / Development2022–2027 / Validation2028–2030 / Test2031–2033 could be reviewed. No assertion that those periods pass coverage is made; this does not solve bank/conglomerate revenue semantics, identity or inference. The present80% chain coverage target is not supported by the exact-concept count reported in [revenue QA](phase3c_revenue_chain_qa.md). No new source requests, window activation or parameter change follows this recommendation.
 '''
     gates_doc = f'''# Phase 3C: final gate review
 
@@ -233,10 +254,15 @@ If the owner chooses permitted manual validation, ask specifically:
 
 Record source product/version, retrieval time, case key, source document/date/locator, permitted evidence extract/hash, effective-from/to, identifier level and contradictions. Never assume university access grants bulk/export/redistribution rights. Manual evidence supplements rather than overrides original SEC sources and must undergo separate certification.
 '''
-    return {'phase3c_report.md': readme, 'phase3c_revenue_chain_qa.md': rev, 'phase3c_identity_lifecycle.md': identity_doc,
+    outputs = {'phase3c_report.md': readme, 'phase3c_revenue_chain_qa.md': rev, 'phase3c_identity_lifecycle.md': identity_doc,
             'phase3c_market_data_qa.md': market_doc, 'phase3c_availability_review.md': avail,
             'phase3c_inference_calibration.md': inference, 'phase3c_execution_route.md': execution,
             'phase3c_scale_plan.md': scale, 'phase3c_gate_review.md': gates_doc, 'phase3c_orbis_manual_checks.md': orbis}
+    def readable(text):
+        text=re.sub(r'\b(Phase|Item|Note|ASC|ASU|seed|alpha|over|before|after|covers|of|has|froze|proof|published|window|triple|originals|parses|candidates|passes|triples|cases|acceptance|count|identified|evidence|result|rate|calls|logins|queries|Protocol|Protocolv|primary|fixed|families)(?=\d)',r'\1 ',text)
+        text=re.sub(r'(?<=\d)(requests|starts|replications|draws|sessions|days|years|annuals|issuer|cases|GB|MB|TB|hours|minutes|quota|jobs|symbols|APIcalls|logins|queries|exports)\b',r' \1',text)
+        return text.replace('As of2026','As of 2026').replace('annual10Ks','annual 10-Ks').replace('annual10-Ks','annual 10-Ks').replace('Protocolv002','Protocol v002')
+    return {name:readable(text) for name,text in outputs.items()}
 
 
 def main():
