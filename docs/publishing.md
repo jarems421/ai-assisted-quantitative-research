@@ -26,7 +26,7 @@ If the destination already has history, clone it into a separate directory and i
 
 ## Suggested GitHub presentation
 
-- Description: “AI-assisted quantitative research with frozen out-of-sample evaluation and independent Python statistics.”
+- Suggested description: “Evidence-native quantitative research with point-in-time provenance, reproducible experiments and independent scientific gates.” This is local guidance; no GitHub repository settings were changed.
 - Topics: `quantitative-finance`, `systematic-trading`, `research`, `backtesting`, `python`, `reproducibility`.
 - A license requires an explicit owner choice and a review of redistribution rights for source data and derived artifacts. No license has been invented; public visibility alone does not grant an open-source license.
 - Issue templates and a separate contribution guide can wait until there is an actual collaboration process. Research changes must preserve frozen results and document their experimental scope.

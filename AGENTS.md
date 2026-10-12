@@ -75,11 +75,11 @@ This repository builds Research OS, an evidence-native quantitative intelligence
 
 - Follow `docs/acceleration/master_plan.md` and the complete owner plan linked there until the owner changes direction. Older phase documents are historical evidence, not current execution authorization.
 - Research OS is canonical for source state, historical population/identity, availability, contracts, trial accounting and inference. Nexus is downstream and historical execution remains blocked.
-- Phase 3D permits bounded source certification, a minimal proof compiler, synthetic inference revision and a local reference execution spine. Use synthetic EXP999 in temporary directories for compiler/execution demonstrations. Do not create EXP005 or inspect real signal rankings/strategy performance.
+- Phase 3 is complete. Its source/compiler/execution demonstrations are historical, synthetic or partial evidence; they are not current acquisition authority. Use synthetic EXP999 in temporary directories for infrastructure demonstrations. Do not reopen EXP005 or inspect real strategy performance during Phase 4A selection.
 - Keep failed Phase 3C calibration and single-concept feasibility evidence immutable. New pre-performance contracts get new versions and review receipts; never broaden tags or dates silently.
 - Availability requires an explicit recorded owner decision. A modeled eligibility bound does not certify exact public availability or resolve acceptance clock uncertainty.
 - EXP004 remains operationally paused. No remote Nexus/Aurora, support message, purchase, Orbis scraping, sealed-stage access, optimizer or paper/live operation is included in Phase 3D.
-- Stop after Phase 3D reporting and verified commits/pushes. Phase 4A, the temporal graph, causal lab, portfolio layer and forward operations each require their own milestones and authorization.
+- Phase 4A now permits documentation, a bounded event-family shortlist and official-documentation feasibility review only. Stop after verified reporting/commits/pushes for owner family review. The graph, causal lab, portfolio layer and forward operations each require separate milestones and authorization.
 
 ## Phase 3E scope disposition
 
@@ -100,3 +100,11 @@ This repository builds Research OS, an evidence-native quantitative intelligence
 - Final verdict ABANDON_EXP005 / PHASE3_COMPLETION COMPLETE_EXP005_ABANDONED applies to the approved confirmatory design under the current certification requirements. It is not economic falsification of the revenue hypothesis and does not register, delete or mutate an experiment. EXP004 stays paused and EXP005 absent/NOT_READY.
 - Preserve v003 planning approval, inactive policy, UNKNOWN public availability, unavailable Salesforce contributor, v002, all prior calibration/source artifacts and denominators. The new accounting/identity/terminal/price/NAV campaigns, Stage C adapter and real-design dry compiler are deferred at the upstream stop; never describe them as completed certifications.
 - No further method/window search, source campaign, performance, Nexus/Aurora, purchase, optimizer, paper/live or Phase 4A follows automatically. Any future instruction must explicitly address the final scientific disposition; do not create another planning subphase independently.
+
+## Phase 4 transition: active experiment selection
+
+- The owner explicitly accepts Phase 3 completion and authorizes the revised Phase 4A in `docs/acceleration/owner_phase4_transition_2026-10-12.md`. Follow the updated master plan and `phase4a_plan.md`; historical stop statements remain historical records.
+- EXP005 is abandoned for its approved confirmatory design, absent/unregistered/unfrozen with no real performance. Do not reopen it. This is not evidence that revenue acceleration has no alpha. EXP004 stays operationally paused.
+- Compare at most three to five economically motivated event families using mechanism, primary-source documentation and cheap source/timing/identity/control/inference feasibility. No event study, prices for returns, strategy threshold/holding-period search, new experiment, freeze, performance, source-heavy campaign, graph or causal platform is authorized here.
+- Government procurement is the leading investigation direction, not a forced winner. Record uncertainty, useful negative outcomes and dependence; event rows are not independent observations. Reuse existing infrastructure and preserve all old evidence.
+- Final state: Phase4A ACTIVE_EXPERIMENT_SELECTION; next experiment NOT_YET_FROZEN; performance false; Nexus blocked; paper/live unauthorized. Stop for owner family/pilot review before full design or acquisition. Do not infer later permissions from this transition or from v002/v003 policy approvals.

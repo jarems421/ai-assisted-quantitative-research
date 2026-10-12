@@ -1,52 +1,80 @@
 # Research OS: governing roadmap
 
-Adopted 2026-10-12 by the owner. This is the active direction until the owner changes it. The [complete owner plan](owner_plan_2026-10-12.md) supplies the detailed scope and stop conditions. The two supplied PDFs are background research, not independent permission to execute their recommendations. [Reading and document disposition](direction_review.json) records their hashes, all 56 pages, and the documentation inventory.
+**Current direction: Phase 4A ACTIVE_EXPERIMENT_SELECTION.** Adopted by the owner on 2026-10-12 in the [complete Phase 4 transition](owner_phase4_transition_2026-10-12.md). This supersedes the old forward instruction to freeze EXP005 and run its Development. Historical plans/reports, source bytes, frozen experiments and negative findings remain unchanged.
 
-Research OS is an evidence-native quantitative intelligence system. Its purpose is to determine whether economically motivated hypotheses contain reproducible net alpha, reject false evidence, and accumulate reusable research knowledge. Profitability is unestablished. Deterministic code controls provenance, timing, identity, statistics, trials and stages; AI helps interpret, propose and falsify. Specialization and accumulated evidence are the intended small-team advantages.
+Research OS builds reproducible, point-in-time investment experiments from primary evidence. It seeks net-of-cost alpha while requiring provenance, timing, historical identity, execution and statistical justification before accepting positive evidence. AI assists interpretation and critique; deterministic contracts control what may advance. Profitability is unestablished.
+
+## Phase 3 is institutional memory
+
+Canonical disposition: **PHASE3_COMPLETION = COMPLETE_EXP005_ABANDONED**. EXP005 is abandoned for its approved confirmatory design, absent, unregistered, unfrozen, with no real performance. The [final report](phase3_final_report.md) and [inference certificate](phase3_final_inference_certificate.json) document the persistent-common-factor obstruction. This does not demonstrate that revenue acceleration has no alpha. Do not reopen or repair EXP005.
+
+The final pass stopped before the 29-chain/60-case certification campaigns, Stage C adapter and real-design compiler were completed. Their deferred statuses remain explicit. EXP004 is operationally paused; its frozen economic design and publication/runtime evidence remain intact. Neither experiment advances from infrastructure tests.
+
+Retain the immutable SEC/XBRL pilot, hashes/replay, accounting/identity contracts, population reconciliation, stage/trial controls, synthetic proof compiler, Decimal reference ledger, calibration/resolution guards, public CI and preservation checks. Reuse them; do not build parallel replacements merely to change the roadmap.
+
+V002 and v003 retain their exact owner planning approvals and inactive status. Observed public availability remains UNKNOWN; the Salesforce chronology-conflict contributor stays unavailable. These policies are not automatic timing authorization for the next event family.
+
+## Forward milestones
+
+| Phase | Purpose | Entry/authorization boundary |
+| --- | --- | --- |
+| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Active family-selection pass only; owner approves the family/bounded pilot before expensive source/design work; a reviewed contract and separate authorization precede creation/freeze/performance |
+| 4B | Temporal Corporate Reality Graph pilot | Separate milestone; start with evidence-linked dated relationships, not a full graph platform |
+| 4C | First causal/counterfactual event experiment | Credible controls, pre-trends/placebos and explicit identification assumptions; no automatic causal label |
+| 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving economic evidence, costs, risk constraints and mechanism diversity |
+| 6 | Nexus certification and forward paper infrastructure | Reconcile to the independent reference; certify historical population/execution semantics; paper needs separate human authorization |
+| 7 | Forward evidence, institutional memory and later selective autonomous research | Actual future observations and audited access controls; software cannot manufacture elapsed evidence |
+
+## Phase 4A: fail cheaply before certifying expensively
+
+Compare three to five economically motivated primary-source event families before choosing a full experiment. The initial [selection plan](phase4a_plan.md) bounds this pass to three: government procurement awards, FDA drug approval decisions and public merger-enforcement decisions. Government contracts lead the investigation direction but do not win by instruction or assumed profitability.
+
+The [feasibility framework](phase4a_feasibility_framework.md) requires evidence for source, timing, identity, population, execution, controls, inference, power/resolution and trial-budget feasibility. Assess effective independent/event variation before a large source-certification campaign. More records do not establish more independent observations. Keep unknown timestamps, unavailable mappings, selection/coverage gaps and ended histories in denominator accounting.
+
+Use authoritative documentation and source/design reasoning, not exploratory returns. No price-history download for strategy analysis, event study, candidate/control return, alpha, threshold/holding-period optimization, strategy ranking or next-experiment registration/freeze occurs in this step. After family approval, evidence acquisition and contract preparation still need a bounded reviewed instruction; performance remains separately gated.
+
+Event contracts should preserve event ID/type, economic event date, observed public-known time or modeled timing policy, issuer/class/security, agency/counterparty, contract/application/case identifier, economic amount/type, effective relationships, source hash, revision lineage and unresolved mapping status. These fields anticipate graph reuse; they do not build Phase 4B now.
+
+## Architecture and responsibilities
 
 ```mermaid
 flowchart TD
-  Sources[Primary public sources] --> Reality[Temporal corporate reality graph: later milestone]
-  Reality --> Hypotheses[Mechanisms, selective AI critique, causal experiments]
-  Hypotheses --> Compiler[Proof compiler: contracts, hashes, gates, replay]
-  Compiler --> Uncertainty[Uncertainty and abstention]
-  Uncertainty --> Risk[Portfolio, costs and risk]
-  Risk --> Adapters[Local reference / certified downstream adapters]
-  Adapters --> Forward[Forward observation]
-  Forward --> Memory[Institutional research memory]
-  Memory --> Reality
+  Sources[Primary public sources: bounded archives implemented] --> Reality[Temporal corporate reality: Phase 4B planned]
+  Reality --> Mechanisms[Mechanisms and selective AI critique]
+  Mechanisms --> Lab[Statistical calibration implemented; causal lab Phase 4C planned]
+  Lab --> Compiler[Proof compiler and replay: synthetic prototype]
+  Compiler --> Uncertainty[Uncertainty and abstention: planned]
+  Uncertainty --> Risk[Portfolio and risk: planned]
+  Risk --> Adapters[Local synthetic reference / future certified adapters]
+  Adapters --> Forward[Forward observation: separately authorized]
+  Forward --> Memory[Research memory: negative evidence retained]
+  Memory --> Mechanisms
 ```
 
-Nexus is a downstream adapter. Research OS remains canonical for populations, sources, eligibility, strategy definitions, trial accounting and inference. Orders eventually travel out; evidence travels back. Historical Nexus execution remains blocked by observed population pruning. No remote Nexus or Aurora work is authorized in Phase 3D.
+Research OS remains canonical for populations, identity, information timing, strategy specifications, trials, inference and research stages. Nexus remains a replaceable downstream adapter for future certified execution/orchestration/paper work; the interface is defined and disabled. Prior historical pruning prevents certification for current requirements. Remote Aurora remains blocked until audited server-side tool/date isolation exists. No Nexus/Aurora call, support message, purchase, Orbis access, optimizer, paper or live operation is included here.
 
-| Milestone | Outcome required | Authorization |
-| --- | --- | --- |
-| 1 / 2 / 3A / 3B / 3C | Existing audit, immutable source pilot, semantic review, one revenue hypothesis, bounded feasibility evidence | Completed historical records; preserve failures |
-| 3D | Scientific closure attempt, minimal proof compiler and local reference execution spine | Completed checkpoints; preserve scoped gains and failures |
-| 3E | Evidence acquisition and final pre-performance experiment feasibility | Owner-authorized bounded phase; stopped at date-scope incompatibility, REDESIGN_REQUIRED |
-| 3E-R | Historical stage and modeled-policy redesign | Exact v003 and conditional Stage C/hierarchy/materiality approved for planning only; policy inactive, further work requires a new instruction |
-| Final Phase 3 | Certification under the approved fixed design | COMPLETE_EXP005_ABANDONED: mandatory inference stop; source/adapter campaigns deferred, no Phase 4A readiness |
-| 4A | Separately authorized source acquisition, EXP005 freeze and Development evidence | Requires genuine mandatory readiness and a new owner instruction |
-| 4B | Narrow SEC + USAspending + historical identity graph | Later separate milestone; relational/Parquet/DuckDB first |
-| 4C | One event family, initially large government awards; credible controls, pre-trends, placebos and explicit causal assumptions | Later separate milestone |
-| 5 | Risk/cost-aware construction, calibrated uncertainty/abstention, research value prioritization and mechanism diversity | Requires surviving evidence |
-| 6 | Reconcile Nexus to local reference; separately human-authorized forward paper infrastructure | No live path; paper infrastructure is not paper validation |
-| 7 | Actual future observation and research memory; later selective autonomy | Future calendar time cannot be replaced by software |
+## Historical checkpoints
 
-Revenue acceleration remains the sole first proposed filing family. A new versioned canonical revenue contract and a bounded inference revision are allowed before performance, because Phase 3C exposed source/calibration failures. They do not supersede old evidence in place. No real acceleration/ranking, market-return inspection, strategy study, optimization or EXP005 creation occurs in Phase 3D. Availability remains an explicit owner decision; a modeled buffer never becomes an observed public timestamp.
+| Evidence | Finding retained |
+| --- | --- |
+| [Phase 1](phase1.md) | Capability audit and execution/source boundaries |
+| [Phase 2](phase2_report.md) | Immutable three-filing SEC pilot and exact offline reconciliation |
+| [Phase 3A](phase3a_report.md) | Scoped semantic observations; clocks/class identity partial |
+| [Phase 3B](phase3b_gate_review.md) | Revenue hypothesis and pre-performance budget proposal |
+| [Phase 3C](phase3c_report.md) | Free-source census; incomplete accounting/identity/terminal evidence and failed calibration |
+| [Phase 3D](phase3d_report.md) / [closure](phase3d_closure_report.md) | Reusable proof/replay and synthetic local ledger; old failed methods preserved |
+| [Phase 3E](phase3e_report.md) | Old twelve-year programme incompatible with approved pilot scope; upstream stop |
+| [Phase 3E-R](phase3e_redesign_report.md) | Historical geometry/modeling redesign and conditional synthetic results |
+| [V003 decision](availability_policy_v003_owner_decision.md) | Exact planning/design approval; no activation or real-assumption certificate |
+| [Final Phase 3](phase3_final_report.md) | COMPLETE_EXP005_ABANDONED; no real performance |
 
-EXP004 stays operationally paused. EXP005 is absent and NOT_READY. The actual EXP004 freeze is four price momentum cells (180/365 calendar days × K20/K40), monthly universe EW and explicit SPY; the handoff's SMA/AI-leg description is not its authoritative design. Phase 3C recorded 114 Tiingo requests: 54 successful price responses, 54 successful metadata responses and six metadata 404s. These clarifications change no archived report or experiment.
+The [original long-term owner plan](owner_plan_2026-10-12.md) and supplied PDFs remain background/direction history; their old Phase 4A EXP005 path is superseded here. [Reading disposition](direction_review.json) preserves the prior 56-page audit. Old dates, estimates and stop statements are historical, not current permissions or deadlines.
 
-Owner decision recorded 2026-10-12: the exact [pilot availability policy](availability_policy_v002_approved.json) is approved for 2015–2021 as a modeled eligibility rule, accepting timing uncertainty with observed public availability UNKNOWN. It is not activated and supplies no wider scope or experiment/execution authorization. Earlier proposed packets remain historical evidence.
+## Current operating state
 
-Engineering estimates in the source documents are conditional, not deadlines: roughly 3–6 weeks for certification closure and 3–5 months for a stronger paper-ready platform if blockers are resolvable, followed by months of future observation. One milestone is earned at a time. Unresolved source, accounting, identity, terminal or inference evidence may keep EXP005 NOT_READY after implementation.
+- PHASE4A = ACTIVE_EXPERIMENT_SELECTION; NEXT_EXPERIMENT = NOT_YET_FROZEN.
+- PERFORMANCE_AUTHORIZED = FALSE; NEXUS_EXECUTION = BLOCKED.
+- EXP004 = OPERATIONALLY_PAUSED; EXP005 = ABANDONED_FOR_APPROVED_DESIGN_AND_ABSENT.
+- PAPER_TRADING and LIVE_TRADING = NOT_AUTHORIZED; profitability UNESTABLISHED.
 
-Historical reports and phase-specific stop statements describe their original authorization. Use this roadmap and the latest phase-specific owner instruction for current scope; the [Phase 3D plan](phase3d_plan.md) remains its earlier authorization checkpoint. Frozen strategies, metrics, raw archives, old plans and negative findings remain immutable.
-
-The [bounded Phase 3D closure continuation](phase3d_closure_report.md) retains the original checkpoint and approved pilot policy. It adds original-source review packets, scoped accounting/lifecycle disclosures, minimum-p and power guards, separate Git/code replay checks and public synthetic CI. Both new inference candidates fail calibration; complete revenue triples, historical class spans and terminal position contracts remain uncertified. EXP005 is NOT_READY. Stop before Phase 4A; no automatic acquisition or strategy study follows this result.
-
-The [complete Phase 3E instruction](owner_phase3e_2026-10-12.md) authorized purpose-linked new evidence and a final pre-performance feasibility decision. The [Phase 3E report](phase3e_report.md) records REDESIGN_REQUIRED and the explicit section 37 early stop: the conditional twelve-year staged programme cannot fit the approved seven-year policy, while fixed 2018–2020 originals cannot support a 2015 inception. No acquisition or v003 calibration occurred. Review the staged horizon/policy scope before commissioning further work; the existing exact pilot approval remains intact. Do not begin Phase 4A.
-
-The owner then [authorized Phase 3E-R](owner_phase3er_2026-10-12.md), removing the old mandatory future 6/3/3 programme. The [redesign report](phase3e_redesign_report.md) compares three historical structures using bounded headers/reference calendars and frozen synthetic inference. The subsequent [owner decision](availability_policy_v003_owner_decision.md) approves exact v003 scope 2018-02-28–2026-09-30 and conditional Stage C: source warm-up 2018-02-28, price warm-up 2019-02-28, Development 2020-03-02–2021-12-31 and one owner-held historical confirmation 2022-01-01–2026-09-30. One formal primary effect, evidence against zero, the estimated two-point materiality floor and positive mandatory cost/delay robustness gates are approved for planning/design only. The original proposal/review/report artifacts retain their hashes. V003 remains NOT_ACTIVATED; observed public availability stays UNKNOWN and the Salesforce conflict unavailable. V002 is unchanged. Real inference assumptions and accounting/class/population/terminal/calendar/adapter/execution gates remain uncertified and fail-closed. EXP004 stays paused and EXP005 absent/NOT_READY. Stop pending a separate bounded instruction; no new acquisition, certification campaign, performance, Nexus/paper/live or Phase 4A is authorized.
-
-The [final owner-authorized Phase 3 campaign](owner_phase3_final_2026-10-12.md) fixes that design and requires a decisive stop at scientifically unacceptable inference. The [final report](phase3_final_report.md) records ABANDON_EXP005 / COMPLETE_EXP005_ABANDONED: the five-group Student mean-variance estimate omits an unrestricted persistent common component, the existing cross-year stress fails, and no independently evidenced dependence restriction or bounded remedy preserving the fixed method/design is established. This is not evidence against revenue acceleration's economic effect. All 29 chains and 60 cases remain accounted for, but their new certification campaigns and adapter/compiler implementation were deferred at the upstream stop. Policy approvals and prior evidence remain unchanged, all gates fail-closed, EXP004 paused and EXP005 absent. No further planning phase, acquisition, performance or Phase 4A is started automatically.
+Stop after this documentation and bounded family-selection pass for owner review of one recommended family, its evidence needs and exact next authorization. No source-heavy campaign or later phase follows automatically.
