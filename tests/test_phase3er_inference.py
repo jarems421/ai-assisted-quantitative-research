@@ -2,9 +2,23 @@ import unittest
 import numpy as np
 from src.research.phase3er.inference import evaluate,student_survival,critical,summarize
 from src.research.phase3er.geometry import triples,window_geometry
+from src.research.phase3er import inference as frozen
+from src.research.phase3er import inference_correction as corrected
 
 
 class RedesignInferenceTests(unittest.TestCase):
+    def test_generator_correction_is_analytic_and_non_ar_unchanged(self):
+        geo={'confirmation_geometry':[{'annual_groups':[{'sessions':252},{'sessions':250},{'sessions':187}]}]}
+        for world in ['iid','ar05','persistent098']:
+            original,counts=frozen.synthetic(np.random.default_rng(4),geo,world,.025,'mixed_common',20)
+            actual,same=corrected.synthetic(np.random.default_rng(4),geo,world,.025,'mixed_common',20)
+            factor=1 if world=='iid' else np.sqrt(1-(.5 if world=='ar05' else .98)**2)
+            np.testing.assert_allclose(actual,original*factor,rtol=1e-12,atol=1e-14)
+            self.assertEqual(counts,same)
+    def test_failed_correction_run_restores_frozen_generator(self):
+        original=frozen.synthetic
+        with self.assertRaises(ValueError):corrected.calibrate({'seed':0},[])
+        self.assertIs(frozen.synthetic,original)
     def test_student_reference_and_unequal_session_weights(self):
         self.assertAlmostEqual(student_survival(1,1),.25,places=12)
         self.assertAlmostEqual(critical(4),2.7764451051977987,places=9)
