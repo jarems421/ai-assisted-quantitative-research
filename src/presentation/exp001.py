@@ -77,11 +77,14 @@ def readme(manifest: dict, result: dict, registry=None) -> str:
     template = Path(__file__).with_name("README.template.md").read_text(encoding="utf-8")
     root = Path(__file__).resolve().parents[2]
     validation = root / "docs/acceleration/phase4a_validation.json"
+    pilot_validation = root / "docs/acceleration/phase4a_procurement_validation.json"
+    if pilot_validation.exists():
+        validation = pilot_validation
     if validation.exists():
         receipt = json.loads(validation.read_bytes())
-        checks = (f"Latest transition validation: **{receipt['local_tests_passed']} local tests, "
+        checks = (f"Latest milestone validation: **{receipt['local_tests_passed']} local tests, "
                   f"{receipt['public_tests_passed']} public tests, {receipt['tests_skipped']} skipped**. "
-                  "See [validation receipt](docs/acceleration/phase4a_validation.json).")
+                  f"See [validation receipt](docs/acceleration/{validation.name}).")
     else:
         receipt = json.loads((root / "docs/acceleration/phase3_final_validation.json").read_bytes())
         checks = (f"Final Phase 3 verified baseline: **{receipt['local_tests_passed']} local tests, "

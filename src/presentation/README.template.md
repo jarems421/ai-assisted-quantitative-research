@@ -107,18 +107,18 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**Phase 3 is complete. Phase 4A is ACTIVE_EXPERIMENT_SELECTION.** EXP005 stays abandoned for its approved design and absent; EXP004 stays paused. The next experiment is NOT_YET_FROZEN and performance is not authorized. V002/v003 approvals remain historical planning evidence, inactive; they do not authorize timing assumptions for a new event family.
+**Phase 3 is complete. Phase 4A’s approved procurement pilot stopped at source access.** EXP005 stays abandoned for its approved design and absent; EXP004 stays paused. The next experiment is NOT_YET_FROZEN and performance is not authorized. V002/v003 approvals remain historical planning evidence, inactive; they do not authorize timing assumptions for a new event family.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Current scope is family selection only; owner review precedes expensive acquisition/design, freeze and performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Approved procurement source pilot stopped; owner review precedes any new route/family work, expensive certification, freeze or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |
 | 6 | Nexus certification and forward paper infrastructure | Reconcile to local evidence, certify population semantics, then separate human paper authorization |
 | 7 | Actual forward evidence, institutional memory and later selective autonomy | Requires elapsed future observations and scoped access controls |
 
-The initial [Phase 4A shortlist and scorecard](docs/acceleration/phase4a_candidate_families.md) compare government procurement, FDA drug decisions and merger-enforcement events on mechanism and source/design feasibility. Government awards are a leading direction for investigation, not a proven effect. The [cheap feasibility gate](docs/acceleration/phase4a_feasibility_framework.md) checks timing, identity, population, controls, execution and statistical resolution before a large certification campaign. No prices or strategy returns inform this selection.
+The initial [Phase 4A shortlist and scorecard](docs/acceleration/phase4a_candidate_families.md) compared government procurement, FDA drug decisions and merger-enforcement events on mechanism and source/design feasibility. The owner then approved the [12-slot procurement source pilot](docs/acceleration/phase4a_procurement_pilot_report.md). The official publication route returned HTTP 403; one USAspending documentation check succeeded. The verdict is PROCUREMENT_FAMILY_REJECT under the frozen channel/frame, with one attempted slot and eleven deferred. No award, lineage match, recipient mapping or timing was established; this does not prove every official procurement channel impossible. The [cheap feasibility gate](docs/acceleration/phase4a_feasibility_framework.md) remains reusable. FDA/merger evidence is retained; no automatic next family, prices or performance are authorized.
 
 Nexus remains a replaceable downstream execution/orchestration adapter, potentially including future certified paper and isolated assistant tasks. Historical execution is not yet certified: prior tests demonstrated population pruning. Remote Aurora remains blocked without audited tool/date isolation. Neither paper nor live trading is authorized, no paper strategy is validated, and no profitable strategy has been demonstrated.
 
