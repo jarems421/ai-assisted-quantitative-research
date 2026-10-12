@@ -53,6 +53,8 @@ def proof_fixture(root):
     contracts['availability'].update(status='APPROVED_SYNTHETIC_FIXTURE',approval_sha256=HASH,public_available_at_utc=None)
     contracts['execution'].update(unresolved_terminal_events=[])
     contracts['trial_family'].update(evaluation_ceiling=1,performance_authorized=False)
+    contracts['inference'].update(design_feasibility={'method':'asymptotic','alpha':.05,'family_size':4,
+        'sample_units':72,'minimum_units':24,'power_lower':.8,'power_required':.5,'scope':'SYNTHETIC_FIXTURE'})
     contracts['source_contract'].update(snapshot_hashes=[source_hash])
     refs={}
     for role,value in contracts.items():

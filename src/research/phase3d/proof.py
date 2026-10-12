@@ -11,6 +11,7 @@ from pathlib import Path
 from jsonschema import Draft202012Validator
 from src.research.spec import canonical, digest
 from src.research.phase3c.sources import put
+from src.research.inference_feasibility import require_inference_design
 
 ROOT = Path(__file__).resolve().parents[3]
 ROLES = ('population', 'identity', 'availability', 'signal', 'execution', 'costs', 'inference', 'trial_family', 'source_contract')
@@ -36,6 +37,7 @@ def environment():
 def code_state():
     names = [*sorted((ROOT / 'src/research/phase3d').glob('*.py')),
              ROOT / 'src/research/spec.py', ROOT / 'src/research/capabilities.py',
+             ROOT / 'src/research/inference_feasibility.py',
              ROOT / 'src/research/analysis.py', ROOT / 'src/research/phase3c/sources.py',
              ROOT / 'src/research/phase3c/quality.py', ROOT / 'src/research/phase3c/inference.py',
              ROOT / 'src/research/sec_pilot/acquisition.py', ROOT / 'src/research/sec_pilot/parsing.py',
@@ -79,6 +81,7 @@ def compile_manifest(spec, root, output, *, authority):
         raise ValueError('Unapproved policy or synthetic clock misrepresented')
     if contracts['inference'].get('status') != 'CERTIFIED_SYNTHETIC_FIXTURE':
         raise ValueError('Inference uncertified')
+    require_inference_design(contracts['inference'].get('design_feasibility',{}))
     if contracts['execution'].get('unresolved_terminal_events') != []:
         raise ValueError('Unresolved mandatory terminal event')
     population = contracts['population'].get('security_ids', [])
@@ -118,4 +121,6 @@ def replay(manifest_path, root, *, authority, strict_environment=True):
     compatible = manifest['environment'] == environment()
     if strict_environment and not compatible: raise ValueError('Environment compatibility changed')
     return {'status': 'PASS_EXACT_INPUT_REPLAY', 'manifest_sha256': manifest['manifest_sha256'],
+            'git_commit_exact':manifest['code_commit']==subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+            'relevant_code_hashes_exact':True,
             'environment_exact': compatible, 'output_bit_reproducibility_certified': False}
