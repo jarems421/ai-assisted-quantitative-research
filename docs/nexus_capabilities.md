@@ -1,5 +1,7 @@
 # Nexus capabilities observed for Research OS v1
 
+Current direction: [governing roadmap](acceleration/master_plan.md). This inventory records observed surfaces, not certification. Phase 3D permits only a disabled local adapter interface; no remote Nexus/Aurora call or EXP004 resume.
+
 Inspected 2026-10-11 without submitting any Nexus job. Installed Python SDK: **1.42.0**. This session exposes **132 MCP tools** (the earlier VS Code discovery reported 136). Exact observed signatures and exposed tool declarations are in [SDK inventory](nexus_sdk_inventory.json) and [MCP inventory](nexus_mcp_inventory.json). These are local observations, not promises about every account's permissions.
 
 | Task | Preferred surface | Actual operation / boundary |

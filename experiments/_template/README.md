@@ -1,5 +1,7 @@
 # New experiment specification
 
+Current direction: [governing roadmap](../../docs/acceleration/master_plan.md). Phase 3D adds a separate proof-manifest schema without migrating old freezes. EXP005 remains absent and cannot be created/frozen by compiler demonstrations. Existing sequential stages and owner-only Test/paper confirmations remain binding.
+
 Copy `spec.example.json` or use `python -m src.research propose EXP002` to create a **local DRAFT**. Replace all synthetic/TODO content before audit or freeze. The example and EXP999 test fixture are infrastructure demonstrations, not proposed market strategies.
 
 `spec.schema.json` requires the hypothesis, rationale, directional claim, falsifiers, confounders, point-in-time universe and data availability, explicit benchmarks, complexity/trial ceilings, ordered windows, costs, execution assumptions, parameter grid, frozen selection/eligibility rules, breadth, robustness/stress plans, multiplicity control, approvals, sealed ranges, and model contamination note.

@@ -1,6 +1,6 @@
 # Repository instructions
 
-This repository studies AI-assisted quantitative research using NexusTrade simulations and independent local Python analysis. Preserve experiment history and distinguish historical simulation, Validation, held-out Test, and future paper/live results.
+This repository builds Research OS, an evidence-native quantitative intelligence system with independent local analysis and downstream execution adapters. Preserve experiment history and distinguish historical simulation, Validation, held-out Test, and future paper/live results.
 
 ## Research integrity
 
@@ -70,3 +70,13 @@ This repository studies AI-assisted quantitative research using NexusTrade simul
 - Keep interpretation, claim verification, and VERIFIED / PROPOSED / UNRESOLVED labels in separate provenance or analysis files. Link the original artifact and its SHA-256 in experiment provenance; record source, receipt date, session reference, and access bounds when known, and mark unknown metadata explicitly.
 - Track research memos in Git using the Git and GitHub workflow above. Credentials or private raw datasets must remain in ignored private storage; any tracked redacted copy must be identified as such and reference the private original without exposing it.
 - Preserve existing legacy memo paths and provenance references. Archival does not authorize Aurora execution, spending, performance queries, or access beyond the experiment cutoff.
+
+## Governing direction: 2026-10-12
+
+- Follow `docs/acceleration/master_plan.md` and the complete owner plan linked there until the owner changes direction. Older phase documents are historical evidence, not current execution authorization.
+- Research OS is canonical for source state, historical population/identity, availability, contracts, trial accounting and inference. Nexus is downstream and historical execution remains blocked.
+- Phase 3D permits bounded source certification, a minimal proof compiler, synthetic inference revision and a local reference execution spine. Use synthetic EXP999 in temporary directories for compiler/execution demonstrations. Do not create EXP005 or inspect real signal rankings/strategy performance.
+- Keep failed Phase 3C calibration and single-concept feasibility evidence immutable. New pre-performance contracts get new versions and review receipts; never broaden tags or dates silently.
+- Availability requires an explicit recorded owner decision. A modeled eligibility bound does not certify exact public availability or resolve acceptance clock uncertainty.
+- EXP004 remains operationally paused. No remote Nexus/Aurora, support message, purchase, Orbis scraping, sealed-stage access, optimizer or paper/live operation is included in Phase 3D.
+- Stop after Phase 3D reporting and verified commits/pushes. Phase 4A, the temporal graph, causal lab, portfolio layer and forward operations each require their own milestones and authorization.

@@ -7,7 +7,13 @@ A reproducible research framework for generating and evaluating systematic tradi
 
 [Final EXP001 report](reports/EXP001_final_report.md) · [Processed results](data/processed/EXP001_SPY_AI_SELECTION/metrics.json) · [Reproduction](#reproducing-exp001) · [Publishing notes](docs/publishing.md)
 
-## Research OS v1
+## Research OS direction
+
+The [governing roadmap](docs/acceleration/master_plan.md) defines an evidence-native quantitative intelligence system: primary-source provenance, deterministic scientific gates, proof-carrying experiments, independent execution, then earned graph/causal, portfolio and forward milestones. Research OS stays canonical; Nexus is a downstream adapter. AI assists interpretation and falsification while deterministic code controls timing, identity, statistics, trials and stages.
+
+Current authorized milestone is [Phase 3D](docs/acceleration/phase3d_plan.md): bounded certification closure, a minimal proof compiler and synthetic local reference execution. Earlier phase evidence stays immutable. EXP004 remains paused; EXP005 remains absent and NOT_READY. No real strategy study, remote Nexus call or automatic Phase 4 transition is included. Availability requires an explicit owner decision.
+
+## Research OS compatibility infrastructure
 
 Reusable infrastructure now supports validated experiment specifications, frozen hashes, sequential stage gates, bounded job planning, durable submission/trial journals, resumable raw extraction, parameter stability, paired resampling, and generated experiment cards. EXP001 remains the only completed economic evaluation; later experiments record feasibility and execution limits.
 

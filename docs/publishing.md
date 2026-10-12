@@ -1,5 +1,7 @@
 # Publishing and Git setup
 
+Current direction: [governing roadmap](acceleration/master_plan.md). Public research artifacts carry contract/evidence hashes and honest gate verdicts. Original vendor bodies, source-error receipts, identity contacts and credentials remain private. Supplied planning PDFs are background material and remain local; historical evidence is preserved.
+
 The initial local audit found no Git repository. This project is now configured for `jarems421/ai-assisted-quantitative-research`, with `main` as the working branch. The workflow in [AGENTS.md](../AGENTS.md) governs future commits and pushes. The repository was created private and subsequently made public with owner authorization after auditing all tracked history for credentials and private data. Licensing remains a separate decision.
 
 Choose an existing GitHub repository or create a destination with the intended visibility first. Do not publish the workspace wholesale. The local `.env`, ignored raw Nexus data, parquet exports under `lake-results/`, extraction checkpoints, and caches must remain private. Review other existing scripts and local configuration before including them in an initial commit.

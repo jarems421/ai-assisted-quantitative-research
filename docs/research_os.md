@@ -1,5 +1,7 @@
 # Research OS v1
 
+Research OS now follows the [governing roadmap](acceleration/master_plan.md). Phase 3D adds engine-independent proof manifests and a synthetic local reference spine; the v1 commands below describe existing compatibility infrastructure, not authorization to reopen closed experiments. Research OS remains canonical; Nexus is downstream and historical execution is blocked.
+
 Research OS is a local control and provenance layer around observed Nexus capabilities. It does not infer alpha, change EXP001, or authorize trading. This implementation was exercised with synthetic EXP999 and fake transports only: no new Nexus portfolio, Aurora run, backtest, sweep, study, or deployment was submitted.
 
 ## Architecture and responsibility
