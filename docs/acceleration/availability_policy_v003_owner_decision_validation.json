@@ -1,0 +1,26 @@
+{
+  "EXP004": "PAUSED",
+  "EXP005": "ABSENT_NOT_READY",
+  "activation": "NOT_ACTIVATED",
+  "deliberate_changes": [
+    "AGENTS.md",
+    "README.md",
+    "docs/acceleration/master_plan.md",
+    "src/presentation/exp001.py"
+  ],
+  "full_local_tests_passed": 275,
+  "full_suite_log_sha256": "0489671936b2eaad2f1ed45cdf8e5dae3886f8dd81509942716ad63092dfae65",
+  "historical_artifacts_and_v002": "UNCHANGED",
+  "policy_hash_and_lineage": "PASS",
+  "presentation_artifacts_checked": 6,
+  "prior_tracked_files_checked": 376,
+  "public_suite_log_sha256": "ea235ee03bde0ddda306c088d81f75455e09b447b5f2ef165df7912a13db08b7",
+  "public_tests_passed": 49,
+  "remote_research_operations": 0,
+  "report_and_geometry_checks": "PASS",
+  "scientific_gates": "FAIL_CLOSED",
+  "source_requests": 0,
+  "tests_skipped": 0,
+  "unexpected_changes": [],
+  "version": "availability_v003_owner_decision_validation_001"
+}
