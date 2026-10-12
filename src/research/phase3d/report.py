@@ -7,6 +7,7 @@ from .proof import ROOT, compile_manifest, replay, file_hash
 from .fixtures import cases, proof_fixture, tiny
 from .execution import LocalReferenceAdapter,NexusAdapter,reconcile_outputs
 from src.research.spec import digest
+from .approval import approved_pilot
 
 DOCS=ROOT/'docs/acceleration'
 
@@ -47,6 +48,7 @@ def evidence():
     prior=json.loads((DOCS/'phase3c_evidence.json').read_bytes())
     census=json.loads((DOCS/'phase3d_source_census.json').read_bytes())
     calibration=json.loads((DOCS/'phase3d_inference_calibration.json').read_bytes())
+    approval=approved_pilot(DOCS)
     gates={'REVENUE_CANONICALIZATION':'PARTIAL','ACCOUNTING_PERIMETER_CERTIFICATION':'BLOCKED',
            'HISTORICAL_SECURITY_IDENTITY':'PARTIAL','CORPORATE_ACTION_LIFECYCLE':'PARTIAL','TERMINAL_VALUE_EVIDENCE':'BLOCKED',
            'PUBLIC_ELIGIBILITY_POLICY':'READY_FOR_OWNER_REVIEW','INFERENCE_IMPLEMENTATION':'BLOCKED',
@@ -56,6 +58,9 @@ def evidence():
     inputs={p:file_hash(DOCS/p) for p in ('phase3c_evidence.json','phase3d_revenue_contract.json',
              'phase3d_identity_contract.json','phase3d_inference_protocol.json','phase3d_inference_calibration.json',
              'phase3d_source_census.json','phase3d_execution_contract.json','phase3d_experiment.schema.json','phase3d_spine_receipt.json')}
+    if approval:
+        gates['PUBLIC_ELIGIBILITY_POLICY']='OWNER_APPROVED_PILOT_NOT_ACTIVATED'
+        inputs['availability_policy_v002_approved.json']=file_hash(DOCS/'availability_policy_v002_approved.json')
     return {'version':'phase3d_evidence_v001','as_of':'2026-10-12','baseline_git_sha':'da35f25',
             'input_hashes':inputs,'gates':gates,'source_cases':prior['cases'],'originals':census['original_denominator'],
             'three_original_denominator':prior['revenue_metrics']['three_originals'],
@@ -63,7 +68,8 @@ def evidence():
             'certified_triples':census['fully_certified_triples'],'real_identity_spans':prior['identity_metrics']['sufficient_span_count'],
             'real_terminal_certificates':prior['identity_metrics']['terminal_certified_count'],
             'timing_invariant':sum(r['status']=='INVARIANT' for r in prior['timing']),
-            'availability_policy_sha256':prior['policy_sha256'],'owner_decision':'PENDING_NOT_APPROVED',
+            'availability_policy_sha256':prior['policy_sha256'],'owner_decision':'APPROVED_EXACT_PILOT_MODELED_UNCERTAINTY' if approval else 'PENDING_NOT_APPROVED',
+            'policy_activation':'NOT_ACTIVATED','owner_approval_sha256':digest(approval) if approval else None,
             'exact_public_availability':'UNKNOWN','inference_selected_method':calibration['selected_method'],
             'synthetic_replicates_per_world':400,'new_source_requests':{k:0 for k in ('SEC','OpenFIGI','Tiingo','FMP','Orbis','Nexus')},
             'documentation_browser':{'tool_calls':1,'search_queries':2,'source_dataset_requests':0},
@@ -81,7 +87,10 @@ def table(headers,rows):
 def render(e):
     gates=table(['Gate','Verdict'],e['gates'].items())
     validation=DOCS/'phase3d_validation.json'
+    if (DOCS/'availability_policy_v002_validation_001.json').exists(): validation=DOCS/'availability_policy_v002_validation_001.json'
     checks=json.loads(validation.read_bytes()) if validation.exists() else {}
+    approved=e['owner_decision']=='APPROVED_EXACT_PILOT_MODELED_UNCERTAINTY'
+    availability_text=('The owner explicitly approved the exact 2015–2021 pilot modeled policy and its timing uncertainty. The [versioned approval](availability_policy_v002_approved.json) binds that decision to the unchanged policy hash, original review packet and existing source/clock evidence. No real eligibility view is activated.' if approved else 'The [availability decision](phase3d_availability_decision.md) is pending explicit owner approval, rejection or amendment.')
     test_text=f"{checks['tests_passed']} tests passed; {checks['tests_skipped']} skipped." if 'tests_passed' in checks else 'Final validation pending; no unexecuted check claimed.'
     calibration=json.loads((DOCS/'phase3d_inference_calibration.json').read_bytes())
     caltable=table(['World','Annual raw rejection / location coverage','Funded-window raw rejection / location coverage'],
@@ -100,11 +109,11 @@ Both frozen inference candidates were evaluated on known synthetic worlds. Neith
 
 {gates}
 
-Exact public availability stays UNKNOWN. The 89-filing clock-invariance result remains evidence of calendar mechanics, not resolution of SEC summer timestamps. The [availability decision](phase3d_availability_decision.md) is pending explicit owner approval, rejection or amendment. Approval alone cannot certify identity, universe, terminal values or execution.
+Exact public availability stays UNKNOWN. The 89-filing clock-invariance result remains evidence of calendar mechanics, not resolution of SEC summer timestamps. {availability_text} Approval alone cannot certify identity, universe, terminal values or execution.
 
 New source requests: SEC 0, OpenFIGI 0, Tiingo 0, FMP 0, Orbis 0, Nexus 0. Two browser queries in one documentation-tool call reviewed primary accounting/randomization references; no filing or market dataset was acquired. Prior Phase 3C request totals remain separately recorded. Original Intel failure and prefix-retention gap remain intact. Reading utilities were installed only under ignored `.research/pdf-reader`; research dependency pins are unchanged.
 
-Validation: **{test_text}** [Validation receipt](phase3d_validation.json) records executed checks and preservation. [Canonical evidence](phase3d_evidence.json), [source census](phase3d_source_census.json), [synthetic ledgers](phase3d_spine_receipt.json) and [gate review](phase3d_gate_review.md) provide deeper detail. Report generation needs public artifacts only; source census verification requires private archived instances.
+Validation: **{test_text}** [Validation receipt]({validation.name}) records executed checks and preservation. The original [Phase 3D checkpoint validation](phase3d_validation.json) remains unchanged. [Canonical evidence](phase3d_evidence.json), [source census](phase3d_source_census.json), [synthetic ledgers](phase3d_spine_receipt.json) and [gate review](phase3d_gate_review.md) provide deeper detail. Report generation needs public artifacts only; source census verification requires private archived instances.
 
 ```sh
 python -m src.research.phase3d check
@@ -113,7 +122,7 @@ python -m src.research.phase3d report --check
 python -m unittest discover -s tests -v
 ```
 
-EXP004 remains paused; EXP005 is absent. No Validation/Test opening, Nexus/Aurora/support operation, purchase, Orbis scraping, optimization, paper/live action, full backfill, graph or causal platform occurred. **Stopped at the Phase 3D owner decision and unresolved scientific gates; Phase 4A requires separate authorization.** Certification closure remains incomplete even though this bounded implementation checkpoint is delivered. Commit/push receipts are in Git history and the delivery message.
+EXP004 remains paused; EXP005 is absent. No Validation/Test opening, Nexus/Aurora/support operation, purchase, Orbis scraping, optimization, paper/live action, full backfill, graph or causal platform occurred. **Stopped at unresolved Phase 3D scientific gates; Phase 4A requires separate authorization.** Certification closure remains incomplete even though this bounded implementation checkpoint is delivered. Commit/push receipts are in Git history and the delivery message.
 ''',
     'phase3d_gate_review.md':f'''# Phase 3D gate review
 
@@ -121,7 +130,7 @@ EXP004 remains paused; EXP005 is absent. No Validation/Test opening, Nexus/Auror
 
 Software fixture passes do not make real population certification pass. Mandatory accounting/perimeter, historical listing spans, terminal consideration, complete universe/calendar, approved modeled eligibility, usable inference and population-preserving execution remain missing. No EXP005 freeze or performance authorization is inferred.
 
-Next decisions: review the [availability packet](phase3d_availability_decision.md); decide separately whether to commission bounded primary accounting/listing/terminal review or an independently audited source with sufficient coverage. Inference needs another reviewed pre-performance design because this two-method family cannot reach the existing confirmation gate. Do not extend sample windows, relax Holm, change thresholds or choose a new method automatically. Full-market acquisition and Phase 4A remain unauthorized.
+Availability decision: {e['owner_decision']}; policy activation remains NOT_ACTIVATED. Remaining scientific work concerns bounded primary accounting/listing/terminal review or an independently audited source with sufficient coverage. Inference needs another reviewed pre-performance design because this two-method family cannot reach the existing confirmation gate. Do not extend sample windows, relax Holm, change thresholds or choose a new method automatically. Full-market acquisition and Phase 4A remain unauthorized.
 
 The [report](phase3d_report.md) states exact scope, checks and zero new dataset requests. Historical records and failures are preserved.
 ''',
@@ -191,6 +200,19 @@ Hand-verifiable fixtures start at USD1000: a50-share buy at10, hold at12 and sal
 
 This spine is implemented; real LOCAL_EXECUTION_ROUTE remains PARTIAL. Calendar/source completeness, lifecycle coverage, market microstructure/cost feasibility, proof-result binding and stage-safe real selection need further certification. It cannot resume EXP004 or run EXP005.
 '''}
+    if approved:
+        documents['phase3d_availability_decision.md']=f'''# Phase 3D availability decision
+
+**OWNER APPROVED THE EXACT PILOT MODELING POLICY; NOT ACTIVATED.** Recorded 2026-10-12. The owner's explicit reply was “Approve the exact pilot policy and modeled timing uncertainty.” [Original reply and question](decisions/availability_v002_owner_reply_001.json), [unchanged review packet](decisions/availability_v002_review_packet_001.md) and [versioned approval](availability_policy_v002_approved.json) preserve decision provenance.
+
+Approved definition: `phase3c_ambiguity_buffer_v002`, hash `{e['availability_policy_sha256']}`, scope **2015-01-01–2021-12-31**. The canonical `policy` object and its original proposed status remain unchanged in [Phase 3C evidence](phase3c_evidence.json). Approval lives in a separate versioned artifact and is not backdated to a filing.
+
+Rule: 09:30 America/New_York on the second session strictly after the later of filing date and acceptance civil date under every plausible UTC interpretation. Require all candidate opens to equal the raw-rule open and occur after every candidate instant. Missing/contradictory timing, non-invariance, incomplete calendar or contrary public evidence fails closed.
+
+The owner accepts modeled timing uncertainty. Exact first-public time remains **UNKNOWN**; summer acceptance interpretation remains **PARTIAL**. Existing 89/89 invariance passes establish calendar mechanics only. An independently reviewed calendar, full contributor scope and ambiguity-tolerant implementation are still required before any real modeled view is activated. No real facts were admitted to a trading decision.
+
+This approval does not authorize 2022+ scope, EXP005 creation/freeze/performance, EXP004 resume, Phase 4A, new acquisition, Nexus/Aurora, Validation/Test or paper/live actions. Accounting, historical identity, terminal-value, universe, inference and execution gates remain unresolved. The question and answer are local owner-instruction evidence, not independent cryptographic identity attestation.
+'''
     return documents
 
 

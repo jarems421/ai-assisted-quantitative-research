@@ -24,7 +24,7 @@
     "NEXUS_ADAPTER_INTERFACE": "DEFINED_DISABLED",
     "NEXUS_EXECUTION": "BLOCKED",
     "PROOF_COMPILER": "PASS_SYNTHETIC_ONLY",
-    "PUBLIC_ELIGIBILITY_POLICY": "READY_FOR_OWNER_REVIEW",
+    "PUBLIC_ELIGIBILITY_POLICY": "OWNER_APPROVED_PILOT_NOT_ACTIVATED",
     "REVENUE_CANONICALIZATION": "PARTIAL",
     "TERMINAL_VALUE_EVIDENCE": "BLOCKED"
   },
@@ -44,7 +44,9 @@
     "Tiingo": 0
   },
   "originals": 89,
-  "owner_decision": "PENDING_NOT_APPROVED",
+  "owner_approval_sha256": "814dbde30afef737a16b05d82a7452d8a3bf57b0b978f5fd6e11d1fbfcb90817",
+  "owner_decision": "APPROVED_EXACT_PILOT_MODELED_UNCERTAINTY",
+  "policy_activation": "NOT_ACTIVATED",
   "real_acceleration_or_performance_computed": false,
   "real_identity_spans": 0,
   "real_terminal_certificates": 0,

@@ -1,0 +1,72 @@
+{
+  "EXP004_pause": "UNCHANGED",
+  "EXP005": "ABSENT_NOT_READY",
+  "activation_status": "NOT_ACTIVATED",
+  "as_of": "2026-10-12",
+  "baseline_commit": "37ef929",
+  "checks": {
+    "EXP004_audit": {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "3d8905346bf4fe878a87c1b06abe765dc0edcb038884b03e773f3a95322e68da"
+    },
+    "full_suite": {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "2f33fdf0e4eea541345abea3a2d24158a9d609110dc784237f07147a76540da1"
+    },
+    "phase2_report": {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "348535532bf6f5a30c12f47813ae7dc0fdd34f9cd91da2e7a5bfbf99a1129bf8"
+    },
+    "phase3a_report": {
+      "command": "python -m src.research.sec_pilot.phase3a --report-only --check",
+      "exit_code": 0,
+      "log_sha256": "7e8911a8a5150f0e5d38ec9dd57b7d1d59a389fab3b863ac9c2591e64fd08e79"
+    },
+    "phase3c_report": {
+      "command": "python -m src.research.phase3c.report --check",
+      "exit_code": 0,
+      "log_sha256": "eaabbcdb6bdb89b70f02f0a58bcb5c4fd2cc62f7f1037c8118e59e51747da810"
+    },
+    "phase3d_report": {
+      "command": "python -m src.research.phase3d report --check",
+      "exit_code": 0,
+      "log_sha256": "9de4a31505c6a54234972c3f149f424a884543236472bc9e7351308a0bc50cc5"
+    },
+    "phase3d_spine": {
+      "command": "python -m src.research.phase3d check",
+      "exit_code": 0,
+      "log_sha256": "5f39f120cf85671971c9831d58272d0eee253c02b87d481f6aba21edc3db1178"
+    },
+    "presentation": {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "037c36964d6f037141654518c9515b972ff23b19c7a30d1a585fc29b9d776714"
+    }
+  },
+  "historical_artifact_mismatches": [],
+  "intentional_update_paths": [
+    "README.md",
+    "docs/acceleration/master_plan.md",
+    "docs/acceleration/phase3d_availability_decision.md",
+    "docs/acceleration/phase3d_evidence.json",
+    "docs/acceleration/phase3d_gate_review.md",
+    "docs/acceleration/phase3d_report.md",
+    "docs/acceleration/phase3d_summary.json",
+    "docs/research_os.md",
+    "src/presentation/exp001.py",
+    "src/research/phase3d/report.py"
+  ],
+  "modeled_policy_owner_approved": true,
+  "new_source_or_Nexus_requests": 0,
+  "observed_public_availability": "UNKNOWN",
+  "policy_hash_unchanged": true,
+  "preserved_preexisting_tracked_files": 288,
+  "prior_phase3d_validation": "phase3d_validation.json unchanged; current receipt supplements it",
+  "scope": "Recorded owner modeling-policy decision only; no real eligibility view or experiment activated",
+  "tests_passed": 255,
+  "tests_skipped": 0,
+  "version": "availability_owner_approval_validation_v001"
+}

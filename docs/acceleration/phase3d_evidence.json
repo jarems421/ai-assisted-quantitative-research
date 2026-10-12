@@ -24,12 +24,13 @@
     "NEXUS_ADAPTER_INTERFACE": "DEFINED_DISABLED",
     "NEXUS_EXECUTION": "BLOCKED",
     "PROOF_COMPILER": "PASS_SYNTHETIC_ONLY",
-    "PUBLIC_ELIGIBILITY_POLICY": "READY_FOR_OWNER_REVIEW",
+    "PUBLIC_ELIGIBILITY_POLICY": "OWNER_APPROVED_PILOT_NOT_ACTIVATED",
     "REVENUE_CANONICALIZATION": "PARTIAL",
     "TERMINAL_VALUE_EVIDENCE": "BLOCKED"
   },
   "inference_selected_method": null,
   "input_hashes": {
+    "availability_policy_v002_approved.json": "814dbde30afef737a16b05d82a7452d8a3bf57b0b978f5fd6e11d1fbfcb90817",
     "phase3c_evidence.json": "46c631b46c8587ddc8d7d5fa3ac1bdf9d859e4f08d0dcb379861d7c3b8d808de",
     "phase3d_execution_contract.json": "82046712745bf7d7c54447f7538c0fce59fe8eefd7eadadf651f0c6ca41968b4",
     "phase3d_experiment.schema.json": "5d86c91188b2a9afc5a2a6c0f5f17be5ea2338311187230494b12f8add68150c",
@@ -55,7 +56,9 @@
     "Tiingo": 0
   },
   "originals": 89,
-  "owner_decision": "PENDING_NOT_APPROVED",
+  "owner_approval_sha256": "814dbde30afef737a16b05d82a7452d8a3bf57b0b978f5fd6e11d1fbfcb90817",
+  "owner_decision": "APPROVED_EXACT_PILOT_MODELED_UNCERTAINTY",
+  "policy_activation": "NOT_ACTIVATED",
   "prior_phase3c_request_counts": {
     "Documentation": 9,
     "OpenFIGI": 12,

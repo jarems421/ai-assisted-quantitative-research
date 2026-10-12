@@ -34,6 +34,8 @@ Revenue acceleration remains the sole first proposed filing family. A new versio
 
 EXP004 stays operationally paused. EXP005 is absent and NOT_READY. The actual EXP004 freeze is four price momentum cells (180/365 calendar days × K20/K40), monthly universe EW and explicit SPY; the handoff's SMA/AI-leg description is not its authoritative design. Phase 3C recorded 114 Tiingo requests: 54 successful price responses, 54 successful metadata responses and six metadata 404s. These clarifications change no archived report or experiment.
 
+Owner decision recorded 2026-10-12: the exact [pilot availability policy](availability_policy_v002_approved.json) is approved for 2015–2021 as a modeled eligibility rule, accepting timing uncertainty with observed public availability UNKNOWN. It is not activated and supplies no wider scope or experiment/execution authorization. Earlier proposed packets remain historical evidence.
+
 Engineering estimates in the source documents are conditional, not deadlines: roughly 3–6 weeks for certification closure and 3–5 months for a stronger paper-ready platform if blockers are resolvable, followed by months of future observation. One milestone is earned at a time. Unresolved source, accounting, identity, terminal or inference evidence may keep EXP005 NOT_READY after implementation.
 
 Historical reports and phase-specific stop statements describe their original authorization. Use this roadmap and the [Phase 3D plan](phase3d_plan.md) for current work. Frozen strategies, metrics, raw archives, old plans and negative findings remain immutable.
