@@ -1,0 +1,12 @@
+{
+  "collector_sha256": "9eded3c82cd0195d91d2f0b288b6d2b21d823d9d42d100985fc607bae9aee0e5",
+  "frozen_at_utc": "2026-10-12T23:28:31.526140+00:00",
+  "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+  "network_starts_before_freeze": 0,
+  "owner_authority": "FDA_FAMILY_APPROVED_FOR_SOURCE_FEASIBILITY",
+  "owner_request_sha256": "2dc2b975782910ba4e1fed7434df643cac936009a08b940947aadeeb63ae55b3",
+  "performance_authorized": false,
+  "reused_procurement_collector_sha256": "c9b286b75b245a0eeaa591ca04d5bec4deb73d5be2e86b9bc62a3f52174af10d",
+  "self_check": "Gate1 documentation only; exact FDA routes;10 starts including retries;total60;12 slots conditional;no outcome/issuer/price filter or substitution;Gate2 blocked absent reviewed pass and separate event freeze",
+  "version": "fda_gate1_freeze_v001"
+}
