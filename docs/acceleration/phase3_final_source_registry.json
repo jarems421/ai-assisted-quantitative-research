@@ -1,0 +1,22 @@
+{
+  "account_wide_debit": "UNKNOWN",
+  "counts": {
+    "Aurora": 0,
+    "FMP": 0,
+    "Nexus": 0,
+    "OpenFIGI": 0,
+    "Orbis": 0,
+    "SEC": 0,
+    "Tiingo": 0,
+    "browser": 0,
+    "documentation_HTTP": 0
+  },
+  "failures": 0,
+  "git_and_ci": "Separate delivery metadata, not research source requests",
+  "new_source_debit": 0,
+  "pacing_issues": [],
+  "reason": "Section29 upstream inference stop; no source request dispatched",
+  "requests": [],
+  "successes": 0,
+  "version": "phase3_final_source_registry_v001"
+}

@@ -1,0 +1,90 @@
+{
+  "EXP004_pause": "Baseline hashed operational pause and state preserved",
+  "EXP005_state_counts": {
+    "experiments": 0,
+    "jobs": 0,
+    "trials": 0
+  },
+  "baseline": "05aca92614c9c32dd59890910d0ed24e0b0b27b3",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "f1d1f88b67bb040f1698fe559d95228ae6d621ab01fff599329190deb9f11ccb"
+    },
+    {
+      "command": "python -m src.research.phase3_final --check",
+      "exit_code": 0,
+      "log_sha256": "da8a1670bbec618859a733b27ae698e5c3e327c84093759732f93dd73ef8d221"
+    },
+    {
+      "command": "python -m src.research.phase3er report --check",
+      "exit_code": 0,
+      "log_sha256": "fa4c28394cfcdf8c3fb22bc72e672f1948b97a0fe4e506c52040f061ec32ea08"
+    },
+    {
+      "command": "python -m src.research.phase3er geometry --check",
+      "exit_code": 0,
+      "log_sha256": "dfd17fb0e07c9b8bab9f672953932890ae2f7d986610726c30397e2a7fd85557"
+    },
+    {
+      "command": "python -m src.research.phase3er audit",
+      "exit_code": 0,
+      "log_sha256": "c02de9e38fd833f12baab30588f34080f47afcf67903c69f857664e7035bb94e"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure sources --check",
+      "exit_code": 0,
+      "log_sha256": "768f1ab8004f2c218cd4f8d081178e19f79e990d39135e3aa08cf38c3106064f"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0,
+      "log_sha256": "4658cb6d3bdeaaae22941052c2a45875edd652c10f566d3220a9ece9b4de4268"
+    },
+    {
+      "command": "python -m src.research.phase3e report --check",
+      "exit_code": 0,
+      "log_sha256": "6e832a9623f3e51b3e7bf23ac319087907e99bb67753cf96a4c969b2417347d5"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "a0beb5d2cc256cb53e33f1ab7846245cb472adbf894e2e453d4bc42e3ad49444"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    }
+  ],
+  "gate": "MANDATORY_INFERENCE_STOP",
+  "hosted_ci": "Final HEAD observation reported in delivery; not embedded as a self-referential hash",
+  "local_tests_passed": 278,
+  "owner_request_verbatim_sha256": "471ff54f578c1a7c00ecce643cace8d1f2992069b0056bf3b5de817e9d05414b",
+  "performance_inputs": 0,
+  "preservation": {
+    "deliberate_changes": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "src/presentation/exp001.py",
+      "src/research/public_checks.py"
+    ],
+    "files": 8456,
+    "unchanged": 8451,
+    "unexpected_changes": []
+  },
+  "public_test_log_sha256": "c9a03f86163fd064a93cd1fefa763d536b31c8904119cba26a7fb06e348e975f",
+  "public_tests_passed": 52,
+  "simulations": 0,
+  "source_reconciliation": "All89 original packets and60 retained cases reconcile; new certification campaign deferred, not completed",
+  "source_requests": 0,
+  "tests_skipped": 0,
+  "version": "phase3_final_validation_v001"
+}

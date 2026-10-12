@@ -1,0 +1,487 @@
+{
+  "cases": [
+    {
+      "case_key": "0000004962|AXP",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000014693|BF.A",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000021344|KO",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000027419|TGT",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000031235|KODK",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000040545|GE",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000050863|INTC",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000051143|IBM",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000077476|PEP",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000078003|PFE",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000080424|PG",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000098246|TIF",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "DISCLOSED_TERMS_ONLY",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000101829|UTX",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000104169|WMT",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000200406|JNJ",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000310158|MRK",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000320187|NKE",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000320193|AAPL",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000354950|HD",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000701985|LB",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000718877|ATVI",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000731766|UNH",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000743988|XLNX",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000789019|MSFT",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000796343|ADBE",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000804328|QCOM",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000813828|CBS",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "DISCLOSED_TERMS_ONLY",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000816284|CELG",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "DISCLOSED_TERMS_ONLY",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000829224|SBUX",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000858877|CSCO",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000865436|WFM",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "DISCLOSED_TERMS_ONLY",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000886158|BBBY",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000899866|ALXN",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "DISCLOSED_TERMS_ONLY",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000909832|COST",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0000931336|DF",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001004980|PCG",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001011006|YHOO",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001018724|AMZN",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001045810|NVDA",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001067983|BRK.A",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001067983|BRK.B",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001108524|CRM",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001141391|MA",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001166126|JCP",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001310067|SHLD",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001326801|FB",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001339947|VIAB",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "DISCLOSED_TERMS_ONLY",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001341439|ORCL",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001357204|DUNK",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001403161|V",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001418091|TWTR",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001563922|SUNE",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001564708|NWSA",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001652044|GOOG",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001652044|GOOGL",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001657853|HTZ",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001666700|DD",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001744489|DIS",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001751788|DOW",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    },
+    {
+      "case_key": "0001754301|FOXA",
+      "new_review_status": "DEFERRED_INFERENCE_STOP",
+      "prior_terminal_status": "UNRESOLVED",
+      "terminal_certificate": false
+    }
+  ],
+  "certified_position_terminal_cases": 0,
+  "frame_denominator": 60,
+  "prior_claims": [
+    {
+      "accession": "0001104659-19-065939",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 28813,
+        "decoded_start": 24926,
+        "normalized_end": 5090,
+        "normalized_span_sha256": "fb1926e812b29b3e5a2402b4561070843445b4574eb4a262cdd4215913d0bbb0",
+        "normalized_start": 3461,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "cash_per_share": "50.00",
+        "contingent_right": "One CVR; contingent USD9, never assumed payable",
+        "currency": "USD",
+        "kind": "mixed_cash_stock_contingent",
+        "stock_ratio": "1"
+      },
+      "receipt_sha256": "f1392dc2028644800557a3afe4a77e50b08e135c083eeb55d19a48c2f8f058f4",
+      "source_sha256": "ee1b6f877b9e18a6fd90ff51a192655cdf1f7fe536d4a6b2b3516bfd57c237b3"
+    },
+    {
+      "accession": "0001104659-21-094624",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 27501,
+        "decoded_start": 24582,
+        "normalized_end": 6941,
+        "normalized_span_sha256": "d8ee049d8ef2db6ed71e9d45412f347d389f2618e9e61f6868e336fd7de2a179",
+        "normalized_start": 5188,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "cash_per_share": "60",
+        "currency": "USD",
+        "kind": "mixed_cash_stock_election",
+        "stock_instrument": "AstraZeneca ADS, with ordinary-share election",
+        "stock_ratio": "2.1243"
+      },
+      "receipt_sha256": "53d4ba3318c897994b15d329b0df2b3ee1a723bd0e97f59acae5cb2b0ea3babc",
+      "source_sha256": "cdae14750dd7821aa57cfabdef5e8fd49e9830b7c697f76e59afec1baf3c6928"
+    },
+    {
+      "accession": "0001144204-17-045261",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 15256,
+        "decoded_start": 12570,
+        "normalized_end": 4972,
+        "normalized_span_sha256": "232dde9e26f6aded4b83d8dcb0f70259a052ed4218413a61d17e5cabf4c5ac1d",
+        "normalized_start": 3404,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "cash_per_share": "42.00",
+        "currency": "USD",
+        "kind": "cash_acquisition"
+      },
+      "receipt_sha256": "83ee389be6f61467111066cbe1fc00a64b9c421d4680cc1366875d8a88263268",
+      "source_sha256": "3076d5e4483e065b5a224de2824d658e2f72e052f7a77c7e84016fd9ca41f5ee"
+    },
+    {
+      "accession": "0001193125-21-004213",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 22581,
+        "decoded_start": 19619,
+        "normalized_end": 4538,
+        "normalized_span_sha256": "30de4b505e9c96d3fc11b7345189581b1ea1bacba68fb42bfb73ecca693682cd",
+        "normalized_start": 2931,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "cash_per_share": "131.50",
+        "currency": "USD",
+        "kind": "cash_acquisition"
+      },
+      "receipt_sha256": "c6e1faa8280451bfd747dcaf22149970a7f745523ffbd1657182165e316b58b1",
+      "source_sha256": "725192fdf54ca1855feac24d8737de89823e5695319f466b3cc38cd0575b0c1f"
+    },
+    {
+      "accession": "0001193125-19-306334",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 26317,
+        "decoded_start": 23316,
+        "normalized_end": 3678,
+        "normalized_span_sha256": "d72eb09fb0be1fb620520d7cae14c94be0a732c1b9e91fc3f5861a075ff7f62a",
+        "normalized_start": 2134,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "kind": "surviving_issuer_rename_exchange_change"
+      },
+      "receipt_sha256": "9dd8b9d597d26fcdbaeafa316bcb5fa565952f3b87b9707fc4122bcd497b3429",
+      "source_sha256": "e777c2707bd41e31c6b81d6456e60c7e972cde5299d0705c8743a8dfe27b7361"
+    },
+    {
+      "accession": "0001193125-19-306335",
+      "complete_terminal_certificate": false,
+      "evidence_locator": {
+        "decoded_end": 27865,
+        "decoded_start": 25786,
+        "normalized_end": 5764,
+        "normalized_span_sha256": "47e4de3df41b0f12f350d6f2bc7d0c746b4e4ef1fee6ec21588cfb05aeb2d9f4",
+        "normalized_start": 4216,
+        "transform": "html_text_whitespace_v003; entity source lengths preserved; skip explicit hidden/header blocks; original UTF8 decoded spans, not byte offsets"
+      },
+      "facts": {
+        "kind": "stock_acquisition_fractional_cash",
+        "stock_instrument": "Viacom Class B to ViacomCBS Class B; cash-in-lieu required",
+        "stock_ratio": "0.59625"
+      },
+      "receipt_sha256": "949630404a62ecb7900c91a45d734d70a4f80e028f079fdc12ad4ffdbb359d3b",
+      "source_sha256": "50b4052e33d2feac549a7531cdab9e8242fa9057666f61dcc25d6b8d2ce88755"
+    }
+  ],
+  "prior_completion_documents": 10,
+  "prior_reviewed_disclosures": 6,
+  "status": "DEFERRED_INFERENCE_STOP"
+}

@@ -1,0 +1,20 @@
+{
+  "StageC_coverage_certified": false,
+  "approved_warmup": "2019-02-28",
+  "denominator": 60,
+  "new_requests": 0,
+  "prior_metrics": {
+    "diagnostic_full_calendar_passes": 41,
+    "dividend_events": 252,
+    "duplicate_sessions": 0,
+    "invalid_rows": 0,
+    "nonempty_responses": 45,
+    "original_pre_event_dividend_probe_passed": 6,
+    "price_http200_responses": 54,
+    "received_rows": 22075,
+    "separate_cash_exdate_internal_consistency_passed": 252,
+    "split_events": 4,
+    "split_probe_passed": 4
+  },
+  "status": "PARTIAL_PRIOR_QA_NEW_CAMPAIGN_DEFERRED"
+}

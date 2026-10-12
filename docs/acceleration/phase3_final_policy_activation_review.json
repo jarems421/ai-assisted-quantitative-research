@@ -1,0 +1,9 @@
+{
+  "activation": "NOT_ACTIVATED",
+  "exact_public_availability": "UNKNOWN",
+  "owner_approval": "RECORDED_UNCHANGED",
+  "policy_sha256": "438d7bcf7d091f596009ba841e6dacbd960c18493c34ffec798d8c1aaf1dacbd",
+  "readiness": "BLOCKED",
+  "salesforce_conflict": "UNAVAILABLE",
+  "source_and_stage_prerequisites": "UNSATISFIED_UNCHANGED"
+}
