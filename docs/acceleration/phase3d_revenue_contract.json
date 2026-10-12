@@ -1,0 +1,15 @@
+{
+  "version": "RevenueContract_v002",
+  "status": "FROZEN_SOURCE_ONLY_CANDIDATE_NOT_EXP005_FREEZE",
+  "reason": "Pre-performance semantic revision after retained Phase 3C exact-element source-feasibility failure; no real acceleration or returns observed",
+  "canonical_line": "Original current-year consolidated operating revenue, net of assessed taxes, under explicitly reviewed economic scope",
+  "candidate_concepts": ["RevenueFromContractWithCustomerExcludingAssessedTax", "SalesRevenueNet", "Revenues"],
+  "namespace_rule": "http://fasb.org/us-gaap/YYYY or YYYY-MM-DD; fiscal source vintages only",
+  "mapping_rule": "Each candidate needs an explicit source-hash/locator-linked receipt establishing the same consolidated income-statement line, tax convention, recognition basis and perimeter. Topic606 and older sales/revenue concepts are not presumptively equivalent. Revenues containing incompatible nonoperating/financial income is rejected. No substring or extension match, priority selection or segment sum.",
+  "mandatory_review_checks": ["consolidated_statement", "net_assessed_tax", "recognition_basis", "perimeter_compatible", "continuing_operations", "no_recast_substitution"],
+  "mandatory_provenance": ["issuer_cik", "accession", "form", "original_version", "concept", "namespace", "context_ref", "entity_cik", "dimensions", "period_start", "period_end", "filing_period_end", "unit", "scale", "value", "decimals", "locator", "statement_locator", "source_sha256", "primary_sha256", "original_element_reconciled", "primary_reconciled", "conflicting_duplicates"],
+  "receipt": ["version", "reviewer", "reviewed_at", "reason", "decision", "source_sha256", "primary_sha256", "locator", "concept", "namespace", "mapping_rule", "accounting_basis", "perimeter", "evidence_locators", "checks"],
+  "chain": "Three distinct originals, same issuer, positive finite USD duration observations 350–380 inclusive days, contiguous periods and original current-year lineage. Adjacent comparatives overlap rounding intervals and require their own source/primary review. Mapping differences require reviewed common accounting basis/perimeter. No comparative replacement or annualization.",
+  "ambiguity": "Equivalent duplicate locators retained; conflicting values, multiple competing mapped statement lines, nil/instant/dimensional/unsupported transformations or untrusted receipts stay unavailable",
+  "boundaries": "Existing fixed Phase 3C frame and annual originals only; dates, economic hypothesis and performance trial ceiling unchanged. No real acceleration computed. Owner review and source gate still required before EXP005. Amendments stay separate and can invalidate future state, never overwrite an earlier snapshot."
+}

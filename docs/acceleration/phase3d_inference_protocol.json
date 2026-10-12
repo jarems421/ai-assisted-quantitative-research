@@ -1,0 +1,26 @@
+{
+  "version": "phase3d_cluster_sign_calibration_v001",
+  "status": "FROZEN_PRE_SYNTHETIC_EVALUATION",
+  "seed": 3003002,
+  "replicates_per_world": 400,
+  "window_lengths": [756, 756],
+  "candidate_order": ["annual_cluster_sign", "funding_window_sign"],
+  "candidates": {
+    "annual_cluster_sign": {"cluster_sessions": 252, "cluster_count": 6, "exact_transformations": 64, "minimum_p": 0.015625},
+    "funding_window_sign": {"cluster_sessions": 756, "cluster_count": 2, "exact_transformations": 4, "minimum_p": 0.25}
+  },
+  "statistic": "Aligned paired mean; exact independently sign-flipped cluster sums, ties included",
+  "assumptions": "Independent sign-invariant cluster errors; observational portfolio labels are not randomly assigned. Symmetry and cluster independence require separate justification; not guaranteed by a bootstrap or simulation pass.",
+  "four_effects": ["base", "double_cost", "delay1", "delay5"],
+  "alpha": 0.05,
+  "multiple_testing": "Holm, all four effects including failures p=1",
+  "worlds": ["iid_null", "ar1_null", "persistent_null", "annual_shock_null", "overlap_null", "window_shift_null", "heteroskedastic_null", "skewed_null", "positive", "negative"],
+  "joint_dependence": ["fully_correlated", "independent", "mixed_common_shock"],
+  "interval": "Conservative two-sided confidence-set inversion of exact sign tests under a common additive cluster location; report unbounded sets and do not claim coverage for arbitrary heterogeneous mean effects",
+  "size_gate": "Every null-world raw and family Wilson95 upper <=0.10",
+  "coverage_gate": "Common-location worlds: Wilson95 lower for true location coverage >=0.90; model-violating worlds diagnostic only",
+  "power_gate": "Four-effect positive-world rejection Wilson95 lower >=0.50; otherwise method is not usable for confirmatory design",
+  "selection": "First predeclared candidate meeting size, relevant coverage, family-power and separately evidenced assumptions; otherwise select none. No new seed, cluster size, method or real performance input allowed to rescue results.",
+  "budget": "2 methods ×10 worlds ×400 paired replicates; family checks3 joint structures ×400, all synthetic. Existing45 real-performance ceiling unchanged; zero real evaluations authorized.",
+  "prior_failure": "Phase3C bootstrap evidence and protocol immutable; these candidates are a separate bounded methodological diagnostic, not an approved replacement"
+}

@@ -1,0 +1,18 @@
+{
+  "version": "execution_v001",
+  "scope": "SYNTHETIC_EXP999_ONLY",
+  "input": ["experiment_id", "mode", "contract_version", "starting_cash", "fee_bps", "sessions", "bindings", "rebalances", "events"],
+  "session": ["session", "open_at", "close_at", "prices keyed by every active stable security ID"],
+  "binding": ["issuer_cik", "class", "security_id", "ticker", "exchange", "effective_from inclusive", "effective_to exclusive", "source_sha256"],
+  "rebalance": ["session", "decision_at strictly before open", "observations: exhaustive decision population, value, ticker, available_at, source_sha256", "top_k", "exposure"],
+  "event": ["event_id", "session", "sequence", "security_id", "kind", "available_at", "source_sha256", "status", "explicit kind-specific terms"],
+  "action_order": "Caller supplies unique per-session sequences; actions precede rebalance. Dividends specify current share basis after earlier sequenced actions, ex-session entitlement and pay-session cash.",
+  "cash_merger": "Known USD per-share amount; immediate same-session cash settlement only in v001",
+  "stock_merger": "Positive exchange ratio and active successor ID; preserve fractional quantity",
+  "cancellation": "Requires explicit zero-recovery evidence; delisting alone never authorizes cancellation",
+  "output": ["populations", "observations", "orders", "fills", "positions", "cash_ledger", "action_ledger", "nav including receivables", "warnings", "errors", "input_sha256", "engine", "receipt_sha256"],
+  "arithmetic": "34-digit Decimal; exact strings; no floats; fractional shares; sells before buys; charge actual turnover; no leverage or hidden cash scaling",
+  "marking": "Complete open/close price set for all active identities; explicit terminal transition for every disappeared population ID; any unvalued position or receivable fails",
+  "reconciliation": "All semantic output fields compared exactly, including population and observations. Engine metadata may differ. No numeric tolerance silently applied.",
+  "limits": ["No independently certified exchange calendar", "No real source adapter", "No bid/ask, impact, order book, deferred merger payment, currency conversion, spinoff or OTC model", "No real strategy execution", "Nexus adapter always raises; no client or remote transport"]
+}
