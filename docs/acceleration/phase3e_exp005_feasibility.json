@@ -1,0 +1,558 @@
+{
+  "EXP004": "PAUSED",
+  "EXP005": "ABSENT",
+  "Phase4A": "NOT_STARTED",
+  "baseline": "081dfe638f1acb8e580a70de2c991bc83dfed5c1",
+  "contributors": [
+    {
+      "accessions": [
+        "0000004962-19-000018",
+        "0000004962-20-000030",
+        "0000004962-21-000013"
+      ],
+      "case_key": "0000004962|AXP",
+      "mechanical_all_contributor_bound_utc": "2021-02-17T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000021344-19-000014",
+        "0000021344-20-000006",
+        "0000021344-21-000008"
+      ],
+      "case_key": "0000021344|KO",
+      "mechanical_all_contributor_bound_utc": "2021-03-01T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000027419-18-000010",
+        "0000027419-19-000006",
+        "0000027419-20-000008"
+      ],
+      "case_key": "0000027419|TGT",
+      "mechanical_all_contributor_bound_utc": "2020-03-13T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000050863-19-000007",
+        "0000050863-20-000011",
+        "0000050863-21-000010"
+      ],
+      "case_key": "0000050863|INTC",
+      "mechanical_all_contributor_bound_utc": "2021-01-26T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001047469-19-000712",
+        "0001558370-20-001334",
+        "0001558370-21-001489"
+      ],
+      "case_key": "0000051143|IBM",
+      "mechanical_all_contributor_bound_utc": "2021-02-25T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000077476-19-000017",
+        "0000077476-20-000015",
+        "0000077476-21-000007"
+      ],
+      "case_key": "0000077476|PEP",
+      "mechanical_all_contributor_bound_utc": "2021-02-16T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000078003-19-000015",
+        "0000078003-20-000014",
+        "0000078003-21-000038"
+      ],
+      "case_key": "0000078003|PFE",
+      "mechanical_all_contributor_bound_utc": "2021-03-01T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000080424-18-000055",
+        "0000080424-19-000050",
+        "0000080424-20-000053"
+      ],
+      "case_key": "0000080424|PG",
+      "mechanical_all_contributor_bound_utc": "2020-08-10T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000104169-18-000028",
+        "0000104169-19-000016",
+        "0000104169-20-000011"
+      ],
+      "case_key": "0000104169|WMT",
+      "mechanical_all_contributor_bound_utc": "2020-03-24T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000200406-19-000009",
+        "0000200406-20-000010"
+      ],
+      "case_key": "0000200406|JNJ",
+      "mechanical_all_contributor_bound_utc": null,
+      "originals": 2,
+      "source_triple_certified": false,
+      "status": "MISSING_THIRD_ORIGINAL",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000310158-19-000014",
+        "0000310158-20-000005",
+        "0000310158-21-000004"
+      ],
+      "case_key": "0000310158|MRK",
+      "mechanical_all_contributor_bound_utc": "2021-03-01T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000320187-18-000142",
+        "0000320187-19-000051",
+        "0000320187-20-000047"
+      ],
+      "case_key": "0000320187|NKE",
+      "mechanical_all_contributor_bound_utc": "2020-07-28T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000320193-18-000145",
+        "0000320193-19-000119",
+        "0000320193-20-000096"
+      ],
+      "case_key": "0000320193|AAPL",
+      "mechanical_all_contributor_bound_utc": "2020-11-03T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000354950-18-000019",
+        "0000354950-19-000010",
+        "0000354950-20-000015"
+      ],
+      "case_key": "0000354950|HD",
+      "mechanical_all_contributor_bound_utc": "2020-03-27T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000731766-19-000005",
+        "0000731766-20-000006",
+        "0000731766-21-000013"
+      ],
+      "case_key": "0000731766|UNH",
+      "mechanical_all_contributor_bound_utc": "2021-03-03T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001564590-18-019062",
+        "0001564590-19-027952",
+        "0001564590-20-034944"
+      ],
+      "case_key": "0000789019|MSFT",
+      "mechanical_all_contributor_bound_utc": "2020-08-03T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000796343-19-000019",
+        "0000796343-20-000013",
+        "0000796343-21-000004"
+      ],
+      "case_key": "0000796343|ADBE",
+      "mechanical_all_contributor_bound_utc": "2021-01-20T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001728949-18-000095",
+        "0001728949-19-000072",
+        "0001728949-20-000067"
+      ],
+      "case_key": "0000804328|QCOM",
+      "mechanical_all_contributor_bound_utc": "2020-11-06T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000829224-18-000052",
+        "0000829224-19-000051",
+        "0000829224-20-000078"
+      ],
+      "case_key": "0000829224|SBUX",
+      "mechanical_all_contributor_bound_utc": "2020-11-16T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000858877-18-000011",
+        "0000858877-19-000012",
+        "0000858877-20-000010"
+      ],
+      "case_key": "0000858877|CSCO",
+      "mechanical_all_contributor_bound_utc": "2020-09-08T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0000909832-18-000013",
+        "0000909832-19-000019",
+        "0000909832-20-000017"
+      ],
+      "case_key": "0000909832|COST",
+      "mechanical_all_contributor_bound_utc": "2020-10-09T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001018724-19-000004",
+        "0001018724-20-000004",
+        "0001018724-21-000004"
+      ],
+      "case_key": "0001018724|AMZN",
+      "mechanical_all_contributor_bound_utc": "2021-02-05T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001045810-18-000010",
+        "0001045810-19-000023",
+        "0001045810-20-000010"
+      ],
+      "case_key": "0001045810|NVDA",
+      "mechanical_all_contributor_bound_utc": "2020-02-24T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001193125-19-048926",
+        "0001564590-20-005874",
+        "0001564590-21-009611"
+      ],
+      "case_key": "0001067983|BRK.B",
+      "mechanical_all_contributor_bound_utc": "2021-03-03T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001108524-18-000011",
+        "0001108524-19-000009",
+        "0001108524-20-000014"
+      ],
+      "case_key": "0001108524|CRM",
+      "mechanical_all_contributor_bound_utc": "2020-03-09T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001141391-19-000013",
+        "0001141391-20-000032",
+        "0001141391-21-000018"
+      ],
+      "case_key": "0001141391|MA",
+      "mechanical_all_contributor_bound_utc": "2021-02-17T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001326801-19-000009",
+        "0001326801-20-000013",
+        "0001326801-21-000014"
+      ],
+      "case_key": "0001326801|FB",
+      "mechanical_all_contributor_bound_utc": "2021-02-01T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001193125-18-201034",
+        "0001564590-19-023119",
+        "0001564590-20-030125"
+      ],
+      "case_key": "0001341439|ORCL",
+      "mechanical_all_contributor_bound_utc": "2020-06-24T13:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001403161-18-000055",
+        "0001403161-19-000050",
+        "0001403161-20-000070"
+      ],
+      "case_key": "0001403161|V",
+      "mechanical_all_contributor_bound_utc": "2020-11-23T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    },
+    {
+      "accessions": [
+        "0001652044-19-000004",
+        "0001652044-20-000008",
+        "0001652044-21-000010"
+      ],
+      "case_key": "0001652044|GOOGL",
+      "mechanical_all_contributor_bound_utc": "2021-02-05T14:30:00+00:00",
+      "originals": 3,
+      "source_triple_certified": false,
+      "status": "MECHANICAL_BOUND_ONLY",
+      "trading_eligible": false
+    }
+  ],
+  "execution_disposition": "STOPPED_AT_PRE_ACQUISITION_SCOPE_GATE",
+  "feasibility_verdict": "REDESIGN_REQUIRED",
+  "gates": {
+    "ACCOUNTING_PERIMETER_CERTIFICATION": "BLOCKED_PRIOR_EVIDENCE",
+    "CORPORATE_ACTION_LIFECYCLE": "PARTIAL_PRIOR_EVIDENCE",
+    "EXP005_FEASIBILITY": "REDESIGN_REQUIRED",
+    "EXP005_FREEZE_READINESS": "NOT_READY",
+    "HISTORICAL_NAV_FEASIBILITY": "BLOCKED_PRIOR_EVIDENCE",
+    "HISTORICAL_SECURITY_IDENTITY": "PARTIAL_PRIOR_EVIDENCE",
+    "HISTORICAL_UNIVERSE_FEASIBILITY": "BLOCKED",
+    "INFERENCE_CALIBRATION": "NOT_RUN_UPSTREAM_SCOPE_STOP",
+    "INFERENCE_HYPOTHESIS_STRUCTURE": "CONCEPTUAL_REVIEW_NOT_ADOPTED",
+    "INFERENCE_IMPLEMENTATION": "BLOCKED_PRIOR_CALIBRATION",
+    "INFERENCE_POWER": "NOT_ESTIMATED_V003",
+    "INFERENCE_RESOLUTION_FEASIBILITY": "NO_V003_DESIGN_FROZEN",
+    "LOCAL_EXECUTION_ROUTE": "PARTIAL_SYNTHETIC_PREVIOUSLY_VERIFIED",
+    "MANIFEST_REPLAY": "SYNTHETIC_ONLY_PREVIOUSLY_VERIFIED",
+    "NEXUS_ADAPTER_INTERFACE": "DEFINED_DISABLED",
+    "NEXUS_EXECUTION": "BLOCKED",
+    "PROOF_COMPILER": "SYNTHETIC_ONLY_PREVIOUSLY_VERIFIED",
+    "PUBLIC_ELIGIBILITY_ACTIVATION_READINESS": "INCOMPATIBLE_WITH_EXISTING_PROGRAMME",
+    "PUBLIC_ELIGIBILITY_POLICY": "OWNER_APPROVED_PILOT_NOT_ACTIVATED",
+    "REVENUE_CANONICALIZATION": "PARTIAL_PRIOR_EVIDENCE",
+    "REVENUE_TRIPLE_FEASIBILITY": "DEFERRED_SCOPE_STOP",
+    "TERMINAL_VALUE_EVIDENCE": "BLOCKED_PRIOR_EVIDENCE"
+  },
+  "horizon": {
+    "complete_stages_covered": 0,
+    "policy_extension_approved": false,
+    "policy_scope": [
+      "2015-01-01",
+      "2021-12-31"
+    ],
+    "research_authorized": false,
+    "stages": [
+      {
+        "calendar_days": 2191,
+        "policy_covered_calendar_days": 365,
+        "policy_covers_complete_stage": false,
+        "requested": [
+          "2021-01-01",
+          "2026-12-31"
+        ],
+        "stage": "development",
+        "uncovered_calendar_days": 1826
+      },
+      {
+        "calendar_days": 1096,
+        "policy_covered_calendar_days": 0,
+        "policy_covers_complete_stage": false,
+        "requested": [
+          "2027-01-01",
+          "2029-12-31"
+        ],
+        "stage": "validation",
+        "uncovered_calendar_days": 1096
+      },
+      {
+        "calendar_days": 1096,
+        "policy_covered_calendar_days": 0,
+        "policy_covers_complete_stage": false,
+        "requested": [
+          "2030-01-01",
+          "2032-12-31"
+        ],
+        "stage": "test",
+        "uncovered_calendar_days": 1096
+      }
+    ],
+    "status": "INCOMPATIBLE_POLICY_SCOPE"
+  },
+  "inference": {
+    "hypothesis_change_adopted": false,
+    "new_replications": 0,
+    "prior_v002_candidate_verdicts": {
+      "monthly_hac12": {
+        "coverage_gate": false,
+        "power10_screen": false,
+        "power_at_materiality": false,
+        "selected": false,
+        "size_gate": false,
+        "statistical_assumptions_real": "UNESTABLISHED"
+      },
+      "monthly_studentized_circular12": {
+        "coverage_gate": false,
+        "power10_screen": false,
+        "power_at_materiality": false,
+        "selected": false,
+        "size_gate": false,
+        "statistical_assumptions_real": "UNESTABLISHED"
+      }
+    },
+    "prior_v002_power02_ranges": {
+      "monthly_hac12": [
+        0.045,
+        0.045
+      ],
+      "monthly_studentized_circular12": [
+        0.055,
+        0.06
+      ]
+    },
+    "prior_v002_selected_method": null,
+    "real_power": "UNKNOWN",
+    "v003_calibration": "NOT_RUN_UPSTREAM_STOP",
+    "v003_detectable_effect": "NOT_ESTIMATED",
+    "v003_protocol": "NOT_FROZEN"
+  },
+  "inputs": {
+    "availability_policy_v002_approved.json": "814dbde30afef737a16b05d82a7452d8a3bf57b0b978f5fd6e11d1fbfcb90817",
+    "owner_phase3e_2026-10-12.md": "daac79ecd8bce17e51a441ac3c7905a1065c9307c3b9be132556cbfbfc2fe526",
+    "phase3b_design.md": "2b6663b29a19cb1e766551e81389e2f5c9fd706fc199ce673fe21d0473737330",
+    "phase3b_source_requirements.json": "27e1e40ee716121ab7f43576d90741633221cfbb8904e375a79dbe11e2abc480",
+    "phase3b_trial_budget.md": "1b6ea95b953314cfeff571fb4c89a177483c0749e7d1e9ed1c97a3a995d59988",
+    "phase3c_evidence.json": "46c631b46c8587ddc8d7d5fa3ac1bdf9d859e4f08d0dcb379861d7c3b8d808de",
+    "phase3d_accounting_review.json": "41d2bf2f257ea78e618ce4011ce0623522a0cef3b2b91f74e3cd778f6eb30ef9",
+    "phase3d_identity_closure.json": "1990777b47ef5f694f4e19073adf70cd3bfa795c24749d0d400f37e2ab863fbf",
+    "phase3d_inference_calibration_v002.json": "3dd6077a6977bd5e4a9aabb889ad1df56b610b77cb090bd86080c1edff2d4b21",
+    "phase3d_terminal_closure.json": "e88e9d66b1b9f8cfc707338f48d8657e507c9d063df102eaa7dd7f0588e0994e",
+    "phase3e_plan.md": "ec00a81878def16f507412807a38fcefb7c5db4db64ba79c5ac086c1a5cb01bf"
+  },
+  "policy": {
+    "hash": "7cb18aca01fdb9ccab41fb178a5f5439582d9334b067737626fbe56c55427926",
+    "public_available_at_utc": null,
+    "real_views_activated": 0,
+    "reapproval_requested": false,
+    "scope": [
+      "2015-01-01",
+      "2021-12-31"
+    ],
+    "status": "OWNER_APPROVED_PILOT_NOT_ACTIVATED"
+  },
+  "prior_identity": {
+    "cases": 60,
+    "certified_full_spans": 0,
+    "new_reviews": 0,
+    "status_counts": {
+      "AMBIGUOUS_CLASS": 1,
+      "PARTIAL_END_ONLY": 1,
+      "POINT_OBSERVATION_ONLY": 52,
+      "UNRESOLVED": 6
+    }
+  },
+  "prior_revenue": {
+    "certified_triples": 0,
+    "issuers": 30,
+    "new_reviews": 0,
+    "originals": 89,
+    "partially_reviewed_not_certified": 29,
+    "triples": 29
+  },
+  "prior_terminal": {
+    "cases": 60,
+    "certified_position_cases": 0,
+    "complete_nav_paths": 0,
+    "completion_document_sets": 10,
+    "new_reviews": 0
+  },
+  "real_signals_or_returns_computed": false,
+  "stop_condition": "Owner request section37: availability-policy scope incompatible with required historical design",
+  "version": "phase3e_feasibility_v001"
+}

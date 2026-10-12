@@ -1,0 +1,128 @@
+{
+  "EXP004_operational_pause_hash_unchanged": true,
+  "EXP004_registered_stage": "HYPOTHESIS_FROZEN",
+  "EXP005_directory_exists": false,
+  "EXP005_state_counts": {
+    "experiments": 0,
+    "jobs": 0,
+    "trials": 0
+  },
+  "baseline": "081dfe638f1acb8e580a70de2c991bc83dfed5c1",
+  "checked_at_utc": "2026-10-12T19:23:36Z",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "bb35a382f6b2fc3bacb14a6d824921400cff95db7f8506cce19f2bfc45edbd4c"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "b1612e689b7101790f27c37d1e4049d224a12719bb56c21d470081c0e7629074"
+    },
+    {
+      "command": "python -m src.research.phase3e report --check",
+      "exit_code": 0,
+      "log_sha256": "9494088d0d5381176f8dea1eae3f58fc3ae73096c28c5b3cdc22a899d309a192"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0,
+      "log_sha256": "4eb72f543a99004f7859038744e12b431a232dc54ec79993862186b82a7c2a8e"
+    },
+    {
+      "command": "python -m src.research.phase3d report --check",
+      "exit_code": 0,
+      "log_sha256": "08942af9194493cca14a11b820ff2cca500d48b50fdda5994585285023b7bf71"
+    },
+    {
+      "command": "python -m src.research.phase3d check",
+      "exit_code": 0,
+      "log_sha256": "7bd624ce2f5362d7faf8d3efe726272958ba1a1bac5f6b3982587a3d5ff63612"
+    },
+    {
+      "command": "python -m src.research.sec_pilot.phase3a --check",
+      "exit_code": 0,
+      "log_sha256": "aab42aefb7341fa7a198f17c10dfcb3743c441378aa171da94841b124196eb84"
+    },
+    {
+      "command": "python -m src.research.sec_pilot replay",
+      "exit_code": 0,
+      "log_sha256": "90b9502002aeb081f67503820fb88701c809e39f9501703328dc4086227db006"
+    },
+    {
+      "command": "python -m src.research.sec_pilot audit",
+      "exit_code": 0,
+      "log_sha256": "90b9502002aeb081f67503820fb88701c809e39f9501703328dc4086227db006"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "8e01f82f7836d59e10a1986db39138393666d7257e16bec97ada75e2244ec2c0"
+    },
+    {
+      "command": "python -m src.research.phase3c.report --check",
+      "exit_code": 0,
+      "log_sha256": "343d8227d5be128e36e03637689adf046be903eb32b62ecaf83d2604b404fa05"
+    },
+    {
+      "command": "python -m src.research.support_case --check",
+      "exit_code": 0,
+      "log_sha256": "90d7ad6112326cbe78d53b3ad7ef782079b4d1443771cb6f5176a4bb6dd86035"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "df14503a8290a5981e2d0b89782247a1f2ec57f00d1faa7c895cd0f2eacc9ffa"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "a54bbb017886315339fd0a80c6eed87ecfd8d2183033af18fe9d9b40ee6f5dde"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure sources --check",
+      "exit_code": 0,
+      "log_sha256": "872dec90e56236d9da5778a7b92b2dfece67d862411cf15d8dd1878a3923b2a4"
+    },
+    {
+      "command": "python -m pip check",
+      "exit_code": 0,
+      "log_sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+    }
+  ],
+  "code_checkpoint": "222448acea91ab59e0271509d21a6a3a36e810d8",
+  "delivery_metadata_observations": 2,
+  "hosted_ci": {
+    "observed_runs": [
+      {
+        "conclusion": "success",
+        "head_sha": "222448acea91ab59e0271509d21a6a3a36e810d8",
+        "id": 38297244419,
+        "status": "completed",
+        "url": "https://github.com/jarems421/ai-assisted-quantitative-research/actions/runs/38297244419"
+      }
+    ],
+    "scope": "Code checkpoint; final report SHA supplied in delivery"
+  },
+  "new_synthetic_replications": 0,
+  "note": "Early stop under owner section37; tests are regression/synthetic scope checks, not new source or inference certification",
+  "owner_request_verbatim_sha256": "daac79ecd8bce17e51a441ac3c7905a1065c9307c3b9be132556cbfbfc2fe526",
+  "preservation": {
+    "deliberate_changed": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "src/presentation/exp001.py",
+      "src/research/public_checks.py"
+    ],
+    "files": 7347,
+    "unchanged": 7342,
+    "unexpected_changes": []
+  },
+  "public_tests_passed": 40,
+  "source_requests": 0,
+  "tests_passed": 266,
+  "tests_skipped": 0,
+  "version": "phase3e_validation_v001"
+}

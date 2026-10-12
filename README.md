@@ -15,6 +15,8 @@ The [Phase 3D checkpoint](docs/acceleration/phase3d_report.md) implements review
 
 The [closure continuation](docs/acceleration/phase3d_closure_report.md) adds bounded original-source review, inference feasibility guards and public synthetic CI. Both revised monthly inference candidates fail calibration. Scoped source disclosures improve evidence without certifying complete revenue triples, class spans or terminal position contracts. The earlier checkpoint and failures remain intact; work stops before Phase 4A.
 
+The [Phase 3E feasibility review](docs/acceleration/phase3e_report.md) concludes **REDESIGN_REQUIRED** for EXP005. The existing twelve-year staged programme cannot fit the approved 2015–2021 modeled policy; the fixed original filings also cannot supply a 2015 inception. Phase 3E stopped under the owner's explicit scope condition before new acquisition or calibration. A staged horizon/policy decision is required; EXP004 remains paused and EXP005 absent.
+
 ## Research OS compatibility infrastructure
 
 Reusable infrastructure now supports validated experiment specifications, frozen hashes, sequential stage gates, bounded job planning, durable submission/trial journals, resumable raw extraction, parameter stability, paired resampling, and generated experiment cards. EXP001 remains the only completed economic evaluation; later experiments record feasibility and execution limits.

@@ -80,3 +80,9 @@ This repository builds Research OS, an evidence-native quantitative intelligence
 - Availability requires an explicit recorded owner decision. A modeled eligibility bound does not certify exact public availability or resolve acceptance clock uncertainty.
 - EXP004 remains operationally paused. No remote Nexus/Aurora, support message, purchase, Orbis scraping, sealed-stage access, optimizer or paper/live operation is included in Phase 3D.
 - Stop after Phase 3D reporting and verified commits/pushes. Phase 4A, the temporal graph, causal lab, portfolio layer and forward operations each require their own milestones and authorization.
+
+## Phase 3E scope disposition
+
+- The owner-authorized Phase 3E is separate from Phase 3D. Its complete request is archived in `docs/acceleration/owner_phase3e_2026-10-12.md`; the bounded plan and early-stop report use a new namespace and preserve all earlier evidence.
+- Phase 3E stopped under owner section 37 at incompatibility between the existing twelve-year programme and the approved 2015–2021 pilot policy. EXP005 feasibility is REDESIGN_REQUIRED, freeze readiness NOT_READY. Source acquisition and inference v003 were deferred, not performed or certified.
+- Reuse the exact approved pilot policy without requesting its approval again. A wider policy or a reviewed staged horizon is a separate owner decision; do not infer it from this roadmap. No real signal/performance, EXP004 resume, EXP005 creation or Phase 4A is authorized by the early-stop artifacts.

@@ -69,6 +69,10 @@ def evidence():
     identity=json.loads((DOCS/'phase3d_identity_closure.json').read_bytes())
     terminal=json.loads((DOCS/'phase3d_terminal_closure.json').read_bytes())
     calibration=json.loads((DOCS/'phase3d_inference_calibration_v002.json').read_bytes())
+    power02={}
+    for method in calibration['candidate_verdicts']:
+        rates=[r['primary']['fraction'] for r in calibration['rows'] if r['world']=='positive02' and r['method']==method]
+        power02[method]=[min(rates),max(rates)]
     names=['phase3b_design.md','phase3b_source_requirements.json','phase3b_trial_budget.md',
            'phase3c_evidence.json','phase3d_accounting_review.json','phase3d_identity_closure.json',
            'phase3d_terminal_closure.json','phase3d_inference_calibration_v002.json','availability_policy_v002_approved.json',
@@ -85,6 +89,7 @@ def evidence():
                               'certified_position_cases':terminal['certified_position_terminal_cases'],'complete_nav_paths':terminal['complete_nav_paths'],'new_reviews':0},
             'inference':{'v003_protocol':'NOT_FROZEN','v003_calibration':'NOT_RUN_UPSTREAM_STOP','new_replications':0,
                          'prior_v002_candidate_verdicts':calibration['candidate_verdicts'],'prior_v002_selected_method':calibration['selected_method'],
+                         'prior_v002_power02_ranges':power02,
                          'real_power':'UNKNOWN','v003_detectable_effect':'NOT_ESTIMATED','hypothesis_change_adopted':False},
             'policy':{'status':'OWNER_APPROVED_PILOT_NOT_ACTIVATED','hash':approval['policy_sha256'],'scope':approval['scope'],
                       'public_available_at_utc':None,'real_views_activated':0,'reapproval_requested':False},

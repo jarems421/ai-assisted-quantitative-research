@@ -22,7 +22,8 @@ Nexus is a downstream adapter. Research OS remains canonical for populations, so
 | Milestone | Outcome required | Authorization |
 | --- | --- | --- |
 | 1 / 2 / 3A / 3B / 3C | Existing audit, immutable source pilot, semantic review, one revenue hypothesis, bounded feasibility evidence | Completed historical records; preserve failures |
-| 3D | Scientific closure attempt, minimal proof compiler and local reference execution spine | Current bounded implementation; source-only review and synthetic execution/calibration |
+| 3D | Scientific closure attempt, minimal proof compiler and local reference execution spine | Completed checkpoints; preserve scoped gains and failures |
+| 3E | Evidence acquisition and final pre-performance experiment feasibility | Owner-authorized bounded phase; stopped at date-scope incompatibility, REDESIGN_REQUIRED |
 | 4A | Separately authorized source acquisition, EXP005 freeze and Development evidence | Requires genuine mandatory readiness and a new owner instruction |
 | 4B | Narrow SEC + USAspending + historical identity graph | Later separate milestone; relational/Parquet/DuckDB first |
 | 4C | One event family, initially large government awards; credible controls, pre-trends, placebos and explicit causal assumptions | Later separate milestone |
@@ -38,6 +39,8 @@ Owner decision recorded 2026-10-12: the exact [pilot availability policy](availa
 
 Engineering estimates in the source documents are conditional, not deadlines: roughly 3–6 weeks for certification closure and 3–5 months for a stronger paper-ready platform if blockers are resolvable, followed by months of future observation. One milestone is earned at a time. Unresolved source, accounting, identity, terminal or inference evidence may keep EXP005 NOT_READY after implementation.
 
-Historical reports and phase-specific stop statements describe their original authorization. Use this roadmap and the [Phase 3D plan](phase3d_plan.md) for current work. Frozen strategies, metrics, raw archives, old plans and negative findings remain immutable.
+Historical reports and phase-specific stop statements describe their original authorization. Use this roadmap and the latest phase-specific owner instruction for current scope; the [Phase 3D plan](phase3d_plan.md) remains its earlier authorization checkpoint. Frozen strategies, metrics, raw archives, old plans and negative findings remain immutable.
 
 The [bounded Phase 3D closure continuation](phase3d_closure_report.md) retains the original checkpoint and approved pilot policy. It adds original-source review packets, scoped accounting/lifecycle disclosures, minimum-p and power guards, separate Git/code replay checks and public synthetic CI. Both new inference candidates fail calibration; complete revenue triples, historical class spans and terminal position contracts remain uncertified. EXP005 is NOT_READY. Stop before Phase 4A; no automatic acquisition or strategy study follows this result.
+
+The [complete Phase 3E instruction](owner_phase3e_2026-10-12.md) authorized purpose-linked new evidence and a final pre-performance feasibility decision. The [Phase 3E report](phase3e_report.md) records REDESIGN_REQUIRED and the explicit section 37 early stop: the conditional twelve-year staged programme cannot fit the approved seven-year policy, while fixed 2018–2020 originals cannot support a 2015 inception. No acquisition or v003 calibration occurred. Review the staged horizon/policy scope before commissioning further work; the existing exact pilot approval remains intact. Do not begin Phase 4A.

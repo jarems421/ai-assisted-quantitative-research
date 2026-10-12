@@ -1,0 +1,71 @@
+{
+  "acquisition": "NOT_STARTED_OWNER_SECTION37_STOP",
+  "new_requests": {
+    "Aurora": {
+      "account_wide_usage": "UNKNOWN",
+      "failures": 0,
+      "network_cost_incurred": 0,
+      "pacing": "NOT_APPLICABLE_NO_REQUESTS",
+      "requests": 0,
+      "successes": 0
+    },
+    "FMP": {
+      "account_wide_usage": "UNKNOWN",
+      "failures": 0,
+      "network_cost_incurred": 0,
+      "pacing": "NOT_APPLICABLE_NO_REQUESTS",
+      "requests": 0,
+      "successes": 0
+    },
+    "Nexus": {
+      "account_wide_usage": "UNKNOWN",
+      "failures": 0,
+      "network_cost_incurred": 0,
+      "pacing": "NOT_APPLICABLE_NO_REQUESTS",
+      "requests": 0,
+      "successes": 0
+    },
+    "OpenFIGI": {
+      "account_wide_usage": "UNKNOWN",
+      "failures": 0,
+      "network_cost_incurred": 0,
+      "pacing": "NOT_APPLICABLE_NO_REQUESTS",
+      "requests": 0,
+      "successes": 0
+    },
+    "Orbis": {
+      "account_wide_usage": "UNKNOWN",
+      "failures": 0,
+      "network_cost_incurred": 0,
+      "pacing": "NOT_APPLICABLE_NO_REQUESTS",
+      "requests": 0,
+      "successes": 0
+    },
+    "SEC": {
+      "account_wide_usage": "UNKNOWN",
+      "failures": 0,
+      "network_cost_incurred": 0,
+      "pacing": "NOT_APPLICABLE_NO_REQUESTS",
+      "requests": 0,
+      "successes": 0
+    },
+    "Tiingo": {
+      "account_wide_usage": "UNKNOWN",
+      "failures": 0,
+      "network_cost_incurred": 0,
+      "pacing": "NOT_APPLICABLE_NO_REQUESTS",
+      "requests": 0,
+      "successes": 0
+    },
+    "documentation/browser": {
+      "account_wide_usage": "UNKNOWN",
+      "failures": 0,
+      "network_cost_incurred": 0,
+      "pacing": "NOT_APPLICABLE_NO_REQUESTS",
+      "requests": 0,
+      "successes": 0
+    }
+  },
+  "prior_totals": "Unchanged; see phase3c_report.md and phase3d_closure_summary.json",
+  "version": "phase3e_source_registry_v001"
+}
