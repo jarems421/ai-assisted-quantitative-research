@@ -1,6 +1,6 @@
 # Research OS: governing roadmap
 
-**Current direction: Phase 4A procurement source pilot stopped for owner review.** The [complete Phase 4 transition](owner_phase4_transition_2026-10-12.md) supersedes the old forward instruction to freeze EXP005 and run its Development. The owner subsequently [approved the bounded procurement pilot](owner_procurement_pilot_2026-10-12.md); its [report](phase4a_procurement_pilot_report.md) records the early source-access stop. Historical plans/reports, source bytes, frozen experiments and negative findings remain unchanged.
+**Current direction: Phase 4A ACTIVE_EXPERIMENT_SELECTION; FDA source feasibility.** The [complete Phase 4 transition](owner_phase4_transition_2026-10-12.md) supersedes the old forward instruction to freeze EXP005 and run its Development. Procurement remains closed under its frozen channel/frame. The owner [approved the two-gate FDA pilot](owner_fda_pilot_2026-10-13.md); its [report](phase4a_fda_pilot_report.md) records FDA_FAMILY_REJECT under the audited frame/routes after five requests, with no certified outcome-complete denominator. Historical plans/reports, source bytes, frozen experiments and negative findings remain unchanged.
 
 Research OS builds reproducible, point-in-time investment experiments from primary evidence. It seeks net-of-cost alpha while requiring provenance, timing, historical identity, execution and statistical justification before accepting positive evidence. AI assists interpretation and critique; deterministic contracts control what may advance. Profitability is unestablished.
 
@@ -18,7 +18,7 @@ V002 and v003 retain their exact owner planning approvals and inactive status. O
 
 | Phase | Purpose | Entry/authorization boundary |
 | --- | --- | --- |
-| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Approved procurement pilot stopped: PROCUREMENT_FAMILY_REJECT under the frozen publication route; new route/family scope needs owner instruction; no full certification/freeze/performance |
+| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Procurement closed; FDA source pilot closed at Gate 1; merger enforcement needs separate bounded authorization; no Gate 2/full certification/freeze/performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; start with evidence-linked dated relationships, not a full graph platform |
 | 4C | First causal/counterfactual event experiment | Credible controls, pre-trends/placebos and explicit identification assumptions; no automatic causal label |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving economic evidence, costs, risk constraints and mechanism diversity |
@@ -72,9 +72,13 @@ The [original long-term owner plan](owner_plan_2026-10-12.md) and supplied PDFs 
 
 ## Current operating state
 
-- PHASE4A = PROCUREMENT_PILOT_STOPPED_OWNER_REVIEW; NEXT_EXPERIMENT = NOT_YET_FROZEN.
+- PHASE4A = ACTIVE_EXPERIMENT_SELECTION; FDA_FAMILY_REJECT for the audited routes/frame; NEXT_EXPERIMENT = NOT_YET_FROZEN.
 - PERFORMANCE_AUTHORIZED = FALSE; NEXUS_EXECUTION = BLOCKED.
 - EXP004 = OPERATIONALLY_PAUSED; EXP005 = ABANDONED_FOR_APPROVED_DESIGN_AND_ABSENT.
 - PAPER_TRADING and LIVE_TRADING = NOT_AUTHORIZED; profitability UNESTABLISHED.
 
 The approved [procurement manifest](phase4a_procurement_pilot_manifest.json) retains all 12 fixed slots. The official January 2019 discovery route returned HTTP 403; one independent USAspending documentation response returned HTTP 200, with no eligible announcement substitute. Total starts: 2; every event-data/SEC/OpenFIGI/price/remote research count: 0. Eleven unvisited slots are deferred, not observed missing announcements. No timing, recipient, award-lineage or sample geometry is certified. The original scorecard remains historical evidence; FDA/merger work is not automatically launched. Stop for owner review. No source-heavy campaign or later phase follows automatically.
+
+The [FDA frame audit](phase4a_fda_frame_review_v002.json) retains the approved 10-start Gate 1 /60-start total contract. The initial 200/200/302 responses and REDESIGN review remain preserved. The owner follow-up continued the original budget under a separately frozen landing-route amendment: the landing page returned 200 and the exact negative-letter documentation URL returned 404. Five starts, zero retries; acquisition then stopped. The final verdict is FDA_FAMILY_REJECT for the bounded audited frame/routes, not proof that every FDA frame is approval-selected or inaccessible. No event slots, eligible-action definition, applicant/security mappings, regulatory timing or cluster geometry were instantiated. No approval-selected event sample is permitted.
+
+The programme is limited to the original three families: procurement, FDA and merger enforcement. One separately authorized merger pass may follow only an explicit owner decision; do not launch it automatically. After those three, stop and reassess hypothesis generation instead of adding families indefinitely. All timing policies, experiment/graph/causal/performance and paper/live permissions remain separately gated.

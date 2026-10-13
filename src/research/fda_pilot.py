@@ -168,6 +168,7 @@ def acquire():
 
 
 def report(check=False):
+    if (RAW/'gate1_continuation_result_v002.json').exists():return continuation_report(check)
     m=frozen();r=json.loads((RAW/'gate1_result.json').read_bytes());h=FrameHTTP(m)
     review=json.loads((DOCS/'phase4a_fda_disposition_review.json').read_bytes())
     if review['raw_result_sha256']!=hashlib.sha256((RAW/'gate1_result.json').read_bytes()).hexdigest() or review['manifest_sha256']!=digest(m):
@@ -258,6 +259,93 @@ Phase4A remains ACTIVE_EXPERIMENT_SELECTION; next experiment NOT_YET_FROZEN, per
         if check:
             if not p.exists() or p.read_text(encoding='utf-8')!=text:raise ValueError('FDA report mismatch: '+name)
         else:p.write_text(text,encoding='utf-8',newline='\n')
+    return summary
+
+
+def continuation_report(check=False):
+    m=continued_frozen();h=ContinuedFrameHTTP(m)
+    review=json.loads((DOCS/'phase4a_fda_disposition_review_v002.json').read_bytes())
+    result=RAW/'gate1_continuation_result_v002.json'
+    if review['result_sha256']!=hashlib.sha256(result.read_bytes()).hexdigest() or review['manifest_sha256']!=digest(m):raise ValueError('Continuation review lineage changed')
+    receipts=sorted([json.loads(p.read_bytes()) for p in (RAW/'receipts').glob('*.json')],key=lambda r:r['request_started_at_utc'])
+    for r in receipts:h.archive.read(r['body'])
+    if len(h.starts())!=len(receipts) or len(receipts)>10:raise ValueError('Unreconciled source ledger')
+    questions={
+     'Q1':'Drugs@FDA/openFDA describe approved products; official monthly reports cover CDER approvals/tentative approvals, not CBER approvals.',
+     'Q2':'Approval-oriented universe explicitly documented; tentative approvals are not a complete never-approved/unresolved risk set.',
+     'Q3':'Not established. The exact negative-letter documentation URL returned 404; this does not prove negative decisions or other official archives absent.',
+     'Q4':'UNKNOWN: no complete pre-outcome application census established.',
+     'Q5':'PARTIAL_DOC_ONLY: NDA/BLA/ANDA, originals/supplements and tentative/final report distinctions documented. Withdrawal/discontinuation/other action coverage unresolved.',
+     'Q6':'Database update cadence and submission-status date fields are distinct; none is certified first-public time.',
+     'Q7':'These acquired response bytes are immutable. Historical original application/action document versions not tested; landing page describes most recent approved labeling.',
+     'Q8':'UNKNOWN: current database/API transformation does not establish historical revision replay.',
+     'Q9':'FAIL_CLOSED: no certified outcome-complete historical eligible denominator under these audited routes.',
+     'Q10':'NOT_CERTIFIED: approval/tentative-only reports and generic sector peers do not repair future-outcome conditioning.'}
+    v=json.loads((DOCS/'phase4a_fda_validation.json').read_bytes()) if (DOCS/'phase4a_fda_validation.json').exists() else {}
+    summary={'date':'2026-10-13','family_verdict':review['family_verdict'],'source_frame_verdict':review['source_frame_verdict'],
+     'gate1':'FAIL_CLOSED','gate2_ran':False,'event_manifest_created':False,'selected_events':0,'conditional_slots':12,'slots_instantiated':False,
+     'original_manifest_sha256':digest(frozen()),'gate1_manifest_sha256':digest(m),'total_requests':len(receipts),'retries':sum(r['attempt']>1 for r in receipts),
+     'questions':questions,'public_timing':'UNAVAILABLE','identity':'NOT_TESTED','effective_sample_size':None,
+     'performance_authorized':False,'EXP004':'PAUSED','EXP005':'ABANDONED_ABSENT','next_experiment':'NOT_YET_FROZEN',
+     'Phase4A':'ACTIVE_EXPERIMENT_SELECTION','policy_activated':False,'merger_family_automatic_launch':False}
+    registry={'gate1_ceiling':10,'total_pilot_ceiling':60,'starts':len(receipts),'receipts':receipts,
+     'counts':{'FDA':len(receipts),'SEC':0,'OpenFIGI':0,'prices':0,'procurement':0,'Nexus':0,'Aurora':0,'browser_source_search':0},
+     'original_stop_retained':True,'request_budget_reset':False,'cost':'No purchase or source upgrade; account-wide usage/debit unknown'}
+    findings=[]
+    for r in receipts:
+        row={'receipt':r,'findings':scope_findings(h.archive.read(r['body']),r['body']['sha256']) if r['status']==200 else None}
+        if r['url']==m['FDA_documentation'][0]['url'] and r['status']==200:
+            p=Text();p.feed(h.archive.read(r['body']).decode('utf-8'));text=' '.join(' '.join(p.parts).split())
+            row['landing_scope_locators']={}
+            for name,pattern in {'report_scope':r'Reports include only BLAs/NDAs/ANDAs.*?CBER\)',
+              'recent_labeling':r'most recent labeling','approved_universe':r'approved for human use in the United States'}.items():
+                row['landing_scope_locators'][name]=[{'normalized_start':a.start(),'normalized_end':a.end(),'span_sha256':digest(text[a.start():a.end()]),'source_sha256':r['body']['sha256']} for a in re.finditer(pattern,text,re.I)]
+        findings.append(row)
+    table='| Route | HTTP | Original bytes |\n| --- | ---: | ---: |\n'+'\n'.join('| '+r['url']+' | '+str(r['status'])+' | '+str(r['body']['bytes'])+' |' for r in receipts)
+    qtable='| Gate 1 question | Evidence / limit |\n| --- | --- |\n'+'\n'.join('| '+k+' | '+value+' |' for k,value in questions.items())
+    md=f'''# FDA pilot: source-frame stop
+
+**{review['family_verdict']}. Gate 1 FAIL_CLOSED; {review['source_frame_verdict']}.** As of 2026-10-13. Five source requests established approval-oriented documentation but no outcome-complete historical decision denominator. This rejects the audited frame/routes, not every possible FDA source or the economic relevance of regulatory decisions. No event, prices, strategy or experiment was created.
+
+## Frozen routes and preserved continuation
+
+Original manifest SHA-256 `{digest(frozen())}`; [continued exact manifest](phase4a_fda_frame_manifest_v002.json) SHA-256 `{digest(m)}`. The [owner instruction](owner_fda_pilot_2026-10-13.md) authorized at most ten Gate 1 starts; the [follow-up](decisions/fda_gate1_continue_reply_001.md) continued that scope. Version 2 was committed before dispatch and changed only the official landing route, using the acquired data-file page's HTTP href with a declared HTTPS scheme upgrade. It did not claim to know the original redirect target.
+
+{table}
+
+The original overview request returned HTTP 302; its body, error and stop remain unchanged. An explicit hash-checked review permitted only the separately frozen FDA routes. It reused the same archive, reservations and ceilings. The secure official landing page then returned 200. The exact negative-letter documentation route returned 404, so acquisition stopped immediately: F05 remains unvisited. Neither 302 nor 404 is a 403/429 access denial. The 404 establishes only that this URL was unavailable, not that all negative FDA letters are absent. No redirects, proxy, mirror, procurement retry or alternative host was used. No remaining budget was spent after this stop.
+
+The original automated FDA_FAMILY_REJECT draft and subsequent [incomplete-audit REDESIGN review](phase4a_fda_disposition_review.json) are retained. The [new scientific disposition](phase4a_fda_disposition_review_v002.json) records this completed bounded continuation separately. [Version 2 source registry](phase4a_fda_source_registry_v002.json) and [frame review](phase4a_fda_frame_review_v002.json) retain all five response hashes, lengths, retrieval/request times and normalized source locators. Original response bodies remain private and immutable; present-day retrieval is historical reconstruction, not contemporaneous public availability.
+
+## Denominator findings
+
+{qtable}
+
+The twelve months are conditional Gate 2 slots, not twelve observed empty months. Gate 2 did not run; no event manifest, application/action census, public/private mapping, rights-holder/security mapping, timestamp or cluster geometry was created. Missing source coverage is unavailable, never a zero count of FDA decisions. Tentative approvals or previous negative actions of eventually approved applications cannot establish complete never-approved/unresolved coverage. The stronger claim OUTCOME_SELECTED_SOURCE_FRAME for every possible official FDA route is not made from this incomplete alternative-source evidence.
+
+## Pilot questions and design limits
+
+Q1 authoritative historical source access is partial; Q2 outcome completeness is not certified; Q3 regulatory-action replay is untested (our new documentation bytes alone replay); Q4 public timing is unavailable; Q5 applicant/rights-holder and Q6 historical security mapping were not tested; Q7 clustering is not measured; Q8 anticipation requires future scoped evidence; Q9 outcome-independent comparisons are not certified; Q10 expansion is rejected under this frame.
+
+Application acceptance/decision schedules, advisory committees, priority review and prior communications would be needed to assess anticipation; no anticipation dataset was built. Contemporaneous applications require an outcome-independent risk set; scheduled cohorts require independently dated schedules; therapeutic peers face therapy/calendar confounding and outcome selection; within-issuer contrasts retain issuer, repeated-product and programme dependence. No control was selected and no causal claim is made. Raw actions, applications, products, sponsors, economic clusters and effective independent sample size remain unmeasured. No market-based power or return was calculated. Regulatory date, document date, current update time and first-public time remain distinct. No FDA timing policy or SEC policy reuse was approved.
+
+## Verification and stop
+
+Validation: {v.get('local_tests_passed','pending')} local tests; {v.get('public_tests_passed','pending')} public tests; zero skipped. [Validation receipt](phase4a_fda_validation.json). Reconcile archived hashes and regenerate with `python -m src.research.fda_pilot report --check`; it makes no network request. Acquisition and reviewed continuation are separate explicit remote mutations, not reproduction. Completed results are retained and never blindly resubmitted.
+
+Five starts, zero retries, of Gate 1 maximum ten and total conditional maximum sixty. SEC, OpenFIGI, prices, procurement, Nexus, Aurora and source browser search all zero. No purchase/upgrade; account-wide debit is unknown. Git/hosted-CI metadata are delivery checks recorded separately. Existing procurement, Phase 3, frozen experiments, EXP004 pause, EXP005 abandonment/absence, candidate scorecard and inactive approved policies are preserved. The shared collector gained a reviewed-stop hook; its procurement default still rejects a stopped route, and original acquisition-code hashes remain pinned to their historical Git checkpoints.
+
+**Stopped after the FDA source-only pilot.** No larger FDA campaign, approval-only event sample, EXP006, Phase 4B/4C, graph, causal lab or paper/live activity is authorized. No decision is needed to record this negative pilot. The next optional owner decision is whether to authorize a separately bounded merger-enforcement pilot, the last of the original three families. It does not launch automatically; after that family the repository must stop and reassess rather than continue family shopping.
+'''
+    outputs={'phase4a_fda_pilot_summary.json':summary,'phase4a_fda_source_registry_v002.json':registry,
+     'phase4a_fda_frame_review_v002.json':{'gate1':'FAIL_CLOSED','questions':questions,'source_findings':findings,'F05':'UNVISITED_AFTER_STOP','outcome_complete_certified':False,'gate2_authorized':False},
+     'phase4a_fda_pilot_report.md':md}
+    for name,value in outputs.items():
+        text=json.dumps(value,sort_keys=True,indent=2)+'\n' if not isinstance(value,str) else value
+        path=DOCS/name
+        if check:
+            if not path.exists() or path.read_text(encoding='utf-8')!=text:raise ValueError('FDA report mismatch: '+name)
+        else:path.write_text(text,encoding='utf-8',newline='\n')
     return summary
 
 

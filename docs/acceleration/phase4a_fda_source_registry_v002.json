@@ -1,0 +1,142 @@
+{
+  "cost": "No purchase or source upgrade; account-wide usage/debit unknown",
+  "counts": {
+    "Aurora": 0,
+    "FDA": 5,
+    "Nexus": 0,
+    "OpenFIGI": 0,
+    "SEC": 0,
+    "browser_source_search": 0,
+    "prices": 0,
+    "procurement": 0
+  },
+  "gate1_ceiling": 10,
+  "original_stop_retained": true,
+  "receipts": [
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 120359,
+        "path": "0000000000-00-000000/85215a5be47af1a0a523edba0a4787cf1c42e5f81c36f07b04a2079619c9f525/body.bin",
+        "sha256": "85215a5be47af1a0a523edba0a4787cf1c42e5f81c36f07b04a2079619c9f525"
+      },
+      "content_type": "text/html; charset=utf-8",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://open.fda.gov/apis/drug/drugsfda/",
+      "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+      "purpose": "FDA_GATE1_FRAME_DOCUMENTATION",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-12T23:29:08.012720+00:00",
+      "response_headers": {
+        "content-length": "120359",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 12 Oct 2026 23:29:23 GMT",
+        "last-modified": "Fri, 09 Oct 2026 15:48:34 GMT"
+      },
+      "retrieved_at_utc": "2026-10-12T23:29:08.612903+00:00",
+      "slot": null,
+      "status": 200,
+      "url": "https://open.fda.gov/apis/drug/drugsfda/"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 34324,
+        "path": "0000000000-00-000000/b9663ee11630b10d69fcdd7766dd334eddfabbef212928ad1801131f9a7ae824/body.bin",
+        "sha256": "b9663ee11630b10d69fcdd7766dd334eddfabbef212928ad1801131f9a7ae824"
+      },
+      "content_type": "text/html; charset=UTF-8",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files",
+      "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+      "purpose": "FDA_GATE1_FRAME_DOCUMENTATION",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-12T23:29:08.621518+00:00",
+      "response_headers": {
+        "content-length": "34324",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Mon, 12 Oct 2026 23:29:22 GMT",
+        "last-modified": "Mon, 12 Oct 2026 23:19:58 GMT"
+      },
+      "retrieved_at_utc": "2026-10-12T23:29:08.903233+00:00",
+      "slot": null,
+      "status": 200,
+      "url": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 15991,
+        "path": "0000000000-00-000000/853b9e97ea2a248755ccf0a1e007463ae0e34640b9cc35b3e2fda498cfec4113/body.bin",
+        "sha256": "853b9e97ea2a248755ccf0a1e007463ae0e34640b9cc35b3e2fda498cfec4113"
+      },
+      "content_type": "text/html;charset=UTF-8",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process",
+      "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+      "purpose": "FDA_GATE1_FRAME_DOCUMENTATION",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-12T23:29:09.221678+00:00",
+      "response_headers": {
+        "content-type": "text/html;charset=UTF-8",
+        "date": "Mon, 12 Oct 2026 23:29:23 GMT"
+      },
+      "retrieved_at_utc": "2026-10-12T23:29:09.624476+00:00",
+      "slot": null,
+      "status": 302,
+      "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 38244,
+        "path": "0000000000-00-000000/93f0579ff936404d570fe697eea4998c3dd8a44d15069d752617595c864c35df/body.bin",
+        "sha256": "93f0579ff936404d570fe697eea4998c3dd8a44d15069d752617595c864c35df"
+      },
+      "content_type": "text/html;charset=UTF-8",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm",
+      "manifest_sha256": "056ba94081b3b1b0ad2514d98f28e257bffe16f2c6cd478634828cee7ca8ef43",
+      "purpose": "FDA_GATE1_REVIEWED_ROUTE_CONTINUATION",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T00:18:58.800340+00:00",
+      "response_headers": {
+        "content-length": "38244",
+        "content-type": "text/html;charset=UTF-8",
+        "date": "Tue, 13 Oct 2026 00:19:13 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T00:18:59.027824+00:00",
+      "slot": null,
+      "status": 200,
+      "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 14495,
+        "path": "0000000000-00-000000/e0eed7485295551db4c106d2795f72a3d5de5dcb3e02874390d3b54eb610c562/body.bin",
+        "sha256": "e0eed7485295551db4c106d2795f72a3d5de5dcb3e02874390d3b54eb610c562"
+      },
+      "content_type": "text/html; charset=UTF-8",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.fda.gov/drugs/drug-approvals-and-databases/complete-response-letters",
+      "manifest_sha256": "056ba94081b3b1b0ad2514d98f28e257bffe16f2c6cd478634828cee7ca8ef43",
+      "purpose": "FDA_GATE1_REVIEWED_ROUTE_CONTINUATION",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T00:18:59.401216+00:00",
+      "response_headers": {
+        "content-length": "14495",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Tue, 13 Oct 2026 00:19:13 GMT",
+        "last-modified": "Tue, 13 Oct 2026 00:19:13 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T00:18:59.797227+00:00",
+      "slot": null,
+      "status": 404,
+      "url": "https://www.fda.gov/drugs/drug-approvals-and-databases/complete-response-letters"
+    }
+  ],
+  "request_budget_reset": false,
+  "starts": 5,
+  "total_pilot_ceiling": 60
+}

@@ -107,11 +107,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**Phase 3 is complete. Phase 4A’s approved procurement pilot stopped at source access.** EXP005 stays abandoned for its approved design and absent; EXP004 stays paused. The next experiment is NOT_YET_FROZEN and performance is not authorized. V002/v003 approvals remain historical planning evidence, inactive; they do not authorize timing assumptions for a new event family.
+**Phase 3 is complete. Phase 4A remains ACTIVE_EXPERIMENT_SELECTION.** Procurement is closed under its frozen source-channel/frame. The owner selected [FDA for bounded source feasibility](docs/acceleration/phase4a_fda_pilot_report.md); Gate 1 failed closed after five requests: FDA_FAMILY_REJECT for the audited frame, with no outcome-complete denominator or Gate 2. EXP005 stays abandoned and absent; EXP004 stays paused. The next experiment is NOT_YET_FROZEN, with no performance authorization. V002/v003 stay inactive and do not authorize a new event timing policy. The original three-family shortlist is capped; merger enforcement needs a separate bounded instruction and never launches automatically.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Approved procurement source pilot stopped; owner review precedes any new route/family work, expensive certification, freeze or performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Procurement closed; FDA source pilot closed at Gate 1; merger enforcement requires a separate bounded instruction; no freeze or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |

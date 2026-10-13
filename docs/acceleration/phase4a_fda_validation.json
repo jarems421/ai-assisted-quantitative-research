@@ -1,0 +1,146 @@
+{
+  "EXP004_pause": "Original operational pause/SQLite hash unchanged",
+  "SEC_OpenFIGI_requests": 0,
+  "baseline": "1529838ec711520c3f1f5ba54f9e718bc60c5eda",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "3234ce1f2f8e9187ae2405aa4f4a2b9d34864dae270dcc7bda2e7e8146fcd085"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "c4273719d4a1d78af614224f6622de61b60f5bab7a104322295c77f10ac274a7"
+    },
+    {
+      "command": "python -m src.research.fda_pilot manifest",
+      "exit_code": 0,
+      "log_sha256": "35fe1e5bd2162d8df56cf870748f2bad31d2f31604adda5eb05152dd4fd3badd"
+    },
+    {
+      "command": "python -m src.research.fda_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "58e4af86f886fb58c57c19c16f73587a371f80e50bb7c5dbb9e4edc7242e7340"
+    },
+    {
+      "command": "python -m src.research.procurement_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "fd0acf5bed1f9491e4a7d3b4651510cb3a821474a8bed6519a5b05b7c9702f87"
+    },
+    {
+      "command": "python -m src.research.phase4a --check",
+      "exit_code": 0,
+      "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "command": "python -m src.research.phase3_final --check",
+      "exit_code": 0,
+      "log_sha256": "da8a1670bbec618859a733b27ae698e5c3e327c84093759732f93dd73ef8d221"
+    },
+    {
+      "command": "python -m src.research.phase3er report --check",
+      "exit_code": 0,
+      "log_sha256": "fa4c28394cfcdf8c3fb22bc72e672f1948b97a0fe4e506c52040f061ec32ea08"
+    },
+    {
+      "command": "python -m src.research.phase3er geometry --check",
+      "exit_code": 0,
+      "log_sha256": "dfd17fb0e07c9b8bab9f672953932890ae2f7d986610726c30397e2a7fd85557"
+    },
+    {
+      "command": "python -m src.research.phase3er audit",
+      "exit_code": 0,
+      "log_sha256": "c02de9e38fd833f12baab30588f34080f47afcf67903c69f857664e7035bb94e"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0,
+      "log_sha256": "4658cb6d3bdeaaae22941052c2a45875edd652c10f566d3220a9ece9b4de4268"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "a0beb5d2cc256cb53e33f1ab7846245cb472adbf894e2e453d4bc42e3ad49444"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    }
+  ],
+  "client_report_date": "2026-10-13",
+  "continuation_acquisition_functions_unchanged_after_dispatch": true,
+  "continuation_manifest_sha256": "056ba94081b3b1b0ad2514d98f28e257bffe16f2c6cd478634828cee7ca8ef43",
+  "event_manifest_created": false,
+  "freeze_checkpoints": [
+    "f4ef17e",
+    "3151fb6"
+  ],
+  "gate2_ran": false,
+  "held_out_openings": 0,
+  "historical_collector_hashes_exact": true,
+  "hosted_ci": "Final HEAD observation reported in delivery; no self-referential hash",
+  "http_statuses": [
+    200,
+    200,
+    302,
+    200,
+    404
+  ],
+  "legacy_regression_scope": "Existing already-opened EXP001 fixtures only; not new research access",
+  "local_tests_passed": 296,
+  "manifest_sha256": "6014f0841b91a25be9640acad801c5f03bace49f64fabfe80d0919278fc3f69d",
+  "manifests_committed_before_dispatch": true,
+  "minimum_start_gap_seconds": 0.60016,
+  "new_experiment_state_counts": {
+    "EXP005": {
+      "experiments": 0,
+      "jobs": 0,
+      "trials": 0
+    },
+    "EXP006": {
+      "experiments": 0,
+      "jobs": 0,
+      "trials": 0
+    }
+  },
+  "original_body_hash_length_verification": "PASS",
+  "original_stop_preserved": true,
+  "owner_request_verbatim_sha256": "2dc2b975782910ba4e1fed7434df643cac936009a08b940947aadeeb63ae55b3",
+  "preservation": {
+    "deliberate_current_guidance_and_shared_collector_changes": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "docs/research_os.md",
+      "src/presentation/README.template.md",
+      "src/presentation/exp001.py",
+      "src/research/procurement_pilot.py",
+      "src/research/public_checks.py"
+    ],
+    "files": 8509,
+    "unchanged": 8501,
+    "unexpected_changes": []
+  },
+  "price_requests": 0,
+  "prior_scientific_review_and_response_summaries": "UNCHANGED",
+  "procurement_Phase3_original_candidate_policy_experiment_evidence": "UNCHANGED",
+  "public_tests_passed": 70,
+  "real_performance_inputs": 0,
+  "report_README_regeneration": "Final counts consumed after receipt; report/presentation checked again",
+  "request_starts": 5,
+  "retries": 0,
+  "shared_collector_change": "Additive reviewed-stop hook; procurement default remains closed. Historical code bytes recoverable by frozen Git checkpoints.",
+  "source_frame_classification": "Bounded audited frame uncertified; approval-oriented scope, negative-route404, not FDA-wide impossibility",
+  "targeted_tests_passed": 18,
+  "tests_skipped": 0,
+  "unused_budget_is_not_automatic_authority": true,
+  "unused_gate1_starts": 5,
+  "version": "fda_pilot_validation_v002"
+}
