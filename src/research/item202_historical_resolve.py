@@ -76,10 +76,15 @@ def review():
                 observed[key]={'Item202':None,'state':'SOURCE_REMOVED_OR_UNAVAILABLE','reason':'Observed source unavailability, not proven legal removal'};known_unavailable+=1;continue
             header=parse_header(body,cik=source['CIK'],accession=source['accession'],form=source['form'])
             filed=header.get('FILED_AS_OF_DATE');source_day=filed[:4]+'-'+filed[4:6]+'-'+filed[6:] if filed else None
-            consistent=not header['source_chronology_contradictory'] and source_day==source['filing_date']
+            # Item membership is an accession/form/filer source claim, not a
+            # claim that daily-index Date Filed equals raw FILED AS OF DATE.
+            # Keep every raw index key and date discrepancy in version lineage.
+            consistent=not header['source_chronology_contradictory']
             present='2.02' in header['source_items'] if consistent else None
             observed[key]={'Item202':present,'state':event_state('8-K',present),'header_sha256':header['source_sha256'],
-                           'reason':'Exact original source header matches filer/form/date/accession' if consistent else 'Original/current header conflicts with retained index key; no retrospective overwrite'}
+                           'header_FILED_AS_OF_DATE':source_day,'index_filed_date_matches_header':source_day==source['filing_date'],
+                           'version_state':'SOURCE_HEADER_INDEX_DATE_DIFFERENCE' if source_day!=source['filing_date'] else 'HEADER_INDEX_DATE_MATCH',
+                           'reason':'Original header verifies filer/form/accession and Item declaration; date/version differences remain separately retained' if consistent else 'Original/current header conflicts with retained filer/form/accession; no retrospective overwrite'}
     final=[]
     for row in data['rows']:
         key=tuple(row[k] for k in ('CIK','accession','form','filing_date','source_path'))
@@ -96,6 +101,8 @@ def review():
               candidate_original_Item202_rows=sum(r['event_state']=='ORIGINAL_SIGNAL_EVENT' for r in final),
               candidate_original_unique_CIKs=len({r['CIK'] for r in final if r['event_state']=='ORIGINAL_SIGNAL_EVENT'}),
               event_states=dict(Counter(r['event_state'] for r in final)),unresolved_original_Item_source_rows=unresolved,
+              candidate_original_unique_filer_accession_count=len({(r['CIK'],r['accession']) for r in final if r['event_state']=='ORIGINAL_SIGNAL_EVENT'}),
+              observed_header_index_date_differences=sum(not r.get('original_header_review',{}).get('index_filed_date_matches_header',True) for r in final),
               source_original_unavailability_count=known_unavailable if unresolved==0 else None,
               observed_source_unavailability_keys=known_unavailable,
               Item_membership_role='Source candidates from audited metadata/original headers, not certified equity identities or realized trades. Original primary validation remains sampled.',
