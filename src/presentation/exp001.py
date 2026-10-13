@@ -83,6 +83,9 @@ def readme(manifest: dict, result: dict, registry=None) -> str:
     fda_validation = root / "docs/acceleration/phase4a_fda_validation.json"
     if fda_validation.exists():
         validation = fda_validation
+    merger_validation = root / "docs/acceleration/phase4a_merger_validation.json"
+    if merger_validation.exists():
+        validation = merger_validation
     if validation.exists():
         receipt = json.loads(validation.read_bytes())
         checks = (f"Latest milestone validation: **{receipt['local_tests_passed']} local tests, "

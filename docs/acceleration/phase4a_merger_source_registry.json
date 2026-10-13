@@ -1,0 +1,46 @@
+{
+  "archive": "All original success/error bytes ignored; headers exclude personal contact/auth values",
+  "cost": "No purchase/upgrade; account-wide usage/debit unknown",
+  "counts": {
+    "Aurora": 0,
+    "DOJ": 0,
+    "FDA": 0,
+    "FTC": 1,
+    "Nexus": 0,
+    "OpenFIGI": 0,
+    "SEC": 0,
+    "prices": 0,
+    "procurement": 0,
+    "source_browser_search": 0
+  },
+  "gate1_ceiling": 12,
+  "response_receipts": [
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 1301,
+        "path": "0000000000-00-000000/6cb6ddd1f7eefd58b6094bfb287c9fafa16b34eb1dfbf27416431220d9e45e5e/body.bin",
+        "sha256": "6cb6ddd1f7eefd58b6094bfb287c9fafa16b34eb1dfbf27416431220d9e45e5e"
+      },
+      "content_type": "text/html",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.ftc.gov/legal-library/browse/cases-proceedings",
+      "manifest_sha256": "599a1c8a7f04e2324516a66de9bc6b600eaf3eb10ef4f5cf9c43718fe26e9496",
+      "purpose": "MERGER_GATE1_DOCUMENTATION_M01",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T01:25:46.729864+00:00",
+      "response_headers": {
+        "content-length": "1301",
+        "content-type": "text/html",
+        "date": "Tue, 13 Oct 2026 01:26:01 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T01:25:46.935203+00:00",
+      "slot": null,
+      "status": 404,
+      "url": "https://www.ftc.gov/legal-library/browse/cases-proceedings"
+    }
+  ],
+  "starts": 1,
+  "total_pilot_ceiling": 72,
+  "unresponded_reservations": 0
+}

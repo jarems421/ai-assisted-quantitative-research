@@ -1,0 +1,139 @@
+{
+  "EXP004_pause": "Original pause/state hashes unchanged",
+  "SEC_OpenFIGI_requests": 0,
+  "baseline": "f2013b50a5c555aa02d4f7df9bfe55283ac5e39f",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "614bf1c49f3fd02e664f3727fb8c7157997e6769c994757f15c198e959dc8e48"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "5230647c9eef1ae41291663506d6038de1e817bdc0c1eecb3fc00cbfa5d86079"
+    },
+    {
+      "command": "python -m src.research.merger_pilot manifest",
+      "exit_code": 0,
+      "log_sha256": "fe0e53971d891fff6919ba47724d957d9827fe7ea79ee8e7377225572242bf61"
+    },
+    {
+      "command": "python -m src.research.merger_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "4f8d8a2de33cfa4d13825563da81f756c2be84e509a993c27abcadd2bfe63056"
+    },
+    {
+      "command": "python -m src.research.fda_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "58e4af86f886fb58c57c19c16f73587a371f80e50bb7c5dbb9e4edc7242e7340"
+    },
+    {
+      "command": "python -m src.research.procurement_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "fd0acf5bed1f9491e4a7d3b4651510cb3a821474a8bed6519a5b05b7c9702f87"
+    },
+    {
+      "command": "python -m src.research.phase4a --check",
+      "exit_code": 0,
+      "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "command": "python -m src.research.phase3_final --check",
+      "exit_code": 0,
+      "log_sha256": "da8a1670bbec618859a733b27ae698e5c3e327c84093759732f93dd73ef8d221"
+    },
+    {
+      "command": "python -m src.research.phase3er report --check",
+      "exit_code": 0,
+      "log_sha256": "fa4c28394cfcdf8c3fb22bc72e672f1948b97a0fe4e506c52040f061ec32ea08"
+    },
+    {
+      "command": "python -m src.research.phase3er geometry --check",
+      "exit_code": 0,
+      "log_sha256": "dfd17fb0e07c9b8bab9f672953932890ae2f7d986610726c30397e2a7fd85557"
+    },
+    {
+      "command": "python -m src.research.phase3er audit",
+      "exit_code": 0,
+      "log_sha256": "c02de9e38fd833f12baab30588f34080f47afcf67903c69f857664e7035bb94e"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0,
+      "log_sha256": "4658cb6d3bdeaaae22941052c2a45875edd652c10f566d3220a9ece9b4de4268"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "a0beb5d2cc256cb53e33f1ab7846245cb472adbf894e2e453d4bc42e3ad49444"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    }
+  ],
+  "client_report_date": "2026-10-13",
+  "collector_and_shared_transport_hashes_exact": true,
+  "event_manifest_created": false,
+  "family_screen": "THREE_PREDECLARED_FAMILIES_EXHAUSTED",
+  "freeze_checkpoint": "8102335",
+  "gate2_ran": false,
+  "held_out_openings": 0,
+  "hosted_ci": "Final HEAD observation reported in delivery; no self-referential hash",
+  "http_statuses": [
+    404
+  ],
+  "legacy_regression_scope": "Already-opened EXP001 local fixtures for regression only; no new strategy research",
+  "local_tests_passed": 305,
+  "manifest_committed_before_dispatch": true,
+  "manifest_sha256": "599a1c8a7f04e2324516a66de9bc6b600eaf3eb10ef4f5cf9c43718fe26e9496",
+  "new_experiment_state_counts": {
+    "EXP005": {
+      "experiments": 0,
+      "jobs": 0,
+      "trials": 0
+    },
+    "EXP006": {
+      "experiments": 0,
+      "jobs": 0,
+      "trials": 0
+    }
+  },
+  "next_experiment": "NONE_SELECTED",
+  "next_family_automatic": false,
+  "original_body_bytes": 1301,
+  "original_body_hash_length_verification": "PASS",
+  "owner_request_verbatim_sha256": "645505a40fb4f6f65e33e45a756666d9e3baafb0edb51279c7d8bb5ef222f780",
+  "preservation": {
+    "deliberate_current_guidance_renderer_public_whitelist_changes": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "docs/research_os.md",
+      "src/presentation/README.template.md",
+      "src/presentation/exp001.py",
+      "src/research/public_checks.py"
+    ],
+    "files": 8553,
+    "unchanged": 8546,
+    "unexpected_changes": []
+  },
+  "price_requests": 0,
+  "procurement_FDA_Phase3_policies_frozen_experiments": "UNCHANGED",
+  "public_tests_passed": 79,
+  "real_performance_inputs": 0,
+  "report_README_regeneration": "Final receipt counts regenerated and consistency checked after receipt",
+  "request_starts": 1,
+  "retries": 0,
+  "source_frame_scope": "First exactFTC route unavailable; HSR/DOJ/SEC alternatives UNKNOWN/not tested",
+  "targeted_tests_passed": 9,
+  "tests_skipped": 0,
+  "version": "merger_pilot_validation_v001"
+}

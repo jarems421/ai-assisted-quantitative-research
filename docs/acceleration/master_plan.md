@@ -1,6 +1,6 @@
 # Research OS: governing roadmap
 
-**Current direction: Phase 4A ACTIVE_EXPERIMENT_SELECTION; FDA source feasibility.** The [complete Phase 4 transition](owner_phase4_transition_2026-10-12.md) supersedes the old forward instruction to freeze EXP005 and run its Development. Procurement remains closed under its frozen channel/frame. The owner [approved the two-gate FDA pilot](owner_fda_pilot_2026-10-13.md); its [report](phase4a_fda_pilot_report.md) records FDA_FAMILY_REJECT under the audited frame/routes after five requests, with no certified outcome-complete denominator. Historical plans/reports, source bytes, frozen experiments and negative findings remain unchanged.
+**Current direction: Phase 4A THREE_PREDECLARED_FAMILIES_EXHAUSTED; NEXT_EXPERIMENT NONE_SELECTED.** The [complete Phase 4 transition](owner_phase4_transition_2026-10-12.md) supersedes the old instruction to freeze EXP005 and run Development. The owner authorized the [third/final merger pilot](owner_merger_pilot_2026-10-13.md), which stopped at its first exact source route. [Three-family synthesis](phase4a_family_screen_summary.md) records the bounded procurement/FDA/merger rejections and owner reassessment questions. Historical plans/reports, raw bytes, frozen experiments and negative findings remain unchanged. No fourth family or Phase 4B/4C begins automatically.
 
 Research OS builds reproducible, point-in-time investment experiments from primary evidence. It seeks net-of-cost alpha while requiring provenance, timing, historical identity, execution and statistical justification before accepting positive evidence. AI assists interpretation and critique; deterministic contracts control what may advance. Profitability is unestablished.
 
@@ -18,7 +18,7 @@ V002 and v003 retain their exact owner planning approvals and inactive status. O
 
 | Phase | Purpose | Entry/authorization boundary |
 | --- | --- | --- |
-| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Procurement closed; FDA source pilot closed at Gate 1; merger enforcement needs separate bounded authorization; no Gate 2/full certification/freeze/performance |
+| **4A** | **Next experiment discovery, feasibility and eventual freeze** | THREE_PREDECLARED_FAMILIES_EXHAUSTED; NONE_SELECTED; stop for architecture/research-direction review, no fourth family or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; start with evidence-linked dated relationships, not a full graph platform |
 | 4C | First causal/counterfactual event experiment | Credible controls, pre-trends/placebos and explicit identification assumptions; no automatic causal label |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving economic evidence, costs, risk constraints and mechanism diversity |
@@ -72,7 +72,7 @@ The [original long-term owner plan](owner_plan_2026-10-12.md) and supplied PDFs 
 
 ## Current operating state
 
-- PHASE4A = ACTIVE_EXPERIMENT_SELECTION; FDA_FAMILY_REJECT for the audited routes/frame; NEXT_EXPERIMENT = NOT_YET_FROZEN.
+- PHASE4A_FAMILY_SCREEN = THREE_PREDECLARED_FAMILIES_EXHAUSTED; NEXT_EXPERIMENT = NONE_SELECTED.
 - PERFORMANCE_AUTHORIZED = FALSE; NEXUS_EXECUTION = BLOCKED.
 - EXP004 = OPERATIONALLY_PAUSED; EXP005 = ABANDONED_FOR_APPROVED_DESIGN_AND_ABSENT.
 - PAPER_TRADING and LIVE_TRADING = NOT_AUTHORIZED; profitability UNESTABLISHED.
@@ -81,4 +81,6 @@ The approved [procurement manifest](phase4a_procurement_pilot_manifest.json) ret
 
 The [FDA frame audit](phase4a_fda_frame_review_v002.json) retains the approved 10-start Gate 1 /60-start total contract. The initial 200/200/302 responses and REDESIGN review remain preserved. The owner follow-up continued the original budget under a separately frozen landing-route amendment: the landing page returned 200 and the exact negative-letter documentation URL returned 404. Five starts, zero retries; acquisition then stopped. The final verdict is FDA_FAMILY_REJECT for the bounded audited frame/routes, not proof that every FDA frame is approval-selected or inaccessible. No event slots, eligible-action definition, applicant/security mappings, regulatory timing or cluster geometry were instantiated. No approval-selected event sample is permitted.
 
-The programme is limited to the original three families: procurement, FDA and merger enforcement. One separately authorized merger pass may follow only an explicit owner decision; do not launch it automatically. After those three, stop and reassess hypothesis generation instead of adding families indefinitely. All timing policies, experiment/graph/causal/performance and paper/live permissions remain separately gated.
+The third/final [merger pilot](phase4a_merger_pilot_report.md) made one request: its frozen FTC case-directory URL returned404. No pre-decision risk set was established. HSR granularity/confidentiality, DOJ and SEC alternatives remain untested, not proven unsuitable. MERGER_FAMILY_REJECT applies to the bounded audited route/frame. Gate2 did not run; no deal, identity/lifecycle/timing/control/cluster certificate exists.
+
+All three predeclared families are exhausted. The [synthesis](phase4a_family_screen_summary.md) prepares the mandatory owner architecture/research-direction decision. No candidate4, larger source campaign or automatic Phase4B/4C begins. Event-driven economics were never tested; exact source access should precede further mechanism scoring. All timing, experiment, graph, causal, performance and paper/live permissions remain separately gated.

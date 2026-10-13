@@ -1,0 +1,38 @@
+{
+  "Phase4B_4C_authorized": false,
+  "automatic_next_family": false,
+  "candidate_ceiling": 3,
+  "candidate_count": 3,
+  "date": "2026-10-13",
+  "families": [
+    {
+      "failure": "Frozen publication channel403; independent transaction documentation not announcement substitute",
+      "family": "procurement",
+      "not_tested": "Award/action/recipient/timing/controls/geometry",
+      "starts": 2,
+      "verdict": "PROCUREMENT_FAMILY_REJECT"
+    },
+    {
+      "failure": "Approval-oriented sources; no certified complete denominator; exact negative-document route404",
+      "family": "FDA",
+      "not_tested": "Event census, rights/security, timing, clusters, controls",
+      "starts": 5,
+      "verdict": "FDA_FAMILY_REJECT"
+    },
+    {
+      "failure": "SOURCE_ROUTE_UNAVAILABLE_DENOMINATOR_UNCERTIFIED",
+      "family": "merger",
+      "not_tested": "Pre-decision population, HSR/SEC alternatives, deals/parties/lifecycle/timing/geometry/controls",
+      "starts": 1,
+      "verdict": "MERGER_FAMILY_REJECT"
+    }
+  ],
+  "family_screen": "THREE_PREDECLARED_FAMILIES_EXHAUSTED",
+  "finding_scope": "Three bounded frames failed; no economic hypothesis was tested and no event-driven research impossibility established",
+  "hypothesis_problem": "UNTESTED: no prices/returns; failure is not evidence that mechanisms lack alpha",
+  "next_experiment": "NONE_SELECTED",
+  "next_owner_decision": "Choose higher-level hypothesis-generation/source-population architecture reassessment scope; no fourth family or Phase4B/4C automatic authorization",
+  "performance_authorized": false,
+  "source_problem": "Accessible primary routes and outcome-independent denominators were not established in bounded audits",
+  "system_design_problem": "Early source gates worked; route verification before scoring is a supported engineering lesson. Identity/terminal/control burdens remain mostly prospective, not three empirically established failures."
+}
