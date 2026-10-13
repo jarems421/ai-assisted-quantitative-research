@@ -1,0 +1,32 @@
+{
+  "version": "item202_acceptance_remedy_dispatch_v001",
+  "starting_head": "3c867089fffc16710d23f322f18c330fb5da495b",
+  "owner_request_sha256": "42f29f631075f3808b2c71d6884b7298be6c53e24c5aaae323a0cd635a4ae733",
+  "SEC_documentation_and_sampling_index_ceiling": 12,
+  "sample_filings_ceiling": 48,
+  "NYSE_calendar_document_ceiling": 6,
+  "workers": 1,
+  "minimum_start_seconds": 0.6,
+  "sample_selection": "For each fixed rotating year/quarter, first four source-order original 8-K and first four source-order 8-K/A keys, retaining missing/error cases, shared accessions and cofilers; no issuer, outcome or survival filter. Exactly freeze before header acquisition.",
+  "index_routes": [
+    "https://www.sec.gov/Archives/edgar/full-index/2015/QTR1/master.idx",
+    "https://www.sec.gov/Archives/edgar/full-index/2016/QTR2/master.idx",
+    "https://www.sec.gov/Archives/edgar/full-index/2017/QTR3/master.idx",
+    "https://www.sec.gov/Archives/edgar/full-index/2018/QTR4/master.idx",
+    "https://www.sec.gov/Archives/edgar/full-index/2019/QTR1/master.idx",
+    "https://www.sec.gov/Archives/edgar/full-index/2020/QTR2/master.idx"
+  ],
+  "SEC_documentation_routes": [
+    "https://www.sec.gov/submit-filings/filer-support-resources/how-do-i-guides/determine-status-my-filing"
+  ],
+  "reuse_documentation": "Archived SEC 2013 PDS specification, webmaster FAQ, data-access guide and 2006 overview; verify bytes/hashes and record cache reuse, not new requests.",
+  "calendar_routes": [
+    "https://ir.theice.com/press/news-details/2013/NYSE-Euronext-Announces-2015-Holiday-Calendar-and-Early-Closings/default.aspx",
+    "https://ir.theice.com/press/news-details/2014/NYSE-Group-2016-Holiday-Calendar-and-Early-Closings/default.aspx",
+    "https://ir.theice.com/press/news-details/2016/NYSE-Group-Announces-2017-Holiday-and-Early-Closings-Calendar/default.aspx",
+    "https://ir.theice.com/press/news-details/2017/NYSE-Group-Announces-2018-2019-and-2020-Holiday-and-Early-Closings-Calendar/default.aspx",
+    "https://ir.theice.com/press/news-details/2018/New-York-Stock-Exchange-to-Honor-President-George-H-W-Bush/default.aspx"
+  ],
+  "transport": "Existing immutable Archive/PilotHTTP; exact allowlists, local SEC identity headers redacted, no redirects/denial bypass. Requests/reservations persist, no budget reset.",
+  "downstream": "Automatically resume previous scientific gates only if all remedy conditions pass. No performance before certified committed EXP006 freeze; no confirmation access."
+}
