@@ -107,11 +107,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**Three predeclared Phase 4A family pilots are complete; NONE_SELECTED.** [Procurement](docs/acceleration/phase4a_procurement_pilot_report.md), [FDA](docs/acceleration/phase4a_fda_pilot_report.md) and [merger enforcement](docs/acceleration/phase4a_merger_pilot_report.md) each stopped under its bounded source/frame gate. The [family-screen synthesis](docs/acceleration/phase4a_family_screen_summary.md) separates source failures from untested economics and prepares owner reassessment. No fourth family starts automatically. EXP005 stays abandoned and absent; EXP004 stays paused. No experiment or performance is authorized. V002/v003 remain inactive and do not authorize event timing.
+**Phase 4A-R now uses source-first researchability mapping.** The three [mechanism-first family pilots](docs/acceleration/phase4a_family_screen_summary.md) remain closed/exhausted. The [new map](docs/acceleration/phase4a_researchability_report.md) tested SEC/EDGAR, Federal Register and ClinicalTrials.gov: SEC is preferred for a bounded design review, with unresolved population-version, timing, identity and execution gates. [Predictive mechanism directions](docs/acceleration/phase4a_mechanism_directions.md) are ideas, not a selected experiment. Phase4B stays later. NEXT_EXPERIMENT NONE_SELECTED, performance false; no fourth family pilot. EXP004 stays paused, EXP005 abandoned/absent, v002/v003 inactive.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | THREE_PREDECLARED_FAMILIES_EXHAUSTED; owner architecture/research-direction reassessment; no fourth family, freeze or performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | 4A-R source-first map complete; SEC planning-level direction ready, owner bounded design/contract review; no experiment or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |

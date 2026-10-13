@@ -1,6 +1,6 @@
 # Research OS: governing roadmap
 
-**Current direction: Phase 4A THREE_PREDECLARED_FAMILIES_EXHAUSTED; NEXT_EXPERIMENT NONE_SELECTED.** The [complete Phase 4 transition](owner_phase4_transition_2026-10-12.md) supersedes the old instruction to freeze EXP005 and run Development. The owner authorized the [third/final merger pilot](owner_merger_pilot_2026-10-13.md), which stopped at its first exact source route. [Three-family synthesis](phase4a_family_screen_summary.md) records the bounded procurement/FDA/merger rejections and owner reassessment questions. Historical plans/reports, raw bytes, frozen experiments and negative findings remain unchanged. No fourth family or Phase 4B/4C begins automatically.
+**Current direction: Phase 4A-R SOURCE_FIRST_RESEARCHABILITY_MAPPING; NEXT_EXPERIMENT NONE_SELECTED.** The [owner architecture decision](owner_source_first_2026-10-13.md) switches discovery from mechanism-first scoring to proven source surfaces. The [completed map](phase4a_researchability_report.md) recommends SEC for bounded source-contract/design review; KEEP_PHASE4B_LATER. The [three-family screen](phase4a_family_screen_summary.md) remains complete/exhausted, with all old reports/bytes preserved. No fourth family pilot, experiment, performance or automatic Phase4B/4C starts.
 
 Research OS builds reproducible, point-in-time investment experiments from primary evidence. It seeks net-of-cost alpha while requiring provenance, timing, historical identity, execution and statistical justification before accepting positive evidence. AI assists interpretation and critique; deterministic contracts control what may advance. Profitability is unestablished.
 
@@ -18,7 +18,7 @@ V002 and v003 retain their exact owner planning approvals and inactive status. O
 
 | Phase | Purpose | Entry/authorization boundary |
 | --- | --- | --- |
-| **4A** | **Next experiment discovery, feasibility and eventual freeze** | THREE_PREDECLARED_FAMILIES_EXHAUSTED; NONE_SELECTED; stop for architecture/research-direction review, no fourth family or performance |
+| **4A** | **Next experiment discovery, feasibility and eventual freeze** | 4A-R source-first researchability mapping; SEC direction ready at planning level, stop for bounded contract/design review; no performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; start with evidence-linked dated relationships, not a full graph platform |
 | 4C | First causal/counterfactual event experiment | Credible controls, pre-trends/placebos and explicit identification assumptions; no automatic causal label |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving economic evidence, costs, risk constraints and mechanism diversity |
@@ -27,20 +27,21 @@ V002 and v003 retain their exact owner planning approvals and inactive status. O
 
 ## Phase 4A: fail cheaply before certifying expensively
 
-Compare three to five economically motivated primary-source event families before choosing a full experiment. The initial [selection plan](phase4a_plan.md) bounds this pass to three: government procurement awards, FDA drug approval decisions and public merger-enforcement decisions. Government contracts lead the investigation direction but do not win by instruction or assumed profitability.
+The mechanism-first [selection plan](phase4a_plan.md) and three-family pilots remain historical negative evidence. Current discovery follows the [source-first plan](phase4a_source_first_plan.md): freeze exact routes and prove access before interpretation, then assess denominator, PIT/timing, historical depth, identifiers/relationships and observation/dependence geometry. Only then derive economical mechanism directions. At most six source surfaces and36 new starts were authorized; the fixed three-surface pass used six starts, no discovery or corpus downloads.
 
-The [feasibility framework](phase4a_feasibility_framework.md) requires evidence for source, timing, identity, population, execution, controls, inference, power/resolution and trial-budget feasibility. Assess effective independent/event variation before a large source-certification campaign. More records do not establish more independent observations. Keep unknown timestamps, unavailable mappings, selection/coverage gaps and ended histories in denominator accounting.
+The [researchability contract](phase4a_researchability_contract.md) uses evidenced statuses and hard gates, without ordinal-score totals. SEC has planning-level plausibility from current access, documented form-index coverage and prior original-byte/offline evidence; complete source census, PAC/deletion/version reconstruction, availability, identity, execution and inference remain unresolved. Federal Register is conditional; ClinicalTrials current-version PIT remains blocked under the probed route. No surface is certified for trading.
 
-Use authoritative documentation and source/design reasoning, not exploratory returns. No price-history download for strategy analysis, event study, candidate/control return, alpha, threshold/holding-period optimization, strategy ranking or next-experiment registration/freeze occurs in this step. After family approval, evidence acquisition and contract preparation still need a bounded reviewed instruction; performance remains separately gated.
+Future mechanisms may be PREDICTIVE or CAUSAL_CANDIDATE. Predictive work needs a predeclared benchmark and PIT/non-hindsight population, honest historical class identity, dependence/calibration/power, costs/trial rules and survivor-safe execution; it does not automatically need a natural experiment or treatment effect. Causal claims require additional identification/counterfactual evidence and the separately authorized Phase4C milestone. No frozen experiment/metric or source gate is weakened.
 
-Event contracts should preserve event ID/type, economic event date, observed public-known time or modeled timing policy, issuer/class/security, agency/counterparty, contract/application/case identifier, economic amount/type, effective relationships, source hash, revision lineage and unresolved mapping status. These fields anticipate graph reuse; they do not build Phase 4B now.
+Recommended next owner decision: one bounded SEC filing-denominator/PAC/availability contract prototype with declared form/date/sample/request ceilings, then separate review of one [predictive direction](phase4a_mechanism_directions.md). These are planning recommendations, not acquisition, hypothesis-selection, registration/freeze or performance permissions. No graph or full platform is needed before this source contract. Standardize entity/version relationships only when the contract needs them.
 
 ## Architecture and responsibilities
 
 ```mermaid
 flowchart TD
-  Sources[Primary public sources: bounded archives implemented] --> Reality[Temporal corporate reality: Phase 4B planned]
-  Reality --> Mechanisms[Mechanisms and selective AI critique]
+  Sources[Primary public sources: bounded archives implemented] --> Surface[Source-first researchability and population contracts]
+  Surface --> Mechanisms[Economically motivated predictive / causal directions]
+  Surface -. Later evidence-linked relationships .-> Reality[Temporal corporate reality: Phase 4B planned]
   Mechanisms --> Lab[Statistical calibration implemented; causal lab Phase 4C planned]
   Lab --> Compiler[Proof compiler and replay: synthetic prototype]
   Compiler --> Uncertainty[Uncertainty and abstention: planned]
@@ -72,7 +73,7 @@ The [original long-term owner plan](owner_plan_2026-10-12.md) and supplied PDFs 
 
 ## Current operating state
 
-- PHASE4A_FAMILY_SCREEN = THREE_PREDECLARED_FAMILIES_EXHAUSTED; NEXT_EXPERIMENT = NONE_SELECTED.
+- PHASE4A_FAMILY_SCREEN = COMPLETE_THREE_FAMILIES_EXHAUSTED; PHASE4A_R = SOURCE_FIRST_RESEARCHABILITY_MAPPING; NEXT_EXPERIMENT = NONE_SELECTED.
 - PERFORMANCE_AUTHORIZED = FALSE; NEXUS_EXECUTION = BLOCKED.
 - EXP004 = OPERATIONALLY_PAUSED; EXP005 = ABANDONED_FOR_APPROVED_DESIGN_AND_ABSENT.
 - PAPER_TRADING and LIVE_TRADING = NOT_AUTHORIZED; profitability UNESTABLISHED.
@@ -84,3 +85,5 @@ The [FDA frame audit](phase4a_fda_frame_review_v002.json) retains the approved 1
 The third/final [merger pilot](phase4a_merger_pilot_report.md) made one request: its frozen FTC case-directory URL returned404. No pre-decision risk set was established. HSR granularity/confidentiality, DOJ and SEC alternatives remain untested, not proven unsuitable. MERGER_FAMILY_REJECT applies to the bounded audited route/frame. Gate2 did not run; no deal, identity/lifecycle/timing/control/cluster certificate exists.
 
 All three predeclared families are exhausted. The [synthesis](phase4a_family_screen_summary.md) prepares the mandatory owner architecture/research-direction decision. No candidate4, larger source campaign or automatic Phase4B/4C begins. Event-driven economics were never tested; exact source access should precede further mechanism scoring. All timing, experiment, graph, causal, performance and paper/live permissions remain separately gated.
+
+The owner has now answered the architecture question through Phase4A-R. [Source-first decision](phase4a_architecture_decision.md): SOURCE_FIRST_DIRECTION_READY at planning level, SEC preferred, KEEP_PHASE4B_LATER. Stop for the next exact bounded SEC contract/design instruction. The older family-screen synthesis remains unchanged and does not authorize any additional family pilot.

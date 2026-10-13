@@ -1,0 +1,170 @@
+{
+  "EXP004_pause": "Original operational pause/state hashes unchanged",
+  "Phase4B_4C_launched": false,
+  "Phase4B_verdict": "KEEP_PHASE4B_LATER",
+  "baseline": "209beb8aa021dbc41049db108428c270fef18123",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "61d8b356bc0ad88b6a4b8d15f5bac9df446f67ced6a0804d22ecbd3f3d29675d"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "71edef1dd6355d6cbf1a77833eddfba160e0701fe12287e3a97eda4e77489e86"
+    },
+    {
+      "command": "python -m src.research.source_first manifest",
+      "exit_code": 0,
+      "log_sha256": "fa88db39d8e602707649a8623cc924316066f7dc5cc1b7a555e0006bb0a1313a"
+    },
+    {
+      "command": "python -m src.research.source_first_report --audit --check",
+      "exit_code": 0,
+      "log_sha256": "e220c0b349e8d777c795aac35cd3c1479dca519fcfd6dab38ebdbde967b71bac"
+    },
+    {
+      "command": "python -m src.research.merger_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "4f8d8a2de33cfa4d13825563da81f756c2be84e509a993c27abcadd2bfe63056"
+    },
+    {
+      "command": "python -m src.research.fda_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "58e4af86f886fb58c57c19c16f73587a371f80e50bb7c5dbb9e4edc7242e7340"
+    },
+    {
+      "command": "python -m src.research.procurement_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "fd0acf5bed1f9491e4a7d3b4651510cb3a821474a8bed6519a5b05b7c9702f87"
+    },
+    {
+      "command": "python -m src.research.phase4a --check",
+      "exit_code": 0,
+      "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "command": "python -m src.research.sec_pilot replay",
+      "exit_code": 0,
+      "log_sha256": "a521f9c1526028874c8663964c7c81d34b50be11eb887e781e1b1364e8fb9a38"
+    },
+    {
+      "command": "python -m src.research.sec_pilot audit",
+      "exit_code": 0,
+      "log_sha256": "a521f9c1526028874c8663964c7c81d34b50be11eb887e781e1b1364e8fb9a38"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "a0beb5d2cc256cb53e33f1ab7846245cb472adbf894e2e453d4bc42e3ad49444"
+    },
+    {
+      "command": "python -m src.research.phase3_final --check",
+      "exit_code": 0,
+      "log_sha256": "da8a1670bbec618859a733b27ae698e5c3e327c84093759732f93dd73ef8d221"
+    },
+    {
+      "command": "python -m src.research.phase3er report --check",
+      "exit_code": 0,
+      "log_sha256": "fa4c28394cfcdf8c3fb22bc72e672f1948b97a0fe4e506c52040f061ec32ea08"
+    },
+    {
+      "command": "python -m src.research.phase3er geometry --check",
+      "exit_code": 0,
+      "log_sha256": "dfd17fb0e07c9b8bab9f672953932890ae2f7d986610726c30397e2a7fd85557"
+    },
+    {
+      "command": "python -m src.research.phase3er audit",
+      "exit_code": 0,
+      "log_sha256": "c02de9e38fd833f12baab30588f34080f47afcf67903c69f857664e7035bb94e"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0,
+      "log_sha256": "4658cb6d3bdeaaae22941052c2a45875edd652c10f566d3220a9ece9b4de4268"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    }
+  ],
+  "client_report_date": "2026-10-13",
+  "closed_family_reports_raw_Phase3_policies_experiments": "UNCHANGED",
+  "collector_and_shared_transport_hashes_exact": true,
+  "current_SEC_index_matches_previous_bytes": true,
+  "exact_public_availability": "NOT_CERTIFIED",
+  "existing_SEC_original_documents_verified": 15,
+  "family_candidate4_launched": false,
+  "freeze_checkpoint": "e885776",
+  "held_out_openings": 0,
+  "hosted_ci": "Final HEAD observation in delivery; no self-referential hash",
+  "http_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    302
+  ],
+  "hypothesis_selected": false,
+  "legacy_regression_scope": "Already-opened EXP001 local fixtures for regression only; no new strategy research",
+  "local_tests_passed": 315,
+  "manifest_committed_before_dispatch": true,
+  "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+  "mechanism_directions": "Three SEC PREDICTIVE ideas derived after archived map; none selected/registered/executed",
+  "minimum_global_start_gap_seconds": 0.600174,
+  "new_experiment_state_counts": {
+    "EXP005": {
+      "experiments": 0,
+      "jobs": 0,
+      "trials": 0
+    },
+    "EXP006": {
+      "experiments": 0,
+      "jobs": 0,
+      "trials": 0
+    }
+  },
+  "original_body_hash_length_verification": "PASS",
+  "owner_request_verbatim_sha256": "53bbf54f808d0492108a8272d4caa0f35a6adf165d2e3c0479a86fba24009f88",
+  "preferred": "SEC",
+  "preservation": {
+    "deliberate_current_direction_framework_renderer_whitelist_changes": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "docs/acceleration/phase4a_feasibility_framework.md",
+      "docs/research_os.md",
+      "src/presentation/README.template.md",
+      "src/presentation/exp001.py",
+      "src/research/public_checks.py"
+    ],
+    "files": 8573,
+    "unchanged": 8565,
+    "unexpected_changes": []
+  },
+  "price_requests": 0,
+  "public_tests_passed": 89,
+  "real_performance_inputs": 0,
+  "recommendation": "SOURCE_FIRST_DIRECTION_READY_PLANNING_ONLY",
+  "report_README_regeneration": "Final receipt counts consumed and consistency checked after receipt",
+  "retries": 0,
+  "sample_rows": {
+    "ClinicalTrials": 2,
+    "FederalRegister": 2
+  },
+  "samples_are_not_censuses": true,
+  "source_starts": 6,
+  "surfaces": 3,
+  "targeted_tests_passed": 10,
+  "tests_skipped": 0,
+  "timing_policy_approved_or_activated": false,
+  "version": "source_first_validation_v001"
+}
