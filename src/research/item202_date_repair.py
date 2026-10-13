@@ -11,6 +11,10 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import gzip
+import io
+import tarfile
+import time
 from urllib.parse import urljoin
 
 from src.research.spec import ROOT, digest
@@ -162,9 +166,20 @@ def verify_freeze():
     return m, sample, policy
 
 
+def pace_other_groups(group):
+    """One persisted global pacing boundary across independently stopped channels."""
+    prior = [json.loads(p.read_bytes())['request_started_at_utc']
+             for p in RAW.glob('*/reservations/*.json') if p.parent.parent.name != group]
+    if prior:
+        from datetime import timezone
+        gap = (datetime.now(timezone.utc)-datetime.fromisoformat(max(prior))).total_seconds()
+        time.sleep(max(0, .6-gap))
+
+
 def client(group, urls, ceiling):
     ua = identity()  # Value exists only in local request headers, never in receipts.
     def transport(url, headers, payload):
+        pace_other_groups(group)
         return SourceHTTP._transport(url, dict(headers, **{'User-Agent': ua}), payload)
     h = PilotHTTP(contract(), root=RAW/group, transport=transport)
     h.allowed = set(urls)
@@ -172,6 +187,166 @@ def client(group, urls, ceiling):
                dispatch_sha256=digest(json.loads(MANIFEST.read_bytes())),
                retry={'transient_statuses': []})
     return h
+
+
+def freeze_archives():
+    """Exact predeclared 12-day frame; paths discovered only through official indexes."""
+    _, sample, _ = verify_freeze()
+    days = []
+    for year in range(2015, 2021):
+        candidates = sorted({r['filed_date'] for r in sample['records'] if r['year'] == year})
+        days += candidates[:2]
+    dispatch = {'version': 'EXP006_archive_feasibility_dispatch_v001', 'days': days,
+                'day_GET_ceiling': 12, 'discovery_ceiling': 14,
+                'roots': ['https://www.sec.gov/Archives/edgar/Oldloads/index.json',
+                          'https://www.sec.gov/Archives/edgar/Feed/index.json'],
+                'route_selection': 'Official directory index links only; Oldloads preferred, Feed independently predeclared alternative. Stop each unavailable or denied channel, never retry it.',
+                'compressed_byte_ceiling': 256*1024*1024, 'uncompressed_byte_ceiling': 1024*1024*1024,
+                'archive_body_role': 'Quarantined whole-day originals. Parse only selected Development accessions; no other filing feature or clock interpretation.',
+                'sample_sha256': digest(sample)}
+    write_public('exp006_archive_dispatch_v003.json', dispatch)
+    return {'days': len(days), 'status': 'ARCHIVE_DISPATCH_FROZEN'}
+
+
+def archive_entries(body):
+    """Directory JSON is discovery metadata, never a filing or timing certificate."""
+    data = json.loads(body)
+    return data.get('directory', {}).get('item', [])
+
+
+def recover_archive(body, targets, *, tar_format, max_uncompressed):
+    """Streaming header-only extraction without filesystem archive expansion."""
+    found = {}; total = 0
+    if tar_format:
+        with tarfile.open(fileobj=io.BytesIO(body), mode='r|gz') as archive:
+            for member in archive:
+                total += member.size
+                if total > max_uncompressed: raise ValueError('Archive uncompressed ceiling')
+                matches = [acc for acc in targets if acc in member.name or acc.replace('-', '') in member.name]
+                if not matches or not member.isfile(): continue
+                f = archive.extractfile(member)
+                header = f.read(min(member.size, 1024*1024))
+                header = header.split(b'<DOCUMENT>', 1)[0]
+                for acc in matches: found[acc] = header
+    else:
+        with gzip.GzipFile(fileobj=io.BytesIO(body)) as archive:
+            buffer = b''
+            while chunk := archive.read(256*1024):
+                total += len(chunk)
+                if total > max_uncompressed: raise ValueError('Archive uncompressed ceiling')
+                buffer += chunk
+                while True:
+                    start = buffer.find(b'<SEC-HEADER>')
+                    if start < 0:
+                        buffer = buffer[-32:]; break
+                    end = buffer.find(b'</SEC-HEADER>', start)
+                    if end < 0:
+                        buffer = buffer[start:]
+                        if len(buffer) > 1024*1024: raise ValueError('Header prefix ceiling')
+                        break
+                    header = buffer[start:end+13]
+                    for acc in targets:
+                        if acc.encode() in header: found[acc] = header
+                    buffer = buffer[end+13:]
+    return found, total
+
+
+def acquire_archives():
+    """Independent official route feasibility; no whole-corpus expansion."""
+    dispatch = json.loads((DOCS/'exp006_archive_dispatch_v003.json').read_bytes())
+    result_path = DOCS/'exp006_archive_feasibility_v003.json'
+    if result_path.exists(): return {'status': 'EXISTING_ARCHIVE_RESULT_NO_REQUESTS'}
+    h = client('archive_discovery', dispatch['roots'], dispatch['discovery_ceiling'])
+    days_http = client('archive_days', [], dispatch['day_GET_ceiling'])
+    from urllib.request import Request, build_opener, ProxyHandler
+    from urllib.error import HTTPError
+    from src.research.sec_pilot.acquisition import NoRedirect
+    ua = identity()
+    def bounded_archive_transport(url, headers, payload):
+        pace_other_groups('archive_days')
+        try: response = build_opener(NoRedirect(), ProxyHandler({})).open(Request(url, headers=dict(headers, **{'User-Agent': ua})), timeout=40)
+        except HTTPError as error: response = error
+        with response:
+            chunks=[]; size=0
+            while chunk := response.read(1024*1024):
+                chunks.append(chunk); size += len(chunk)
+                if size > dispatch['compressed_byte_ceiling']:
+                    error=ValueError('Archive compressed ceiling'); error.partial_body=b''.join(chunks); raise error
+            return response.status, dict(response.headers), b''.join(chunks), response.geturl()
+    days_http.transport = bounded_archive_transport
+    sample = json.loads(SAMPLE.read_bytes())['records']
+    audit = json.loads(EVIDENCE.read_bytes())['records']
+    direct = {r['accession']: r for r in audit}
+    requests=[]; slots=[]; route_found=False
+    from src.research.item202_date_bound import exact_header_reconciliation
+    for root in dispatch['roots']:
+        receipt, body = h.fetch(root, purpose='OFFICIAL_HEADER_ARCHIVE_DIRECTORY')
+        requests.append({k:receipt[k] for k in ('url','status','body','request_started_at_utc','retrieved_at_utc')})
+        print('Archive discovery', root, receipt['status'], flush=True)
+        if receipt['status'] != 200:
+            # Independent separately declared channel starts in its own namespace;
+            # a stop is not silently cleared, and denied URLs never repeat.
+            if root == dispatch['roots'][0]:
+                h = client('archive_feed_discovery', [dispatch['roots'][1]], dispatch['discovery_ceiling']-len(requests))
+            continue
+        entries = archive_entries(body)
+        route_found=True
+        for day in dispatch['days']:
+            slot={'day':day,'status':'UNAVAILABLE_ARCHIVE_PATH','recovered_headers':0,'header_matches':0}
+            base = root.rsplit('/',1)[0]+'/'
+            directory = next((x for x in entries if x.get('name')==day[:4] and x.get('type')=='dir'), None)
+            if not directory:
+                slots.append(slot); continue
+            year_url=urljoin(base, day[:4]+'/index.json')
+            h.allowed.add(year_url)
+            r,b=h.fetch(year_url,purpose='OFFICIAL_ARCHIVE_YEAR_DIRECTORY')
+            if not any(x['url']==r['url'] for x in requests): requests.append({k:r[k] for k in ('url','status','body','request_started_at_utc','retrieved_at_utc')})
+            if r['status']!=200: slot['status']='ARCHIVE_DIRECTORY_HTTP_'+str(r['status']); slots.append(slot); break
+            year_entries=archive_entries(b); archive_base=year_url.rsplit('/',1)[0]+'/'
+            name_entry=next((x for x in year_entries if x.get('name','').startswith(day.replace('-','')) and x.get('name','').endswith('.gz')),None)
+            if not name_entry:
+                q='QTR'+str((int(day[5:7])-1)//3+1)
+                if any(x.get('name')==q and x.get('type')=='dir' for x in year_entries):
+                    qurl=urljoin(archive_base,q+'/index.json');h.allowed.add(qurl)
+                    r,b=h.fetch(qurl,purpose='OFFICIAL_ARCHIVE_QUARTER_DIRECTORY')
+                    if not any(x['url']==r['url'] for x in requests): requests.append({k:r[k] for k in ('url','status','body','request_started_at_utc','retrieved_at_utc')})
+                    if r['status']!=200: slot['status']='ARCHIVE_DIRECTORY_HTTP_'+str(r['status']); slots.append(slot); break
+                    archive_base=qurl.rsplit('/',1)[0]+'/'
+                    name_entry=next((x for x in archive_entries(b) if x.get('name','').startswith(day.replace('-','')) and x.get('name','').endswith('.gz')),None)
+            if not name_entry: slots.append(slot); continue
+            name=name_entry['name']
+            if not re.fullmatch(r'\d{8}[A-Za-z0-9_.-]*\.gz',name): raise ValueError('Unsafe official archive link')
+            url=urljoin(archive_base,name);days_http.allowed.add(url)
+            receipt,body=days_http.fetch(url,purpose='BOUNDED_ORIGINAL_DAY_ARCHIVE_RECONCILIATION')
+            requests.append({k:receipt[k] for k in ('url','status','body','request_started_at_utc','retrieved_at_utc')})
+            slot.update(archive_url=url,receipt_sha256=digest(receipt),compressed_bytes=len(body),source_sha256=receipt['body']['sha256'])
+            if receipt['status']!=200: slot['status']='ARCHIVE_HTTP_'+str(receipt['status']);slots.append(slot);break
+            targets={r['accession']:r for r in sample if r['filed_date']==day}
+            try:
+                recovered,total=recover_archive(body,targets,tar_format='.tar.gz' in name,max_uncompressed=dispatch['uncompressed_byte_ceiling'])
+            except (ValueError, OSError, tarfile.TarError, EOFError) as error:
+                slot.update(status='ARCHIVE_PARSE_UNAVAILABLE',error_type=type(error).__name__)
+                slots.append(slot); break
+            comparisons=[]
+            for acc,header in recovered.items():
+                row=targets[acc];ref=direct[acc]
+                old_body=Archive(RAW/'headers').read(ref['receipt']['body'])
+                matched=exact_header_reconciliation(old_body,header,cik=row['CIK'],accession=acc,form=row['form'])
+                saved=Archive(RAW/'archive_recovered').body(acc,header)
+                comparisons.append({'accession':acc,'matched_direct_original':matched,'body':saved})
+            slot.update(status='ARCHIVE_HEADER_RECOVERED' if comparisons else 'ARCHIVE_NO_TARGET_HEADER_RECOVERED',
+                        uncompressed_bytes=total,recovered_headers=len(comparisons),header_matches=sum(x['matched_direct_original'] for x in comparisons),comparisons=comparisons)
+            slots.append(slot)
+        break
+    visited={r['day'] for r in slots}
+    slots += [{'day':d,'status':'DEFERRED_ARCHIVE_ROUTE_UNAVAILABLE','recovered_headers':0,'header_matches':0} for d in dispatch['days'] if d not in visited]
+    output={'version':'EXP006_archive_feasibility_v003','status':'ORIGINAL_ARCHIVE_HEADERS_VERIFIED_SCOPED' if any(r['header_matches'] for r in slots) else 'OFFICIAL_ARCHIVE_FEASIBILITY_NOT_ESTABLISHED',
+            'dispatch_sha256':digest(dispatch),'slots':slots,'requests':requests,
+            'day_GETs':len(days_http.starts()),'discovery_starts':sum(len(list((RAW/g/'reservations').glob('*.json'))) for g in ('archive_discovery','archive_feed_discovery')),
+            'historical_PAC_exhaustiveness_certified':False,'confirmation_accesses':0,
+            'scope':'12 fixed Development days retained. Unvisited/denied routes do not prove all official archives inaccessible. No full archive scaling performed.'}
+    write_public(result_path.name,output)
+    return {k:output[k] for k in ('status','day_GETs','discovery_starts')}
 
 
 def acquire_headers():
@@ -313,13 +488,13 @@ def validate_classification():
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('mode', choices=('freeze','headers','validate','classify-freeze','classify','classify-validate'))
+    p.add_argument('mode', choices=('freeze','headers','validate','classify-freeze','classify','classify-validate','archives-freeze','archives'))
     p.add_argument('--execute', action='store_true')
     a = p.parse_args()
-    if a.mode in ('headers','classify') and not a.execute: p.error('Remote requests require --execute')
+    if a.mode in ('headers','classify','archives') and not a.execute: p.error('Remote requests require --execute')
     functions = {'freeze': freeze, 'headers': acquire_headers, 'validate': validate_headers,
                  'classify-freeze': freeze_classification, 'classify': acquire_classification,
-                 'classify-validate': validate_classification}
+                 'classify-validate': validate_classification, 'archives-freeze':freeze_archives,'archives':acquire_archives}
     print(functions[a.mode]())
 
 

@@ -3,6 +3,9 @@ import hashlib
 import json
 from pathlib import Path
 import unittest
+import gzip
+import io
+import tarfile
 
 from src.research.item202_date_bound import (envelope, second_open, compare, confusion,
     primary_item202, exact_header_reconciliation, freeze_before_performance)
@@ -100,6 +103,25 @@ class DateBoundTests(unittest.TestCase):
         h = b'<ACCEPTANCE-DATETIME>20150105120000\nACCESSION NUMBER: 0000000001-15-000001\nCONFORMED SUBMISSION TYPE: 8-K\nFILED AS OF DATE: 20150105\nCENTRAL INDEX KEY: 1\n<ITEMS>2.02'
         self.assertTrue(exact_header_reconciliation(h, h, cik='1', accession='0000000001-15-000001', form='8-K'))
         self.assertFalse(exact_header_reconciliation(h, h.replace(b'20150105120000', b'20150106120000'), cik='1', accession='0000000001-15-000001', form='8-K'))
+
+    def test_streaming_oldload_selects_only_declared_header(self):
+        from src.research.item202_date_repair import recover_archive
+        acc='0000000001-15-000001'
+        header=b'<SEC-HEADER>\nACCESSION NUMBER: '+acc.encode()+b'\n</SEC-HEADER>'
+        other=b'<SEC-HEADER>ACCESSION NUMBER: 0000000001-21-000001</SEC-HEADER>'
+        found,total=recover_archive(gzip.compress(header+b'<DOCUMENT>ignored</DOCUMENT>'+other), {acc:{}}, tar_format=False, max_uncompressed=10000)
+        self.assertEqual(found,{acc:header});self.assertGreater(total,len(header))
+        with self.assertRaises(ValueError):recover_archive(gzip.compress(header),{acc:{}},tar_format=False,max_uncompressed=1)
+
+    def test_feed_archive_never_extracts_paths_to_disk(self):
+        from src.research.item202_date_repair import recover_archive
+        acc='0000000001-15-000001';body=b'<SEC-HEADER>original header</SEC-HEADER><DOCUMENT>not interpreted'
+        stream=io.BytesIO()
+        with tarfile.open(fileobj=stream,mode='w:gz') as archive:
+            member=tarfile.TarInfo('../../'+acc+'.nc');member.size=len(body)
+            archive.addfile(member,io.BytesIO(body))
+        found,total=recover_archive(stream.getvalue(),{acc:{}},tar_format=True,max_uncompressed=10000)
+        self.assertEqual(found[acc],body.split(b'<DOCUMENT>')[0])
 
     def test_freeze_before_performance_and_confirmation_rejection(self):
         for cert, pushed, stage in (({}, False, 'development'), ({'all_mandatory_gates_passed': True}, False, 'development'),
