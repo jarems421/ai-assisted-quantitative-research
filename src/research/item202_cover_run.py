@@ -7,7 +7,7 @@ from src.research.spec import ROOT,digest
 from src.research.phase3c.sources import put,secret,SourceHTTP
 from src.research.sec_pilot.acquisition import Archive,identity,now
 from src.research.item202_identity import require_published,source_state
-from src.research.item202_cover import parse_cover,choose_class,event_scope
+from src.research.item202_cover import parse_cover,choose_class,parse_cover_v2,parse_cover_v4,choose_class_v2,event_scope
 RAW=ROOT/'data/raw/item202_cover_v002'
 DOCS=ROOT/'docs/acceleration'
 SAMPLE=DOCS/'exp006_cover_identity_sample_v002.json'
@@ -92,14 +92,14 @@ def acquire():
         print('Frozen cover',i+1,'/',len(planned),'archived',flush=True)
 
 
-def review():
+def review(version=1):
     sample=json.loads(SAMPLE.read_bytes());records=[]
     for planned in sample['records']:
         r=json.loads((RAW/'acquisition'/(digest(planned['source_key'])+'.json')).read_bytes())
         parsed={'rows':[],'domestic_jurisdiction_points':[]}
         if r['receipt'] and r['receipt']['status']==200:
-            body=Archive(ROOT/r['source_root']).read(r['receipt']['body']);parsed=parse_cover(body)
-        chosen=choose_class(parsed['rows']);row=chosen['row'];reasons=[]
+            body=Archive(ROOT/r['source_root']).read(r['receipt']['body']);parsed={1:parse_cover,2:parse_cover_v2,4:parse_cover_v4}[version](body)
+        chosen=(choose_class if version==1 else choose_class_v2)(parsed['rows']);row=chosen['row'];reasons=[]
         valid=[x for x in parsed['rows'] if all(x.get(k) and x[k].lower() not in ('none','n/a','not applicable','—','-') for k in ('class_title','trading_symbol','exchange'))]
         if not valid:reasons.append('NO_COMPLETE_COVER_IDENTITY_TUPLE')
         if chosen['status']!='SINGLE_COMMON_CANDIDATE':reasons.append(chosen['status'])
@@ -113,20 +113,22 @@ def review():
             'single_common_cover':chosen['status']=='SINGLE_COMMON_CANDIDATE','SEC_identity_candidate':not reasons,
             'selected_common_row':row,'source_failures':reasons,'source_root':r.get('source_root'),
             'cache_hit':r.get('cache_hit',False),'receipt':r['receipt']})
-    value={'version':'EXP006_human_cover_review_v001','sample_sha256':digest(sample),'records':records,
+    value={'version':f'EXP006_human_cover_review_v{version:03d}','sample_sha256':digest(sample),'records':records,
            'records_sha256':digest(records),'cover_tuple_count':sum(r['complete_cover_tuple'] for r in records),
            'single_common_count':sum(r['single_common_cover'] for r in records),
            'multiple_common_count':sum(r['common_count']>1 for r in records),
            'SEC_identity_candidate_count':sum(r['SEC_identity_candidate'] for r in records),
            'source_failure_counts':dict(Counter(x for r in records for x in r['source_failures']))}
-    put(RAW/'cover_review_v001.json',value)
+    put(RAW/f'cover_review_v{version:03d}.json',value)
     print({k:v for k,v in value.items() if k not in ('records',)})
     return value
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('command',choices=('acquire','review'));p.add_argument('--execute',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('command',choices=('acquire','review','review-v2','review-final'));p.add_argument('--execute',action='store_true');a=p.parse_args()
     if a.command=='review':review()
+    elif a.command=='review-v2':review(2)
+    elif a.command=='review-final':review(4)
     elif not a.execute:p.error('Remote acquisition requires --execute')
     else:acquire()
 

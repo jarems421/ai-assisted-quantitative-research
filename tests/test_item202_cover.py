@@ -1,11 +1,35 @@
 import unittest
 from datetime import date,timedelta
 from src.research.item202_cover import (parse_cover,choose_class,class_kind,provider_bridge,path_certificate,event_scope,pool_eligible)
+from src.research.item202_cover import parse_cover_v2,parse_cover_v4,choose_class_v2
 
 def document(rows):
     return ('<html><table><tr><td>Title of each class</td><td>Trading Symbol(s)</td><td>Name of each exchange on which registered</td></tr>'+''.join('<tr>'+''.join('<td>'+v+'</td>' for v in r)+'</tr>' for r in rows)+'</table><p>Item 2.02 Results of Operations</p></html>').encode()
 
 class CoverTests(unittest.TestCase):
+    def test_no_outcomes_without_pushed_scientific_freeze(self):
+        from src.research.item202_date_bound import freeze_before_performance
+        with self.assertRaises(ValueError):
+            freeze_before_performance({'status':'SCIENTIFICALLY_READY_FOR_FREEZE'},freeze_commit_pushed=False,stage='development')
+        with self.assertRaises(ValueError):
+            freeze_before_performance({'status':'ABANDON_EXP006_SOURCE_FEASIBILITY'},freeze_commit_pushed=True,stage='development')
+
+    def test_header_synonyms_and_explicit_prose(self):
+        b=document([['Common Stock','ABC','NYSE']]).replace(b'Title of each class',b'Title of Class')
+        self.assertEqual(parse_cover_v4(b)['rows'][0]['trading_symbol'],'ABC')
+        prose=b'<p>Common Stock, Par Value $0.01 Per Share; Common stock traded on the New York Stock Exchange; trading symbol ABC.</p><p>Item 2.02</p>'
+        self.assertEqual(parse_cover_v4(prose)['rows'][0]['trading_symbol'],'ABC')
+    def test_labels_below_values_and_quoted_symbol(self):
+        b=document([['Common Stock','"ABC"','NYSE']])
+        self.assertEqual(parse_cover_v2(b)['rows'][0]['trading_symbol'],'ABC')
+        header='<tr><td>Title of each class</td><td>Trading Symbol(s)</td><td>Name of each exchange on which registered</td></tr>'
+        data='<tr><td>Common Stock</td><td>ABC</td><td>NYSE</td></tr>'
+        self.assertEqual(parse_cover_v2(('<table>'+data+header+'</table><p>Item 2.02</p>').encode())['rows'][0]['trading_symbol'],'ABC')
+
+    def test_standalone_common_is_a_source_class_title(self):
+        p=parse_cover_v2(document([['Common','ABC','NYSE']]))
+        self.assertEqual(choose_class_v2(p['rows'])['status'],'SINGLE_COMMON_CANDIDATE')
+        self.assertEqual(choose_class(p['rows'])['status'],'NO_ELIGIBLE_COMMON_CLASS')
     def test_plain_html_without_inline(self):
         p=parse_cover(document([['Common Stock, $0.01 par value','OLD','New York Stock Exchange']]))
         self.assertEqual(p['rows'][0]['trading_symbol'],'OLD')
@@ -70,6 +94,7 @@ class CoverTests(unittest.TestCase):
 
     def test_inception_and_symmetric_control_identity(self):
         self.assertFalse(event_scope('2019-05-01'));self.assertTrue(event_scope('2019-05-02'))
+        self.assertFalse(event_scope('2021-01-01'))
         r={'form':'8-K','filing_date':'2019-05-02','event_state':'NON_ITEM202'}
         self.assertFalse(pool_eligible(r,'control',identity_status='UNRESOLVED'))
         self.assertTrue(pool_eligible(r,'control',identity_status='FULLY_RESOLVED'))

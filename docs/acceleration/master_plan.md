@@ -1,6 +1,6 @@
 # Research OS: governing roadmap
 
-**Explicit source missingness accepted; EXP006 remains HISTORICAL_IDENTITY_BLOCKED.** The [latest identity report](exp006_identity_report.md) records a pushed 240-event feasibility sample across all six Development years and three bounded routes: SEC covers, dated-symbol OpenFIGI candidates and configured Tiingo metadata. None supplies certified class/listing/provider spans and 20-session lifecycle support; 0/240 are fully resolved, below the unchanged 95% standard, so identity scaling and later gates did not run. All 113 unknown source keys / 107 accessions remain excluded from both event and control pools. A separate correction fixes duplicate aggregates to 111 daily / 0 quarterly without changing union keys or earlier receipts. Timing v003, frozen experiments, EXP004 pause and EXP005 abandonment remain unchanged; performance and confirmation accesses are 0.
+**EXP006 abandoned for source feasibility; its economic hypothesis remains untested.** The [final bounded identity report](exp006_cover_identity_report.md) records the owner-authorized post-May-2-2019 redesign: 280 source candidates, 242 complete human-readable cover tuples and 227 single common-class candidates. Even perfect downstream mapping/path support could certify at most 81.1%, below the unchanged 95% standard. The sample therefore stopped before provider/path queries, scaling, matching, inference, freeze or Development. Revised source keys retain 64 unknowns/61 accessions; all earlier 113 unknown keys and prior reports remain unchanged. EXP004 stays paused; EXP005/EXP006 remain absent; performance and confirmation accesses are 0. No further EXP006 identity/inception rescue or automatic Phase 4B follows.
 
 Research OS builds reproducible, point-in-time investment experiments from primary evidence. It seeks net-of-cost alpha while requiring provenance, timing, historical identity, execution and statistical justification before accepting positive evidence. AI assists interpretation and critique; deterministic contracts control what may advance. Profitability is unestablished.
 
@@ -18,7 +18,7 @@ V002 and v003 retain their exact owner planning approvals and inactive status. O
 
 | Phase | Purpose | Entry/authorization boundary |
 | --- | --- | --- |
-| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Timing/source population passed within declared limits; source missingness accepted; three dated-identity routes failed feasibility before scaling or performance |
+| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Final EXP006 human-cover redesign failed 95% feasibility; candidate abandoned/untested before scaling or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; start with evidence-linked dated relationships, not a full graph platform |
 | 4C | First causal/counterfactual event experiment | Credible controls, pre-trends/placebos and explicit identification assumptions; no automatic causal label |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving economic evidence, costs, risk constraints and mechanism diversity |

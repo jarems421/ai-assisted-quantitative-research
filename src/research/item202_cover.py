@@ -64,9 +64,10 @@ def header_kind(text):
     return None
 
 
-def parse_cover(body):
+def parse_cover(body,header_matcher=None):
     text=body.decode('utf-8',errors='replace');p=CoverHTML(text);p.feed(text);p.close()
     rows=[];sha=hashlib.sha256(body).hexdigest()
+    match_header=header_matcher or header_kind
     # The cover ends at the first substantive Item heading. Exhibits or later
     # narrative tables cannot supply a missing cover identity.
     item=re.search(r'\bitem\s+(?:1\.01|2\.02|[1-9]\.\d\d)\b',normalized(' '.join(t for _,t in p.visible)),re.I)
@@ -78,7 +79,7 @@ def parse_cover(body):
         if table['start']>=cutoff:continue
         header=None;header_indices=None
         for cells in table['rows']:
-            kinds=[header_kind(c['text']) for c in cells]
+            kinds=[match_header(c['text']) for c in cells]
             if all(k in kinds for k in ('class_title','trading_symbol','exchange')):
                 header={k:kinds.index(k) for k in ('class_title','trading_symbol','exchange')}
                 header_indices={k:sum(bool(c['text']) for c in cells[:i]) for k,i in header.items()}
@@ -93,7 +94,7 @@ def parse_cover(body):
                 selected[field]=cell
             if any(c is None for c in selected.values()):continue
             values={k:c['text'] for k,c in selected.items()}
-            if any(header_kind(v) for v in values.values()):continue
+            if any(match_header(v) for v in values.values()):continue
             if len(set(values.values()))<3:continue
             symbol=values['trading_symbol']
             if not re.fullmatch(r'[A-Za-z0-9.\-/ ,;()]{1,40}',symbol):continue
@@ -144,6 +145,87 @@ def class_kind(title):
 
 def choose_class(rows):
     common=[r for r in rows if class_kind(r['class_title'])=='COMMON_EQUITY_CANDIDATE']
+    if len(common)>1:return {'status':'MULTIPLE_ELIGIBLE_CLASSES','row':None,'common_count':len(common)}
+    if len(common)==1:return {'status':'SINGLE_COMMON_CANDIDATE','row':common[0],'common_count':1}
+    return {'status':'NO_ELIGIBLE_COMMON_CLASS','row':None,'common_count':0}
+
+
+def parse_cover_v2(body,header_matcher=None):
+    """General label-above/below and quoted-symbol presentation review.
+
+    V001 extraction remains callable and its original receipts reproducible.
+    """
+    result=parse_cover(body,header_matcher);match_header=header_matcher or header_kind
+    text=body.decode('utf-8',errors='replace');p=CoverHTML(text);p.feed(text);p.close()
+    chunks=[];positions=[];length=0
+    for pos,data in p.visible:
+        chunks.append(data);positions.append((length,pos));length+=len(data)+1
+    visible=' '.join(chunks);m=re.search(r'\bitem\s+[1-9]\.\d\d\b',visible,re.I)
+    cutoff=len(text)
+    if m:cutoff=next((pos for offset,pos in reversed(positions) if offset<=m.start()),len(text))
+    rows=list(result['rows'])
+    for table in p.tables:
+        if table['start']>=cutoff:continue
+        for h,cells in enumerate(table['rows']):
+            kinds=[match_header(c['text']) for c in cells]
+            if not all(k in kinds for k in ('class_title','trading_symbol','exchange')):continue
+            indices={k:kinds.index(k) for k in ('class_title','trading_symbol','exchange')}
+            ordinals={k:sum(bool(c['text']) for c in cells[:i]) for k,i in indices.items()}
+            for neighbor in table['rows'][max(0,h-1):]:
+                if neighbor is cells:continue
+                nonempty=[c for c in neighbor if c['text']];selected={}
+                for field,index in indices.items():
+                    c=neighbor[index] if len(neighbor)>max(indices.values()) else None
+                    if c is None or not c['text']:
+                        i=ordinals[field];c=nonempty[i] if i<len(nonempty) else None
+                    selected[field]=c
+                if any(c is None for c in selected.values()):continue
+                values={k:c['text'] for k,c in selected.items()}
+                if any(match_header(v) for v in values.values()):continue
+                symbol=values['trading_symbol'].strip()
+                if len(symbol)>1 and symbol[0]==symbol[-1] and symbol[0] in ('"',"'",'“','”'):symbol=symbol[1:-1].strip()
+                if not re.fullmatch(r'[A-Za-z0-9.\-/]{1,15}',symbol):continue
+                if not re.search(r'(?:common|ordinary|stock|shares|notes|warrants|units|preferred|debt)',values['class_title'],re.I):continue
+                raw_symbol=values['trading_symbol'];values['trading_symbol']=symbol
+                if not any(all(x[k]==values[k] for k in values) for x in rows):
+                    rows.append(dict(values,source_trading_symbol_text=raw_symbol,source_hash=result['source_sha256'],additional_locators=[],
+                        source_locator={'representation':'HTML_TABLE_LABEL_ABOVE_OR_BELOW','character_start':min(c['start'] for c in selected.values()),
+                         'character_end':max(c['end'] for c in selected.values()),'field_character_spans':{k:[c['start'],c['end']] for k,c in selected.items()}}))
+    result.update(version='human_cover_table_v002',rows=rows)
+    return result
+
+
+def parse_cover_v4(body):
+    """Source-general header synonyms and explicit prose identity, no inference."""
+    result=parse_cover_v2(body);text=body.decode('utf8',errors='replace')
+    # Header matching is an explicit argument; no shared mutable parser state.
+    def relaxed(value):
+        t=normalized(value).lower().replace('e ach','each')
+        if re.search(r'title of (?:each )?class',t):return 'class_title'
+        return header_kind(value)
+    extra=parse_cover_v2(body,relaxed)
+    rows=extra['rows']
+    p=CoverHTML(text);p.feed(text);p.close();visible=normalized(' '.join(x for _,x in p.visible))
+    m=re.search(r'\bitem\s+[1-9]\.\d\d',visible,re.I);cover=visible[:m.start()] if m else visible
+    prose=re.search(r'(Common Stock[^;]{0,120});\s*Common stock traded on (?:the )?([^;]{2,80});\s*trading symbol\s+([A-Za-z0-9.\-]+)',cover,re.I)
+    if prose and not rows:
+        # Locate exact contributing phrases in the original visible data spans.
+        cutoff=next((pos for pos,x in p.visible if re.search(r'\bitem\s+[1-9]\.\d\d',x,re.I)),len(text))
+        contributors=[(pos,x) for pos,x in p.visible if pos<cutoff and normalized(x).strip() and
+                      (prose[0] in normalized(x) or any(normalized(x).strip() in prose[g] for g in (1,2,3)))]
+        if contributors:
+            rows.append({'class_title':prose[1].strip(),'trading_symbol':prose[3].rstrip('.'),'exchange':prose[2].strip(),
+                'source_hash':result['source_sha256'],'additional_locators':[],
+                'source_locator':{'representation':'EXPLICIT_COVER_PROSE','character_start':min(pos for pos,x in contributors),
+                    'character_end':max(pos+len(x) for pos,x in contributors)}})
+    extra.update(version='human_cover_table_v004',rows=rows)
+    return extra
+
+
+def choose_class_v2(rows):
+    common=[r for r in rows if class_kind(r['class_title'])=='COMMON_EQUITY_CANDIDATE' or normalized(r['class_title']).lower()=='common']
+    # Equivalent duplicate renderings do not become multiple economic classes.
+    common=list({(r['class_title'],r['trading_symbol'],r['exchange']):r for r in common}.values())
     if len(common)>1:return {'status':'MULTIPLE_ELIGIBLE_CLASSES','row':None,'common_count':len(common)}
     if len(common)==1:return {'status':'SINGLE_COMMON_CANDIDATE','row':common[0],'common_count':1}
     return {'status':'NO_ELIGIBLE_COMMON_CLASS','row':None,'common_count':0}

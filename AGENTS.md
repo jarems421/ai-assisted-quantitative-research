@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Final EXP006 identity redesign and abandonment (2026-10-13)
+
+- `docs/acceleration/owner_item202_cover_redesign_2026-10-13.md` authorized the final source-driven Development revision to 2019-05-02–2020-12-31. Official SEC rule evidence distinguishes human cover disclosure from phased Inline tagging; original design v001 and prior receipts are immutable. V002 requires event-date exact class/provider identity and a 20-session path, not a complete multi-year listing span.
+- `exp006_cover_identity_report.md` records ABANDON_EXP006_SOURCE_FEASIBILITY: the fixed 280-event sample has 242 complete cover tuples and 227 single common candidates. Its 81.1% maximum possible certificate coverage is below 95% even with perfect provider/path stages. Those stages, scaling, matching, inference/power, freeze and Development were not run. Hypothesis untested; no registration or economic verdict.
+- Retain all 113 unknown keys/107 accessions in the historical contract; revised-period 64 keys/61 accessions remain neither events nor controls. No further identity search, commercial provider, threshold reduction, moved inception or Phase 4B rescue is authorized. EXP004 paused; EXP005/EXP006 abandoned and absent; performance/confirmation 0. Preserve archives/prototypes, passed timing, frozen experiments, results and pins.
+
 ## Latest identity feasibility closure (2026-10-13)
 
 - `docs/acceleration/owner_item202_identity_2026-10-13.md` supersedes the previous Item-membership stop for this candidate. The versioned missingness contract retains all 113 unknown keys / 107 accessions; they are neither events nor controls, never imputed or dropped. No renewed unknown-source recovery is authorized.
