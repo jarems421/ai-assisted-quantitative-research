@@ -1,0 +1,117 @@
+{
+  "version": "EXP006_historical_population_validation_v001",
+  "local_tests_passed": 398,
+  "public_tests_passed": 170,
+  "tests_skipped": 0,
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "dcfb0a5849e8b4d88517fd8e3e1886bbbc099dbe0216422e71fad312ad12073d",
+      "tests_run": 398
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "fde6f71d4fecbcb3a991b86b432daad8acaf8270b0e1c2a14db4d12fafc0a4d4",
+      "tests_run": 170
+    },
+    {
+      "command": "python -m src.research.item202_historical_report --audit --check",
+      "exit_code": 0,
+      "log_sha256": "d576a2990ee1e3c9a23b163d0597003acc60861801a8728cfc88abec08119dd5"
+    },
+    {
+      "command": "python -m src.research.item202_date_repair_report --audit --check",
+      "exit_code": 0,
+      "log_sha256": "33326c37f8b6fc107d43dce4d107a27b29388f20315b97ec79be2262d1954c3a"
+    },
+    {
+      "command": "python -m src.research.item202_remedy --audit --check",
+      "exit_code": 0,
+      "log_sha256": "190a3aac2d7158e0cc8e2e88eca58cc363ce14c81971fd9a3497710fbd733aa3"
+    },
+    {
+      "command": "python -m src.research.item202_closure --audit --check",
+      "exit_code": 0,
+      "log_sha256": "03e0fd805a705e328b65404c293b09e9614e37c0371a52c8a10df1f9cf669460"
+    },
+    {
+      "command": "python -m src.research.integration_review --audit --check",
+      "exit_code": 0,
+      "log_sha256": "2e558a567b038e18e9daaaca27e6a20bbab48a7d2755a02611d369ec9bccce02"
+    },
+    {
+      "command": "python -m src.research.source_first_report --audit --check",
+      "exit_code": 0,
+      "log_sha256": "e220c0b349e8d777c795aac35cd3c1479dca519fcfd6dab38ebdbde967b71bac"
+    },
+    {
+      "command": "python -m src.research.procurement_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "fd0acf5bed1f9491e4a7d3b4651510cb3a821474a8bed6519a5b05b7c9702f87"
+    },
+    {
+      "command": "python -m src.research.fda_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "58e4af86f886fb58c57c19c16f73587a371f80e50bb7c5dbb9e4edc7242e7340"
+    },
+    {
+      "command": "python -m src.research.merger_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "4f8d8a2de33cfa4d13825563da81f756c2be84e509a993c27abcadd2bfe63056"
+    },
+    {
+      "command": "python -m src.research.phase4a --check",
+      "exit_code": 0,
+      "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+    },
+    {
+      "command": "python -m src.research.phase3_final --check",
+      "exit_code": 0,
+      "log_sha256": "da8a1670bbec618859a733b27ae698e5c3e327c84093759732f93dd73ef8d221"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "a0beb5d2cc256cb53e33f1ab7846245cb472adbf894e2e453d4bc42e3ad49444"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "command": "python -m pip check",
+      "exit_code": 0,
+      "log_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    }
+  ],
+  "preservation": {
+    "tracked_baseline_files": 543,
+    "baseline_files_unchanged": 536,
+    "deliberate_current_documentation_and_presentation_updates": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "docs/research_os.md",
+      "src/presentation/README.template.md",
+      "src/presentation/exp001.py",
+      "src/research/public_checks.py"
+    ],
+    "frozen_experiments_and_old_reports": "PASS_HASH_EXACT",
+    "prior_raw_archives": "Earlier original-byte audits PASS",
+    "new_source_ledger_and_union_replay": "PASS"
+  },
+  "performance_evaluations": 0,
+  "confirmation_accesses": 0,
+  "EXP004": "PAUSED",
+  "EXP005": "ABANDONED_ABSENT",
+  "EXP006": "ABSENT_UNFROZEN",
+  "private_logs": ".research/item202_historical_population/checks/ (ignored)"
+}

@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Latest historical-population closure (2026-10-13)
+
+- `docs/acceleration/owner_item202_population_identity_2026-10-13.md` authorized Development daily-index reconstruction and conditional dated-identity closure. `exp006_historical_population_report.md` records the completed 1,500-file union and HISTORICAL_ITEM_STATUS_BLOCKED: 113 original keys / 107 accessions lack Item membership after bounded official-source checks.
+- All daily/quarterly keys, date variants, cofilers and unavailable originals remain. Amendments are version-only, never separate signals or retrospective replacements. Preserve v003 timing, all earlier receipts/reports, the first404 stop and its reviewed conditional source representations unchanged. No missing Item becomes zero or a control.
+- Identity sampling/provider routes, inference, freeze and Development were deferred at the upstream Item-source stop; retain the95% identity standard, approved parameters and12-evaluation ceiling. EXP004 stays paused, EXP005 abandoned/absent, EXP006 absent. No automatic source expansion, old archive retry, performance, confirmation, Nexus/Aurora, paper/live or new phase follows.
+
 ## Latest Item 2.02 closure checkpoint (2026-10-13)
 
 - `docs/acceleration/owner_item202_date_repair_2026-10-13.md` authorized the bounded conservative-date repair and automatic remaining closure. `exp006_date_repair_report.md` records its result: SCALABLE_ACCEPTANCE_DATE_BOUND_READY and sampled classification pass, followed by HISTORICAL_POPULATION_VERSION_IDENTITY_BLOCKED.

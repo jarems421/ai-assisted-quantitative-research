@@ -137,4 +137,20 @@ class PopulationTests(unittest.TestCase):
             with self.assertRaises(ValueError):h.fetch(urls[1])
             self.assertEqual(len(calls),2)
 
+    def test_cofiler_header_requires_each_legal_filer_not_accession_alone(self):
+        from src.research.item202_availability import parse_header
+        b=b'ACCESSION NUMBER: 0000000001-15-000001\nCONFORMED SUBMISSION TYPE: 8-K\nFILED AS OF DATE: 20150105\nCENTRAL INDEX KEY: 1\nCENTRAL INDEX KEY: 2\n<ITEMS>2.02'
+        for cik in ('1','2'):
+            self.assertFalse(parse_header(b,cik=cik,accession='0000000001-15-000001',form='8-K')['source_chronology_contradictory'])
+        self.assertTrue(parse_header(b,cik='3',accession='0000000001-15-000001',form='8-K')['source_chronology_contradictory'])
+
+    def test_passed_timing_and_classification_artifacts_unchanged(self):
+        import hashlib
+        docs=Path('docs/acceleration')
+        frozen=json.loads((docs/'exp006_historical_population_manifest.json').read_bytes())['preserved_artifacts']
+        for name in ('exp006_availability_contract_v003.json','exp006_availability_certificate_v003.json',
+                     'exp006_date_validation_v003.json','exp006_primary_title_review_v003.json'):
+            p=docs/name
+            self.assertEqual(hashlib.sha256(p.read_bytes()).hexdigest(),frozen[p.as_posix()])
+
 if __name__=='__main__':unittest.main()
