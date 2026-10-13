@@ -40,6 +40,14 @@ class PopulationTests(unittest.TestCase):
         result=reconcile([a,b],[a,c])
         self.assertEqual([x['population_state'] for x in result['rows']],['PRESENT_BOTH','HISTORICAL_DAILY_ONLY','CURRENT_QUARTERLY_ONLY'])
         self.assertEqual(result,reconcile([b,a],[c,a]))
+        self.assertEqual(result['daily_equivalent_extra_rows'],0)
+        self.assertEqual(result['quarterly_equivalent_extra_rows'],0)
+
+    def test_disjoint_sources_duplicate_counts_nonnegative(self):
+        a,b=self.row(),self.row('2')
+        for daily,quarterly,counts in (([a,a],[b],(1,0)),([a],[b,b],(0,1)),([],[b],(0,0))):
+            result=reconcile(daily,quarterly)
+            self.assertEqual((result['daily_equivalent_extra_rows'],result['quarterly_equivalent_extra_rows']),counts)
 
     def test_equivalent_rows_and_cofilers_do_not_disappear(self):
         a,b=self.row(),self.row('2')

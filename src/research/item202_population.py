@@ -40,7 +40,7 @@ def reconcile(daily, quarterly):
     for r in quarterly: quarter_map[key(r)].append(r)
     result=[]
     for k in sorted(daily_map.keys()|quarter_map.keys()):
-        d,q=daily_map[k],quarter_map[k]
+        d,q=daily_map.get(k, []),quarter_map.get(k, [])
         state='PRESENT_BOTH' if d and q else 'HISTORICAL_DAILY_ONLY' if d else 'CURRENT_QUARTERLY_ONLY'
         result.append(dict(zip(KEY_FIELDS,k),population_state=state,
                            daily_observations=[{'day':r['observed_index_day'],'sha256':r['source_index_sha256'],'line':r['source_line']} for r in d],
