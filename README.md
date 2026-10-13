@@ -5,7 +5,7 @@
 
 **A Python research-engineering project investigating whether economically motivated investment ideas survive realistic costs and independent testing.** It combines public-source data pipelines, point-in-time controls, statistical analysis and reproducible backtesting. AI helps with interpretation and engineering; deterministic code governs evidence and experiment boundaries.
 
-One investment study is complete, reusable research infrastructure is built, and the latest predictive candidate ended at source-feasibility certification. **No profitable strategy or validated paper/live system has been established.**
+One investment study is complete, reusable research infrastructure is built, and the latest predictive candidate is blocked at original-source validation. **No profitable strategy or validated paper/live system has been established.**
 
 ### Six key highlights
 
@@ -16,7 +16,7 @@ One investment study is complete, reusable research infrastructure is built, and
 - **Execution and integration engineering:** a Decimal reference ledger tests fees, cash flows and corporate actions on synthetic fixtures. Nexus historical-universe pruning was detected and remains an execution blocker.
 - **Reproducible software delivery:** automated public CI, regression tests, versioned contracts and generated reports/figures from canonical results. Public software checks are separate from private-source and real-market certification.
 
-**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [final source-feasibility review](docs/acceleration/exp006_cover_identity_report.md) or [implementation boundaries](#architecture-and-implementation-status).
+**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current congressional source review](docs/acceleration/exp007_source_validation_report.md) or [implementation boundaries](#architecture-and-implementation-status).
 
 ## Vision, progress and next steps
 
@@ -25,7 +25,7 @@ The long-term goal is a small, auditable research platform that turns economic h
 | Step | Progress and next requirement |
 | --- | --- |
 | Build the evidence foundation | Bounded source archives, offline reconciliation, experiment controls and synthetic execution tests are implemented. Complete historical identity, lifecycle and execution certification remain open. |
-| Test one economic mechanism | The SPY timing study is complete. An SEC Item 2.02 candidate has passed timing and sampled classification audits. The filing population is reconstructed and missingness disclosed. A final post-May-2019 human-cover test found only 227/280 single common-class candidates, below the 95% feasibility gate even with perfect downstream mapping. EXP006 ended without performance; the hypothesis remains untested. |
+| Test one economic mechanism | The SPY timing study is complete. An SEC Item 2.02 candidate has passed timing and sampled classification audits. EXP006 ended untested at source feasibility. The next congressional-purchase/SPY study has pinned data and a chronological source split; its 96-observation original audit remains incomplete after image-only House records and a Senate 403. No new performance exists. |
 | Establish independent investment evidence | Future work requires certified populations, matched benchmarks, realistic costs and calibrated inference before any new performance access. The next candidate is not registered or frozen. |
 | Earn portfolio and forward capabilities | Risk-aware construction, optional evidence-linked relationship/causal tools and separately authorized forward paper observation are later milestones, conditional on surviving evidence. |
 
@@ -146,11 +146,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**EXP006 source-feasibility closure; no new alpha claim.** The [final identity redesign](docs/acceleration/exp006_cover_identity_report.md) tested 280 source candidates after the SEC human-readable cover rule took effect May 2, 2019. It found 242 complete tuples and 227 single common classes: at most 81.1% could qualify against the unchanged 95% requirement. The candidate was abandoned before provider/path queries, scaling, freeze or performance. Earlier artifacts and all unknown source states are preserved. EXP004 remains paused; EXP005 and EXP006 remain unregistered.
+**EXP007 original-source validation stop; no new performance.** The [congressional sprint](docs/acceleration/exp007_source_validation_report.md) verified 42 pinned disclosure-table files and froze 96 neutral original observations. 27 rows agree on source type/date/asset; 34 House observations have image-only/empty text, while a Senate 403 leaves 35 observations unavailable. The snapshot remains audited-derived with modeled information time. Required source validation is unresolved, so provider/inference/freeze/Development did not run. The eight-evaluation ceiling is untouched; confirmation outcomes remain unopened. EXP006 is permanently closed; EXP004 remains paused.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Final bounded identity redesign failed the unchanged 95% gate; EXP006 abandoned/untested before scaling or performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | EXP006 closed; EXP007 original-source validation blocked before provider certification, freeze or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |
@@ -176,7 +176,7 @@ python -m src.presentation.exp001 --check
 
 Public checks block external network and private data reads. EXP999 uses temporary directories and fake transports. Presentation regeneration (`python -m src.presentation.exp001`) uses published EXP001 processed records; it creates no remote job. These checks demonstrate software behavior, not certified market execution or alpha.
 
-Latest milestone validation: **426 local tests, 198 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp006_cover_identity_validation.json).
+Latest milestone validation: **436 local tests, 208 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp007_validation.json).
 
 The complete local suite additionally needs ignored original archives:
 

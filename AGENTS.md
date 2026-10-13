@@ -1,5 +1,12 @@
 # Repository instructions
 
+## Latest EXP007 source-validation stop (2026-10-13)
+
+- `docs/acceleration/owner_exp007_congressional_2026-10-13.md` authorized one congressional common-equity purchase/SPY 20-session predictive sprint, explicitly conditional on source/timing/identity/inference/power/Proof gates and a pushed freeze before outcomes. EXP007 is free but remains proposed, unregistered and unfrozen. The fresh ceiling is 8 real evaluations, none consumed.
+- `exp007_source_validation_report.md` records ORIGINAL_SOURCE_VALIDATION_BLOCKED. The pinned dataset is AUDITED_EXTERNAL_DERIVED with modeled EOD, never observed exact public time or PRIMARY_ORIGINAL. Source-only stages are Development 2014–2021 / owner-held confirmation 2022–2025. All 96 frozen observations remain: 27 rows corroborated, 34 House image-only/empty projections unknown, 35 Senate observations unavailable after one 403 and 34 unvisited sources. Never retry or bypass the persisted Senate stop or infer failed purchase classification from inaccessible originals.
+- Printed/resolved tickers and version lineage remain separate; unknown types/assets/identities are unavailable, not zero. Date-filter retrospective contributors. No 95% gate over all disclosures is imposed; the prospective estimand is source-resolved common purchases with provider/path certification. Those later stages, real inference/power, Proof, freeze and Development were NOT_RUN. Confirmation outcome accesses 0; source geometry inspection is separately disclosed.
+- EXP002–EXP006 are not reopened. EXP004 stays paused; EXP005/EXP006 abandoned and absent. No Item 2.02 rescue, other repository audit, paid provider, Phase 4B, Nexus/Aurora, optimization or paper/live action follows automatically. Preserve all source errors, original bodies, prototypes, prior reports, frozen artifacts, metrics and pins.
+
 ## Final EXP006 identity redesign and abandonment (2026-10-13)
 
 - `docs/acceleration/owner_item202_cover_redesign_2026-10-13.md` authorized the final source-driven Development revision to 2019-05-02–2020-12-31. Official SEC rule evidence distinguishes human cover disclosure from phased Inline tagging; original design v001 and prior receipts are immutable. V002 requires event-date exact class/provider identity and a 20-session path, not a complete multi-year listing span.

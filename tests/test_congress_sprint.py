@@ -3,6 +3,15 @@ from datetime import date,timedelta
 from src.research.congress_sprint import classify,resolution,eligible_open,consolidate,stage_guard,contributor_asof
 
 class CongressSprintTests(unittest.TestCase):
+    def test_printed_status_does_not_require_redundant_resolved_field(self):
+        r=resolution({'printed_ticker':'OLD','resolved_ticker':None,'resolution_status':'printed'})
+        self.assertEqual(r['status'],'SOURCE_RESOLVED_CANDIDATE');self.assertEqual(r['candidate_symbol'],'OLD')
+        self.assertIsNone(r['resolved_ticker']);self.assertIsNone(r['printed_equals_resolved'])
+    def test_source_matching_cannot_hide_action_or_date_disagreement(self):
+        from src.research.congress_originals import select_original_row
+        expected={'asset_description':'Issuer Common Stock','printed_ticker':'ABC','transaction_date':'2020-01-01','action':'purchase','trade_key':['house','D',0]}
+        actual={'asset_text':'Issuer Common Stock (ABC)','action':'sale','transaction_date':'2020-02-01'}
+        self.assertEqual(select_original_row(expected,[actual]),actual)
     def test_original_paths_include_declared_senate_paper_and_deny_escape(self):
         from src.research.congress_originals import original_url_allowed
         self.assertTrue(original_url_allowed('senate','https://efdsearch.senate.gov/search/view/paper/abc-def/'))

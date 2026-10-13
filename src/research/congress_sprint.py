@@ -22,13 +22,18 @@ def classify(trade):
 
 def resolution(trade):
     printed=trade.get('printed_ticker');resolved=trade.get('resolved_ticker');status=trade.get('resolution_status')
-    usable=status in ('printed','resolved') and bool(resolved)
+    # Upstream "printed" legitimately leaves resolvedTicker null. A resolver
+    # correction and an unchanged printed candidate are distinct source roles.
+    candidate=printed if status=='printed' and (not resolved or resolved==printed) else resolved if status=='resolved' else None
+    usable=bool(candidate)
     return {'printed_ticker':printed,'resolved_ticker':resolved,'resolution_status':status,
-            'resolution_reason':trade.get('resolution_reason'),'printed_equals_resolved':bool(printed and resolved and printed==resolved),
+            'resolution_reason':trade.get('resolution_reason'),'printed_equals_resolved':printed==resolved if printed and resolved else None,
+            'candidate_symbol':candidate,'candidate_basis':'PRINTED_UNCHANGED' if status=='printed' and candidate else 'UPSTREAM_RESOLVER' if status=='resolved' and candidate else None,
             'status':'SOURCE_RESOLVED_CANDIDATE' if usable else 'UNRESOLVED_SECURITY'}
 
 
 def eligible_open(event,sessions):
+    if sessions!=sorted(set(sessions)) or any(day.weekday()>4 for day in sessions):raise ValueError('Invalid session calendar')
     first=instant(event['first_available_at']);version=instant(event['available_at']);bound=max(first,version)
     if first>version:raise ValueError('Contradictory availability chronology')
     civil=bound.astimezone(NY).date();later=[d for d in sessions if d>civil]
@@ -60,10 +65,10 @@ def stage_guard(decision,development,confirmation,*,outcome=False,pushed_freeze=
     return True
 
 
-def contributor_asof(event,trades):
+def contributor_asof(event,trades,*,lookup=None):
     """Upstream contributor arrays can grow retrospectively; date each link."""
     bound=max(instant(event['first_available_at']),instant(event['available_at']));accepted=[];future=[];missing=[]
-    lookup={(r['chamber'],r['doc_id'],r['row_index']):r for r in trades}
+    if lookup is None:lookup={(r['chamber'],r['doc_id'],r['row_index']):r for r in trades}
     for identifier in json.loads(event.get('contributor_row_ids') or '[]'):
         doc,_,row=identifier.rpartition(':');trade=lookup.get((event['chamber'],doc,int(row)))
         if not trade:missing.append(identifier)

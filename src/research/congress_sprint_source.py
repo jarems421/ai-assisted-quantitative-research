@@ -13,6 +13,14 @@ OLD=ROOT/'data/raw/integration_v002/comparison'
 PLAN=DOCS/'exp007_source_sprint_contract.json'
 
 
+def pinned_manifest_retrieved_at():
+    pin=json.loads((OLD/'snapshot_pin.json').read_bytes())
+    receipts=[json.loads(f.read_bytes()) for f in (OLD/'CONGRESS/receipts').glob('*.json')]
+    times=[r['retrieved_at_utc'] for r in receipts if r.get('body',{}).get('sha256')==pin['source_sha256']]
+    if not times:raise ValueError('Pinned manifest retrieval provenance unavailable')
+    return min(times)
+
+
 class SprintHTTP(BoundedHTTP):
     """Reuse audited transport with this task's own persisted source ceilings."""
     def __init__(self,stage,provider,*,transport=None,sleep=None):
@@ -26,7 +34,14 @@ class SprintHTTP(BoundedHTTP):
 def acquire_snapshot():
     require_published(PLAN);plan=json.loads(PLAN.read_bytes());manifest=json.loads((OLD/'snapshot_manifest.json').read_bytes())
     if digest(manifest)!=plan['snapshot_manifest_sha256']:raise ValueError('Pinned manifest changed')
-    adapter=CongressionalDisclosuresAdapter(manifest,OLD/'snapshot_files',revision=plan['snapshot_revision'],retrieved_at=manifest['generatedAt'])
+    completed=RAW/'snapshot_acquisition.json'
+    if completed.exists():
+        result=json.loads(completed.read_bytes())
+        if result['plan_sha256']!=digest(plan):raise ValueError('Completed snapshot contract changed')
+        a=CongressionalDisclosuresAdapter(manifest,RAW/'snapshot_files',revision=plan['snapshot_revision'],retrieved_at=pinned_manifest_retrieved_at())
+        for f in plan['table_files']:a.verify(f)
+        return result
+    adapter=CongressionalDisclosuresAdapter(manifest,OLD/'snapshot_files',revision=plan['snapshot_revision'],retrieved_at=pinned_manifest_retrieved_at())
     http=SprintHTTP('snapshot','CONGRESS');results=[]
     for i,f in enumerate(plan['table_files']):
         target=RAW/'snapshot_files'/f['publicPath'];cache_hit=False

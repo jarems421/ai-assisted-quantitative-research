@@ -4,13 +4,13 @@ import json,re
 from src.research.spec import ROOT,digest
 from src.research.phase3c.sources import put
 from src.research.surfaces.congressional import CongressionalDisclosuresAdapter,TABLES
-from src.research.congress_sprint_source import DOCS,RAW,OLD,PLAN
+from src.research.congress_sprint_source import DOCS,RAW,OLD,PLAN,pinned_manifest_retrieved_at
 from src.research.congress_sprint import classify,resolution,contributor_asof
 
 
 def corpus(years=range(2012,2026)):
     plan=json.loads(PLAN.read_bytes());m=json.loads((OLD/'snapshot_manifest.json').read_bytes())
-    a=CongressionalDisclosuresAdapter(m,RAW/'snapshot_files',revision=plan['snapshot_revision'],retrieved_at=m['generatedAt'])
+    a=CongressionalDisclosuresAdapter(m,RAW/'snapshot_files',revision=plan['snapshot_revision'],retrieved_at=pinned_manifest_retrieved_at())
     return {t:[r for year in years for r in a.table(t,year)] for t in TABLES}
 
 

@@ -21,6 +21,17 @@ def original_url_allowed(chamber,url):
     return False
 
 
+def select_original_row(expected,rows,asset_field='asset_text',ticker_field=None):
+    """Locate independently of expected action/date, so discrepancies are visible."""
+    asset=normalized(expected.get('asset_description') or '');ticker=expected.get('printed_ticker')
+    matches=[x for x in rows if asset and asset in normalized(x[asset_field]) or ticker and
+             (ticker.casefold()==x.get(ticker_field,'').casefold() if ticker_field else re.search(r'\('+re.escape(ticker)+r'\)',x[asset_field],re.I))]
+    if len(matches)==1:return matches[0]
+    index=expected['trade_key'][2]
+    if 0<=index<len(rows) and rows[index] in matches:return rows[index]
+    return None
+
+
 def house_rows(pages):
     rows=[]
     for page in pages:
@@ -70,7 +81,7 @@ def acquire():
     put(RAW/'original_acquisition_result.json',value);return value
 
 
-def review():
+def review(version=2):
     sample=json.loads(SAMPLE.read_bytes());acquisition=json.loads((RAW/'original_acquisition_result.json').read_bytes())
     lookup={r['source_url']:r for r in acquisition['records']};records=[];parsed={}
     from src.research.congress_sprint_review import corpus
@@ -81,6 +92,7 @@ def review():
         source=lookup[r['source_url']];fields={k:'UNKNOWN' for k in ('transaction_type','transaction_date','asset_description','printed_ticker','member_identity','document_identity')}
         status='ORIGINAL_UNAVAILABLE';selected=None;reason=source['status']
         if source['status']=='ARCHIVED':
+            status='ORIGINAL_ROW_UNRESOLVED';reason='ORIGINAL_AVAILABLE_ROW_NOT_INDEPENDENTLY_RECONCILED'
             root=ROOT/source['source_root'];body=Archive(root).read(source['receipt']['body'])
             if r['trade_key'][0]=='house' and body.startswith(b'%PDF'):
                 if r['source_url'] not in parsed:
@@ -92,14 +104,15 @@ def review():
                 # Transaction/date association is anchored by exact original asset
                 # or printed symbol. Never search by expected transaction type.
                 asset=normalized(r['asset_description']);ticker=r.get('printed_ticker')
-                matches=[x for x in rows if (asset and asset in normalized(x['asset_text']) or ticker and re.search(r'\('+re.escape(ticker)+r'\)',x['asset_text'],re.I)) and x['transaction_date']==r['transaction_date']]
-                if len(matches)==1:
-                    selected=matches[0];status='ORIGINAL_ROW_CHECKED';reason='UNIQUE_SOURCE_ASSET_OR_PRINTED_TICKER_AND_DATE_ASSOCIATION'
+                selected=select_original_row(r,rows)
+                if selected:
+                    status='ORIGINAL_ROW_CHECKED';reason='SOURCE_ASSET_OR_PRINTED_TICKER_ASSOCIATION_INDEPENDENT_OF_EXPECTED_TYPE_AND_DATE'
                     fields['transaction_type']='AGREE' if selected['action']==r['action'] else 'DISAGREE'
-                    fields['transaction_date']='AGREE'
+                    fields['transaction_date']='AGREE' if selected['transaction_date']==r['transaction_date'] else 'DISAGREE'
                     fields['asset_description']='AGREE' if asset and asset in normalized(selected['asset_text']) else 'UNKNOWN_PRESENTATION_DIFFERENCE'
                     fields['printed_ticker']='AGREE' if ticker and re.search(r'\('+re.escape(ticker)+r'\)',selected['raw'],re.I) else 'UNKNOWN'
                 full=' '.join(p['text'] for p in projection['pages'])
+                if not full.strip():reason='IMAGE_ONLY_OR_EMPTY_TEXT_PROJECTION_UNKNOWN_NOT_NO_TRADES'
                 fields['document_identity']='AGREE' if r['trade_key'][1] in full else 'UNKNOWN'
                 trade=original_trades[tuple(r['trade_key'])];first=normalized(trade.get('filer_first') or '');last=normalized(trade.get('filer_last') or '')
                 if first and last and first in normalized(full) and last in normalized(full):fields['member_identity']='AGREE'
@@ -123,12 +136,12 @@ def review():
                             except ValueError:pass
                         if day:senate_rows.append(dict(values,transaction_date=day,source_locator={'representation':'HTML_TABLE','character_start':cells[0]['start'],'character_end':cells[-1]['end']}))
                 asset=normalized(r['asset_description']);ticker=r.get('printed_ticker')
-                matches=[x for x in senate_rows if x['transaction_date']==r['transaction_date'] and
-                    (asset and asset in normalized(x['asset']) or ticker and ticker.casefold()==x.get('ticker','').casefold())]
-                if len(matches)==1:
-                    selected=matches[0];status='ORIGINAL_ROW_CHECKED';reason='UNIQUE_OFFICIAL_SENATE_ASSET_DATE_ROW'
+                selected=select_original_row(r,senate_rows,asset_field='asset',ticker_field='ticker')
+                if selected:
+                    status='ORIGINAL_ROW_CHECKED';reason='OFFICIAL_SENATE_ASSET_OR_SYMBOL_ROW_INDEPENDENT_OF_EXPECTED_TYPE_AND_DATE'
                     fields['transaction_type']='AGREE' if selected['action'].lower()==r['action'] else 'DISAGREE'
-                    fields['transaction_date']='AGREE';fields['asset_description']='AGREE' if asset in normalized(selected['asset']) else 'UNKNOWN'
+                    fields['transaction_date']='AGREE' if selected['transaction_date']==r['transaction_date'] else 'DISAGREE'
+                    fields['asset_description']='AGREE' if asset in normalized(selected['asset']) else 'UNKNOWN'
                     fields['printed_ticker']='AGREE' if ticker and ticker.casefold()==selected.get('ticker','').casefold() else 'UNKNOWN'
                     fields['document_identity']='AGREE' if r['trade_key'][1] in r['source_url'] else 'UNKNOWN'
                 full=' '.join(x for _,x in parser.visible);trade=original_trades[tuple(r['trade_key'])]
@@ -140,11 +153,11 @@ def review():
             'source_sha256':source.get('receipt',{}).get('body',{}).get('sha256'),
             'resolved_ticker_not_required_in_original':True})
     fields={field:dict(Counter(r['fields'][field] for r in records)) for field in records[0]['fields']}
-    value={'version':'EXP007_original_field_validation_v001','sample_sha256':digest(sample),'records':records,'records_sha256':digest(records),
+    value={'version':f'EXP007_original_field_validation_v{version:03d}','sample_sha256':digest(sample),'records':records,'records_sha256':digest(records),
            'field_results':fields,'purchase_type_disagreements':sum(r['action_expected']=='purchase' and r['fields']['transaction_type']=='DISAGREE' for r in records),
            'classification_unresolved_observations':sum(r['fields']['transaction_type']=='UNKNOWN' for r in records),
            'no_unverified_purchase_classification_promoted':True,'performance_evaluations':0}
-    put(RAW/'original_field_validation_v001.json',value)
+    put(RAW/f'original_field_validation_v{version:03d}.json',value)
     print('Original field-level results:',fields);return value
 
 
