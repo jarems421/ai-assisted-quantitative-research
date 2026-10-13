@@ -1,0 +1,78 @@
+{
+  "version": "EXP006_specific_availability_preflight_v001",
+  "rule": "First regular NYSE session OPEN strictly AFTER SEC date filed calendar date; never execute on filing date",
+  "owner_status": "OWNER_APPROVED_CONDITIONAL_ON_SOURCE_SEMANTICS",
+  "intended_development_scope": [
+    "2015-01-01",
+    "2020-12-31"
+  ],
+  "timing_class": "MODELED_CONSERVATIVE_ELIGIBILITY",
+  "status": "AVAILABILITY_BLOCKED",
+  "policy_activated": false,
+  "observed_public_available_at_utc": null,
+  "observed_public_availability_status": "UNKNOWN",
+  "source_semantics": {
+    "filed_date_no_earlier_than_acceptance_certified": false,
+    "earlier_date_adjustment_documented": true,
+    "unchanged_acceptance_time_documented": true,
+    "historical_exception_mechanism_predates_development": true,
+    "adjusted_8K_frequency_in_development": null
+  },
+  "evidence": [
+    {
+      "url": "https://www.sec.gov/submit-filings/filer-support-resources/how-do-i-guides/request-filing-date-adjustment",
+      "status": 200,
+      "source_sha256": "d0f7d9a9c389d3fa113dd0d545b1e23fe389f0356781c7a2343b77f3c7358cdb",
+      "bytes": 93661,
+      "retrieved_at_utc": "2026-10-13T04:07:19.077703+00:00",
+      "receipt_sha256": "535de023ab5de7fb19990d33aaa6af3b3d6a07cf12356a54bc74f26790b77990",
+      "source_locators": {
+        "original_byte_anchor_offsets": [
+          78356,
+          79478
+        ],
+        "sections": [
+          "Request a Filing Date Adjustment: opening paragraph and request checklist"
+        ]
+      },
+      "document_date": "2024-06-04; updated 2024-10-31",
+      "interpretation": "Official date may reference earlier unsuccessful transmission; acceptance time remains unchanged"
+    },
+    {
+      "url": "https://www.sec.gov/info/edgar/regoverview.htm",
+      "status": 200,
+      "source_sha256": "4dd8b8470aa31433e48bb27239b69d330167cd70558d48834a272bf3c30628c0",
+      "bytes": 73733,
+      "retrieved_at_utc": "2026-10-13T04:07:19.713092+00:00",
+      "receipt_sha256": "590ad2cb089f82df705b5db3c9a7d70c34ae116bc545f7e96d3749df25d285ca",
+      "source_locators": {
+        "original_byte_anchor_offsets": [
+          38102,
+          63301
+        ],
+        "sections": [
+          "B.5 Hardship Exemptions / Rule 13 adjustments",
+          "C. Common Filing Concerns: Exchange Act report adjustments"
+        ]
+      },
+      "document_date": "2006-10-03; modified 2006-11-16",
+      "interpretation": "Pre-Development Rule 13 technical-delay mechanism applies to Exchange Act reports; no full-period census exception count established"
+    }
+  ],
+  "synthetic_counterexample": {
+    "evidence_class": "SYNTHETIC_ILLUSTRATION_NOT_OBSERVED_FILING",
+    "filing_date": "2015-01-05",
+    "acceptance_utc": "2015-01-07T16:00:00+00:00",
+    "date_only_rule_open_utc": "2015-01-06T14:30:00+00:00",
+    "result": "EXECUTION_PRECEDES_ACCEPTANCE"
+  },
+  "clock_fields_kept_distinct": [
+    "economic_event_date",
+    "SEC_filing_date",
+    "raw_acceptance_timestamp",
+    "modeled_eligibility",
+    "retrieved_at_utc"
+  ],
+  "old_v002_v003": "UNCHANGED_NOT_ACTIVATED",
+  "automatic_remedy": "NONE; no acceptance maximum, extra waiting period or adjusted-filing exclusion authorized by failed gate"
+}

@@ -1,0 +1,114 @@
+{
+  "version": "item202_closure_stop_v001",
+  "starting_head": "8e8ad0c7f676d916832bfaae4e0fb1ff17adf492",
+  "owner_authority": "owner_item202_closure_2026-10-13.md sections 3 and 24",
+  "owner_request_sha256": "578ee7565281b57a88695707f72eefcf0b2fe8e77a52e7538be6dc54453c9a67",
+  "status": "AVAILABILITY_BLOCKED",
+  "availability_contract_sha256": "40945568ece79cc3b5984e7a58f23ad6f3fa71175d644131bf51415dc1dd2a0b",
+  "design_parameters": "OWNER_ADOPTED_PRE_PERFORMANCE_NOT_RESCINDED",
+  "parameters": {
+    "candidate": "SEC_ITEM202_SOURCE_DECLARED_DISCLOSURE",
+    "estimand_type": "PREDICTIVE",
+    "feature": "Original 8-K source-declared Item 2.02 with primary corroboration where required",
+    "development": [
+      "2015-01-01",
+      "2020-12-31"
+    ],
+    "unopened_confirmation": [
+      "2021-01-01",
+      "2026-09-30"
+    ],
+    "horizon_regular_sessions": 20,
+    "entry_exit_concept": "Eligible regular open; exit open exactly 20 regular sessions after entry",
+    "cost_bps_per_side": 10,
+    "future_robustness": {
+      "cost_bps_per_side": 20,
+      "entry_delay_sessions": 1,
+      "run_now": false
+    },
+    "trial_ceiling": 12,
+    "materiality_paired_mean_percentage_points": 0.5,
+    "materiality_confidence": "Positive two-sided 95% lower endpoint against zero",
+    "matching_dimensions": [
+      "industry",
+      "size",
+      "momentum",
+      "calendar proximity"
+    ],
+    "matching_algorithm_frozen": false
+  },
+  "scientifically_ready_for_freeze": false,
+  "EXP006_created": false,
+  "spec_sha256": null,
+  "freeze_commit_sha256": null,
+  "performance_evaluations": 0,
+  "trial_budget_remaining": 12,
+  "held_out_confirmation_accesses": 0,
+  "Development_run": false,
+  "downstream_work": "DEFERRED_AVAILABILITY_STOP",
+  "source_coverage": {
+    "required_years": [
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020
+    ],
+    "full_period_census_acquired": false,
+    "full_period_8K_count": null,
+    "full_period_8KA_count": null,
+    "full_period_unique_CIKs": null,
+    "full_period_Item202_count": null,
+    "full_period_unknown_count": null,
+    "prior_Q1_prototype_receipt_sha256": "5002c87958a9fb62dcd91f257d4b875965d3488c8b0958695d8b3d604e3a9560",
+    "prior_prototype_not_promoted_to_full_period": true
+  },
+  "identity": {
+    "status": "NOT_TESTED_AT_UPSTREAM_STOP",
+    "mapped": null,
+    "unresolved": null,
+    "ended_classes": null,
+    "terminal_resolved": null
+  },
+  "market_data": {
+    "status": "NOT_TESTED_AT_UPSTREAM_STOP",
+    "provider": null,
+    "API_contract": null,
+    "requests": 0,
+    "coverage": null,
+    "corporate_actions": "NOT_CERTIFIED"
+  },
+  "benchmark": {
+    "status": "CONCEPTS_RETAINED_ALGORITHM_NOT_FROZEN",
+    "match_rate": null
+  },
+  "inference": {
+    "status": "NOT_RUN_AT_UPSTREAM_STOP",
+    "methods_evaluated": 0,
+    "chosen_method": null,
+    "calibration": null,
+    "power": null,
+    "effective_N": null
+  },
+  "requests": {
+    "SEC_source_certification": 2,
+    "new_filing_source": 0,
+    "identity_source": 0,
+    "market_data": 0,
+    "retries": 0,
+    "Nexus": 0,
+    "Aurora": 0,
+    "browser_documentation_discovery_tool_calls": 1,
+    "browser_documentation_discovery_queries": 2,
+    "browser_underlying_network_count": "UNKNOWN",
+    "GitHub_engineering": "Commit/push/hosted metadata accounted separately in delivery",
+    "purchase_upgrade": 0,
+    "account_wide_debit": "UNKNOWN"
+  },
+  "pre_request_setup": "Import-path and missing collector quota-key failures before any reservation; corrected under same frozen routes. Failed local edit also made no source request. Earlier configuration receipt retained.",
+  "policy_activation": false,
+  "EXP004": "OPERATIONALLY_PAUSED",
+  "EXP005": "ABANDONED_ABSENT",
+  "next_action": "Separate owner instruction for a bounded source-chronology remedy for this same candidate; no automatic downstream continuation"
+}

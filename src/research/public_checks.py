@@ -8,7 +8,7 @@ from src.research.sec_pilot.parsing import offline
 ROOT=Path(__file__).resolve().parents[2]
 PUBLIC_TESTS=('test_phase3d_execution','test_phase3d_proof','test_phase3d_certification',
               'test_phase3d_inference','test_phase3d_approval','test_phase3d_closure_inference','test_phase3d_closure_sources',
-              'test_phase3e_feasibility','test_phase3er_design','test_phase3er_inference','test_phase3_final','test_procurement_pilot','test_fda_pilot','test_merger_pilot','test_source_first','test_integrations_v2')
+              'test_phase3e_feasibility','test_phase3er_design','test_phase3er_inference','test_phase3_final','test_procurement_pilot','test_fda_pilot','test_merger_pilot','test_source_first','test_integrations_v2','test_item202_closure')
 
 
 def run():
