@@ -186,6 +186,11 @@ def client(group, urls, ceiling):
     h.m = dict(contract(), version='EXP006_date_repair_' + group, request_ceiling=ceiling,
                dispatch_sha256=digest(json.loads(MANIFEST.read_bytes())),
                retry={'transient_statuses': []})
+    original_fetch = h.fetch
+    def paced_fetch(*args, **kwargs):
+        pace_other_groups(group)
+        return original_fetch(*args, **kwargs)
+    h.fetch = paced_fetch
     return h
 
 
@@ -268,7 +273,7 @@ def acquire_archives():
         except HTTPError as error: response = error
         with response:
             chunks=[]; size=0
-            while chunk := response.read(1024*1024):
+            while chunk := response.read(min(1024*1024, dispatch['compressed_byte_ceiling']+1-size)):
                 chunks.append(chunk); size += len(chunk)
                 if size > dispatch['compressed_byte_ceiling']:
                     error=ValueError('Archive compressed ceiling'); error.partial_body=b''.join(chunks); raise error
@@ -278,8 +283,27 @@ def acquire_archives():
     audit = json.loads(EVIDENCE.read_bytes())['records']
     direct = {r['accession']: r for r in audit}
     requests=[]; slots=[]; route_found=False
+    roots=dispatch['roots']
+    prior_stop=RAW/'archive_days/publication_stop.json'
+    if prior_stop.exists():
+        # A different predeclared route is tested without clearing or retrying
+        # the stopped Oldloads transfer. All its error/prefix receipts survive.
+        for p in sorted((RAW/'archive_discovery/receipts').glob('*.json')):
+            r=json.loads(p.read_bytes())
+            requests.append({k:r[k] for k in ('url','status','body','request_started_at_utc','retrieved_at_utc')})
+        for p in sorted((RAW/'archive_days/errors').glob('*.json')):
+            r=json.loads(p.read_bytes());requests.append(r)
+            slots.append({'day':dispatch['days'][0],'route':'Oldloads','status':'INCOMPLETE_COMPRESSED_BYTE_CEILING',
+                          'partial_body':r.get('partial_body'),'HTTP_status':'UNKNOWN_NOT_RETAINED_BY_TRANSPORT_ERROR_RECEIPT',
+                          'recovered_headers':0,'header_matches':0,'never_retry':True})
+        roots=dispatch['roots'][1:]
+        remaining_discovery=dispatch['discovery_ceiling']-len(list((RAW/'archive_discovery/reservations').glob('*.json')))
+        h=client('archive_feed_discovery',roots,remaining_discovery)
+        remaining_days=dispatch['day_GET_ceiling']-len(list((RAW/'archive_days/reservations').glob('*.json')))
+        days_http=client('archive_feed_days',[],remaining_days)
+        days_http.transport=bounded_archive_transport
     from src.research.item202_date_bound import exact_header_reconciliation
-    for root in dispatch['roots']:
+    for root in roots:
         receipt, body = h.fetch(root, purpose='OFFICIAL_HEADER_ARCHIVE_DIRECTORY')
         requests.append({k:receipt[k] for k in ('url','status','body','request_started_at_utc','retrieved_at_utc')})
         print('Archive discovery', root, receipt['status'], flush=True)
@@ -316,6 +340,11 @@ def acquire_archives():
             if not name_entry: slots.append(slot); continue
             name=name_entry['name']
             if not re.fullmatch(r'\d{8}[A-Za-z0-9_.-]*\.gz',name): raise ValueError('Unsafe official archive link')
+            listed_size=name_entry.get('size')
+            if listed_size is not None and str(listed_size).isdigit() and int(listed_size)>dispatch['compressed_byte_ceiling']:
+                slot.update(status='OFFICIAL_LISTED_SIZE_EXCEEDS_FROZEN_BYTE_CEILING',listed_compressed_bytes=int(listed_size),
+                            archive_url=urljoin(archive_base,name),size_evidence_sha256=r['body']['sha256'])
+                slots.append(slot); break
             url=urljoin(archive_base,name);days_http.allowed.add(url)
             receipt,body=days_http.fetch(url,purpose='BOUNDED_ORIGINAL_DAY_ARCHIVE_RECONCILIATION')
             requests.append({k:receipt[k] for k in ('url','status','body','request_started_at_utc','retrieved_at_utc')})
@@ -342,7 +371,8 @@ def acquire_archives():
     slots += [{'day':d,'status':'DEFERRED_ARCHIVE_ROUTE_UNAVAILABLE','recovered_headers':0,'header_matches':0} for d in dispatch['days'] if d not in visited]
     output={'version':'EXP006_archive_feasibility_v003','status':'ORIGINAL_ARCHIVE_HEADERS_VERIFIED_SCOPED' if any(r['header_matches'] for r in slots) else 'OFFICIAL_ARCHIVE_FEASIBILITY_NOT_ESTABLISHED',
             'dispatch_sha256':digest(dispatch),'slots':slots,'requests':requests,
-            'day_GETs':len(days_http.starts()),'discovery_starts':sum(len(list((RAW/g/'reservations').glob('*.json'))) for g in ('archive_discovery','archive_feed_discovery')),
+            'day_GETs':sum(len(list((RAW/g/'reservations').glob('*.json'))) for g in ('archive_days','archive_feed_days')),
+            'discovery_starts':sum(len(list((RAW/g/'reservations').glob('*.json'))) for g in ('archive_discovery','archive_feed_discovery')),
             'historical_PAC_exhaustiveness_certified':False,'confirmation_accesses':0,
             'scope':'12 fixed Development days retained. Unvisited/denied routes do not prove all official archives inaccessible. No full archive scaling performed.'}
     write_public(result_path.name,output)

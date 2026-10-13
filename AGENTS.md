@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Latest Item 2.02 closure checkpoint (2026-10-13)
+
+- `docs/acceleration/owner_item202_date_repair_2026-10-13.md` authorized the bounded conservative-date repair and automatic remaining closure. `exp006_date_repair_report.md` records its result: SCALABLE_ACCEPTANCE_DATE_BOUND_READY and sampled classification pass, followed by HISTORICAL_POPULATION_VERSION_IDENTITY_BLOCKED.
+- Preserve the earlier exact-clock stop, v001/v002 reports/contracts and the new frozen sample/first-parser unknowns. The envelope is modeled; exact public availability stays UNKNOWN. No per-CIK clock correction or current-ticker substitute is permitted.
+- Both official archive day transfers stopped at their byte boundaries; preserve prefixes, errors and persisted stops, never resubmit them automatically. EXP006 remains absent/unfrozen; no performance or confirmation was opened. EXP004 remains paused and EXP005 abandoned/absent. This completed closure does not authorize another source campaign or phase.
+
 This repository builds Research OS, an evidence-native quantitative intelligence system with independent local analysis and downstream execution adapters. Preserve experiment history and distinguish historical simulation, Validation, held-out Test, and future paper/live results.
 
 ## Research integrity

@@ -16,7 +16,7 @@ One investment study is complete, reusable research infrastructure is built, and
 - **Execution and integration engineering:** a Decimal reference ledger tests fees, cash flows and corporate actions on synthetic fixtures. Nexus historical-universe pruning was detected and remains an execution blocker.
 - **Reproducible software delivery:** automated public CI, regression tests, versioned contracts and generated reports/figures from canonical results. Public software checks are separate from private-source and real-market certification.
 
-**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current source-closure review](docs/acceleration/exp006_freeze_review.md) or [implementation boundaries](#architecture-and-implementation-status).
+**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current source-closure review](docs/acceleration/exp006_date_repair_report.md) or [implementation boundaries](#architecture-and-implementation-status).
 
 ## Vision, progress and next steps
 
@@ -25,7 +25,7 @@ The long-term goal is a small, auditable research platform that turns economic h
 | Step | Progress and next requirement |
 | --- | --- |
 | Build the evidence foundation | Bounded source archives, offline reconciliation, experiment controls and synthetic execution tests are implemented. Complete historical identity, lifecycle and execution certification remain open. |
-| Test one economic mechanism | The SPY timing study is complete. An SEC Item 2.02 operating-results disclosure candidate is designed; its scalable original-acceptance provenance is blocked. The next scoped task would repair or reject that source bridge before downstream research. |
+| Test one economic mechanism | The SPY timing study is complete. An SEC Item 2.02 disclosure candidate has passed a conservative date-bound audit and sampled source classification. Historical population/version and dated class identity remain blocked before freeze or performance. |
 | Establish independent investment evidence | Future work requires certified populations, matched benchmarks, realistic costs and calibrated inference before any new performance access. The next candidate is not registered or frozen. |
 | Earn portfolio and forward capabilities | Risk-aware construction, optional evidence-linked relationship/causal tools and separately authorized forward paper observation are later milestones, conditional on surviving evidence. |
 
@@ -140,11 +140,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**Item 2.02 acceptance remedy passed its scoped raw-header audit; source scaling stopped at SCALABLE_ACCEPTANCE_PROVENANCE_BLOCKED.** The [current freeze review](docs/acceleration/exp006_freeze_review.md) records 48 invariant source-header probes, a verified 2015–2020 opening calendar and automatic full-source continuation. All 438,666 current index rows were retained; the official bulk clock conflicted with original-source UTC candidates in 24/48 fixed audit records. No guessed offsets or submission-body expansion followed. EXP006 remains absent/unfrozen; no Development performance or confirmation outcomes were opened. The failed filing-date-only rule, approved design parameters, prior evidence, EXP004 pause and EXP005 abandonment are preserved.
+**Item 2.02 timing repair passed; freeze remains blocked on historical population/version and security identity.** The [latest closure report](docs/acceleration/exp006_date_repair_report.md) records 240 new original-header checks: zero earlier dates/opens, 192 unchanged opens and 48 conservative one-session delays. All 96 sampled primary classifications reconcile after a retained, versioned heading-parser correction. The 438,666-row census stays intact, but its 109,347 provisional Item 2.02 source keys lack certified dated class/provider bindings. Both official archive transfers reached their bounded byte limit. EXP006 remains absent/unfrozen, with zero performance or confirmation accesses. The [earlier exact-clock failure](docs/acceleration/exp006_freeze_review.md), all prior evidence and experiment pauses remain unchanged.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Acceptance remedy scoped pass; scalable source-clock provenance blocked; no freeze/performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Conservative date-bound and sampled classification pass; historical population/version and class identity blocked; no freeze/performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |

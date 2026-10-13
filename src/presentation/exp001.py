@@ -98,6 +98,9 @@ def readme(manifest: dict, result: dict, registry=None) -> str:
     remedy_validation = root / "docs/acceleration/exp006_remedy_validation.json"
     if remedy_validation.exists():
         validation = remedy_validation
+    date_repair_validation = root / "docs/acceleration/exp006_date_repair_validation.json"
+    if date_repair_validation.exists():
+        validation = date_repair_validation
     if validation.exists():
         receipt = json.loads(validation.read_bytes())
         checks = (f"Latest milestone validation: **{receipt['local_tests_passed']} local tests, "

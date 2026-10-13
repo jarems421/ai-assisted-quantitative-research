@@ -99,6 +99,14 @@ class DateBoundTests(unittest.TestCase):
         self.assertFalse(primary_item202(b'<p>Item 5.02 Leadership changes</p>')['present'])
         self.assertIsNone(primary_item202(b'<p>No identifiable filing structure</p>')['present'])
 
+    def test_general_source_title_variants_and_reference_fail_closed(self):
+        from src.research.item202_primary_review import inspect
+        for heading in ('Item 2.02. Disclosure of Results of Operations and Financial Condition',
+                        'Item 2.02 Results of Operation and Financial Condition',
+                        'Item 2.02 — Results of Operations and Financial Condition'):
+            self.assertTrue(inspect(heading.encode())['present'])
+        self.assertIsNone(inspect(b'See Item 2.02 of the previous filing')['present'])
+
     def test_original_archive_header_reconciliation(self):
         h = b'<ACCEPTANCE-DATETIME>20150105120000\nACCESSION NUMBER: 0000000001-15-000001\nCONFORMED SUBMISSION TYPE: 8-K\nFILED AS OF DATE: 20150105\nCENTRAL INDEX KEY: 1\n<ITEMS>2.02'
         self.assertTrue(exact_header_reconciliation(h, h, cik='1', accession='0000000001-15-000001', form='8-K'))
