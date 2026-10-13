@@ -1,6 +1,6 @@
 # Research OS: governing roadmap
 
-**Phase 4A-I integration and source-contract continuation is complete.** [Implemented integrations](phase4a_integration_report.md) mechanically selected SEC and produced one [Item 2.02 predictive design candidate](next_experiment_design_candidate.md). Design-only structural review is READY_FOR_EXPERIMENT_FREEZE_REVIEW; executable freeze remains BLOCKED by source coverage, availability, historical class/terminal identity, execution and inference certification. The Congressional adapter remains audited external derived evidence. The three earlier family pilots stay closed; EXP004 stays paused, EXP005 abandoned/absent, approved policies inactive. No experiment, performance, Phase4B/4C or remote Nexus activity was started.
+**Item 2.02 closure stopped at AVAILABILITY_BLOCKED.** The owner adopted the feature, dates, 20-session horizon, costs, materiality and trial ceiling, with Development conditional on a certified freeze. The [availability review](exp006_freeze_review.md) found that SEC official filing dates can be adjusted to earlier attempted transmissions without changing acceptance time; a filing-date-only next-open rule can therefore precede acceptance. No full census, market-provider certification, inference, EXP006 registration/freeze or Development performance followed this required stop. EXP004 remains paused, EXP005 abandoned/absent and confirmation unopened. The prior integration/candidate artifacts and inactive v002/v003 policies remain unchanged.
 
 Research OS builds reproducible, point-in-time investment experiments from primary evidence. It seeks net-of-cost alpha while requiring provenance, timing, historical identity, execution and statistical justification before accepting positive evidence. AI assists interpretation and critique; deterministic contracts control what may advance. Profitability is unestablished.
 
@@ -18,7 +18,7 @@ V002 and v003 retain their exact owner planning approvals and inactive status. O
 
 | Phase | Purpose | Entry/authorization boundary |
 | --- | --- | --- |
-| **4A** | **Next experiment discovery, feasibility and eventual freeze** | 4A-I implemented; SEC Item 2.02 design-only review ready; remaining scientific certificates block freeze; no performance |
+| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Item 2.02 closure stopped at availability semantics; no executable freeze or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; start with evidence-linked dated relationships, not a full graph platform |
 | 4C | First causal/counterfactual event experiment | Credible controls, pre-trends/placebos and explicit identification assumptions; no automatic causal label |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving economic evidence, costs, risk constraints and mechanism diversity |
@@ -33,7 +33,7 @@ The [researchability contract](phase4a_researchability_contract.md) uses evidenc
 
 Future mechanisms may be PREDICTIVE or CAUSAL_CANDIDATE. Predictive work needs a predeclared benchmark and PIT/non-hindsight population, honest historical class identity, dependence/calibration/power, costs/trial rules and survivor-safe execution; it does not automatically need a natural experiment or treatment effect. Causal claims require additional identification/counterfactual evidence and the separately authorized Phase4C milestone. No frozen experiment/metric or source gate is weakened.
 
-The bounded [v002 source-contract prototype](phase4a_source_contract_prototype.md) and one [Item 2.02 design candidate](next_experiment_design_candidate.md) are now complete. Next owner decision: review that concrete candidate and separately authorize exact bounded closure of its remaining scientific certificates. Structural review readiness does not authorize registration, freeze or performance. No graph or full platform is needed before this source contract. Standardize entity/version relationships only when the contract needs them.
+The bounded [v002 source-contract prototype](phase4a_source_contract_prototype.md) and one [Item 2.02 design candidate](next_experiment_design_candidate.md) are now complete. The owner commissioned closure and conditionally authorized Development after freeze. That pass stopped under sections 3/24 at the unsupported filing-date-only timing rule; see the [closure review](exp006_freeze_review.md). Any source-chronology remedy requires a separate bounded instruction; no renewed parameter adoption is needed merely because the gate failed. No graph or full platform is needed before this source contract. Standardize entity/version relationships only when the contract needs them.
 
 ## Architecture and responsibilities
 
@@ -73,7 +73,7 @@ The [original long-term owner plan](owner_plan_2026-10-12.md) and supplied PDFs 
 
 ## Current operating state
 
-- PHASE4A_FAMILY_SCREEN = COMPLETE_THREE_FAMILIES_EXHAUSTED; PHASE4A_I = INTEGRATION_AND_SOURCE_CONTRACT_COMPLETE; NEXT_DESIGN = SEC_ITEM202; EXPERIMENT_REGISTERED = FALSE; EXECUTABLE_FREEZE = BLOCKED.
+- PHASE4A_FAMILY_SCREEN = COMPLETE_THREE_FAMILIES_EXHAUSTED; PHASE4A_I = INTEGRATION_AND_SOURCE_CONTRACT_COMPLETE; NEXT_DESIGN = SEC_ITEM202; ITEM202_CLOSURE = AVAILABILITY_BLOCKED; EXPERIMENT_REGISTERED = FALSE; EXECUTABLE_FREEZE = BLOCKED.
 - PERFORMANCE_AUTHORIZED = FALSE; NEXUS_EXECUTION = BLOCKED.
 - EXP004 = OPERATIONALLY_PAUSED; EXP005 = ABANDONED_FOR_APPROVED_DESIGN_AND_ABSENT.
 - PAPER_TRADING and LIVE_TRADING = NOT_AUTHORIZED; profitability UNESTABLISHED.

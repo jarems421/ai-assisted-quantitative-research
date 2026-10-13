@@ -92,6 +92,9 @@ def readme(manifest: dict, result: dict, registry=None) -> str:
     integration_validation = root / "docs/acceleration/phase4a_integration_validation.json"
     if integration_validation.exists():
         validation = integration_validation
+    closure_validation = root / "docs/acceleration/exp006_closure_validation.json"
+    if closure_validation.exists():
+        validation = closure_validation
     if validation.exists():
         receipt = json.loads(validation.read_bytes())
         checks = (f"Latest milestone validation: **{receipt['local_tests_passed']} local tests, "

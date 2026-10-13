@@ -113,11 +113,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**Phase 4A-I integration and source-contract continuation is complete.** [Implemented integrations](docs/acceleration/phase4a_integration_report.md) mechanically selected SEC and produced one [Item 2.02 predictive design candidate](docs/acceleration/next_experiment_design_candidate.md). Design-only structural review is READY_FOR_EXPERIMENT_FREEZE_REVIEW; executable freeze remains BLOCKED by source coverage, availability, historical class/terminal identity, execution and inference certification. The Congressional adapter remains audited external derived evidence. The three earlier family pilots stay closed; EXP004 stays paused, EXP005 abandoned/absent, approved policies inactive. No experiment, performance, Phase4B/4C or remote Nexus activity was started.
+**Item 2.02 closure stopped at AVAILABILITY_BLOCKED.** The owner adopted the feature, dates, 20-session horizon, costs, materiality and trial ceiling, with Development conditional on a certified freeze. The [availability review](docs/acceleration/exp006_freeze_review.md) found that SEC official filing dates can be adjusted to earlier attempted transmissions without changing acceptance time; a filing-date-only next-open rule can therefore precede acceptance. No full census, market-provider certification, inference, EXP006 registration/freeze or Development performance followed this required stop. EXP004 remains paused, EXP005 abandoned/absent and confirmation unopened. The prior integration/candidate artifacts and inactive v002/v003 policies remain unchanged.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | 4A-I implemented; SEC Item 2.02 design review ready; executable freeze blocked; no experiment or performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Item 2.02 closure: AVAILABILITY_BLOCKED; no experiment freeze or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |
@@ -143,7 +143,7 @@ python -m src.presentation.exp001 --check
 
 Public checks block external network and private data reads. EXP999 uses temporary directories and fake transports. Presentation regeneration (`python -m src.presentation.exp001`) uses published EXP001 processed records; it creates no remote job. These checks demonstrate software behavior, not certified market execution or alpha.
 
-Latest milestone validation: **331 local tests, 103 public tests, 0 skipped**. See [validation receipt](docs/acceleration/phase4a_integration_validation.json).
+Latest milestone validation: **338 local tests, 110 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp006_closure_validation.json).
 
 The complete local suite additionally needs ignored original archives:
 
