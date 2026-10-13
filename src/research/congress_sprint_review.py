@@ -8,10 +8,10 @@ from src.research.congress_sprint_source import DOCS,RAW,OLD,PLAN
 from src.research.congress_sprint import classify,resolution,contributor_asof
 
 
-def corpus():
+def corpus(years=range(2012,2026)):
     plan=json.loads(PLAN.read_bytes());m=json.loads((OLD/'snapshot_manifest.json').read_bytes())
     a=CongressionalDisclosuresAdapter(m,RAW/'snapshot_files',revision=plan['snapshot_revision'],retrieved_at=m['generatedAt'])
-    return {t:[r for year in range(2012,2026) for r in a.table(t,year)] for t in TABLES}
+    return {t:[r for year in years for r in a.table(t,year)] for t in TABLES}
 
 
 def geometry():
@@ -63,7 +63,8 @@ def geometry():
 
 
 def validation_sample():
-    g=json.loads((DOCS/'exp007_source_geometry.json').read_bytes());data=corpus();trades=data['political_trades'];events=data['political_trade_events']
+    g=json.loads((DOCS/'exp007_source_geometry.json').read_bytes())
+    data=corpus(range(int(g['development'][0][:4]),int(g['development'][1][:4])+1));trades=data['political_trades'];events=data['political_trade_events']
     versions={(e['chamber'],e['source_doc_id'],e['source_row_index']) for e in events if e['version']>1 and e['available_at'][:10]<=g['development'][1]}
     eligible=[r for r in trades if g['development'][0]<=r['available_at'][:10]<=g['development'][1]]
     strata=defaultdict(list)

@@ -3,6 +3,13 @@ from datetime import date,timedelta
 from src.research.congress_sprint import classify,resolution,eligible_open,consolidate,stage_guard,contributor_asof
 
 class CongressSprintTests(unittest.TestCase):
+    def test_original_paths_include_declared_senate_paper_and_deny_escape(self):
+        from src.research.congress_originals import original_url_allowed
+        self.assertTrue(original_url_allowed('senate','https://efdsearch.senate.gov/search/view/paper/abc-def/'))
+        self.assertTrue(original_url_allowed('house','https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2014/D.pdf'))
+        self.assertFalse(original_url_allowed('senate','https://example.com/search/view/paper/abc/'))
+        self.assertFalse(original_url_allowed('house','https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2014/../D.pdf'))
+
     def test_purchase_sale_unknown_and_asset_missingness(self):
         self.assertEqual(classify({'action':'purchase','asset_type_code':'ST'})['status'],'COMMON_EQUITY_CANDIDATE')
         self.assertEqual(classify({'action':'sale','asset_type_code':'ST'})['status'],'EXCLUDED_NON_PURCHASE')
