@@ -147,4 +147,5 @@ def evaluate_gate(records,contract):
     mechanical=all(checks.values())
     return {'verdict':'REQUIRES_CLUSTER_REVIEW' if mechanical else 'ABANDON_EXP007_SOURCE_FEASIBILITY',
         'checks':checks,'decisive':len(decisive),'unknown':len(unresolved),'agreement_rates':rates,
-        'purchase_nonpurchase_disagreements':purchase_disagreements,'unresolved_clusters':clusters}
+        'purchase_nonpurchase_disagreements':purchase_disagreements,'unresolved_clusters':clusters,
+        'cluster_disposition':'REVIEW_REQUIRED' if mechanical else 'PATTERNS_RETAINED; CORE_FAILURE_ALREADY_SUFFICIENT; NO_CLUSTER_PASS_CERTIFICATE'}

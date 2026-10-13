@@ -5,7 +5,7 @@
 
 **A Python research-engineering project investigating whether economically motivated investment ideas survive realistic costs and independent testing.** It combines public-source data pipelines, point-in-time controls, statistical analysis and reproducible backtesting. AI helps with interpretation and engineering; deterministic code governs evidence and experiment boundaries.
 
-One investment study is complete, reusable research infrastructure is built, and the latest predictive candidate is blocked at original-source validation. **No profitable strategy or validated paper/live system has been established.**
+One investment study is complete, reusable research infrastructure is built, and the latest predictive candidate was abandoned after a bounded source-validation repair. **No profitable strategy or validated paper/live system has been established.**
 
 ### Six key highlights
 
@@ -16,7 +16,7 @@ One investment study is complete, reusable research infrastructure is built, and
 - **Execution and integration engineering:** a Decimal reference ledger tests fees, cash flows and corporate actions on synthetic fixtures. Nexus historical-universe pruning was detected and remains an execution blocker.
 - **Reproducible software delivery:** automated public CI, regression tests, versioned contracts and generated reports/figures from canonical results. Public software checks are separate from private-source and real-market certification.
 
-**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current congressional source review](docs/acceleration/exp007_source_validation_report.md) or [implementation boundaries](#architecture-and-implementation-status).
+**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [final House source review](docs/acceleration/exp007_house_repair_report.md) or [implementation boundaries](#architecture-and-implementation-status).
 
 ## Vision, progress and next steps
 
@@ -146,11 +146,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**EXP007 original-source validation stop; no new performance.** The [congressional sprint](docs/acceleration/exp007_source_validation_report.md) verified 42 pinned disclosure-table files and froze 96 neutral original observations. 27 rows agree on source type/date/asset; 34 House observations have image-only/empty text, while a Senate 403 leaves 35 observations unavailable. The snapshot remains audited-derived with modeled information time. Required source validation is unresolved, so provider/inference/freeze/Development did not run. The eight-evaluation ceiling is untouched; confirmation outcomes remain unopened. EXP006 is permanently closed; EXP004 remains paused.
+**EXP007 closed after the final House-only source repair; hypothesis untested.** The [latest report](docs/acceleration/exp007_house_repair_report.md) retains all 61 frozen House observations: 28 have decisive original type/date/asset validation, below the unchanged 55-row requirement; 33 remain unresolved after local OCR of 34 observations. The Senate 403 and earlier House/Senate report remain preserved. No provider/path certification, inference/power, experiment registration/freeze or Development occurred. Performance evaluations and confirmation outcome accesses remain 0; no further source rescue is authorized. EXP004 stays paused and EXP005/EXP006 abandoned/absent.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | EXP006 closed; EXP007 original-source validation blocked before provider certification, freeze or performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | EXP006 and EXP007 source-feasibility candidates closed; no new performance or automatic next phase |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |
@@ -176,7 +176,7 @@ python -m src.presentation.exp001 --check
 
 Public checks block external network and private data reads. EXP999 uses temporary directories and fake transports. Presentation regeneration (`python -m src.presentation.exp001`) uses published EXP001 processed records; it creates no remote job. These checks demonstrate software behavior, not certified market execution or alpha.
 
-Latest milestone validation: **436 local tests, 208 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp007_validation.json).
+Latest milestone validation: **451 local tests, 223 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp007_house_validation.json).
 
 The complete local suite additionally needs ignored original archives:
 

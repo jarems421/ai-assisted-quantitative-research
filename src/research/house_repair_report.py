@@ -95,7 +95,8 @@ def certify():
         dependency_inventory_sha256=hashlib.sha256((DOCS/'exp007_house_ocr_inventory.json').read_bytes()).hexdigest(),
         scientific_source_requests=0,senate_requests=0,market_provider_requests=0,registered=False,frozen=False,
         remaining_gates='NOT_RUN_UPSTREAM_SOURCE_STOP' if value['gate']['verdict']=='ABANDON_EXP007_SOURCE_FEASIBILITY' else 'CONTINUATION_REQUIRED',
-        model_hashes=json.loads((RAW/'ocr'/scope['source_hashes'][0]/'projection.json').read_bytes())['model_hashes'])
+        model_hashes=json.loads((RAW/'ocr'/scope['source_hashes'][0]/'projection.json').read_bytes())['model_hashes'],
+        execution_provenance_sha256=hashlib.sha256((DOCS/'exp007_house_ocr_execution_provenance.json').read_bytes()).hexdigest())
     put(CERT,output);return output
 
 
@@ -112,7 +113,7 @@ def report(check=False):
 
 [Design v002](exp007_design_candidate_v002.json) restricts the estimand to source-resolved House common-equity purchase disclosures versus SPY over 20 sessions. This source-access revision precedes all market outcomes; it does not select members, parties, amounts, sectors or returns. The earlier [House/Senate report](exp007_source_validation_report.md), 96-row sample, schema/snapshot receipts, original PDFs/projections and Senate 403 remain unchanged. Senate observations are outside v002, not House failures. No Senate request or access workaround occurred.
 
-All **61 existing House observations** remain, with no replacements. **27** had decisive text-source validation before repair. OCR attempted the other **34 observations across {c['OCR_documents']} cached official PDFs**, processing {c['total_OCR_pages']} pages. Full transaction documents were projected because the archived image-only PDFs supply no reliable text page index; source geometry alone drives row extraction. No expected asset, ticker, action or date is supplied to the OCR worker. A general parser extracts rows first; association uses source asset/printed-symbol evidence, then independently compares action/date. Ambiguous associations and low-confidence OCR remain UNKNOWN.
+All **61 existing House observations** remain, with no replacements. **27** had decisive text-source validation before repair. OCR attempted the other **34 observations across {c['OCR_documents']} cached official PDFs**, processing {c['total_OCR_pages']} pages. Full transaction documents were projected because the archived image-only PDFs supply no reliable text page index; source geometry alone drives row extraction. No expected asset, ticker, action or date is supplied to the OCR worker. A general parser extracts rows first; association uses source asset/printed-symbol evidence, then independently compares action/date. Ambiguous associations and low-confidence OCR remain UNKNOWN. Labeled checkbox cells retain source-image coordinates and ink measurements; multiple marked cells remain ambiguous. Repeated assets corroborate core fields only if every matching source row has identical action/date values. Source-informed general layout interpretation is not an independent classifier holdout.
 
 The isolated pipeline uses RapidOCR 3.4.0, ONNX Runtime 1.23.2, pypdfium2 4.30.0 and packaged local models. Four local processes partition the fixed documents; each uses one CPU inference thread and identical settings. Render hashes, page numbers, token boxes/confidences, source hashes, model/configuration and projection hashes are retained privately. OCR is **DERIVED_PROJECTION_OF_PRIMARY_ORIGINAL**, not a new primary source. [Wheel lock](exp007_house_ocr_requirements.lock), [licence/notice inventory](exp007_house_ocr_inventory.json) and [canonical certificate](exp007_house_source_certificate_v002.json) preserve reproduction evidence. Canonical research requirements are unchanged. Rendering follows the [pypdfium2 API](https://pypdfium2.readthedocs.io/en/v4/python_api.html); engine provenance is [RapidOCR](https://github.com/RapidAI/RapidOCR).
 
@@ -140,7 +141,7 @@ These retained clusters describe extraction missingness, not market outcomes. Th
 
 **Abandon EXP007 as a source-feasibility candidate.** No third source repair, fresh sample, reduced thresholds, modern-year restriction, Senate retry, alternate original route or new OCR provider follows. The predictive economic hypothesis remains untested. Provider/class/path certification, actual event aggregation, market sessions/prices, inference calibration, synthetic power, Proof, spec, freeze and Development are **NOT_RUN**. There is no effect, interval, p-value or materiality verdict. The 8-evaluation ceiling remains untouched; performance evaluations and confirmation outcome accesses are **0**.
 
-Scientific source starts: **0**; Senate **0**; provider/identity/Nexus/Aurora **0**. Only cached originals were used; no purchase or upgrade. Account-wide debit is UNKNOWN. Source geometry keeps Development 2014–2021 and owner-held confirmation 2022–2025 as prior planning boundaries; no stage was opened or shortened to improve coverage. Modeled EOD and second-later-session entry remain proposed contracts; exact public availability remains UNKNOWN, no trading eligibility view was activated.
+Scientific source starts: **0**; Senate **0**; provider/identity/Nexus/Aurora **0**. Only cached originals were used; no purchase or upgrade. Account-wide debit is UNKNOWN. Source geometry keeps Development 2014–2021 and owner-held confirmation 2022–2025 as prior planning boundaries; no stage was opened or shortened to improve coverage. The owner-predeclared modeled EOD and second-later-session entry contract remains unactivated; exact public availability remains UNKNOWN.
 
 Validation: **{v.get('local_tests_passed','pending')} local tests, {v.get('public_tests_passed','pending')} public tests, {v.get('tests_skipped','pending')} skipped**. [Receipt](exp007_house_validation.json). Public report regeneration reads tracked receipts; private audit verifies immutable PDFs, render/text hashes, blind extraction replay and the frozen 61-row frame. Public CI needs no OCR binary, private filing or network.
 
@@ -166,7 +167,12 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--build',action='store_true');p.add_argument('--audit',action='store_true');p.add_argument('--check',action='store_true');a=p.parse_args()
     if a.build:print(certify()['gate'])
     if a.audit:
-        c=json.loads(CERT.read_bytes());r=review()
+        c=json.loads(CERT.read_bytes())
+        for name,sha in c['code_hashes'].items():
+            if hashlib.sha256((ROOT/'src/research'/name).read_bytes()).hexdigest()!=sha:raise ValueError('Pinned source-replay code changed')
+        provenance=json.loads((DOCS/'exp007_house_ocr_execution_provenance.json').read_bytes())
+        if hashlib.sha256((ROOT/'.research/exp007_house/worker_runtime_source.py').read_bytes()).hexdigest()!=provenance['producer_code_sha256']:raise ValueError('OCR producer snapshot differs')
+        r=review()
         if digest(r)!=c['private_review_sha256']:raise ValueError('Source replay differs')
         print('Private source/render/row replay PASS')
     print(report(a.check))

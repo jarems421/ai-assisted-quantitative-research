@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Final EXP007 House-only source closure (2026-10-13)
+
+- `docs/acceleration/owner_exp007_house_repair_2026-10-13.md` authorized one final pre-performance House-only revision using exactly the existing 61 House observations, with local OCR for the 34 unresolved observations. Preserve the original 96-row House/Senate sample, reports, snapshot/schema receipts, original PDFs/projections and Senate 403; never retry/bypass Senate access.
+- `exp007_house_repair_report.md` records ABANDON_EXP007_SOURCE_FEASIBILITY: 28/61 decisive type/date/asset rows, below the frozen minimum 55. The fixed denominator and all unknowns remain. The hypothesis is untested; no third source repair, replacement sample, threshold reduction, modern-year restriction or new OCR/source provider is authorized.
+- EXP007 remains unregistered/unfrozen/absent. Provider/path, actual event aggregation, inference/power, Proof and Development were NOT_RUN. Performance evaluations and confirmation outcome accesses are 0; the 8-evaluation ceiling is untouched. No new experiment, Phase 4B, Nexus/Aurora, optimization or paper/live action follows automatically. EXP002–EXP006 remain closed to new research, EXP004 paused, EXP005/EXP006 abandoned/absent.
+
 ## Latest EXP007 source-validation stop (2026-10-13)
 
 - `docs/acceleration/owner_exp007_congressional_2026-10-13.md` authorized one congressional common-equity purchase/SPY 20-session predictive sprint, explicitly conditional on source/timing/identity/inference/power/Proof gates and a pushed freeze before outcomes. EXP007 is free but remains proposed, unregistered and unfrozen. The fresh ceiling is 8 real evaluations, none consumed.

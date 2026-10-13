@@ -1,6 +1,6 @@
 # Research OS: governing roadmap
 
-**EXP007 congressional purchase sprint stopped at original-source validation.** The [latest report](exp007_source_validation_report.md) records the pinned audited-derived snapshot, a source-only Development 2014–2021 / confirmation 2022–2025 split, and 96 frozen original-validation observations. 27 independently reconciled rows agree on type/date/asset; 34 House observations have image-only/empty text and 35 Senate observations remain unavailable after one preserved 403 stop. No purchase misclassification was established, but cross-source validation is uncertified. Provider/path, inference/power, Proof, registration/freeze and Development did not run; performance and confirmation outcomes remain 0. EXP002–EXP006 were not reopened; EXP004 stays paused and EXP005/EXP006 abandoned.
+**EXP007 closed after the final House-only source repair; hypothesis untested.** The [latest report](exp007_house_repair_report.md) retains all 61 frozen House observations: 28 have decisive original type/date/asset validation, below the unchanged 55-row requirement; 33 remain unresolved after local OCR of 34 observations. The Senate 403 and earlier House/Senate report remain preserved. No provider/path certification, inference/power, experiment registration/freeze or Development occurred. Performance evaluations and confirmation outcome accesses remain 0; no further source rescue is authorized. EXP004 stays paused and EXP005/EXP006 abandoned/absent.
 
 Research OS builds reproducible, point-in-time investment experiments from primary evidence. It seeks net-of-cost alpha while requiring provenance, timing, historical identity, execution and statistical justification before accepting positive evidence. AI assists interpretation and critique; deterministic contracts control what may advance. Profitability is unestablished.
 
@@ -18,7 +18,7 @@ V002 and v003 retain their exact owner planning approvals and inactive status. O
 
 | Phase | Purpose | Entry/authorization boundary |
 | --- | --- | --- |
-| **4A** | **Next experiment discovery, feasibility and eventual freeze** | EXP006 permanently closed; EXP007 source validation blocked, no automatic downstream phase |
+| **4A** | **Next experiment discovery, feasibility and eventual freeze** | EXP006 and EXP007 source-feasibility candidates closed; no automatic downstream phase |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; start with evidence-linked dated relationships, not a full graph platform |
 | 4C | First causal/counterfactual event experiment | Credible controls, pre-trends/placebos and explicit identification assumptions; no automatic causal label |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving economic evidence, costs, risk constraints and mechanism diversity |
