@@ -107,11 +107,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**Item 2.02 closure stopped at AVAILABILITY_BLOCKED.** The owner adopted the feature, dates, 20-session horizon, costs, materiality and trial ceiling, with Development conditional on a certified freeze. The [availability review](docs/acceleration/exp006_freeze_review.md) found that SEC official filing dates can be adjusted to earlier attempted transmissions without changing acceptance time; a filing-date-only next-open rule can therefore precede acceptance. No full census, market-provider certification, inference, EXP006 registration/freeze or Development performance followed this required stop. EXP004 remains paused, EXP005 abandoned/absent and confirmation unopened. The prior integration/candidate artifacts and inactive v002/v003 policies remain unchanged.
+**Item 2.02 acceptance remedy passed its scoped raw-header audit; source scaling stopped at SCALABLE_ACCEPTANCE_PROVENANCE_BLOCKED.** The [current freeze review](docs/acceleration/exp006_freeze_review.md) records 48 invariant source-header probes, a verified 2015–2020 opening calendar and automatic full-source continuation. All 438,666 current index rows were retained; the official bulk clock conflicted with original-source UTC candidates in 24/48 fixed audit records. No guessed offsets or submission-body expansion followed. EXP006 remains absent/unfrozen; no Development performance or confirmation outcomes were opened. The failed filing-date-only rule, approved design parameters, prior evidence, EXP004 pause and EXP005 abandonment are preserved.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Item 2.02 closure: AVAILABILITY_BLOCKED; no experiment freeze or performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Acceptance remedy scoped pass; scalable source-clock provenance blocked; no freeze/performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |

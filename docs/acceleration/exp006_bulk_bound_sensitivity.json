@@ -1,0 +1,8 @@
+{
+  "version": "EXP006_bulk_bound_sensitivity_v001",
+  "sample_size": 48,
+  "different_second_session_opens": 0,
+  "note": "Calendar-only diagnostic; agreement for this sample does not recover original raw clocks or certify an unknown serialization mode for the whole census.",
+  "performance_accesses": 0,
+  "confirmation_accesses": 0
+}

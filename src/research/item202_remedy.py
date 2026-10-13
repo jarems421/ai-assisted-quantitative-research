@@ -34,11 +34,26 @@ def audit():
     for row in chronology['records']:
         observed=probe(row['raw_acceptance'],row['FILED_AS_OF_DATE'],days,evidence_sha256=policy['evidence'][0]['sha256'],contradictory=row['source_chronology_contradictory'])
         if observed['modeled_eligible_open_utc']!=row['modeled_eligible_open_utc'] or observed['status']!=row['status']:raise ValueError('Chronology replay differs')
+    from src.research.item202_source import metadata_clock_conformance
+    labels=json.loads((RAW/'source_closure/bulk_labels.json').read_bytes())
+    if digest(labels['rows'])!=labels['stats']['rows_sha256']:raise ValueError('Bulk derivative changed')
+    lookup={(x['CIK'],x['accession']):x for x in labels['rows']}
+    headers={(x['CIK'],x['accession']):x for x in chronology['records']}
+    matches=0
+    for row in clock['records']:
+        key=(row['CIK'],row['accession']);meta=lookup[key]['metadata'];header=headers[key]
+        if meta['acceptance_representation']!=row['bulk_acceptanceDateTime'] or header['raw_acceptance']!=row['raw_ACCEPTANCE_DATETIME'] or header['source_sha256']!=row['original_header_sha256']:
+            raise ValueError('Original/bulk clock linkage differs')
+        match=metadata_clock_conformance(row['bulk_acceptanceDateTime'],row['source_UTC_candidates'])=='MATCH_SOURCE_CANDIDATE'
+        if match!=row['literal_ISO_matches_retained_source_UTC']:raise ValueError('Clock comparison differs')
+        matches+=match
+    if matches!=clock['literal_ISO_matches_source_candidates']:raise ValueError('Clock aggregate differs')
     if (ROOT/'experiments/EXP006').exists():raise ValueError('Blocked EXP006 must remain absent')
     return {'availability':policy['status'],'continuation':receipt['status'],'source_starts':total,'original_hashes':'PASS','chronology_replay':48,'performance':0,'confirmation':0}
 
 def report(check=False):
     r=json.loads((DOCS/'exp006_remedy_continuation_receipt.json').read_bytes());s=json.loads((DOCS/'exp006_source_coverage.json').read_bytes());c=json.loads((DOCS/'exp006_bulk_clock_validation.json').read_bytes())
+    sensitivity=json.loads((DOCS/'exp006_bulk_bound_sensitivity.json').read_bytes())
     vpath=DOCS/'exp006_remedy_validation.json';v=json.loads(vpath.read_bytes()) if vpath.exists() else {}
     text=f'''# Item 2.02 acceptance remedy and source-closure stop
 
@@ -64,9 +79,11 @@ Every census key has a current structured metadata label; no CIK member or histo
 
 [Clock validation](exp006_bulk_clock_validation.json) compares the same 48 original SGML timestamps with the official bulk `acceptanceDateTime` values interpreted according to their literal ISO representation. **{c['literal_ISO_matches_source_candidates']}/48 match a retained original-source UTC candidate; {c['literal_ISO_conflicts_source_candidates']}/48 do not.** Sixteen bulk lexical clocks equal the raw wall clock; other records exhibit conversion, and eight have an additional four/five-hour offset relative to seasonal-source UTC. A single documented serialization interpretation does not reproduce the observed originals.
 
+A separate [calendar-only sensitivity](exp006_bulk_bound_sensitivity.json) gives **{sensitivity['different_second_session_opens']}/48 different eligible opens** when the bulk value is taken literally. Thus this sample does not demonstrate 24 failed date bounds, nor that the modeled buffer fails. Its dates happen to agree; that agreement does not recover original raw timestamps or establish the undocumented representation mode for every census record. The stop concerns the source bridge required by the declared raw-acceptance contract.
+
 Sampled accession `0001001250-20-000042` has raw `20200518160143` while bulk says `2020-05-18T20:01:43.000Z`, a normal seasonal conversion. Accession `0000950157-20-000567` has raw `20200504061131` and bulk `2020-05-04T14:11:31.000Z`, four hours beyond its seasonal-source UTC candidate. The receipt retains all examples, including unconverted clocks, with original source hashes. These are source clock observations, not return results. Neither per-CIK offset guessing nor a broadened adapter clock model was adopted to repair this after discovery.
 
-The raw-header model still passes. The failed gate is certifying its **scalable source input**: an ISO string with mixed provenance cannot silently become original raw ACCEPTANCE-DATETIME. The existing official SEC access guide describes Feed/Oldloads as full public submission archives with headers. They remain a potential raw source, not proved inaccessible, but acquiring a full six-year submission-body corpus or hundreds of thousands of individual headers is not authorized by the instruction to avoid tens of thousands of bodies. No such fallback was run. A separately bounded source/provenance method is needed; this finding does not prove every possible scalable original-header route impossible.
+The raw-header model still passes. The failed gate is certifying its **scalable source input**: an ISO string with mixed provenance cannot silently become original raw ACCEPTANCE-DATETIME. The existing official SEC access guide describes Feed/Oldloads as full public submission archives with headers. They remain a potential raw source, not proved inaccessible. The prior instruction requires bulk-first acquisition, prohibits downloading tens of thousands of bodies and cautions against thousands of individual document requests when a bulk surface exists. No validated header-only bulk source was established in these audited routes, and no full-submission corpus or extensive individual-header fallback was run. A separately bounded source/provenance method is needed; this finding does not prove every possible scalable original-header route impossible.
 
 ## Disposition, verification and stop
 

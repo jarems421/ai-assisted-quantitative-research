@@ -1,47 +1,56 @@
-# Item 2.02 freeze closure: availability stop
+# Item 2.02 acceptance remedy and source-closure stop
 
-**AVAILABILITY_BLOCKED. EXP006 was not created or frozen; Development did not run.** As of 2026-10-13, starting from `8e8ad0c7f676d916832bfaae4e0fb1ff17adf492`. The [owner instruction](owner_item202_closure_2026-10-13.md), sections 3 and 24, requires stopping when the filing-date-only availability semantic cannot be supported. This is a scientific timing stop, not economic falsification or a new architecture phase.
+**Availability v002 passes the scoped raw-header policy audit. Continuation: SCALABLE_ACCEPTANCE_PROVENANCE_BLOCKED. EXP006 remains absent; no freeze or Development.** Starting HEAD `3c867089fffc16710d23f322f18c330fb5da495b`, as of 2026-10-13. [Owner instruction](owner_item202_remedy_2026-10-13.md) required automatic continuation after the remedy; it occurred. This is a concrete source-clock conformance failure, not another planning phase or an unknown-first-public-time stop.
 
-The owner approved one Item 2.02 predictive feature, Development 2015-01-01–2020-12-31, unopened historical confirmation 2021-01-01–2026-09-30, a 20-session horizon, 10 bps per side, future doubled-cost/+1-session robustness, a 12-evaluation ceiling, estimated paired net mean at least 0.50 percentage point and a positive two-sided 95% lower endpoint against zero. These approvals are retained in the [closure receipt](exp006_closure_receipt.json). They were not rescinded or tuned; performance authorization remains conditional on a scientifically certified freeze.
+## Acceptance-aware remedy
 
-## The exact rule and documented exception
+The [v002 contract](exp006_availability_contract_v002.json) retains seasonal Eastern and literal EST interpretations of original raw ACCEPTANCE-DATETIME. Eligibility is 09:30 New York on the second regular NYSE session strictly after the later of filed date and each candidate civil date; independent opens must agree and follow every candidate. Earlier adjusted filing dates cannot defeat the acceptance anchor. Missing/conflicting/non-invariant/calendar states stay unavailable. Exact public availability remains **UNKNOWN**; this is an owner-approved modeled buffer, not an observed or guaranteed website timestamp.
 
-Owner-approved conditional rule: **first regular NYSE open strictly after the SEC filing-date calendar date; never execute on that date**. It is modeled conservative eligibility, not observed first-public time. [Availability contract](exp006_availability_contract.json): OWNER_APPROVED_CONDITIONAL; NOT_ACTIVATED; source-semantic gate FAILED.
+Archived SEC [2013 PDS specification](https://www.sec.gov/files/info/edgar/pdsdissemspec072213.pdf), sections 1.0/2.1, establishes pre-Development acceptance/dissemination and header-time semantics. Current filing-status guidance corroborates acceptance; the webmaster FAQ supplies no exact website posting time or guaranteed lag. Both timezone candidates remain plausible; timestamp uncertainty is preserved rather than declared solved.
 
-The SEC's [filing-date adjustment guidance](https://www.sec.gov/submit-filings/filer-support-resources/how-do-i-guides/request-filing-date-adjustment) permits moving the official date back to an earlier attempted transmission while leaving acceptance time unchanged. The [2006 regulatory overview](https://www.sec.gov/info/edgar/regoverview.htm), section B.5 and Common Filing Concerns, already describes Rule 13 adjustments for technical delays and Exchange Act reports. The newer guidance is not assumed to be a contemporaneous Development receipt; the earlier document establishes that this exception mechanism predates Development. Both current response bodies were archived unchanged with hashes, retrieval times and source locators. No observed adjusted 8-K count is claimed.
+The frozen source-order sample covers 2015–2020, all four quarters, 24 original 8-Ks and 24 amendments: **48 invariant / 0 timing unavailable / 0 acceptance missing**, across 22 CIKs. It includes 12 pre-market, 19 regular and 17 after-market raw-clock observations and eight Fridays. No actual adjusted-date example was independently certified; synthetic earlier-filed, holiday, DST and midnight/non-invariance cases test that policy explicitly. The [calendar certificate](exp006_calendar_certificate_v002.json) reconciles 1,511 opening sessions from official exchange holiday notices and the 2018 mourning closure. Per-class interruptions/execution remain later requirements. [Chronology receipt](exp006_chronology_validation_v002.json).
 
-Consequently, the required universal chronology implication is unsupported: an adjusted official filing date may precede successful acceptance. A next open calculated from that date alone can then precede acceptance. The documentation does not quantify how often this occurs in the proposed census or establish any accession's exact first-public time.
+## Automatic full-source continuation
 
-Synthetic counterexample only: filing date Monday 2015-01-05; delayed acceptance Wednesday 2015-01-07 at 16:00 UTC; the date-only rule gives Tuesday 2015-01-06 at 14:30 UTC. The proposed execution would precede acceptance. This illustrates the permitted mechanism; it is not a fabricated real filing. Calendar tests also cover weekends, holidays, DST, strict date exclusion and insufficient coverage. No production eligibility view exists.
+All 24 current quarterly indexes were acquired or hash-verified cache hits **before Item filtering**. [Source coverage](exp006_source_coverage.json): **438,666 rows**, **426,750 8-K**, **11,916 8-K/A**, **11,340 CIKs**, **426,974 accessions**. Shared-accession/cofiler rows and all source paths/forms/dates remain retained; no ticker, survivor or price-availability join defined the census.
 
-No replacement rule, acceptance maximum, extra waiting period or adjusted-filing exclusion was silently adopted. Old v002/v003 approvals, scopes and inactive states remain unchanged. Economic event date, filing date, acceptance, modeled eligibility and retrieval remain distinct; observed public availability is UNKNOWN. A separately reviewed source-chronology remedy would be needed to change this failed contract.
+The official SEC submissions ZIP was downloaded once as **1,568,623,665 unchanged bytes**, SHA-256 `496e3b23b6014cad33783959c313d3fa9fc75e0acaafa155836907499fddef05`. It includes 993,915 members. Scope gates examined only exact census-bound Development records before Items/acceptance/primary-document fields. Current company/ticker fields and outside-stage feature/clock values were not used. The full raw ZIP includes later metadata and remains quarantined; no market outcomes or confirmation study were opened.
 
-## Scope retained at the upstream stop
+Every census key has a current structured metadata label; no CIK member or historical part was missing. One equivalent duplicate metadata row was retained, not treated as another filing. Current metadata declares Item 2.02 on **108,364 originals plus 983 amendments**; these are provisional source labels, not certified qualifying events or trades. Complete original-primary semantic validation was not reached. All 48 sample Item sets agree with original headers, but this is not a primary-body precision certificate. Certified full-population event/timing counts remain unavailable.
 
-| Required output | Disposition |
+## The specific failed scaling gate
+
+[Clock validation](exp006_bulk_clock_validation.json) compares the same 48 original SGML timestamps with the official bulk `acceptanceDateTime` values interpreted according to their literal ISO representation. **24/48 match a retained original-source UTC candidate; 24/48 do not.** Sixteen bulk lexical clocks equal the raw wall clock; other records exhibit conversion, and eight have an additional four/five-hour offset relative to seasonal-source UTC. A single documented serialization interpretation does not reproduce the observed originals.
+
+A separate [calendar-only sensitivity](exp006_bulk_bound_sensitivity.json) gives **0/48 different eligible opens** when the bulk value is taken literally. Thus this sample does not demonstrate 24 failed date bounds, nor that the modeled buffer fails. Its dates happen to agree; that agreement does not recover original raw timestamps or establish the undocumented representation mode for every census record. The stop concerns the source bridge required by the declared raw-acceptance contract.
+
+Sampled accession `0001001250-20-000042` has raw `20200518160143` while bulk says `2020-05-18T20:01:43.000Z`, a normal seasonal conversion. Accession `0000950157-20-000567` has raw `20200504061131` and bulk `2020-05-04T14:11:31.000Z`, four hours beyond its seasonal-source UTC candidate. The receipt retains all examples, including unconverted clocks, with original source hashes. These are source clock observations, not return results. Neither per-CIK offset guessing nor a broadened adapter clock model was adopted to repair this after discovery.
+
+The raw-header model still passes. The failed gate is certifying its **scalable source input**: an ISO string with mixed provenance cannot silently become original raw ACCEPTANCE-DATETIME. The existing official SEC access guide describes Feed/Oldloads as full public submission archives with headers. They remain a potential raw source, not proved inaccessible. The prior instruction requires bulk-first acquisition, prohibits downloading tens of thousands of bodies and cautions against thousands of individual document requests when a bulk surface exists. No validated header-only bulk source was established in these audited routes, and no full-submission corpus or extensive individual-header fallback was run. A separately bounded source/provenance method is needed; this finding does not prove every possible scalable original-header route impossible.
+
+## Disposition, verification and stop
+
+| Remaining requirement | Disposition |
 | --- | --- |
-| Full 2015–2020 census; 8-K / 8-K/A / CIK / Item 2.02 / unknown counts | NOT_ACQUIRED; counts unavailable, not zero |
-| Existing Q1 2020 prototype | Unchanged: 17,631 8-K; 493 8-K/A; 5,519 filer CIKs; twelve sampled originals, three Item 2.02 declarations; no full-population label count |
-| Identity mapped/unresolved/ended classes and terminal resolution | DEFERRED_AVAILABILITY_STOP; counts unknown, no survivor filtering or terminal exclusion |
-| Market provider/API, coverage and corporate-action certificate | NOT_TESTED; no provider or price request; previous bounded QA is not promoted |
-| Benchmark matching rule/rate | NOT_FROZEN_NOT_MEASURED; industry/size/momentum/calendar concepts retained |
-| Inference methods/calibration/power/effective geometry | NOT_RUN; no method selected and no synthetic success claimed |
-| Scientific Proof v2 / canonical EXP006 specification / freeze commit | NOT_RUN / ABSENT / NONE; old design-only compilation remains historical |
-| Performance trials / historical confirmation accesses | 0 / 0; ceiling remains 12 |
+| Original-primary classification and complete PAC/version/missingness reconciliation | DEFERRED_SOURCE_CLOCK_STOP; all 438,666 version states unresolved; unavailable-original count unknown |
+| Dated equity/class mapping, ended classes and terminal paths | NOT_TESTED; mapped/unresolved/ended/terminal counts unknown |
+| Market provider/API/corporate actions | NOT_CERTIFIED; zero market requests |
+| Exact benchmark matching / match rate | NOT_FROZEN / NOT_MEASURED |
+| Inference methods/calibration/power/effective N | NOT_RUN; zero methods selected/evaluated |
+| Scientific Proof / EXP006 spec hash / freeze commit / Development result | NOT_RUN / NONE / NONE / NONE |
+| Performance trials / confirmation outcome accesses | 0 / 0; 12-evaluation ceiling unchanged |
 
-Two new SEC documentation starts, two HTTP 200 responses, zero retries; no new filing source, identity or market requests. One browser discovery call containing two documentation queries is separately recorded; its underlying fetch count is unavailable. Git/push/hosted-CI operations are engineering delivery, not scientific source calls. No purchase or upgrade occurred; account-wide debit remains unknown. Original response bytes and contact-redacted receipts stay ignored. Local import-path/configuration and editing failures occurred before any request reservation, are retained in the setup log, and consumed no source starts or performance trials.
+Direct starts: **80 SEC + 5 exchange-calendar = 85**, zero retries. SEC comprises remedy documentation/indexes 7, chronology headers 48, remaining quarterly indexes 17, six API schema probes, and bulk HEAD/GET 2. Browser official-documentation discovery/PDS review is separately logged (three tool calls; underlying fetch count unknown), as are Git/push/hosted-CI delivery operations. No purchase or upgrade; account-wide debit unknown. Original and failed setup receipts remain immutable/private; no contacts or vendor payloads are committed.
 
-## Reproduction, preservation and stop
-
-Validation: 338 local tests; 110 public tests; zero skipped. [Validation receipt](exp006_closure_validation.json). Public regeneration/check reads tracked receipts only; private audit verifies the two archived bodies without requests:
+**Verification: 357 local tests, 129 public tests, zero skipped.** [Receipt](exp006_remedy_validation.json). Public report regeneration needs only tracked summaries; private audit verifies every source body including the ZIP by streaming its hash:
 
 ```sh
-python -m src.research.item202_closure --check
-python -m src.research.item202_closure --audit --check
+python -m src.research.item202_remedy --check
+python -m src.research.item202_remedy --audit --check
 python -m src.research.public_checks
 python -m unittest discover -s tests -v
 ```
 
-Prior source/controller/Proof/execution code, integration reports/candidate, original archives, dependency pins, frozen experiments, processed metrics and pause state remain unchanged. Public tests use synthetic fixtures with private reads and external network blocked. Unrelated local files remain untouched. EXP004 stays paused; EXP005 abandoned/absent. No EXP006 directory/state/job/trial, post-event return, confirmation opening, Nexus/Aurora, graph, optimizer or paper/live action occurred.
+The [failed v001 report](exp006_freeze_review_v001.md), failed contract/receipt and old global policies retain their original bytes and verdicts. Previous candidate/integration/source/experiment artifacts, metrics, pins and pause/state remain unchanged. EXP004 stays paused and EXP005 abandoned/absent. No new hypothesis, architecture phase, Nexus/Aurora, price/return, registration/freeze, held-out outcome, optimizer or paper/live action occurred. Owner-approved feature/dates/horizon/costs/materiality/trials are unchanged.
 
-**Stopped under owner sections 3 and 24.** The next substantive decision is whether to commission a separately bounded review of an acceptance/public-availability-aware source chronology contract for this same candidate. Nothing downstream runs automatically, and the already adopted feature/horizon/cost/materiality parameters do not need renewed approval merely because this gate failed.
+**Stopped at the specific source-clock provenance gate.** Next owner decision: authorize or decline a separately bounded original-header/provenance repair for this same candidate. The second-session rule needs no renewed approval merely because its scalable source bridge failed. No downstream continuation runs automatically from this result.

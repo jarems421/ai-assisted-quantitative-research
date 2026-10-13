@@ -1,0 +1,153 @@
+{
+  "starting_head": "3c867089fffc16710d23f322f18c330fb5da495b",
+  "availability_v002": "SCOPED_MODELED_POLICY_CERTIFIED",
+  "continuation": "SCALABLE_ACCEPTANCE_PROVENANCE_BLOCKED",
+  "local_tests_passed": 357,
+  "public_tests_passed": 129,
+  "tests_skipped": 0,
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "e40e00a3073cc4134f325c68d837a28176506db30a69a7e266b0dfc2d51c2c4f"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "3d517723abf99905818044181eb91997213cfcf8a78b83d7f6ac903e034a23b7"
+    },
+    {
+      "command": "python -m src.research.item202_remedy --audit --check",
+      "exit_code": 0,
+      "log_sha256": "190a3aac2d7158e0cc8e2e88eca58cc363ce14c81971fd9a3497710fbd733aa3"
+    },
+    {
+      "command": "python -m src.research.item202_closure --audit --check",
+      "exit_code": 0,
+      "log_sha256": "03e0fd805a705e328b65404c293b09e9614e37c0371a52c8a10df1f9cf669460"
+    },
+    {
+      "command": "python -m src.research.integration_review --audit --check",
+      "exit_code": 0,
+      "log_sha256": "2e558a567b038e18e9daaaca27e6a20bbab48a7d2755a02611d369ec9bccce02"
+    },
+    {
+      "command": "python -m src.research.source_first_report --audit --check",
+      "exit_code": 0,
+      "log_sha256": "e220c0b349e8d777c795aac35cd3c1479dca519fcfd6dab38ebdbde967b71bac"
+    },
+    {
+      "command": "python -m src.research.procurement_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "fd0acf5bed1f9491e4a7d3b4651510cb3a821474a8bed6519a5b05b7c9702f87"
+    },
+    {
+      "command": "python -m src.research.fda_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "58e4af86f886fb58c57c19c16f73587a371f80e50bb7c5dbb9e4edc7242e7340"
+    },
+    {
+      "command": "python -m src.research.merger_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "4f8d8a2de33cfa4d13825563da81f756c2be84e509a993c27abcadd2bfe63056"
+    },
+    {
+      "command": "python -m src.research.phase4a --check",
+      "exit_code": 0,
+      "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+    },
+    {
+      "command": "python -m src.research.phase3_final --check",
+      "exit_code": 0,
+      "log_sha256": "da8a1670bbec618859a733b27ae698e5c3e327c84093759732f93dd73ef8d221"
+    },
+    {
+      "command": "python -m src.research.sec_pilot replay",
+      "exit_code": 0,
+      "log_sha256": "a521f9c1526028874c8663964c7c81d34b50be11eb887e781e1b1364e8fb9a38"
+    },
+    {
+      "command": "python -m src.research.sec_pilot audit",
+      "exit_code": 0,
+      "log_sha256": "a521f9c1526028874c8663964c7c81d34b50be11eb887e781e1b1364e8fb9a38"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "a0beb5d2cc256cb53e33f1ab7846245cb472adbf894e2e453d4bc42e3ad49444"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    },
+    {
+      "command": "python -m pip check",
+      "exit_code": 0,
+      "log_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "command": "python -m src.research.item202_remedy --audit --check",
+      "exit_code": 0,
+      "log_sha256": "190a3aac2d7158e0cc8e2e88eca58cc363ce14c81971fd9a3497710fbd733aa3"
+    },
+    {
+      "command": "python -m src.research.item202_closure --audit --check",
+      "exit_code": 0,
+      "log_sha256": "03e0fd805a705e328b65404c293b09e9614e37c0371a52c8a10df1f9cf669460"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "command": "python -m unittest tests.test_exp001 -q",
+      "exit_code": 0,
+      "log_sha256": "a25258d5a858408b46043eeda910ab5ab25818316288046725525df61ea2609b"
+    }
+  ],
+  "preservation": {
+    "baseline_files": 8830,
+    "permitted_current_docs_renderer_public_guard_and_legacy_report_path_changes": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/exp006_freeze_review.md",
+      "docs/acceleration/master_plan.md",
+      "docs/research_os.md",
+      "src/presentation/README.template.md",
+      "src/presentation/exp001.py",
+      "src/research/item202_closure.py",
+      "src/research/public_checks.py"
+    ],
+    "all_other_files_unchanged": 8821,
+    "original_failed_v001_report_archived_byte_exact": true,
+    "v001_contract_receipt_and_old_global_v002_v003_bytes": "UNCHANGED",
+    "frozen_experiments_processed_results_metrics_source_controllers_dependency_pins_and_operational_state": "PASS"
+  },
+  "read_only_state_counts": {
+    "EXP005": {
+      "experiments": 0,
+      "jobs": 0,
+      "trials": 0
+    },
+    "EXP006": {
+      "experiments": 0,
+      "jobs": 0,
+      "trials": 0
+    }
+  },
+  "performance_evaluations": 0,
+  "confirmation_outcome_accesses": 0,
+  "new_direct_source_starts": 85,
+  "new_SEC_starts": 80,
+  "new_NYSE_calendar_starts": 5,
+  "retries": 0,
+  "market_requests": 0,
+  "Nexus_Aurora_requests": 0,
+  "bulk_quarantine": "Only census-bound Development event fields interpreted; source ZIP later metadata remains quarantined; no outcomes in this source workflow.",
+  "new_dependencies": [],
+  "source_tests": "Fixed raw-header chronology, complete Development quarter census keys, source-metadata scope/missingness and clock conformance; downstream certification not claimed",
+  "hosted_ci": "Final pushed SHA/run outcome reported separately in delivery",
+  "account_wide_debit": "UNKNOWN"
+}
