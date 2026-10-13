@@ -1,0 +1,70 @@
+{
+  "version": "EXP006_item202_availability_v002",
+  "rule": "09:30 America/New_York on second regular NYSE session strictly after later of FILED AS OF DATE and each retained acceptance candidate civil date; require identical candidate opens",
+  "status": "AVAILABILITY_MODELED_POLICY_CERTIFIED_FOR_EXP006",
+  "owner_approval": "Explicit acceptance-aware remedy owner instruction",
+  "owner_sha256": "42f29f631075f3808b2c71d6884b7298be6c53e24c5aaae323a0cd635a4ae733",
+  "scope": [
+    "2015-01-01",
+    "2020-12-31"
+  ],
+  "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+  "exact_public_availability": "UNKNOWN",
+  "policy_activated": false,
+  "activation_boundary": "Per-row modeled timing certification only; no executable universe/experiment activation before downstream gates and freeze. Historical confirmation remains unopened.",
+  "timestamp_candidates": [
+    "Seasonal US Eastern Time",
+    "Literal EST UTC-05:00"
+  ],
+  "invariance": "Compute independent second-session opens under each candidate; require equality and bound strictly later than all candidates. Global max alone must not hide disagreement.",
+  "date_adjustment": "Filed date earlier than acceptance is not automatically contradictory; acceptance civil dates dominate. Conflicting identities/fields/known later public evidence remain unavailable.",
+  "calendar_sha256": "6c051a24e8f0c50a45e26c4f28a8ce02580fde619c38957e66c02826ec6bdb36",
+  "evidence": [
+    {
+      "id": "pds",
+      "url": "https://www.sec.gov/files/info/edgar/pdsdissemspec072213.pdf",
+      "sha256": "c1e8df16fd725c962ea4a29125af4a11a8648a92576dcfd7b0d66387b9a7a099",
+      "bytes": 418557,
+      "reused_archive": true,
+      "sections": [
+        "1.0 pp 2\u20133 acceptance precedes dissemination to PDS and SEC internet site; ordinary rapid process not guaranteed website bound",
+        "2.1 p 8 acceptance date and EST time; retain literal EST and seasonal ET"
+      ]
+    },
+    {
+      "id": "faq",
+      "url": "https://www.sec.gov/about/webmaster-frequently-asked-questions",
+      "sha256": "c70e5c12c085ce45bc59de0fb18f9895848777bbd01e1adfc867edcb2f5889e8",
+      "bytes": 96742,
+      "reused_archive": true,
+      "sections": [
+        "No first-public website timestamp or guaranteed website posting lag"
+      ]
+    },
+    {
+      "id": "access",
+      "url": "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data",
+      "sha256": "b091543c031a798aaaa831ba192b9f5ada56a617c2cdc38af8f13f25e774e1ac",
+      "bytes": 80342,
+      "reused_archive": true,
+      "sections": [
+        "Official public access and index/PAC reconstruction limitations"
+      ]
+    },
+    {
+      "id": "status",
+      "url": "https://www.sec.gov/submit-filings/filer-support-resources/how-do-i-guides/determine-status-my-filing",
+      "sha256": "a266c3724530b07ab6185b2f77815169404c104673a8a7561d9a22b4aedc5924",
+      "bytes": 105815,
+      "retrieved_at_utc": "2026-10-13T05:21:16.243993+00:00",
+      "reused_archive": false,
+      "sections": [
+        "Accepted/suspended submissions and acceptance messages; official filing status"
+      ]
+    }
+  ],
+  "v001_failed_contract_sha256": "8ff58dcb68653d90d7a4aa21fb7e186b197b2643aa49cbc6ad5a4010863e3d3f",
+  "global_v002_v003": "UNCHANGED_NOT_ACTIVATED",
+  "coverage": "Rule semantics and fixed 48-source chronology test; missing/ambiguous census timestamps must remain unavailable and production population coverage is separately gated.",
+  "implementation_sha256": "ceb6532169ac665cd5900851939f6528a346f0d30f9306c867d8ce9bc7ea0f72"
+}

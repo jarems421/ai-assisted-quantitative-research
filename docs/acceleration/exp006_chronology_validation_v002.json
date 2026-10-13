@@ -1,0 +1,2341 @@
+{
+  "version": "EXP006_chronology_audit_v002",
+  "sample_denominator": 48,
+  "records": [
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-15-033076",
+      "form": "8-K",
+      "index_filing_date": "2015-02-04",
+      "year": 2015,
+      "quarter": "QTR1",
+      "acceptance_raw": "20150204115034",
+      "FILED_AS_OF_DATE": "20150204",
+      "source_chronology_contradictory": false,
+      "source_sha256": "4e0522282982a66f047774c39227fbfc993192741f253158ce63dfe8bb13bdfa",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "1.01",
+        "2.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20150204115034",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2015-02-04T16:50:34+00:00",
+          "civil_date_New_York": "2015-02-04"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2015-02-04T16:50:34+00:00",
+          "civil_date_New_York": "2015-02-04"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2015-02-06T14:30:00+00:00",
+        "2015-02-06T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2015-02-06T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2015-02-04T16:50:34+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000180",
+      "accession": "0001000180-15-000002",
+      "form": "8-K",
+      "index_filing_date": "2015-01-12",
+      "year": 2015,
+      "quarter": "QTR1",
+      "acceptance_raw": "20150112080741",
+      "FILED_AS_OF_DATE": "20150112",
+      "source_chronology_contradictory": false,
+      "source_sha256": "2ccd3a276d0f74949ec5de70bd3bffd243eb14bf465fe083d886d8bd73bccb1e",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000180
+      ],
+      "source_items": [
+        "2.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20150112080741",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2015-01-12T13:07:41+00:00",
+          "civil_date_New_York": "2015-01-12"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2015-01-12T13:07:41+00:00",
+          "civil_date_New_York": "2015-01-12"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2015-01-14T14:30:00+00:00",
+        "2015-01-14T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2015-01-14T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2015-01-12T13:07:41+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000180",
+      "accession": "0001000180-15-000006",
+      "form": "8-K",
+      "index_filing_date": "2015-01-21",
+      "year": 2015,
+      "quarter": "QTR1",
+      "acceptance_raw": "20150121160858",
+      "FILED_AS_OF_DATE": "20150121",
+      "source_chronology_contradictory": false,
+      "source_sha256": "d4f5eae2c49a89120cbc01e89d1a39cb47324fb0e29acc2685db58e819e95cbe",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000180
+      ],
+      "source_items": [
+        "2.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20150121160858",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2015-01-21T21:08:58+00:00",
+          "civil_date_New_York": "2015-01-21"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2015-01-21T21:08:58+00:00",
+          "civil_date_New_York": "2015-01-21"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2015-01-23T14:30:00+00:00",
+        "2015-01-23T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2015-01-23T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2015-01-21T21:08:58+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000180",
+      "accession": "0001000180-15-000018",
+      "form": "8-K",
+      "index_filing_date": "2015-02-23",
+      "year": 2015,
+      "quarter": "QTR1",
+      "acceptance_raw": "20150223071801",
+      "FILED_AS_OF_DATE": "20150223",
+      "source_chronology_contradictory": false,
+      "source_sha256": "ad460a37341bd4a1d49afb1f2cd8b1aedc4c791243f4d2ec219471f028b0ddc2",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000180
+      ],
+      "source_items": [
+        "5.02"
+      ],
+      "raw_acceptance": "20150223071801",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2015-02-23T12:18:01+00:00",
+          "civil_date_New_York": "2015-02-23"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2015-02-23T12:18:01+00:00",
+          "civil_date_New_York": "2015-02-23"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2015-02-25T14:30:00+00:00",
+        "2015-02-25T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2015-02-25T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2015-02-23T12:18:01+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1008848",
+      "accession": "0001193125-15-003980",
+      "form": "8-K/A",
+      "index_filing_date": "2015-01-07",
+      "year": 2015,
+      "quarter": "QTR1",
+      "acceptance_raw": "20150107163101",
+      "FILED_AS_OF_DATE": "20150107",
+      "source_chronology_contradictory": false,
+      "source_sha256": "7bdbcd858f33cc47bf1c6cad4b36bfc168fd7152fa9a22249477e1132f8f954d",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1008848
+      ],
+      "source_items": [
+        "9.01"
+      ],
+      "raw_acceptance": "20150107163101",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2015-01-07T21:31:01+00:00",
+          "civil_date_New_York": "2015-01-07"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2015-01-07T21:31:01+00:00",
+          "civil_date_New_York": "2015-01-07"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2015-01-09T14:30:00+00:00",
+        "2015-01-09T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2015-01-09T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2015-01-07T21:31:01+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1009356",
+      "accession": "0001193125-15-027928",
+      "form": "8-K/A",
+      "index_filing_date": "2015-01-30",
+      "year": 2015,
+      "quarter": "QTR1",
+      "acceptance_raw": "20150130170033",
+      "FILED_AS_OF_DATE": "20150130",
+      "source_chronology_contradictory": false,
+      "source_sha256": "62da9ecab4b063dcf70e3605e9ee35dadce9035f1a3cdd0876ae6f83e384ce4a",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1009356
+      ],
+      "source_items": [
+        "7.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20150130170033",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2015-01-30T22:00:33+00:00",
+          "civil_date_New_York": "2015-01-30"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2015-01-30T22:00:33+00:00",
+          "civil_date_New_York": "2015-01-30"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2015-02-03T14:30:00+00:00",
+        "2015-02-03T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2015-02-03T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2015-01-30T22:00:33+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1011570",
+      "accession": "0001011570-15-000006",
+      "form": "8-K/A",
+      "index_filing_date": "2015-02-04",
+      "year": 2015,
+      "quarter": "QTR1",
+      "acceptance_raw": "20150204120736",
+      "FILED_AS_OF_DATE": "20150204",
+      "source_chronology_contradictory": false,
+      "source_sha256": "8875e35111cb0e34994d3a57c551b7a2f46ad7fc3bbf34c73d5e3ae22d690f46",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1011570
+      ],
+      "source_items": [
+        "2.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20150204120736",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2015-02-04T17:07:36+00:00",
+          "civil_date_New_York": "2015-02-04"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2015-02-04T17:07:36+00:00",
+          "civil_date_New_York": "2015-02-04"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2015-02-06T14:30:00+00:00",
+        "2015-02-06T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2015-02-06T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2015-02-04T17:07:36+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1011662",
+      "accession": "0001213900-15-001481",
+      "form": "8-K/A",
+      "index_filing_date": "2015-03-02",
+      "year": 2015,
+      "quarter": "QTR1",
+      "acceptance_raw": "20150302170054",
+      "FILED_AS_OF_DATE": "20150302",
+      "source_chronology_contradictory": false,
+      "source_sha256": "f8961031196c3decce3ac6c4b339cd75b7d86ac6b01a37ad2393c744e03b980c",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1011662
+      ],
+      "source_items": [
+        "1.01",
+        "2.03",
+        "3.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20150302170054",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2015-03-02T22:00:54+00:00",
+          "civil_date_New_York": "2015-03-02"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2015-03-02T22:00:54+00:00",
+          "civil_date_New_York": "2015-03-02"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2015-03-04T14:30:00+00:00",
+        "2015-03-04T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2015-03-04T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2015-03-02T22:00:54+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-16-583445",
+      "form": "8-K",
+      "index_filing_date": "2016-05-09",
+      "year": 2016,
+      "quarter": "QTR2",
+      "acceptance_raw": "20160509133732",
+      "FILED_AS_OF_DATE": "20160509",
+      "source_chronology_contradictory": false,
+      "source_sha256": "671bd9fdb1cfb08a03ba6b90daa2f30cffa7a7a0d7dd6e3eb298125285600611",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "2.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20160509133732",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2016-05-09T17:37:32+00:00",
+          "civil_date_New_York": "2016-05-09"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2016-05-09T18:37:32+00:00",
+          "civil_date_New_York": "2016-05-09"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2016-05-11T13:30:00+00:00",
+        "2016-05-11T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2016-05-11T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000180",
+      "accession": "0001000180-16-000087",
+      "form": "8-K",
+      "index_filing_date": "2016-04-27",
+      "year": 2016,
+      "quarter": "QTR2",
+      "acceptance_raw": "20160427160946",
+      "FILED_AS_OF_DATE": "20160427",
+      "source_chronology_contradictory": false,
+      "source_sha256": "83958a1fa8ad378e7d160faa221fcb02c008f6520e199f9735442e074d7819ee",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000180
+      ],
+      "source_items": [
+        "2.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20160427160946",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2016-04-27T20:09:46+00:00",
+          "civil_date_New_York": "2016-04-27"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2016-04-27T21:09:46+00:00",
+          "civil_date_New_York": "2016-04-27"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2016-04-29T13:30:00+00:00",
+        "2016-04-29T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2016-04-29T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000180",
+      "accession": "0001104659-16-119626",
+      "form": "8-K",
+      "index_filing_date": "2016-05-10",
+      "year": 2016,
+      "quarter": "QTR2",
+      "acceptance_raw": "20160510130012",
+      "FILED_AS_OF_DATE": "20160510",
+      "source_chronology_contradictory": false,
+      "source_sha256": "e8f6efa6e4341fb7ddd1c3c704db031d3e7cc9e6a024397bc9a4e8df0f1f614b",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000180
+      ],
+      "source_items": [
+        "8.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20160510130012",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2016-05-10T17:00:12+00:00",
+          "civil_date_New_York": "2016-05-10"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2016-05-10T18:00:12+00:00",
+          "civil_date_New_York": "2016-05-10"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2016-05-12T13:30:00+00:00",
+        "2016-05-12T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2016-05-12T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000180",
+      "accession": "0001193125-16-588394",
+      "form": "8-K",
+      "index_filing_date": "2016-05-12",
+      "year": 2016,
+      "quarter": "QTR2",
+      "acceptance_raw": "20160512113210",
+      "FILED_AS_OF_DATE": "20160512",
+      "source_chronology_contradictory": false,
+      "source_sha256": "d0a6281110b9c28e77da6320e115bcd69ca8be37016d86695de6eaae317ae559",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000180
+      ],
+      "source_items": [
+        "1.01",
+        "2.01",
+        "3.01",
+        "3.03",
+        "5.01",
+        "5.02",
+        "5.03",
+        "9.01"
+      ],
+      "raw_acceptance": "20160512113210",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2016-05-12T15:32:10+00:00",
+          "civil_date_New_York": "2016-05-12"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2016-05-12T16:32:10+00:00",
+          "civil_date_New_York": "2016-05-12"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2016-05-16T13:30:00+00:00",
+        "2016-05-16T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2016-05-16T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000230",
+      "accession": "0001437749-16-030596",
+      "form": "8-K/A",
+      "index_filing_date": "2016-05-03",
+      "year": 2016,
+      "quarter": "QTR2",
+      "acceptance_raw": "20160503130052",
+      "FILED_AS_OF_DATE": "20160503",
+      "source_chronology_contradictory": false,
+      "source_sha256": "090cb7ff03bc09cc1af26bc0aa5494fe0d8f75dbe90b0eed23e082d0c60bb911",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000230
+      ],
+      "source_items": [
+        "1.01",
+        "1.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20160503130052",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2016-05-03T17:00:52+00:00",
+          "civil_date_New_York": "2016-05-03"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2016-05-03T18:00:52+00:00",
+          "civil_date_New_York": "2016-05-03"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2016-05-05T13:30:00+00:00",
+        "2016-05-05T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2016-05-05T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1001250",
+      "accession": "0001104659-16-122983",
+      "form": "8-K/A",
+      "index_filing_date": "2016-05-24",
+      "year": 2016,
+      "quarter": "QTR2",
+      "acceptance_raw": "20160524165624",
+      "FILED_AS_OF_DATE": "20160524",
+      "source_chronology_contradictory": false,
+      "source_sha256": "38ece5416d71c2215713e9266ffb442a9cd2b521d97fc0c63fbc969ce44e8662",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1001250
+      ],
+      "source_items": [
+        "2.05"
+      ],
+      "raw_acceptance": "20160524165624",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2016-05-24T20:56:24+00:00",
+          "civil_date_New_York": "2016-05-24"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2016-05-24T21:56:24+00:00",
+          "civil_date_New_York": "2016-05-24"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2016-05-26T13:30:00+00:00",
+        "2016-05-26T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2016-05-26T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1001250",
+      "accession": "0001104659-16-127348",
+      "form": "8-K/A",
+      "index_filing_date": "2016-06-15",
+      "year": 2016,
+      "quarter": "QTR2",
+      "acceptance_raw": "20160615160254",
+      "FILED_AS_OF_DATE": "20160615",
+      "source_chronology_contradictory": false,
+      "source_sha256": "dfc63adebe0be97df3e4fc3744f357553b97e3bf8af53ccc58f6a961fde980db",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1001250
+      ],
+      "source_items": [
+        "2.05"
+      ],
+      "raw_acceptance": "20160615160254",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2016-06-15T20:02:54+00:00",
+          "civil_date_New_York": "2016-06-15"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2016-06-15T21:02:54+00:00",
+          "civil_date_New_York": "2016-06-15"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2016-06-17T13:30:00+00:00",
+        "2016-06-17T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2016-06-17T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1001463",
+      "accession": "0001185185-16-004336",
+      "form": "8-K/A",
+      "index_filing_date": "2016-04-25",
+      "year": 2016,
+      "quarter": "QTR2",
+      "acceptance_raw": "20160425094844",
+      "FILED_AS_OF_DATE": "20160425",
+      "source_chronology_contradictory": false,
+      "source_sha256": "648d1b68732736d3214304bc210d764a54eba7de9e118112f7382632239baf12",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1001463
+      ],
+      "source_items": [
+        "1.01",
+        "2.01",
+        "2.02",
+        "5.01",
+        "5.02",
+        "5.07",
+        "7.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20160425094844",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2016-04-25T13:48:44+00:00",
+          "civil_date_New_York": "2016-04-25"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2016-04-25T14:48:44+00:00",
+          "civil_date_New_York": "2016-04-25"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2016-04-27T13:30:00+00:00",
+        "2016-04-27T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2016-04-27T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-17-231164",
+      "form": "8-K",
+      "index_filing_date": "2017-07-19",
+      "year": 2017,
+      "quarter": "QTR3",
+      "acceptance_raw": "20170719144902",
+      "FILED_AS_OF_DATE": "20170719",
+      "source_chronology_contradictory": false,
+      "source_sha256": "7412e49fd8d4a0c32a2ce886d7be77f7b5e71667e15614b6964038e1d8ee70d1",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "5.02"
+      ],
+      "raw_acceptance": "20170719144902",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2017-07-19T18:49:02+00:00",
+          "civil_date_New_York": "2017-07-19"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2017-07-19T19:49:02+00:00",
+          "civil_date_New_York": "2017-07-19"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2017-07-21T13:30:00+00:00",
+        "2017-07-21T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2017-07-21T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-17-243567",
+      "form": "8-K",
+      "index_filing_date": "2017-08-01",
+      "year": 2017,
+      "quarter": "QTR3",
+      "acceptance_raw": "20170801104209",
+      "FILED_AS_OF_DATE": "20170801",
+      "source_chronology_contradictory": false,
+      "source_sha256": "c7c6096aeba1db9a58046ba1e553a01586870818233bc5b1d7990364be0f48e5",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "1.01",
+        "5.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20170801104209",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2017-08-01T14:42:09+00:00",
+          "civil_date_New_York": "2017-08-01"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2017-08-01T15:42:09+00:00",
+          "civil_date_New_York": "2017-08-01"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2017-08-03T13:30:00+00:00",
+        "2017-08-03T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2017-08-03T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-17-247190",
+      "form": "8-K",
+      "index_filing_date": "2017-08-03",
+      "year": 2017,
+      "quarter": "QTR3",
+      "acceptance_raw": "20170803140904",
+      "FILED_AS_OF_DATE": "20170803",
+      "source_chronology_contradictory": false,
+      "source_sha256": "9cd5462f5986292179c466dd6e4655018da164af7e851357a289ef6b217d93af",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "2.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20170803140904",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2017-08-03T18:09:04+00:00",
+          "civil_date_New_York": "2017-08-03"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2017-08-03T19:09:04+00:00",
+          "civil_date_New_York": "2017-08-03"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2017-08-07T13:30:00+00:00",
+        "2017-08-07T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2017-08-07T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-17-283728",
+      "form": "8-K",
+      "index_filing_date": "2017-09-13",
+      "year": 2017,
+      "quarter": "QTR3",
+      "acceptance_raw": "20170913154258",
+      "FILED_AS_OF_DATE": "20170913",
+      "source_chronology_contradictory": false,
+      "source_sha256": "c5e4107d5397e6be836cadf1340a986ca3eb254af3e2ff03b205768acce768ee",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "5.07"
+      ],
+      "raw_acceptance": "20170913154258",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2017-09-13T19:42:58+00:00",
+          "civil_date_New_York": "2017-09-13"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2017-09-13T20:42:58+00:00",
+          "civil_date_New_York": "2017-09-13"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2017-09-15T13:30:00+00:00",
+        "2017-09-15T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2017-09-15T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000623",
+      "accession": "0001000623-17-000108",
+      "form": "8-K/A",
+      "index_filing_date": "2017-08-02",
+      "year": 2017,
+      "quarter": "QTR3",
+      "acceptance_raw": "20170802162657",
+      "FILED_AS_OF_DATE": "20170802",
+      "source_chronology_contradictory": false,
+      "source_sha256": "ea4c6f880bc3a0d57faa58f11952e12bc5a45a0f5382a530282546afb523af92",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000623
+      ],
+      "source_items": [
+        "5.07"
+      ],
+      "raw_acceptance": "20170802162657",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2017-08-02T20:26:57+00:00",
+          "civil_date_New_York": "2017-08-02"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2017-08-02T21:26:57+00:00",
+          "civil_date_New_York": "2017-08-02"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2017-08-04T13:30:00+00:00",
+        "2017-08-04T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2017-08-04T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1003410",
+      "accession": "0000783280-17-000061",
+      "form": "8-K/A",
+      "index_filing_date": "2017-07-27",
+      "year": 2017,
+      "quarter": "QTR3",
+      "acceptance_raw": "20170727102133",
+      "FILED_AS_OF_DATE": "20170727",
+      "source_chronology_contradictory": false,
+      "source_sha256": "3c46669d8764ffef21e444259737849b39c9e6a7786e3e63b861c397c7f90be1",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        783280,
+        1003410
+      ],
+      "source_items": [
+        "5.07"
+      ],
+      "raw_acceptance": "20170727102133",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2017-07-27T14:21:33+00:00",
+          "civil_date_New_York": "2017-07-27"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2017-07-27T15:21:33+00:00",
+          "civil_date_New_York": "2017-07-27"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2017-07-31T13:30:00+00:00",
+        "2017-07-31T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2017-07-31T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1003410",
+      "accession": "0000783280-17-000068",
+      "form": "8-K/A",
+      "index_filing_date": "2017-08-02",
+      "year": 2017,
+      "quarter": "QTR3",
+      "acceptance_raw": "20170802112105",
+      "FILED_AS_OF_DATE": "20170802",
+      "source_chronology_contradictory": false,
+      "source_sha256": "d4d270594cdc5ccfad18a82c388ff2363239caaa9082dbf9d8c0afc9e9cb7205",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        783280,
+        1003410
+      ],
+      "source_items": [
+        "2.01"
+      ],
+      "raw_acceptance": "20170802112105",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2017-08-02T15:21:05+00:00",
+          "civil_date_New_York": "2017-08-02"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2017-08-02T16:21:05+00:00",
+          "civil_date_New_York": "2017-08-02"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2017-08-04T13:30:00+00:00",
+        "2017-08-04T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2017-08-04T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1005757",
+      "accession": "0001564590-17-017865",
+      "form": "8-K/A",
+      "index_filing_date": "2017-08-21",
+      "year": 2017,
+      "quarter": "QTR3",
+      "acceptance_raw": "20170821120721",
+      "FILED_AS_OF_DATE": "20170821",
+      "source_chronology_contradictory": false,
+      "source_sha256": "d147bf2b8a99ec33cde9bec9589d4bb0f66b7a49297f9a60eb210fd9cc5c3605",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1005757
+      ],
+      "source_items": [
+        "5.07"
+      ],
+      "raw_acceptance": "20170821120721",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2017-08-21T16:07:21+00:00",
+          "civil_date_New_York": "2017-08-21"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2017-08-21T17:07:21+00:00",
+          "civil_date_New_York": "2017-08-21"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2017-08-23T13:30:00+00:00",
+        "2017-08-23T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2017-08-23T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-18-314942",
+      "form": "8-K",
+      "index_filing_date": "2018-11-01",
+      "year": 2018,
+      "quarter": "QTR4",
+      "acceptance_raw": "20181101090159",
+      "FILED_AS_OF_DATE": "20181101",
+      "source_chronology_contradictory": false,
+      "source_sha256": "c6424f31dd2a0514e16e0a90defd736732442d9c3464c8df53d9c6660d3cc790",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "2.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20181101090159",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2018-11-01T13:01:59+00:00",
+          "civil_date_New_York": "2018-11-01"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2018-11-01T14:01:59+00:00",
+          "civil_date_New_York": "2018-11-01"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2018-11-05T14:30:00+00:00",
+        "2018-11-05T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2018-11-05T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-18-319610",
+      "form": "8-K",
+      "index_filing_date": "2018-11-06",
+      "year": 2018,
+      "quarter": "QTR4",
+      "acceptance_raw": "20181106163101",
+      "FILED_AS_OF_DATE": "20181106",
+      "source_chronology_contradictory": false,
+      "source_sha256": "f2c0f77a70f2c371d70b36fc92e9d20cbe7c8e99737030c872a0063177beb68a",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "1.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20181106163101",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2018-11-06T21:31:01+00:00",
+          "civil_date_New_York": "2018-11-06"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2018-11-06T21:31:01+00:00",
+          "civil_date_New_York": "2018-11-06"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2018-11-08T14:30:00+00:00",
+        "2018-11-08T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2018-11-08T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2018-11-06T21:31:01+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-18-343069",
+      "form": "8-K",
+      "index_filing_date": "2018-12-06",
+      "year": 2018,
+      "quarter": "QTR4",
+      "acceptance_raw": "20181206090036",
+      "FILED_AS_OF_DATE": "20181206",
+      "source_chronology_contradictory": false,
+      "source_sha256": "b7d118e7740b8768a23d22b7e3878e275104583e3c00d89de13b69970650f7ca",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "5.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20181206090036",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2018-12-06T14:00:36+00:00",
+          "civil_date_New_York": "2018-12-06"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2018-12-06T14:00:36+00:00",
+          "civil_date_New_York": "2018-12-06"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2018-12-10T14:30:00+00:00",
+        "2018-12-10T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2018-12-10T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2018-12-06T14:00:36+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000209",
+      "accession": "0001193125-18-309895",
+      "form": "8-K",
+      "index_filing_date": "2018-10-29",
+      "year": 2018,
+      "quarter": "QTR4",
+      "acceptance_raw": "20181029083035",
+      "FILED_AS_OF_DATE": "20181029",
+      "source_chronology_contradictory": false,
+      "source_sha256": "af6f2060ef3d4443bb0dd0fbe3d271dbfd3f27f4831ac79bc6db6c9457809619",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000209
+      ],
+      "source_items": [
+        "8.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20181029083035",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2018-10-29T12:30:35+00:00",
+          "civil_date_New_York": "2018-10-29"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2018-10-29T13:30:35+00:00",
+          "civil_date_New_York": "2018-10-29"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2018-10-31T13:30:00+00:00",
+        "2018-10-31T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2018-10-31T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000683",
+      "accession": "0001213900-18-013683",
+      "form": "8-K/A",
+      "index_filing_date": "2018-10-09",
+      "year": 2018,
+      "quarter": "QTR4",
+      "acceptance_raw": "20181009145526",
+      "FILED_AS_OF_DATE": "20181009",
+      "source_chronology_contradictory": false,
+      "source_sha256": "cf641d65b38ea44132979b5065c6c2b2d855eacef51ca741d2a58c1c1b91e521",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000683
+      ],
+      "source_items": [
+        "1.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20181009145526",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2018-10-09T18:55:26+00:00",
+          "civil_date_New_York": "2018-10-09"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2018-10-09T19:55:26+00:00",
+          "civil_date_New_York": "2018-10-09"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2018-10-11T13:30:00+00:00",
+        "2018-10-11T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2018-10-11T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1001258",
+      "accession": "0001437749-18-022721",
+      "form": "8-K/A",
+      "index_filing_date": "2018-12-28",
+      "year": 2018,
+      "quarter": "QTR4",
+      "acceptance_raw": "20181228153035",
+      "FILED_AS_OF_DATE": "20181228",
+      "source_chronology_contradictory": false,
+      "source_sha256": "0cb16ead107e4cdad037266461ca44072ffd784451cfeeb7b4ecec4d00830446",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1001258
+      ],
+      "source_items": [
+        "5.07"
+      ],
+      "raw_acceptance": "20181228153035",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2018-12-28T20:30:35+00:00",
+          "civil_date_New_York": "2018-12-28"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2018-12-28T20:30:35+00:00",
+          "civil_date_New_York": "2018-12-28"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-01-02T14:30:00+00:00",
+        "2019-01-02T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-01-02T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2018-12-28T20:30:35+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1001385",
+      "accession": "0001437749-18-018169",
+      "form": "8-K/A",
+      "index_filing_date": "2018-10-11",
+      "year": 2018,
+      "quarter": "QTR4",
+      "acceptance_raw": "20181011144717",
+      "FILED_AS_OF_DATE": "20181011",
+      "source_chronology_contradictory": false,
+      "source_sha256": "c42dfaa1179fa714c31c69c7b615dcb1c296b275db167b99dae7a69ed5d08404",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1001385
+      ],
+      "source_items": [
+        "9.01"
+      ],
+      "raw_acceptance": "20181011144717",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2018-10-11T18:47:17+00:00",
+          "civil_date_New_York": "2018-10-11"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2018-10-11T19:47:17+00:00",
+          "civil_date_New_York": "2018-10-11"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2018-10-15T13:30:00+00:00",
+        "2018-10-15T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2018-10-15T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "10048",
+      "accession": "0000899681-18-000076",
+      "form": "8-K/A",
+      "index_filing_date": "2018-11-13",
+      "year": 2018,
+      "quarter": "QTR4",
+      "acceptance_raw": "20181113171422",
+      "FILED_AS_OF_DATE": "20181113",
+      "source_chronology_contradictory": false,
+      "source_sha256": "3c7b46c5782a31abb1882d74e9e4ca5ae44d046fa44cb1224423a59327745fe6",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        10048
+      ],
+      "source_items": [
+        "9.01"
+      ],
+      "raw_acceptance": "20181113171422",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2018-11-13T22:14:22+00:00",
+          "civil_date_New_York": "2018-11-13"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2018-11-13T22:14:22+00:00",
+          "civil_date_New_York": "2018-11-13"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2018-11-15T14:30:00+00:00",
+        "2018-11-15T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2018-11-15T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2018-11-13T22:14:22+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001193125-19-024617",
+      "form": "8-K",
+      "index_filing_date": "2019-02-01",
+      "year": 2019,
+      "quarter": "QTR1",
+      "acceptance_raw": "20190201063107",
+      "FILED_AS_OF_DATE": "20190201",
+      "source_chronology_contradictory": false,
+      "source_sha256": "f46c24373142e6b26cfde3910781a01ab7e02d1d0703efb12971ef59bd93fe2d",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "2.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20190201063107",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2019-02-01T11:31:07+00:00",
+          "civil_date_New_York": "2019-02-01"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2019-02-01T11:31:07+00:00",
+          "civil_date_New_York": "2019-02-01"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-02-05T14:30:00+00:00",
+        "2019-02-05T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-02-05T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2019-02-01T11:31:07+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000209",
+      "accession": "0001193125-19-004285",
+      "form": "8-K",
+      "index_filing_date": "2019-01-08",
+      "year": 2019,
+      "quarter": "QTR1",
+      "acceptance_raw": "20190108091035",
+      "FILED_AS_OF_DATE": "20190108",
+      "source_chronology_contradictory": false,
+      "source_sha256": "3daf6cf72bb06123abcf4eba2d0664db7663e8bbb20da89a91e8030d014cb571",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000209
+      ],
+      "source_items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20190108091035",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2019-01-08T14:10:35+00:00",
+          "civil_date_New_York": "2019-01-08"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2019-01-08T14:10:35+00:00",
+          "civil_date_New_York": "2019-01-08"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-01-10T14:30:00+00:00",
+        "2019-01-10T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-01-10T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2019-01-08T14:10:35+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000209",
+      "accession": "0001193125-19-007413",
+      "form": "8-K",
+      "index_filing_date": "2019-01-11",
+      "year": 2019,
+      "quarter": "QTR1",
+      "acceptance_raw": "20190111163203",
+      "FILED_AS_OF_DATE": "20190111",
+      "source_chronology_contradictory": false,
+      "source_sha256": "ef5023cca4a9d1fb1a131f9696025bf5ed2ec44971d8762eea5cd5c00e0c57ea",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000209
+      ],
+      "source_items": [
+        "1.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20190111163203",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2019-01-11T21:32:03+00:00",
+          "civil_date_New_York": "2019-01-11"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2019-01-11T21:32:03+00:00",
+          "civil_date_New_York": "2019-01-11"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-01-15T14:30:00+00:00",
+        "2019-01-15T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-01-15T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2019-01-11T21:32:03+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000209",
+      "accession": "0001193125-19-024926",
+      "form": "8-K",
+      "index_filing_date": "2019-02-01",
+      "year": 2019,
+      "quarter": "QTR1",
+      "acceptance_raw": "20190201085035",
+      "FILED_AS_OF_DATE": "20190201",
+      "source_chronology_contradictory": false,
+      "source_sha256": "4a0468d77efab5df0078e95f14fec66df8e7c1d1ef8aba103f4ab8d42d1da0f6",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000209
+      ],
+      "source_items": [
+        "1.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20190201085035",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2019-02-01T13:50:35+00:00",
+          "civil_date_New_York": "2019-02-01"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2019-02-01T13:50:35+00:00",
+          "civil_date_New_York": "2019-02-01"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-02-05T14:30:00+00:00",
+        "2019-02-05T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-02-05T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2019-02-01T13:50:35+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000228",
+      "accession": "0001193125-19-042581",
+      "form": "8-K/A",
+      "index_filing_date": "2019-02-15",
+      "year": 2019,
+      "quarter": "QTR1",
+      "acceptance_raw": "20190215172703",
+      "FILED_AS_OF_DATE": "20190215",
+      "source_chronology_contradictory": false,
+      "source_sha256": "af844c30653fdd7124af113eddc390fdbc8d1e5bb03bd2836019dcd01f717489",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000228
+      ],
+      "source_items": [
+        "2.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20190215172703",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2019-02-15T22:27:03+00:00",
+          "civil_date_New_York": "2019-02-15"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2019-02-15T22:27:03+00:00",
+          "civil_date_New_York": "2019-02-15"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-02-20T14:30:00+00:00",
+        "2019-02-20T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-02-20T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2019-02-15T22:27:03+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1001233",
+      "accession": "0001564590-19-000230",
+      "form": "8-K/A",
+      "index_filing_date": "2019-01-07",
+      "year": 2019,
+      "quarter": "QTR1",
+      "acceptance_raw": "20190104181633",
+      "FILED_AS_OF_DATE": "20190107",
+      "source_chronology_contradictory": false,
+      "source_sha256": "01c38bf0f54edbdc25419653d65dc224a450ba29ba0745d43efe6f0ae542028a",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1001233
+      ],
+      "source_items": [
+        "9.01"
+      ],
+      "raw_acceptance": "20190104181633",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2019-01-04T23:16:33+00:00",
+          "civil_date_New_York": "2019-01-04"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2019-01-04T23:16:33+00:00",
+          "civil_date_New_York": "2019-01-04"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-01-09T14:30:00+00:00",
+        "2019-01-09T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-01-09T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2019-01-04T23:16:33+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1002590",
+      "accession": "0001564590-19-000450",
+      "form": "8-K/A",
+      "index_filing_date": "2019-01-09",
+      "year": 2019,
+      "quarter": "QTR1",
+      "acceptance_raw": "20190109163033",
+      "FILED_AS_OF_DATE": "20190109",
+      "source_chronology_contradictory": false,
+      "source_sha256": "5cfb39e8312988770e749490c38653a71cab90346904b3f46c5d2b8eee41c908",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1002590
+      ],
+      "source_items": [
+        "5.02"
+      ],
+      "raw_acceptance": "20190109163033",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2019-01-09T21:30:33+00:00",
+          "civil_date_New_York": "2019-01-09"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2019-01-09T21:30:33+00:00",
+          "civil_date_New_York": "2019-01-09"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-01-11T14:30:00+00:00",
+        "2019-01-11T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-01-11T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2019-01-09T21:30:33+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1015383",
+      "accession": "0001493152-19-002522",
+      "form": "8-K/A",
+      "index_filing_date": "2019-02-25",
+      "year": 2019,
+      "quarter": "QTR1",
+      "acceptance_raw": "20190225172351",
+      "FILED_AS_OF_DATE": "20190225",
+      "source_chronology_contradictory": false,
+      "source_sha256": "bbb1030b2e366207632f81d005e283c7f283b6d5ce2f85a4fbb2a22e2c928d07",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1015383
+      ],
+      "source_items": [
+        "2.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20190225172351",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2019-02-25T22:23:51+00:00",
+          "civil_date_New_York": "2019-02-25"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2019-02-25T22:23:51+00:00",
+          "civil_date_New_York": "2019-02-25"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2019-02-27T14:30:00+00:00",
+        "2019-02-27T14:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2019-02-27T14:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "CERTIFIED",
+      "certified_acceptance_utc": "2019-02-25T22:23:51+00:00",
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001564590-20-015116",
+      "form": "8-K",
+      "index_filing_date": "2020-04-03",
+      "year": 2020,
+      "quarter": "QTR2",
+      "acceptance_raw": "20200403083034",
+      "FILED_AS_OF_DATE": "20200403",
+      "source_chronology_contradictory": false,
+      "source_sha256": "670ba873dfe9511a8750a61e4546ac8afb1517e991de47ac4050f9758c1ac4c5",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "2.05"
+      ],
+      "raw_acceptance": "20200403083034",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2020-04-03T12:30:34+00:00",
+          "civil_date_New_York": "2020-04-03"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2020-04-03T13:30:34+00:00",
+          "civil_date_New_York": "2020-04-03"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2020-04-07T13:30:00+00:00",
+        "2020-04-07T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2020-04-07T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001564590-20-016816",
+      "form": "8-K",
+      "index_filing_date": "2020-04-15",
+      "year": 2020,
+      "quarter": "QTR2",
+      "acceptance_raw": "20200415083017",
+      "FILED_AS_OF_DATE": "20200415",
+      "source_chronology_contradictory": false,
+      "source_sha256": "b4b09b87af0cc2492500b8bfcbaa6024ddab8ef362c6fa4352507e802da3956a",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "8.01"
+      ],
+      "raw_acceptance": "20200415083017",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2020-04-15T12:30:17+00:00",
+          "civil_date_New_York": "2020-04-15"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2020-04-15T13:30:17+00:00",
+          "civil_date_New_York": "2020-04-15"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2020-04-17T13:30:00+00:00",
+        "2020-04-17T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2020-04-17T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001564590-20-028299",
+      "form": "8-K",
+      "index_filing_date": "2020-06-04",
+      "year": 2020,
+      "quarter": "QTR2",
+      "acceptance_raw": "20200604083046",
+      "FILED_AS_OF_DATE": "20200604",
+      "source_chronology_contradictory": false,
+      "source_sha256": "a414f507565ca06b393ef53e47a06e9465db4c25848ee6e9d29f36940f9cb59a",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "1.01",
+        "2.02",
+        "2.03",
+        "9.01"
+      ],
+      "raw_acceptance": "20200604083046",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2020-06-04T12:30:46+00:00",
+          "civil_date_New_York": "2020-06-04"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2020-06-04T13:30:46+00:00",
+          "civil_date_New_York": "2020-06-04"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2020-06-08T13:30:00+00:00",
+        "2020-06-08T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2020-06-08T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1000045",
+      "accession": "0001176256-20-000243",
+      "form": "8-K",
+      "index_filing_date": "2020-06-29",
+      "year": 2020,
+      "quarter": "QTR2",
+      "acceptance_raw": "20200629142631",
+      "FILED_AS_OF_DATE": "20200629",
+      "source_chronology_contradictory": false,
+      "source_sha256": "489a7aac28755692bdf6517ccba4c4d7317f8faf207267229ee37d8abcaffde9",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1000045
+      ],
+      "source_items": [
+        "9.01"
+      ],
+      "raw_acceptance": "20200629142631",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2020-06-29T18:26:31+00:00",
+          "civil_date_New_York": "2020-06-29"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2020-06-29T19:26:31+00:00",
+          "civil_date_New_York": "2020-06-29"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2020-07-01T13:30:00+00:00",
+        "2020-07-01T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2020-07-01T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1001233",
+      "accession": "0001193125-20-172284",
+      "form": "8-K/A",
+      "index_filing_date": "2020-06-18",
+      "year": 2020,
+      "quarter": "QTR2",
+      "acceptance_raw": "20200618145819",
+      "FILED_AS_OF_DATE": "20200618",
+      "source_chronology_contradictory": false,
+      "source_sha256": "dbfcc985528526bc4a97297739bf3e7bf96f836ab4315018b56240cb1f72ef5c",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1001233
+      ],
+      "source_items": [
+        "9.01"
+      ],
+      "raw_acceptance": "20200618145819",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2020-06-18T18:58:19+00:00",
+          "civil_date_New_York": "2020-06-18"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2020-06-18T19:58:19+00:00",
+          "civil_date_New_York": "2020-06-18"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2020-06-22T13:30:00+00:00",
+        "2020-06-22T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2020-06-22T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1001250",
+      "accession": "0001001250-20-000042",
+      "form": "8-K/A",
+      "index_filing_date": "2020-05-18",
+      "year": 2020,
+      "quarter": "QTR2",
+      "acceptance_raw": "20200518160143",
+      "FILED_AS_OF_DATE": "20200518",
+      "source_chronology_contradictory": false,
+      "source_sha256": "0e599cf6454e6d7e5acb71916512c34050939cf55ec8b120c8c43153a881e9b9",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        1001250
+      ],
+      "source_items": [
+        "4.01"
+      ],
+      "raw_acceptance": "20200518160143",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2020-05-18T20:01:43+00:00",
+          "civil_date_New_York": "2020-05-18"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2020-05-18T21:01:43+00:00",
+          "civil_date_New_York": "2020-05-18"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2020-05-20T13:30:00+00:00",
+        "2020-05-20T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2020-05-20T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1003410",
+      "accession": "0000783280-20-000031",
+      "form": "8-K/A",
+      "index_filing_date": "2020-04-30",
+      "year": 2020,
+      "quarter": "QTR2",
+      "acceptance_raw": "20200429174014",
+      "FILED_AS_OF_DATE": "20200430",
+      "source_chronology_contradictory": false,
+      "source_sha256": "a85c26468f6f5df1865c89db0881c5c28ce567d2a3c7bd87c2f9417845091692",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        783280,
+        1003410
+      ],
+      "source_items": [
+        "5.02",
+        "9.01"
+      ],
+      "raw_acceptance": "20200429174014",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2020-04-29T21:40:14+00:00",
+          "civil_date_New_York": "2020-04-29"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2020-04-29T22:40:14+00:00",
+          "civil_date_New_York": "2020-04-29"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2020-05-04T13:30:00+00:00",
+        "2020-05-04T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2020-05-04T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    },
+    {
+      "CIK": "1004980",
+      "accession": "0000950157-20-000567",
+      "form": "8-K/A",
+      "index_filing_date": "2020-05-04",
+      "year": 2020,
+      "quarter": "QTR2",
+      "acceptance_raw": "20200504061131",
+      "FILED_AS_OF_DATE": "20200504",
+      "source_chronology_contradictory": false,
+      "source_sha256": "a3a9ca04fd8da3915e9a37af7ef39b3ddcd37a505dda7c2c42a5b4ab37072d33",
+      "source_acceptance_locator": "ACCEPTANCE-DATETIME in archived accession SGML header",
+      "header_CIKs": [
+        75488,
+        1004980
+      ],
+      "source_items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "raw_acceptance": "20200504061131",
+      "candidate_interpretations": [
+        {
+          "interpretation": "SEASONAL_EASTERN",
+          "utc": "2020-05-04T10:11:31+00:00",
+          "civil_date_New_York": "2020-05-04"
+        },
+        {
+          "interpretation": "LITERAL_EST",
+          "utc": "2020-05-04T11:11:31+00:00",
+          "civil_date_New_York": "2020-05-04"
+        }
+      ],
+      "candidate_opens_utc": [
+        "2020-05-06T13:30:00+00:00",
+        "2020-05-06T13:30:00+00:00"
+      ],
+      "modeled_eligible_open_utc": "2020-05-06T13:30:00+00:00",
+      "exact_public_available_at_utc": null,
+      "exact_public_availability": "UNKNOWN",
+      "timing_class": "MODELED_ACCEPTANCE_BUFFERED_ELIGIBILITY",
+      "policy_activated": false,
+      "trading_identity_certified": false,
+      "acceptance_timezone_status": "PARTIAL",
+      "certified_acceptance_utc": null,
+      "filed_precedes_raw_acceptance_date": false,
+      "status": "INVARIANT_MODELED_BOUND",
+      "invariant": true
+    }
+  ],
+  "status_counts": {
+    "INVARIANT_MODELED_BOUND": 48
+  },
+  "invariant_count": 48,
+  "unavailable_count": 0,
+  "acceptance_missing_count": 0,
+  "forms": {
+    "8-K": 24,
+    "8-K/A": 24
+  },
+  "quarters": [
+    "QTR1",
+    "QTR2",
+    "QTR3",
+    "QTR4",
+    "QTR1",
+    "QTR2"
+  ],
+  "filed_precedes_raw_acceptance_count": 0,
+  "actual_adjustment_certificate_count": 0,
+  "actual_adjustment_note": "Earlier filed dates are chronology observations, not independently certified adjustment examples. Synthetic backdating stress retained.",
+  "sample_sha256": "599e64ca6ba994e9d6a668a2edb78676d887cd5393ed13d1937af40a4db679f9",
+  "exact_public_availability": "UNKNOWN",
+  "performance_accesses": 0,
+  "confirmation_accesses": 0,
+  "policy_sha256": "fac9c3287f3d67a97db0fcd0d77dc2ea184fb2210544e42014e5952d2ce5da8a"
+}

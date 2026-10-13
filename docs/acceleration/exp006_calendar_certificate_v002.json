@@ -1,0 +1,635 @@
+{
+  "version": "EXP006_NYSE_open_calendar_v002",
+  "scope": [
+    "2015-01-01",
+    "2020-12-31"
+  ],
+  "status": "CERTIFIED_SCOPED_NYSE_REGULAR_OPEN_CALENDAR",
+  "regular_open": "09:30 America/New_York",
+  "full_day_closures": [
+    "2015-01-01",
+    "2015-01-19",
+    "2015-02-16",
+    "2015-04-03",
+    "2015-05-25",
+    "2015-07-03",
+    "2015-09-07",
+    "2015-11-26",
+    "2015-12-25",
+    "2016-01-01",
+    "2016-01-18",
+    "2016-02-15",
+    "2016-03-25",
+    "2016-05-30",
+    "2016-07-04",
+    "2016-09-05",
+    "2016-11-24",
+    "2016-12-26",
+    "2017-01-02",
+    "2017-01-16",
+    "2017-02-20",
+    "2017-04-14",
+    "2017-05-29",
+    "2017-07-04",
+    "2017-09-04",
+    "2017-11-23",
+    "2017-12-25",
+    "2018-01-01",
+    "2018-01-15",
+    "2018-02-19",
+    "2018-03-30",
+    "2018-05-28",
+    "2018-07-04",
+    "2018-09-03",
+    "2018-11-22",
+    "2018-12-05",
+    "2018-12-25",
+    "2019-01-01",
+    "2019-01-21",
+    "2019-02-18",
+    "2019-04-19",
+    "2019-05-27",
+    "2019-07-04",
+    "2019-09-02",
+    "2019-11-28",
+    "2019-12-25",
+    "2020-01-01",
+    "2020-01-20",
+    "2020-02-17",
+    "2020-04-10",
+    "2020-05-25",
+    "2020-07-03",
+    "2020-09-07",
+    "2020-11-26",
+    "2020-12-25"
+  ],
+  "session_count": 1511,
+  "sessions_sha256": "0e8228f7d013e4d384df22cb180c47ce7554af2eb8314a21f052937ca371be8d",
+  "sessions_per_year": {
+    "2015": 252,
+    "2016": 252,
+    "2017": 251,
+    "2018": 251,
+    "2019": 252,
+    "2020": 253
+  },
+  "source_locators": [
+    {
+      "year": 2015,
+      "date": "2015-01-01",
+      "label": "New Year\u2019s Day",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 11
+    },
+    {
+      "year": 2015,
+      "date": "2015-01-19",
+      "label": "Martin Luther King, Jr. Day",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 12
+    },
+    {
+      "year": 2015,
+      "date": "2015-02-16",
+      "label": "Washington\u2019s Birthday",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 13
+    },
+    {
+      "year": 2015,
+      "date": "2015-04-03",
+      "label": "Good Friday",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 14
+    },
+    {
+      "year": 2015,
+      "date": "2015-05-25",
+      "label": "Memorial Day",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 15
+    },
+    {
+      "year": 2015,
+      "date": "2015-07-03",
+      "label": "Independence Day",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 16
+    },
+    {
+      "year": 2015,
+      "date": "2015-09-07",
+      "label": "Labor Day",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 17
+    },
+    {
+      "year": 2015,
+      "date": "2015-11-26",
+      "label": "Thanksgiving Day",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 18
+    },
+    {
+      "year": 2015,
+      "date": "2015-12-25",
+      "label": "Christmas Day",
+      "source_sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a",
+      "HTML_table_row": 19
+    },
+    {
+      "year": 2015,
+      "date": "2015-01-01",
+      "label": "New Year\u2019s Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 2
+    },
+    {
+      "year": 2015,
+      "date": "2015-01-19",
+      "label": "Martin Luther King, Jr. Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 3
+    },
+    {
+      "year": 2015,
+      "date": "2015-02-16",
+      "label": "Washington\u2019s Birthday",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 4
+    },
+    {
+      "year": 2015,
+      "date": "2015-04-03",
+      "label": "Good Friday",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 5
+    },
+    {
+      "year": 2015,
+      "date": "2015-05-25",
+      "label": "Memorial Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 6
+    },
+    {
+      "year": 2015,
+      "date": "2015-07-03",
+      "label": "Independence Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 7
+    },
+    {
+      "year": 2015,
+      "date": "2015-09-07",
+      "label": "Labor Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 8
+    },
+    {
+      "year": 2015,
+      "date": "2015-11-26",
+      "label": "Thanksgiving Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 9
+    },
+    {
+      "year": 2015,
+      "date": "2015-12-25",
+      "label": "Christmas Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 10
+    },
+    {
+      "year": 2016,
+      "date": "2016-01-01",
+      "label": "New Year\u2019s Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 13
+    },
+    {
+      "year": 2016,
+      "date": "2016-01-18",
+      "label": "Martin Luther King, Jr. Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 14
+    },
+    {
+      "year": 2016,
+      "date": "2016-02-15",
+      "label": "Washington\u2019s Birthday",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 15
+    },
+    {
+      "year": 2016,
+      "date": "2016-03-25",
+      "label": "Good Friday",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 16
+    },
+    {
+      "year": 2016,
+      "date": "2016-05-30",
+      "label": "Memorial Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 17
+    },
+    {
+      "year": 2016,
+      "date": "2016-07-04",
+      "label": "Independence Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 18
+    },
+    {
+      "year": 2016,
+      "date": "2016-09-05",
+      "label": "Labor Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 19
+    },
+    {
+      "year": 2016,
+      "date": "2016-11-24",
+      "label": "Thanksgiving Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 20
+    },
+    {
+      "year": 2016,
+      "date": "2016-12-26",
+      "label": "Christmas Day",
+      "source_sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775",
+      "HTML_table_row": 21
+    },
+    {
+      "year": 2016,
+      "date": "2016-02-15",
+      "label": "Washington\u2019s Birthday",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 1
+    },
+    {
+      "year": 2016,
+      "date": "2016-03-25",
+      "label": "Good Friday",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 2
+    },
+    {
+      "year": 2016,
+      "date": "2016-05-30",
+      "label": "Memorial Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 3
+    },
+    {
+      "year": 2016,
+      "date": "2016-07-04",
+      "label": "Independence Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 4
+    },
+    {
+      "year": 2016,
+      "date": "2016-09-05",
+      "label": "Labor Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 5
+    },
+    {
+      "year": 2016,
+      "date": "2016-11-24",
+      "label": "Thanksgiving Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 6
+    },
+    {
+      "year": 2016,
+      "date": "2016-12-26",
+      "label": "Christmas Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 7
+    },
+    {
+      "year": 2017,
+      "date": "2017-01-02",
+      "label": "New Year\u2019s Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 10
+    },
+    {
+      "year": 2017,
+      "date": "2017-01-16",
+      "label": "Martin Luther King, Jr. Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 11
+    },
+    {
+      "year": 2017,
+      "date": "2017-02-20",
+      "label": "Washington\u2019s Birthday",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 12
+    },
+    {
+      "year": 2017,
+      "date": "2017-04-14",
+      "label": "Good Friday",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 13
+    },
+    {
+      "year": 2017,
+      "date": "2017-05-29",
+      "label": "Memorial Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 14
+    },
+    {
+      "year": 2017,
+      "date": "2017-07-04",
+      "label": "Independence Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 15
+    },
+    {
+      "year": 2017,
+      "date": "2017-09-04",
+      "label": "Labor Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 16
+    },
+    {
+      "year": 2017,
+      "date": "2017-11-23",
+      "label": "Thanksgiving Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 17
+    },
+    {
+      "year": 2017,
+      "date": "2017-12-25",
+      "label": "Christmas Day",
+      "source_sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a",
+      "HTML_table_row": 18
+    },
+    {
+      "year": 2018,
+      "date": "2018-01-01",
+      "label": "New Year\u2019s Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 2
+    },
+    {
+      "year": 2019,
+      "date": "2019-01-01",
+      "label": "New Year\u2019s Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 2
+    },
+    {
+      "year": 2020,
+      "date": "2020-01-01",
+      "label": "New Year\u2019s Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 2
+    },
+    {
+      "year": 2018,
+      "date": "2018-01-15",
+      "label": "Martin Luther King, Jr. Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 3
+    },
+    {
+      "year": 2019,
+      "date": "2019-01-21",
+      "label": "Martin Luther King, Jr. Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 3
+    },
+    {
+      "year": 2020,
+      "date": "2020-01-20",
+      "label": "Martin Luther King, Jr. Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 3
+    },
+    {
+      "year": 2018,
+      "date": "2018-02-19",
+      "label": "Washington's Birthday",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 4
+    },
+    {
+      "year": 2019,
+      "date": "2019-02-18",
+      "label": "Washington's Birthday",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 4
+    },
+    {
+      "year": 2020,
+      "date": "2020-02-17",
+      "label": "Washington's Birthday",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 4
+    },
+    {
+      "year": 2018,
+      "date": "2018-03-30",
+      "label": "Good Friday",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 5
+    },
+    {
+      "year": 2019,
+      "date": "2019-04-19",
+      "label": "Good Friday",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 5
+    },
+    {
+      "year": 2020,
+      "date": "2020-04-10",
+      "label": "Good Friday",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 5
+    },
+    {
+      "year": 2018,
+      "date": "2018-05-28",
+      "label": "Memorial Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 6
+    },
+    {
+      "year": 2019,
+      "date": "2019-05-27",
+      "label": "Memorial Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 6
+    },
+    {
+      "year": 2020,
+      "date": "2020-05-25",
+      "label": "Memorial Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 6
+    },
+    {
+      "year": 2018,
+      "date": "2018-07-04",
+      "label": "Independence Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 7
+    },
+    {
+      "year": 2019,
+      "date": "2019-07-04",
+      "label": "Independence Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 7
+    },
+    {
+      "year": 2020,
+      "date": "2020-07-03",
+      "label": "Independence Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 7
+    },
+    {
+      "year": 2018,
+      "date": "2018-09-03",
+      "label": "Labor Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 8
+    },
+    {
+      "year": 2019,
+      "date": "2019-09-02",
+      "label": "Labor Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 8
+    },
+    {
+      "year": 2020,
+      "date": "2020-09-07",
+      "label": "Labor Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 8
+    },
+    {
+      "year": 2018,
+      "date": "2018-11-22",
+      "label": "Thanksgiving Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 9
+    },
+    {
+      "year": 2019,
+      "date": "2019-11-28",
+      "label": "Thanksgiving Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 9
+    },
+    {
+      "year": 2020,
+      "date": "2020-11-26",
+      "label": "Thanksgiving Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 9
+    },
+    {
+      "year": 2018,
+      "date": "2018-12-25",
+      "label": "Christmas Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 10
+    },
+    {
+      "year": 2019,
+      "date": "2019-12-25",
+      "label": "Christmas Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 10
+    },
+    {
+      "year": 2020,
+      "date": "2020-12-25",
+      "label": "Christmas Day",
+      "source_sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849",
+      "HTML_table_row": 10
+    },
+    {
+      "year": 2018,
+      "date": "2018-12-05",
+      "label": "National Day of Mourning",
+      "source_sha256": "deaa4c55cacb2c4766b5b82e5b443728ac93c6cc38f468b0a7c48465003306a0",
+      "locator": "Original announcement body: Wednesday December 5, 2018 closure"
+    }
+  ],
+  "documents": [
+    {
+      "url": "https://ir.theice.com/press/news-details/2013/NYSE-Euronext-Announces-2015-Holiday-Calendar-and-Early-Closings/default.aspx",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-13T05:20:46.245399+00:00",
+      "body": {
+        "bytes": 74356,
+        "path": "0000000000-00-000000/02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a/body.bin",
+        "sha256": "02ba734dca19259b68b6ecbb0df9b8ee3e12493609ad791b1b0707547866670a"
+      }
+    },
+    {
+      "url": "https://ir.theice.com/press/news-details/2014/NYSE-Group-2016-Holiday-Calendar-and-Early-Closings/default.aspx",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-13T05:20:46.783830+00:00",
+      "body": {
+        "bytes": 73938,
+        "path": "0000000000-00-000000/356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775/body.bin",
+        "sha256": "356fe0349db65b2a7d5dd77d253ee478858a8d6dbdc25875eb83a8859bc49775"
+      }
+    },
+    {
+      "url": "https://ir.theice.com/press/news-details/2016/NYSE-Group-Announces-2017-Holiday-and-Early-Closings-Calendar/default.aspx",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-13T05:20:47.400896+00:00",
+      "body": {
+        "bytes": 71224,
+        "path": "0000000000-00-000000/738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a/body.bin",
+        "sha256": "738e08275ba5ec574ff9c5bf220d66204368da9e11f2f3c562fc8e0d7e24982a"
+      }
+    },
+    {
+      "url": "https://ir.theice.com/press/news-details/2017/NYSE-Group-Announces-2018-2019-and-2020-Holiday-and-Early-Closings-Calendar/default.aspx",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-13T05:20:47.968939+00:00",
+      "body": {
+        "bytes": 80852,
+        "path": "0000000000-00-000000/9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849/body.bin",
+        "sha256": "9cf52171625c65539077325aec957e2a6be2744443961efada529d8a5bf7b849"
+      }
+    },
+    {
+      "url": "https://ir.theice.com/press/news-details/2018/New-York-Stock-Exchange-to-Honor-President-George-H-W-Bush/default.aspx",
+      "status": 200,
+      "retrieved_at_utc": "2026-10-13T05:20:48.621741+00:00",
+      "body": {
+        "bytes": 69495,
+        "path": "0000000000-00-000000/deaa4c55cacb2c4766b5b82e5b443728ac93c6cc38f468b0a7c48465003306a0/body.bin",
+        "sha256": "deaa4c55cacb2c4766b5b82e5b443728ac93c6cc38f468b0a7c48465003306a0"
+      }
+    }
+  ],
+  "scope_limits": "NYSE regular opens/full-day closures only; early-close days remain sessions. Per-class exchange/terminal execution certification is a later gate. No market prices or confirmation calendar observations read.",
+  "legacy_calendar_code_sha256": "865db45d2e13abbb7be1ce4be1cc80818a3c68fd7bcd030ff5fe0c8fbf0b9218",
+  "legacy_calendar_reconciliation": "ALL_1511_SESSION_DATES_EXACT",
+  "regular_open_evidence": {
+    "url": "https://www.nyse.com/trade/hours-calendars",
+    "source_sha256": "79602f7be5a8f1d39c2b1cac4dd02c4c07f18cf9f92d70602834069154719bad",
+    "retrieval_role": "Existing exchange hours document; regular-open convention corroboration, not historical closure source"
+  }
+}
