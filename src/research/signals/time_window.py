@@ -28,6 +28,7 @@ class ElapsedWindow:
         self.rows=remaining;self.last=at
         return self.sma()
     def sma(self):return math.fsum(r.value for r in self.rows)/len(self.rows) if self.rows else None
+    def batch(self,observations):return [self.push(r) for r in observations]
     def value_ago(self,lag):
         if lag<timedelta(0) or not self.last:raise ValueError('Invalid lag/no observations')
         rows=[r for r in self.rows if r.at<=self.last-lag]

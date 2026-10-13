@@ -64,6 +64,7 @@ class CongressionalDisclosuresAdapter:
                 row=dict(r,printed_ticker=original.get('printed_ticker') if original else None,
                  resolved_ticker=original.get('resolved_ticker') if original else None,resolution_status=original.get('resolution_status') if original else 'UNAVAILABLE_ORIGINAL_TRADE',
                  upstream_ticker=r.get('ticker'),availability_status='UPSTREAM_MODELED_EOD_NOT_OBSERVED_PUBLIC',evidence_tier=self.evidence_tier.value)
+                row.pop('ticker',None)  # Upstream conflation is provenance, never a canonical ticker.
                 out.append(row)
         if len({r['event_id'] for r in out})!=len(out):raise ValueError('Overlapping event versions')
         return sorted(out,key=lambda r:(r['first_available_at'],r['event_id'],r['version']))

@@ -1,5 +1,6 @@
 """Original SEC filing-index population; no ticker/Item/outcome filtering."""
 import re,hashlib
+from datetime import datetime
 from src.research.surfaces.base import EvidenceTier,ProviderResult
 from src.research.spec import digest
 
@@ -18,16 +19,20 @@ class SECSurfaceAdapter:
             match=re.fullmatch(r'edgar/data/(\d+)/(\d{10}-\d{2}-\d{6})\.txt',path)
             if not match or int(match[1])!=int(cik):raise ValueError('Accession/file identity mismatch')
             accession=match[2]
-            if accession in seen:raise ValueError('Duplicate accession')
+            duplicate=accession in seen
             seen.add(accession)
             rows.append({'accession':accession,'issuer_cik':cik,'filed_name':name,'form':form,'filing_date':day,'source_filename':path,
-             'source_line':line_no,'source_index_sha256':source_sha256,'amendment_relationship':'UNKNOWN' if form=='8-K/A' else 'NOT_APPLICABLE',
+             'source_line':line_no,'source_index_sha256':source_sha256,'duplicate_accession_source_row':duplicate,'amendment_relationship':'UNKNOWN' if form=='8-K/A' else 'NOT_APPLICABLE',
              'PAC_deletion_status':'UNKNOWN','original_body_status':'UNTESTED','public_availability_status':'PUBLIC_TIMESTAMP_UNKNOWN','acceptance_candidates':None})
         if not rows:raise ValueError('No denominator established, never fabricate zero')
         return rows
     def sample(self,rows):
         return [r for month in ('2020-01','2020-02','2020-03') for r in [x for x in rows if x['form']=='8-K' and x['filing_date'].startswith(month)][:4]]
-    def normalize_probe(self,rows):raise ValueError('Explicit archived receipt required for SEC result construction')
+    def normalize_probe(self,rows,receipt=None):
+        if not receipt or not rows or any(r['source_index_sha256']!=receipt['body']['sha256'] for r in rows):raise ValueError('Matching archived index receipt required')
+        return ProviderResult(self.surface_id,self.evidence_tier,receipt['url'],receipt['body']['sha256'],
+         'SEC_CURRENT_INDEX_v002',receipt['body']['sha256'],receipt['retrieved_at_utc'],None,'PUBLIC_TIMESTAMP_UNKNOWN',
+         'CURRENT_INDEX_PAC_HISTORY_UNCERTIFIED','DECLARED_INDEX_DENOMINATOR_ONLY',self.probe_manifest(),self.capabilities(),tuple(rows))
 
 def item_semantics(body,item='2.02'):
     text=body.decode('utf-8',errors='replace')
@@ -37,3 +42,13 @@ def item_semantics(body,item='2.02'):
     if label and any(label.lower() in h.lower() for h in headers):return {'status':'PRESENT_SOURCE_HEADER','item':item,'headers':headers,'source_sha256':hashlib.sha256(body).hexdigest()}
     if headers:return {'status':'NOT_DECLARED_IN_COMPLETE_HEADER','item':item,'headers':headers,'absence_scope':'This submission header only; not zero corporate activity'}
     return {'status':'UNKNOWN','item':item,'reason':'No complete declared item header; textual proximity alone is insufficient'}
+
+def daily_index_keys(body):
+    """Compare source keys only; preserve raw body, normalize compact daily dates."""
+    keys=set()
+    for line in body.decode('latin-1').splitlines():
+        p=line.split('|')
+        if len(p)!=5 or p[2] not in ('8-K','8-K/A'):continue
+        day=datetime.strptime(p[3],'%Y%m%d' if '-' not in p[3] else '%Y-%m-%d').date().isoformat()
+        keys.add((p[0],p[1],p[2],day,p[4]))
+    return keys

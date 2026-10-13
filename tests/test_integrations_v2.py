@@ -4,7 +4,7 @@ from pathlib import Path
 from unittest.mock import patch
 from src.research.surfaces.base import EvidenceTier,ProviderResult
 from src.research.surfaces.congressional import CongressionalDisclosuresAdapter
-from src.research.surfaces.sec import SECSurfaceAdapter,item_semantics
+from src.research.surfaces.sec import SECSurfaceAdapter,item_semantics,daily_index_keys
 from src.research.signals.time_window import ElapsedWindow,TimedObservation
 from src.research.integrations.nexus_local import prepare_html
 from src.research.integrations.registry import validate_registry
@@ -17,6 +17,11 @@ def snapshot():return {'schemaVersion':1,'dataset':'austin-starks/congressional-
 def event(version,available,superseded=None):return {'event_id':'house:D:1','version':version,'chamber':'house','source_doc_id':'D','source_row_index':version,'source_url':'https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2020/D.pdf','transaction_date':'2020-01-01','first_available_at':'2020-01-10T00:00:00Z','available_at':available,'superseded_at':superseded,'ticker':'UPSTREAM'}
 
 class IntegrationTests(unittest.TestCase):
+    def test_daily_quarter_date_representation_and_shared_accession_not_dropped(self):
+        a=b'1|Issuer|8-K|20200102|edgar/data/1/0000000001-20-000001.txt'
+        b=a.replace(b'20200102',b'2020-01-02');self.assertEqual(daily_index_keys(a),daily_index_keys(b))
+        joint=b+b'\n2|Cofiler|8-K|2020-01-02|edgar/data/2/0000000001-20-000001.txt'
+        rows=SECSurfaceAdapter().enumerate(joint,'a'*64);self.assertEqual(len(rows),2);self.assertTrue(rows[1]['duplicate_accession_source_row'])
     def test_publisher_redirect_archived_reviewed_and_deny_not_overridden(self):
         with tempfile.TemporaryDirectory() as tmp:
             def fake(url,*a):
@@ -59,6 +64,7 @@ class IntegrationTests(unittest.TestCase):
         trade={'chamber':'house','doc_id':'D','row_index':1,'printed_ticker':'OLD','resolved_ticker':'NEW','resolution_status':'unresolved'}
         row=a.events_known_at([e],'2020-02-01T00:00:00Z',[trade])[0]
         self.assertEqual((row['printed_ticker'],row['resolved_ticker']),('OLD','NEW'));self.assertEqual(row['resolution_status'],'unresolved');self.assertIsNone(row['member_id']);self.assertEqual(row['source_url'],e['source_url'])
+        self.assertNotIn('ticker',row);self.assertEqual(row['upstream_ticker'],'UPSTREAM')
 
     def test_window_irregular_bucket_expiry_and_out_of_order(self):
         at=datetime(2020,1,1,tzinfo=timezone.utc);w=ElapsedWindow(timedelta(hours=1),timedelta(minutes=5))
@@ -71,6 +77,7 @@ class IntegrationTests(unittest.TestCase):
     def test_stream_batch_state_capacity_and_reset(self):
         at=datetime(2020,1,1,tzinfo=timezone.utc);rows=[TimedObservation(at+timedelta(minutes=i),i+1) for i in (0,5,10)]
         one=ElapsedWindow(timedelta(hours=1),timedelta(minutes=1));values=[one.push(r) for r in rows]
+        batch=ElapsedWindow(timedelta(hours=1),timedelta(minutes=1));self.assertEqual(batch.batch(rows),values)
         restored=ElapsedWindow.restore(one.state());new=TimedObservation(at+timedelta(minutes=15),5)
         self.assertEqual(one.push(new),restored.push(new));self.assertEqual(values,[1,3.5,6.0])
         self.assertEqual(one.value_ago(timedelta(minutes=5)),11);one.reset();self.assertIsNone(one.sma())
@@ -86,6 +93,10 @@ class IntegrationTests(unittest.TestCase):
     def test_sec_denominator_no_item_or_issuer_filter(self):
         body=b'1|Private|8-K|2020-01-02|edgar/data/1/0000000001-20-000001.txt\n2|Ended|8-K/A|2020-01-02|edgar/data/2/0000000002-20-000001.txt'
         a=SECSurfaceAdapter();rows=a.enumerate(body,'a'*64);self.assertEqual(len(rows),2);self.assertEqual(len(a.sample(rows)),1)
+        with self.assertRaises(ValueError):a.normalize_probe(rows)
+        result=a.normalize_probe(rows,{'url':'https://www.sec.gov/index','body':{'sha256':'a'*64},'retrieved_at_utc':'2026-10-13T00:00:00Z'})
+        self.assertEqual(result.evidence_tier,EvidenceTier.PRIMARY_INDEX_OR_METADATA)
+        with self.assertRaises(ValueError):result.require_original()
         self.assertEqual(item_semantics(b'ITEM INFORMATION: Results of Operations and Financial Condition\n')['status'],'PRESENT_SOURCE_HEADER')
         self.assertEqual(item_semantics(b'<p>nothing</p>')['status'],'UNKNOWN')
 
@@ -96,7 +107,7 @@ class IntegrationTests(unittest.TestCase):
 
     def test_proof_refuses_execution_and_changed_contract(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp);records={r:{} for r in ROLES};records.update(population={'status':'SOURCE_CONTRACT_READY_FOR_DESIGN'},source_surface={'version':'v2'},source_snapshot={'source_end':'2020-03-31','evidence_tier':'PRIMARY_INDEX_OR_METADATA','upstream_version':'SEC'},availability={'status':'PUBLIC_TIMESTAMP_UNKNOWN'},trial_family={'ceiling':10},inference_contract={'obviously_impossible':False})
+            root=Path(tmp);records={r:{'fixture_contract':True} for r in ROLES};records.update(population={'status':'SOURCE_CONTRACT_READY_FOR_DESIGN'},source_surface={'version':'v2'},source_snapshot={'source_end':'2020-03-31','evidence_tier':'PRIMARY_INDEX_OR_METADATA','upstream_version':'SEC','source_sha256s':['a'*64]},availability={'status':'PUBLIC_TIMESTAMP_UNKNOWN'},identity={'required':'Dated class/listing evidence'},trial_family={'ceiling':10},inference_contract={'obviously_impossible':False})
             refs={}
             for role,obj in records.items():
                 p=root/(role+'.json');p.write_text(json.dumps(obj));refs[role]={'path':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}

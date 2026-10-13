@@ -1,0 +1,179 @@
+{
+  "candidate_name": "SEC_ITEM202_SOURCE_DECLARED_DISCLOSURE",
+  "contracts": {
+    "availability": {
+      "contract_sha256": "fd23d35fabaf7cf01e67f834786ae32b897838e47d7a92047429062e0bfaaf55",
+      "execution_eligibility": "Unavailable until separately approved source/form/date bound; v002/v003 not universal",
+      "new_policy": "NOT_APPROVED_NOT_ACTIVATED",
+      "source_acceptance": "Raw observed14-digit representation; DST candidates remain distinct",
+      "status": "PUBLIC_TIMESTAMP_UNKNOWN"
+    },
+    "benchmark_contract": {
+      "concept": "Predeclared contemporaneous non-Item202 filing/issuer baseline with dated industry/size/momentum matching available at decision; SPY descriptive comparator. No causal interpretation and no future outcome matching. Missing matches unavailable.",
+      "contract_sha256": "a0122938be4d147045f63859768f8602203f08e6526ee7e1ac33699f69ff710a",
+      "single_primary": "Positive net paired predictive mean difference, not multiple benchmark discoveries"
+    },
+    "cost_contract": {
+      "concept": "Prospective10bps per side (20bps round trip); doubled-cost robustness40bps, not current account fees or certified liquidity. Capacity/participation/terminal costs must be reviewed before executable freeze.",
+      "contract_sha256": "0903bfd03ed87cef95a1411a574a60e259a8b7937ca983f6489a1eeb922624d8"
+    },
+    "execution_contract": {
+      "Nexus": "DISABLED",
+      "concept": "Next eligible open after independently approved availability; one prospective20-session evaluation horizon, no horizon search; target/ended class paths must remain valued",
+      "contract_sha256": "aa75d1fe9f6b5d17a4a5cadab86d7868a9db9bfd30b0100aa8840af2c6792ab4",
+      "local_reference": "SYNTHETIC_ONLY_NO_REAL_CERTIFICATE",
+      "status": "BLOCKED_REAL_EXECUTION"
+    },
+    "feature_contract": {
+      "aggregation": "One issuer/class/decision day; cofilers and simultaneous disclosures must be reconciled under dated identity; unresolved/missing is UNKNOWN not zero",
+      "amendments": "8-K/A retained as revisions; never retroactively alter earlier source state",
+      "contract_sha256": "f8f3dd9e96c614478818cbcf4dacf79daf1e635a6f8cd84d6adcf94f79a86d74",
+      "feature": "Original8-K source-declared Item2.02 corroborated by primary document; information available at approved decision cutoff",
+      "hypothesis": "Public operating-results disclosure may convey information incorporated gradually; average effect is uncertain and falsifiable without content surprise assumptions.",
+      "semantic_not_declared": 9,
+      "semantic_present": 3,
+      "semantic_receipt_sha256": "0401a0f579fff345e2085200919c17d688d585b215add79f88798f30f834507d",
+      "semantic_unknown": 0,
+      "version": "Item202_label_v001"
+    },
+    "identity": {
+      "contract_sha256": "02801644a335bfb6730449adb525d3e753e8e1b1cbf52da8e1a6c9aa1259abd5",
+      "required": "Dated issuer-security-class/listing bridge, cofilers, ended histories and terminal cash/stock handling; no current ticker lookup",
+      "status": "FILER_CIK_ONLY"
+    },
+    "inference_contract": {
+      "Development_proposal": [
+        "2015-01-01",
+        "2020-12-31"
+      ],
+      "Q1_alone": "Three monthly groups do not support confirmatory exactsignalpha.05; minimum p.125. Q1 is source/semantic pilot only.",
+      "calendar_grouping": "Issuer and calendar dependence, overlapping20-session observations, industry/common-factor shocks; effective count UNKNOWN",
+      "contract_sha256": "e8cbbe139e897ad99f679255e317da1c4d39faf9ec2cbbc98502dc2a41047a71",
+      "obviously_impossible": false,
+      "prototype_geometry": {
+        "Q1_only_confirmatory_sign_minimum_p": 0.125,
+        "Q1_three_month_confirmation_is_insufficient": true,
+        "amendment8KA_rows": 493,
+        "body_sample": 12,
+        "body_sample_CIKs": 4,
+        "body_sample_Item202_positive": 3,
+        "calendar_months": 3,
+        "daily_index_checks": [
+          {
+            "PAC_state": "No observed key difference on these3 days; no certificate that other dates or historical vintages lack PAC/deletions",
+            "daily_only": 0,
+            "daily_rows": 286,
+            "daily_sha256": "b7cf21f8fd93360865d87f83a3f449ee28e165830012c034dd5182feff12fcee",
+            "day": "2020-01-31",
+            "quarter_only": 0,
+            "quarter_rows": 286
+          },
+          {
+            "PAC_state": "No observed key difference on these3 days; no certificate that other dates or historical vintages lack PAC/deletions",
+            "daily_only": 0,
+            "daily_rows": 387,
+            "daily_sha256": "7e0027291b6a891cf7b1d0bf436584b2d88afe81935e6be375718dddcaf484b9",
+            "day": "2020-02-06",
+            "quarter_only": 0,
+            "quarter_rows": 387
+          },
+          {
+            "PAC_state": "No observed key difference on these3 days; no certificate that other dates or historical vintages lack PAC/deletions",
+            "daily_only": 0,
+            "daily_rows": 301,
+            "daily_sha256": "c4b37d629bfe4c96b0bda384daea1b6d122837b4da58d5fd798aa48a6d95b8b8",
+            "day": "2020-03-05",
+            "quarter_only": 0,
+            "quarter_rows": 301
+          }
+        ],
+        "filing_dates": 62,
+        "geometry_verdict": "LARGER_CALENDAR_SOURCE_DESIGN_PLAUSIBLE_NOT_INFERENCE_OR_POWER_CERTIFICATE",
+        "independent_N": null,
+        "original8K_rows": 17631,
+        "planned_effective_groups_unverified": true,
+        "planned_monthly_confirmation_groups": 69,
+        "source_index_rows": 18124,
+        "unique_CIK_accession_paths": 18124,
+        "unique_accessions": 17660,
+        "unique_filer_CIKs": 5519
+      },
+      "required": "Predeclared few-/many-cluster or block method calibrated under persistent common factors, heterogeneity, unequal-calendar/partial-year support and informative missingness; no real Student-independence certificate inferred",
+      "source_coverage": "Only Q1 prototype observed; proposed larger-source periods not acquired/certified",
+      "synthetic_resolution_only": {
+        "alpha": 0.05,
+        "bootstrap_draws_proposal": 9999,
+        "formal_effects": 1,
+        "minimum_attainable_p": 0.0001,
+        "power": null
+      },
+      "workflow_held_out_confirmation_proposal": [
+        "2021-01-01",
+        "2026-09-30"
+      ]
+    },
+    "population": {
+      "contract_sha256": "5c9a69996b60689cdb18d9441b72c810f5bad864ef754c93367b2faa19e912d7",
+      "definition": "All current official master-index8-K and8-K/A entries; not all legal obligations/US stocks. Preserve CIK/accession/path rows and shared-accession cofiler identities.",
+      "period": [
+        "2020-01-01",
+        "2020-03-31"
+      ],
+      "prototype_receipt_sha256": "ac701ab3ed8fc20347ac31be43eb33990b596fb80ead20560ae6dad97edf8311",
+      "rows": 18124,
+      "status": "SOURCE_CONTRACT_READY_FOR_DESIGN"
+    },
+    "source_snapshot": {
+      "contract_sha256": "6ff19eac928f0ac6a34894fe9aab4f2d1f8bb642ca6d1295dae2ef576dc8a105",
+      "evidence_tier": "PRIMARY_INDEX_OR_METADATA",
+      "source_end": "2020-03-31",
+      "source_sha256s": [
+        "1973b14fc2c8e437db28e733d23148e3b1ac7c07fe1fe5c81009031d8cde02fd",
+        "b7cf21f8fd93360865d87f83a3f449ee28e165830012c034dd5182feff12fcee",
+        "7e0027291b6a891cf7b1d0bf436584b2d88afe81935e6be375718dddcaf484b9",
+        "c4b37d629bfe4c96b0bda384daea1b6d122837b4da58d5fd798aa48a6d95b8b8"
+      ],
+      "upstream_version": "SEC_index_bytes_1973b14fc2c8e437db28e733d23148e3b1ac7c07fe1fe5c81009031d8cde02fd"
+    },
+    "source_surface": {
+      "code_sha256": "c685c40c8416c398ab6ce209c1c9ad02e1ab21024563f9471df90e8b90186310",
+      "contract_sha256": "3f53d2a99de32a970727817d620d096eba36653dbd47f49a13b32a140417cfbf",
+      "module": "src/research/surfaces/sec.py",
+      "version": "SEC_adapter_v002"
+    },
+    "trial_family": {
+      "ceiling": 12,
+      "contract_sha256": "5f8f012f40f8724ab5818b63fe4ea05e40a028d4cea6e3cde006ab5bbcd60994",
+      "proposal": "One feature, one20-session horizon, one formal paired discovery. Development/confirmation/owner-onlyTest candidate and explicit benchmark six evaluations, confirmation double-cost/+1-delay robustness two, four failure reserves. No model/grid/horizon/threshold search or new budget inheritance."
+    }
+  },
+  "estimand_type": "PREDICTIVE",
+  "executable_freeze_readiness": "BLOCKED_UNTIL_KNOWN_SCIENTIFIC_GATES_CLOSED",
+  "experiment_registered": false,
+  "known_blockers": [
+    "Larger proposed source-year census/PAC/version coverage not acquired or certified",
+    "New8-K availability policy and calendar require separate approval; public timestamps UNKNOWN",
+    "Historical equity/class/listing/terminal identity and matched baseline require certification",
+    "Real execution remains blocked; independent local engine currently synthetic only",
+    "Inference calibration/power/common-factor dependence and final source effective sample size unresolved",
+    "Design horizons/costs/materiality/trial proposal require owner review before adoption"
+  ],
+  "materiality_proposal": "Estimated paired net20-session mean>=0.50percentage point plus positive two-sided95% lower endpoint againstzero; pre-performance owner-review proposal, not return-derived or adopted policy",
+  "mode": "DESIGN_ONLY",
+  "overall_status": "READY_FOR_EXPERIMENT_FREEZE_REVIEW",
+  "performance_authorized": false,
+  "performance_executed": false,
+  "proof_dry_compile": {
+    "scientifically_certified": false,
+    "sha256": "2a4c38b375229521fd52ed0094c0adc5507c91f59c027299ae71df950fd946a1",
+    "status": "STRUCTURALLY_READY_FOR_EXPERIMENT_FREEZE_REVIEW"
+  },
+  "research_cutoff": "2020-12-31",
+  "scope": "Structural/pre-performance design review only; not approval to freeze/run Development",
+  "source_prototype_period": [
+    "2020-01-01",
+    "2020-03-31"
+  ],
+  "trial_ceiling_proposal": 12,
+  "version": "predictive_design_candidate_v001"
+}

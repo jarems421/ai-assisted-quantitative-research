@@ -1,0 +1,212 @@
+{
+  "PAC_deletion_certification": "UNKNOWN_UNLESS_INDEPENDENTLY_EVIDENCED",
+  "availability_status": "PUBLIC_TIMESTAMP_UNKNOWN_NO_NEW_POLICY",
+  "body_states": {
+    "AVAILABLE": 12,
+    "MISSING": 0,
+    "REMOVED": 0,
+    "UNTESTED": 18112
+  },
+  "contract_version": "SEC_DENOMINATOR_v002",
+  "date_end": "2020-03-31",
+  "date_start": "2020-01-01",
+  "denominator_frozen_sha256": "0b37536f51fb92b26ca4c15915068bea0a5a4eb184ca89558c08f79694a07ce1",
+  "feature_choice": "First fixed SEC direction Item2.02; later directions not tested/selected",
+  "feature_negative_header_scope": 9,
+  "feature_positive": 3,
+  "feature_receipt_sha256": "0401a0f579fff345e2085200919c17d688d585b215add79f88798f30f834507d",
+  "feature_unknown": 0,
+  "forms": [
+    "8-K",
+    "8-K/A"
+  ],
+  "full_private_receipt_sha256": "ac701ab3ed8fc20347ac31be43eb33990b596fb80ead20560ae6dad97edf8311",
+  "geometry": {
+    "Q1_only_confirmatory_sign_minimum_p": 0.125,
+    "Q1_three_month_confirmation_is_insufficient": true,
+    "amendment8KA_rows": 493,
+    "body_sample": 12,
+    "body_sample_CIKs": 4,
+    "body_sample_Item202_positive": 3,
+    "calendar_months": 3,
+    "daily_index_checks": [
+      {
+        "PAC_state": "No observed key difference on these3 days; no certificate that other dates or historical vintages lack PAC/deletions",
+        "daily_only": 0,
+        "daily_rows": 286,
+        "daily_sha256": "b7cf21f8fd93360865d87f83a3f449ee28e165830012c034dd5182feff12fcee",
+        "day": "2020-01-31",
+        "quarter_only": 0,
+        "quarter_rows": 286
+      },
+      {
+        "PAC_state": "No observed key difference on these3 days; no certificate that other dates or historical vintages lack PAC/deletions",
+        "daily_only": 0,
+        "daily_rows": 387,
+        "daily_sha256": "7e0027291b6a891cf7b1d0bf436584b2d88afe81935e6be375718dddcaf484b9",
+        "day": "2020-02-06",
+        "quarter_only": 0,
+        "quarter_rows": 387
+      },
+      {
+        "PAC_state": "No observed key difference on these3 days; no certificate that other dates or historical vintages lack PAC/deletions",
+        "daily_only": 0,
+        "daily_rows": 301,
+        "daily_sha256": "c4b37d629bfe4c96b0bda384daea1b6d122837b4da58d5fd798aa48a6d95b8b8",
+        "day": "2020-03-05",
+        "quarter_only": 0,
+        "quarter_rows": 301
+      }
+    ],
+    "filing_dates": 62,
+    "geometry_verdict": "LARGER_CALENDAR_SOURCE_DESIGN_PLAUSIBLE_NOT_INFERENCE_OR_POWER_CERTIFICATE",
+    "independent_N": null,
+    "original8K_rows": 17631,
+    "planned_effective_groups_unverified": true,
+    "planned_monthly_confirmation_groups": 69,
+    "source_index_rows": 18124,
+    "unique_CIK_accession_paths": 18124,
+    "unique_accessions": 17660,
+    "unique_filer_CIKs": 5519
+  },
+  "identity_status": "FILER_CIK_ONLY_NO_SECURITY_CERTIFICATE",
+  "index_sha256s": [
+    "1973b14fc2c8e437db28e733d23148e3b1ac7c07fe1fe5c81009031d8cde02fd",
+    "b7cf21f8fd93360865d87f83a3f449ee28e165830012c034dd5182feff12fcee",
+    "7e0027291b6a891cf7b1d0bf436584b2d88afe81935e6be375718dddcaf484b9",
+    "c4b37d629bfe4c96b0bda384daea1b6d122837b4da58d5fd798aa48a6d95b8b8"
+  ],
+  "interpretation_revision": {
+    "previous_receipt_sha256": "eddcd7c6f2afaf618208db7f0ada66464e727653454aa29a45b90f61ff3b08ea",
+    "reason": "Normalize compact daily YYYYMMDD versus quarterly ISO dates before key reconciliation. Both original source bodies and prior derived comparison retained."
+  },
+  "neutral_sample_sha256": "a85468b3ef8a3c0ee87696699a086ac71365fa413ba122af2ea82c9070fe21a6",
+  "observed_missing_count_scope": "Only sampled fetches; unsampled availability stays UNTESTED",
+  "performance_authorized": false,
+  "proof_compile": "DESIGN_ONLY_NOT_EXECUTABLE",
+  "reconstruction": "Present-day historical original bytes, not contemporaneous ingestion",
+  "sample": [
+    {
+      "accepted_raw": "20200131084831",
+      "accession": "0001564590-20-002843",
+      "filing_date": "2020-01-31",
+      "form": "8-K",
+      "issuer_cik": "1000045",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200130092003",
+      "accession": "0001193125-20-019141",
+      "filing_date": "2020-01-30",
+      "form": "8-K",
+      "issuer_cik": "1000209",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200114161539",
+      "accession": "0001564590-20-001092",
+      "filing_date": "2020-01-14",
+      "form": "8-K",
+      "issuer_cik": "1000229",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200129171311",
+      "accession": "0001564590-20-002491",
+      "filing_date": "2020-01-29",
+      "form": "8-K",
+      "issuer_cik": "1000229",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200206083021",
+      "accession": "0001564590-20-003598",
+      "filing_date": "2020-02-06",
+      "form": "8-K",
+      "issuer_cik": "1000045",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200220180057",
+      "accession": "0001564590-20-005611",
+      "filing_date": "2020-02-21",
+      "form": "8-K",
+      "issuer_cik": "1000045",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200225163027",
+      "accession": "0001564590-20-006409",
+      "filing_date": "2020-02-25",
+      "form": "8-K",
+      "issuer_cik": "1000045",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200203161106",
+      "accession": "0001193125-20-022930",
+      "filing_date": "2020-02-03",
+      "form": "8-K",
+      "issuer_cik": "1000209",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200305160945",
+      "accession": "0001564590-20-008962",
+      "filing_date": "2020-03-05",
+      "form": "8-K",
+      "issuer_cik": "1000229",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200316172550",
+      "accession": "0001564590-20-011216",
+      "filing_date": "2020-03-16",
+      "form": "8-K",
+      "issuer_cik": "1000229",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200327160539",
+      "accession": "0001564590-20-013591",
+      "filing_date": "2020-03-27",
+      "form": "8-K",
+      "issuer_cik": "1000229",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    },
+    {
+      "accepted_raw": "20200317130029",
+      "accession": "0001437749-20-005432",
+      "filing_date": "2020-03-17",
+      "form": "8-K",
+      "issuer_cik": "1000230",
+      "original_body_status": "AVAILABLE",
+      "public_availability_status": "PUBLIC_TIMESTAMP_UNKNOWN",
+      "timing_status": "ACCEPTANCE_OBSERVED"
+    }
+  ],
+  "source_requests": 16,
+  "status": "SOURCE_CONTRACT_READY_FOR_DESIGN"
+}
