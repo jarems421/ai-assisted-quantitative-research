@@ -7,7 +7,8 @@ from pathlib import Path
 
 CONFIG={'render_scale':3.0,'det_limit_side_len':1536,'det_limit_type':'max',
         'text_score':0.5,'CPU_threads':1,'engine':'RapidOCR3.4.0_ONNX1.23.2',
-        'scope':'All pages of frozen image-only transaction documents; no expected fields supplied'}
+        'scope':'All pages of frozen image-only transaction documents; no expected fields supplied',
+        'visualization_font':'Windows Arial local only, not used for recognition'}
 
 
 def sha(body):return hashlib.sha256(body).hexdigest()
@@ -21,12 +22,23 @@ def exclusive(path,body):
         with path.open('xb') as f:f.write(body)
 
 
+def validate_dispatch(dispatch,allowed_hashes):
+    if len(dispatch['documents'])>34:raise ValueError('OCR scope ceiling')
+    for d in dispatch['documents']:
+        if set(d)!={'path','sha256'}:raise ValueError('Expected values or undeclared fields forbidden in OCR dispatch')
+        if d['sha256'] not in allowed_hashes:raise ValueError('Document outside frozen OCR frame')
+    return True
+
+
 def main():
     import argparse,importlib.metadata,io
     from unittest.mock import patch
     p=argparse.ArgumentParser();p.add_argument('dispatch');p.add_argument('output');a=p.parse_args()
     dispatch=json.loads(Path(a.dispatch).read_bytes());out=Path(a.output).resolve()
-    if len(dispatch['documents'])>34:raise ValueError('OCR scope ceiling')
+    root=Path(__file__).resolve().parents[2]
+    allowed=json.loads((root/'docs/acceleration/exp007_house_ocr_scope.json').read_bytes())['source_hashes']
+    validate_dispatch(dispatch,allowed)
+    if not out.is_relative_to(root/'data/raw/exp007_house_v002/ocr'):raise ValueError('OCR output outside private namespace')
     with patch('socket.socket.connect',side_effect=ValueError('OCR network disabled')),patch('socket.create_connection',side_effect=ValueError('OCR network disabled')):
         import rapidocr,pypdfium2 as pdfium
         models=Path(rapidocr.__file__).parent/'models'
@@ -36,7 +48,7 @@ def main():
             'Cls.model_path':str(models/'ch_ppocr_mobile_v2.0_cls_infer.onnx'),
             'Det.limit_side_len':CONFIG['det_limit_side_len'],'Det.limit_type':'max',
             'EngineConfig.onnxruntime.intra_op_num_threads':1,'EngineConfig.onnxruntime.inter_op_num_threads':1,
-            'Global.text_score':0.5,'Global.log_level':'warning'})
+            'Global.text_score':0.5,'Global.log_level':'warning','Global.font_path':'C:/Windows/Fonts/arial.ttf'})
         for d in dispatch['documents']:
             path=Path(d['path']);body=path.read_bytes()
             if sha(body)!=d['sha256']:raise ValueError('Original PDF hash mismatch')
