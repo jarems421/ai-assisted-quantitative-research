@@ -125,7 +125,8 @@ Prior source/controller/Proof/execution code, integration reports/candidate, ori
 
 **Stopped under owner sections 3 and 24.** The next substantive decision is whether to commission a separately bounded review of an acceptance/public-availability-aware source chronology contract for this same candidate. Nothing downstream runs automatically, and the already adopted feature/horizon/cost/materiality parameters do not need renewed approval merely because this gate failed.
 '''
-    p = DOCS / 'exp006_freeze_review.md'
+    archived = DOCS / 'exp006_freeze_review_v001.md'
+    p = archived if archived.exists() else DOCS / 'exp006_freeze_review.md'
     body = text.encode('utf-8')
     if check:
         if not p.exists() or p.read_bytes() != body:

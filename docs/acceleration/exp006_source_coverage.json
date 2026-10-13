@@ -1,0 +1,258 @@
+{
+  "amendment8KA": 11916,
+  "census_hash": "0bc14c8ccf20b3ce415cea0b5399f149309446df7bbc80f06c68a34eb0bcfb6a",
+  "cofiler_and_shared_accession_rows_retained": 11692,
+  "full_source_Item202_count": null,
+  "original8K": 426750,
+  "period": [
+    "2015-01-01",
+    "2020-12-31"
+  ],
+  "quarters": [
+    {
+      "amendment8KA": 658,
+      "cache_hit": true,
+      "original8K": 19252,
+      "quarter": 1,
+      "rows": 19910,
+      "source_sha256": "7f7241c79f7ff1ed6666fcc222bc3bb5ceaccba3dd6614cd1cf961ff4d03c81c",
+      "year": 2015
+    },
+    {
+      "amendment8KA": 589,
+      "cache_hit": false,
+      "original8K": 21213,
+      "quarter": 2,
+      "rows": 21802,
+      "source_sha256": "89b520fa914241b41b6b8a9ddafe52e1c01de629f47334a08dbf43ef2fb5806a",
+      "year": 2015
+    },
+    {
+      "amendment8KA": 501,
+      "cache_hit": false,
+      "original8K": 17771,
+      "quarter": 3,
+      "rows": 18272,
+      "source_sha256": "e76a3b004b2d1573d7b3b3269ade1474697ebbc2b453791ca4e5d8a49ceec877",
+      "year": 2015
+    },
+    {
+      "amendment8KA": 532,
+      "cache_hit": false,
+      "original8K": 18171,
+      "quarter": 4,
+      "rows": 18703,
+      "source_sha256": "e0e4604664595a4a17208a803515d87de16c8c66c8c90bb6401c5ce2ff779ac2",
+      "year": 2015
+    },
+    {
+      "amendment8KA": 519,
+      "cache_hit": false,
+      "original8K": 18209,
+      "quarter": 1,
+      "rows": 18728,
+      "source_sha256": "43ccb67ed90ad4229b02b99094846a291c6d1672eb25a1ee89dcb0636c2a264e",
+      "year": 2016
+    },
+    {
+      "amendment8KA": 482,
+      "cache_hit": true,
+      "original8K": 20377,
+      "quarter": 2,
+      "rows": 20859,
+      "source_sha256": "a9be706b290c7c4737b0c0c739dda7933980ba9f91449bdebb6e4a273350892b",
+      "year": 2016
+    },
+    {
+      "amendment8KA": 468,
+      "cache_hit": false,
+      "original8K": 17046,
+      "quarter": 3,
+      "rows": 17514,
+      "source_sha256": "575483595aa7290024301c3b2bc7df9fd3cb12ece671b1884e1f8bd39719b84d",
+      "year": 2016
+    },
+    {
+      "amendment8KA": 421,
+      "cache_hit": false,
+      "original8K": 16989,
+      "quarter": 4,
+      "rows": 17410,
+      "source_sha256": "a736e5fcdfed73d3c847196c4cb32080ce4ecddf69e5f6c1e237fa15b04ab73d",
+      "year": 2016
+    },
+    {
+      "amendment8KA": 583,
+      "cache_hit": false,
+      "original8K": 17914,
+      "quarter": 1,
+      "rows": 18497,
+      "source_sha256": "31b2a16408517c5b4ca4dc8f32b18efe4ddb2add5933c1c89fca3ed0587e2812",
+      "year": 2017
+    },
+    {
+      "amendment8KA": 580,
+      "cache_hit": false,
+      "original8K": 19861,
+      "quarter": 2,
+      "rows": 20441,
+      "source_sha256": "0475fc410b7ded7d3b2732df9bec92fc12db7acb0d1a5783f000ecb8f8bb383f",
+      "year": 2017
+    },
+    {
+      "amendment8KA": 662,
+      "cache_hit": true,
+      "original8K": 15939,
+      "quarter": 3,
+      "rows": 16601,
+      "source_sha256": "82a8689817b58cf8a6bacefc3711c294817c2797e3c879372ed60090c3b7a10d",
+      "year": 2017
+    },
+    {
+      "amendment8KA": 601,
+      "cache_hit": false,
+      "original8K": 17071,
+      "quarter": 4,
+      "rows": 17672,
+      "source_sha256": "c4ac8c2a1f34071f3ab5b119ef0d27199b51865757b538d9c36295e03389ef57",
+      "year": 2017
+    },
+    {
+      "amendment8KA": 511,
+      "cache_hit": false,
+      "original8K": 17367,
+      "quarter": 1,
+      "rows": 17878,
+      "source_sha256": "1c76fb8af1fd81935e02db2771849fa4bfb49e7344c5f2fadf8c1659fda24bb9",
+      "year": 2018
+    },
+    {
+      "amendment8KA": 464,
+      "cache_hit": false,
+      "original8K": 19050,
+      "quarter": 2,
+      "rows": 19514,
+      "source_sha256": "71ad669c60bdefa3a469f653fcf96ca1ea6fdf870ac239b82458edeaa861703a",
+      "year": 2018
+    },
+    {
+      "amendment8KA": 402,
+      "cache_hit": false,
+      "original8K": 15471,
+      "quarter": 3,
+      "rows": 15873,
+      "source_sha256": "3bcb79ffbd2a42b26d7ed666a7b3491b9f01265925a41908bf57f952cefd9b00",
+      "year": 2018
+    },
+    {
+      "amendment8KA": 440,
+      "cache_hit": true,
+      "original8K": 16293,
+      "quarter": 4,
+      "rows": 16733,
+      "source_sha256": "bfca373df69a64d3a2a5c408c1d01238f408b5a4aa33b2cac542d1af2f69ff69",
+      "year": 2018
+    },
+    {
+      "amendment8KA": 460,
+      "cache_hit": true,
+      "original8K": 16449,
+      "quarter": 1,
+      "rows": 16909,
+      "source_sha256": "51ed5a547ab5bf3375307a80cac243d9f8e3c18ca0e0863134ac82c77b729760",
+      "year": 2019
+    },
+    {
+      "amendment8KA": 462,
+      "cache_hit": false,
+      "original8K": 18635,
+      "quarter": 2,
+      "rows": 19097,
+      "source_sha256": "43abca946a5710cb16799e752b7744c1e0b2f705c3903739e3468e22f67decd6",
+      "year": 2019
+    },
+    {
+      "amendment8KA": 415,
+      "cache_hit": false,
+      "original8K": 15346,
+      "quarter": 3,
+      "rows": 15761,
+      "source_sha256": "da852e19e0f697aeddb7c7f2ab81e6db0dc8f662b3fad7a30e3c713b316375d3",
+      "year": 2019
+    },
+    {
+      "amendment8KA": 397,
+      "cache_hit": false,
+      "original8K": 15997,
+      "quarter": 4,
+      "rows": 16394,
+      "source_sha256": "1cd516d4d8afa9755ac268107f38d471286aeeb1c2257f714a159490313e64b1",
+      "year": 2019
+    },
+    {
+      "amendment8KA": 493,
+      "cache_hit": true,
+      "original8K": 17631,
+      "quarter": 1,
+      "rows": 18124,
+      "source_sha256": "1973b14fc2c8e437db28e733d23148e3b1ac7c07fe1fe5c81009031d8cde02fd",
+      "year": 2020
+    },
+    {
+      "amendment8KA": 488,
+      "cache_hit": true,
+      "original8K": 21647,
+      "quarter": 2,
+      "rows": 22135,
+      "source_sha256": "d9db1ed44390f3e041796a5e2d970c931e84b3220d6e4838f082a7bd24006db8",
+      "year": 2020
+    },
+    {
+      "amendment8KA": 398,
+      "cache_hit": false,
+      "original8K": 16248,
+      "quarter": 3,
+      "rows": 16646,
+      "source_sha256": "134f27a15f9963c23768e41d560d5ddd1c75eb2f6f3bb6845ac91f89f4870a0c",
+      "year": 2020
+    },
+    {
+      "amendment8KA": 390,
+      "cache_hit": false,
+      "original8K": 16803,
+      "quarter": 4,
+      "rows": 17193,
+      "source_sha256": "5aac625a8b8354ae9dfee4748a7afc16388d40325821aeba8ee9392b9ef69845",
+      "year": 2020
+    }
+  ],
+  "removed_originals_not_referenced_by_current_indexes": "UNKNOWN_NOT_ZERO",
+  "source_certification": "CURRENT_OFFICIAL_INDEX_ENUMERATION_ONLY; PAC/version completeness not certified",
+  "source_index_starts": 17,
+  "source_paths_and_cofilers_retained": true,
+  "source_rows": 438666,
+  "unique_CIKs": 11340,
+  "unique_accessions": 426974,
+  "unknown_Item_classification_count": 438666,
+  "status": "CURRENT_INDEX_ENUMERATED_PIT_CLASSIFICATION_UNCERTIFIED",
+  "bulk_snapshot_sha256": "496e3b23b6014cad33783959c313d3fa9fc75e0acaafa155836907499fddef05",
+  "bulk_snapshot_bytes": 1568623665,
+  "bulk_declared_Item202_rows": 109347,
+  "bulk_not_declared_Item202_rows": 329319,
+  "bulk_missing_or_conflicting_label_rows": 0,
+  "original_primary_semantic_audit_count": 0,
+  "original_header_Itemset_audit": {
+    "sample": 48,
+    "matches": 48
+  },
+  "full_certified_Item202_count": null,
+  "full_certified_clock_count": null,
+  "blocker": "SCALABLE_ACCEPTANCE_PROVENANCE_BLOCKED",
+  "PAC_daily_feed_review": "DEFERRED_AT_BULK_CLOCK_PROVENANCE_STOP",
+  "original_bytes_available_for_all_referenced_filings": null,
+  "unresolved_historical_version_states": 438666,
+  "reconciliation": "All CIK/accession/path/form/date keys retained; all current bulk metadata labels match exactly one canonical value per census key; one equivalent duplicate metadata row retained in private probe",
+  "source_receipts": "Original indexes, full ZIP and API probe responses immutable and ignored; public source hashes/counts only",
+  "bulk_original8K_Item202_rows": 108364,
+  "bulk_amendment8KA_Item202_rows": 983
+}
