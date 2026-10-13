@@ -1,0 +1,16 @@
+{
+  "version": "item202_gate3_preflight_v001",
+  "starting_head": "8e8ad0c7f676d916832bfaae4e0fb1ff17adf492",
+  "owner_request_sha256": "578ee7565281b57a88695707f72eefcf0b2fe8e77a52e7538be6dc54453c9a67",
+  "gate": "Availability before full census, identity, market certification or inference",
+  "scope": "Exact official documentation; no new filing corpus or prices in this preflight",
+  "request_ceiling_including_retries": 6,
+  "workers": 1,
+  "minimum_seconds_between_starts": 0.6,
+  "routes": [
+    "https://www.sec.gov/submit-filings/filer-support-resources/how-do-i-guides/request-filing-date-adjustment",
+    "https://www.sec.gov/info/edgar/regoverview.htm"
+  ],
+  "stop": "Owner sections 3 and 24: unsupported filing-date-only next-open semantics => AVAILABILITY_BLOCKED. No automatic replacement policy or downstream campaign.",
+  "performance_authorized_before_frozen_all_gates_pass": false
+}
