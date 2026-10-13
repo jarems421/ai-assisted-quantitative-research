@@ -91,13 +91,17 @@ class PilotHTTP:
 
     def starts(self):return sorted((self.root/'reservations').glob('*.json'))
 
+    def reviewed_stop_allows(self,url):
+        """Default remains closed; a scoped subclass must verify an explicit review."""
+        return False
+
     def fetch(self,url,*,slot=None,purpose='publication_channel'):
         if url not in self.allowed:raise ValueError('URL outside frozen dispatch allowlist')
         cache=self.root/'completed'/(digest({'url':url})+'.json')
         if cache.exists():
             receipt=json.loads(cache.read_bytes());return receipt,self.archive.read(receipt['body'])
         stop=self.root/'publication_stop.json'
-        if stop.exists() and url!=ALTERNATIVE:raise ValueError('Persisted publication stop; no automatic retry')
+        if stop.exists() and url!=ALTERNATIVE and not self.reviewed_stop_allows(url):raise ValueError('Persisted publication stop; no automatic retry')
         for attempt in range(1,4):
             if len(self.starts())>=self.m['request_ceiling']:raise ValueError('Total starts ceiling reached')
             # Persisted UTC pacing remains enforceable across process restarts.

@@ -54,6 +54,49 @@ class FrameHTTP(PilotHTTP):
         self.m=m;self.allowed={p['url'] for p in m['FDA_documentation']}
 
 
+class ContinuedFrameHTTP(PilotHTTP):
+    """One reviewed redirect stop; original archive, ledger and ceilings retained."""
+    def __init__(self,m,*,root=RAW,**kwargs):
+        super().__init__(procurement_contract(),root=root,**kwargs)
+        base=contract()
+        if (m['original_manifest_sha256']!=digest(base) or m['request_ceiling']!=10
+            or m['total_pilot_ceiling']!=60 or m['requests_already_consumed']!=3
+            or m['FDA_documentation']!=[dict(base['FDA_documentation'][2],url='https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm'),*base['FDA_documentation'][3:]]):
+            raise ValueError('Continuation scope changed')
+        self.m=m;self.allowed={p['url'] for p in m['FDA_documentation']}
+
+    def reviewed_stop_allows(self,url):
+        review=self.m['reviewed_stop']
+        stop=self.root/'publication_stop.json'
+        if url not in self.allowed or hashlib.sha256(stop.read_bytes()).hexdigest()!=review['stop_file_sha256']:return False
+        if json.loads(stop.read_bytes()).get('reason')!='UNCERTAIN_TRANSPORT_OR_BOUNDARY':return False
+        errors={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (self.root/'errors').glob('*.json')}
+        if errors!=review['error_file_hashes'] or list((self.root/'stops').glob('*.json')):return False
+        bad=[json.loads(p.read_bytes()) for p in (self.root/'receipts').glob('*.json') if json.loads(p.read_bytes())['status']!=200]
+        return len(bad)==1 and bad[0]['status']==302 and digest(bad[0])==review['redirect_receipt_sha256']
+
+
+def continued_frozen():
+    m=json.loads((DOCS/'phase4a_fda_frame_manifest_v002.json').read_bytes())
+    f=json.loads((DOCS/'phase4a_fda_frame_freeze_v002.json').read_bytes())
+    if digest(m)!=f['manifest_sha256']:raise ValueError('Continuation freeze changed')
+    ContinuedFrameHTTP(m)
+    return m
+
+
+def continue_acquire():
+    m=continued_frozen();h=ContinuedFrameHTTP(m);saved=RAW/'gate1_continuation_result_v002.json'
+    if saved.exists():return json.loads(saved.read_bytes())
+    rows=[]
+    for page in m['FDA_documentation']:
+        try:r,body=h.fetch(page['url'],purpose='FDA_GATE1_REVIEWED_ROUTE_CONTINUATION')
+        except ValueError:break
+        rows.append({'id':page['id'],'receipt':r,'findings':scope_findings(body,r['body']['sha256']) if r['status']==200 else None})
+        if r['status']!=200:break
+    result={'manifest_sha256':digest(m),'sources':rows,'requests':len(h.starts()),'gate2_ran':False,'event_manifest_created':False,'stopped_at_utc':now()}
+    put(saved,result);return result
+
+
 def gate2_authority(frame,*,total_starts,event_manifest_frozen):
     if (frame.get('gate1')!='PASS' or frame.get('outcome_independent_frame') is not True
         or frame.get('negative_unresolved_coverage') is not True or not frame.get('review_receipt_sha256')

@@ -1,12 +1,32 @@
 import copy
+import hashlib,json
 from pathlib import Path
 import tempfile
 import unittest
-from src.research.fda_pilot import contract,validate,FrameHTTP,gate2_authority,outcome_gate,missing_record,retain_identity,scope_findings
+from src.research.fda_pilot import contract,validate,FrameHTTP,ContinuedFrameHTTP,gate2_authority,outcome_gate,missing_record,retain_identity,scope_findings
+from src.research.spec import digest
 from src.research.phase3c.sources import put
 
 
 class FDAFrameTests(unittest.TestCase):
+    def test_reviewed_redirect_keeps_stop_bytes_and_invalidates_on_new_error(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);m=contract()
+            http=FrameHTTP(m,root=root,transport=lambda u,*a:(302,{},b'redirect',u),sleep=lambda _:None)
+            with self.assertRaises(ValueError):http.fetch(m['FDA_documentation'][2]['url'])
+            stop=(root/'publication_stop.json').read_bytes()
+            receipt=json.loads(next((root/'receipts').glob('*.json')).read_bytes())
+            amended={'original_manifest_sha256':digest(m),'request_ceiling':10,'total_pilot_ceiling':60,'requests_already_consumed':3,
+             'FDA_documentation':[dict(m['FDA_documentation'][2],url='https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm'),*m['FDA_documentation'][3:]],
+             'retry':m['retry'],'reviewed_stop':{'stop_file_sha256':hashlib.sha256(stop).hexdigest(),
+              'error_file_hashes':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (root/'errors').glob('*.json')},'redirect_receipt_sha256':digest(receipt)}}
+            resumed=ContinuedFrameHTTP(amended,root=root,transport=lambda u,*a:(302,{},b'new redirect',u),sleep=lambda _:None)
+            with self.assertRaises(ValueError):resumed.fetch(amended['FDA_documentation'][0]['url'])
+            self.assertEqual((root/'publication_stop.json').read_bytes(),stop)
+            with self.assertRaises(ValueError):resumed.fetch(amended['FDA_documentation'][1]['url'])
+            self.assertEqual(len(resumed.starts()),2)
+            self.assertFalse(http.reviewed_stop_allows(m['FDA_documentation'][0]['url']))
+
     def test_freeze_filters_and_fixed_conditional_months(self):
         m=contract();validate(m);self.assertEqual(len(m['conditional_gate2_slots']),12)
         for key in ('approval','issuer','current_public','therapeutic_area','price'):
