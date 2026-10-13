@@ -114,6 +114,12 @@
       "command": "python -m unittest tests.test_exp001 -q",
       "exit_code": 0,
       "log_sha256": "b6d111b1c88fc56fd9b6446e21dabea2ad944e6fbdac257d1109f45673026a6a"
+    },
+    {
+      "command": "python -m src.research.public_checks (after Windows resolved-path assertion correction)",
+      "exit_code": 0,
+      "tests_passed": 103,
+      "log_sha256": "642591457891368c4ea412b1e6614712e43e76a777a4882ad9da0c3f11a14e7f"
     }
   ],
   "preservation": {
@@ -154,5 +160,10 @@
   "observed_public_availability": "UNKNOWN",
   "source_tiers": "Congress AUDITED_EXTERNAL_DERIVED; SEC index metadata and sampled primary originals kept distinct",
   "environment": "Existing pins retained; NumPy 2.2.6 made explicit. Isolated system-site-package import smoke, not independent wheel resolution.",
-  "hosted_ci": "Final pushed SHA and hosted result reported in delivery; receipt intentionally not self-referential."
+  "hosted_ci": "Final pushed SHA and hosted result reported in delivery; receipt intentionally not self-referential.",
+  "hosted_ci_initial_failure": {
+    "run_id": 38341637176,
+    "cause": "Fixture compared Windows 8.3 alias to resolved long path; resolved-path assertion corrected; no adapter/gate change",
+    "url": "https://github.com/jarems421/ai-assisted-quantitative-research/actions/runs/38341637176"
+  }
 }

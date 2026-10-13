@@ -45,7 +45,7 @@ class IntegrationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             m=snapshot();body=b'fixture';f={'publicPath':'data/political_trades/2020.parquet','size':7,'sha256':hashlib.sha256(body).hexdigest()}
             m['tables']['political_trades']['manifests'][0]['files']=[f];a=CongressionalDisclosuresAdapter(m,tmp,revision='a'*40,retrieved_at='2026-10-13T00:00:00Z')
-            p=Path(tmp)/f['publicPath'];p.parent.mkdir(parents=True);p.write_bytes(body);self.assertEqual(a.verify(f),p)
+            p=Path(tmp)/f['publicPath'];p.parent.mkdir(parents=True);p.write_bytes(body);self.assertEqual(a.verify(f),p.resolve())
             p.write_bytes(b'changed')
             with self.assertRaises(ValueError):a.verify(f)
             f['publicPath']='../escape'
