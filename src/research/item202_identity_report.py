@@ -83,6 +83,15 @@ def review():
     unknown=[r for r in population['rows'] if source_state(r)=='UNKNOWN_ITEM_STATUS']
     issuer_unknown=Counter(r['CIK'] for r in unknown)
     confirmed=[r for r in population['rows'] if source_state(r)=='ITEM202_CONFIRMED']
+    issuer_years=defaultdict(Counter)
+    for r in confirmed:issuer_years[r['CIK']][r['filing_date'][:4]]+=1
+    accounting={'source_population_sha256':population['sha256'],
+        'issuer_records':[{'legal_filer_CIK':cik,'source_keys':sum(years.values()),
+            'source_keys_by_year':dict(sorted(years.items())),'certified_bindings':0,'certified_coverage_percent':0,
+            'issuer_class_count':None,'rename_status':'UNKNOWN','ended_status':'UNKNOWN','terminal_required':'UNKNOWN'}
+            for cik,years in sorted(issuer_years.items())],
+        'source_keys':[{'source_key':list(key(r)),'binding_status':'UNRESOLVED_NO_QUALIFIED_SPAN_ROUTE'} for r in confirmed]}
+    put(RAW/'full_identity_accounting.json',dict(accounting,sha256=digest(accounting)))
     legacy_path=ROOT/'data/raw/EXP002/audit/raw/two_gate_20261011/historical_security_spans/rows.json'
     legacy=json.loads(legacy_path.read_bytes())
     if isinstance(legacy,dict):legacy=legacy.get('rows',[])
@@ -128,7 +137,7 @@ def report(check=False):
     table='\n'.join(f"| {year} | {row['denominator']} | {row['fully_resolved']} | {row['coverage_percent']:.1f}% |" for year,row in s['by_year'].items())
     text=f'''# EXP006: source missingness accepted; historical identity stop
 
-**HISTORICAL_IDENTITY_BLOCKED. EXP006 remains absent and unfrozen.** Starting HEAD `{c['starting_head']}`. The [owner instruction](owner_item202_identity_2026-10-13.md) accepted explicit source missingness and authorized automatic identity closure. The source unknowns no longer impose a zero-missingness gate. All three bounded identity routes were tested; none supplies the required dated class/provider/listing and 20-session lifecycle certificate. No route was selected or scaled.
+**HISTORICAL_IDENTITY_BLOCKED. EXP006 remains absent and unfrozen.** Starting HEAD `{c['starting_head']}`. The [owner instruction](owner_item202_identity_2026-10-13.md) accepted explicit source missingness and authorized automatic identity closure. The unknown keys no longer block continuation, and no further source recovery is required by this decision. All three bounded identity routes were tested; none supplies the required dated class/provider/listing and 20-session lifecycle certificate. No route was selected or scaled.
 
 ## Source contract and correction
 
@@ -154,7 +163,7 @@ Fully resolved sample events: **{s['fully_resolved']}/{s['denominator']} ({s['co
 | --- | ---: | ---: | ---: |
 {table}
 
-The full source population has **0 certified event bindings / {p['source_Item202_keys']:,} retained source keys** because no route qualified for scaling. This is the certificate inventory, not an extrapolated failure probability from the sample or proof that every issuer is unresolvable. Per-issuer/per-year uncertified key accounting remains in the canonical certificate. Full-population multiple-class, renamed, ended and terminal-required counts remain UNKNOWN; their denominators were not certified. Complete terminal paths remain zero. A disappeared security is never disqualified by present survival or silently assigned zero value.
+The full source population has **0 certified event bindings / {p['source_Item202_keys']:,} retained source keys** because no route qualified for scaling. This is the certificate inventory, not an extrapolated failure probability from the sample or proof that every issuer is unresolvable. Per-issuer/per-year uncertified key accounting is archived privately for all {p['legal_filer_CIKs']:,} legal filers, with every original source key retained and bound to the unchanged population hash. The public certificate records year totals. Full-population multiple-class, renamed, ended and terminal-required counts remain UNKNOWN; their denominators were not certified. Complete terminal paths remain zero. A disappeared security is never disqualified by present survival or silently assigned zero value.
 
 The local EXP002 discovery artifact overlaps {c['legacy_EXP002_matching_sample_CIKs']} sample legal filers ({c['legacy_EXP002_matching_rows']} rows). Its clipped spans, incomplete venue/type evidence and prior underfilled source universe were not independently recertified. It remains DISCOVERY_ONLY; its current canonical-symbol field was not used. No Nexus request occurred.
 
@@ -190,6 +199,18 @@ def audit():
     if digest(sample)!=c['sample_sha256']:raise ValueError('Sample changed')
     r=json.loads((RAW/'identity_sample_review.json').read_bytes())
     if digest(r['records'])!=c['sample_review_sha256']:raise ValueError('Identity review changed')
+    union=json.loads((OLD/'reconciled_population.json').read_bytes())
+    correction=json.loads((DOCS/'exp006_population_duplicate_correction_v001.json').read_bytes())
+    if digest(union['rows'])!=correction['union_sha256_unchanged']:raise ValueError('Union changed')
+    for prefix,observations in (('daily','daily_observations'),('quarterly','quarterly_observations')):
+        total=sum(len(x[observations]) for x in union['rows'])
+        distinct=sum(bool(x[observations]) for x in union['rows'])
+        if (total,distinct,total-distinct)!=(correction[prefix+'_observations'],correction[prefix+'_distinct_keys'],correction[prefix+'_equivalent_extra_rows']):
+            raise ValueError('Corrected duplicate aggregate does not reconcile')
+    accounting=json.loads((RAW/'full_identity_accounting.json').read_bytes())
+    if digest({k:v for k,v in accounting.items() if k!='sha256'})!=accounting['sha256']:raise ValueError('Identity accounting hash differs')
+    if sum(x['source_keys'] for x in accounting['issuer_records'])!=c['full_population']['source_Item202_keys']:raise ValueError('Issuer accounting denominator changed')
+    if (ROOT/'experiments/EXP006').exists() or (ROOT/'experiments/EXP006_SEC_ITEM202_PREDICTIVE').exists():raise ValueError('Blocked experiment created')
     # Re-running review verifies all originals, vendor payloads and source keys.
     if review()!=c:raise ValueError('Certificate replay differs')
     return {'status':'PASS','sample_events_replayed':len(r['records']),'confirmation_accesses':0}

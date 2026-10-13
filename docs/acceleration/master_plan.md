@@ -1,6 +1,6 @@
 # Research OS: governing roadmap
 
-**Historical SEC filing population reconstructed; EXP006 remains HISTORICAL_ITEM_STATUS_BLOCKED.** The [latest closure report](exp006_historical_population_report.md) records all 1,500 daily masters: 438,165 shared full keys, 672 daily-only and 501 quarterly-only, retained in a 439,338-key union. Bounded original-source checks leave 113 keys across 107 accessions with unknown Item membership; none is zero activity or a non-Item control. Amendments, cofilers and source-date discrepancies remain explicit. Identity sampling, provider/matching/inference, freeze and Development were deferred at this source gate. Timing v003, earlier evidence, EXP004 pause and EXP005 abandonment remain unchanged; performance and confirmation accesses are 0.
+**Explicit source missingness accepted; EXP006 remains HISTORICAL_IDENTITY_BLOCKED.** The [latest identity report](exp006_identity_report.md) records a pushed 240-event feasibility sample across all six Development years and three bounded routes: SEC covers, dated-symbol OpenFIGI candidates and configured Tiingo metadata. None supplies certified class/listing/provider spans and 20-session lifecycle support; 0/240 are fully resolved, below the unchanged 95% standard, so identity scaling and later gates did not run. All 113 unknown source keys / 107 accessions remain excluded from both event and control pools. A separate correction fixes duplicate aggregates to 111 daily / 0 quarterly without changing union keys or earlier receipts. Timing v003, frozen experiments, EXP004 pause and EXP005 abandonment remain unchanged; performance and confirmation accesses are 0.
 
 Research OS builds reproducible, point-in-time investment experiments from primary evidence. It seeks net-of-cost alpha while requiring provenance, timing, historical identity, execution and statistical justification before accepting positive evidence. AI assists interpretation and critique; deterministic contracts control what may advance. Profitability is unestablished.
 
@@ -18,7 +18,7 @@ V002 and v003 retain their exact owner planning approvals and inactive status. O
 
 | Phase | Purpose | Entry/authorization boundary |
 | --- | --- | --- |
-| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Acceptance-buffered policy scoped pass; automatic source closure stopped at bulk clock provenance; no freeze/performance |
+| **4A** | **Next experiment discovery, feasibility and eventual freeze** | Timing/source population passed within declared limits; source missingness accepted; three dated-identity routes failed feasibility before scaling or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; start with evidence-linked dated relationships, not a full graph platform |
 | 4C | First causal/counterfactual event experiment | Credible controls, pre-trends/placebos and explicit identification assumptions; no automatic causal label |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving economic evidence, costs, risk constraints and mechanism diversity |

@@ -5,7 +5,7 @@
 
 **A Python research-engineering project investigating whether economically motivated investment ideas survive realistic costs and independent testing.** It combines public-source data pipelines, point-in-time controls, statistical analysis and reproducible backtesting. AI helps with interpretation and engineering; deterministic code governs evidence and experiment boundaries.
 
-One investment study is complete, reusable research infrastructure is built, and the next predictive design is blocked on source certification. **No profitable strategy or validated paper/live system has been established.**
+One investment study is complete, reusable research infrastructure is built, and the next predictive design is blocked on historical identity certification. **No profitable strategy or validated paper/live system has been established.**
 
 ### Six key highlights
 
@@ -16,7 +16,7 @@ One investment study is complete, reusable research infrastructure is built, and
 - **Execution and integration engineering:** a Decimal reference ledger tests fees, cash flows and corporate actions on synthetic fixtures. Nexus historical-universe pruning was detected and remains an execution blocker.
 - **Reproducible software delivery:** automated public CI, regression tests, versioned contracts and generated reports/figures from canonical results. Public software checks are separate from private-source and real-market certification.
 
-**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current source-closure review](docs/acceleration/exp006_historical_population_report.md) or [implementation boundaries](#architecture-and-implementation-status).
+**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current identity review](docs/acceleration/exp006_identity_report.md) or [implementation boundaries](#architecture-and-implementation-status).
 
 ## Vision, progress and next steps
 
@@ -25,7 +25,7 @@ The long-term goal is a small, auditable research platform that turns economic h
 | Step | Progress and next requirement |
 | --- | --- |
 | Build the evidence foundation | Bounded source archives, offline reconciliation, experiment controls and synthetic execution tests are implemented. Complete historical identity, lifecycle and execution certification remain open. |
-| Test one economic mechanism | The SPY timing study is complete. An SEC Item 2.02 candidate has passed timing and sampled classification audits. The full daily filing population is reconstructed, but Item membership remains unknown for 107 historical accessions; identity and performance stay gated. |
+| Test one economic mechanism | The SPY timing study is complete. An SEC Item 2.02 candidate has passed timing and sampled classification audits. The daily filing population is reconstructed and explicit missingness accepted. Three identity routes were tested on 240 source candidates; none met the dated-class/lifecycle standard. Performance remains gated. |
 | Establish independent investment evidence | Future work requires certified populations, matched benchmarks, realistic costs and calibrated inference before any new performance access. The next candidate is not registered or frozen. |
 | Earn portfolio and forward capabilities | Risk-aware construction, optional evidence-linked relationship/causal tools and separately authorized forward paper observation are later milestones, conditional on surviving evidence. |
 
@@ -146,11 +146,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**Historical filing population reconstructed; original Item membership remains blocked.** The [latest source report](docs/acceleration/exp006_historical_population_report.md) reconciles all 1,500 publisher-enumerated daily masters against the current quarterly census: 438,165 shared keys, 672 daily-only and 501 quarterly-only. The 439,338-key union retains cofilers, amendments and date/version discrepancies. Original-source checks leave 113 keys across 107 accessions with unknown Item membership; they are never treated as zero activity or non-Item controls. Timing v003 and earlier source audits remain unchanged. Identity, freeze and performance did not start. EXP004 stays paused and EXP005 abandoned/absent.
+**Source missingness accepted; historical identity remains blocked.** The [latest identity report](docs/acceleration/exp006_identity_report.md) records three bounded routes tested on 240 source candidates across 2015–2020. None supplies the required dated class/listing/provider span and 20-session lifecycle support; 0/240 qualifies under the unchanged 95% standard. The 439,338-key daily/quarterly union is unchanged. All 113 unknown keys / 107 accessions remain explicit and excluded from both events and controls. Earlier receipts are preserved; a separate correction fixes duplicate counts to 111 daily / 0 quarterly. No identity scaling, freeze or performance occurred. EXP004 stays paused and EXP005 abandoned/absent.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Daily filing population reconstructed; historical-original Item membership blocked before identity, freeze or performance |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | Source missingness accepted; dated identity feasibility failed before scaling, freeze or performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |
@@ -176,7 +176,7 @@ python -m src.presentation.exp001 --check
 
 Public checks block external network and private data reads. EXP999 uses temporary directories and fake transports. Presentation regeneration (`python -m src.presentation.exp001`) uses published EXP001 processed records; it creates no remote job. These checks demonstrate software behavior, not certified market execution or alpha.
 
-Latest milestone validation: **398 local tests, 170 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp006_historical_population_validation.json).
+Latest milestone validation: **408 local tests, 180 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp006_identity_validation.json).
 
 The complete local suite additionally needs ignored original archives:
 

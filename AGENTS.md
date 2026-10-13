@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Latest identity feasibility closure (2026-10-13)
+
+- `docs/acceleration/owner_item202_identity_2026-10-13.md` supersedes the previous Item-membership stop for this candidate. The versioned missingness contract retains all 113 unknown keys / 107 accessions; they are neither events nor controls, never imputed or dropped. No renewed unknown-source recovery is authorized.
+- `exp006_identity_report.md` records three bounded routes on the pushed 240-event sample and twelve dated-symbol provider inputs. None met the unchanged 95% fully resolved standard: HISTORICAL_IDENTITY_BLOCKED, no identity scaling or downstream provider-price/matching/inference/freeze/Development. Current metadata and EXP002 discovery spans remain uncertified for historical class/lifecycle binding.
+- Preserve all prior reports/receipts and v003 timing. The separate duplicate-aggregate correction records 111 daily / 0 quarterly repeats; old negative aggregates remain historical software-error evidence, while union keys/classifications are unchanged. EXP004 remains paused, EXP005 abandoned/absent, EXP006 absent; performance/confirmation remain 0. No automatic next campaign, Nexus/Aurora, paper/live or new phase follows.
+
 ## Latest historical-population closure (2026-10-13)
 
 - `docs/acceleration/owner_item202_population_identity_2026-10-13.md` authorized Development daily-index reconstruction and conditional dated-identity closure. `exp006_historical_population_report.md` records the completed 1,500-file union and HISTORICAL_ITEM_STATUS_BLOCKED: 113 original keys / 107 accessions lack Item membership after bounded official-source checks.
