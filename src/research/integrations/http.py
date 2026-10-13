@@ -25,12 +25,14 @@ class BoundedHTTP(PilotHTTP):
         super().__init__(contract(),root=self.global_root/provider,**kwargs)
         self.m={'version':'integration_dispatch_v002','request_ceiling':ceiling,'retry':contract()['retry'],'provider':provider}
         self.allowed=set()
+        for path in (self.root/'redirect_headers').glob('*.json'):
+            record=json.loads(path.read_bytes());self.locations[record['url']]=record['location']
         reviews=[json.loads(p.read_bytes()) for p in (self.root/'redirect_reviews').glob('*.json')]
         if reviews:
             latest=max(reviews,key=lambda r:r['reviewed_at_utc']);self.review_errors=latest['errors'];self.review_stop_hash=latest['stop_sha256'];self.reviewed=[latest['target']]
     def starts(self):return sorted(self.global_root.glob('*/reservations/*.json'))
     def allow(self,url,purpose):
-        p=urlsplit(url);hosts={'CONGRESS':{'huggingface.co','cdn-lfs.huggingface.co','cas-bridge.xethub.hf.co'},'SEC':{'www.sec.gov'},'HOUSE':{'disclosures-clerk.house.gov'},'SENATE':{'efdsearch.senate.gov'}}[self.provider]
+        p=urlsplit(url);hosts={'CONGRESS':{'huggingface.co','cdn-lfs.huggingface.co','cas-bridge.xethub.hf.co','us.aws.cdn.hf.co'},'SEC':{'www.sec.gov'},'HOUSE':{'disclosures-clerk.house.gov'},'SENATE':{'efdsearch.senate.gov'}}[self.provider]
         if p.scheme!='https' or p.hostname not in hosts or p.username or p.password:raise ValueError('Source host/scheme outside reviewed contract')
         receipt={'url':url,'purpose':purpose,'provider':self.provider,'ceiling':self.m['request_ceiling'],'frozen_at_utc':now(),'performance_authorized':False}
         put(self.root/'dispatch'/(digest(receipt)+'.json'),receipt);self.allowed.add(url)

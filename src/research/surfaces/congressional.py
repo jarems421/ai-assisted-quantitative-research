@@ -18,7 +18,7 @@ def normalize(row):
 class CongressionalDisclosuresAdapter:
     surface_id='CONGRESS';evidence_tier=EvidenceTier.AUDITED_EXTERNAL_DERIVED
     def __init__(self,manifest,root,*,revision,retrieved_at):
-        if manifest.get('dataset')!='austin-starks/congressional-stock-trades' or manifest.get('schemaVersion')!=1:raise ValueError('Unsupported dataset/schema')
+        if manifest.get('dataset')!='austin-starks/congressional-stock-trades' or manifest.get('schemaVersion') not in (1,2):raise ValueError('Unsupported dataset/schema')
         instant(manifest['generatedAt']);instant(retrieved_at)
         self.manifest=manifest;self.root=Path(root).resolve();self.revision=revision;self.retrieved_at=retrieved_at
         if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Snapshot revision must be immutable commit')
@@ -68,4 +68,4 @@ class CongressionalDisclosuresAdapter:
         if len({r['event_id'] for r in out})!=len(out):raise ValueError('Overlapping event versions')
         return sorted(out,key=lambda r:(r['first_available_at'],r['event_id'],r['version']))
     def normalize_probe(self,rows):
-        return ProviderResult(self.surface_id,self.evidence_tier,'https://huggingface.co/datasets/'+self.manifest['dataset'],digest(self.manifest),'snapshot_schema_v1',self.revision,self.retrieved_at,None,'UPSTREAM_MODELED_EOD','VERSIONED_EVENT_ROWS','EXTERNAL_SNAPSHOT_ONLY',{},self.access_contract(),tuple(rows))
+        return ProviderResult(self.surface_id,self.evidence_tier,'https://huggingface.co/datasets/'+self.manifest['dataset'],digest(self.manifest),'snapshot_schema_v'+str(self.manifest['schemaVersion']),self.revision,self.retrieved_at,None,'UPSTREAM_MODELED_EOD','VERSIONED_EVENT_ROWS','EXTERNAL_SNAPSHOT_ONLY',{},self.access_contract(),tuple(rows))

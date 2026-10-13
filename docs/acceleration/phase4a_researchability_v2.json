@@ -1,0 +1,66 @@
+{
+  "canonical_primary_promotion": false,
+  "decisive_criterion": "Fewer dependencies on non-primary derived evidence after3 proof/pass gates and2PARTIAL gates tie",
+  "keys": {
+    "CONGRESS": [
+      3,
+      -2,
+      -1,
+      -2,
+      0,
+      false
+    ],
+    "SEC": [
+      3,
+      -2,
+      0,
+      -1,
+      0,
+      true
+    ]
+  },
+  "neutral_sample_count": 12,
+  "neutral_source_files": 1,
+  "performance_used": false,
+  "research_starts": 10,
+  "rows": [
+    {
+      "derived_dependencies": 0,
+      "evidence": "Verified v001 SEC archive and documented public index semantics; no new comparison request",
+      "frequency_status": "UNKNOWN_NO_INDEPENDENT_N",
+      "gates": {
+        "DENOMINATOR": "PARTIAL",
+        "HISTORICAL_DEPTH": "PASS_BOUNDED_PROBE",
+        "POINT_IN_TIME": "PARTIAL",
+        "REPRODUCIBILITY": "PROVEN_FROM_EXISTING_EVIDENCE",
+        "SOURCE_ACCESS": "PROVEN_FROM_EXISTING_EVIDENCE"
+      },
+      "id": "SEC",
+      "identity_burden": 1,
+      "plausible_independent_frequency": 0
+    },
+    {
+      "derived_dependencies": 1,
+      "evidence": "Pinned schema2 snapshot verified3 files; 2020 tables; per-version as-of tests; modeled EOD/no owner acceptance; member-only event layer",
+      "frequency_status": "UNKNOWN_NO_INDEPENDENT_N",
+      "gates": {
+        "DENOMINATOR": "PARTIAL",
+        "HISTORICAL_DEPTH": "PASS_BOUNDED_PROBE",
+        "POINT_IN_TIME": "PARTIAL",
+        "REPRODUCIBILITY": "PASS_BOUNDED_PROBE",
+        "SOURCE_ACCESS": "PASS_BOUNDED_PROBE"
+      },
+      "id": "CONGRESS",
+      "identity_burden": 2,
+      "plausible_independent_frequency": 0
+    }
+  ],
+  "selection_rule_sha256": "05d8de509ac05e6efdd046cca0c2f54ef8337352ba17534f27f2a1da3bf9189d",
+  "snapshot": {
+    "generatedAt": "2026-10-12T07:38:23.530Z",
+    "manifest_sha256": "39cf5506dfc968fcaa32126c91fc4c73c11856b5d93799245cc70dd8cf8311d7",
+    "revision": "58ffb57382208624bd61a6de68c68782eb26cbf6",
+    "source_sha256": "d4b3250e9d8cc52faa37d5e3b27ffd418d0e1a0d80999818947cfcf0a64491d4"
+  },
+  "winner": "SEC"
+}
