@@ -1,0 +1,706 @@
+[
+  {
+    "name": "congressional-disclosures",
+    "repo": "https://github.com/austin-starks/congressional-disclosures",
+    "resolved_owner_name": "austin-starks/congressional-disclosures",
+    "pinned_audit_commit": "2965e8796bd4cb9423a83b964a1f9dbd076a0ad6",
+    "default_branch": "main",
+    "license": "MIT",
+    "license_files": [
+      {
+        "path": "LICENSE",
+        "sha256": "08c7bb6a6ef3cc40ca848e14808938624cc6213a1709d4a8c8ac4cc6e849ba90",
+        "bytes": 1070
+      }
+    ],
+    "package_version": "2.2.2",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "OPTIONAL_ADAPTER",
+    "runtime_dependency": false,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "src/research/surfaces/congressional.py",
+    "reason": "Snapshot hash/schema/as-of adapter; upstream modeled EOD and version availableAt kept distinct. Event consolidation filters resolved members and can augment contributors retrospectively; no primary trust promotion.",
+    "files_inspected": [
+      {
+        "path": "README.md",
+        "sha256": "f21906af104acaae2ed98b696c7d44765e61f9c7f57f7c2247844b6b2c48bb7f",
+        "bytes": 20794
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "08c7bb6a6ef3cc40ca848e14808938624cc6213a1709d4a8c8ac4cc6e849ba90",
+        "bytes": 1070
+      },
+      {
+        "path": "package.json",
+        "sha256": "4e693eb03b1a18dbd8997118dc027215b7cd94d21912a289419e424f122bbfdb",
+        "bytes": 4314
+      },
+      {
+        "path": "packages/congressional-disclosures/package.json",
+        "sha256": "61311faeb3adeef89e535ddd2292e38b2d55571d1a1815a5ae7cedaad4bd951c",
+        "bytes": 3040
+      },
+      {
+        "path": "packages/congressional-disclosures/src/dataset/download.ts",
+        "sha256": "883f07f0193d032384ab0e30d352e5245095695f54a39aec4238ed149c227cc6",
+        "bytes": 10454
+      },
+      {
+        "path": "packages/congressional-disclosures/src/dataset/sqlite.ts",
+        "sha256": "647260462a00393de2c106b51641b89b55b1df4b50a1b1c424b543ee2686df49",
+        "bytes": 15410
+      },
+      {
+        "path": "packages/congressional-disclosures/src/storage/sqlite.ts",
+        "sha256": "5807f92671d485be91e4ec81cedc313a704e637b31355bd3899783f668a33692",
+        "bytes": 22281
+      },
+      {
+        "path": "packages/congressional-disclosures/src/storage/parquet.ts",
+        "sha256": "0cde416b249746a154f1d075740a5616a622e2d93a7c0d014e6a0d9c09e1bef7",
+        "bytes": 5512
+      },
+      {
+        "path": "packages/congressional-disclosures/src/lake/events.ts",
+        "sha256": "d817cf4d1267e96d167d2dbf5564fc9d89c6ecac54a276034312ea23d9db0029",
+        "bytes": 10543
+      },
+      {
+        "path": "packages/congressional-disclosures/src/lake/dates.ts",
+        "sha256": "61f0701d45785f9de02bdde6e9b9f4b0b27b12bf1f39b7dd6d8a7b1ab975916d",
+        "bytes": 1477
+      },
+      {
+        "path": "packages/congressional-disclosures/src/lake/types.ts",
+        "sha256": "87127efe4cc7bbc98592053b8fca45016bfbee4773fb6626fb9a1a6844000f44",
+        "bytes": 6742
+      },
+      {
+        "path": "packages/congressional-disclosures/src/lake/normalize.ts",
+        "sha256": "0beec66c2668dc60531148ea0f33d6a3f63f9036f4099fd5abe58df40ec68073",
+        "bytes": 14773
+      },
+      {
+        "path": "packages/congressional-disclosures/src/integrity.ts",
+        "sha256": "de39a735ad33191fe17dba3c0cea7716ba074baa94e0dd2ef7c0667a0eedb6f4",
+        "bytes": 21695
+      },
+      {
+        "path": "packages/congressional-disclosures/src/identity/resolve.ts",
+        "sha256": "ee4c3c18cc5115f24df30d3e7dc62d6c05c3f23aecf3d523788a6854029c85ae",
+        "bytes": 8719
+      },
+      {
+        "path": "packages/congressional-disclosures/src/identity/legislators.ts",
+        "sha256": "91b593bbaaaf6f0d88191448b0bf89e47063ef74a6c3a1ed4a811d0a5a72a34f",
+        "bytes": 7219
+      },
+      {
+        "path": "packages/congressional-disclosures/src/sources/http.ts",
+        "sha256": "b53c5cdbcf178343d0491819109b73d28020bbb8fe0670931823996311615937",
+        "bytes": 2358
+      },
+      {
+        "path": "packages/congressional-disclosures/src/sources/house.ts",
+        "sha256": "ffd5b6cb8198495202d6ce7ba3005844f60cccd5f190cf96bf5f508c38523099",
+        "bytes": 3026
+      },
+      {
+        "path": "packages/congressional-disclosures/src/sources/senate.ts",
+        "sha256": "626cc025255d1e9d47f30466b8458a50e83048c09923163e5d391897e43260b3",
+        "bytes": 10389
+      },
+      {
+        "path": "packages/congressional-disclosures/src/backfill/receipts.ts",
+        "sha256": "a3f51e5003399b39b76e00b1883d843092bf72fe5007edb3fa19dc1752e1e33a",
+        "bytes": 4953
+      },
+      {
+        "path": "packages/congressional-disclosures/src/backfill/round.ts",
+        "sha256": "a8445abe782e9e44ee2286e58735cd67244b63ab44f52355cd241105f1bfcee1",
+        "bytes": 2959
+      },
+      {
+        "path": "packages/congressional-disclosures/src/tests/datasetDownload.test.ts",
+        "sha256": "9f8744824e67342aa5d50a0f87cac70fea7789a11a871db404b568010547d61f",
+        "bytes": 3166
+      },
+      {
+        "path": "packages/congressional-disclosures/src/tests/datasetSqlite.test.ts",
+        "sha256": "79ce75d3d5d8e89692a491fe0383d0ba94987f197f858ef1d8d2429f89625778",
+        "bytes": 5319
+      },
+      {
+        "path": "packages/congressional-disclosures/src/lake/tests/normalizationGolden.test.ts",
+        "sha256": "745a8d9faa49e33e914168c5f4f06daaa81b885f1c9f2598503629e77ade635f",
+        "bytes": 3468
+      },
+      {
+        "path": "packages/congressional-disclosures/src/tests/sqliteRepository.test.ts",
+        "sha256": "9dd3353957001c761f68d416060e69020e086eb432e2ef3e1262a4fb50d69242",
+        "bytes": 7883
+      },
+      {
+        "path": "packages/congressional-disclosures/src/identity/tests/resolve.test.ts",
+        "sha256": "e1b5e1b900b06be21380b055207c17e6820bf5e5fc151b90276c9db818af3470",
+        "bytes": 13269
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  },
+  {
+    "name": "chrono-ta",
+    "repo": "https://github.com/austin-starks/chrono-ta",
+    "resolved_owner_name": "austin-starks/chrono-ta",
+    "pinned_audit_commit": "39141072e3e262fbe8715675584f7453bd2bdb9a",
+    "default_branch": "master",
+    "license": "MIT",
+    "license_files": [
+      {
+        "path": "LICENSE",
+        "sha256": "acd075ae0f4e6505c7301fa6fce19a64a71eb1bd0e531f3cf196bd6b1a0693cf",
+        "bytes": 1139
+      }
+    ],
+    "package_version": "2.2.3",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "ADOPTED_SEMANTICS",
+    "runtime_dependency": false,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "src/research/signals/time_window.py",
+    "reason": "Explicit UTC buckets/elapsed expiry/state continuation; clean-room implementation rejects ordering/capacity instead of adaptive thinning. No crate dependency or bit parity claim.",
+    "files_inspected": [
+      {
+        "path": "README.md",
+        "sha256": "872fce8999c062c530bc1bc5084e85e362f3d18ff372f9f3b136b9fcfa7a20b2",
+        "bytes": 17930
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "acd075ae0f4e6505c7301fa6fce19a64a71eb1bd0e531f3cf196bd6b1a0693cf",
+        "bytes": 1139
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "23d93b18a893f8ecc14921323c3f6fb4c5b48338db7c04a5a6a3507a545755c9",
+        "bytes": 925
+      },
+      {
+        "path": "src/data_item.rs",
+        "sha256": "f612cec42ebeb0d1515115fd1a0a4687a5e63fd8838c437587ebcff243e0e2d7",
+        "bytes": 5425
+      },
+      {
+        "path": "src/helpers.rs",
+        "sha256": "852cc97aed00097e8975fbb689442a6c804d51dff49675f60bb19fa15af29c50",
+        "bytes": 335
+      },
+      {
+        "path": "src/indicators/fixed_time_bucket.rs",
+        "sha256": "0a7d17397612a04dfd6a8d069bd04b08db9e568d18d02d4c5021789241ce06dc",
+        "bytes": 1743
+      },
+      {
+        "path": "src/indicators/window_aggregate.rs",
+        "sha256": "aa7ec6ed26418fc5f2a9aef5f2afc4249fad994be677a2ecac0dcaa6d7871147",
+        "bytes": 6604
+      },
+      {
+        "path": "src/indicators/simple_moving_average.rs",
+        "sha256": "f95dc8fa1d8fd305d93b126a161a14627e4d3e3707a325411d4c2b60d7cbd378",
+        "bytes": 7186
+      },
+      {
+        "path": "src/indicators/rate_of_change.rs",
+        "sha256": "daf3ad851eabb0dc76e14392151b1a200019a01e8da3fac9f40a2b4ba8faa3fa",
+        "bytes": 6945
+      },
+      {
+        "path": "tests/golden_regressions.rs",
+        "sha256": "c468bbcae5a1ed9b68e0646e991e0ce55232c0bb1414f6bc8c71d0aa16a90650",
+        "bytes": 8577
+      },
+      {
+        "path": "tests/test_adaptive_replacement.rs",
+        "sha256": "aef7783ae9c4a7ea2bcc855e4bcc44fba74b6a9e6e7740de131b251970329435",
+        "bytes": 7528
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  },
+  {
+    "name": "nexustrade-py",
+    "repo": "https://github.com/austin-starks/nexustrade-py",
+    "resolved_owner_name": "austin-starks/nexustrade-py",
+    "pinned_audit_commit": "e13a54517d063a924d5f50374de0a276c7e62007",
+    "default_branch": "main",
+    "license": "MIT",
+    "license_files": [
+      {
+        "path": "LICENSE",
+        "sha256": "cdc2a0d0410276c6648de2a2a56f7b265bbe168cd664617e29fe04a7f6a2b7f2",
+        "bytes": 1079
+      }
+    ],
+    "package_version": "upstream1.55.0 / installed1.42.0",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "EXISTING_DEPENDENCY",
+    "runtime_dependency": true,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "src/research/integrations/nexus_local.py",
+    "reason": "Installed1.42.0 literal-byte offline prepare_web_pages only; upstream1.55.0 audited, not upgraded. No client/agent/host fetch or statistics-as-inference.",
+    "files_inspected": [
+      {
+        "path": "README.md",
+        "sha256": "f7593b379575b75cb72b899dcf52d57c0b59fc250308d5e91fbf31e1bc5b41d0",
+        "bytes": 83405
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "cdc2a0d0410276c6648de2a2a56f7b265bbe168cd664617e29fe04a7f6a2b7f2",
+        "bytes": 1079
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "310811aaaf6aa5ef4eef9c93d4199b10725d1ab9588dc94f4bd524257d0fad45",
+        "bytes": 3308
+      },
+      {
+        "path": "nexustrade/scanned_table.py",
+        "sha256": "5421fc2134f6feed528208e867e2933e8ba198ed9614807835c5cc4e282bc436",
+        "bytes": 156387
+      },
+      {
+        "path": "nexustrade/report_evidence.py",
+        "sha256": "890c4143a91b24838e47c98b05aaf85a2de9db419b50d2c4e38eaed703215e52",
+        "bytes": 9728
+      },
+      {
+        "path": "tests/test_web_page_extraction.py",
+        "sha256": "2a986159a1562acc9395e13f3d73e23b49617a72efa61ef6feedba3a3f6fa7ec",
+        "bytes": 23701
+      },
+      {
+        "path": "tests/test_report_evidence.py",
+        "sha256": "7473192f788013514f78620579ee4726c56c7ae1eeafdb540a46e708209ccf80",
+        "bytes": 8268
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  },
+  {
+    "name": "OpenBB",
+    "repo": "https://github.com/OpenBB-finance/OpenBB",
+    "resolved_owner_name": "OpenBB-finance/OpenBB",
+    "pinned_audit_commit": "7c9d4221bdf66965e3f6c7f4dc6ee848073e5ae2",
+    "default_branch": "develop",
+    "license": "Apache-2.0",
+    "license_files": [
+      {
+        "path": "LICENSE",
+        "sha256": "2c40e795cd5d3179d45c57b534e953e3fa2f1fb499602e2b314f57aeec813885",
+        "bytes": 11476
+      }
+    ],
+    "package_version": "audited HEAD; no runtime adoption",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "ADOPTED_INTERFACE_PATTERN",
+    "runtime_dependency": false,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "src/research/surfaces/base.py",
+    "reason": "Normalize provider results while preserving query/upstream metadata and evidence tier; no full stack or evidence promotion.",
+    "files_inspected": [
+      {
+        "path": "README.md",
+        "sha256": "e16d366a7c2db035918231b9a6051c2a203f8e9991ab7853005218e8549bdaba",
+        "bytes": 10591
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "2c40e795cd5d3179d45c57b534e953e3fa2f1fb499602e2b314f57aeec813885",
+        "bytes": 11476
+      },
+      {
+        "path": "openbb_platform/core/pyproject.toml",
+        "sha256": "8d98f6dc03937fab206f19614d8107684e06f997dab00f71b5ab278d3ad24261",
+        "bytes": 3066
+      },
+      {
+        "path": "openbb_platform/core/openbb_core/provider/abstract/provider.py",
+        "sha256": "9ce396ebbef86ffe5167ce09acb4ad9cc8c534fa1bd2167cbab53fbe0f6a537f",
+        "bytes": 1951
+      },
+      {
+        "path": "openbb_platform/core/openbb_core/provider/abstract/fetcher.py",
+        "sha256": "bde211053a842828b3bba21ed0c53fc82fa0b1d0af946bc96d7342c81f00efa3",
+        "bytes": 13257
+      },
+      {
+        "path": "openbb_platform/core/openbb_core/provider/abstract/data.py",
+        "sha256": "409cb1de38421941f252382a38cbf05593581c31cce2b4a95db1e2dfa01ee61d",
+        "bytes": 3459
+      },
+      {
+        "path": "openbb_platform/core/openbb_core/provider/abstract/query_params.py",
+        "sha256": "02160f338b14508922b585f7ade0afa81b49dc2e43492b7913e63f9ac28290f5",
+        "bytes": 2696
+      },
+      {
+        "path": "openbb_platform/core/tests/provider/abstract/test_fetcher.py",
+        "sha256": "2b5f3786cf842a94bb25290a472c46fcef1e53ed9491498d38fbb65eb6034299",
+        "bytes": 6340
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  },
+  {
+    "name": "FinRL",
+    "repo": "https://github.com/AI4Finance-Foundation/FinRL",
+    "resolved_owner_name": "AI4Finance-Foundation/FinRL",
+    "pinned_audit_commit": "00f3596facd01cced5217d875d8c1fc413a31665",
+    "default_branch": "master",
+    "license": "MIT",
+    "license_files": [
+      {
+        "path": "LICENSE",
+        "sha256": "486a06be9075686b75b35649de0adf9076508c5d0cc5b00af7928b7a96bffe65",
+        "bytes": 1093
+      }
+    ],
+    "package_version": "audited HEAD; no runtime adoption",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "DEFERRED_PHASE5",
+    "runtime_dependency": false,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "docs/architecture/external_integrations.md",
+    "reason": "Train/test/env/risk contracts informative but download/reward/portfolio/trading paths outside current scope. README points to FinRL-Trading/FinRL-X; not installed.",
+    "files_inspected": [
+      {
+        "path": "README.md",
+        "sha256": "498bb3870ec65e5b1a885d4faf4070f3c4f28ba4dab9558cb657b5e096d22063",
+        "bytes": 23178
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "486a06be9075686b75b35649de0adf9076508c5d0cc5b00af7928b7a96bffe65",
+        "bytes": 1093
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "7577eef126ce8a94704d02d21d4cd600dd1340205c455ad493285622a2e81d78",
+        "bytes": 1837
+      },
+      {
+        "path": "finrl/train.py",
+        "sha256": "bd57a6bde04d6c040f9f6017c8ad63f708014567fd096b0527ab7cc53c47d744",
+        "bytes": 5215
+      },
+      {
+        "path": "finrl/test.py",
+        "sha256": "cfa0a4fbca01a25f9fcb412953f55cf294b6e2f4d2655a2ecb5cda86f57b4f4f",
+        "bytes": 4246
+      },
+      {
+        "path": "finrl/meta/env_stock_trading/env_stocktrading.py",
+        "sha256": "2a4747dc78c632e207f55aeb942e179eef4eda28040f0225055e454780eb7620",
+        "bytes": 22361
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  },
+  {
+    "name": "numpy",
+    "repo": "https://github.com/numpy/numpy",
+    "resolved_owner_name": "numpy/numpy",
+    "pinned_audit_commit": "a0e0f603ac3ad50443a6c33b7c39f150574429de",
+    "default_branch": "main",
+    "license": "BSD-3-Clause",
+    "license_files": [
+      {
+        "path": "LICENSE.txt",
+        "sha256": "1be1df33863f97a7bc1c4d67980bd6c69c9a6fef0a5ee76e6ad6cb91e56e8491",
+        "bytes": 1543
+      }
+    ],
+    "package_version": "installed2.2.6",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "EXISTING_DEPENDENCY",
+    "runtime_dependency": true,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "requirements-research.txt",
+    "reason": "Existing direct synthetic inference/proof fingerprint dependency now explicitly pinned2.2.6; no change to installed environment or canonical metrics.",
+    "files_inspected": [
+      {
+        "path": "README.md",
+        "sha256": "b2aef38c7633af8cc43be494004da614e719cb20041beecaaa44566fe663a6ec",
+        "bytes": 4411
+      },
+      {
+        "path": "LICENSE.txt",
+        "sha256": "1be1df33863f97a7bc1c4d67980bd6c69c9a6fef0a5ee76e6ad6cb91e56e8491",
+        "bytes": 1543
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "6c160baccae69413d5753906b0d44f98eb1dd3572a80d55ef3a6e09a50ff2fb1",
+        "bytes": 14460
+      },
+      {
+        "path": "numpy/_core/fromnumeric.py",
+        "sha256": "4c8b87a348581c7d1f0dfec996fc80b6f7e95d0921de629e04ad94b994af7dc6",
+        "bytes": 152985
+      },
+      {
+        "path": "numpy/_core/tests/test_numeric.py",
+        "sha256": "e1edae593e8b766cb6c9a1e40bd44cc45c3e334d381960e1c90c52cc265f5647",
+        "bytes": 161825
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  },
+  {
+    "name": "pandas",
+    "repo": "https://github.com/pandas-dev/pandas",
+    "resolved_owner_name": "pandas-dev/pandas",
+    "pinned_audit_commit": "802a5b6c44cfdcf8be4547408412d5605dc0bf9c",
+    "default_branch": "main",
+    "license": "BSD-3-Clause",
+    "license_files": [
+      {
+        "path": "LICENSE",
+        "sha256": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae",
+        "bytes": 1634
+      }
+    ],
+    "package_version": "audited HEAD; no runtime adoption",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "REFERENCE_ONLY",
+    "runtime_dependency": false,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "src/research/surfaces/congressional.py",
+    "reason": "Arrow/DuckDB suffice; DataFrame mutation/coercion cannot supply source vintage. Not added as direct dependency.",
+    "files_inspected": [
+      {
+        "path": "README.md",
+        "sha256": "5c63b18d017b2200be7474166621177a311f461a9a5cf15813b865bacb4f2b9b",
+        "bytes": 11348
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae",
+        "bytes": 1634
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "160f805135641b63cbcdd531392ea2a2ecaf3bc3baa51f4cafb59f7f7cb28351",
+        "bytes": 23309
+      },
+      {
+        "path": "pandas/core/frame.py",
+        "sha256": "42690a9b4a6a9e9abbb310dc2791450a1d9c96f3f4748e4e0a6a35cf94d329e9",
+        "bytes": 725926
+      },
+      {
+        "path": "pandas/tests/frame/test_constructors.py",
+        "sha256": "1debf7be6a40645f2174095b98299d76e3bc722e2ea46cf3412edd1d09280cc8",
+        "bytes": 136028
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  },
+  {
+    "name": "matplotlib",
+    "repo": "https://github.com/matplotlib/matplotlib",
+    "resolved_owner_name": "matplotlib/matplotlib",
+    "pinned_audit_commit": "24b0053e2c4f96ce54037138e79b84cb90f01e17",
+    "default_branch": "main",
+    "license": "Matplotlib-license (PSF-based)",
+    "license_files": [
+      {
+        "path": "LICENSE/LICENSE",
+        "sha256": "5a1a81ea301728c8bba2933da832c0cd62229daf20893a024ab3d53244468dbc",
+        "bytes": 4830
+      }
+    ],
+    "package_version": "installed3.11.2",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "EXISTING_DEPENDENCY",
+    "runtime_dependency": true,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "requirements-docs.txt",
+    "reason": "Keep3.11.2 presentation-only; no canonical performance processor change.",
+    "files_inspected": [
+      {
+        "path": "README.md",
+        "sha256": "46b9067dc4fd2e012efd57439e3e4cd1f7e76ae86fc191b54aaa94a544a01564",
+        "bytes": 3972
+      },
+      {
+        "path": "LICENSE/LICENSE",
+        "sha256": "5a1a81ea301728c8bba2933da832c0cd62229daf20893a024ab3d53244468dbc",
+        "bytes": 4830
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "505f217d7998fd5ef5f2e8e7d8aff59350a36a3daef761dd7c3b88535474facb",
+        "bytes": 14588
+      },
+      {
+        "path": "lib/matplotlib/pyplot.py",
+        "sha256": "17fe4aa36d19cd539d7dc6b8399371e199a9c76cb669bd16784ff08891a559e6",
+        "bytes": 156439
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  },
+  {
+    "name": "scikit-learn",
+    "repo": "https://github.com/scikit-learn/scikit-learn",
+    "resolved_owner_name": "scikit-learn/scikit-learn",
+    "pinned_audit_commit": "bebaf70573b6fe756bc93aca5534f3191c18c4eb",
+    "default_branch": "main",
+    "license": "BSD-3-Clause",
+    "license_files": [
+      {
+        "path": "COPYING",
+        "sha256": "50d6a9d340f19ab355609917993114daf5f47e3161067bcf34955bbd05cd9cb0",
+        "bytes": 1532
+      }
+    ],
+    "package_version": "audited HEAD; no runtime adoption",
+    "role": "LIBRARY_OR_ADAPTER_NOT_RESEARCH_TRUTH",
+    "integration_status": "REFERENCE_ONLY",
+    "runtime_dependency": false,
+    "canonical_evidence_role": "NONE_LIBRARY_IS_NOT_PRIMARY_EVIDENCE",
+    "allowed_usage": [
+      "Pinned implementation/license audit",
+      "Declared local adapter/semantics only"
+    ],
+    "forbidden_usage": [
+      "Automatic source-trust promotion",
+      "Remote execution",
+      "Strategy performance",
+      "Current-survivor population replacement"
+    ],
+    "Research_OS_module": "docs/architecture/external_integrations.md",
+    "reason": "TimeSeriesSplit/evaluation interface examined; no predictive model exists requiring runtime dependency or generic CV replacement of stage controls.",
+    "files_inspected": [
+      {
+        "path": "README.rst",
+        "sha256": "3e0c151adde02aa2501477a7c2a17a87888abe58178c09a2a8eff794bbee3221",
+        "bytes": 7676
+      },
+      {
+        "path": "COPYING",
+        "sha256": "50d6a9d340f19ab355609917993114daf5f47e3161067bcf34955bbd05cd9cb0",
+        "bytes": 1532
+      },
+      {
+        "path": "pyproject.toml",
+        "sha256": "60076dfc0b7bef4471363947873317e288767cd1271b0eba81eccb5ac6e897f2",
+        "bytes": 13812
+      },
+      {
+        "path": "sklearn/model_selection/_split.py",
+        "sha256": "c8906abec0bb3af831928d4c3689c904ff59ed49e5dc99c4038f72d91ec2d093",
+        "bytes": 111854
+      },
+      {
+        "path": "sklearn/model_selection/tests/test_split.py",
+        "sha256": "8cb3361b394f66dbe21fabe43bdc930f0aea6808d190b9ca38f28f9af4b0cda5",
+        "bytes": 75308
+      }
+    ],
+    "audit_scope": "Implementation interfaces, critical functions and representative tests inspected; entire repository not exhaustively line-audited",
+    "code_copied": false
+  }
+]
