@@ -1,0 +1,158 @@
+{
+  "baseline": "aad8ab7946bd4853d5f987ae0165943de25f4400",
+  "date": "2026-10-13",
+  "local_tests_passed": 331,
+  "public_tests_passed": 103,
+  "tests_skipped": 0,
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "log_sha256": "e6f0f64010afd4cd41a322b0bd44cccdf621dc445f9c03621ba7c913382ee186"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "exit_code": 0,
+      "log_sha256": "f49a3453b23fc44935287778e8a43a3410839b16130e5b864ad82f7c595180da"
+    },
+    {
+      "command": "python -m src.research.source_first manifest",
+      "exit_code": 0,
+      "log_sha256": "fa88db39d8e602707649a8623cc924316066f7dc5cc1b7a555e0006bb0a1313a"
+    },
+    {
+      "command": "python -m src.research.source_first_report --audit --check",
+      "exit_code": 0,
+      "log_sha256": "e220c0b349e8d777c795aac35cd3c1479dca519fcfd6dab38ebdbde967b71bac"
+    },
+    {
+      "command": "python -m src.research.merger_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "4f8d8a2de33cfa4d13825563da81f756c2be84e509a993c27abcadd2bfe63056"
+    },
+    {
+      "command": "python -m src.research.fda_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "58e4af86f886fb58c57c19c16f73587a371f80e50bb7c5dbb9e4edc7242e7340"
+    },
+    {
+      "command": "python -m src.research.procurement_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "fd0acf5bed1f9491e4a7d3b4651510cb3a821474a8bed6519a5b05b7c9702f87"
+    },
+    {
+      "command": "python -m src.research.phase4a --check",
+      "exit_code": 0,
+      "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+    },
+    {
+      "command": "python -m src.research.sec_pilot replay",
+      "exit_code": 0,
+      "log_sha256": "a521f9c1526028874c8663964c7c81d34b50be11eb887e781e1b1364e8fb9a38"
+    },
+    {
+      "command": "python -m src.research.sec_pilot audit",
+      "exit_code": 0,
+      "log_sha256": "a521f9c1526028874c8663964c7c81d34b50be11eb887e781e1b1364e8fb9a38"
+    },
+    {
+      "command": "python -m src.research.sec_pilot report --check",
+      "exit_code": 0,
+      "log_sha256": "a0beb5d2cc256cb53e33f1ab7846245cb472adbf894e2e453d4bc42e3ad49444"
+    },
+    {
+      "command": "python -m src.research.phase3_final --check",
+      "exit_code": 0,
+      "log_sha256": "da8a1670bbec618859a733b27ae698e5c3e327c84093759732f93dd73ef8d221"
+    },
+    {
+      "command": "python -m src.research.phase3er report --check",
+      "exit_code": 0,
+      "log_sha256": "fa4c28394cfcdf8c3fb22bc72e672f1948b97a0fe4e506c52040f061ec32ea08"
+    },
+    {
+      "command": "python -m src.research.phase3er geometry --check",
+      "exit_code": 0,
+      "log_sha256": "dfd17fb0e07c9b8bab9f672953932890ae2f7d986610726c30397e2a7fd85557"
+    },
+    {
+      "command": "python -m src.research.phase3er audit",
+      "exit_code": 0,
+      "log_sha256": "c02de9e38fd833f12baab30588f34080f47afcf67903c69f857664e7035bb94e"
+    },
+    {
+      "command": "python -m src.research.phase3d.closure report --check",
+      "exit_code": 0,
+      "log_sha256": "4658cb6d3bdeaaae22941052c2a45875edd652c10f566d3220a9ece9b4de4268"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "exit_code": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    },
+    {
+      "command": "python -m src.research.integration_review --audit --check",
+      "exit_code": 0,
+      "log_sha256": "2e558a567b038e18e9daaaca27e6a20bbab48a7d2755a02611d369ec9bccce02"
+    },
+    {
+      "command": "python -m pip check",
+      "exit_code": 0,
+      "log_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "exit_code": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "command": "python -m src.research.integration_review --audit --check",
+      "exit_code": 0,
+      "log_sha256": "2e558a567b038e18e9daaaca27e6a20bbab48a7d2755a02611d369ec9bccce02"
+    },
+    {
+      "command": "python -m unittest tests.test_exp001 -q",
+      "exit_code": 0,
+      "log_sha256": "b6d111b1c88fc56fd9b6446e21dabea2ad944e6fbdac257d1109f45673026a6a"
+    }
+  ],
+  "preservation": {
+    "baseline_files": 8616,
+    "permitted_current_documentation_dependency_and_public_guard_changes": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "docs/research_os.md",
+      "requirements-research.txt",
+      "src/presentation/README.template.md",
+      "src/presentation/exp001.py",
+      "src/research/public_checks.py"
+    ],
+    "all_other_files_unchanged": 8608,
+    "original_raw_frozen_artifacts_canonical_results_and_operational_pause": "PASS"
+  },
+  "scientific_requests": {
+    "comparison": 10,
+    "comparison_ceiling": 24,
+    "sec_prototype": 16,
+    "sec_prototype_ceiling": 32,
+    "total": 26,
+    "retries": 0,
+    "prices": 0,
+    "Nexus": 0,
+    "Aurora": 0,
+    "performance": 0,
+    "purchase_upgrade": 0,
+    "account_wide_debit": "UNKNOWN"
+  },
+  "overall": "READY_FOR_EXPERIMENT_FREEZE_REVIEW_STRUCTURAL_ONLY",
+  "executable_freeze": "BLOCKED",
+  "experiment_registered": false,
+  "EXP004": "OPERATIONALLY_PAUSED",
+  "EXP005": "ABANDONED_AND_ABSENT",
+  "Phase4B_4C_launched": false,
+  "observed_public_availability": "UNKNOWN",
+  "source_tiers": "Congress AUDITED_EXTERNAL_DERIVED; SEC index metadata and sampled primary originals kept distinct",
+  "environment": "Existing pins retained; NumPy 2.2.6 made explicit. Isolated system-site-package import smoke, not independent wheel resolution.",
+  "hosted_ci": "Final pushed SHA and hosted result reported in delivery; receipt intentionally not self-referential."
+}

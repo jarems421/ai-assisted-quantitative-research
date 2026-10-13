@@ -20,7 +20,7 @@ NumPy2.2.6, already directly used and fingerprinted, is now explicitly pinned in
 
 ## Validation, history and stop
 
-Validation: pending local tests, pending public tests, zero skipped. [Validation receipt](phase4a_integration_validation.json). Replay completed evidence offline: `python -m src.research.integration_review --audit --check`. Public report regeneration/check needs only tracked summaries: `python -m src.research.integration_review --check`. No routine reproduction command makes a source request. Public CI uses fake transports and small synthetic manifests; full local Arrow/SDK tests require the existing research environment, not live data.
+Validation: 331 local tests, 103 public tests, zero skipped. [Validation receipt](phase4a_integration_validation.json). Replay completed evidence offline: `python -m src.research.integration_review --audit --check`. Public report regeneration/check needs only tracked summaries: `python -m src.research.integration_review --check`. No routine reproduction command makes a source request. Public CI uses fake transports and small synthetic manifests; full local Arrow/SDK tests require the existing research environment, not live data.
 
 Source-first v001, procurement/FDA/merger, old Proof/Decimal execution, canonical metrics/results and frozen experiment artifacts remain byte-preserved. The initial compact-date comparison and earlier dry-compile versions remain privately retained, with corrected interpretation/current code fingerprints separately recorded. No old failed calibration or policy was rewritten. EXP004 remains paused; EXP005 abandoned and absent; no EXP006, held-out opening, new market observations, Orbis/Nexus/Aurora, graph, causal lab, optimization or paper/live action.
 
