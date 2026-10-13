@@ -28,10 +28,11 @@ def manifest():
 
 class IndexHTTP:
     """Existing Archive/transport reused, with exact UA and failure provenance."""
-    def __init__(self,group,urls,ceiling,*,transport=None,sleep=time.sleep):
+    def __init__(self,group,urls,ceiling,*,transport=None,sleep=time.sleep,allow_document_404=False):
         self.group=group;self.root=RAW/group;self.allowed=set(urls);self.ceiling=ceiling
         self.archive=Archive(self.root);self.transport=transport or SourceHTTP._transport;self.sleep=sleep
         self.manifest_sha256=digest(manifest())
+        self.allow_document_404=allow_document_404
 
     def starts(self):return list((self.root/'reservations').glob('*.json'))
 
@@ -53,6 +54,9 @@ class IndexHTTP:
             receipt.update(status=status,final_url=final,retrieved_at_utc=now(),body=self.archive.body('0000000000-00-000000',body),
                 headers={k.lower():v for k,v in headers.items() if k.lower() in ('content-type','content-length','content-encoding','last-modified','retry-after')})
             put(self.root/'receipts'/(token+'.json'),receipt)
+            if status==404 and final==url and self.allow_document_404:
+                put(self.root/'missing_documents'/(token+'.json'),{'url':url,'receipt_sha256':digest(receipt),'reason':'Exact document unavailable; not a denial or proof of legal removal'})
+                put(completed,receipt);return receipt,body
             if final!=url or status!=200:raise ValueError('Non200 or redirect: stop exact source channel')
             if receipt['headers'].get('content-encoding','identity').lower()!='identity':raise ValueError('Encoding not declared')
             if 'content-length' in receipt['headers'] and int(receipt['headers']['content-length'])!=len(body):raise ValueError('Response length mismatch')

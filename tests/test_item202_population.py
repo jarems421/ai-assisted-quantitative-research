@@ -124,4 +124,17 @@ class PopulationTests(unittest.TestCase):
                 with self.assertRaises(ValueError):h.fetch(url)
             self.assertEqual(len(calls),1);self.assertEqual(len(list((Path(temp)/'directory/receipts').glob('*.json'))),1)
 
+    def test_reviewed_404_is_document_missingness_and_denial_still_stops(self):
+        from src.research import item202_population_acquire as module
+        urls=['https://www.sec.gov/Archives/edgar/data/1/missing','https://www.sec.gov/Archives/edgar/data/1/denied']
+        calls=[]
+        def transport(u,h,p):calls.append(u);return (404 if u==urls[0] else 403),{},b'Unavailable',u
+        with tempfile.TemporaryDirectory() as temp,patch.object(module,'RAW',Path(temp)),patch.object(module,'manifest',return_value={}),patch.object(module,'identity',return_value='PRIVATE_FIXTURE_VALUE'):
+            h=module.IndexHTTP('headers',urls,2,transport=transport,sleep=lambda _:None,allow_document_404=True)
+            self.assertEqual(h.fetch(urls[0])[0]['status'],404)
+            self.assertFalse((Path(temp)/'headers/stop.json').exists())
+            with self.assertRaises(ValueError):h.fetch(urls[1])
+            with self.assertRaises(ValueError):h.fetch(urls[1])
+            self.assertEqual(len(calls),2)
+
 if __name__=='__main__':unittest.main()
