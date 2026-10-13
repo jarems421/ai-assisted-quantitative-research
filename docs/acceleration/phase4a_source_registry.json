@@ -1,0 +1,350 @@
+{
+  "ceiling": 36,
+  "cost": "No purchase/upgrade; account-wide usage/debit unknown; Git/CI metadata separate",
+  "counts": {
+    "Aurora": 0,
+    "ClinicalTrials": 2,
+    "FederalRegister": 2,
+    "Nexus": 0,
+    "Orbis": 0,
+    "SEC": 2,
+    "closed_family_reopening": 0,
+    "discovery": 0,
+    "prices": 0
+  },
+  "existing_source_reuse": {
+    "first_fixture_current_index_same_bytes": true,
+    "historical_acceptance_limit": "Phase3A winter representation certified; October ambiguity/public availability preserved",
+    "offline_replay_prior": "phase2_validation.json; rerun in final validation",
+    "original_documents_verified": 15,
+    "phase2_summary_sha256": "61207d3a0bc3a77f037009735e3fdc9e0b6065f77b6daa03eff5ab17b1bc0f45",
+    "source_documents": [
+      {
+        "accession": "0000320193-19-000119",
+        "bytes": 22705,
+        "role": "header",
+        "sha256": "dbe71a15080fabd573ff373207451da31aa49b804a91adc38003cbf5984ac6ec"
+      },
+      {
+        "accession": "0000320193-19-000119",
+        "bytes": 13533,
+        "role": "index",
+        "sha256": "37fca11b19f1fdff8cb5a9e9d626ae0c64c9d1de1b39f8cd42805dddeceed753"
+      },
+      {
+        "accession": "0000320193-19-000119",
+        "bytes": 2774010,
+        "role": "instance",
+        "sha256": "90cc42b5465d6bd93738c9b6b556e6d37de840423671cf82a3b81ff61dcd48e8"
+      },
+      {
+        "accession": "0000320193-19-000119",
+        "bytes": 2714207,
+        "role": "primary",
+        "sha256": "6673cc9b769fc50b2f7047ada3a5f1cf7e30ec5c53b0027cd6981c6d84e2d92b"
+      },
+      {
+        "accession": "0000320193-19-000119",
+        "bytes": 12861616,
+        "role": "submission",
+        "sha256": "c77a7ab405b61398dcbd7b0ecb98191b24c9519d9b18689c280c2ac7e4ebf4ab"
+      },
+      {
+        "accession": "0000320193-20-000096",
+        "bytes": 23302,
+        "role": "header",
+        "sha256": "d411a9778b1cb97243b44cdbf5cc3afda31261531137eff0a1aba03b1056f0e4"
+      },
+      {
+        "accession": "0000320193-20-000096",
+        "bytes": 13518,
+        "role": "index",
+        "sha256": "19cb22316566ea52708cdd3a97c88d172f708d51489bb85d11e1112cb09a4e81"
+      },
+      {
+        "accession": "0000320193-20-000096",
+        "bytes": 2405367,
+        "role": "instance",
+        "sha256": "b8bb01dc617abbf706cb9aa7c0c52603fc52697d822131e0167bbc43e9dd87c1"
+      },
+      {
+        "accession": "0000320193-20-000096",
+        "bytes": 2467417,
+        "role": "primary",
+        "sha256": "feca4f722500cc1c881ce4a83af3255a428604261239600910bf95ddfbfabb05"
+      },
+      {
+        "accession": "0000320193-20-000096",
+        "bytes": 12502600,
+        "role": "submission",
+        "sha256": "79e20f91eb22d0e6de03159f2a3c4c0ebe5de632121384ccfcf01f463966482d"
+      },
+      {
+        "accession": "0001326801-20-000013",
+        "bytes": 23207,
+        "role": "header",
+        "sha256": "170a49d2215256e72b2b26cb5bfabb687418a035e5ad6e6785311debd9b518e2"
+      },
+      {
+        "accession": "0001326801-20-000013",
+        "bytes": 15575,
+        "role": "index",
+        "sha256": "c82ba4d3b20242442e13fb195b1e8298cc6021e1e6672bfb8efdf0e73baab515"
+      },
+      {
+        "accession": "0001326801-20-000013",
+        "bytes": 2004912,
+        "role": "instance",
+        "sha256": "f7ce97840a23ac7a54c71579478e55ec9c4467509713ab12e386badf4f4b4fd2"
+      },
+      {
+        "accession": "0001326801-20-000013",
+        "bytes": 3015333,
+        "role": "primary",
+        "sha256": "1b01418cfd02246365173f23cd2a092a94a66c3b1611f0ea89ee1de800ca1136"
+      },
+      {
+        "accession": "0001326801-20-000013",
+        "bytes": 12866813,
+        "role": "submission",
+        "sha256": "f8ff2c7f5c7339125c78625de91e2b676be198fb316eefd71f85bd7017025cd9"
+      }
+    ]
+  },
+  "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+  "per_surface_stops": "FR documentation302 retained; independent CT probes are predeclared, not an FR evasion",
+  "private_header_values_excluded": true,
+  "response_receipts": [
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 13533,
+        "path": "0000000000-00-000000/37fca11b19f1fdff8cb5a9e9d626ae0c64c9d1de1b39f8cd42805dddeceed753/body.bin",
+        "sha256": "37fca11b19f1fdff8cb5a9e9d626ae0c64c9d1de1b39f8cd42805dddeceed753"
+      },
+      "content_type": "text/html",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019319000119/0000320193-19-000119-index.htm",
+      "header_provenance": "SEC private identified User-Agent excluded; other requests generic; no contact/auth header values retained",
+      "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+      "purpose": "SEC_ACCESS",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T01:50:56.794769+00:00",
+      "response_headers": {
+        "content-length": "13533",
+        "content-type": "text/html",
+        "date": "Tue, 13 Oct 2026 01:51:11 GMT",
+        "last-modified": "Wed, 30 Oct 2019 22:12:36 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T01:50:56.949363+00:00",
+      "slot": null,
+      "status": 200,
+      "surface": "SEC",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019319000119/0000320193-19-000119-index.htm"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 80349,
+        "path": "0000000000-00-000000/9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0/body.bin",
+        "sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0"
+      },
+      "content_type": "text/html; charset=utf-8",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data",
+      "header_provenance": "SEC private identified User-Agent excluded; other requests generic; no contact/auth header values retained",
+      "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+      "purpose": "SEC_DOC",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T01:50:57.395007+00:00",
+      "response_headers": {
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 13 Oct 2026 01:51:11 GMT",
+        "last-modified": "Fri, 09 Oct 2026 20:53:05 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T01:50:57.533624+00:00",
+      "slot": null,
+      "status": 200,
+      "surface": "SEC",
+      "url": "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 4046,
+        "path": "0000000000-00-000000/7167f29dcd0a5d47dc09081d252429fc9b32fdfc81bfd22e31939f78dec248c4/body.bin",
+        "sha256": "7167f29dcd0a5d47dc09081d252429fc9b32fdfc81bfd22e31939f78dec248c4"
+      },
+      "content_type": "application/json; charset=utf-8",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.federalregister.gov/api/v1/documents.json?per_page=2&order=oldest&conditions%5Bpublication_date%5D%5Bis%5D=2019-01-02",
+      "header_provenance": "SEC private identified User-Agent excluded; other requests generic; no contact/auth header values retained",
+      "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+      "purpose": "FR_ACCESS",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T01:50:57.995196+00:00",
+      "response_headers": {
+        "content-length": "4046",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 13 Oct 2026 01:51:12 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T01:50:58.336866+00:00",
+      "slot": null,
+      "status": 200,
+      "surface": "FR",
+      "url": "https://www.federalregister.gov/api/v1/documents.json?per_page=2&order=oldest&conditions%5Bpublication_date%5D%5Bis%5D=2019-01-02"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 0,
+        "path": "0000000000-00-000000/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/body.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "content_type": null,
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://www.federalregister.gov/developers/documentation/api/v1",
+      "header_provenance": "SEC private identified User-Agent excluded; other requests generic; no contact/auth header values retained",
+      "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+      "purpose": "FR_DOC",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T01:50:58.595397+00:00",
+      "response_headers": {
+        "content-length": "0",
+        "date": "Tue, 13 Oct 2026 01:51:13 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T01:50:58.878074+00:00",
+      "slot": null,
+      "status": 302,
+      "surface": "FR",
+      "url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 8241,
+        "path": "0000000000-00-000000/932c78791d7098d6537af158f921748da7d3b6d93a8b02b4d549d5e18f19fca7/body.bin",
+        "sha256": "932c78791d7098d6537af158f921748da7d3b6d93a8b02b4d549d5e18f19fca7"
+      },
+      "content_type": "application/json",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://clinicaltrials.gov/api/v2/studies?pageSize=2&sort=LastUpdatePostDate%3Aasc&format=json&countTotal=true",
+      "header_provenance": "SEC private identified User-Agent excluded; other requests generic; no contact/auth header values retained",
+      "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+      "purpose": "CT_ACCESS",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T01:50:59.195571+00:00",
+      "response_headers": {
+        "content-type": "application/json",
+        "date": "Tue, 13 Oct 2026 01:51:13 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T01:50:59.762545+00:00",
+      "slot": null,
+      "status": 200,
+      "surface": "CT",
+      "url": "https://clinicaltrials.gov/api/v2/studies?pageSize=2&sort=LastUpdatePostDate%3Aasc&format=json&countTotal=true"
+    },
+    {
+      "attempt": 1,
+      "body": {
+        "bytes": 94247,
+        "path": "0000000000-00-000000/9eab3838b5e04819a83aea1524a6e80e92a3e69ba5e0caf5a2d861e75101ac1f/body.bin",
+        "sha256": "9eab3838b5e04819a83aea1524a6e80e92a3e69ba5e0caf5a2d861e75101ac1f"
+      },
+      "content_type": "text/html",
+      "decoding": "Original response bytes; no text interpretation yet",
+      "final_url": "https://clinicaltrials.gov/data-api/api",
+      "header_provenance": "SEC private identified User-Agent excluded; other requests generic; no contact/auth header values retained",
+      "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+      "purpose": "CT_DOC",
+      "request_headers": "IDENTIFIED_GENERIC_UA_NO_CONTACT_OR_CREDENTIAL",
+      "request_started_at_utc": "2026-10-13T01:50:59.796173+00:00",
+      "response_headers": {
+        "content-length": "94247",
+        "content-type": "text/html",
+        "date": "Tue, 13 Oct 2026 01:51:14 GMT",
+        "last-modified": "Tue, 06 Oct 2026 17:32:09 GMT"
+      },
+      "retrieved_at_utc": "2026-10-13T01:51:00.077339+00:00",
+      "slot": null,
+      "status": 200,
+      "surface": "CT",
+      "url": "https://clinicaltrials.gov/data-api/api"
+    }
+  ],
+  "retries": 0,
+  "sample_counts": {
+    "CT": {
+      "count_is_independent_N": false,
+      "fields": [
+        "protocolSection.identificationModule.nctId",
+        "protocolSection.statusModule",
+        "protocolSection.sponsorCollaboratorsModule.leadSponsor",
+        "protocolSection.sponsorCollaboratorsModule.collaborators"
+      ],
+      "first_post_dates": [
+        {
+          "date": "2000-08-04",
+          "type": "ESTIMATED"
+        },
+        {
+          "date": "2000-09-12",
+          "type": "ESTIMATED"
+        }
+      ],
+      "historical_versions_in_response": false,
+      "last_update_post_dates": [
+        {
+          "date": "2005-06-24",
+          "type": "ESTIMATED"
+        },
+        {
+          "date": "2005-06-24",
+          "type": "ESTIMATED"
+        }
+      ],
+      "overall_status": [
+        "COMPLETED",
+        "COMPLETED"
+      ],
+      "sample_is_census": false,
+      "sample_rows": 2,
+      "source_reported_count": 606601,
+      "source_sha256": "932c78791d7098d6537af158f921748da7d3b6d93a8b02b4d549d5e18f19fca7",
+      "study_ids": [
+        "NCT00006137",
+        "NCT00006275"
+      ]
+    },
+    "FR": {
+      "agency_ids": [
+        [
+          383
+        ],
+        [
+          262
+        ]
+      ],
+      "count_is_independent_N": false,
+      "document_numbers": [
+        "2018-27915",
+        "2018-28268"
+      ],
+      "official_pdf_links_present": true,
+      "publication_dates": [
+        "2019-01-02",
+        "2019-01-02"
+      ],
+      "publication_pdf_not_acquired": true,
+      "sample_is_census": false,
+      "sample_rows": 2,
+      "source_reported_count": 12,
+      "source_sha256": "7167f29dcd0a5d47dc09081d252429fc9b32fdfc81bfd22e31939f78dec248c4",
+      "types": [
+        "Notice",
+        "Notice"
+      ]
+    }
+  },
+  "starts": 6
+}

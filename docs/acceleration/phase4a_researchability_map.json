@@ -1,0 +1,562 @@
+{
+  "Phase4B_verdict": "KEEP_PHASE4B_LATER",
+  "acquisition_sha256": "024b6cee43183f3c8121ae366cc76186385946f9e1874ead12744510470d56c2",
+  "conditional_frontier": [
+    "FR"
+  ],
+  "date": "2026-10-13",
+  "family_screen": "COMPLETE_THREE_FAMILIES_EXHAUSTED",
+  "hard_gate_scope": "Planning-level plausible routes only; no complete census, historical public timestamp, security population or trading-readiness certificate.",
+  "interpretation_revision": {
+    "prior_review_sha256": "7dda931e044305a606e78eae5b580c32a0620057887d513f1d11247302298d2d",
+    "reason": "ClinicalTrials sample posting dates are explicitly ESTIMATED. Preserve source dates but do not classify historical public availability as observed date-only.",
+    "revised_at_utc": "2026-10-13T01:59:03.876400+00:00"
+  },
+  "manifest_sha256": "da5ac2fd79ffdcf77f725c79cf6185ed0aed3d37443f36a8812b884cd4e12fba",
+  "next_experiment": "NONE_SELECTED",
+  "not_ready": [
+    "CT"
+  ],
+  "performance_authorized": false,
+  "policy_activation": false,
+  "preferred_surfaces": [
+    "SEC"
+  ],
+  "recommendation": "SOURCE_FIRST_DIRECTION_READY",
+  "reusable_gap": "Versioned filing-denominator contract: daily-index enumeration plus original accession/amendment/PAC/removal/missingness receipts. Reuse archive/Store; no giant platform.",
+  "reviewed_at_utc": "2026-10-13T01:56:18.849335+00:00",
+  "samples": {
+    "CT": {
+      "count_is_independent_N": false,
+      "fields": [
+        "protocolSection.identificationModule.nctId",
+        "protocolSection.statusModule",
+        "protocolSection.sponsorCollaboratorsModule.leadSponsor",
+        "protocolSection.sponsorCollaboratorsModule.collaborators"
+      ],
+      "first_post_dates": [
+        {
+          "date": "2000-08-04",
+          "type": "ESTIMATED"
+        },
+        {
+          "date": "2000-09-12",
+          "type": "ESTIMATED"
+        }
+      ],
+      "historical_versions_in_response": false,
+      "last_update_post_dates": [
+        {
+          "date": "2005-06-24",
+          "type": "ESTIMATED"
+        },
+        {
+          "date": "2005-06-24",
+          "type": "ESTIMATED"
+        }
+      ],
+      "overall_status": [
+        "COMPLETED",
+        "COMPLETED"
+      ],
+      "sample_is_census": false,
+      "sample_rows": 2,
+      "source_reported_count": 606601,
+      "source_sha256": "932c78791d7098d6537af158f921748da7d3b6d93a8b02b4d549d5e18f19fca7",
+      "study_ids": [
+        "NCT00006137",
+        "NCT00006275"
+      ]
+    },
+    "FR": {
+      "agency_ids": [
+        [
+          383
+        ],
+        [
+          262
+        ]
+      ],
+      "count_is_independent_N": false,
+      "document_numbers": [
+        "2018-27915",
+        "2018-28268"
+      ],
+      "official_pdf_links_present": true,
+      "publication_dates": [
+        "2019-01-02",
+        "2019-01-02"
+      ],
+      "publication_pdf_not_acquired": true,
+      "sample_is_census": false,
+      "sample_rows": 2,
+      "source_reported_count": 12,
+      "source_sha256": "7167f29dcd0a5d47dc09081d252429fc9b32fdfc81bfd22e31939f78dec248c4",
+      "types": [
+        "Notice",
+        "Notice"
+      ]
+    }
+  },
+  "source_evidence": {
+    "CT_ACCESS": {
+      "HTTP": 200,
+      "bytes": 8241,
+      "source_sha256": "932c78791d7098d6537af158f921748da7d3b6d93a8b02b4d549d5e18f19fca7",
+      "url": "https://clinicaltrials.gov/api/v2/studies?pageSize=2&sort=LastUpdatePostDate%3Aasc&format=json&countTotal=true"
+    },
+    "CT_DOC": {
+      "HTTP": 200,
+      "bytes": 94247,
+      "source_sha256": "9eab3838b5e04819a83aea1524a6e80e92a3e69ba5e0caf5a2d861e75101ac1f",
+      "url": "https://clinicaltrials.gov/data-api/api"
+    },
+    "FR_ACCESS": {
+      "HTTP": 200,
+      "bytes": 4046,
+      "source_sha256": "7167f29dcd0a5d47dc09081d252429fc9b32fdfc81bfd22e31939f78dec248c4",
+      "url": "https://www.federalregister.gov/api/v1/documents.json?per_page=2&order=oldest&conditions%5Bpublication_date%5D%5Bis%5D=2019-01-02"
+    },
+    "FR_DOC": {
+      "HTTP": 302,
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    "SEC_ACCESS": {
+      "HTTP": 200,
+      "bytes": 13533,
+      "source_sha256": "37fca11b19f1fdff8cb5a9e9d626ae0c64c9d1de1b39f8cd42805dddeceed753",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019319000119/0000320193-19-000119-index.htm"
+    },
+    "SEC_DOC": {
+      "HTTP": 200,
+      "bytes": 80349,
+      "source_sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0",
+      "url": "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data"
+    },
+    "SEC_document_scope": {
+      "locators": {
+        "daily_removal_gap": [
+          {
+            "end": 6079,
+            "source_sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0",
+            "span_sha256": "335324d60596a0be324516b11ee23255dedc89b12179279933fb5a0a262411f2",
+            "start": 6012
+          }
+        ],
+        "index_fields": [
+          {
+            "end": 7371,
+            "source_sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0",
+            "span_sha256": "757fc13af7b752a4d3d71c21a4143b699140949fb44a5b627545ce3828e00c7a",
+            "start": 7304
+          }
+        ],
+        "index_history": [
+          {
+            "end": 6485,
+            "source_sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0",
+            "span_sha256": "5123374d83a4bb2f4a89de0453c7513b24fc3e93aa9e4b438cbd84edbc2df452",
+            "start": 6459
+          }
+        ],
+        "post_acceptance": [
+          {
+            "end": 5491,
+            "source_sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0",
+            "span_sha256": "3a81b7cc9794387984fd886bb8b3a4d52f5468de793bd81540f066d683c5a9b8",
+            "start": 5450
+          }
+        ],
+        "public_forms": [
+          {
+            "end": 3290,
+            "source_sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0",
+            "span_sha256": "295dc8ac79e265074f82b7a460214684103b3fb4c6710e0b619430eafe463df7",
+            "start": 3232
+          }
+        ],
+        "quarterly_revision": [
+          {
+            "end": 6134,
+            "source_sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0",
+            "span_sha256": "a85779f4f512ed29428eede5859e018baccfe283bce35ac4ef341ba6c1e1aa0d",
+            "start": 6085
+          }
+        ],
+        "ticker_warning": [
+          {
+            "end": 12316,
+            "source_sha256": "9a4d3cd9adde03aa7c0f071928f9420d17fa0e16bccb8f351f6c9ef2b57f15a0",
+            "span_sha256": "2600e45822ba181f1cf65bc96c3535740b4eafe23488da5fbcd91cce93f8128d",
+            "start": 12282
+          }
+        ]
+      },
+      "normalized_text_sha256": "e13a51fb3197acbc11b94071b3052451abeab185b94b6c4a6b555ff32bc6330d",
+      "transform": "HTML_visible_whitespace_v001"
+    },
+    "SEC_existing": {
+      "first_fixture_current_index_same_bytes": true,
+      "historical_acceptance_limit": "Phase3A winter representation certified; October ambiguity/public availability preserved",
+      "offline_replay_prior": "phase2_validation.json; rerun in final validation",
+      "original_documents_verified": 15,
+      "phase2_summary_sha256": "61207d3a0bc3a77f037009735e3fdc9e0b6065f77b6daa03eff5ab17b1bc0f45",
+      "source_documents": [
+        {
+          "accession": "0000320193-19-000119",
+          "bytes": 22705,
+          "role": "header",
+          "sha256": "dbe71a15080fabd573ff373207451da31aa49b804a91adc38003cbf5984ac6ec"
+        },
+        {
+          "accession": "0000320193-19-000119",
+          "bytes": 13533,
+          "role": "index",
+          "sha256": "37fca11b19f1fdff8cb5a9e9d626ae0c64c9d1de1b39f8cd42805dddeceed753"
+        },
+        {
+          "accession": "0000320193-19-000119",
+          "bytes": 2774010,
+          "role": "instance",
+          "sha256": "90cc42b5465d6bd93738c9b6b556e6d37de840423671cf82a3b81ff61dcd48e8"
+        },
+        {
+          "accession": "0000320193-19-000119",
+          "bytes": 2714207,
+          "role": "primary",
+          "sha256": "6673cc9b769fc50b2f7047ada3a5f1cf7e30ec5c53b0027cd6981c6d84e2d92b"
+        },
+        {
+          "accession": "0000320193-19-000119",
+          "bytes": 12861616,
+          "role": "submission",
+          "sha256": "c77a7ab405b61398dcbd7b0ecb98191b24c9519d9b18689c280c2ac7e4ebf4ab"
+        },
+        {
+          "accession": "0000320193-20-000096",
+          "bytes": 23302,
+          "role": "header",
+          "sha256": "d411a9778b1cb97243b44cdbf5cc3afda31261531137eff0a1aba03b1056f0e4"
+        },
+        {
+          "accession": "0000320193-20-000096",
+          "bytes": 13518,
+          "role": "index",
+          "sha256": "19cb22316566ea52708cdd3a97c88d172f708d51489bb85d11e1112cb09a4e81"
+        },
+        {
+          "accession": "0000320193-20-000096",
+          "bytes": 2405367,
+          "role": "instance",
+          "sha256": "b8bb01dc617abbf706cb9aa7c0c52603fc52697d822131e0167bbc43e9dd87c1"
+        },
+        {
+          "accession": "0000320193-20-000096",
+          "bytes": 2467417,
+          "role": "primary",
+          "sha256": "feca4f722500cc1c881ce4a83af3255a428604261239600910bf95ddfbfabb05"
+        },
+        {
+          "accession": "0000320193-20-000096",
+          "bytes": 12502600,
+          "role": "submission",
+          "sha256": "79e20f91eb22d0e6de03159f2a3c4c0ebe5de632121384ccfcf01f463966482d"
+        },
+        {
+          "accession": "0001326801-20-000013",
+          "bytes": 23207,
+          "role": "header",
+          "sha256": "170a49d2215256e72b2b26cb5bfabb687418a035e5ad6e6785311debd9b518e2"
+        },
+        {
+          "accession": "0001326801-20-000013",
+          "bytes": 15575,
+          "role": "index",
+          "sha256": "c82ba4d3b20242442e13fb195b1e8298cc6021e1e6672bfb8efdf0e73baab515"
+        },
+        {
+          "accession": "0001326801-20-000013",
+          "bytes": 2004912,
+          "role": "instance",
+          "sha256": "f7ce97840a23ac7a54c71579478e55ec9c4467509713ab12e386badf4f4b4fd2"
+        },
+        {
+          "accession": "0001326801-20-000013",
+          "bytes": 3015333,
+          "role": "primary",
+          "sha256": "1b01418cfd02246365173f23cd2a092a94a66c3b1611f0ea89ee1de800ca1136"
+        },
+        {
+          "accession": "0001326801-20-000013",
+          "bytes": 12866813,
+          "role": "submission",
+          "sha256": "f8ff2c7f5c7339125c78625de91e2b676be198fb316eefd71f85bd7017025cd9"
+        }
+      ]
+    }
+  },
+  "surfaces": [
+    {
+      "access_attempted": true,
+      "dimensions": {
+        "ACCESS_COST": {
+          "evidence": "SEC_DOC;probe registry",
+          "reason": "Official free public identified access; no purchase/upgrade. Account-wide debit unknown.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "DENOMINATOR": {
+          "evidence": "SEC_DOC public_forms,index_fields,index_history",
+          "reason": "Official company/form/master indexes enumerate all public filings by form/CIK/date/path. Filing-defined population is plausible without conditioning on performance/current listing. No complete date/type census or obligation-based missing-filing universe audited.",
+          "status": "PARTIAL"
+        },
+        "DEPENDENCE_GEOMETRY": {
+          "evidence": "SEC_DOC form index structure;prior source studies",
+          "reason": "Repeat issuer, amendments/multiple items, common reporting schedules and calendar/industry shocks; no independent count inferred.",
+          "status": "PARTIAL"
+        },
+        "ENTITY_IDENTIFIERS": {
+          "evidence": "SEC_ACCESS;SEC_DOC;SEC_existing",
+          "reason": "Accession and CIK/form/date/path available; CIK identifies filer and is not a traded security/class. Submission prefix may be agent.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "GRAPH_REUSE": {
+          "evidence": "SEC_ACCESS;SEC_DOC",
+          "reason": "Accession-to-filer-to-version/time lineage can later feed entity layer; no graph implemented.",
+          "status": "PARTIAL"
+        },
+        "HISTORICAL_DEPTH": {
+          "evidence": "SEC_ACCESS;SEC_existing;SEC_DOC index_history",
+          "reason": "Current2019 accession reproduced; original2019/2020 filings verified. Publisher documents public indexes from1994Q3; full coverage is not audited.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "POINT_IN_TIME": {
+          "evidence": "SEC_existing;SEC_DOC daily_removal_gap,quarterly_revision",
+          "reason": "Original accepted filing/header bytes support retrospective accession state with explicit unknown public time. A daily-index-plus-original/PAC/missingness contract is plausible; modern acquisition is not contemporaneous history and deleted originals may be unavailable. No as-of trading view activated.",
+          "status": "PARTIAL"
+        },
+        "RECORD_FREQUENCY": {
+          "evidence": "SEC_DOC index_history;phase3d_closure_report.md",
+          "reason": "All-public-filing indexes and prior89 originals/30 issuer frame support plausible repeated observations; neither index census nor effective independent N measured here.",
+          "status": "PARTIAL"
+        },
+        "RELATIONSHIPS": {
+          "evidence": "phase3a_identity.md;SEC_DOC ticker_warning",
+          "reason": "Existing issuer/cover observations support point links, not listing/class/economic-right spans. Name/ticker lists are not historical memberships.",
+          "status": "PARTIAL"
+        },
+        "REPRODUCIBILITY": {
+          "evidence": "SEC_existing;phase2_validation.json",
+          "reason": "15 original documents hash/length verified; existing parser/store offline reconciliation plus new immutable responses.",
+          "status": "PROVEN_FROM_EXISTING_EVIDENCE"
+        },
+        "REVISION_LINEAGE": {
+          "evidence": "SEC_DOC post_acceptance,quarterly_revision,daily_removal_gap",
+          "reason": "Publisher explicitly documents PAC/removals and rebuilt quarterly indexes. Need separate original/revision/withdrawal receipts and missing raw records; current quarterly index cannot serve as untouched historical vintage.",
+          "status": "PARTIAL"
+        },
+        "SOURCE_ACCESS": {
+          "evidence": "SEC_ACCESS;SEC_DOC;SEC_existing",
+          "reason": "Current fixed filing index and official documentation both200; same index bytes as Phase2.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "TERMINAL_LIFECYCLE_BURDEN": {
+          "evidence": "phase3d_closure_report.md;historical_execution.md",
+          "reason": "Filings do not intrinsically select acquired targets, but ended issuers/classes must remain. Complete terminal/NAV/execution evidence still missing.",
+          "status": "PARTIAL"
+        },
+        "TIMING": {
+          "evidence": "SEC_DOC;phase3a_report.md;inactive v002/v003 owner decisions",
+          "reason": "Acceptance and documented dissemination differ from first public accessibility; modeled conservative bound can be reviewed, never silently adopted. Ownership late dissemination differs by form.",
+          "status": "PARTIAL"
+        }
+      },
+      "hard_gates_plausible": true,
+      "id": "SEC",
+      "plausible_hard_gates": [
+        "DENOMINATOR",
+        "POINT_IN_TIME",
+        "RECORD_FREQUENCY"
+      ],
+      "timing": {
+        "capability": "MODELED_BOUND_PLAUSIBLE",
+        "policy_approved": false,
+        "trading_eligibility_activated": false
+      },
+      "trading_ready": false
+    },
+    {
+      "access_attempted": true,
+      "dimensions": {
+        "ACCESS_COST": {
+          "evidence": "FR_ACCESS",
+          "reason": "Unauthenticated official API worked, no purchase; terms/legal source status and scale access still need review.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "DENOMINATOR": {
+          "evidence": "FR_ACCESS;sample.FR",
+          "reason": "Source query advertises12 documents on2019-01-02; two neutral rows sampled without agency/company/outcome filters. Population includes notices/rules, not a certified corporate-event universe.",
+          "status": "PARTIAL"
+        },
+        "DEPENDENCE_GEOMETRY": {
+          "evidence": "sample.FR",
+          "reason": "Agency/rulemaking/docket/topic/calendar and multiple notices per programme can repeat; none quantified beyond sampled agencies.",
+          "status": "PARTIAL"
+        },
+        "ENTITY_IDENTIFIERS": {
+          "evidence": "sample.FR",
+          "reason": "Document numbers and agency IDs/URLs; no CIK or traded class proved.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "GRAPH_REUSE": {
+          "evidence": "sample.FR",
+          "reason": "Document/agency/docket/publication links could feed a later entity/time spine after evidence certification.",
+          "status": "PARTIAL"
+        },
+        "HISTORICAL_DEPTH": {
+          "evidence": "FR_ACCESS",
+          "reason": "Dated2019 publication records observed; broader historical extent not established by stopped documentation probe.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "POINT_IN_TIME": {
+          "evidence": "FR_ACCESS;FR_DOC",
+          "reason": "Current API exposes historical dates and official PDF links, but original legal-publication bytes, corrections/history and availability lineage not acquired.",
+          "status": "UNKNOWN"
+        },
+        "RECORD_FREQUENCY": {
+          "evidence": "sample.FR",
+          "reason": "Publisher count12 on one fixed day; types Notice/Notice. Not annual volume, corporate-linked count or independent N.",
+          "status": "PARTIAL"
+        },
+        "RELATIONSHIPS": {
+          "evidence": "sample.FR",
+          "reason": "Sector/application notice can concern businesses; agency IDs are not issuers and corporate bridges untested.",
+          "status": "UNKNOWN"
+        },
+        "REPRODUCIBILITY": {
+          "evidence": "FR_ACCESS;FR_DOC",
+          "reason": "Current original JSON and empty redirect body/receipts archived; source historic versions not certified.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "REVISION_LINEAGE": {
+          "evidence": "FR_DOC;FR_ACCESS",
+          "reason": "Amendment/correction linkage and API revision provenance not established; documentation route stopped on302.",
+          "status": "UNKNOWN"
+        },
+        "SOURCE_ACCESS": {
+          "evidence": "FR_ACCESS;FR_DOC",
+          "reason": "Exact historical publication-day API returned200 with schema-valid two-row first page; documentation302 was not followed.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "TERMINAL_LIFECYCLE_BURDEN": {
+          "evidence": "sample.FR",
+          "reason": "No security-linked population acquired; generic publication surface not automatically terminal-safe.",
+          "status": "UNKNOWN"
+        },
+        "TIMING": {
+          "evidence": "sample.FR",
+          "reason": "Publication dates observed; public-inspection URL parameter is not certified first-public UTC. No timing policy approved.",
+          "status": "PARTIAL"
+        }
+      },
+      "hard_gates_plausible": false,
+      "id": "FR",
+      "plausible_hard_gates": [
+        "DENOMINATOR",
+        "RECORD_FREQUENCY"
+      ],
+      "timing": {
+        "capability": "OBSERVED_DATE_ONLY",
+        "policy_approved": false,
+        "trading_eligibility_activated": false
+      },
+      "trading_ready": false
+    },
+    {
+      "access_attempted": true,
+      "dimensions": {
+        "ACCESS_COST": {
+          "evidence": "CT_ACCESS",
+          "reason": "Official unauthenticated API served tiny query; no purchase/upgrade. Scale and other usage unobserved.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "DENOMINATOR": {
+          "evidence": "sample.CT",
+          "reason": "Unfiltered current registry query; source count606601, two COMPLETED samples selected by update order not outcome. Does not certify all conducted trials, registration compliance or historical enrolment/risk set.",
+          "status": "PARTIAL"
+        },
+        "DEPENDENCE_GEOMETRY": {
+          "evidence": "sample.CT",
+          "reason": "Repeat sponsor/intervention/programme/condition and phase/date cohorts; current registry updates can repeat studies.",
+          "status": "PARTIAL"
+        },
+        "ENTITY_IDENTIFIERS": {
+          "evidence": "sample.CT",
+          "reason": "NCT stable study IDs, sponsor/collaborator fields; no historical issuer/security/economic-right bridge certified.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "GRAPH_REUSE": {
+          "evidence": "sample.CT",
+          "reason": "Study/sponsor/collaborator/intervention/version links could be valuable later, after PIT version route proof.",
+          "status": "PARTIAL"
+        },
+        "HISTORICAL_DEPTH": {
+          "evidence": "sample.CT",
+          "reason": "Sample first-post fields2000 and last-update2005, both ESTIMATED. Old current records do not establish historical versions.",
+          "status": "PARTIAL"
+        },
+        "POINT_IN_TIME": {
+          "evidence": "sample.CT;CT_DOC",
+          "reason": "Probed endpoint returns current study modules, no prior versions. First/last dates cannot reconstruct prior sponsor/status/content. Other official history routes remain untested.",
+          "status": "BLOCKED"
+        },
+        "RECORD_FREQUENCY": {
+          "evidence": "sample.CT",
+          "reason": "Source advertises606601 current studies, not corporate-linked events, eligible observations or independent N.",
+          "status": "PARTIAL"
+        },
+        "RELATIONSHIPS": {
+          "evidence": "sample.CT",
+          "reason": "Sponsor/collaborator fields provide candidates only, not public-company ownership, license or historical rights.",
+          "status": "PARTIAL"
+        },
+        "REPRODUCIBILITY": {
+          "evidence": "CT_ACCESS;CT_DOC",
+          "reason": "This current response and documentation-shell bytes archived; does not recover past study versions.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "REVISION_LINEAGE": {
+          "evidence": "CT_ACCESS;CT_DOC",
+          "reason": "Current first/last submission/posting dates without version bodies do not replay modifications; JS documentation shell supplies no contrary evidence.",
+          "status": "BLOCKED"
+        },
+        "SOURCE_ACCESS": {
+          "evidence": "CT_ACCESS;CT_DOC",
+          "reason": "Neutral two-study API page200; documentation200 serves a JS shell, not substantive offline documentation.",
+          "status": "PASS_BOUNDED_PROBE"
+        },
+        "TERMINAL_LIFECYCLE_BURDEN": {
+          "evidence": "sample.CT",
+          "reason": "No security population acquired; sponsor changes and licensing require later dated bridges.",
+          "status": "UNKNOWN"
+        },
+        "TIMING": {
+          "evidence": "sample.CT",
+          "reason": "Posted-date structs are date-only and sample dates explicitly ESTIMATED; no observed public intraday instant.",
+          "status": "PARTIAL"
+        }
+      },
+      "hard_gates_plausible": false,
+      "id": "CT",
+      "plausible_hard_gates": [],
+      "timing": {
+        "capability": "PRESENT_DAY_DATABASE_ONLY",
+        "policy_approved": false,
+        "trading_eligibility_activated": false
+      },
+      "trading_ready": false
+    }
+  ],
+  "version": "SourceResearchabilityContract_v001"
+}
