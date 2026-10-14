@@ -5,7 +5,7 @@
 
 **A Python research-engineering project investigating whether economically motivated investment ideas survive realistic costs and independent testing.** It combines public-source data pipelines, point-in-time controls, statistical analysis and reproducible backtesting. AI helps with interpretation and engineering; deterministic code governs evidence and experiment boundaries.
 
-One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study has complete price enrichment but remains blocked by missing execution-session prices. **No profitable strategy or validated paper/live system has been established.**
+One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study has complete price enrichment but remains blocked at execution-evidence certification. **No profitable strategy or validated paper/live system has been established.**
 
 ### Six key highlights
 
@@ -16,7 +16,7 @@ One investment study is complete, reusable research infrastructure is built, and
 - **Execution and integration engineering:** a Decimal reference ledger tests fees, cash flows and corporate actions on synthetic fixtures. Nexus historical-universe pruning was detected and remains an execution blocker.
 - **Reproducible software delivery:** automated public CI, regression tests, versioned contracts and generated reports/figures from canonical results. Public software checks are separate from private-source and real-market certification.
 
-**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current momentum execution-input audit](docs/acceleration/exp004_frozen_enrichment_report.md) or [implementation boundaries](#architecture-and-implementation-status).
+**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current momentum execution-evidence audit](docs/acceleration/exp004_execution_gap_report.md) or [implementation boundaries](#architecture-and-implementation-status).
 
 ## Vision, progress and next steps
 
@@ -25,7 +25,7 @@ The long-term goal is a small, auditable research platform that turns economic h
 | Step | Progress and next requirement |
 | --- | --- |
 | Build the evidence foundation | Bounded source archives, offline reconciliation, experiment controls and synthetic execution tests are implemented. Complete historical identity, lifecycle and execution certification remain open. |
-| Test one economic mechanism | The SPY timing study is complete. Revenue, SEC Item 2.02 and congressional-purchase candidates closed before performance at inference/source gates. Frozen momentum inputs passed numeric QA; same-source OPEN enrichment now preserves all frozen price rows, but 26 required monthly execution prices are unavailable. No new strategy performance exists. |
+| Test one economic mechanism | The SPY timing study is complete. Revenue, SEC Item 2.02 and congressional-purchase candidates closed before performance at inference/source gates. Frozen momentum inputs passed numeric QA; same-source OPEN enrichment preserves all frozen rows; a bounded 26-gap forensic pass found raw daily candidates but could not certify complete execution evidence. No new strategy performance exists. |
 | Establish independent investment evidence | Future work requires certified populations, matched benchmarks, realistic costs and calibrated inference before any new performance access. The next candidate is not registered or frozen. |
 | Earn portfolio and forward capabilities | Risk-aware construction, optional evidence-linked relationship/causal tools and separately authorized forward paper observation are later milestones, conditional on surviving evidence. |
 
@@ -140,7 +140,7 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**EXP004 frozen-row enrichment is complete; required execution OPENs remain missing.** The [price bridge and execution audit](docs/acceleration/exp004_frozen_enrichment_report.md) resolves VPG namespace drift without rewriting frozen IDs. All 28 quarters reconcile: 7,871,192 enriched rows, zero exact CLOSE mismatches and zero ambiguous price keys. Of 273,115 frozen monthly security/session pairs, 273,089 have positive finite OPENs and 26 have no source OHLC row. SPY has 1,511 source sessions; dividend/terminal certification and performance were deferred at the missing-OPEN gate. No v004 PASS exists; all 24 folds/six replays remain NOT_RUN, Validation/Test accesses 0. Earlier reports and economics remain unchanged; Nexus execution stays blocked.
+**EXP004 execution-gap investigation stopped with unresolved evidence; no-fill remains inactive.** The [26-case forensic report](docs/acceleration/exp004_execution_gap_report.md) preserves complete 28-quarter price enrichment and all frozen identities. Independent requests returned 17 raw daily bar candidates, including 16 with two-sided scale agreement; none meets the complete historical provider-class/session-opening certificate. Nine cases have no recovered exact-date bar from that route; TWMC remains unresolved. All 26 remain represented. No no-trading certificate, amendment receipt or V002 engine exists; all folds/replays/performance remain NOT_RUN, Validation/Test0. This source result is not an economic verdict.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |

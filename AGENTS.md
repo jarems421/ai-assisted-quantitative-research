@@ -1,5 +1,12 @@
 # Repository instructions
 
+## EXP004 bounded 26-gap forensic closure (2026-10-14)
+
+- `docs/acceleration/owner_exp004_execution_gaps_2026-10-14.md` authorized only the exact 26-case investigation and conditional pre-performance no-fill amendment. Policy/inventory were pushed before sources; the 40-submission ceiling counts new retrievals/submissions, with Lake polls/downloads separate. Preserve all previous freeze, enrichment, V001 ledger and source stops unchanged.
+- `exp004_execution_gap_report.md` records EXECUTION_GAPS_UNRESOLVED:17 raw daily candidates/16 two-sided scale screens,9 no exact alternative bar. All26 remain UNRESOLVED_VENDOR_GAP under the full dated provider-class/compatible opening-convention standard. Zero certified no-trading, interruptions or recovered execution bars. TWMC404 and issuer deficiency letter do not prove an August3 halt. No current-symbol projection, interpolated prices, stock deletion or EW pruning.
+- 36 scientific submissions were used; 4 remain unspent. One separately recorded exchange date-format correction counts as a new request; no automatic retries. Search off-scope snippets are quarantined/unopened/unused. final_stop.json prohibits further scientific submissions. No policy activation or amendment receipt; V002 not created because the all-case gate failed. Never weaken V001 or use missing vendor rows as no-fill evidence.
+- Pending cash/sell/buy/supersession/fee/split/terminal/stale-mark semantics remain frozen planning only. No dividend work, broader terminal audit, v004, folds/replays/metrics, Validation/Test, new experiment, Nexus/Aurora, optimizer, Phase4B or paper/live follows. EXP005/006/007 remain closed; prior59 ceiling/19 reserves unchanged. Any further source or executable remedy needs a separate owner instruction.
+
 ## EXP004 VPG bridge and complete enrichment stop (2026-10-14)
 
 - `docs/acceleration/owner_exp004_vpg_bridge_2026-10-14.md` authorized one bounded VPG identity review and conditional price-only enrichment/local Development. Current VPG matches frozen CIK/CS/share-class FIGI/span; the distinct nonoverlapping VSHw base-ID collision establishes VPG_SAME_SECURITY_NAMESPACE_DRIFT. Preserve old IDs, previous exact-key stop, source evidence and economic freeze. No broad alias rule or current-symbol substitution.

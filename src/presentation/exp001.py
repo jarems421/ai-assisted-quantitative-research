@@ -128,6 +128,9 @@ def readme(manifest: dict, result: dict, registry=None) -> str:
     enrichment_validation = root / "docs/acceleration/exp004_frozen_enrichment_validation.json"
     if enrichment_validation.exists():
         validation = enrichment_validation
+    gap_validation = root / "docs/acceleration/exp004_execution_gap_validation.json"
+    if gap_validation.exists():
+        validation = gap_validation
     if validation.exists():
         receipt = json.loads(validation.read_bytes())
         checks = (f"Latest milestone validation: **{receipt['local_tests_passed']} local tests, "

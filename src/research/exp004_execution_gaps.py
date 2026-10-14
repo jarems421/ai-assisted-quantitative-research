@@ -9,6 +9,17 @@ RECOVERY=('security_identity_verified','exact_date_verified','actual_session_bar
           'provenance_archived','positive_prices')
 
 
+def request_room(records,category,key,allocation,ceiling=40):
+    return (category in allocation and len(records)<ceiling
+            and sum(r['category']==category for r in records)<allocation[category]
+            and not any(r['key']==key for r in records))
+
+
+def price_scope(rows,start,end):
+    if not '2015-01-02'<=start<=end<='2020-12-31':raise ValueError('Sealed/outside case date bound')
+    if any(not start<=r.get('date','')[:10]<=end for r in rows):raise ValueError('Out-of-case/held-out provider row')
+
+
 def classify(evidence):
     if evidence.get('positive_identity_or_unit_conflict'):return VERDICTS[4]
     if all(evidence.get(k) is True for k in RECOVERY):return VERDICTS[0]
