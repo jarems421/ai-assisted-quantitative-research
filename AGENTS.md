@@ -1,5 +1,12 @@
 # Repository instructions
 
+## EXP004 VPG bridge and complete enrichment stop (2026-10-14)
+
+- `docs/acceleration/owner_exp004_vpg_bridge_2026-10-14.md` authorized one bounded VPG identity review and conditional price-only enrichment/local Development. Current VPG matches frozen CIK/CS/share-class FIGI/span; the distinct nonoverlapping VSHw base-ID collision establishes VPG_SAME_SECURITY_NAMESPACE_DRIFT. Preserve old IDs, previous exact-key stop, source evidence and economic freeze. No broad alias rule or current-symbol substitution.
+- `exp004_frozen_price_bridge_v001.json` is PASS_SOURCE_BRIDGE_ONLY, pushed before 27 remaining price-only queries. All 7,871,192 frozen rows retain IDs/CLOSE and have unique ticker/day matches and positive finite OPEN fields. Current security_segments never re-identifies the enriched population. Preserve source extras separately; they are outside candidate/EW rows.
+- `exp004_frozen_enrichment_report.md` records LOCAL_EXECUTION_INPUTS_BLOCKED / REQUIRED_EXECUTION_OPEN_ROWS_MISSING: 273,089 of 273,115 monthly required pairs have positive finite OPENs; 26 required ticker/days have no OHLC row even in full source responses. Earliest SGOC/EW2015-09-01. Never impute CLOSE/adjacent prices, prune targets or treat this as economic falsification. Persisted execution_input_stop prohibits further acquisition.
+- SPY has 1,511 separate ETF source sessions. Cash-dividend accounting, raw-share price units and actual-held terminal paths remain uncertified/deferred. No v004 PASS, actual positions, metrics or new trials; all 24 folds/six replays NOT_RUN, Validation/Test0, prior59 ceiling/19 reserves unchanged. EXP005/006/007 stay closed. No further source rescue, vendor, experiment, Phase4B, optimizer or paper/live continuation follows automatically.
+
 ## EXP004 supplemental same-source reconciliation stop (2026-10-14)
 
 - `docs/acceleration/owner_exp004_supplement_2026-10-14.md` authorized only frozen same-source execution-field acquisition and conditional local Development. Preserve all earlier source parts, economic freezes, engine code and local reports; the global remote pause remains intact.

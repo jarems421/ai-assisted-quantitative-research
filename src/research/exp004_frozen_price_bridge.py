@@ -10,6 +10,19 @@ OUT=ROOT/'data/raw/EXP004/frozen_price_bridge_v001'
 CERT=DOCS/'exp004_frozen_price_bridge_v001.json'
 
 
+def execution_open_coverage(required,enriched):
+    """Source-row enrichment does not imply that every required session exists."""
+    import duckdb
+    db=duckdb.connect();db.register('required',required);db.register('enriched',enriched)
+    q='FROM required r LEFT JOIN enriched e ON r.security_id=e.security_id AND r.ticker=e.ticker AND CAST(r.day AS DATE)=e.day'
+    n=db.execute('SELECT COUNT(*) FROM required').fetchone()[0]
+    missing=db.execute('SELECT COUNT(*) '+q+' WHERE e.security_id IS NULL OR e.openingPrice IS NULL').fetchone()[0]
+    valid=db.execute('SELECT COUNT(*) '+q+' WHERE isfinite(e.openingPrice) AND e.openingPrice>0').fetchone()[0]
+    db.close()
+    return {'required':n,'valid':valid,'missing':missing,'invalid':n-missing-valid,
+            'status':'PASS_OPEN_FIELD_COVERAGE_ONLY' if valid==n else 'LOCAL_EXECUTION_INPUTS_BLOCKED'}
+
+
 def enrich(frozen,source):
     import duckdb
     db=duckdb.connect();db.register('frozen',frozen);db.register('source',source)

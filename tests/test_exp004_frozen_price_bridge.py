@@ -29,3 +29,10 @@ class FrozenPriceBridgeTests(unittest.TestCase):
             query=row['request']['query'].lower()
             self.assertNotIn('security_segments',query);self.assertNotIn('security_id',query)
             self.assertTrue('2013-12-31'<=row['request']['params'][0]<=row['request']['params'][1]<='2020-12-31')
+    def test_all_frozen_rows_enriched_does_not_imply_execution_day_exists(self):
+        from src.research.exp004_frozen_price_bridge import execution_open_coverage
+        f,s=self.frames();q,enriched=enrich(f,s)
+        self.assertEqual(q['status'],'PASS_FROZEN_PRICE_ENRICHMENT')
+        required=f.select(['ticker','day','security_id']).set_column(1,'day',pa.array([date(2014,1,3)]))
+        coverage=execution_open_coverage(required,enriched)
+        self.assertEqual(coverage['missing'],1);self.assertEqual(coverage['status'],'LOCAL_EXECUTION_INPUTS_BLOCKED')

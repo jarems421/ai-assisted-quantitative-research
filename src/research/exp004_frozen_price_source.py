@@ -13,7 +13,7 @@ OUT=ROOT/'data/raw/EXP004/frozen_price_bridge_v001/prices'
 def acquire(name):
     verify_freeze();require_published(PLAN)
     plan=json.loads(PLAN.read_bytes());record=next(r for r in plan['requests'] if r['name']==name);request=record['request'];base=OUT;directory=base/name;directory.mkdir(parents=True,exist_ok=True)
-    if (base/'reconciliation_stop.json').exists():raise ValueError('Price enrichment stopped; no continuation')
+    if (base/'reconciliation_stop.json').exists() or (base.parent/'execution_input_stop.json').exists():raise ValueError('Price enrichment/execution input stopped; no continuation')
     cert=ROOT/'docs/acceleration/exp004_frozen_price_bridge_v001.json';require_published(cert)
     if hashlib.sha256(cert.read_bytes()).hexdigest()!=plan['bridge_sha256']:raise ValueError('Source bridge changed')
     return acquire_in(directory,request)
