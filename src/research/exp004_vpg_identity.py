@@ -16,12 +16,14 @@ def verdict(frozen,current):
     result['same_common_class']=a.get('asset_type')==b.get('asset_type')=='CS' and bool(a.get('share_class_figi')) and a['share_class_figi']==b.get('share_class_figi')
     result['same_historical_span']=all(a.get(k)==b.get(k) for k in ('from_date','to_date'))
     competing=[r for r in current if r.get('security_id')==OLD_ID]
-    # Require a separate nonoverlapping when-issued predecessor sharing issuer
-    # and class, not merely a suffix resembling an alias.
-    collision=[r for r in competing if r.get('ticker')=='VSHw' and r.get('cik')==a.get('cik')
-               and r.get('asset_type')=='CS' and r.get('share_class_figi')==a.get('share_class_figi')
+    # A namespace collision is evidenced by an independently distinguished,
+    # nonoverlapping old base-ID row, not by requiring it to be the same class.
+    collision=[r for r in competing if r.get('ticker')=='VSHw' and r.get('cik') and r.get('cik')!=a.get('cik')
+               and r.get('asset_type')=='CS'
                and r.get('to_date') and r['to_date']<a['from_date']]
-    result['no_competing_class']=len(competing)==len(collision)==1
+    overlaps=[r for r in current if r.get('ticker')!='VPG' and r.get('security_id') in (OLD_ID,NEW_ID)
+              and r.get('from_date')<=a['to_date'] and (not r.get('to_date') or r['to_date']>=a['from_date'])]
+    result['no_competing_class']=len(competing)==len(collision)==1 and not overlaps
     result['namespace_collision_evidenced']=a.get('security_id')==OLD_ID and b.get('security_id')==NEW_ID and bool(collision)
     if all(result[k] for k in result if k!='verdict'):result['verdict']='VPG_SAME_SECURITY_NAMESPACE_DRIFT'
     elif not result['same_issuer'] or not result['same_common_class'] or not result['no_competing_class']:
