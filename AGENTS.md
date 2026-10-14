@@ -1,5 +1,12 @@
 # Repository instructions
 
+## EXP004 local-only execution input stop (2026-10-14)
+
+- `docs/acceleration/owner_exp004_local_execution_2026-10-14.md` supersedes earlier EXP004 pause instructions only for this bounded local certification attempt and conditional Development. Nexus/Aurora and all 2021+ observations remain prohibited; the existing remote operational pause stays unchanged.
+- `exp004_local_execution_report.md` records LOCAL_EXECUTION_BLOCKED / LOCAL_EXECUTION_OPEN_PRICES_BLOCKED: all 28 frozen price parts contain ticker/day/security_id/unadjustedClose only, with no execution OPENs. All 72 panels and 273,115 source security-decisions reconcile; this is not local executable-population certification. No close-as-open, new provider, source lookup or population pruning is authorized.
+- The new EXP004_LOCAL_REFERENCE_V001 is a separate fixture-tested Decimal ledger prototype; the original EXP999 synthetic engine and guards remain unchanged. A failed certificate cannot activate real execution or metrics. Cash-dividend/payment and terminal economics are not present in the authorized extract; actual held-action counts remain unmeasured because no position opened.
+- All 24 folds/six full replays, selection and robustness remain NOT_RUN; no new trial or evaluation consumed the existing 59 ceiling/19 remaining failure reserves. Validation/Test accesses 0. Preserve EXP004 economic freeze v001/v002, QA, Nexus failure, original Development report, all raw/processed baselines and policies. EXP005/EXP006/EXP007 remain closed; no EXP008, source search, Phase 4B, optimizer or paper/live continuation.
+
 ## Final EXP007 House-only source closure (2026-10-13)
 
 - `docs/acceleration/owner_exp007_house_repair_2026-10-13.md` authorized one final pre-performance House-only revision using exactly the existing 61 House observations, with local OCR for the 34 unresolved observations. Preserve the original 96-row House/Senate sample, reports, snapshot/schema receipts, original PDFs/projections and Senate 403; never retry/bypass Senate access.

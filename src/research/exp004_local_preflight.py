@@ -10,7 +10,7 @@ from src.research.exp004_local_execution import ENGINE,schema_gate,exact_populat
 DOCS=ROOT/'docs/acceleration'
 RAW=ROOT/'data/raw/EXP004/production_inputs_v001'
 OUT=ROOT/'data/raw/EXP004/local_execution_v001'
-CERT=DOCS/'exp004_local_execution_certificate_v002.json'
+CERT=DOCS/'exp004_local_execution_certificate_v003.json'
 
 
 def hashed(path):return {'path':path.relative_to(ROOT).as_posix(),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
@@ -74,7 +74,7 @@ def build():
     put(OUT/'blocked_target_inventory.json',target_value)
     prior=json.loads((ROOT/'experiments/EXP004/research/publication_runtime_audit.json').read_bytes())
     from src.research.exp004_inputs import bar_request
-    value={'version':2,'engine':ENGINE,'engine_sha256':hashed(ROOT/'src/research/exp004_local_execution.py')['sha256'],
+    value={'version':3,'engine':ENGINE,'engine_sha256':hashed(ROOT/'src/research/exp004_local_execution.py')['sha256'],
         'status':'LOCAL_EXECUTION_BLOCKED','specific_blocker':'LOCAL_EXECUTION_OPEN_PRICES_BLOCKED',
         'specification_sha256':f['frozen_specification_sha256'],'methodology_sha256':f['frozen_methodology_sha256'],
         'frozen_receipt':hashed(ROOT/'experiments/EXP004/freeze_versions/v002/receipt.json'),
@@ -100,16 +100,17 @@ def build():
         'validation_accesses':0,'test_accesses':0,'new_source_requests':0,'Nexus_calls':0,'Aurora_calls':0,
         'owner_authority':hashed(DOCS/'owner_exp004_local_execution_2026-10-14.md'),
         'initial_preflight_receipt':hashed(DOCS/'exp004_local_execution_certificate_v001.json'),
-        'version_reason':'Add an explicit core-ledger certified-entry guard; initial failed input receipt and prototype retained, no data or economic change'}
+        'previous_preflight_receipt':hashed(DOCS/'exp004_local_execution_certificate_v002.json'),
+        'version_reason':'Preserve the frozen explicit SPY ETF benchmark separately from CS candidates/EW; prior failed receipts/prototypes retained, no data or economic change'}
     put(CERT,value);return value
 
 
 def report(check=False):
-    c=json.loads(CERT.read_bytes());vpath=DOCS/'exp004_local_validation.json';v=json.loads(vpath.read_bytes()) if vpath.exists() else {}
+    c=json.loads(CERT.read_bytes());vpath=DOCS/'exp004_local_validation_v002.json';v=json.loads(vpath.read_bytes()) if vpath.exists() else {}
     examples='\n'.join(f"| {r['cell']} | {r['first_intended_target_ticker']} | `{r['stable_security_id']}` | {r['session']} |" for r in c['first_intended_target_examples'])
     text=f'''# EXP004 local execution: frozen input boundary stop
 
-**LOCAL_EXECUTION_BLOCKED — LOCAL_EXECUTION_OPEN_PRICES_BLOCKED. Hypothesis untested.** Starting HEAD `34c5b7595ddd30bc67627c4d61638a91a62e4efd`, as of 2026-10-14. [Owner instruction](owner_exp004_local_execution_2026-10-14.md) authorizes local-only Development after a passing, pushed pre-performance certificate. [This certificate](exp004_local_execution_certificate_v002.json) records a failed input gate, not permission to calculate performance. The initial failed preflight receipt and engine prototype are retained separately; version 2 adds an explicit core-ledger entry guard without changing inputs or economics.
+**LOCAL_EXECUTION_BLOCKED — LOCAL_EXECUTION_OPEN_PRICES_BLOCKED. Hypothesis untested.** Starting HEAD `34c5b7595ddd30bc67627c4d61638a91a62e4efd`, as of 2026-10-14. [Owner instruction](owner_exp004_local_execution_2026-10-14.md) authorizes local-only Development after a passing, pushed pre-performance certificate. [This certificate](exp004_local_execution_certificate_v003.json) records a failed input gate, not permission to calculate performance. Earlier failed receipts/prototypes are retained: version 2 adds the core-ledger entry guard; version 3 keeps SPY's explicit ETF binding separate from the candidates/EW CS population. Neither changes inputs or economics.
 
 ## Concrete blocker
 
@@ -141,7 +142,7 @@ All **24 scored-fold evaluations and six full-Development replays are NOT_RUN**.
 
 **Validation accesses 0; Test accesses 0; new scientific source requests 0; Nexus/Aurora 0.** Only frozen Development/warmup dates were decoded; real price values were not analyzed. EXP005/EXP006/EXP007 remain closed and absent where previously absent; no EXP008, source discovery, Phase 4B, optimizer or paper/live operation occurred. Dependency pins and unrelated user files are preserved.
 
-Validation: **{v.get('local_tests_passed','pending')} local tests, {v.get('public_tests_passed','pending')} public tests, {v.get('tests_skipped','pending')} skipped**. [Validation receipt](exp004_local_validation.json). Public report checks need tracked receipts only; private source audit needs the unchanged EXP004 parts/panels and inherited identity snapshot.
+Validation: **{v.get('local_tests_passed','pending')} local tests, {v.get('public_tests_passed','pending')} public tests, {v.get('tests_skipped','pending')} skipped**. [Validation receipt](exp004_local_validation_v002.json). Public report checks need tracked receipts only; private source audit needs the unchanged EXP004 parts/panels and inherited identity snapshot.
 
 ```sh
 python -m src.research.exp004_local_preflight --check

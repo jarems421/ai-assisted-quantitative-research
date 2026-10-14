@@ -5,7 +5,7 @@
 
 **A Python research-engineering project investigating whether economically motivated investment ideas survive realistic costs and independent testing.** It combines public-source data pipelines, point-in-time controls, statistical analysis and reproducible backtesting. AI helps with interpretation and engineering; deterministic code governs evidence and experiment boundaries.
 
-One investment study is complete, reusable research infrastructure is built, and the latest predictive candidate was abandoned after a bounded source-validation repair. **No profitable strategy or validated paper/live system has been established.**
+One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study is now blocked at local execution inputs. **No profitable strategy or validated paper/live system has been established.**
 
 ### Six key highlights
 
@@ -16,7 +16,7 @@ One investment study is complete, reusable research infrastructure is built, and
 - **Execution and integration engineering:** a Decimal reference ledger tests fees, cash flows and corporate actions on synthetic fixtures. Nexus historical-universe pruning was detected and remains an execution blocker.
 - **Reproducible software delivery:** automated public CI, regression tests, versioned contracts and generated reports/figures from canonical results. Public software checks are separate from private-source and real-market certification.
 
-**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [final House source review](docs/acceleration/exp007_house_repair_report.md) or [implementation boundaries](#architecture-and-implementation-status).
+**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current local momentum execution review](docs/acceleration/exp004_local_execution_report.md) or [implementation boundaries](#architecture-and-implementation-status).
 
 ## Vision, progress and next steps
 
@@ -140,11 +140,11 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**EXP007 closed after the final House-only source repair; hypothesis untested.** The [latest report](docs/acceleration/exp007_house_repair_report.md) retains all 61 frozen House observations: 28 have decisive original type/date/asset validation, below the unchanged 55-row requirement; 33 remain unresolved after local OCR of 34 observations. The Senate 403 and earlier House/Senate report remain preserved. No provider/path certification, inference/power, experiment registration/freeze or Development occurred. Performance evaluations and confirmation outcome accesses remain 0; no further source rescue is authorized. EXP004 stays paused and EXP005/EXP006 abandoned/absent.
+**EXP004 local execution stopped at missing OPEN-price inputs; hypothesis untested.** The [local route report](docs/acceleration/exp004_local_execution_report.md) verifies all 28 frozen close-only price extracts and 72 monthly panels. The separate Decimal ledger passes synthetic fixtures, but none of the downloaded price parts contains execution OPENs. No close substitution, survivor pruning, source acquisition or performance occurred. All 24 fold evaluations and six full replays remain NOT_RUN; Validation/Test accesses are 0. Nexus stays blocked; EXP005/EXP006/EXP007 remain closed.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
-| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | EXP006 and EXP007 source-feasibility candidates closed; no new performance or automatic next phase |
+| **4A** | Next experiment discovery, cheap feasibility and eventual freeze | EXP006/EXP007 closed; EXP004 local route blocked at missing execution inputs; no new performance |
 | 4B | Temporal Corporate Reality Graph pilot | Separate milestone; primary evidence, dated relationships and uncertainty |
 | 4C | First causal/counterfactual event experiment | Credible identification, controls, pre-trends and placebos; causal labels must be earned |
 | 5 | Portfolio/risk, uncertainty/abstention and research value-of-information | Requires surviving evidence and a reviewed cost/risk contract |

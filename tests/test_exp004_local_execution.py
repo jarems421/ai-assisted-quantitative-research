@@ -5,7 +5,7 @@ from src.research.exp004_local_execution import LocalEXP004Adapter,targets,exact
 
 def fixture(cell='EW'):
     ids=['A','B'] if cell!='SPY' else ['SPY-ID']
-    bindings=[{'security_id':s,'ticker':s,'asset_type':'CS','source_sha256':'fake'} for s in ids]
+    bindings=[{'security_id':s,'ticker':'SPY' if cell=='SPY' else s,'asset_type':'ETF' if cell=='SPY' else 'CS','source_sha256':'fake'} for s in ids]
     return {'experiment_id':'EXP999','mode':'SYNTHETIC_INFRASTRUCTURE','cell':cell,
         'sessions':[{'day':day,'open_at':day+'T14:30:00Z','close_at':day+'T21:00:00Z','bindings':copy.deepcopy(bindings),
                      'prices':{s:{'open':'10','close':'10'} for s in ids}} for day in ('2017-01-03','2017-01-04','2017-02-01')],
@@ -34,6 +34,12 @@ class LocalEXP004Tests(unittest.TestCase):
             out=self.run_fixture(fixture(cell));self.assertEqual(Decimal(out['nav'][0]),Decimal('24976.25'))
             self.assertEqual(sum(Decimal(f['fee']) for f in out['fills']),Decimal('23.75'))
         d=fixture('SPY');d['rebalances'].append(dict(d['rebalances'][0],day='2017-02-01'))
+        with self.assertRaises(ValueError):self.run_fixture(d)
+    def test_SPY_is_explicit_ETF_exception_not_a_CS_universe_filter(self):
+        self.run_fixture(fixture('SPY'))
+        d=fixture('SPY');d['sessions'][0]['bindings'][0]['ticker']='OTHER'
+        with self.assertRaises(ValueError):self.run_fixture(d)
+        d=fixture();d['sessions'][0]['bindings'][0].update(ticker='SPY',asset_type='ETF')
         with self.assertRaises(ValueError):self.run_fixture(d)
     def test_monthly_sell_before_buy_and_empty_cash(self):
         d=fixture();r=dict(d['rebalances'][0],day='2017-02-01',decision_at='2017-02-01T02:00:00Z',eligible_ids=['B'],executable_ids=['B'],values={'B':'1'})

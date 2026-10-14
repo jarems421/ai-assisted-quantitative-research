@@ -116,6 +116,12 @@ def readme(manifest: dict, result: dict, registry=None) -> str:
     house_validation = root / "docs/acceleration/exp007_house_validation.json"
     if house_validation.exists():
         validation = house_validation
+    local_exp004_validation = root / "docs/acceleration/exp004_local_validation.json"
+    if local_exp004_validation.exists():
+        validation = local_exp004_validation
+    local_exp004_final = root / "docs/acceleration/exp004_local_validation_v002.json"
+    if local_exp004_final.exists():
+        validation = local_exp004_final
     if validation.exists():
         receipt = json.loads(validation.read_bytes())
         checks = (f"Latest milestone validation: **{receipt['local_tests_passed']} local tests, "

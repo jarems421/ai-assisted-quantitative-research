@@ -98,7 +98,8 @@ def ledger(inputs,*,_authorization=None):
             tickers=[b['ticker'] for b in bindings]
             if len(tickers)!=len(set(tickers)):raise ValueError('Ambiguous ticker binding')
             for b in bindings:
-                if b.get('asset_type')!='CS' or not b.get('source_sha256') or not b.get('ticker'):raise ValueError('Uncertified historical CS binding')
+                allowed_type=(b.get('asset_type')=='CS' if cell!='SPY' else b.get('asset_type')=='ETF' and b.get('ticker')=='SPY')
+                if not allowed_type or not b.get('source_sha256') or not b.get('ticker'):raise ValueError('Uncertified historical CS or explicit SPY ETF binding')
             prices=s['prices']
             for sid,p in prices.items():
                 if sid not in live:raise ValueError('Price lacks stable identity')
