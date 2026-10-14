@@ -1,5 +1,12 @@
 # Repository instructions
 
+## EXP004 supplemental same-source reconciliation stop (2026-10-14)
+
+- `docs/acceleration/owner_exp004_supplement_2026-10-14.md` authorized only frozen same-source execution-field acquisition and conditional local Development. Preserve all earlier source parts, economic freezes, engine code and local reports; the global remote pause remains intact.
+- `exp004_supplement_execution_report.md` records LOCAL_EXECUTION_INPUTS_BLOCKED / SOURCE_RECONCILIATION_BLOCKED. The first warmup quarter has 256,677 rows, 256,615 exact matched keys, 62 missing/62 extra VPG stable-ID keys and zero matched CLOSE changes. All fetched OPENs are positive finite. Do not strip the new #2 suffix, remap IDs, exclude rows or retry to manufacture equality.
+- The persisted reconciliation stop prohibits further acquisition. Remaining 27 quarters, SPY, dividend semantics and held-terminal paths were not run; Development OPEN coverage is unacquired, not observed NULLs. No v004 PASS, real execution or metrics exist. All 24 folds/six full replays remain NOT_RUN; Validation/Test accesses 0; prior 59-evaluation ceiling/19 failure reserves unchanged.
+- The initial projection diagnostic incorrectly conflated unmatched keys with CLOSE changes. Preserve its original receipt and separately versioned correction; exact key failure remains. EXP005/EXP006/EXP007 stay closed. No new source campaign, identity rescue, vendor, experiment, Phase 4B, optimizer or paper/live action follows automatically.
+
 ## EXP004 local-only execution input stop (2026-10-14)
 
 - `docs/acceleration/owner_exp004_local_execution_2026-10-14.md` supersedes earlier EXP004 pause instructions only for this bounded local certification attempt and conditional Development. Nexus/Aurora and all 2021+ observations remain prohibited; the existing remote operational pause stays unchanged.

@@ -5,7 +5,7 @@
 
 **A Python research-engineering project investigating whether economically motivated investment ideas survive realistic costs and independent testing.** It combines public-source data pipelines, point-in-time controls, statistical analysis and reproducible backtesting. AI helps with interpretation and engineering; deterministic code governs evidence and experiment boundaries.
 
-One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study is now blocked at local execution inputs. **No profitable strategy or validated paper/live system has been established.**
+One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study is now blocked at same-source historical identity reconciliation. **No profitable strategy or validated paper/live system has been established.**
 
 ### Six key highlights
 
@@ -16,7 +16,7 @@ One investment study is complete, reusable research infrastructure is built, and
 - **Execution and integration engineering:** a Decimal reference ledger tests fees, cash flows and corporate actions on synthetic fixtures. Nexus historical-universe pruning was detected and remains an execution blocker.
 - **Reproducible software delivery:** automated public CI, regression tests, versioned contracts and generated reports/figures from canonical results. Public software checks are separate from private-source and real-market certification.
 
-**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current local momentum execution review](docs/acceleration/exp004_local_execution_report.md) or [implementation boundaries](#architecture-and-implementation-status).
+**Core tools:** Python, NumPy, PyArrow/Parquet, DuckDB, SQLite, Matplotlib, Git and GitHub Actions. Start with the [completed study](reports/EXP001_final_report.md), [current momentum source reconciliation](docs/acceleration/exp004_supplement_execution_report.md) or [implementation boundaries](#architecture-and-implementation-status).
 
 ## Vision, progress and next steps
 
@@ -25,7 +25,7 @@ The long-term goal is a small, auditable research platform that turns economic h
 | Step | Progress and next requirement |
 | --- | --- |
 | Build the evidence foundation | Bounded source archives, offline reconciliation, experiment controls and synthetic execution tests are implemented. Complete historical identity, lifecycle and execution certification remain open. |
-| Test one economic mechanism | The SPY timing study is complete. An SEC Item 2.02 candidate has passed timing and sampled classification audits. EXP006 ended untested at source feasibility. The next congressional-purchase/SPY study has pinned data and a chronological source split; its 96-observation original audit remains incomplete after image-only House records and a Senate 403. No new performance exists. |
+| Test one economic mechanism | The SPY timing study is complete. Revenue, SEC Item 2.02 and congressional-purchase candidates closed before performance at inference/source gates. Frozen momentum inputs passed numeric QA; a same-source OPEN supplement stopped at changed historical identity keys. No new strategy performance exists. |
 | Establish independent investment evidence | Future work requires certified populations, matched benchmarks, realistic costs and calibrated inference before any new performance access. The next candidate is not registered or frozen. |
 | Earn portfolio and forward capabilities | Risk-aware construction, optional evidence-linked relationship/causal tools and separately authorized forward paper observation are later milestones, conditional on surviving evidence. |
 
@@ -146,7 +146,7 @@ The reusable lessons are practical: ticker history does not establish security i
 
 ## Current state and roadmap
 
-**EXP004 local execution stopped at missing OPEN-price inputs; hypothesis untested.** The [local route report](docs/acceleration/exp004_local_execution_report.md) verifies all 28 frozen close-only price extracts and 72 monthly panels. The separate Decimal ledger passes synthetic fixtures, but none of the downloaded price parts contains execution OPENs. No close substitution, survivor pruning, source acquisition or performance occurred. All 24 fold evaluations and six full replays remain NOT_RUN; Validation/Test accesses are 0. Nexus stays blocked; EXP005/EXP006/EXP007 remain closed.
+**EXP004 supplemental acquisition stopped at exact source-key reconciliation; hypothesis untested.** The [same-source audit](docs/acceleration/exp004_supplement_execution_report.md) acquired OPENs for the first warmup quarter: 256,677 rows, 256,615 exact matched keys, 62 missing/62 replacement VPG identity keys and zero matched CLOSE changes. No identity rewrite was used. The remaining 27 quarters, SPY, dividends and held-terminal review were not run. No v004 PASS certificate or performance exists; all 24 folds/six replays remain NOT_RUN and Validation/Test accesses are 0. Nexus execution stays blocked; EXP005/EXP006/EXP007 remain closed.
 
 | Milestone | Next purpose | Entry boundary |
 | --- | --- | --- |
@@ -176,7 +176,7 @@ python -m src.presentation.exp001 --check
 
 Public checks block external network and private data reads. EXP999 uses temporary directories and fake transports. Presentation regeneration (`python -m src.presentation.exp001`) uses published EXP001 processed records; it creates no remote job. These checks demonstrate software behavior, not certified market execution or alpha.
 
-Latest milestone validation: **469 local tests, 241 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp004_local_validation_v002.json).
+Latest milestone validation: **472 local tests, 244 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp004_supplement_validation.json).
 
 The complete local suite additionally needs ignored original archives:
 

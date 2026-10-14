@@ -35,7 +35,7 @@ def client(directory,requests):
     def known():return {json.loads(p.read_bytes())['id'] for p in OUT.glob('*/submission.json')}
     def capture(method,path,*,bytes_call=False,**kwargs):
         allowed_call(method,path,kwargs.get('body'),requests,known())
-        if (OUT/'source_stop.json').exists():raise ValueError('Persisted source stop; do not automatically resubmit')
+        if (OUT/'source_stop.json').exists() or (OUT/'reconciliation_stop.json').exists():raise ValueError('Persisted source/reconciliation stop; do not automatically continue')
         n=len(list(directory.glob('wire_request_*.json')))+1
         put(directory/f'wire_request_{n:04}.json',{'method':method,'path':path,'body':kwargs.get('body'),
             'idempotency_key':kwargs.get('idempotency_key'),'binary':bytes_call})
