@@ -7,7 +7,7 @@
 
 One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study has complete price enrichment but remains blocked at execution-evidence certification. **No profitable strategy or validated paper/live system has been established.**
 
-**Current direction:** test whether unusual public data measures an economically useful change, starting with small cases. The approved [web-adoption source pilot](docs/strategy/web_adoption_day1_report.md) retrieved historical observations but stopped because detector/version publication evidence was insufficient; two bounded backups also remain unready. Business prediction and return tests were not run. Existing experiments and their stops are preserved.
+**Current direction:** test small unconventional-data relationships for economic value before attempting a trading strategy. The [new research review](docs/strategy/next_frontier_review.md) separates exploratory reconstructed evidence from historically actionable and executable investment evidence. Its initial reactor-data check stopped at an NRC access denial; no economic observations were acquired. A concrete river-level/next-week freight forecasting pilot is proposed for owner approval, with source access and predictive value still untested. Earlier web-adoption findings and all experiment stops are preserved.
 
 ### Six key highlights
 
@@ -22,13 +22,13 @@ One investment study is complete, reusable research infrastructure is built, and
 
 ## Vision, progress and next steps
 
-The long-term goal is a small, auditable research platform that turns economic hypotheses into independently supported, cost-aware investment decisions. Each layer must earn the next: **certified data and execution → economically motivated forecasts → independent evidence of incremental alpha → risk-aware portfolios → forward paper evidence.**
+The long-term goal is a small, auditable research platform that turns economic hypotheses into independently supported, cost-aware investment decisions. Each claim must earn its evidence: **exploratory economic measurements → historically actionable forecasts → execution-aware investment tests → independent confirmation → forward paper evidence.** Early exploratory work may use disclosed reconstructed data; stronger investment claims require stronger certification.
 
 | Step | Progress and next requirement |
 | --- | --- |
 | Build the evidence foundation | Bounded source archives, offline reconciliation, experiment controls and synthetic execution tests are implemented. Complete historical identity, lifecycle and execution certification remain open. |
 | Test one economic mechanism | The SPY timing study is complete. Revenue, SEC Item 2.02 and congressional-purchase candidates closed before performance at inference/source gates. Frozen momentum inputs passed numeric QA; same-source OPEN enrichment preserves all frozen rows; a bounded 26-gap forensic pass found raw daily candidates but could not certify complete execution evidence. No new strategy performance exists. |
-| Establish independent investment evidence | Future work requires certified populations, matched benchmarks, realistic costs and calibrated inference before any new performance access. The next candidate is not registered or frozen. |
+| Establish independent investment evidence | A proposed Level A river-transport study would first test incremental economic forecasting value. Historically actionable investment studies still require certified populations, benchmarks, costs and inference. No new investment candidate is registered or frozen. |
 | Earn portfolio and forward capabilities | Risk-aware construction, optional evidence-linked relationship/causal tools and separately authorized forward paper observation are later milestones, conditional on surviving evidence. |
 
 Progress is measured by reproducible artifacts and closed scientific gates, rather than promised profitability or a deployment deadline. Rejected designs document what the platform has learned and which requirements remain unresolved. The [governing roadmap](docs/acceleration/master_plan.md) records the detailed milestones and authorization boundaries.

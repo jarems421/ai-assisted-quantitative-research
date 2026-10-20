@@ -1,0 +1,93 @@
+{
+  "status": "PRIMARY_SOURCE_ACCESS_BLOCKED_NO_AUTOMATIC_BACKUP",
+  "as_of": "2026-10-20",
+  "owner_instruction": "owner_next_frontier_2026-10-20.md",
+  "owner_instruction_sha256": "a0b08e34a86cec922d3bf01fe0e4026dc9feb0e2615630fbb375fdd649605c5f",
+  "source_card": "next_frontier_source_card.json",
+  "initial_primary": "Nuclear availability and regional wholesale prices",
+  "source_responses": [
+    {
+      "index": 1,
+      "url": "https://www.nrc.gov/reading-rm/doc-collections/event-status/reactor-status/index",
+      "purpose": "Primary reactor archive index and historical range",
+      "started_at_utc": "2026-10-20T04:55:25.037951+00:00",
+      "retrieved_at_utc": "2026-10-20T04:55:25.187265+00:00",
+      "status": 403,
+      "body_sha256": "fee51df749935064d06bf50c55a0aaeb2b21f2061cdf4847c4aa7c6b969a49b0",
+      "bytes": 455,
+      "complete": true,
+      "source_role": "NON_FILING_ORIGINAL_SOURCE"
+    }
+  ],
+  "stop": {
+    "backups_started": false,
+    "ended_at_utc": "2026-10-20T04:57:44.488211+00:00",
+    "new_cloud_queries": 0,
+    "not_established": [
+      "Historical reactor report absence",
+      "Every NRC route inaccessible",
+      "Economic hypothesis false"
+    ],
+    "original_observation_rows": 0,
+    "paid_spend": 0,
+    "reason": "The selected ordinary NRC archive-index request returned HTTP 403. Its 455-byte response is preserved. No alternate path/host or outcome-data acquisition followed.",
+    "source_requests": 1,
+    "status": "PRIMARY_SOURCE_ACCESS_BLOCKED_NO_AUTOMATIC_BACKUP"
+  },
+  "actual_reactor_rows": 0,
+  "actual_price_rows": 0,
+  "actual_historical_range_verified": null,
+  "independent_events_estimated_from_data": null,
+  "dataset_available_at_historical_decision_dates": null,
+  "level_B_or_C_certificate": false,
+  "backup_observations_acquired": 0,
+  "new_authenticated_calls": 0,
+  "new_cloud_jobs": 0,
+  "billing_or_service_changes": 0,
+  "paid_spend_GBP": 0,
+  "account_wide_usage": "UNKNOWN",
+  "automatic_retries": 0,
+  "redirects_or_denial_workarounds": 0,
+  "browser_documentation_review": {
+    "tool_calls": 9,
+    "search_queries": 34,
+    "direct_opens": 2,
+    "underlying_http_fetches": "UNKNOWN",
+    "role": "Documentation/prior-art discovery, not primary observation packets or historical availability certificates"
+  },
+  "documents_reviewed": {
+    "deep_research_pdf_sha256": "762949b20f1f41fe4665d822bef26691c228342ebda58d3824c51e280d0529fd",
+    "pdf_pages": 21,
+    "repository_review": "Strategy/review/pilot/Day1 report and canonical receipt; EXP001 final findings, EXP002/003 freeze dispositions, EXP004 gap state, EXP005/006/007 closures, current README/roadmap and representative archive/spec/analysis/public-check utilities. Not every historical receipt or test individually reviewed."
+  },
+  "selection_history": [
+    {
+      "order": 1,
+      "decision": "Seven new mechanisms compared using documentation and prior art. No estimated returns or novelty scores."
+    },
+    {
+      "order": 2,
+      "decision": "Nuclear primary and river/FAA backups recorded and pushed before its first source dispatch."
+    },
+    {
+      "order": 3,
+      "decision": "First NRC index request denied; stop preserved. No outcome file or alternate route requested."
+    },
+    {
+      "order": 4,
+      "decision": "Recommend owner activation of river backup only; no backup acquisition or economic study authorized by this report."
+    }
+  ],
+  "economic_results": {
+    "forecasts": 0,
+    "effects": 0,
+    "returns": 0,
+    "hypotheses_tested": 0
+  },
+  "limitations": [
+    "403 is route-specific access evidence, not evidence of missing historical records or no economic relationship.",
+    "Publication timing and revision history may remain uncertain at Level A, but missing data cannot be fabricated.",
+    "A reconstructed association cannot be promoted to historical trading or causal evidence."
+  ],
+  "historical_availability_status": "NOT_ESTABLISHED"
+}

@@ -1,0 +1,109 @@
+# Next frontier: a small economic test with proportionate evidence
+
+**2026-10-20. Recommendation for approval; no economic study executed.** I recommend a **Level A test of Mississippi low-water pressure and next-week barge freight quotes**. One physical constraint, one freight lane and one feature make the question falsifiable: does the water measurement add anything beyond information already in recent freight prices and seasonality?
+
+The initial primary was nuclear availability and power prices. Its ordinary NRC request returned **403**, so that check stopped. River transport was recorded as backup 1 before dispatch and has **not** been activated. This recommendation preserves the failed selection rather than silently replacing it. [Owner instruction](owner_next_frontier_2026-10-20.md) · [Predispatch card](next_frontier_source_card.json) · [Actual source receipt](next_frontier_source_receipt.json) · [Exact proposed river experiment](river_transport_pilot_proposed.json).
+
+## A. What we learned
+
+The [closed Day 1 investigation](web_adoption_day1_report.md) retrieved historical web labels but did not establish the detector/version publication bounds its design required. The software route's earliest exported dependency snapshot was May 2022, too late for its 2020 start. NHTSA's current files document changes to historical values; receipt/date-added fields did not recover the earlier versions. None was an economic rejection.
+
+These failures differ. A genuinely missing period cannot be cured by labeling research exploratory. A reconstructed dataset with uncertain revisions may still support a **new Level A question**. Missing observations remain missing; reconstructed timing never becomes historical actionability. The closed studies are not reopened under this policy.
+
+The recent web gate concerned **Level B source timing**, rather than production fills. EXP004 additionally has execution requirements. Distinguishing them is more useful than calling every earlier requirement production certification. EXP001 remains the completed investment study: its selected rule reduced risk but underperformed SPY's return/Sharpe in later windows. EXP002/003 closed before freeze; EXP005/006/007 ended before economic testing. Their findings and budgets remain intact.
+
+| Level | What it can establish | Boundary |
+| --- | --- | --- |
+| **A: exploratory economic** | Association or retrospective forecast comparison using disclosed reconstructions | Valid units/joins, missingness, temporal outcome definition, selection history and uncertainty. No causal, historical-trading or implementable-alpha claim. |
+| **B: historically actionable predictive** | Incremental information actually available at each decision | Versions, publication bounds, construction and dated identities prevent look-ahead. |
+| **C: execution-aware investment** | Evidence about implementability and later performance | Fills, costs, liquidity, actions, portfolio accounting, survivorship and separate evaluation. |
+
+A does not require a full-market ledger or exact reconstruction of every publication. It does require scientifically meaningful measurements. Software tests cannot supply the missing economic estimate.
+
+## B. Seven new relationships
+
+Order reflects the **initial** practical judgment, not expected profitability. Only candidate 1 received a direct source check. Source histories below distinguish publisher documentation from acquired observations; none is claimed original or uncrowded. Private-fund saturation is unknown.
+
+| Candidate and connection | Sources, history and timing | Exposure, horizon and fastest falsifier | Prior art and main risk |
+| --- | --- | --- | --- |
+| **1. Reactor availability → regional scarcity prices.** Lost cheap supply may raise the value of available generation. | [NRC index](https://www.nrc.gov/reading-rm/doc-collections/event-status/reactor-status/index) advertises 1999 onward; direct access returned 403. [EIA/ICE](https://www.eia.gov/electricity/wholesale/index.php) documents PJM electricity history from 2001 and gas from 2014. Operational, quote, delivery and publication dates differ. No rows acquired. | PSEG/Constellation are possible exposure examples, not a stock universe. Test subsequent five-quote-date price pressure beyond prior prices/fuel. Physical adjustment may take hours, not 5–20 equity sessions. No incremental relationship rejects the simple information measure. | [Davis/Hausman](https://doi.org/10.1257/app.20140473) and [EIA's PJM analysis](https://www.eia.gov/todayinenergy/detail.php?id=2510) are close prior art. Maintenance anticipation, transmission, load, gas costs and hedging matter. **Access blocked.** |
+| **2. River stage → next-week freight cost.** Shallow water restricts loading/capacity when grain needs shipping. | [USGS Memphis 07032000](https://waterdata.usgs.gov/monitoring-location/USGS-07032000/statistics/) and [USDA Table 9](https://www.ams.usda.gov/services/transportation-analysis/gtr-datasets) identify the gauge and Cairo-Memphis quotes. Historical report examples exist; complete 2013–2023 overlap and API access are untested. Revisions remain a Level A limitation. | ADM/Bunge might transmit the cost; route shares/contracts/pass-through need evidence. First outcome is next week's quote, not a stock return. No improvement beyond quote persistence/seasonality rejects incremental forecasting value. | USDA already [compares low water and freight](https://www.ams.usda.gov/sites/default/files/media/GTR09252025.pdf). Demand and adaptation can prevent high rates despite low water. Quantified incremental value, not discovery of drought, is the opportunity. **Backup 1, unstarted.** |
+| **3. FAA capacity advisories × carrier footprint → cancellation spillovers.** Local disruption propagates through aircraft/crew networks. | [FAA archive form](https://www.fly.faa.gov/adv/advAdvisoryForm?title=Airport+Delays) exists; earliest accessible history is unverified. [BTS](https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ) documents reporting-carrier outcomes from 1987. Advisory issuance/effectiveness and later outcome reporting differ. | United/Delta/Southwest illustrate exposure; dated mappings required. Test next-day excess cancellations conditional on pre-existing hub exposure and weather. Natural horizon hours–three days; a delayed 5–20-day equity effect is speculative. | [Fleurquin et al.](https://www.nature.com/articles/srep01159) study propagation; [FlightAware](https://www.flightaware.com/commercial/reports/custom) sells histories. Shared weather/network shocks or immediate incorporation may eliminate additional information. **Backup 2, unstarted.** |
+| **4. MSHA withdrawal orders → subsequent mine output.** Safety restrictions can remove capacity or require remediation. | [MSHA](https://arlweb.msha.gov/accinj/accinj.htm) provides historical injury/employment/production resources. Exact joined order/quarter coverage is unverified. Issuance/termination and public posting are separate. | Dated coal-mine parents could include Peabody or Arch entities. Test newly issued section 107(a) orders against next-quarter tonnage residuals beyond lagged output/seasonality. Quarter-scale economics is slower than the preferred trade horizon. | [Li's MINER Act study](https://doi.org/10.1177/0019793920931495) already connects enforcement and productivity. Targeted inspections, coal demand, closures and reporting gaps confound effects. Eventual order duration cannot be an earlier predictor. |
+| **5. PTAB claim cancellation × rival products → redistribution of legal rents.** Losing a blocking patent can alter bargaining power. | [USPTO](https://data.uspto.gov/apis/ptab-trials/download-decisions) describes decisions since September 2012, with account/API-key requirements. No key/document acquired. Decision date is not automatically posting time. | Patent owner and previously identified product rivals; rights/materiality joins needed. Market reactions can be the first outcome: immediate 0–5 days versus a separately specified delayed component. No distinct reaction would weaken the proposed financial link. | [Galasso/Schankerman](https://doi.org/10.1093/qje/qju029) study downstream innovation after court invalidation, not this trading effect. Appeals, anticipated decisions and immaterial claims can defeat the signal. |
+| **6. Facility compliance deterioration × mill ownership → production shortfalls.** Operational trouble may create environmental records before wider interruption. | [EPA ECHO](https://echo.epa.gov/resources/echo-data/about-the-data) documents snapshots, incomplete small-facility coverage and synchronization lags. Exact case/output overlap is unverified; enforcement dates do not certify publication. | Illustrative pulp/paper-mill parents such as International Paper. First test needs dated facility-to-segment links and next-quarter disclosed production. Usually weeks–quarters. No independent output measure or no increment over industry trends defeats this candidate. | [Hamilton's research](https://profiles.stanford.edu/james-hamilton) establishes environmental disclosure/stock-reaction prior art. Reporting intensity, reverse causality and segment aggregation may dominate. No robotic campaign proposed. |
+| **7. NLRB close elections × labor exposure → later cost pressure.** Bargaining changes can affect staffing/cost expectations. | [NLRB reports](https://www.nlrb.gov/reports/agency-performance/election-reports) list 2001 onward; certification month differs from vote/publication time. Establishment-parent history and outcomes not acquired. | Establishment-linked listed employers, preserving failed/unknown joins. A close-win/close-loss comparison could address selection; economics plausibly takes months. No forced short holding period. | [Lee/Mas](https://www.nber.org/system/files/working_papers/w14709/w14709.pdf) already link elections and equity values, with substantially smaller close-election than event-study estimates. This argues against a simple union-victory trading rule. |
+
+Each relationship has an identifiable proposed sample, but **no available event count or effective independent N has been verified**. The documentation-only candidates are not acquisition certificates. A commercial product's existence does not disqualify a question; it does weaken claims of obscurity.
+
+## C. The strongest three
+
+**Nuclear availability** has the most direct physical-to-economic chain. But merit-order effects are established and energy professionals monitor outages. The unknown would be incremental size/persistence in a particular sample, not whether lost generation costs money. PSEG's [2023 report](https://www.sec.gov/Archives/edgar/data/81033/000162828024006885/pseg-20231231.htm) also shows why prices cannot become profits mechanically: ownership shares, hedges and other revenue mechanisms intervene. No delayed equity incorporation is demonstrated.
+
+**River transport** joins a sensor to a quoted bottleneck cost without requiring company-revenue forecasts or a technology detector. It is attractive because it can fail meaningfully: USDA discusses later low-water episodes that did not reproduce 2022's freight spike. Demand, capacity and adaptation matter. The proposed contribution is a precisely aligned incremental forecast, not a claim that this physical relationship is unknown.
+
+**FAA spillovers** ask where a local shock travels rather than treating one airport delay as a nationwide airline signal. Pre-existing airport/rotation exposure might matter more than the headline delay. Weather controls, operator changes and network joins make it a larger first-week task than the river case. Commercial flight data and published propagation research are evidence of an established category, not proof of investment profitability.
+
+## D. Initial selection and real source result
+
+The source card fixed nuclear as primary, river/FAA as backups, neutral reactor blocks January 3–5, 2018 and July 5–7, 2023, and a four-hour maximum. It was pushed in **231463d** before dispatch. No observed outage or price move selected those dates.
+
+**Actual acquisition:** one ordinary GET to the NRC index; **HTTP 403; 455 original bytes**. Body SHA-256: **fee51df749935064d06bf50c55a0aaeb2b21f2061cdf4847c4aa7c6b969a49b0**. Original body/status/times and a persisted stop are private. The check ran 04:54:52–04:57:44 UTC, below four hours. No retry, alternate path/host, proxy, outcome workbook or automatic backup followed.
+
+**0 reactor rows, 0 price rows, 0 economic observations acquired.** Actual historical coverage, revisions, release times, mappings and independent-event count are **NOT_MEASURED**, not zero-valued phenomena. Indexed documentation and browser snippets are not original observation packets. One denial does not establish universal NRC inaccessibility, absent history or a false mechanism.
+
+New authenticated calls, cloud jobs, billing/service changes and paid spending: **0**. One direct scientific source start is archived; nine browser documentation/prior-art calls (34 searches, two opens) are separate, with underlying wire counts unknown. No paper result was replicated. **Decision:** defer the nuclear implementation and recommend owner activation of river backup 1; FAA remains backup 2. Neither was launched.
+
+## E. The proposed economic experiment
+
+The unexecuted nuclear concept was a **Level A** comparison of abrupt availability declines and the next five PJM wholesale quote dates in 2018–2023, controlling prior prices, fuel and seasonality. Complete fleet/capacity mapping, planned-outage information and trade-versus-delivery-date treatment would be necessary. Daily power declines are not automatically unplanned surprises. EIA's ICE indices are neither fills nor contemporaneous government releases. Source access failed: no event definition, sample count, effect or economic GO is certified. Do not implement it now.
+
+The **recommended next experiment**, subject to its own source check, is [the exact river proposal](river_transport_pilot_proposed.json):
+
+| Component | Single proposed specification |
+| --- | --- |
+| Hypothesis/null | Seasonally low Memphis stage improves next-week Cairo-Memphis freight forecasts. Null: no increment beyond recent quotes and calendar seasonality. |
+| Sources/join | USGS **07032000**, parameter **00065**, feet; USDA GTR Table 9 **nearby Cairo-Memphis**, percent of tariff. Keep quote date, report issue date, measurement time, units and flags separate. No stock/commodity-price API. |
+| Dates | **2013–2017** stage climatology; **2018–2020** initial fit; **2021–2023** chronological scoring. Full overlap is unverified. No convenient date shift if coverage disappoints. |
+| One feature | Feet below the baseline calendar-week **20th percentile**, truncated at zero; median stage over the seven days ending on each quote date. Baseline uses the same week ±2 weeks in 2013–2017. No alternate gauge/percentile search. |
+| Outcome/horizon | Log of next weekly nearby freight quote. Gaps over ten days stay unscored. This is a one-week economic forecast, **not a 5–20-session equity holding rule**. |
+| Baseline/augmentation | Expanding OLS: intercept, current log quote, annual sine/cosine; add only low-stage pressure. Refit using earlier physical-date targets. |
+| Missingness/units | Missing water/quotes never become zero. At least four observed daily means per weekly feature and sixty baseline daily observations. Retain provisional/revised flags and datum changes. Negative gauge heights are valid; authentic freight quotes must be positive for logs. |
+| Primary metric/support | Relative reduction in mean absolute log forecast error; include original-index errors and year contributions. Fewer than **100 scored weeks** is inconclusive. Weeks sharing drought conditions are not independent events. |
+| Confounders/checks | Harvest/export demand, fuel, capacity, dredging/closures, high-water restrictions, pricing anticipation and revisions. Fixed same-week timing comparison and 52-week-lag feature diagnostic; report 2022 leverage without selecting a new winner. |
+| Proposed research-priority rule | **≥5%** overall MAE improvement, nonnegative in at least two of three scoring years and not confined to 2022. Otherwise negative/fragile/inconclusive. This is not significance, power or investment materiality. |
+| Evidence/attempts | **Level A only**; three analyses including the two fixed diagnostics. No causal, historical-actionability, alpha or execution claim. No stock-return trial or old reserve used. |
+
+The 2022/2023 drought/rate narratives were visible in prior art during design. Chronological scoring is therefore exploratory, **not untouched confirmation or genuine forward forecasting**. Current revisions can bias even a Level A association. A meaningful datum or quote-definition inconsistency must be disclosed and resolved from evidence, not hidden by changing the period or station.
+
+The result should say: “Across N retained weekly pairs and three scoring years, this fixed water measure changed next-week forecast error by X relative to quote persistence/seasonality, with these year contributions and missing-data limitations.” **N and X are unknown today.** A useful operating-cost measure could have no equity alpha: firms hedge, pass costs through or earn offsetting merchandising margins. ADM/Bunge are possible later exposure studies; no security or stock signal is selected.
+
+A later confirmation would need a separate predeclared design and candid treatment of historical knowledge. Historically actionable claims additionally require Level B clocks; execution claims require Level C. No numerical significance/power guarantee is proposed.
+
+## F. Minimum implementation, if approved
+
+Only a manifest, one small analysis script, a README, one focused test file and a human report are proposed under **research/river_transport/** and **reports/**. One private weekly Parquet plus original responses suffices. The [JSON proposal](river_transport_pilot_proposed.json) lists exact suggested paths. None of these implementation files exists yet.
+
+Reuse Archive.body/read for original bytes, spec.canonical/digest for hashes, Arrow/DuckDB for small joins and NumPy least squares for the two models. RawStore canonicalizes JSON and is not an original-byte archive. No crawler, service, warehouse, Store migration, generic compiler or execution adapter is needed. Portfolio metrics and legacy bootstrap/Holm machinery do not answer this question. Tests should cover weekly alignment, missingness, units and future-target exclusion; the source/economic result remains the deliverable.
+
+## G. Conditional five-working-day roadmap
+
+Start after owner approval; at most 40 working hours and no paid spend. This is a proposed schedule, not an automatically launched programme.
+
+| Day | Deliverable and stop/go |
+| --- | --- |
+| **1** | River source check: **four hours maximum, twelve ordinary starts**, representative original stage/quote rows in two fixed historical weeks, field/date/datum/rights evidence and coverage estimate. Stop on denial or missing required history; no automatic FAA switch. |
+| **2** | If approved source conditions pass, acquire the small fixed panel; retain every week/missing state, freeze source/feature hashes and show economic-unit examples. No model selection. |
+| **3** | Run the baseline/augmentation comparison. Publish retained/scored N, error changes and year contributions. A null result completes the main test. |
+| **4** | Run the two fixed diagnostics and inspect calendar/revision/drought-year dependence. No alternative feature, stock screen or rescue model. |
+| **5** | Publish errors, useful figures, limitations and a GO/negative/inconclusive research-priority verdict; relevant checks and Git delivery. Further confirmation requires a separate decision. |
+
+## H. Final recommendation and authority
+
+**Approve the river pilot as the next Level A economic question, conditional on its bounded source check.** The valuable unknown is incremental next-week cost information, not the already-known physical constraint. Public source descriptions and original USDA report examples support plausibility; actual backup access, complete history and economic value remain unverified. A sensor/quote comparison asks a useful weaker question than rebuilding the closed Shopify/Wix detector history or assembling an executable trading population.
+
+The NRC denial is a genuine limitation of this task, not an economic discovery. There is no new estimated effect, forecast improvement, p-value or return to report. The change that should improve learning is applying Level A to valid reconstructed economic measurements while reserving stronger clocks/execution requirements for stronger claims.
+
+This task stops under owner sections **8/12**. No full pilot, backup acquisition, old-source repair, experiment registration, market returns, architecture phase, Nexus/Aurora or paper/live activity was authorized or executed. The [evidence/reading record](next_frontier_evidence_review.md) and [validation receipt](next_frontier_validation.json) distinguish documentation, actual access evidence and untested ideas. Owner approval may adopt the concrete conditional proposal; it does not weaken or reopen earlier experiments.
+
+Verification: **485 local tests, 257 public tests, zero skipped**; EXP004 audit and unresolved-gap check passed. The initial presentation check caught a stale README during editing; regeneration and the final six-artifact check passed. Of 676 pre-existing tracked files, 671 remain byte-identical; five living guidance/presentation files deliberately gained the new direction. Prior reports, experiments, code, metrics and dependency pins are unchanged. These checks verify preservation and software, not economic value.

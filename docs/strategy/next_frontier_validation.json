@@ -1,0 +1,73 @@
+{
+  "status": "PASS_WITH_DISCLOSED_INTERMEDIATE_PRESENTATION_FAILURE",
+  "as_of": "2026-10-20",
+  "scope": "Documentation, bounded primary access evidence and unimplemented proposed Level A experiment; no economic result",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "returncode": 0,
+      "seconds": 24.782
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "returncode": 0,
+      "seconds": 6.065
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "returncode": 1,
+      "seconds": 1.467,
+      "status": "INITIAL_STALE_README_CHECK_FAILED_THEN_CORRECTED"
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "returncode": 0,
+      "seconds": 0.215
+    },
+    {
+      "command": "python -m src.research.exp004_execution_gap_report --check",
+      "returncode": 0,
+      "seconds": 0.324
+    }
+  ],
+  "final_presentation": {
+    "command": "python -m src.presentation.exp001 --check",
+    "returncode": 0,
+    "artifacts": 6,
+    "note": "Initial check found stale README during editing. Regenerated after final template edit; final check passed. Original failed log retained privately."
+  },
+  "local_tests": 485,
+  "public_tests": 257,
+  "skipped": 0,
+  "preservation": {
+    "starting_head": "311661aa0659b29c571a371c68c05a052166df3e",
+    "preexisting_tracked_files": 676,
+    "byte_identical_files": 671,
+    "deliberate_living_guidance_changes": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "docs/research_os.md",
+      "src/presentation/README.template.md"
+    ],
+    "all_other_preexisting_files_unchanged": true
+  },
+  "source_audit": {
+    "body_hash_verified": "fee51df749935064d06bf50c55a0aaeb2b21f2061cdf4847c4aa7c6b969a49b0",
+    "bytes": 455,
+    "http_status": 403,
+    "new_scientific_starts": 1,
+    "automatic_retries": 0,
+    "backup_acquisition": false,
+    "economic_observations": 0,
+    "source_stop_present": true,
+    "old_source_stops_unchanged": true
+  },
+  "owner_instruction_hash_verified": "a0b08e34a86cec922d3bf01fe0e4026dc9feb0e2615630fbb375fdd649605c5f",
+  "json_and_relative_links": "PASS; 13 existing relative links checked before this receipt; final link/fence check recorded in delivery",
+  "git_diff_check_returncode": 0,
+  "economic_execution": false,
+  "paid_spend": 0,
+  "cloud_jobs": 0,
+  "limitations": "Tests establish software regression and preservation only. NRC access failed, so no economic finding or backup source certification exists. Hosted CI and final Git SHA are delivery records, not embedded self-referential scientific evidence."
+}

@@ -1,0 +1,91 @@
+{
+  "status": "PROPOSED_FOR_OWNER_APPROVAL_NOT_IMPLEMENTED",
+  "name": "River-stage pressure and next-week Cairo-Memphis barge freight quotes",
+  "evidence_level": "A_RETROSPECTIVE_RECONSTRUCTED_ECONOMIC_ASSOCIATION",
+  "original_selection_role": "Backup 1; recommended after initial nuclear source access failed. Backup not activated.",
+  "economic_hypothesis": "Seasonally low Mississippi stage adds incremental information about next-week quoted southbound barge freight beyond recent freight quotes and calendar seasonality.",
+  "null": "The single low-stage feature does not improve the declared chronological forecast baseline.",
+  "sources": [
+    {
+      "role": "physical_measurement",
+      "publisher": "USGS",
+      "site": "07032000",
+      "name": "Mississippi River at Memphis, TN",
+      "parameter": "00065 gage height",
+      "units": "feet",
+      "access_status": "Documentation checked; original records not retrieved. New USGS API migration/rights/quota must be checked."
+    },
+    {
+      "role": "economic_outcome",
+      "publisher": "USDA AMS Grain Transportation Report",
+      "table": "Table 9 weekly southbound barge freight rates",
+      "lane": "Cairo-Memphis",
+      "field": "Nearby quote, percent of tariff",
+      "units": "percent of 1976 tariff, no USD conversion",
+      "access_status": "Publisher dataset description and original report examples reviewed; full workbook not acquired."
+    }
+  ],
+  "dates": {
+    "climatology": "2013-01-01/2017-12-31",
+    "initial_fit": "2018-01-01/2020-12-31",
+    "chronological_scoring": "2021-01-01/2023-12-31",
+    "last_target_date": "2023-12-31",
+    "status": "Proposed fixed dates; full overlap not verified. Literature already exposed 2022/2023 drought/rate narratives; no held-out/unseen claim."
+  },
+  "weekly_join": "For each actual USDA quote date t, use observed gage-height days t-6 through t. Preserve quote date, report issue date, raw timestamps, units and quality flags separately. Target is the next scheduled weekly quote; gaps over ten days are unscored, not bridged.",
+  "signal": "max(0, Q20_calendar_week(2013-2017, week +/-2) - median_gage_height[t-6:t]); feet. Negative gage heights are valid. Require at least 4 observed daily means per weekly measurement and at least 60 climatology daily observations. No alternate threshold or station.",
+  "outcome": "log(nearby_freight_index[t+1]); positive authentic quotes only, missing/invalid states retained. Physical quote chronology is not publication-time certification.",
+  "baseline": "Expanding OLS of next-week log quote on intercept, current log quote and one annual sine/cosine pair; initial training through 2020 only. Refit each scored week using only earlier physical-date targets.",
+  "augmentation": "Same baseline plus one low-stage feature; no interactions or variable search.",
+  "primary_metric": "Relative reduction in mean absolute log forecast error; also publish errors in the original quote-index units.",
+  "support": "Report all source weeks, retained weeks, gaps and year counts. Fewer than 100 scored weeks in 2021-2023 is INCONCLUSIVE; no date extension. Weeks are not independent economic events.",
+  "diagnostics": [
+    "Same-week versus next-week association to distinguish contemporaneous pricing from incremental future information.",
+    "One fixed 52-week-lagged low-stage feature as a seasonality diagnostic, not an alternative winner.",
+    "Year contributions and worst-week influence within the primary analysis, including results with 2022 omitted as disclosed dependence on the known drought year."
+  ],
+  "economic_promote_for_later_validation": "At least 5% primary MAE improvement, nonnegative improvement in at least two of three score years and no improvement confined to 2022. These are proposed research-priority rules, not significance or investment thresholds. Otherwise report negative/fragile/inconclusive.",
+  "confounders": [
+    "Grain export demand and harvest season",
+    "Fuel/barging capacity, dredging, closures and weather",
+    "High-water restrictions as well as low-water pressure",
+    "Revisions/datum changes, reporting schedule and changing quote construction",
+    "Price anticipation and researcher knowledge of drought episodes"
+  ],
+  "inference": "Descriptive forecast errors and coefficients, no causal identification, alpha test or promised power. No random-fold split or claim that raw weeks are independent.",
+  "exposure": "ADM and Bunge are possible later commercial-exposure case studies; contracts, route shares, ownership and cost pass-through must be separately dated. No security, stock signal, holding period or trade selected.",
+  "stock_horizon": "Not adopted. The economic forecast is one weekly quote ahead; this is not a 5-20-session equity holding rule.",
+  "new_attempt_ceiling": 3,
+  "attempt_roles": [
+    "Primary baseline-versus-augmentation forecast comparison",
+    "Same-week temporal diagnostic",
+    "Fixed 52-week-lag diagnostic"
+  ],
+  "future_source_check": {
+    "maximum_working_hours": 4,
+    "maximum_ordinary_starts_including_corrections": 12,
+    "minimum_start_spacing_seconds": 1,
+    "maximum_body_bytes": 4194304,
+    "maximum_total_bytes": 20971520,
+    "cloud_jobs": 0,
+    "paid_spend": 0,
+    "probe_dates": [
+      "2018-01-02/2018-01-09",
+      "2023-07-04/2023-07-11"
+    ],
+    "scope": "Publisher links/schema plus a handful of original stage and quote observations, no full panel until owner approval covers the conditional study. Use normal official current routes; stop on denial and do not bypass."
+  },
+  "minimum_future_files": [
+    "research/river_transport/manifest.json",
+    "research/river_transport/screen.py",
+    "research/river_transport/README.md",
+    "tests/test_river_transport_screen.py",
+    "reports/river_transport_level_a.md"
+  ],
+  "not_authorized_now": [
+    "Backup acquisition",
+    "Full historical panel or economic analysis",
+    "Stock/commodity returns or execution simulation",
+    "Old experiment changes, source rescue, cloud spend, new service enablement or deployment"
+  ]
+}

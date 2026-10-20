@@ -1,0 +1,31 @@
+# Next frontier: reading and evidence record
+
+**2026-10-20.** This review supports the [recommendation](next_frontier_review.md), not a claim of source completeness or replicated investment results. The [verbatim owner request](owner_next_frontier_2026-10-20.md) authorizes a new shortlist and one bounded read-only primary check, followed by approval before the full study.
+
+## Repository and supplied report
+
+Reviewed the current README/template, roadmap and operating contracts; previous reorientation, evidence and Day 1 reports; EXP001 final findings and relevant EXP002–007 closure/freeze reports; EXP004 enrichment and execution-gap boundaries; representative archive/hash/analysis utilities, dependency pins and public-check workflow. This was a decision-relevant review, not an assertion that every test, generated receipt or raw record was read.
+
+The supplied 21-page *Unusual Public Data for Short-Horizon Quantitative Edges: Where I Would Search Next* was hash-verified against `762949b20f1f41fe4665d822bef26691c228342ebda58d3824c51e280d0529fd`. All pages were read through the existing page-by-page text extraction, including pages 8–21 separately. The earlier [page map and citation audit](evidence_review.md) remain unchanged. Its operational-exhaust thesis motivates questions; it does not establish novelty, historical data access or profitability. The seven new relationships deliberately extend beyond its original families.
+
+## Documentation and nearby prior art
+
+Nine browser calls comprised 34 searches and two direct opens. Underlying fetch/retry counts are unknown. Search discoveries were assessed using agency, publisher or author sources; incidental secondary results supply no adopted evidence. Some historical report examples were visible through indexed PDF text, without acquisition of original PDF bytes. No paper result was replicated and no published effect magnitude became an expected effect for this pilot.
+
+| Relationship | Limited support and remaining uncertainty |
+| --- | --- |
+| Nuclear | [EIA/ICE wholesale documentation](https://www.eia.gov/electricity/wholesale/index.php) describes historical PJM and gas workbooks and separate trade/delivery dates. No workbook was retrieved. [Davis/Hausman](https://doi.org/10.1257/app.20140473) studies a plant closure; [EIA](https://www.eia.gov/todayinenergy/detail.php?id=2510) already discusses PJM outages and prices. This is established economic territory. [PSEG's report](https://www.sec.gov/Archives/edgar/data/81033/000162828024006885/pseg-20231231.htm) illustrates why ownership and hedges separate electricity prices from issuer profit. |
+| River | [USGS Memphis station](https://waterdata.usgs.gov/monitoring-location/USGS-07032000/statistics/) and [USDA datasets](https://www.ams.usda.gov/services/transportation-analysis/gtr-datasets) identify the proposed measurements. [USDA's September 2025 report](https://www.ams.usda.gov/sites/default/files/media/GTR09252025.pdf) contrasts low-water episodes and freight conditions. Complete historical overlap, gauge-datum comparability and actual API/quote access remain untested. [USGS service migration](https://waterservices.usgs.gov/) must be accounted for in a later authorized check. |
+| FAA | [FAA archive form](https://www.fly.faa.gov/adv/advAdvisoryForm?title=Airport+Delays) and [BTS reporting-carrier fields](https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ) describe candidate surfaces, not an acquired joined panel. [Fleurquin et al.](https://www.nature.com/articles/srep01159) already study network delay propagation; [FlightAware](https://www.flightaware.com/commercial/reports/custom) markets historical reports. |
+| MSHA | [MSHA resources](https://arlweb.msha.gov/accinj/accinj.htm) establish production/employment data surfaces. [Li](https://doi.org/10.1177/0019793920931495) connects safety regulation and productivity. Joined order/output coverage and dated mine ownership were not certified. |
+| PTAB | [USPTO decisions documentation](https://data.uspto.gov/apis/ptab-trials/download-decisions) describes coverage and access requirements; no account/key was created. [Galasso/Schankerman](https://doi.org/10.1093/qje/qju029) studies invalidation and later innovation, not the proposed equity effect. |
+| EPA | [ECHO documentation](https://echo.epa.gov/resources/echo-data/about-the-data) describes synchronization delays and coverage limits. [Hamilton's author bibliography](https://profiles.stanford.edu/james-hamilton) establishes nearby pollution-disclosure research; detailed paper effects were not independently audited here. No facility corpus was queried. |
+| NLRB | [Election reports](https://www.nlrb.gov/reports/agency-performance/election-reports) distinguish certification timing and reporting formats. [Lee/Mas](https://www.nber.org/system/files/working_papers/w14709/w14709.pdf) supplies close prior art and reasons to distinguish event-study associations from close-election comparisons. No employer/outcome panel was acquired. |
+
+This focused search cannot establish private-fund saturation or exhaustive academic novelty. Messy joins may offer learning value; they do not demonstrate a durable investment advantage. Publication clocks and redistribution rights still need source-specific review before stronger claims or original-data publication.
+
+## Actual source evidence and stopping decision
+
+Only nuclear received a direct scientific source check. The predispatched [card](next_frontier_source_card.json) fixed its selection, neutral dates and ceilings. The first ordinary NRC index GET returned **HTTP 403, 455 bytes**, archived with status, timestamps and SHA-256 in the [receipt](next_frontier_source_receipt.json). That denial ended acquisition. No alternate NRC route, EIA workbook or backup source was fetched. This is access evidence for one route, not proof that every archive is inaccessible.
+
+New economic observations, cloud jobs, authenticated calls and paid spending were **zero**. River and FAA remain proposals. The recommendation therefore asks for approval of the concrete conditional river experiment; it does not report a passed river source gate or an economic discovery. Level A permits disclosed reconstruction, while valid measurements, units, missingness and honest temporal comparisons remain necessary.

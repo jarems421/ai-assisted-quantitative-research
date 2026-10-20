@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Next frontier: exploratory economic evidence (2026-10-20)
+
+- `docs/strategy/owner_next_frontier_2026-10-20.md` authorizes seven fresh mechanisms and one bounded source check, not a full historical study. Level A permits disclosed reconstructed economic associations; Level B adds historically available information; Level C adds implementability. This distinction never relaxes frozen experiments or permits invented data, causal claims or alpha from Level A.
+- `next_frontier_source_card.json` was pushed before dispatch. Initial primary nuclear availability stopped on its first NRC GET: HTTP 403, 455 archived bytes; zero reactor/price rows. No retry, alternate route, cloud job, paid spend or backup acquisition followed. The persisted new stop remains in force.
+- `docs/strategy/next_frontier_review.md` recommends river-stage/next-week freight forecasting as backup 1; FAA is backup 2. `river_transport_pilot_proposed.json` is a concrete Level A proposal, NOT implemented or authorized for acquisition. Stop for owner approval before activating its source check or full pilot. No fourth-source rescue, old-source reopening, new architecture, market study or execution follows automatically.
+
 ## Web-adoption Day 1 source closure (2026-10-20)
 
 - `docs/strategy/web_adoption_day1_report.md` and its canonical receipt close the owner-approved primary and two ordered backup feasibility checks. Six bounded queries retrieved 180 page-months and repeated payload/summary records; 60.54 GiB billed usage is expected inside the free tier, not an independently verified invoice. All three currently linked projects had zero October jobs before dispatch; post-run inventories reconcile the six jobs.
