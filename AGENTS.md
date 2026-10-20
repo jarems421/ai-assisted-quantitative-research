@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Expanded frontier discovery; river not approved (2026-10-20)
+
+- `docs/strategy/owner_expanded_discovery_2026-10-20.md` requires a fresh 15–25-candidate investigation, five substantive deep dives, top three with precise differentiation and one further-investigation recommendation/source plan. Preserve the agreed value/competition standard; do not recycle the old seven or choose merely for quick testing.
+- River is explicitly NOT APPROVED. Earlier preferred-learning-task language records a proposal, not owner acceptance. No river source check, pilot, old-source rescue or automatic backup is authorized.
+- This scope permits public documentation/academic/commercial-offering review only: no economic tests, full dataset acquisition, spending, architecture rewrite, frozen-experiment changes or altered source stops. Distinguish source documentation from API access, complete history, public-time evidence, exposure certificates and profitable opportunities. All private competitive use remains unknown absent evidence.
+
 ## Frontier selection: value and competition (2026-10-20)
 
 - Apply `docs/strategy/owner_frontier_selection_refinement_2026-10-20.md` and `frontier_selection_standard.md` to every frontier candidate. Assess economic relevance, named external interest and its limits, exact-signal saturation, testable differentiation and economic/investment usefulness separately. External research or commercial interest can support relevance; obscurity and missing papers earn no bonus.
