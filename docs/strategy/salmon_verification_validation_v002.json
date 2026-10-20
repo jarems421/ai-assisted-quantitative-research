@@ -1,0 +1,82 @@
+{
+  "version": "SALMON_FINAL_VALIDATION_V002",
+  "created_at_utc": "2026-10-20T22:02:21.754718+00:00",
+  "purpose": "Verification and preservation, not an economic result",
+  "status": "BOUNDED_VERIFICATION_CLOSED_NOT_READY",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "status": "PASS",
+      "return_code": 0,
+      "tests": 485,
+      "skipped": 0
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "status": "PASS",
+      "return_code": 0,
+      "tests": 257,
+      "skipped": 0
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "status": "PASS",
+      "return_code": 0,
+      "artifacts": 6
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "status": "PASS",
+      "return_code": 0,
+      "stage": "HYPOTHESIS_FROZEN",
+      "nexus_calls": 0
+    },
+    {
+      "command": "python -m src.research.exp004_execution_gap_report --check",
+      "status": "PASS",
+      "return_code": 0,
+      "state": "EXECUTION_GAPS_UNRESOLVED"
+    },
+    {
+      "command": "Retained private summarize.py --check under blocked socket",
+      "status": "PASS",
+      "original_body_hashes": 28,
+      "network_allowed": false,
+      "sample_selection_and_unknowns_replayed": true
+    },
+    {
+      "command": "Canonical JSON and final report relative links/fences",
+      "status": "PASS"
+    }
+  ],
+  "preservation": {
+    "resume_baseline_head": "c9ad6092ae5d28da2237c1da0451604ecd636e91",
+    "preexisting_tracked_files": 696,
+    "byte_identical_preexisting_files": 692,
+    "changed_preexisting_files": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "src/presentation/README.template.md"
+    ],
+    "prior_progress_receipts_reports_and_frozen_experiments": "BYTE_IDENTICAL",
+    "unrelated_user_files": "NOT_TOUCHED"
+  },
+  "time": {
+    "convention": "Two analyst-days = at most 16 active hours. Credential setup wait between recorded work sessions excluded. Elapsed wall in each active session is a conservative upper bound.",
+    "first_work_session_seconds": 622.69451,
+    "second_work_session_start_utc": "2026-10-20T21:50:27+00:00",
+    "cumulative_work_upper_bound_seconds_at_this_validation": 1337.449228,
+    "maximum_seconds": 57600,
+    "source_closed_at_utc": "2026-10-20T21:58:15.296772+00:00",
+    "ordinary_starts_used": 28,
+    "starts_remaining_unspent": 2,
+    "body_bytes": 3743970
+  },
+  "final_receipt_sha256": "ac92cb237827052394fe84c75ac562686634b974333f77652533ec64b8e5cd24",
+  "private_offline_replay_source_sha256": "698b3aafc21e8ba98f6f29d10c47feff28d344f43a9986fc45d8d6adf20cfac0",
+  "private_dispatch_helper_sha256": "9db29f072b146cba20eaa54e5c55e8df6fc0c175c4143cbf9ddd51e20c809ec0",
+  "private_reproduction": "Retained .research/salmon_verification_20261020/summarize.py --check with the immutable ignored source archive; no network. Public review uses tracked receipts.",
+  "acquisition_is_reproduction": false,
+  "source_stop": "Persisted final_stop.json; no source dispatch permitted."
+}
