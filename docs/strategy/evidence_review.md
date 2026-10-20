@@ -1,0 +1,104 @@
+# Report, source and prior-art review
+
+**2026-10-20.** This record separates the supplied report's claims, independent documentation checks and untested hypotheses. Documentation availability is not an API/data access certificate. Literature findings below are from original research/publisher or author sources, not secondary summaries. No cited investment result was replicated.
+
+## Reading and verification record
+
+The owner-supplied PDF is **Unusual Public Data for Short-Horizon Quantitative Edges: Where I Would Search Next**, 21 pages, 252,177 bytes, SHA-256 `762949b20f1f41fe4665d822bef26691c228342ebda58d3824c51e280d0529fd`. Its immutable local original is retained under ignored `data/raw/strategy_reorientation_20261020/<sha256>/owner_supplied_report.pdf`; it is not redistributed in Git. Full page-by-page text extraction and embedded-link inventory remain ignored under `.research/strategy_review/`. All 21 pages, equations/tables and references were read; 89 link annotations resolve to 21 distinct targets, including one ChatGPT interface link, rather than 89 independent sources. The PDF's internal `filecite` markers do not resolve to independently inspectable evidence.
+
+The [owner instruction](owner_reorientation_2026-10-20.md) is preserved verbatim, SHA-256 `4451dd221616593003a1653aa5cbdf7c1d2f230a15ae809fef82f8f03a0e98c8`. The PDF is a lead document; its recommendations are not independent authority to run an experiment. Text extraction used the existing isolated pypdf helper, with no dependency changes. All saved UTF-8 pages were read, including pages 9–10 separately. No OCR or omitted-page inference was needed.
+
+Repository reading prioritized the generated README and its template, root instructions, `docs/research_os.md`, governing roadmap and cheap feasibility framework; EXP001's final report/manifest, EXP002/003 final reviews, EXP004 specification/current enrichment and gap reports; final EXP005/006/007 dispositions; external-integration audit, immutable storage, metric/analysis routines, ledger entry guards, representative stage/immutability tests, public check runner/workflow and dependency pins. Recent commits were inspected. This was a decision-relevant review, not a claim to read every generated receipt, every test or millions of data rows.
+
+Browser verification covered publisher documentation, original prior-art abstracts/papers and a few issuer operating-metric examples. It did not call authenticated data APIs, run BigQuery jobs, acquire a scientific corpus, calculate signals/returns or inspect a new sealed stage. Search results included unrelated material; only the linked primary sources inform the findings. Original browser responses are tool evidence, not claimed complete original-byte HTTP archives. The browser's underlying fetch/retry count and account-wide cost are unknown; this review has no scientific-source debit claim. Existing private source stops are untouched.
+
+### Complete report page map
+
+| Pages | Content read | Critical disposition |
+| --- | --- | --- |
+| 1 | Operational exhaust thesis; web customer-adoption lead; CC/HA/CrUX/CT ingredients | Sensible hypothesis chain; existence of ingredients does not establish a joined historical feed |
+| 2 | Consumption over commits; seven-family A–C+ ranking | Retain all families; independently revise novelty and first-week feasibility |
+| 3 | Novelty caveat, EDGAR/XBRL paper, repository capabilities and EXP004 lesson | Correct distinction between public and cheap-to-process information; no proof that an edge remains |
+| 4 | Messy signal universe/small security universe; net-adoption equation | Useful scope reversal; simple equations can still hide expensive data construction |
+| 5 | Web and software consumption, trademarks and FCC | Historical ownership, monetization and publication still need evidence |
+| 6 | NHTSA, MAUDE, CT; actions rather than opinions; web lead begins | Regulatory records are reported actions, not verified economic incidence |
+| 7 | Adoption/removal persistence, popularity weights, CT and business linkage | Persistence using a later crawl delays usable time; monthly weights need their own release clocks |
+| 8 | Mechanism-first kill; free/invisible products and detector drift; recalls/pre-recall idea | Adopt the business test; prior-art search finds closer complaint research than the report discusses |
+| 9 | Complaint-rate normalization, communication corroboration, timing caveat; MAUDE starts | Receipt dates are not first public dates; no retrospective lag invented |
+| 10 | MAUDE severity/count formulation and caveats; shadow-launch starts | FDA cautions particularly strongly against interpreting counts as changing defect rates |
+| 11 | Trademark/FCC/web convergence; OSS consumption chain | Interesting frontier, too many new joins for first week; OSS consumption may not monetize |
+| 12 | Dependency adoption candidates, PyPI/GH Archive, monetization test; cyber starts | Distinguish declared requirements, current resolution, exported snapshots and release metadata |
+| 13 | Existing cyber work; docs/API expansion/contraction | Keep cyber prior art; mechanical page/rule selection required for docs idea |
+| 14 | Mechanical docs rules, avoid standalone procurement/trademarks/recalls/cyber; no kitchen-sink ML | Sensible caution; known research does not automatically make every incremental question worthless |
+| 15 | Processing frictions; web nowcast first; stock returns second | Best part of the proposed workflow, conditional on small source feasibility |
+| 16 | Fixed technology/domain panel, five proposed variables, operating outcomes | Start with one transform, not choose among five after examining targets |
+| 17 | Three business/return possibilities, 20-session design and two tracks | Freeze the stock-screen rule before returns, not only after finding delayed incorporation; monthly collection alone does not justify 20-day alpha |
+| 18 | Public data inventory and measurement advantage | Valuable aspiration; no demonstrated exclusive moat or profitability |
+| 19 | Simple trading universe, final recommendation and references 1/2/5/11/21/25/29 | Agree with scope direction; preserve uncertainty about usable history |
+| 20 | Source and academic references 3–27 | Audit below; repeated overview citations support less than some nearby claims |
+| 21 | HTTP Archive Wappalyzer repository reference 28 | Fork exists; code licence is not necessarily dataset/third-party-page redistribution rights |
+
+## What independent checks support—and what they do not
+
+**Verified** below means the publisher documentation or original paper supports the described limited fact. It does not mean an account/API call, full historical dataset or financial mechanism passed certification. Where an opening failed, that failure is recorded rather than hidden by a confident summary.
+
+| Report references / pages | Independent evidence | Limit and decision |
+| --- | --- | --- |
+| 1/11/25/29; pp. 1, 6–7, 13, 18 | [Common Crawl CDXJ index](https://www.commoncrawl.org/cdxj-index) documents capture indexing. | Index/capture timestamps are not necessarily historical index or WARC publication times. Does not establish HTTP Archive, CrUX, CT, complete repeated domain coverage or cheap all-web extraction. No WARC request performed. |
+| 28; pp. 7–8, 16, 21 | [HTTP Archive fork](https://github.com/HTTPArchive/wappalyzer), [technology schema](https://httparchive.org/docs/reference/structs/technology), [pages schema](https://httparchive.org/docs/reference/tables/pages) establish a precomputed technology surface. | Actual historical partitions/configuration not sampled here. [Maintainer discussion](https://discuss.httparchive.org/t/technologies-table/1587) describes retroactive detection work; old HTML age cannot establish when a derived detection existed. |
+| Additional timing check | [HTTP Archive release cycle](https://httparchive.org/docs/guides/release-cycle) distinguishes nominal month, actual testing and publication. [CrUX documentation](https://developer.chrome.com/docs/crux/bigquery) gives next-month release cadence and rank history. | Source-specific release/version evidence still needed. CrUX ranks cannot be used before their release, and a changing popular-origins frame is not an unbiased census of businesses. No optional popularity weighting in MVP. |
+| 4; p. 5 | [Wappalyzer's own description](https://www.wappalyzer.com/about/) establishes a commercial technographic product. More directly, [BuiltWith alternative data](https://builtwith.com/alternative-data) markets customer acquisition/loss data to investment users. | Commercial existence is verified; performance/customer marketing claims are not audited. Do not repeat the page's implausible automated historical-duration counter. Professional obscurity is unsupported. |
+| 2/5/21; pp. 2, 5, 11–12 | [deps.dev overview](https://docs.deps.dev/), [API](https://docs.deps.dev/api/v3/) and [BigQuery schema](https://docs.deps.dev/bigquery/v1/) expose versions, requirements, dependency relations, `SnapshotAt` and `Snapshots`. | No actual earliest snapshot queried. Package publication is distinct from service export/resolution. Package/project metadata links may be unverified. Do not assume an old resolved graph can be reconstructed from today's service. |
+| 22; pp. 2, 12 | [PyPI BigQuery](https://docs.pypi.org/api/bigquery/) documents download logs and immutable release-metadata rows; [GH Archive](https://www.gharchive.org/) describes archived events starting in 2011 and later collection changes. | Historical upload/event time does not establish paid usage, independent customers or every package/repository's full historical public version. Download bots and CI remain confounds. No data queries. |
+| 8/15/16; pp. 6, 8–9 | [NHTSA datasets/layouts](https://www.nhtsa.gov/nhtsa-datasets-and-apis) and [manufacturer-communication page](https://www.nhtsa.gov/es/vehicle-manufacturers/manufacturer-communications) exist. | Current files and receipt-date partitions do not certify original publication/vintage. The complaint import documentation explicitly identifies updateable data. No bulk file downloaded. |
+| 9/17/18; pp. 6, 9–10 | [openFDA device-event page](https://open.fda.gov/apis/device/event/) describes weekly updates and publicly releasable history; [MAUDE guidance](https://www.fda.gov/medical-devices/mandatory-reporting-requirements-manufacturers-importers-and-device-user-facilities/about-manufacturer-and-user-facility-device-experience-maude-database) describes monthly search/bulk updates, supplements and reporting limitations. | Different surfaces have different schedules; date received is not publication. Count acceleration may reflect reporting changes. No adverse-event dataset or financial effect verified. |
+| 6; pp. 5, 11 | [USPTO dataset](https://www.uspto.gov/ip-policy/economic-research/research-datasets/trademark-case-files-dataset) supports about 12.7 million historical applications/registrations through March 2024 and versioned downloads. | Current ownership/prosecution fields can reflect later information. Publisher warns of changed signed-download behavior; rights, API/access and daily-original timing need checking. Not downloaded. |
+| 7/20; pp. 5, 11 | Report's KDB landing reference is not a dated EAS event-feed contract. [FCC experimental system](https://apps.fcc.gov/els) and [official record-system notice](https://www.govinfo.gov/content/pkg/FR-2024-10-25/html/2024-24892.htm) establish public and confidentiality distinctions. | Equipment authorization, experimental permission and commercialization are distinct. Report reference 20 is a third-party regulation mirror; use original FCC/government material for any rule adopted later. No FCC record census or access feasibility certified. |
+| 10/13; pp. 6–7 | [CT log description](https://certificate.transparency.dev/logs/) supports publicly auditable, append-only certificate logs. | Certificate issuance/log inclusion is not launch date, revenue or proof of independent companies. Renewals, precertificates and shared infrastructure require deduplication. No log harvesting. |
+| 23; p. 12 | [CISA catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) opening returned browser 403; [OSV documentation](https://docs.osv.dev/) returned tool errors. | Availability not independently certified in this review; no bypass or bulk API probe. The report's CISA link has vendor/page filters, not an unfiltered population definition. |
+| 3; pp. 3, 15 | [Hirshleifer/Ma original NBER abstract](https://www.nber.org/papers/w32767) supports lower accounting-anomaly mispricing after access/processing improvements. | Initial direct opening failed, search returned the original NBER abstract. This is evidence about that paper's setting, not proof of a current web-data alpha opportunity. |
+| 14; p. 8 | Recall effects are established neighboring literature. Stronger new evidence is [Gokalp et al.](https://doi.org/10.1007/s11156-019-00866-9), explicitly on complaints and financial consequences. | Greenland's exact numerical recall effect and the report's other effect estimate were not independently reproduced. No return magnitudes are adopted as this pilot's expected effect. |
+| 19; pp. 10, 14 | [Hsu et al. original abstract](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3224187) studies trademarks, profitability, returns and analyst underreaction. | Use the canonical abstract rather than treating its old PDF delivery URL as stable. Already-studied mechanism; cross-source convergence remains a separate untested lead. |
+| 24/27; pp. 12–14 | [Liu/Makridis original paper listing](https://papers.ssrn.com/abstract%3D3746589) describes network exposure and returns; [authors' discussion](https://cepr.org/voxeu/columns/cybersecurity-vulnerabilities-and-their-financial-impact) corroborates the research direction. | Canonical SSRN opening returned 403, while search exposed the original abstract. Neither full-paper replication nor a KEV-propagation alpha result is claimed. |
+| 26; p. 14 | [Arora et al. NBER abstract](https://www.nber.org/papers/w33880) establishes government R&D contract/stock-reaction prior art. | Direct opening failed, original abstract was visible in search. Does not show all procurement questions are exhausted; closed repo pilots are not reopened. |
+
+### Access, licensing, cost and exposure corrections
+
+“Public/free data” is not “free computation” or “permission to republish original pages.” HTTP Archive documents BigQuery access and scan costs, but its [FAQ](https://httparchive.org/faq) did not establish an explicit blanket dataset licence in this review. Its code/fork licences cannot be substituted for dataset or captured-page rights. Keep raw pages/provider responses private; verify intended internal research and aggregate publication terms at the source gate. [Access guide](https://httparchive.org/docs/guides/getting-started).
+
+BigQuery's published free allowance is not an account-specific entitlement or remaining quota. A dry run and maximum billed bytes must precede any authorized query; a small result or `LIMIT` does not establish a small scan. No billing/project creation or service enablement occurred. [Cost controls](https://docs.cloud.google.com/bigquery/docs/best-practices-costs), [free program](https://docs.cloud.google.com/free/docs/free-cloud-features).
+
+Issuer examples establish the need for a monetization check. [Shopify's 2023 release](https://www.shopify.com/news/shopify-announces-fourth-quarter-and-full-year-2023-financial-results) describes MRR as affected by both merchants and pricing; [Wix's original 2023 filing](https://www.sec.gov/Archives/edgar/data/1576789/000157678924000011/wix-20231231.htm) distinguishes registered users, premium subscriptions and Creative Subscriptions ARR. Installations cannot be assumed equal to paying customers or dollars. The pilot targets a narrower business metric rather than total consolidated revenue.
+
+The currently readable [Tiingo EOD documentation](https://www.tiingo.com/documentation/end-of-day) specifies raw/adjusted fields and split/dividend adjustment. This supports a proposed return-measurement input, not account entitlement, dated class mapping, execution convention or source perfection. Historical earlier documentation-shell findings remain unchanged. No token was loaded and no authenticated price or metadata request occurred here.
+
+## Documented prior-art search
+
+Search date: 2026-10-20. General web discovery was followed by original publisher/author documentation and paper abstracts. This is a focused scoping search, not an exhaustive bibliographic or private-fund search. Search-result dates were not treated as event/publication times. Incidental snippets are not a dataset or research outcome.
+
+| Search strings used | Closest usable evidence / classification |
+| --- | --- |
+| `"web technology" adoption "stock returns" Wappalyzer`; `"website technologies" "customer" "hedge funds" BuiltWith`; `"technographic" "stock returns"`; `"technographic" "equity" adoption research`; `"website technology" "stock return" adoption` | BuiltWith's direct investment offering is strong commercial prior art. No closely matching public paper found for the precise proposed transform in this limited pass. **Commercialized category; exact academic match not found here.** |
+| `site.builtwith.com investor hedge funds technology trends data`; `site.wappalyzer.com "investment" data` | Provider's own product pages, not an independent profitability audit. Avoid low-crowding claims. |
+| `"NHTSA" "complaints" "stock returns" paper` | Gokalp et al., 2019 online/2020 journal, a directly relevant complaint study. **Known/studied; any incremental interaction must be specified.** |
+| `"open source" dependencies adoption "stock returns" paper` | Aksoy-Yurdagul, 2025, code-contribution announcement reactions; institutional working paper *The Private Value of Open-Source Innovation*, repository-release value. **Studied broader family; consumption-specific gap only provisional.** |
+| `"MAUDE" "stock" "returns" medical device`; `"MAUDE" "stock returns" medical devices finance` | No closely matching primary finance study identified in this small pass. **Apparently sparse direct prior art; not proof of originality.** Publisher data limitations dominate anyway. |
+| `"Do Financial Markets Understand Cybersecurity" Liu Makridis`; original NBER/SSRN title searches | Confirmed nearby cyber, trademark and procurement papers listed above. **Known financial research.** |
+
+The report's FCC/trademark/web and docs/API originality claims remain **provisional leads**, not independently established novelty after a specialist literature review. No such frontier direction was chosen for implementation. Useful bounded additions here are design refinements—precomputed web observations, a two-vendor scope and a mechanism-first benchmark—not extra unbounded data families.
+
+## Review validation
+
+This is documentation-only work. **485 local tests and 257 public tests passed, zero skipped.** The local suite reads existing private fixtures/already-opened EXP001 records for regression; it is not new research. Public checks block external network/private reads. No new tests or implementation were added for these reversible documentation changes.
+
+| Executed check | Result |
+| --- | --- |
+| `python -m unittest discover -s tests -v` | PASS; 485 tests, explicit subprocess return code 0 |
+| `python -m src.research.public_checks` | PASS; 257 tests, return code 0 |
+| `python -m src.presentation.exp001 --check` | PASS; all six deterministic artifacts |
+| `python -m src.research audit EXP004` | PASS; HYPOTHESIS_FROZEN, unchanged spec hash, zero Nexus calls |
+| `python -m src.research.exp004_execution_gap_report --check` | PASS; EXECUTION_GAPS_UNRESOLVED preserved |
+| Relative review links, ranking sums, Markdown fences and `git diff --check` | PASS; 21 relative links resolve, score totals agree |
+| Pre-task SHA-256 inventory | 664 existing tracked files; 660 byte-identical. Only AGENTS, README/template and the roadmap gained the deliberate review pointers. |
+
+New review documents are outside historical experiment/report namespaces. The 660 preserved files include all research code, frozen experiments, prior scientific reports, canonical processed records, metric definitions, dependency pins and the CI workflow. Private source archives/stops were not rewritten; the supplied PDF was copied into its own new ignored directory. Unrelated untracked `.mcp.json` and `check_catalog.py` remain untouched. The original execution-gap validation receipt remains historical, not regenerated as new economic evidence. Commit/push and hosted-CI status are delivery records reported separately.

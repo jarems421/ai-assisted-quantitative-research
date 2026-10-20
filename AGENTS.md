@@ -1,5 +1,13 @@
 # Repository instructions
 
+## Strategic reorientation review (2026-10-20)
+
+- The latest owner instruction is `docs/strategy/owner_reorientation_2026-10-20.md`: review unusual-data mechanisms and propose a practical plan before implementation. The full 21-page supplied report is evaluated in `docs/strategy/evidence_review.md`; its recommendations are leads, not execution authority.
+- `docs/strategy/reorientation_review.md` recommends a small public-web adoption/business-metric pilot, with software-consumption and NHTSA backups. All dates, modeled timing, scope, costs and gates in that proposal await owner approval. No source API/BigQuery/market acquisition, signal, return screen, experiment registration or policy activation is authorized by these review documents.
+- Prefer a small complete economic measurement before production hardening in future separately approved work. Preserve provenance, explicit missingness, trial disclosure and stage boundaries. An adjusted-close return screen is distinct from an executable-fill backtest; it cannot repair or relax EXP004.
+- Earlier operational stops remain intact. EXP004 is paused with all 26 gaps unresolved and no-fill inactive; EXP005/006/007 remain closed. Do not spend old residual budgets, reopen sources, change frozen artifacts, or launch architecture/portfolio/Nexus/Aurora/paper/live work from the strategic review.
+- Stop after verified review documentation/commit/push for owner approval of the concrete plan. Historical instructions below retain their original scope; stale continuation language is not new authority.
+
 ## EXP004 bounded 26-gap forensic closure (2026-10-14)
 
 - `docs/acceleration/owner_exp004_execution_gaps_2026-10-14.md` authorized only the exact 26-case investigation and conditional pre-performance no-fill amendment. Policy/inventory were pushed before sources; the 40-submission ceiling counts new retrievals/submissions, with Lake polls/downloads separate. Preserve all previous freeze, enrichment, V001 ledger and source stops unchanged.

@@ -7,6 +7,8 @@
 
 One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study has complete price enrichment but remains blocked at execution-evidence certification. **No profitable strategy or validated paper/live system has been established.**
 
+**Current direction:** [review unusual public data as economic measurements](docs/strategy/reorientation_review.md), test a small complete case quickly, and harden only what earns further research. The proposed first pilot measures web-platform adoption against business outcomes before a conditional return screen; it awaits owner approval. Existing experiments and their stops are preserved.
+
 ### Six key highlights
 
 - **End-to-end investment research:** completed a benchmarked SPY timing study with frozen selection rules, explicit costs and separate Development, Validation and historical Test windows. Lower risk did not translate into benchmark outperformance; the negative result is retained.
