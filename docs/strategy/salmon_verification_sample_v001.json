@@ -1,0 +1,206 @@
+{
+  "version": "SALMON_FROZEN_SITE_FRAME_V001",
+  "selection_rule": "Three lowest locality IDs in each historical 2021W10 area index filtered to at-sea salmon licences, independent of health fields.",
+  "source_schema_sha256": "4b95578a944443798f2afcb8214d10069b6b931cc733c85646716afdac1cf675",
+  "index_rows_returned": 298,
+  "index_rows_outside_selected_six_ids": 292,
+  "selection_fields_used": [
+    "locality.no",
+    "historical area/species query filters"
+  ],
+  "incidental_index_health_fields": "Retained privately, excluded from selection and all analysis outside the declared sample. Index rows are not independent study observations.",
+  "sites": [
+    {
+      "area": 3,
+      "rank": 1,
+      "locality_id": 10029,
+      "name": "Tuholmane Ø",
+      "metadata_receipt_index": 17
+    },
+    {
+      "area": 3,
+      "rank": 2,
+      "locality_id": 10041,
+      "name": "Kviksholmen",
+      "metadata_receipt_index": 17
+    },
+    {
+      "area": 3,
+      "rank": 3,
+      "locality_id": 10045,
+      "name": "Eidholmen",
+      "metadata_receipt_index": 17
+    },
+    {
+      "area": 6,
+      "rank": 1,
+      "locality_id": 10212,
+      "name": "Bogen",
+      "metadata_receipt_index": 18
+    },
+    {
+      "area": 6,
+      "rank": 2,
+      "locality_id": 10213,
+      "name": "Naustneset",
+      "metadata_receipt_index": 18
+    },
+    {
+      "area": 6,
+      "rank": 3,
+      "locality_id": 10216,
+      "name": "Skåren",
+      "metadata_receipt_index": 18
+    }
+  ],
+  "slots": [
+    {
+      "area": 3,
+      "rank": 1,
+      "locality_id": 10029,
+      "name": "Tuholmane Ø",
+      "metadata_receipt_index": 17,
+      "year": 2021,
+      "week": 10,
+      "initially_dispatched": true,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10029/2021/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10029/vessel/2021/10"
+    },
+    {
+      "area": 3,
+      "rank": 1,
+      "locality_id": 10029,
+      "name": "Tuholmane Ø",
+      "metadata_receipt_index": 17,
+      "year": 2024,
+      "week": 10,
+      "initially_dispatched": false,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10029/2024/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10029/vessel/2024/10"
+    },
+    {
+      "area": 3,
+      "rank": 2,
+      "locality_id": 10041,
+      "name": "Kviksholmen",
+      "metadata_receipt_index": 17,
+      "year": 2021,
+      "week": 10,
+      "initially_dispatched": false,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10041/2021/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10041/vessel/2021/10"
+    },
+    {
+      "area": 3,
+      "rank": 2,
+      "locality_id": 10041,
+      "name": "Kviksholmen",
+      "metadata_receipt_index": 17,
+      "year": 2024,
+      "week": 10,
+      "initially_dispatched": true,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10041/2024/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10041/vessel/2024/10"
+    },
+    {
+      "area": 3,
+      "rank": 3,
+      "locality_id": 10045,
+      "name": "Eidholmen",
+      "metadata_receipt_index": 17,
+      "year": 2021,
+      "week": 10,
+      "initially_dispatched": false,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10045/2021/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10045/vessel/2021/10"
+    },
+    {
+      "area": 3,
+      "rank": 3,
+      "locality_id": 10045,
+      "name": "Eidholmen",
+      "metadata_receipt_index": 17,
+      "year": 2024,
+      "week": 10,
+      "initially_dispatched": false,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10045/2024/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10045/vessel/2024/10"
+    },
+    {
+      "area": 6,
+      "rank": 1,
+      "locality_id": 10212,
+      "name": "Bogen",
+      "metadata_receipt_index": 18,
+      "year": 2021,
+      "week": 10,
+      "initially_dispatched": true,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10212/2021/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10212/vessel/2021/10"
+    },
+    {
+      "area": 6,
+      "rank": 1,
+      "locality_id": 10212,
+      "name": "Bogen",
+      "metadata_receipt_index": 18,
+      "year": 2024,
+      "week": 10,
+      "initially_dispatched": false,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10212/2024/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10212/vessel/2024/10"
+    },
+    {
+      "area": 6,
+      "rank": 2,
+      "locality_id": 10213,
+      "name": "Naustneset",
+      "metadata_receipt_index": 18,
+      "year": 2021,
+      "week": 10,
+      "initially_dispatched": false,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10213/2021/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10213/vessel/2021/10"
+    },
+    {
+      "area": 6,
+      "rank": 2,
+      "locality_id": 10213,
+      "name": "Naustneset",
+      "metadata_receipt_index": 18,
+      "year": 2024,
+      "week": 10,
+      "initially_dispatched": true,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10213/2024/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10213/vessel/2024/10"
+    },
+    {
+      "area": 6,
+      "rank": 3,
+      "locality_id": 10216,
+      "name": "Skåren",
+      "metadata_receipt_index": 18,
+      "year": 2021,
+      "week": 10,
+      "initially_dispatched": false,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10216/2021/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10216/vessel/2021/10"
+    },
+    {
+      "area": 6,
+      "rank": 3,
+      "locality_id": 10216,
+      "name": "Skåren",
+      "metadata_receipt_index": 18,
+      "year": 2024,
+      "week": 10,
+      "initially_dispatched": false,
+      "detail_url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/10216/2024/10",
+      "visits_url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10216/vessel/2024/10"
+    }
+  ],
+  "selected_sites": 6,
+  "selected_slot_denominator": 12,
+  "initially_inspected_slots": 4,
+  "unvisited_slots_are_not_missing": true
+}
