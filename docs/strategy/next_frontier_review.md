@@ -1,5 +1,7 @@
 # Next frontier: a small economic test with proportionate evidence
 
+**Current selection standard:** the owner's subsequent [value-and-competition refinement](frontier_selection_standard.md) adds an explicit assessment of economic relevance, external interest, specific-signal saturation, differentiation and usefulness for all seven candidates. It contains the current research-priority ranking and separates five novelty/profitability claims. The original selection, source findings and unchanged proposed experiment below remain the record; river is first for learning, with no demonstrated investment advantage.
+
 **2026-10-20. Recommendation for approval; no economic study executed.** I recommend a **Level A test of Mississippi low-water pressure and next-week barge freight quotes**. One physical constraint, one freight lane and one feature make the question falsifiable: does the water measurement add anything beyond information already in recent freight prices and seasonality?
 
 The initial primary was nuclear availability and power prices. Its ordinary NRC request returned **403**, so that check stopped. River transport was recorded as backup 1 before dispatch and has **not** been activated. This recommendation preserves the failed selection rather than silently replacing it. [Owner instruction](owner_next_frontier_2026-10-20.md) · [Predispatch card](next_frontier_source_card.json) · [Actual source receipt](next_frontier_source_receipt.json) · [Exact proposed river experiment](river_transport_pilot_proposed.json).

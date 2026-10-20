@@ -1,5 +1,12 @@
 # Repository instructions
 
+## Frontier selection: value and competition (2026-10-20)
+
+- Apply `docs/strategy/owner_frontier_selection_refinement_2026-10-20.md` and `frontier_selection_standard.md` to every frontier candidate. Assess economic relevance, named external interest and its limits, exact-signal saturation, testable differentiation and economic/investment usefulness separately. External research or commercial interest can support relevance; obscurity and missing papers earn no bonus.
+- Distinguish raw-data, mechanism, signal-construction and cross-source novelty from a remaining profitable opportunity. Familiar data do not imply a familiar strategy; commercial products do not automatically disqualify it. Compare the proposed information with what providers actually offer; do not infer purchases, fund usage or profits from marketing.
+- Current qualitative priorities address value and competition explicitly. River is first for bounded economic learning, not demonstrated alpha; FAA remains backup and nuclear remains access-blocked. All exact-signal private usage and remaining profitable advantages are unverified. Integration, interpretation, ownership, attention, timing and capacity frictions are hypotheses to test, never presumed moats.
+- This refinement changes selection reasoning only. Existing source stops and all candidate economics, analysis ceilings and approval boundaries remain unchanged; no pilot, further source campaign or implementation is authorized by it.
+
 ## Next frontier: exploratory economic evidence (2026-10-20)
 
 - `docs/strategy/owner_next_frontier_2026-10-20.md` authorizes seven fresh mechanisms and one bounded source check, not a full historical study. Level A permits disclosed reconstructed economic associations; Level B adds historically available information; Level C adds implementability. This distinction never relaxes frozen experiments or permits invented data, causal claims or alpha from Level A.

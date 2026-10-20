@@ -9,6 +9,8 @@ One investment study is complete, reusable research infrastructure is built, and
 
 **Current direction:** test small unconventional-data relationships for economic value before attempting a trading strategy. The [new research review](docs/strategy/next_frontier_review.md) separates exploratory reconstructed evidence from historically actionable and executable investment evidence. Its initial reactor-data check stopped at an NRC access denial; no economic observations were acquired. A concrete river-level/next-week freight forecasting pilot is proposed for owner approval, with source access and predictive value still untested. Earlier web-adoption findings and all experiment stops are preserved.
 
+**Selection standard:** seek [economic value and plausible competitive differentiation](docs/strategy/frontier_selection_standard.md). Research and commercial interest can support relevance; obscurity earns no credit. Assess the specific signal and closest substitutes separately from familiarity with its dataset. No remaining profitable advantage has been demonstrated.
+
 ### Six key highlights
 
 - **End-to-end investment research:** completed a benchmarked SPY timing study with frozen selection rules, explicit costs and separate Development, Validation and historical Test windows. Lower risk did not translate into benchmark outperformance; the negative result is retained.
