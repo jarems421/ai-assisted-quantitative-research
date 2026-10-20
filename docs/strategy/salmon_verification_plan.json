@@ -1,0 +1,50 @@
+{
+  "version": "SALMON_SOURCE_VERIFICATION_V001",
+  "owner_instruction": "owner_salmon_verification_2026-10-20.md",
+  "starting_head": "7a1a4b173d31261d35d3b24ac1c80863fba59879",
+  "scope_recorded_utc": "2026-10-20T21:36:15+00:00",
+  "level": "SOURCE_VERIFICATION_ONLY",
+  "maximum_active_work_hours": 16,
+  "maximum_wall_deadline_utc": "2026-10-22T21:36:15+00:00",
+  "maximum_ordinary_starts": 30,
+  "maximum_total_response_bytes": 20971520,
+  "maximum_response_bytes": 4194304,
+  "minimum_seconds_between_starts": 1,
+  "automatic_retries": 0,
+  "paid_spending_authorized": false,
+  "commercial_shipinfo_authorized": false,
+  "registration_or_contact_authorized": false,
+  "selection": {
+    "maximum_sites": 6,
+    "production_areas": [3, 6],
+    "site_rule": "From the source historical register at 2021 week 10, the three lowest numeric locality IDs in each area permitting salmon production. Preserve missing/quiet sites and owner changes. Freeze exact IDs and routes in a separately hashed manifest before health/visit requests. No outcome-selected replacements.",
+    "site_weeks": [[2021, 10], [2024, 10]],
+    "maximum_site_weeks": 12,
+    "maximum_shared_vessels": 2,
+    "maximum_historical_owner_parent_bridges": 2,
+    "maximum_charter_access_disclosures": 2,
+    "fallback": "NONE"
+  },
+  "stages": [
+    "Read exact rights, authentication and field/schema documentation; do not call commercial shipinfo.",
+    "If free legitimate access and meaningful task linkage exist, freeze representative IDs/routes and retrieve only the bounded sample.",
+    "Check actual treatment-vessel attribution, independent economic ownership, dated prior-only resource availability, field-level history and independent sample units.",
+    "Stop early if an essential distinctive input cannot be established; report unknowns rather than replacing the hypothesis."
+  ],
+  "source_hosts_initial": ["developer.barentswatch.no", "www.barentswatch.no"],
+  "initial_routes": [
+    "https://developer.barentswatch.no/docs/fishhealth/",
+    "https://www.barentswatch.no/en/articles/api-terms-and-conditions/",
+    "https://www.barentswatch.no/bwapi/openapi/index.html?urls.primaryName=Fishhealth+API"
+  ],
+  "discovery_rule": "Only explicit official documentation/schema links or same-source documented routes; archive why each was selected. No alternate provider/host rescue after denial. Schema-derived public application routes are not permission to bypass authentication or endpoint-specific rights.",
+  "browser_review": "Documentation browser calls recorded separately; underlying wire counts unknown. Avoid duplicating scientific requests through the browser.",
+  "body_storage": "data/raw/salmon_verification_20261020_v001/",
+  "timing_rule": "Keep measurement, reporting, update, public and retrieval times distinct. Later visits cannot establish earlier service eligibility; current ownership cannot fill historical ownership.",
+  "stop_rules": [
+    "No retries after access denial; stop that route. No alternate-provider rescue.",
+    "Stop at count, time or body limits; never treat a truncated response as a complete sample.",
+    "If task/capability, shared independent ownership, prior-only availability or usable rights/history cannot be established, do not approve a full pilot.",
+    "No economic tests, stock prices/returns, full dataset, generic lice fallback, backup activation, frozen experiment changes or cloud jobs."
+  ]
+}
