@@ -1,0 +1,55 @@
+{
+  "status": "PRE_DISPATCH_SOURCE_SAMPLE_ONLY",
+  "created_date": "2026-10-20",
+  "scope": "Fixed December 2019 and two approved four-month blocks; no feature, KPI or return calculation",
+  "billing_basis": "All three currently linked billing-account projects returned complete October job inventories with zero jobs. Billing remains enabled; two no-cost administrative APIs enabled for inspection. Account identifiers and original responses remain private. This is a current-project usage inventory, not a billing invoice or guarantee about unrelated future usage.",
+  "guards": {
+    "max_executed_queries_week": 12,
+    "max_bytes_per_query": 26843545600,
+    "max_bytes_week": 549755813888,
+    "max_export_bytes_week": 2147483648,
+    "primary_deadline_utc": "2026-10-20T11:38:11+00:00",
+    "paid_spend_authorized": false,
+    "external_functions_or_remote_models": false,
+    "persistent_destination_tables": false,
+    "automatic_retries": false
+  },
+  "queries": [
+    {
+      "name": "dec2019_sample_v001",
+      "sql": "SELECT date, client, page, root_page, wptid, technologies,\nJSON_VALUE(payload, '$.result') AS result,\nJSON_VALUE(payload, '$.date') AS actual_test_epoch,\nJSON_VALUE(payload, '$.lib-detector-version') AS library_detector_version,\nTO_JSON_STRING(metadata) AS source_metadata\nFROM `httparchive.crawl.pages`\nWHERE date = '2019-12-01' AND client = 'desktop' AND is_root_page\nORDER BY SHA256(root_page), wptid LIMIT 20",
+      "sql_sha256": "4c5f0b12541691ef6567c00e2cff93db78b8dfd9a7253f0ccf2e13a14c87d9d8",
+      "maximum_bytes_billed": 26843545600,
+      "maximum_output_rows": 20
+    },
+    {
+      "name": "2020_block_neutral_v001",
+      "sql": "SELECT date, client, page, root_page, wptid, technologies FROM `httparchive.crawl.pages` WHERE date IN ('2020-01-01','2020-02-01','2020-03-01','2020-04-01') AND client = 'desktop' AND is_root_page QUALIFY ROW_NUMBER() OVER (PARTITION BY date ORDER BY SHA256(root_page), wptid) <= 20",
+      "sql_sha256": "c9cd85a91b5794bcc0c86011f01999355c503686dbd2faa5a1e6e2c25eb2ee47",
+      "maximum_bytes_billed": 26843545600,
+      "maximum_output_rows": 80
+    },
+    {
+      "name": "2023_apr_may_neutral_v001",
+      "sql": "SELECT date, client, page, root_page, wptid, technologies FROM `httparchive.crawl.pages` WHERE date IN ('2023-04-01','2023-05-01') AND client = 'desktop' AND is_root_page QUALIFY ROW_NUMBER() OVER (PARTITION BY date ORDER BY SHA256(root_page), wptid) <= 20",
+      "sql_sha256": "95a06d48105ad6620486d1e478db78fc2ee0cff556c9e5d5e7f08e44732f3dd9",
+      "maximum_bytes_billed": 26843545600,
+      "maximum_output_rows": 40
+    },
+    {
+      "name": "2023_jun_jul_neutral_v001",
+      "sql": "SELECT date, client, page, root_page, wptid, technologies FROM `httparchive.crawl.pages` WHERE date IN ('2023-06-01','2023-07-01') AND client = 'desktop' AND is_root_page QUALIFY ROW_NUMBER() OVER (PARTITION BY date ORDER BY SHA256(root_page), wptid) <= 20",
+      "sql_sha256": "6650267933d3ac63f3afde1d488b0ad7f367a94258fdf4b0ceeed480bacc9ad1",
+      "maximum_bytes_billed": 26843545600,
+      "maximum_output_rows": 40
+    },
+    {
+      "name": "dec2019_payload_layout_v002",
+      "sql": "SELECT date, page, root_page, wptid, TO_JSON_STRING(payload) AS original_payload, TO_JSON_STRING(metadata) AS source_metadata FROM `httparchive.crawl.pages` WHERE date = '2019-12-01' AND client = 'desktop' AND is_root_page AND wptid IN ('191220_DxD_TCW','191209_Dx4C_8JYQ') ORDER BY wptid",
+      "sql_sha256": "925391b570389c9b46e8371f203d5dcee637336a306916d46d536869a679b96b",
+      "maximum_bytes_billed": 26843545600,
+      "maximum_output_rows": 2
+    }
+  ],
+  "reason_for_v002": "The first 20 neutral records had null projected JSON paths; inspect two exact already sampled payloads to distinguish wrong historical layout from absent source fields. No vendor/feature/outcome selection."
+}
