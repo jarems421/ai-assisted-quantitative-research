@@ -1,5 +1,12 @@
 # Repository instructions
 
+## Approved web-adoption pilot: bounded Day 1 (2026-10-20)
+
+- `docs/strategy/owner_web_adoption_pilot_approval_2026-10-20.md` approves the exact previously proposed pilot and conditional continuation. `web_adoption_day1_card.md` records the source gate and limits; do not ask for renewed approval within that scope.
+- Establish actual historical HTTP Archive access, detector lineage and specific-version publication bounds first. Primary maximum eight working hours, implemented conservatively as eight elapsed hours from 03:38:11 UTC. No paid billing/purchases/upgrades/cloud charges; BigQuery requires already authorized free/sandbox access and adequate quota. Missing setup is not evidence of historical source absence.
+- Keep SHOP/WIX, MRR/Creative Subscriptions ARR, source frame, feature and horizon unchanged. If primary passes, continue only through predefined gates; if it stops, bounded software-consumption then NHTSA feasibility only, at most two hours each. No fourth candidate, broad source rescue or new infrastructure.
+- Preserve all old experiments/stops and proposal-time review documents. EXP004 remains paused, no-fill inactive; no reuse of its four remaining source submissions. Actual counts, evidence, costs and economic results take priority over software-only success claims.
+
 ## Strategic reorientation review (2026-10-20)
 
 - The latest owner instruction is `docs/strategy/owner_reorientation_2026-10-20.md`: review unusual-data mechanisms and propose a practical plan before implementation. The full 21-page supplied report is evaluated in `docs/strategy/evidence_review.md`; its recommendations are leads, not execution authority.
