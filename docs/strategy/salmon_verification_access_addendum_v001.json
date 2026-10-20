@@ -1,0 +1,35 @@
+{
+  "version": "SALMON_AUTHENTICATED_CHECK_V001",
+  "authorization": "Owner reports free API-client setup complete; ordinary existing-client access only. No registration, commercial entitlement or economic pilot is performed by this task.",
+  "previous_checkpoint": "c9ad6092ae5d28da2237c1da0451604ecd636e91",
+  "limits_unchanged": true,
+  "starts_used_before_resume": 15,
+  "starts_remaining_including_token_exchange": 15,
+  "authentication": {
+    "url": "https://id.barentswatch.no/connect/token",
+    "method": "POST",
+    "grant_type": "client_credentials",
+    "scope": "api",
+    "provenance": "Official registration documentation already archived as original 005.",
+    "credentials": "Read locally from ignored .env; never print, commit or place in URLs. Preserve token response privately; public receipts contain status/hash/count only.",
+    "automatic_refresh_or_retries": false
+  },
+  "selection_index": {
+    "method": "POST",
+    "url": "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/2021/10",
+    "bodies": [
+      {"productionArea": 3, "onlyWithSalmonoidLicense": true, "licenseSpecies": ["laks"], "isOnLand": false},
+      {"productionArea": 6, "onlyWithSalmonoidLicense": true, "licenseSpecies": ["laks"], "isOnLand": false}
+    ],
+    "reason": "This documented, read-only query endpoint is the available area/week index. Selection uses locality ID and historic licensing/geography only. Server responses also contain health summaries: retain and count those returned records explicitly, but do not use health fields for selection or analyse nonselected sites.",
+    "frame": "Keep the original rule: the three lowest IDs in each area, weeks 10/2021 and 10/2024. Freeze all twelve slots before detailed requests. Metadata-index rows outside this selected frame are not independent sample observations."
+  },
+  "sampling_allocation": {
+    "maximum_detailed_site_weeks_initial": 4,
+    "fixed_order": ["area3 rank1 2021W10", "area6 rank1 2021W10", "area3 rank2 2024W10", "area6 rank2 2024W10"],
+    "reason": "The twelve-slot frame is a maximum. Preserve eight initially unvisited slots. Four detail-plus-visit pairs leave four ordinary starts for at most two weekly vessel tracks and two dated ownership evidence documents, or further already-framed slots if no vessel candidate exists. Do not replace quiet/missing sites or expand the frame.",
+    "vessel_selection": "At most two lowest numeric MMSIs observed at two different frozen sites in the same week; if none are shared, inspect at most two lowest numeric wellboat MMSIs in the observed sample to check wider weekly visited-site evidence. No future visits define earlier eligibility.",
+    "vessel_track_scope": "A selected vessel's one-week track can contain other visited sites. Count these as extra source context, not additional selected farm/treatment observations. Do not acquire extra farm histories to convert them into an expanded cohort."
+  },
+  "terminal_rule": "Return a completed bounded verification with all four gates and unknowns explicit. If distinctive task/sharing/prior-availability conditions cannot be established, do not authorize a full pilot, generic lice model or automatic backup."
+}
