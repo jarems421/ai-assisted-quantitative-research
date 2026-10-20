@@ -1,5 +1,7 @@
 # Frontier selection: economic value and competitive differentiation
 
+**Current discovery state:** the framework below is preserved. Its seven-candidate ranking is previous proposal history, superseded by the [twenty-candidate investigation](expanded_discovery_report.md). The owner explicitly did **not** approve the river experiment. No old ranking, source plan or learning-task label constitutes execution authority.
+
 **2026-10-20. Governing refinement for all frontier candidates.** Apply the [owner's instruction](owner_frontier_selection_refinement_2026-10-20.md) alongside the [Level A/B/C framework](next_frontier_review.md). Seek economic value, unconventional information and plausible competitive underexploitation together. Obscurity earns no credit; a familiar source is neither an automatic rejection nor evidence of an available edge.
 
 ## What each candidate must explain

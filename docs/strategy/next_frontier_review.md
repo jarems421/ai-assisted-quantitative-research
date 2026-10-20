@@ -1,5 +1,7 @@
 # Next frontier: a small economic test with proportionate evidence
 
+**Historical proposal; river NOT APPROVED.** The [expanded owner brief](owner_expanded_discovery_2026-10-20.md) explicitly rejects interpreting the earlier river preference as acceptance. The [new twenty-candidate discovery](expanded_discovery_report.md) supersedes this shortlist for further selection; original source findings and design details below remain unchanged. No acquisition or economic study follows automatically.
+
 **Current selection standard:** the owner's subsequent [value-and-competition refinement](frontier_selection_standard.md) adds an explicit assessment of economic relevance, external interest, specific-signal saturation, differentiation and usefulness for all seven candidates. It contains the current research-priority ranking and separates five novelty/profitability claims. The original selection, source findings and unchanged proposed experiment below remain the record; river is first for learning, with no demonstrated investment advantage.
 
 **2026-10-20. Recommendation for approval; no economic study executed.** I recommend a **Level A test of Mississippi low-water pressure and next-week barge freight quotes**. One physical constraint, one freight lane and one feature make the question falsifiable: does the water measurement add anything beyond information already in recent freight prices and seasonality?

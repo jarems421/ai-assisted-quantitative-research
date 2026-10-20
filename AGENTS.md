@@ -5,6 +5,7 @@
 - `docs/strategy/owner_expanded_discovery_2026-10-20.md` requires a fresh 15–25-candidate investigation, five substantive deep dives, top three with precise differentiation and one further-investigation recommendation/source plan. Preserve the agreed value/competition standard; do not recycle the old seven or choose merely for quick testing.
 - River is explicitly NOT APPROVED. Earlier preferred-learning-task language records a proposal, not owner acceptance. No river source check, pilot, old-source rescue or automatic backup is authorized.
 - This scope permits public documentation/academic/commercial-offering review only: no economic tests, full dataset acquisition, spending, architecture rewrite, frozen-experiment changes or altered source stops. Distinguish source documentation from API access, complete history, public-time evidence, exposure certificates and profitable opportunities. All private competitive use remains unknown absent evidence.
+- `expanded_discovery_report.md` completes twenty fresh candidate investigations and five deep dives. F01 shared salmon treatment capacity is recommended for a later bounded verification; F02 provider payment wedges and F03 use-specific chemical permissions complete the top three. Their precise differences from close academic/commercial work are documented, not proved profitable or globally original. No source-verification plan has run and no pilot is activated.
 
 ## Frontier selection: value and competition (2026-10-20)
 
