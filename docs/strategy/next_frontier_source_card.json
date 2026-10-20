@@ -1,0 +1,41 @@
+{
+  "status": "PRIMARY_SELECTED_SOURCE_CHECK_ONLY",
+  "selection_date": "2026-10-20",
+  "primary": "Nuclear reactor availability losses and subsequent regional wholesale electricity prices",
+  "backups": [
+    "Mississippi water levels and barge freight pressure",
+    "FAA capacity advisories and airline cancellation spillovers"
+  ],
+  "alternatives_considered": [
+    "MSHA mine withdrawal orders and subsequent mine production",
+    "PTAB adverse patent decisions and competitor exposure",
+    "EPA facility enforcement and customer/supplier disruption",
+    "NLRB election outcomes and labor-cost exposure"
+  ],
+  "selection_reason": "A direct operational scarcity mechanism, original daily administrative observations, a small physical outcome dataset and existing nearest-neighbor research. The merit-order mechanism is known; novelty, delayed equity response and underexploitation are unproved.",
+  "evidence_target": "Level A reconstructed descriptive association only; no historical actionability or executable profitability claim",
+  "source_check_started_utc": "2026-10-20T04:54:52.140568+00:00",
+  "deadline_utc": "2026-10-20T08:54:52.140568+00:00",
+  "limits": {
+    "ordinary_source_requests_including_manual_corrections": 24,
+    "response_bytes": 4194304,
+    "total_response_bytes": 20971520,
+    "minimum_start_spacing_seconds": 1,
+    "automatic_retries": 0,
+    "cloud_queries": 0,
+    "paid_spend": 0,
+    "new_services_or_billing_changes": false
+  },
+  "fixed_report_dates": [
+    "2018-01-03",
+    "2018-01-04",
+    "2018-01-05",
+    "2023-07-05",
+    "2023-07-06",
+    "2023-07-07"
+  ],
+  "selection_of_dates": "Two three-day calendar blocks fixed before retrieval; all reactor rows retained. No famous outage or observed price selected. Exact routes must be evidenced by publisher indexes.",
+  "outcome_source_probe": "At most one small 2023 EIA/ICE annual electricity workbook and corresponding gas workbook, inspect schemas and first three source-order PJM/TETCO observations only. No signal-outcome join or effect calculation.",
+  "pass_for_proposal": "Actual source rows, consistent unit/date fields, a usable outcome schema and a manageable proposed sample; historical publication/revision limitations may be retained at Level A. Missing exact historical public versions alone does not fail Level A.",
+  "stop": "Any denied route stops its requests; no bypass or automatic backup. A decisive primary limitation ends the source check. Full sample, joins, event counts, statistical estimates and returns require subsequent owner approval."
+}
