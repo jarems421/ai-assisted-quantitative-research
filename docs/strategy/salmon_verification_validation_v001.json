@@ -1,0 +1,60 @@
+{
+  "version": "SALMON_VERIFICATION_CHECKPOINT_VALIDATION_V001",
+  "created_at_utc": "2026-10-20T21:45:42.953437+00:00",
+  "purpose": "Delivery/preservation of an incomplete source verification, not an economic result or passing source gate",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "status": "PASS",
+      "return_code": 0,
+      "tests": 485,
+      "skipped": 0
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "status": "PASS",
+      "return_code": 0,
+      "tests": 257,
+      "skipped": 0
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "status": "PASS",
+      "artifacts": 6
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "status": "PASS",
+      "stage": "HYPOTHESIS_FROZEN",
+      "nexus_calls": 0
+    },
+    {
+      "command": "python -m src.research.exp004_execution_gap_report --check",
+      "status": "PASS",
+      "state": "EXECUTION_GAPS_UNRESOLVED"
+    },
+    {
+      "command": "Private local body SHA-256 verification",
+      "status": "PASS",
+      "bodies": 15
+    },
+    {
+      "command": "Verification JSON, report relative links/fences and git diff --check",
+      "status": "PASS"
+    }
+  ],
+  "prior_tracked_files": 690,
+  "byte_identical_prior_files": 686,
+  "changed_prior_files": [
+    "AGENTS.md",
+    "README.md",
+    "docs/acceleration/master_plan.md",
+    "src/presentation/README.template.md"
+  ],
+  "baseline_head": "7a1a4b173d31261d35d3b24ac1c80863fba59879",
+  "frozen_experiments_raw_stops_metrics_requirements": "UNCHANGED",
+  "source_review_receipt_sha256": "e377e8a2c223e97e11a54b0581218ed3e7a8c3cf4c07fb834a27124f21aa86e9",
+  "owner_instruction_sha256": "23dadea71c461dd732701dadb08d3050dce8507a4488e90080d334b7f24d83a4",
+  "private_fetch_helper_sha256": "168d6d9ee62c03fa0bd5a590cab02a7859995ddd54b4e9b5978717e7909cea61",
+  "scientific_state": "IN_PROGRESS_API_CLIENT_REQUIRED"
+}

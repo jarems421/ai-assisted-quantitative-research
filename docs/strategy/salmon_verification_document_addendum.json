@@ -1,0 +1,12 @@
+{
+  "version": "SALMON_DOCUMENT_ROUTES_V001",
+  "scope": "Only the two issuer disclosures already identified in the approved discovery deep dive; illustrative contract/capability evidence, not selected farm-week observations or permission for fleet acquisition.",
+  "additional_hosts": ["www.masoval.no"],
+  "exact_routes": [
+    "https://www.masoval.no/en/announcements/masoval-as-increases-wellboat-capacity/",
+    "https://www.masoval.no/en/artikler/njord-kya-christened-at-siholmen-strengthens-wellboat-capacity-at-masoval/"
+  ],
+  "limits_unchanged": true,
+  "sample_not_selected_from_these_examples": true,
+  "warning": "The announcement is May 2024 and commissioning is April 2025. Neither can establish access for the proposed March 2021 or March 2024 sample. A future charter is not contemporaneous operational availability or shared cross-owner treatment evidence."
+}

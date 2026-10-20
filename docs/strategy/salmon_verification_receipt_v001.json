@@ -1,0 +1,429 @@
+{
+  "version": "SALMON_VERIFICATION_PROGRESS_V001",
+  "status": "IN_PROGRESS_API_CLIENT_REQUIRED",
+  "created_at_utc": "2026-10-20T21:43:39.340180+00:00",
+  "starting_head": "7a1a4b173d31261d35d3b24ac1c80863fba59879",
+  "predispatch_checkpoint": "7a33bce",
+  "plan_sha256": "840cae16e2599994297d9984115bde2201617ceb1c61928c56e5603221944edb",
+  "document_addendum_sha256": "1f2ce2c112d76b502be6e8f95b8e5b5b7dc28d8cbc94438615157627da2924ec",
+  "ordinary_http_starts": 15,
+  "response_bytes": 1179966,
+  "http_status_counts": {
+    "200": 14,
+    "301": 1
+  },
+  "automatic_retries": 0,
+  "minimum_start_gap_seconds": 1.050314,
+  "browser_review": {
+    "calls": 4,
+    "search_queries": 11,
+    "direct_opens": 1,
+    "wire_starts": "UNKNOWN"
+  },
+  "originals": [
+    {
+      "index": 1,
+      "url": "https://developer.barentswatch.no/docs/fishhealth/",
+      "purpose": "rights-fields",
+      "started_at_utc": "2026-10-20T21:37:24.437244+00:00",
+      "retrieved_at_utc": "2026-10-20T21:37:24.928183+00:00",
+      "status": 200,
+      "body_sha256": "74894352252150ab616934f2648c68d7cd1e02acd732d010c4334f79e8fb4922",
+      "body_bytes": 20130,
+      "complete": true
+    },
+    {
+      "index": 2,
+      "url": "https://www.barentswatch.no/en/articles/api-terms-and-conditions/",
+      "purpose": "general-terms",
+      "started_at_utc": "2026-10-20T21:37:25.487689+00:00",
+      "retrieved_at_utc": "2026-10-20T21:37:25.849441+00:00",
+      "status": 200,
+      "body_sha256": "17ac953eaf602793f74a54cfb2ecf8bd78cd7430961e97fdf7fd454f9d71219b",
+      "body_bytes": 20523,
+      "complete": true
+    },
+    {
+      "index": 3,
+      "url": "https://developer.barentswatch.no/docs/appreg",
+      "purpose": "registration-and-authentication",
+      "started_at_utc": "2026-10-20T21:37:33.874418+00:00",
+      "retrieved_at_utc": "2026-10-20T21:37:34.041223+00:00",
+      "status": 301,
+      "body_sha256": "9e17cb15dd75bbbd5dbb984eda674863c3b10ab72613cf8a39a00c3e11a8492a",
+      "body_bytes": 162,
+      "complete": true
+    },
+    {
+      "index": 4,
+      "url": "https://www.barentswatch.no/bwapi/openapi/index.html?urls.primaryName=Fishhealth%20API",
+      "purpose": "linked-openapi-shell",
+      "started_at_utc": "2026-10-20T21:37:34.924842+00:00",
+      "retrieved_at_utc": "2026-10-20T21:37:35.169264+00:00",
+      "status": 200,
+      "body_sha256": "0287914a335217a42c746cf8e755808c6fce36f36dd8b6cf8107a2a5de489450",
+      "body_bytes": 759,
+      "complete": true
+    },
+    {
+      "index": 5,
+      "url": "https://developer.barentswatch.no/docs/appreg/",
+      "purpose": "redirected-registration-documentation",
+      "started_at_utc": "2026-10-20T21:37:44.245718+00:00",
+      "retrieved_at_utc": "2026-10-20T21:37:44.655273+00:00",
+      "status": 200,
+      "body_sha256": "736812ec4c44e955e8e81fd6a32b9622b902d397cf500e87dc2ff0a800b11e40",
+      "body_bytes": 26312,
+      "complete": true
+    },
+    {
+      "index": 6,
+      "url": "https://www.barentswatch.no/bwapi/openapi/index.js",
+      "purpose": "explicitly-linked-openapi-configuration",
+      "started_at_utc": "2026-10-20T21:37:45.296034+00:00",
+      "retrieved_at_utc": "2026-10-20T21:37:45.674858+00:00",
+      "status": 200,
+      "body_sha256": "85bc466eaf757a14253971ce56feeb81431cae3d8e6dc97677675ff49c8dda2e",
+      "body_bytes": 3991,
+      "complete": true
+    },
+    {
+      "index": 7,
+      "url": "https://www.barentswatch.no/bwapi/openapi/fishhealth/openapi.json",
+      "purpose": "schema-explicitly-selected-by-swagger-configuration",
+      "started_at_utc": "2026-10-20T21:38:04.356383+00:00",
+      "retrieved_at_utc": "2026-10-20T21:38:05.134355+00:00",
+      "status": 200,
+      "body_sha256": "4b95578a944443798f2afcb8214d10069b6b931cc733c85646716afdac1cf675",
+      "body_bytes": 679076,
+      "complete": true
+    },
+    {
+      "index": 8,
+      "url": "https://www.barentswatch.no/en/tutorials/fish-health/",
+      "purpose": "field-history-and-reporting-guide",
+      "started_at_utc": "2026-10-20T21:38:33.700687+00:00",
+      "retrieved_at_utc": "2026-10-20T21:38:33.940042+00:00",
+      "status": 200,
+      "body_sha256": "9e7095c229bc0e2fb77d66c70276724f4607957cbe5105d244efc4f6b3bc1aa9",
+      "body_bytes": 31117,
+      "complete": true
+    },
+    {
+      "index": 9,
+      "url": "https://www.barentswatch.no/en/articles/updates-in-the-fishhealth-service/",
+      "purpose": "vessel-history-boundary",
+      "started_at_utc": "2026-10-20T21:38:34.751135+00:00",
+      "retrieved_at_utc": "2026-10-20T21:38:35.172760+00:00",
+      "status": 200,
+      "body_sha256": "05782ee689980c35cee985a94adb27b739a8b6254d5bbd416fa71714fb5e73ab",
+      "body_bytes": 18490,
+      "complete": true
+    },
+    {
+      "index": 10,
+      "url": "https://www.barentswatch.no/veiledning/fiskehelse-forklaring-og-bruksanvisning/",
+      "purpose": "task-meaning-and-visit-methodology",
+      "started_at_utc": "2026-10-20T21:38:35.801520+00:00",
+      "retrieved_at_utc": "2026-10-20T21:38:36.092590+00:00",
+      "status": 200,
+      "body_sha256": "3770047a101028f0bdceb935fb07a71e882c3ddb259c788b93936b87b791333d",
+      "body_bytes": 34230,
+      "complete": true
+    },
+    {
+      "index": 11,
+      "url": "https://www.barentswatch.no/veiledning/fiskehelse-spoersmaal-og-svar/",
+      "purpose": "official-visit-and-treatment-ambiguity",
+      "started_at_utc": "2026-10-20T21:39:42.056964+00:00",
+      "retrieved_at_utc": "2026-10-20T21:39:42.347219+00:00",
+      "status": 200,
+      "body_sha256": "c44fb716ed76bb1b844ab72f422f5a4afcef86fa1a1e98cb9ff8303715ea7d1a",
+      "body_bytes": 29749,
+      "complete": true
+    },
+    {
+      "index": 12,
+      "url": "https://www.barentswatch.no/artikler/trafikken-mellom-merdene/",
+      "purpose": "source-linked-explanation-of-what-visits-measure",
+      "started_at_utc": "2026-10-20T21:40:00.057903+00:00",
+      "retrieved_at_utc": "2026-10-20T21:40:00.365571+00:00",
+      "status": 200,
+      "body_sha256": "9bc56e8352b930eee30507813b532039039158b1f9adc02d27b64155ff5a8bbd",
+      "body_bytes": 26684,
+      "complete": true
+    },
+    {
+      "index": 13,
+      "url": "https://www.masoval.no/en/announcements/masoval-as-increases-wellboat-capacity/",
+      "purpose": "preidentified-original-charter-example-not-sample",
+      "started_at_utc": "2026-10-20T21:40:56.777985+00:00",
+      "retrieved_at_utc": "2026-10-20T21:40:57.568461+00:00",
+      "status": 200,
+      "body_sha256": "eab97256c1e3bd9f2b5e26fd56360ea637698ae1d0ab9b000650e7305f13c590",
+      "body_bytes": 129036,
+      "complete": true
+    },
+    {
+      "index": 14,
+      "url": "https://www.masoval.no/en/artikler/njord-kya-christened-at-siholmen-strengthens-wellboat-capacity-at-masoval/",
+      "purpose": "preidentified-commissioning-example-not-prior-access",
+      "started_at_utc": "2026-10-20T21:40:57.828299+00:00",
+      "retrieved_at_utc": "2026-10-20T21:40:58.491521+00:00",
+      "status": 200,
+      "body_sha256": "6e6ae41536ff30e1100f64c95e976091e89cf83efaeff67d4cb24ddd56b0c683",
+      "body_bytes": 138658,
+      "complete": true
+    },
+    {
+      "index": 15,
+      "url": "https://www.barentswatch.no/artikler/viser-bronnbater-i-fiskehelse/",
+      "purpose": "linked-older-wellboat-history-not-all-vessel-history",
+      "started_at_utc": "2026-10-20T21:41:50.967410+00:00",
+      "retrieved_at_utc": "2026-10-20T21:41:51.430390+00:00",
+      "status": 200,
+      "body_sha256": "ea591de66c4e9618acf9cccd8fefa8650dfe0ce67fc94c6abb0f8f27a4d2207f",
+      "body_bytes": 21049,
+      "complete": true
+    }
+  ],
+  "schema_review": {
+    "receipt_index": 7,
+    "paths": 128,
+    "schema_definitions": 192,
+    "global_security": [
+      {
+        "oauth2": [
+          "api"
+        ]
+      }
+    ],
+    "selected_model_properties": [
+      {
+        "schema": "BW.Api.Api.VesselTrackWeeks.Models.VesselVisit",
+        "properties": [
+          "mmsi",
+          "vesselName",
+          "startTime",
+          "stopTime",
+          "shipType",
+          "isWellboat",
+          "isSlaughterBoat",
+          "shipRegisterVesselType",
+          "shipRegisterVesselTypeNameNo",
+          "shipRegisterVesselTypeNameEn"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.VesselTrackWeeks.Models.VesselTrackLocalityWeek",
+        "properties": [
+          "localityNo",
+          "year",
+          "week",
+          "analysisBasedOnSurfaceArea",
+          "anlysisBasedOnSurfaceArea",
+          "weekIsAnalyzed",
+          "vesselVisits"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.VesselTrackWeeks.Models.TrackAnalysis",
+        "properties": [
+          "id",
+          "isBasedOnSurfaceArea",
+          "vesselTrackWeekId",
+          "localityWaypoints",
+          "hasDiseaseZoneVisitsAnalysis",
+          "diseaseZoneVisits",
+          "hasProductionAreaVisitsAnalysis",
+          "productionAreaVisits",
+          "hasSlaughterhouseVisitsAnalysis",
+          "slaughterhouseVisits"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.Licereport.Models.LiceReport.Treatment",
+        "properties": [
+          "id",
+          "treatmentType",
+          "startDate",
+          "endDate",
+          "entireLocality",
+          "treatmentDetail"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.Licereport.Models.LiceReport.NonMedicinalTreatment",
+        "properties": [
+          "id",
+          "type",
+          "doneBeforeLiceCount",
+          "entireLocality",
+          "numberOfCages"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.Licereport.Models.LiceReport.MedicinalTreatment",
+        "properties": [
+          "id",
+          "type",
+          "doneBeforeLiceCount",
+          "entireLocality",
+          "numberOfCages",
+          "substanceId",
+          "concentrationValue",
+          "concentrationUnit",
+          "amountValue",
+          "amountUnit",
+          "otherSubstance"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.Licereport.Models.LiceReport.CombinationTreatment",
+        "properties": [
+          "id",
+          "liceReportId",
+          "nonMedicinalTreatments",
+          "medicinalTreatments"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.Licereport.Models.LiceReport.MechanicalRemoval",
+        "properties": [
+          "id",
+          "entireLocality",
+          "method"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.FishhealthDownload.Models.TreatmentsExportDto",
+        "properties": [
+          "week",
+          "year",
+          "localityNo",
+          "localityName",
+          "treatmentType",
+          "treatmentSubType",
+          "substance",
+          "speciesId",
+          "species",
+          "quantity",
+          "treatmentScope",
+          "municipalityNo",
+          "municipality",
+          "countyNumber",
+          "county",
+          "lat",
+          "lon",
+          "productionAreaId",
+          "productionAreaName",
+          "numberOfCages"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.Licereport.Models.LocalityWeek",
+        "properties": [
+          "id",
+          "localityNo",
+          "year",
+          "week",
+          "hasReportedLice",
+          "hasMechanicalRemoval",
+          "hasBathTreatment",
+          "hasInFeedTreatment",
+          "hasCleanerFishDeployed",
+          "isFallow",
+          "avgAdultFemaleLice",
+          "avgMobileLice",
+          "avgStationaryLice",
+          "seaTemperature",
+          "bathTreatments",
+          "inFeedTreatments",
+          "cleanerFish",
+          "mechanicalRemoval",
+          "timeSinceLastChitinSynthesisInhibitorTreatment",
+          "hasSalmonoids",
+          "isSlaughterHoldingCage",
+          "version",
+          "nonMedicinalTreatments",
+          "medicinalTreatments",
+          "combinationTreatments"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.AquacultureRegister.Models.Dto.OrganizationDto",
+        "properties": [
+          "name",
+          "organizationNo",
+          "address",
+          "postalCode",
+          "city",
+          "localities"
+        ]
+      },
+      {
+        "schema": "BW.Api.Api.AquacultureRegister.Models.Dto.LicenseDto",
+        "properties": [
+          "licenseNo",
+          "licensee",
+          "grantDate",
+          "expirationDate",
+          "localities",
+          "capacity",
+          "purpose",
+          "productionType",
+          "isGreen",
+          "species",
+          "speciesCategory",
+          "unit"
+        ]
+      }
+    ],
+    "finding": "No direct vessel identifier or task-assignment key in the inspected treatment models; no booking/priority/availability schedule in inspected models. This does not exclude evidence from operators or other uninspected sources."
+  },
+  "actual_data_counts": {
+    "historical_site_weeks": 0,
+    "visit_records": 0,
+    "attributed_treatment_operations": 0,
+    "verified_cross_owner_shared_treatment_resources": 0,
+    "certified_prior_only_resource_sets": 0,
+    "historical_site_parent_bridges": 0,
+    "illustrative_original_contract_capability_examples": 1,
+    "original_contract_commissioning_documents": 2,
+    "independent_observations": "NOT_MEASURED"
+  },
+  "counts_meaning": "Zero acquired/verified inventory is not a measured zero prevalence or zero success rate. Schema examples are not scientific observations.",
+  "gates": {
+    "treatment_task_attribution": "NOT_ESTABLISHED",
+    "cross_owner_sharing": "NOT_MEASURED",
+    "prior_only_realistic_availability": "NOT_ESTABLISHED",
+    "rights_history_independence": "PARTIAL_NOT_MEASURED"
+  },
+  "account_setup": {
+    "required": "Free registered BarentsWatch API client; scope api",
+    "configured_at_last_presence_check": false,
+    "registration_performed": false,
+    "auth_or_token_requests": 0,
+    "secrets_disclosed": false,
+    "question_pending": true
+  },
+  "costs": {
+    "paid_requests_initiated": 0,
+    "purchases": 0,
+    "cloud_jobs": 0,
+    "account_wide_debit": "UNKNOWN"
+  },
+  "economic_tests": 0,
+  "market_series_requests": 0,
+  "sample_selected": false,
+  "full_pilot_authorized": false,
+  "generic_lice_fallback": false,
+  "backups_activated": false,
+  "dispatch_state": "Awaiting access; no scheduler or automatic continuation",
+  "time_budget": {
+    "maximum_active_hours": 16,
+    "wall_deadline_utc": "2026-10-22T21:36:15+00:00",
+    "scope_recorded_utc": "2026-10-20T21:36:15+00:00",
+    "elapsed_wall_minutes_at_checkpoint": 7.405674983333333
+  }
+}

@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Bounded salmon source verification (2026-10-20)
+
+- `docs/strategy/owner_salmon_verification_2026-10-20.md` approves only the distinctive salmon service-capacity verification, not a full economic pilot. The plan was pushed in `7a33bce` before retrieval: two analyst-days, 30 ordinary starts, 20 MiB, serial access, no retries or spending. No generic lice fallback or automatic backup.
+- `salmon_verification_report.md` is an IN_PROGRESS / API_CLIENT_REQUIRED checkpoint. Fifteen ordinary documentation/schema/issuer starts retrieved 1,179,966 bytes. The 128-path/192-model schema exposes visits and treatments but no direct task-assignment key; actual sample data and independent sharing/availability observations are not acquired. Free registered-client setup is pending, not an access denial or economic rejection. Never bypass authentication or call commercial shipinfo.
+- The six-site/twelve-site-week frame still needs exact IDs/routes frozen before farm requests. Retain missing/quiet cases, dated owners and prior-only resource definitions. Later visits, current parents, wellboat flags and co-occurrence cannot certify treatment or resource access. The 2017 release describes wellboat history from 2012; the 2020 extension covers wider vessel types. Actual history remains unverified. Earlier source stops and EXP001–EXP007 stay unchanged.
+
 ## Expanded frontier discovery; river not approved (2026-10-20)
 
 - `docs/strategy/owner_expanded_discovery_2026-10-20.md` requires a fresh 15–25-candidate investigation, five substantive deep dives, top three with precise differentiation and one further-investigation recommendation/source plan. Preserve the agreed value/competition standard; do not recycle the old seven or choose merely for quick testing.
