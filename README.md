@@ -7,7 +7,7 @@
 
 One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study has complete price enrichment but remains blocked at execution-evidence certification. **No profitable strategy or validated paper/live system has been established.**
 
-**Current direction:** [review unusual public data as economic measurements](docs/strategy/reorientation_review.md), test a small complete case quickly, and harden only what earns further research. The proposed first pilot measures web-platform adoption against business outcomes before a conditional return screen; it awaits owner approval. Existing experiments and their stops are preserved.
+**Current direction:** test whether unusual public data measures an economically useful change, starting with small cases. The approved [web-adoption source pilot](docs/strategy/web_adoption_day1_report.md) retrieved historical observations but stopped because detector/version publication evidence was insufficient; two bounded backups also remain unready. Business prediction and return tests were not run. Existing experiments and their stops are preserved.
 
 ### Six key highlights
 

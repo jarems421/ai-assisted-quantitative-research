@@ -1,5 +1,12 @@
 # Repository instructions
 
+## Web-adoption Day 1 source closure (2026-10-20)
+
+- `docs/strategy/web_adoption_day1_report.md` and its canonical receipt close the owner-approved primary and two ordered backup feasibility checks. Six bounded queries retrieved 180 page-months and repeated payload/summary records; 60.54 GiB billed usage is expected inside the free tier, not an independently verified invoice. All three currently linked projects had zero October jobs before dispatch; post-run inventories reconcile the six jobs.
+- The primary source gate did not pass: exact historical detector/deployment and same-version public bounds remain uncertified. Current labels, actual test dates and old source code are not that certificate. Do not infer all historical originals absent or an economically false hypothesis.
+- Backup 1 retrieved 231 snapshot times, oldest 2022-05-08, insufficient for the declared 2020 start. Backup 2 established current-file revision limitations; date-added/received fields do not recover past versions. No alternative source reconstruction was certified. No cohort, feature, KPI model, prices or returns ran; no fourth candidate or automatic rescue is authorized.
+- Private `primary_stop.json`, backup stops and `final_stop.json` prevent further source dispatch. Billing remains linked; only free administrative Cloud Billing/Resource Manager APIs were enabled. Preserve failed enable/read receipts. One cross-client WPT-start/BigQuery-poll gap was 0.684322 seconds; do not claim full global one-second pacing compliance. EXP004 and all historical experiments remain unchanged.
+
 ## Approved web-adoption pilot: bounded Day 1 (2026-10-20)
 
 - `docs/strategy/owner_web_adoption_pilot_approval_2026-10-20.md` approves the exact previously proposed pilot and conditional continuation. `web_adoption_day1_card.md` records the source gate and limits; do not ask for renewed approval within that scope.

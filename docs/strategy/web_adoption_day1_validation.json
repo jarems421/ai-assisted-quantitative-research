@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-20",
+  "status": "PASS_CHECKS_WITH_DISCLOSED_PACING_DEVIATION_AND_FAILED_SOURCE_GATES",
+  "local_tests": 485,
+  "public_tests": 257,
+  "skipped": 0,
+  "commands": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "return_code": 0
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "return_code": 0
+    },
+    {
+      "command": "python -m src.presentation.exp001 --check",
+      "return_code": 0
+    },
+    {
+      "command": "python -m src.research audit EXP004",
+      "return_code": 0
+    },
+    {
+      "command": "python -m src.research.exp004_execution_gap_report --check",
+      "return_code": 0
+    }
+  ],
+  "private_response_bodies_hash_verified": 109,
+  "baseline_tracked_files": 669,
+  "baseline_files_byte_identical": 665,
+  "deliberately_changed_prior_files": [
+    "AGENTS.md",
+    "README.md",
+    "docs/acceleration/master_plan.md",
+    "src/presentation/README.template.md"
+  ],
+  "research_code_frozen_experiments_processed_results_metrics_pins_changed": false,
+  "new_report_relative_links_checked": 6,
+  "canonical_query_count": 6,
+  "canonical_bytes_billed": 65007517696,
+  "ordinary_http_starts": 42,
+  "google_api_starts": 68,
+  "global_pacing_condition_fully_met": false,
+  "pacing_deviation_seconds": 0.684322,
+  "source_gate_verdict": "PRIMARY_NOT_PASSED_BACKUPS_NOT_READY",
+  "economic_analyses": 0,
+  "readme_generator": "python -m src.presentation.exp001",
+  "private_original_body_namespace": "data/raw/web_adoption_day1_v001/",
+  "credentials_or_raw_bodies_published": false,
+  "recorded_at_utc": "2026-10-20T04:26:34.799810+00:00"
+}
