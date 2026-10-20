@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Frontier Selection II: F02/F03 verification closed (2026-10-20)
+
+- `docs/strategy/owner_frontier_selection_ii_2026-10-20.md` authorized two fixed historical examples per candidate, four working hours, 20 ordinary starts and 20 MiB each, without economic testing. The pre-source plan was pushed in `3e22951`; original URLs in `029866f`. Preserve both clinical routes and both chemical decisions, failed requests and missing links.
+- `frontier_selection_ii_report.md` recommends NEITHER: F02 is WEAK INVESTMENT RATIONALE for the checked differentiated application, given explicit issuer interpretation and close procedure/payment research. Material product dependence does not establish a hidden provider wedge, a full matched-vintage fee or delayed market response. No specific non-bypassable NCCI pair was certified. F03 is PROMISING BUT MISSING A CRITICAL INPUT: real alternatives and use-specific permission do not establish historically qualified customers or material decision-sensitive substitute sales.
+- Source check closed with F02 14 starts/7,944,340 bytes and F03 13 starts/10,992,339 bytes; no retries, spending, credentials or cloud jobs. Candidate `final_stop.json` files prohibit further dispatch. No economic pilot, new experiment or automatic backup follows. F09 is only a proposed future selection question; salmon remains closed, river unapproved, EXP001–EXP007 and every earlier source/trial boundary unchanged.
+
 ## Bounded salmon source verification (2026-10-20)
 
 - `docs/strategy/owner_salmon_verification_2026-10-20.md` approves only the distinctive salmon service-capacity verification, not a full economic pilot. The plan was pushed in `7a33bce` before retrieval: two analyst-days, 30 ordinary starts, 20 MiB, serial access, no retries or spending. No generic lice fallback or automatic backup.

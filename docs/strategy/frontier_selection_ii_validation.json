@@ -1,0 +1,165 @@
+{
+  "version": "FRONTIER_SELECTION_II_VALIDATION_V001",
+  "recorded_at_utc": "2026-10-20T23:00:58.834582+00:00",
+  "source_receipt": "frontier_selection_ii_receipt.json",
+  "source_receipt_sha256": "2e45cf7904d17719e1bfa8b96cf2165e0f96e02ba1a021cedc23a2bea8567573",
+  "report_sha256": "8add214381d6073bced0634c19f696c78d4b19a094e31459ca4c42f5df4d3f0e",
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "started_at_utc": "2026-10-20T22:59:45.504095+00:00",
+      "finished_at_utc": "2026-10-20T23:00:20.428230+00:00",
+      "returncode": 0,
+      "log_sha256": "ef667e4a05eb4e03101c79bdb172c7466be65c2905845c75dddb8f5953617538",
+      "tests": 485,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research.public_checks"
+      ],
+      "started_at_utc": "2026-10-20T23:00:20.429129+00:00",
+      "finished_at_utc": "2026-10-20T23:00:26.574252+00:00",
+      "returncode": 0,
+      "log_sha256": "172b1651e5054f4c05057caa44410d55d17e897aa83013d71488ab071f29b227",
+      "tests": 257,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.presentation.exp001",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-20T23:00:26.574976+00:00",
+      "finished_at_utc": "2026-10-20T23:00:27.907811+00:00",
+      "returncode": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research",
+        "audit",
+        "EXP004"
+      ],
+      "started_at_utc": "2026-10-20T23:00:27.908585+00:00",
+      "finished_at_utc": "2026-10-20T23:00:28.124787+00:00",
+      "returncode": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research.exp004_execution_gap_report",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-20T23:00:28.125435+00:00",
+      "finished_at_utc": "2026-10-20T23:00:28.529184+00:00",
+      "returncode": 0,
+      "log_sha256": "64877d6dbac62922a24916bcbcb3a1d6c86f7ded4b936a87d906dd6f6ff6d536",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        ".research\\frontier_selection_ii_20261020\\audit.py"
+      ],
+      "started_at_utc": "2026-10-20T23:00:28.529827+00:00",
+      "finished_at_utc": "2026-10-20T23:00:28.644615+00:00",
+      "returncode": 0,
+      "log_sha256": "696156be5d5e14b425a99952c8fc2fbab51118472425426f56dd22b101ed5182",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-20T23:00:28.645218+00:00",
+      "finished_at_utc": "2026-10-20T23:00:28.698997+00:00",
+      "returncode": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests": null,
+      "skipped": []
+    }
+  ],
+  "local_tests": 485,
+  "public_tests": 257,
+  "skipped": 0,
+  "presentation_artifacts": 6,
+  "offline_evidence": {
+    "response_body_hash_checks": 26,
+    "projection_source_hash_links": 19,
+    "four_case_denominator_preserved": true,
+    "network": "SOCKETS_BLOCKED",
+    "private_helpers": [
+      {
+        "name": "fetch.py",
+        "sha256": "d2881e059618201f245721b92032bfa222c3f00e2be9228abe92de092ee4b9c3"
+      },
+      {
+        "name": "extract.py",
+        "sha256": "50dccff0d718aff44d8749e1891339c3d8ee11eeb7110c317681148d0bf0833a"
+      },
+      {
+        "name": "audit.py",
+        "sha256": "99d201df51214f86aba9585f534c36765f73eb125e8abf5f6b52096850d3c27c"
+      },
+      {
+        "name": "close_and_receipt.py",
+        "sha256": "e2f5f4e459a178652c4df6cbc14958b5be3b9209d194dad56a82d383c747aaf9"
+      },
+      {
+        "name": "checks.py",
+        "sha256": "db9db60b69238b9005af31a5561a3d78e7fd5bb0179187838de9deef0f9dc06c"
+      }
+    ]
+  },
+  "preservation": {
+    "starting_head": "e59cf49c833950babdd67781d3193912075ac7e0",
+    "baseline_tracked_files": 702,
+    "unchanged_count": 698,
+    "changed_living_guidance": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "src/presentation/README.template.md"
+    ],
+    "baseline_inventory_sha256": "a9665430fbfbe86fdb5afadec0d05c381ac890a41e7fef2feb49a2af0182c9d9",
+    "new_research_code_dependencies_tests": 0,
+    "unrelated_untracked_preserved": [
+      ".mcp.json",
+      ".vscode/",
+      "check_catalog.py"
+    ],
+    "raw_history_note": "No earlier source archives were targeted for writes. Regression suite uses already-opened EXP001 records; no new scientific acquisition or held-out access."
+  },
+  "document_checks": {
+    "relative_links_checked": 6,
+    "markdown_fences": "PASS",
+    "JSON_parsing": "PASS"
+  },
+  "scientific_limits": "Delivery validation only. No economic test, independent event census, historically actionable signal, new experiment or executable investment result.",
+  "delivery": "Final commit/push/hosted CI reported separately after this receipt; no claim of completion by receipt alone."
+}

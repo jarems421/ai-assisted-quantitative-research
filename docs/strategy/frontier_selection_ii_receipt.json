@@ -1,0 +1,856 @@
+{
+  "version": "FRONTIER_SELECTION_II_REVIEW_V001",
+  "review_date": "2026-10-20",
+  "starting_head": "e59cf49c833950babdd67781d3193912075ac7e0",
+  "owner_instruction": {
+    "path": "owner_frontier_selection_ii_2026-10-20.md",
+    "sha256": "19b99e9db56877ff411124f9bbbdda5b32c7dcd5c352a6e81c6a1aecac7c371d"
+  },
+  "plan": "frontier_selection_ii_plan.json",
+  "initial_exact_sources": "frontier_selection_ii_sources_v001.json",
+  "checkpoints": [
+    "3e22951",
+    "029866f"
+  ],
+  "scope_started_utc": "2026-10-20T22:41:02+00:00",
+  "source_closed_at_utc": "2026-10-20T22:56:47.384266+00:00",
+  "conservative_total_elapsed_seconds_to_source_close": 945.384266,
+  "time_accounting": "Both candidates share the conservative four-hour wall deadline. Browser discovery, ordinary retrieval and source interpretation are included in this shared elapsed bound. Delivery/check time is separately recorded in validation; no claim of four-hour exhaustive searches.",
+  "selection": "NEITHER",
+  "counts": {
+    "F02": {
+      "ordinary_starts": 14,
+      "responses": 14,
+      "response_bytes": 7944340,
+      "statuses": {
+        "200": 12,
+        "403": 2
+      },
+      "transport_errors": 0,
+      "error_types": [],
+      "automatic_retries": 0,
+      "unspent_starts": 6,
+      "browser_calls": 3,
+      "browser_search_queries": 12,
+      "private_competitive_use": "UNKNOWN",
+      "final_state": "WEAK INVESTMENT RATIONALE",
+      "stop_sha256": "9da1bbd741c0bddd58743e5197050d781c3ab374ba6623caae3d0e6e46b0c6d4"
+    },
+    "F03": {
+      "ordinary_starts": 13,
+      "responses": 12,
+      "response_bytes": 10992339,
+      "statuses": {
+        "202": 3,
+        "200": 9
+      },
+      "transport_errors": 1,
+      "error_types": [
+        "URLError"
+      ],
+      "automatic_retries": 0,
+      "unspent_starts": 7,
+      "browser_calls": 4,
+      "browser_search_queries": 12,
+      "private_competitive_use": "UNKNOWN",
+      "final_state": "PROMISING BUT MISSING A CRITICAL INPUT",
+      "stop_sha256": "e3dc44fee9ebe55fb7a500c614d4a29f58e07025fe0f2d1ef5add7a72a30081a"
+    }
+  },
+  "minimum_global_ordinary_start_spacing_seconds": 1.050045,
+  "ordinary_start_count": 27,
+  "original_response_count": 26,
+  "original_response_bytes": 18936679,
+  "browser": {
+    "calls": 7,
+    "search_queries": 24,
+    "underlying_fetch_retry_count": "UNKNOWN",
+    "evidence": "Discovery/tool evidence, not complete original-byte HTTP archives. No additional browser opening of denied originals. Original candidate-specific query limits fully used."
+  },
+  "cost": {
+    "paid_requests_initiated": 0,
+    "purchases": 0,
+    "account_registrations": 0,
+    "cloud_jobs": 0,
+    "billing_changes": 0,
+    "credential_loads": 0,
+    "authenticated_requests": 0,
+    "invoice_or_account_wide_debit": "UNKNOWN",
+    "browser_service_cost": "UNKNOWN",
+    "note": "Only public ordinary documents and existing research browser were used; no paid scientific spending initiated."
+  },
+  "scientific_state": {
+    "purposive_clinical_cases": 2,
+    "purposive_chemical_cases": 2,
+    "representative_population": false,
+    "complete_distinctive_investment_chains": 0,
+    "independent_event_count": "NOT_ESTABLISHED",
+    "new_economic_tests": 0,
+    "market_data_requests": 0,
+    "returns_or_backtests": 0,
+    "new_experiments": 0,
+    "old_reserved_budgets_used": 0,
+    "pilot_authorized": false
+  },
+  "cases": [
+    {
+      "id": "F02_HYPOGLOSSAL",
+      "issuer": "Inspire Medical Systems",
+      "historical_ticker_candidate": "INSP",
+      "codes": [
+        "64582",
+        "42975"
+      ],
+      "source_refs": [
+        "F02:006",
+        "F02:008"
+      ],
+      "workflow": "DISE is the final patient-selection procedure; implantation and DISE physician services are separate from bundled facility reimbursement.",
+      "observed_issuer_reported_2022_USD": {
+        "hospital_payment": 30063,
+        "ASC_payment": 24828,
+        "physician_implantation": 888,
+        "physician_DISE": 115
+      },
+      "financial_scale": {
+        "FY2021_revenue_USD_millions": 233.4,
+        "reported_historical_Medicare_share_of_US_implants_percent": 25
+      },
+      "limitations": [
+        "Dollar figures are issuer-reported national averages, not independently replayed claims, provider margins or manufacturer receipts.",
+        "No negative change in necessary complementary-service economics was established.",
+        "CMS A57149 version 19 is superseded 2026 text with revision history; not an archived original 2022 article.",
+        "2021 annual report is a later explanatory source, not a pre-2022 event-time input."
+      ],
+      "bridge": "WORKFLOW_AND_SCALE_DOCUMENTED; HIDDEN_NEGATIVE_WEDGE_NOT_ESTABLISHED"
+    },
+    {
+      "id": "F02_GLAUCOMA",
+      "issuer": "Glaukos",
+      "historical_ticker_candidate": "GKOS",
+      "codes": [
+        "66989",
+        "66991"
+      ],
+      "source_refs": [
+        "F02:003",
+        "F02:007",
+        "F02:009",
+        "F02:010",
+        "F02:014"
+      ],
+      "workflow": "Physician incentive for adding a trabecular bypass stent during cataract surgery differs from facility payment and device revenue.",
+      "financial_scale": {
+        "FY2021_total_sales_USD_millions": 294.0,
+        "FY2021_US_glaucoma_sales_USD_millions": 170.8,
+        "FY2021_iStent_platform_share_of_total_sales_percent": 79,
+        "reported_US_ASC_procedure_mix_percent": 80
+      },
+      "official_selected_cataract_only_professional_payment_USD": {
+        "code": "66984",
+        "CY2021": 548.17,
+        "initial_CY2022_final_rule": 528.84
+      },
+      "official_work_RVU_correction": {
+        "code": "66991",
+        "misprinted": 7.41,
+        "corrected": 9.23,
+        "interpretation": "Correction to printed previously-finalized policy; work RVU alone is not the full professional fee."
+      },
+      "payment_wedge": "Issuer explicitly disclosed lower physician payment despite different facility changes and connected this to procedure/revenue risk. A fully reconstructed matched-vintage old/new incremental physician fee and provider profit were not established.",
+      "limitations": [
+        "US glaucoma sales and global iStent mix are broad exposure figures, not measured sales lost or exact Medicare-dependent revenue.",
+        "Denied issuer call PDF and indexed dollar snippets were not promoted to recovered fee observations.",
+        "Physician and facility corrections have separate publication clocks; Jan 1 effective date is not first disclosure.",
+        "No specific non-bypassable NCCI pair was certified."
+      ],
+      "bridge": "ECONOMIC_INTERPRETATION_AND_MATERIAL_SCALE_DOCUMENTED; DIFFERENTIATED_INFORMATION_NOT_ESTABLISHED"
+    },
+    {
+      "id": "F03_LEAD_PIGMENTS",
+      "decision_candidate": "C(2016)5644",
+      "decision_date_candidate": "2016-09-07",
+      "original_decision_text_recovered": false,
+      "source_refs": [
+        "F03:001",
+        "F03:003",
+        "F03:008"
+      ],
+      "substitute_leads": [
+        "BASF / Sicopal and Paliotan"
+      ],
+      "documented_links": [
+        "Original court digest describes DCC Maastricht lead pigment authorisation and 2019 annulment.",
+        "BASF February 5 2015 press release announces commercial bismuth vanadate expansion and demand for lead-chromate alternatives, before the selected 2016 decision."
+      ],
+      "financial_scale": {
+        "BASF_reported_2013_total_sales_EUR_billions_2015_release": 74
+      },
+      "limitations": [
+        "Corporate revenue is context only, not pigment or substitution-sales exposure.",
+        "No exact customer/process qualification, switch contract, forecast revenue or authorisation-dependent sales amount.",
+        "Court digest is later legal explanation, not controlling original 2016 decision or original public timestamp.",
+        "BASF 2015 ownership is not a certificate of current pigment ownership."
+      ],
+      "bridge": "COMMERCIAL_SUBSTITUTION_REAL; SPECIFIC_QUALIFICATION_AND_MATERIALITY_MISSING"
+    },
+    {
+      "id": "F03_FUNCTIONAL_CHROME",
+      "decision": "C(2020)8797",
+      "decision_date": "2020-12-18",
+      "OJ_notice": "2020/C 447/03",
+      "OJ_publication_date": "2020-12-23",
+      "original_summary_recovered": true,
+      "controlling_full_decision_recovered": false,
+      "source_refs": [
+        "F03:004",
+        "F03:005",
+        "F03:009",
+        "F03:011",
+        "F03:012"
+      ],
+      "substitute_leads": [
+        "Bodycote / HVOF coatings"
+      ],
+      "legal_scope": "Functional chrome plating where listed properties are necessary; seven upstream legal holders and multiple authorised uses in the published notice.",
+      "listed_functionalities": [
+        "wear resistance",
+        "hardness",
+        "layer thickness",
+        "corrosion resistance",
+        "coefficient of friction",
+        "surface morphology"
+      ],
+      "review_expiry_in_historical_notice": "2024-09-21",
+      "qualification_evidence": "2022 issuer brochure advertises aerospace accreditations, preferred-supplier status and hard-chrome replacement applications; it does not establish customer/component-specific qualification as of December 2020.",
+      "financial_scale": {
+        "H1_2020_Bodycote_total_revenue_GBP_millions": 306.7,
+        "H1_2020_Specialist_Technologies_share_percent": 27
+      },
+      "limitations": [
+        "No affected HVOF sales, conditional orders, substitution opportunity amount, customer contract or decision-driven delay.",
+        "Specialist Technologies share is not HVOF or regulatory-switch revenue.",
+        "Earliest public availability before OJ and exact full-decision conditions are unverified.",
+        "Historical review expiry is not an assumed hard ban or a statement of current legal entitlement.",
+        "Later court developments were encountered in discovery but not recovered as controlling original text."
+      ],
+      "bridge": "USE_SPECIFIC_PERMISSION_AND_REAL_REPLACEMENT_CAPABILITY; HISTORICAL_QUALIFICATION_AND_MATERIALITY_MISSING"
+    }
+  ],
+  "competition": {
+    "F02": {
+      "academic": {
+        "authors": [
+          "Yash Gulani",
+          "Gerard F. Anderson",
+          "Thomas V. Johnson"
+        ],
+        "title": "Comparing National Microinvasive Glaucoma Surgery Procedure Rates in Response to Medicare and Industry Payment Changes",
+        "doi": "10.1016/j.ogla.2026.06.009",
+        "source_ref": "F02:011",
+        "depth": "Original author-institution abstract/accepted-publication record; no full-methods audit or replication.",
+        "overlap": "2018–2023 Medicare procedure use, reimbursement changes, competing procedures, manufacturer transfers of value, and a comparator procedure.",
+        "limit": "Its headline payment amounts were not adopted as independently verified CMS professional fees; payment definition requires full methods."
+      },
+      "commercial_refs": [
+        "F02:012",
+        "F02:013"
+      ],
+      "issuer_substitute": "F02:007 already states the professional/facility distinction and demand-risk inference.",
+      "exact_private_trading_use": "UNKNOWN"
+    },
+    "F03": {
+      "prior_research": "Slunge, Andersson and Sterner, 2022, DOI 10.1016/j.jclepro.2022.132637, previously reviewed original abstract on authorisation/substitution; not newly retrieved or replicated.",
+      "industry_ref": "F03:012",
+      "commercial_ref": "F03:013",
+      "overlap": "Consortia already organise authorised substances/uses/upstream holders; compliance software markets regulatory interpretation and supply-chain declarations.",
+      "limit": "Neither inspected offering proves a public-issuer lost-sales forecast or exact private signal use.",
+      "exact_private_trading_use": "UNKNOWN"
+    }
+  },
+  "corrections_and_access_limits": [
+    "The guessed OJ identifier in sources_v001 was not submitted. Discovery located 2020/C 447/03; the distinct original full issue was acquired. An intermediate /05 search was a discovery mistake, not an acquired authorisation.",
+    "F02 issuer-hosted PDF and syndicated issuer release returned 403 and were not retried. Search-index snippets are not recovered primary fee evidence.",
+    "Three distinct EUR-Lex HTML records returned empty 202 responses, not the requested texts. A separately published full OJ issue PDF was accessible; no proxy, header/host rotation, authentication or cookie bypass.",
+    "One ECHA listing start produced URLError with no body; it remains a counted failed start. Prior denied ECHA 0132 PDF was never requested.",
+    "The small CMS PE-methodology supplement contains selected example codes, not 66991. It did not resolve the full incremental fee.",
+    "Browser snippets and issuer filings can contain stock-performance content. No market series or shareholder graph was used; incidental material was not an input to selection or conclusions."
+  ],
+  "rights_and_reading": {
+    "rights": "Original documents stay ignored/private. CMS-hosted CPT descriptions include AMA rights; no code table or licensed descriptors redistributed. Commercial product access/redistribution not obtained. Public links/limited factual summaries do not imply blanket dataset redistribution rights.",
+    "reading_depth": "Targeted original sections/pages and abstract reviewed; no claim to read all 145 Inspire pages, all 30 Bodycote interim pages, full court digest, full OJ issue or complete academic methods. Earlier repository discovery was reused as qualified context.",
+    "security": "No .env, keys, account identifiers or credentials loaded; no contact or signup."
+  },
+  "sources": [
+    {
+      "candidate": "F02",
+      "index": 1,
+      "url": "https://www.cms.gov/medicaremedicare-fee-service-paymentphysicianfeeschedpfs-federal-regulation-notices/cms-1751-f",
+      "purpose": "2022 PFS final-rule display/publication record and exact small addendum links",
+      "started_at_utc": "2026-10-20T22:46:49.378248+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:46:49.942381+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "last-modified": "Tue, 20 Oct 2026 22:47:09 GMT",
+        "etag": "\"1792536429-gzip\"",
+        "date": "Tue, 20 Oct 2026 22:47:09 GMT"
+      },
+      "body_sha256": "0f5c02274c725add3bac6ad1d297037e6f15a212bc0bed30ba4e16a72b23c2ae",
+      "body_bytes": 190305,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 2,
+      "url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-faq-library",
+      "purpose": "PTP modifier/setting and interpretation constraints",
+      "started_at_utc": "2026-10-20T22:46:50.428595+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:46:50.888128+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "last-modified": "Tue, 20 Oct 2026 22:13:55 GMT",
+        "etag": "\"1792534435-gzip\"",
+        "date": "Tue, 20 Oct 2026 22:47:10 GMT"
+      },
+      "body_sha256": "9ee51f694512b340e35a8a8c4a08be41ab8c063a1ae506809db8a8d4f84ff0f8",
+      "body_bytes": 246091,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 3,
+      "url": "https://www.cms.gov/files/document/mm12666-april-2022-update-hospital-outpatient-prospective-payment-system-opps.pdf",
+      "purpose": "Official 66989/66991 facility-payment correction and retrospective effective date",
+      "started_at_utc": "2026-10-20T22:46:51.478989+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:46:51.906074+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "250212",
+        "last-modified": "Mon, 28 Mar 2022 17:20:55 GMT",
+        "date": "Tue, 20 Oct 2026 22:47:11 GMT"
+      },
+      "body_sha256": "7aa9e7c8fe64c040ec16816138b0fa45a3181dcbb2a4d18d2e17258be0c3d9fb",
+      "body_bytes": 250212,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 4,
+      "url": "https://s29.q4cdn.com/769210894/files/doc_financials/2021/q3/GKOS_3Q21_EPS_Call_11_4_21.pdf",
+      "purpose": "Original issuer-hosted contemporaneous physician/facility economics and competition disclosure",
+      "started_at_utc": "2026-10-20T22:46:52.529110+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:46:53.169709+00:00",
+      "status": 403,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:47:13 GMT",
+        "content-type": "text/html",
+        "content-length": "1439",
+        "etag": "\"6949aa37-59f\""
+      },
+      "body_sha256": "1d2009e4aea51a8e6a0f6404f282d8948f473e26f80e45c7ed9bbb12e470d661",
+      "body_bytes": 1439,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 5,
+      "url": "https://www.globenewswire.com/news-release/2021/11/10/2332095/0/en/inspire-medical-systems-inc-provides-update-on-2022-ambulatory-surgical-center-reimbursement-levels.html",
+      "purpose": "Original issuer-authored ASC correction announcement, date and setting; not a hidden physician-complement effect",
+      "started_at_utc": "2026-10-20T22:46:53.579532+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:46:53.728224+00:00",
+      "status": 403,
+      "headers": {
+        "content-type": "text/html",
+        "content-length": "598",
+        "date": "Tue, 20 Oct 2026 22:47:13 GMT"
+      },
+      "body_sha256": "88e16260a9e1b5702074e1726e9a1e82c87a18ce7a9c0d1a923e31731f02c005",
+      "body_bytes": 598,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 6,
+      "url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=57149&ver=19",
+      "purpose": "Actual CMS coding/coverage article and historical version information; current version not presumed original 2022 publication",
+      "started_at_utc": "2026-10-20T22:48:10.562299+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:48:10.938136+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 20 Oct 2026 22:48:30 GMT"
+      },
+      "body_sha256": "458704cf70f12a3484e949678b719372f662fc1d917e4f313c471e255a84913e",
+      "body_bytes": 195437,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 7,
+      "url": "https://www.sec.gov/Archives/edgar/data/1192448/000155837022002371/gkos-20211231x10k.htm",
+      "purpose": "Issuer product ownership, financial exposure and reimbursement disclosures; subsequent outcomes not used to select cases or test effects",
+      "started_at_utc": "2026-10-20T22:48:11.612396+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:48:12.006961+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "last-modified": "Mon, 28 Feb 2022 22:08:57 GMT",
+        "date": "Tue, 20 Oct 2026 22:48:31 GMT"
+      },
+      "body_sha256": "febac482e24eee0dd7e7aab9eaa522bf71b94148f2b99d85999f8e4e67123d21",
+      "body_bytes": 3336102,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 8,
+      "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001609550/c301639a-04ba-4ed5-a000-b73f9f75fd52.pdf",
+      "purpose": "Original issuer-hosted 2021 10-K product dependence and reported reimbursement figures; do not inspect its shareholder return graph",
+      "started_at_utc": "2026-10-20T22:48:12.662892+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:48:13.544047+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "2843810",
+        "date": "Tue, 20 Oct 2026 22:48:33 GMT",
+        "last-modified": "Tue, 15 Feb 2022 21:12:26 GMT",
+        "etag": "\"5ca07a97ccef57cc44ac5375de722789\""
+      },
+      "body_sha256": "121ae405947d38986bd375fbcb7aa5378c0b1e3c1b83a61834d8f241322f022d",
+      "body_bytes": 2843810,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 9,
+      "url": "https://www.cms.gov/files/zip/cy-2022-pfs-final-rule-impact-payment-selected-procedures.zip",
+      "purpose": "Explicit original CMS final-rule link; small selected-procedure impact table, not national claims/bulk PTP corpus",
+      "started_at_utc": "2026-10-20T22:48:13.713080+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:48:13.994144+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "application/zip",
+        "content-length": "14650",
+        "last-modified": "Tue, 02 Nov 2021 20:08:50 GMT",
+        "date": "Tue, 20 Oct 2026 22:48:33 GMT"
+      },
+      "body_sha256": "b577a14858ac701989d54fe0abdfe1b5305ee616585ce3aec0259f5aa3b37fcc",
+      "body_bytes": 14650,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 10,
+      "url": "https://public-inspection.federalregister.gov/2022-02623.pdf",
+      "purpose": "Original February 2022 CMS correction; verifies 66991 work-RVU correction and that nominal effective dates do not identify first observation",
+      "started_at_utc": "2026-10-20T22:50:33.502234+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:50:34.174351+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "230435",
+        "date": "Tue, 20 Oct 2026 22:50:53 GMT",
+        "last-modified": "Wed, 09 Feb 2022 13:45:16 GMT",
+        "etag": "\"d23b94419417e067ef8ef26850b8b0a4\""
+      },
+      "body_sha256": "b22088145e7b44822572be6a13c58360f5be63df10767a74ff6dc2262ff88a58",
+      "body_bytes": 230435,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 11,
+      "url": "https://pure.johnshopkins.edu/en/publications/comparing-national-microinvasive-glaucoma-surgery-procedure-rates/",
+      "purpose": "Author-institution original research abstract for exact competing incentive/utilisation relationship",
+      "started_at_utc": "2026-10-20T22:50:34.552368+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:50:35.598403+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:50:55 GMT",
+        "content-type": "text/html;charset=UTF-8",
+        "last-modified": "Mon, 12 Oct 2026 10:51:40 GMT"
+      },
+      "body_sha256": "2574d4a3ee49074f267e471abacbe826ed3b2830d57cb31a115eeb3e9384b680",
+      "body_bytes": 53287,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 12,
+      "url": "https://lp.aapc.com/codify/features.aspx",
+      "purpose": "Inspect closest coding product: whether it already integrates PTP/modifier and fee/payment interpretation; advertised offering, not audited demand.",
+      "started_at_utc": "2026-10-20T22:54:09.566446+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:54:10.821193+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:54:30 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "content-length": "219228"
+      },
+      "body_sha256": "67f4ab4f6e50d11abff08af4a3e36132721ebe82d586e6c5696dec7e77332e38",
+      "body_bytes": 219228,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 13,
+      "url": "https://www.mmitnetwork.com/",
+      "purpose": "Inspect closest coverage/market-access offering and distinguish it from provider procedure economics; no account or product access.",
+      "started_at_utc": "2026-10-20T22:54:10.832443+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:54:11.571836+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:54:31 GMT",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "ae701de43a6016629a32ef7c4657acd1776836d7fe58f70af56e92e7d0704bb1",
+      "body_bytes": 346465,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F02",
+      "index": 14,
+      "url": "https://www.cms.gov/files/zip/cy-2022-pfs-final-rule-calculation-pe-rvus-under-methodology-selected-codes.zip",
+      "purpose": "Follow original CMS final-rule landing link for a small selected-code calculation supplement; test whether it independently contains the selected new-code payment ingredients, no national bulk corpus.",
+      "started_at_utc": "2026-10-20T22:54:11.882813+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:54:12.110836+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "application/zip",
+        "content-length": "16281",
+        "last-modified": "Tue, 02 Nov 2021 20:04:51 GMT",
+        "date": "Tue, 20 Oct 2026 22:54:32 GMT"
+      },
+      "body_sha256": "b33136ed584b264bb3016a73d198044d1f71d8a8712ccab6a1f25f29d1732fae",
+      "body_bytes": 16281,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 1,
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62016TJ0837",
+      "purpose": "Original General Court judgment quoting the selected 2016 decision, uses, alternatives and decision conditions; not a substitute claim of having the original decision PDF",
+      "started_at_utc": "2026-10-20T22:47:12.319723+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:47:12.507204+00:00",
+      "status": 202,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:47:32 GMT",
+        "content-length": "0",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_bytes": 0,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 2,
+      "url": "https://echa.europa.eu/applications-for-authorisation-previous-consultations/-/substance-rev/14304/term",
+      "purpose": "Selected chromium-trioxide application/decision listing; no repeat of the previously denied 0132 PDF",
+      "started_at_utc": "2026-10-20T22:47:13.369821+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "error_type": "URLError",
+      "recorded_at_utc": "2026-10-20T22:47:13.555037+00:00"
+    },
+    {
+      "candidate": "F03",
+      "index": 3,
+      "url": "https://www.basf.com/dam/jcr%3A4e263579-ff63-36cd-8c7a-0b10347bfe29/basf/www/global/documents/en/news-and-media/news-releases/2015/02/P130e_BASF_bismuth%20vanadate%20pigments.pdf",
+      "purpose": "Dated original alternative-pigment investment/qualification/sales-use evidence predating 2016 authorisation",
+      "started_at_utc": "2026-10-20T22:47:14.420059+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:47:14.796795+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "application/pdf;charset=UTF-8",
+        "content-length": "46167",
+        "etag": "7DB4D7DA2EB560B28A17749E2CE92247A28C5DF5",
+        "last-modified": "Mon, 07 Jul 2025 08:23:17 GMT",
+        "date": "Tue, 20 Oct 2026 22:47:34 GMT"
+      },
+      "body_sha256": "d50b255c4f86440dde04a1649bf5c89dc32f89cf00b6a1016cc398bebf55d8d6",
+      "body_bytes": 46167,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 4,
+      "url": "https://www.bodycote.com/wp-content/uploads/2022/07/coating-solutions-for-the-aerospace-and-defence-industries-2022.pdf",
+      "purpose": "Dated original first-party HVOF capability/qualified-use claims; 2022 evidence cannot establish 2020 qualification",
+      "started_at_utc": "2026-10-20T22:47:15.470532+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:47:15.839255+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:47:35 GMT",
+        "content-type": "application/pdf",
+        "content-length": "2573336",
+        "last-modified": "Tue, 25 Aug 2026 07:47:46 GMT",
+        "etag": "\"6a8d48a2-274418\""
+      },
+      "body_sha256": "09e5c67392b9e0f49b07f4b4ba6f881c7a7e543c9f8e5434e3b8f16d0157e05e",
+      "body_bytes": 2573336,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 5,
+      "url": "https://www.bodycote.com/what-we-do/surface-technology/",
+      "purpose": "Current first-party qualification and scope context only, not historical certification",
+      "started_at_utc": "2026-10-20T22:47:16.520876+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:47:16.715892+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:47:36 GMT",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "7ef74942c25e254d42b348bf65b84f35fc957e9b7307119ff4e83bc3cdca6077",
+      "body_bytes": 919185,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 6,
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ%3AC%3A2020%3A447%3ATOC",
+      "purpose": "Official Journal table of contents; resolves intended C447/03, not C447/05",
+      "started_at_utc": "2026-10-20T22:49:07.526017+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:49:07.681033+00:00",
+      "status": 202,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:49:27 GMT",
+        "content-length": "0",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_bytes": 0,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 7,
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex%3A62021CJ0144",
+      "purpose": "Original 2023 judgment quoting selected 2020 scope and conditions; later legal context cannot be backdated",
+      "started_at_utc": "2026-10-20T22:49:08.576062+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:49:08.657450+00:00",
+      "status": 202,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:49:28 GMT",
+        "content-length": "0",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_bytes": 0,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 8,
+      "url": "https://curia.europa.eu/common/recdoc/repertoire_jurisp/bull_3/data/3_02_06.htm",
+      "purpose": "Original court legal digest for the selected lead-pigment judgment and alternative-availability findings",
+      "started_at_utc": "2026-10-20T22:49:09.626293+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:49:10.175418+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:49:29 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "3601335",
+        "last-modified": "Mon, 19 Oct 2026 12:17:16 GMT"
+      },
+      "body_sha256": "bb42792f88e71b55f29761ecd7a00561e007a68c19a1d50d4414df02ef0a3899",
+      "body_bytes": 3601335,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 9,
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AC%3A2020%3A447%3AFULL",
+      "purpose": "Predeclared official journal original issue containing authorisation summary C447/03; not a retry of a judgment or TOC URL",
+      "started_at_utc": "2026-10-20T22:50:31.401801+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:50:31.849595+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "date": "Tue, 20 Oct 2026 22:50:51 GMT"
+      },
+      "body_sha256": "43521a44025750697e9348267a2b474fa620fb3c62171ab5a0d6219a57661db2",
+      "body_bytes": 979296,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 10,
+      "url": "https://www.bodycote.com/investors/results-reports-and-presentations/",
+      "purpose": "Exact issuer financial-archive link from acquired current surface-technology page; locate original 2020 scale and ownership evidence",
+      "started_at_utc": "2026-10-20T22:50:32.452117+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:50:32.616492+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:50:52 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "last-modified": "Tue, 20 Oct 2026 20:13:38 GMT"
+      },
+      "body_sha256": "4090fd8b46009f7778db5bb6e754677aada169d0e5f7124c5facc37bfef5b15a",
+      "body_bytes": 965755,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 11,
+      "url": "https://www.bodycote.com/wp-content/uploads/2020/07/Bodycote-Interim-Press-Release-2020.pdf",
+      "purpose": "Follow issuer financial archive link: pre-December-2020 evidence of publicly listed parent, coating exposure, financial scale and disclosed end-market confounding, not subsequent return selection.",
+      "started_at_utc": "2026-10-20T22:54:12.932926+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:54:13.192704+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:54:33 GMT",
+        "content-type": "application/pdf",
+        "content-length": "789601",
+        "last-modified": "Tue, 25 Aug 2026 07:49:55 GMT",
+        "etag": "\"6a8d4923-c0c61\""
+      },
+      "body_sha256": "8ec5458682c1ae3b06646dc0e9c0bc04444b60d92d7bda7e16510a54db116ad0",
+      "body_bytes": 789601,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 12,
+      "url": "https://www.iaeg.com/workgroups/wg5/authorisation",
+      "purpose": "Inspect predeclared industry consortium substitute: whether industry already integrates chromium uses, alternatives and authorisation coordination.",
+      "started_at_utc": "2026-10-20T22:54:13.983050+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:54:14.948833+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:54:34 GMT",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "c06d3d5b2efb9ee1f23e35d47eb681b70b6e43db9f8931ca21cee0823597cf6f",
+      "body_bytes": 89761,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F03",
+      "index": 13,
+      "url": "https://sphera.com/solutions/product-stewardship/product-compliance-software/",
+      "purpose": "Inspect predeclared commercial compliance substitute and exact advertised coverage; do not assume a sales-loss forecast or verified customers.",
+      "started_at_utc": "2026-10-20T22:54:15.033312+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-20T22:54:17.195239+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Tue, 20 Oct 2026 22:54:36 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "last-modified": "Tue, 01 Sep 2026 11:44:23 GMT"
+      },
+      "body_sha256": "cec8e6990fb0231927e93a6c7870943363126a1e744e7257df6c213921876c67",
+      "body_bytes": 1027903,
+      "complete": true,
+      "size_stop": null
+    }
+  ]
+}
