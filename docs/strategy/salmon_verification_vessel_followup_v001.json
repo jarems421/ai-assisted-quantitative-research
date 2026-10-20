@@ -1,0 +1,25 @@
+{
+  "version": "SALMON_VESSEL_FOLLOWUP_V001",
+  "rule": "No same-week shared MMSI observed across the four sampled sites. Apply the predeclared fallback: two lowest numeric wellboat MMSIs observed, without treatment/outcome selection.",
+  "known_shared_at_selection": false,
+  "vessels": [
+    {
+      "mmsi": 257210000,
+      "name": "ROSTEIN",
+      "source_site": 10029,
+      "year": 2021,
+      "week": 10,
+      "url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/vesseltrack/257210000/2021/10"
+    },
+    {
+      "mmsi": 257262000,
+      "name": "RONJA SUND",
+      "source_site": 10029,
+      "year": 2021,
+      "week": 10,
+      "url": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/vesseltrack/257262000/2021/10"
+    }
+  ],
+  "only_one_week_per_vessel": true,
+  "wider_visited_sites": "Context only. Not extra selected farm/treatment observations or as-of proof of available resources."
+}
