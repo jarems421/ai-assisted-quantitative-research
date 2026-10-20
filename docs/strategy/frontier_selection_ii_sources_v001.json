@@ -1,0 +1,26 @@
+{
+  "version": "FRONTIER_II_INITIAL_EXACT_ORIGINALS_V001",
+  "selection_plan": "frontier_selection_ii_plan.json",
+  "note": "Initial exact originals located by documentation search after clinical/legal case selection. Additional explicit links may be reserved individually before retrieval within the unchanged per-candidate cap. No denied URL is retried.",
+  "F02": [
+    {"url":"https://www.cms.gov/medicaremedicare-fee-service-paymentphysicianfeeschedpfs-federal-regulation-notices/cms-1751-f","role":"2022 PFS final-rule display/publication record and exact small addendum links","case":"BOTH"},
+    {"url":"https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-faq-library","role":"PTP modifier/setting and interpretation constraints","case":"BOTH"},
+    {"url":"https://www.cms.gov/files/document/mm12666-april-2022-update-hospital-outpatient-prospective-payment-system-opps.pdf","role":"Official 66989/66991 facility-payment correction and retrospective effective date","case":"GLAUCOMA"},
+    {"url":"https://s29.q4cdn.com/769210894/files/doc_financials/2021/q3/GKOS_3Q21_EPS_Call_11_4_21.pdf","role":"Original issuer-hosted contemporaneous physician/facility economics and competition disclosure","case":"GLAUCOMA"},
+    {"url":"https://www.globenewswire.com/news-release/2021/11/10/2332095/0/en/inspire-medical-systems-inc-provides-update-on-2022-ambulatory-surgical-center-reimbursement-levels.html","role":"Original issuer-authored ASC correction announcement, date and setting; not a hidden physician-complement effect","case":"HYPOGLOSSAL"},
+    {"url":"https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=57149&ver=19","role":"Actual CMS coding/coverage article and historical version information; current version not presumed original 2022 publication","case":"HYPOGLOSSAL"},
+    {"url":"https://www.sec.gov/Archives/edgar/data/1192448/000155837022002371/gkos-20211231x10k.htm","role":"Issuer product ownership, financial exposure and reimbursement disclosures; subsequent outcomes not used to select cases or test effects","case":"GLAUCOMA"},
+    {"url":"https://d18rn0p25nwr6d.cloudfront.net/CIK-0001609550/c301639a-04ba-4ed5-a000-b73f9f75fd52.pdf","role":"Original issuer-hosted 2021 10-K product dependence and reported reimbursement figures; do not inspect its shareholder return graph","case":"HYPOGLOSSAL"},
+    {"url":"https://doi.org/10.1016/j.ogla.2026.06.009","role":"Closest original research on the same 2022 procedure-payment/use mechanism, not a new result replicated here","case":"COMPETITION"}
+  ],
+  "F03": [
+    {"url":"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62016TJ0837","role":"Original General Court judgment quoting the selected 2016 decision, uses, alternatives and decision conditions; not a substitute claim of having the original decision PDF","case":"LEAD_PIGMENTS"},
+    {"url":"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52020XC1223(01)","role":"Candidate Official Journal summary identifier for C(2020)8797, to verify against actual title/text; wrong identifier stays failed/unmatched","case":"FUNCTIONAL_CHROME"},
+    {"url":"https://echa.europa.eu/applications-for-authorisation-previous-consultations/-/substance-rev/14304/term","role":"Selected chromium-trioxide application/decision listing; no repeat of the previously denied 0132 PDF","case":"FUNCTIONAL_CHROME"},
+    {"url":"https://www.basf.com/dam/jcr%3A4e263579-ff63-36cd-8c7a-0b10347bfe29/basf/www/global/documents/en/news-and-media/news-releases/2015/02/P130e_BASF_bismuth%20vanadate%20pigments.pdf","role":"Dated original alternative-pigment investment/qualification/sales-use evidence predating 2016 authorisation","case":"LEAD_PIGMENTS"},
+    {"url":"https://www.bodycote.com/wp-content/uploads/2022/07/coating-solutions-for-the-aerospace-and-defence-industries-2022.pdf","role":"Dated original first-party HVOF capability/qualified-use claims; 2022 evidence cannot establish 2020 qualification","case":"FUNCTIONAL_CHROME"},
+    {"url":"https://www.bodycote.com/what-we-do/surface-technology/","role":"Current first-party qualification and scope context only, not historical certification","case":"FUNCTIONAL_CHROME"},
+    {"url":"https://www.iaeg.com/workgroups/wg5/authorisation","role":"Use/holder compliance substitute and anticipatory industry information","case":"COMPETITION"},
+    {"url":"https://sphera.com/solutions/product-stewardship/product-compliance-software/","role":"Closest marketed regulatory/supply-chain interpretation offering; no account or product access","case":"COMPETITION"}
+  ]
+}
