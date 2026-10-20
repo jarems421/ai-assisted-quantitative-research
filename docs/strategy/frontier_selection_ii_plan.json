@@ -1,0 +1,71 @@
+{
+  "version": "FRONTIER_SELECTION_II_SOURCE_PLAN_V001",
+  "owner_instruction": "owner_frontier_selection_ii_2026-10-20.md",
+  "starting_head": "e59cf49c833950babdd67781d3193912075ac7e0",
+  "scope_started_utc": "2026-10-20T22:41:02+00:00",
+  "scope": "Read-only verification and economic/competition comparison of F02 and F03; no economic experiment, returns, registration or other candidate activation.",
+  "per_candidate_limits": {
+    "maximum_working_seconds": 14400,
+    "conservative_wall_deadline_utc": "2026-10-21T02:41:02+00:00",
+    "maximum_ordinary_http_starts_including_redirects_and_corrections": 20,
+    "maximum_original_response_bytes": 20971520,
+    "maximum_single_response_bytes": 8388608,
+    "minimum_seconds_between_ordinary_starts_global": 1,
+    "automatic_retries": 0,
+    "maximum_browser_discovery_actions": 12,
+    "browser_accounting": "Search/open/click/find operations separately recorded; underlying wire counts unknown. Discovery is for locating exact originals and prior/commercial work, not an alternative scientific acquisition client after denial. No browser full-dataset requests."
+  },
+  "F02": {
+    "historical_window": "CMS code/payment transition effective 2022-01-01; original final/proposed rules in 2021, original payment/clinical records through 2022. Later material may explain competition but cannot backdate an event.",
+    "example_selection": "Two fixed clinical routes selected before new source inspection: hypoglossal-nerve stimulation implantation and trabecular micro-bypass implantation with cataract surgery. In each, inspect the first 2022 Category I coding/payment transition and its required complementary clinical work. These are purposive mechanism checks, not a representative or untouched statistical sample. Do not select or replace examples by later earnings, returns or whether a wedge is found.",
+    "issuer_candidates_to_verify": ["Inspire Medical Systems / Inspire", "Glaukos / iStent"],
+    "known_history": "INSP was an illustrative pre-existing lead, not a trading target. NeoGenomics' known 2014 revenue disclosure is competition/mechanism context only and is excluded as a supposedly neutral validation example because its financial outcome was already inspected.",
+    "candidate_code_anchors_to_verify_not_assumed_correct": ["64582", "66989", "66991"],
+    "planned_source_routes": [
+      "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-procedure-procedure-ptp-edits",
+      "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-faq-library",
+      "https://www.cms.gov/medicare/physician-fee-schedule/search",
+      "https://www.cms.gov/medicare-coverage-database/",
+      "https://www.federalregister.gov/",
+      "https://www.govinfo.gov/",
+      "https://www.accessdata.fda.gov/",
+      "https://investors.inspiresleep.com/",
+      "https://investors.glaukos.com/",
+      "https://www.sec.gov/Archives/edgar/data/",
+      "https://lp.aapc.com/codify/features.aspx",
+      "https://www.mmitnetwork.com/"
+    ],
+    "source_policy": "Use exact original rule, selected fee fields and original device/workflow/billing or issuer documents located from these publishers. Do not download national claims or full PTP/fee bulk corpora merely to inspect a few codes. FDA family remains closed: no FDA acquisition is planned; the listed documentation domain is not authority to reopen its former frame. Prefer original manufacturer product records. No CPT descriptor/table redistribution or patient data.",
+    "decision_target": "Verify actual setting/modifier/same-episode payment consequence and separate provider professional revenue from facility payment and manufacturer sales. Derive only documented payment arithmetic; no forecast or outcome test."
+  },
+  "F03": {
+    "historical_window": "2016 and 2020 upstream authorisation decisions; relevant earlier applications/alternatives and dated qualification/issuer documents. Later judgments may clarify evidence, but cannot supply earlier public knowledge.",
+    "example_selection": "Two fixed substance/use routes selected by industrial/legal mechanism before supplier financial inspection: lead-chromate pigment uses and chromium-trioxide functional plating. Start with the documented multi-use upstream decisions identified as C(2016)5644 and C(2020)8797, subject to primary-record verification. Cases remain even if no qualified listed substitute can be found. No replacement with a successful supplier or a more favourable decision.",
+    "selection_limit": "At most two legal examples; at most two named substitute-supplier leads per example, taken in source order from original alternatives/qualification material. Qualification, supplier identity and materiality remain separate. A different process name alone is not a qualified supplier.",
+    "planned_source_routes": [
+      "https://eur-lex.europa.eu/",
+      "https://curia.europa.eu/",
+      "https://ec.europa.eu/",
+      "https://echa.europa.eu/",
+      "https://www.iaeg.com/workgroups/wg5/authorisation",
+      "https://www.basf.com/",
+      "https://www.clariant.com/",
+      "https://www.bodycote.com/",
+      "https://www.oerlikon.com/",
+      "https://www.atotech.com/",
+      "https://sphera.com/solutions/product-stewardship/product-compliance-software/"
+    ],
+    "source_policy": "Use official Commission/Official Journal/court/application records and dated first-party supplier/customer qualification/issuer evidence. Do not repeat the earlier denied ECHA 0132-01-02 PDF. EUR-Lex/Commission originals are predeclared legal-record sources, not an access bypass. If another route is denied, preserve it and never retry/proxy it. No private customer contracts or paid compliance product.",
+    "decision_target": "Demonstrate a specific permitted use, incumbent right, technically qualified replacement, dated listed supplier and material commercial exposure. Do not assume total business-line revenue equals affected substitution sales."
+  },
+  "evidence_rules": [
+    "Freeze exact discovered original URLs and document why selected before their ordinary retrieval; no outcome-selected replacements.",
+    "Public documents and values are provenance, not proof of historical tradeability. Separate reconstructed Level A from published-as-of Level B and untested Level C.",
+    "Observed financial disclosures can assess materiality; they cannot be used to choose the cases retrospectively. Disclose all known prior inspection and model-history limits.",
+    "Record the best close commercial/academic/issuer substitute, anticipation and why any remaining increment might be illusory. Private signal usage stays UNKNOWN.",
+    "No source credentials, account creation, contact, purchase, cloud job, market series or frozen-research mutation. Preserve originals and failures privately."
+  ],
+  "final_states": ["READY FOR A PROPOSED ECONOMIC PILOT", "PROMISING BUT MISSING A CRITICAL INPUT", "NOT CURRENTLY RESEARCHABLE UNDER OUR CONSTRAINTS", "WEAK INVESTMENT RATIONALE"],
+  "pilot_design": "Prepare an empirical experiment only if a candidate actually passes observable distinctive-link/materiality/data conditions. Otherwise identify missing evidence and recommend neither without inventing a watered-down pilot.",
+  "body_storage": "data/raw/frontier_selection_ii_20261020/"
+}
