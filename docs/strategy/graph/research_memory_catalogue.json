@@ -1,0 +1,1252 @@
+{
+ "version": "GRAPH_MEMORY_CATALOGUE_V001",
+ "recorded_at_utc": "2026-10-21T11:05:23+00:00",
+ "status": "NON_AUTHORITATIVE_RESEARCH_MEMORY",
+ "authority": "docs/strategy/owner_graph_v1_2026-10-21.md",
+ "mapping_review": "PENDING_HUMAN_REVIEW",
+ "rules": [
+  "Historical reports remain authoritative for their findings and decisions; this catalogue only cites them.",
+  "No entry is a Discovery Lab record, disposition, review or freeze.",
+  "Requirement mappings are curated retrieval aids, not evidence that a requirement was met or that a gap is unfillable.",
+  "recorded_at_utc is when this catalogue was written; historical_closure dates are context only."
+ ],
+ "report_hashes": {
+  "docs/strategy/discovery_bottleneck_receipt.json": "39c6dbf85337c55d2c37398c2c03991c40ae08096a7bbb690ef02d49e1f6e052",
+  "docs/strategy/discovery_bottleneck_report.md": "6dde96fd23500fd01cbdd61228e7f382262db951ea95244043bef8ef94194c73",
+  "docs/strategy/frontier_selection_ii_receipt.json": "2e45cf7904d17719e1bfa8b96cf2165e0f96e02ba1a021cedc23a2bea8567573",
+  "docs/strategy/frontier_selection_ii_report.md": "8add214381d6073bced0634c19f696c78d4b19a094e31459ca4c42f5df4d3f0e",
+  "docs/strategy/measurement_gate_campaign_cards.md": "e513a9d18ec666985355d6d148cc0707fb83428c135fc0221ec782fc4ea710cb",
+  "docs/strategy/measurement_gate_campaign_ledger.json": "81742c80a34d2b8da999f829b49d3df5faec967272b5a74a4b476de20660c67b",
+  "docs/strategy/measurement_gate_campaign_report.md": "0ab41a52d16d44c6dce98ad37cec31b03c064c8283515784b772ac39588c8988",
+  "docs/strategy/salmon_verification_final_report.md": "449cb327563f3b0f980bfb44803f77059553e01f1f7c8d1d2fe1443702250f83",
+  "docs/strategy/salmon_verification_receipt_v002.json": "ac92cb237827052394fe84c75ac562686634b974333f77652533ec64b8e5cd24",
+  "docs/strategy/sh09_verification_receipt.json": "41f10a128d70fef15d11b038ed6f28eeebece3edd71377b68e1166f080a58d49",
+  "docs/strategy/sh09_verification_report.md": "33858eb03d2ba0f58bfa25d08987310fd7bbaeaf52ccdba4f06c979b9b931514"
+ },
+ "requirements": [
+  {
+   "id": "REQ_AVAILABLE_CAPACITY",
+   "label": "Available capacity net of commitments",
+   "definition": "Capacity, output or service actually available for incremental use at a dated time, net of existing commitments.",
+   "does_not_mean": [
+    "nameplate or permitted capacity",
+    "regulatory approval or capability",
+    "physical presence or a visit",
+    "a stated intention to increase production"
+   ]
+  },
+  {
+   "id": "REQ_REALISED_ACTIVITY",
+   "label": "Realised activity or use",
+   "definition": "Activity that actually occurred (treatments performed, credits used, qualified sales or orders), as distinct from permission, balances or presence.",
+   "does_not_mean": [
+    "a balance change",
+    "a legal permission",
+    "co-location or proximity",
+    "an empty field read as absence"
+   ]
+  },
+  {
+   "id": "REQ_RETAINED_NET_ECONOMICS",
+   "label": "Retained or net economics",
+   "definition": "The amount retained by the specified entity after ceded, recovered or offset amounts, on an explicit basis.",
+   "does_not_mean": [
+    "gross written or gross liability",
+    "group totals",
+    "a nominal security amount"
+   ]
+  },
+  {
+   "id": "REQ_DOCUMENTED_ALLOCATION",
+   "label": "Documented allocation of an aggregate",
+   "definition": "A documented split of an aggregate amount to the specific asset, lease, entity or cohort in question.",
+   "does_not_mean": [
+    "a proportional or equal split",
+    "an aggregate treated as the cohort"
+   ]
+  },
+  {
+   "id": "REQ_ENTITY_COHORT_JOIN",
+   "label": "Matching entity, cohort and period",
+   "definition": "Predictor and outcome measured on the same legal entity, cohort, period and accounting basis.",
+   "does_not_mean": [
+    "a name resemblance",
+    "a parent or group in place of a subsidiary",
+    "mixed cohorts"
+   ]
+  },
+  {
+   "id": "REQ_UNREDACTED_CONTRACT_AMOUNT",
+   "label": "Unredacted contractual amount",
+   "definition": "The contractual cash quantity itself, publicly visible, not only the existence of the agreement.",
+   "does_not_mean": [
+    "a contract label",
+    "a later aggregate loss"
+   ]
+  },
+  {
+   "id": "REQ_HISTORICAL_SCHEDULE_OR_VERSION",
+   "label": "Historical schedule, attachment or version",
+   "definition": "The original dated schedule, attachment or source version that carries the needed rows, as available at the time.",
+   "does_not_mean": [
+    "a later description of an earlier document",
+    "a current version",
+    "an incomplete prefix"
+   ]
+  }
+ ],
+ "blocker_requirements": {
+  "ALLOCATION_UNVERIFIED": "REQ_DOCUMENTED_ALLOCATION",
+  "NET_EXPOSURE_UNVERIFIED": "REQ_RETAINED_NET_ECONOMICS",
+  "UNSUPPORTED_JOIN:legal_entity": "REQ_ENTITY_COHORT_JOIN",
+  "UNSUPPORTED_JOIN:cohort": "REQ_ENTITY_COHORT_JOIN"
+ },
+ "claim_mappings": [],
+ "investigations": [
+  {
+   "id": "HIST-F01",
+   "family": "F01",
+   "title": "Shared salmon treatment and service capacity",
+   "report": "docs/strategy/salmon_verification_final_report.md",
+   "historical_closure": {
+    "date": "2026-10-20",
+    "note": "Report date; context only, not a graph-ingestion time."
+   },
+   "verdict": {
+    "text": "BOUNDED_VERIFICATION_CLOSED / NOT_READY",
+    "status_class": "NOT_ADVANCED",
+    "scope": "The bounded BarentsWatch verification only; not economic falsification.",
+    "citation": {
+     "path": "docs/strategy/salmon_verification_final_report.md",
+     "quote": "BOUNDED_VERIFICATION_CLOSED / NOT_READY. No economic pilot."
+    },
+    "scope_citation": {
+     "path": "docs/strategy/salmon_verification_final_report.md",
+     "quote": "This is an incomplete measurement chain, not economic falsification or proof that no useful salmon data exist."
+    }
+   },
+   "claims": [
+    {
+     "id": "v1",
+     "version": 1,
+     "object": "Cross-owner treatment-resource dependence and available treatment capacity",
+     "financial_basis": "NOT_ESTABLISHED",
+     "reformulates": null,
+     "post_outcome": "UNKNOWN",
+     "counts_as_original": true,
+     "recorded_status": [
+      {
+       "text": "NOT_READY",
+       "citation": {
+        "path": "docs/strategy/salmon_verification_final_report.md",
+        "quote": "Do not advance the proposed capacity study on these inputs."
+       }
+      }
+     ]
+    }
+   ],
+   "findings": [
+    {
+     "id": "F1",
+     "kind": "MEASUREMENT_GAP",
+     "text": "Bookings, priority rights, treatment-compatible slots and spare capacity are not exposed.",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "The reviewed records do not expose bookings, priority rights, treatment-compatible slots or spare capacity."
+     },
+     "requirement": "REQ_AVAILABLE_CAPACITY",
+     "claim": "v1"
+    },
+    {
+     "id": "F2",
+     "kind": "MEASUREMENT_GAP",
+     "text": "Vessel visits are not established treatment episodes.",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "**1. Actual treatment rather than a visit** | **NOT_ESTABLISHED.**"
+     },
+     "requirement": "REQ_REALISED_ACTIVITY",
+     "claim": "v1"
+    },
+    {
+     "id": "F3",
+     "kind": "SCOPE_LIMIT",
+     "text": "Empty treatment arrays mean none recorded in the returned fields, not verified absence of treatment.",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "Empty treatment arrays mean **none recorded in these returned fields**, not independently verified absence of treatment."
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F4",
+     "kind": "IDENTITY_LIMIT",
+     "text": "Actual treatment customers and their independent economic control were not verified; name resemblance is not a parent certificate.",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "No historical site-to-ultimate-parent certificate was completed; names resembling Lerøy are not a substitute."
+     },
+     "requirement": "REQ_ENTITY_COHORT_JOIN",
+     "claim": "v1"
+    },
+    {
+     "id": "F5",
+     "kind": "SOURCE_FIELD_PRESENT",
+     "text": "Real site-week health and vessel-visit records exist for the sampled weeks.",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "Thus **eight selected health site-weeks were inspected**, with **four receiving full detail and visit checks**."
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F6",
+     "kind": "SCOPE_LIMIT",
+     "text": "Vessel route contexts demonstrate multi-site movement, not treatment work or independent customers.",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "They do not demonstrate treatment work or independent customers."
+     },
+     "requirement": "REQ_REALISED_ACTIVITY",
+     "claim": "v1"
+    },
+    {
+     "id": "F7",
+     "kind": "ACCESS_NOTE",
+     "text": "Access was through an authorised free registered (authenticated) client; credentials and token stay private.",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "Ordinary authenticated access works and the acquired Fishhealth routes are covered by the documented general NLOD terms, with attribution"
+     },
+     "requirement": null,
+     "claim": null
+    },
+    {
+     "id": "F8",
+     "kind": "EVIDENCE_TO_CHANGE",
+     "text": "A source linking vessel, farm, date and treatment method, dated access constraints and enough allocation episodes.",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "Evidence that could change this assessment would include an identifiable source linking vessel, farm, date and treatment method, plus dated capability/access constraints and enough separate service-allocation episodes to validate the inference."
+     },
+     "requirement": null,
+     "claim": "v1"
+    }
+   ],
+   "entities": [
+    {
+     "type": "FACILITY",
+     "id": "BW_LOCALITY:10029",
+     "name": "Tuholmane Ø",
+     "identity_basis": "RECORDED_IDENTIFIER",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "10029, Tuholmane Ø / 2021W10"
+     }
+    },
+    {
+     "type": "FACILITY",
+     "id": "BW_LOCALITY:10212",
+     "name": "Bogen",
+     "identity_basis": "RECORDED_IDENTIFIER",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "10212, Bogen / 2021W10"
+     }
+    },
+    {
+     "type": "FACILITY",
+     "id": "BW_LOCALITY:10041",
+     "name": "Kviksholmen",
+     "identity_basis": "RECORDED_IDENTIFIER",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "10041, Kviksholmen / 2024W10"
+     }
+    },
+    {
+     "type": "FACILITY",
+     "id": "BW_LOCALITY:10213",
+     "name": "Naustneset",
+     "identity_basis": "RECORDED_IDENTIFIER",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "10213, Naustneset / 2024W10"
+     }
+    },
+    {
+     "type": "ASSET",
+     "id": "MMSI:257210000",
+     "name": "ROSTEIN (wellboat)",
+     "identity_basis": "RECORDED_IDENTIFIER",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "ROSTEIN (`257210000`)"
+     }
+    },
+    {
+     "type": "ASSET",
+     "id": "MMSI:257262000",
+     "name": "RONJA SUND (wellboat)",
+     "identity_basis": "RECORDED_IDENTIFIER",
+     "citation": {
+      "path": "docs/strategy/salmon_verification_final_report.md",
+      "quote": "RONJA SUND (`257262000`)"
+     }
+    }
+   ],
+   "documents": [
+    {
+     "sha256": "fce8a379fa8dd198407483bb512df417dc95b5d236c4ba62012559f596a40d4b",
+     "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10029/vessel/2021/10",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 699,
+     "receipt": "docs/strategy/salmon_verification_receipt_v002.json",
+     "role": "Recorded visit response for locality 10029, 2021W10"
+    },
+    {
+     "sha256": "253a49d06ceeb3b5e7a8984d16d18e70699c24f2bbfe98efe0c4716598ee25f1",
+     "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10213/vessel/2024/10",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 7164,
+     "receipt": "docs/strategy/salmon_verification_receipt_v002.json",
+     "role": "Recorded visit response for locality 10213, 2024W10"
+    },
+    {
+     "sha256": "d01c12155bfe1fd903110e81067307cc85259d82e400775ee921d17d41ab3660",
+     "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/vesseltrack/257210000/2021/10",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 1151578,
+     "receipt": "docs/strategy/salmon_verification_receipt_v002.json",
+     "role": "Recorded weekly vessel context, MMSI 257210000"
+    },
+    {
+     "sha256": "4b95578a944443798f2afcb8214d10069b6b931cc733c85646716afdac1cf675",
+     "locator": "https://www.barentswatch.no/bwapi/openapi/fishhealth/openapi.json",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 679076,
+     "receipt": "docs/strategy/salmon_verification_receipt_v002.json",
+     "role": "Official schema (field definitions, not rows)"
+    }
+   ],
+   "related": [
+    "HIST-EF03"
+   ]
+  },
+  {
+   "id": "HIST-SH09",
+   "family": "SH09",
+   "title": "Offshore predecessor cleanup obligations (Cox/Chevron control)",
+   "report": "docs/strategy/sh09_verification_report.md",
+   "historical_closure": {
+    "date": "2026-10-21",
+    "note": "Report date; context only, not a graph-ingestion time."
+   },
+   "verdict": {
+    "text": "STOP / M NOT PASSED / H NOT ESTABLISHED",
+    "status_class": "STOPPED",
+    "scope": "The bounded public reconstruction of the Cox/Chevron case only.",
+    "citation": {
+     "path": "docs/strategy/sh09_verification_report.md",
+     "quote": "STOP: historical information not reconstructable within this bounded public check. M NOT PASSED; H NOT ESTABLISHED."
+    },
+    "scope_citation": {
+     "path": "docs/strategy/sh09_verification_report.md",
+     "quote": "This is an **unresolved reconstruction and access limit**, not documented impossibility or economic falsification."
+    }
+   },
+   "claims": [
+    {
+     "id": "v1",
+     "version": 1,
+     "object": "Change in Chevron recoverable-net predecessor cleanup exposure before 2024-01-02",
+     "financial_basis": "NET",
+     "reformulates": null,
+     "post_outcome": true,
+     "counts_as_original": true,
+     "recorded_status": [
+      {
+       "text": "M NOT PASSED; H NOT ESTABLISHED",
+       "citation": {
+        "path": "docs/strategy/sh09_verification_report.md",
+        "quote": "M NOT PASSED; H NOT ESTABLISHED."
+       }
+      }
+     ]
+    }
+   ],
+   "findings": [
+    {
+     "id": "F1",
+     "kind": "SOURCE_OMISSION",
+     "text": "The W&T filing omits its lease, excluded-asset and financial-support schedules.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "Item 9.01 says schedules/attachments are omitted."
+     },
+     "requirement": "REQ_HISTORICAL_SCHEDULE_OR_VERSION",
+     "claim": "v1"
+    },
+    {
+     "id": "F2",
+     "kind": "MEASUREMENT_GAP",
+     "text": "The original December 12 abandonment motion and asset attachment were not acquired.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "The original December 12 abandonment motion and asset attachment were not acquired."
+     },
+     "requirement": "REQ_HISTORICAL_SCHEDULE_OR_VERSION",
+     "claim": "v1"
+    },
+    {
+     "id": "F3",
+     "kind": "MEASUREMENT_GAP",
+     "text": "The approximately $170m security was neither allocated to leases nor netted.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "**No $170m subtraction, proportional allocation, new cost estimate or liability forecast was calculated.**"
+     },
+     "requirement": "REQ_DOCUMENTED_ALLOCATION",
+     "claim": "v1"
+    },
+    {
+     "id": "F4",
+     "kind": "MEASUREMENT_GAP",
+     "text": "Recoverable-net exposure was not reconstructed; the combined charge is not a cleanup-only outcome.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "The combined amount is neither cleanup-only nor Cox-only, immediate cash spending or a sampled-lease outcome."
+     },
+     "requirement": "REQ_RETAINED_NET_ECONOMICS",
+     "claim": "v1"
+    },
+    {
+     "id": "F5",
+     "kind": "RETROSPECTIVE_ONLY",
+     "text": "The 134-lease liability set is known only from a later issuer account.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "Chevron distinguished 205 leases in its chain of title from 134 with outstanding obligations; mere historical ownership therefore did not identify the relevant liability set."
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F6",
+     "kind": "ACCESS_BLOCKED",
+     "text": "The free RECAP search returned 403; the route stopped without bypass.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "One ordinary request returned **403**. No docket or original filing was delivered."
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F7",
+     "kind": "ACCESS_BLOCKED",
+     "text": "The Chevron letter host returned 403 on the new request.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "New ordinary retrieval returned **403**; no letter body was delivered."
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F8",
+     "kind": "SCOPE_LIMIT",
+     "text": "No leases were selected or mapped.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "No such list was acquired, so **selected leases = 0; mapped leases = 0**."
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F9",
+     "kind": "EVIDENCE_TO_CHANGE",
+     "text": "An already located original December 12 motion with its lease attachment and pre-January-2 public evidence.",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "The cheapest first falsification for a future decision would be an **already located original December 12 motion plus the actual lease attachment and evidence of public availability before January 2**."
+     },
+     "requirement": null,
+     "claim": "v1"
+    }
+   ],
+   "entities": [
+    {
+     "type": "LISTED_COMPANY",
+     "id": "CIK:0000093410",
+     "name": "Chevron Corporation",
+     "identity_basis": "SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR",
+     "locator": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000002/cvx-20240102.htm"
+    },
+    {
+     "type": "LISTED_COMPANY",
+     "id": "NAME:W&T Offshore",
+     "name": "W&T Offshore",
+     "identity_basis": "NAME_ONLY",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "W&T's December 15 signature"
+     }
+    },
+    {
+     "type": "COHORT",
+     "id": "NAME:Cox estate leases",
+     "name": "Cox-estate leases with outstanding obligations",
+     "identity_basis": "NAME_ONLY",
+     "citation": {
+      "path": "docs/strategy/sh09_verification_report.md",
+      "quote": "134 with outstanding obligations"
+     }
+    }
+   ],
+   "documents": [
+    {
+     "sha256": "1d468393d22cfafe99b67b1432a38bcfc0630b85e4e76620a8e9ff5285451651",
+     "locator": "https://www.wtoffshore.com/investors/sec-filings/all-sec-filings/content/0001104659-23-126389/0001104659-23-126389.pdf",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 2076442,
+     "receipt": "docs/strategy/sh09_verification_receipt.json",
+     "role": "W&T 8-K and purchase agreement (schedules omitted)"
+    },
+    {
+     "sha256": "4c5d6244c33ac20637cfd6b4e6ce4f939bb0ce6f13281f963d8005ba80195766",
+     "locator": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000002/cvx-20240102.htm",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 39360,
+     "receipt": "docs/strategy/sh09_verification_receipt.json",
+     "role": "Chevron January 2, 2024 8-K (combined charge)"
+    },
+    {
+     "sha256": "f70acef4d8bb6b5b9c67c042676f0cd5217face3fc2630b0ff877665e86dd36f",
+     "locator": "https://chevroncorp.gcs-web.com/static-files/51fe92ca-3680-42a4-b804-2c9433cfe667",
+     "http_status": 403,
+     "complete": true,
+     "body_bytes": 452,
+     "receipt": "docs/strategy/sh09_verification_receipt.json",
+     "role": "HTTP 403 error body; not the letter"
+    },
+    {
+     "sha256": "dc6f503969324d8da3b8204988ce06ab0be870d8fad8c777fc731daa71fd37c0",
+     "locator": "https://www.courtlistener.com/?q=%22MLCJR%22&type=r&order_by=dateFiled%20asc",
+     "http_status": 403,
+     "complete": true,
+     "body_bytes": 919,
+     "receipt": "docs/strategy/sh09_verification_receipt.json",
+     "role": "HTTP 403 error body; RECAP search denied"
+    }
+   ],
+   "related": []
+  },
+  {
+   "id": "HIST-EF06",
+   "family": "EF06",
+   "title": "Citizens takeouts: retained premium (v1) and restricted gross object (v2)",
+   "report": "docs/strategy/measurement_gate_campaign_report.md",
+   "historical_closure": {
+    "date": "2026-10-21",
+    "note": "Report date; context only, not a graph-ingestion time."
+   },
+   "verdict": {
+    "text": "HOLD v1; reject v2 as investment priority. No acquisition.",
+    "status_class": "HOLD",
+    "scope": "The eight-family Measurement Gate M campaign; v2 is a separate post-observation reformulation.",
+    "citation": {
+     "path": "docs/strategy/measurement_gate_campaign_report.md",
+     "quote": "HOLD v1; reject v2 as investment priority. No acquisition."
+    },
+    "scope_citation": {
+     "path": "docs/strategy/measurement_gate_campaign_report.md",
+     "quote": "The v2 M pass is deliberately excluded from the original-family success numerator."
+    }
+   },
+   "claims": [
+    {
+     "id": "v1",
+     "version": 1,
+     "object": "Per-carrier/cohort accepted and retained premium after cancellations and reinsurance",
+     "financial_basis": "RETAINED_NET",
+     "reformulates": null,
+     "post_outcome": false,
+     "counts_as_original": true,
+     "recorded_status": [
+      {
+       "text": "HOLD / M NOT PASSED",
+       "citation": {
+        "path": "docs/strategy/measurement_gate_campaign_report.md",
+        "quote": "The v1 predictor requires carrier/cohort retained premium. Group gross quantities do not establish it."
+       }
+      }
+     ]
+    },
+    {
+     "id": "v2",
+     "version": 2,
+     "object": "HCI group 2023 acquired gross book and separately reported Citizens gross earned premium",
+     "financial_basis": "GROSS",
+     "reformulates": "v1",
+     "post_outcome": true,
+     "counts_as_original": false,
+     "recorded_status": [
+      {
+       "text": "M_PASSED_RESTRICTED_GROSS_OBJECT",
+       "citation": {
+        "path": "docs/strategy/measurement_gate_campaign_ledger.json",
+        "quote": "M_PASSED_RESTRICTED_GROSS_OBJECT"
+       }
+      },
+      {
+       "text": "REJECT_FURTHER_INVESTMENT_PRIORITY",
+       "citation": {
+        "path": "docs/strategy/measurement_gate_campaign_ledger.json",
+        "quote": "Measurable descriptive object, no supported differentiated inference; do not count as original-family success"
+       }
+      },
+      {
+       "text": "Issuer already explains the acquired book",
+       "citation": {
+        "path": "docs/strategy/measurement_gate_campaign_report.md",
+        "quote": "**Reject v2 for further investment priority.** The issuer already describes the acquired book and premium contribution."
+       }
+      }
+     ]
+    }
+   ],
+   "findings": [
+    {
+     "id": "F1",
+     "kind": "MEASUREMENT_GAP",
+     "text": "Per-carrier retained premium is not observed; group gross quantities do not establish it.",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_report.md",
+      "quote": "The v1 predictor requires carrier/cohort retained premium. Group gross quantities do not establish it."
+     },
+     "requirement": "REQ_RETAINED_NET_ECONOMICS",
+     "claim": "v1"
+    },
+    {
+     "id": "F2",
+     "kind": "MEASUREMENT_GAP",
+     "text": "No carrier, cancellation, reinsurance or monthly allocation may be invented.",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_report.md",
+      "quote": "Do not invent carrier, cancellation, reinsurance or monthly allocations."
+     },
+     "requirement": "REQ_ENTITY_COHORT_JOIN",
+     "claim": "v1"
+    },
+    {
+     "id": "F3",
+     "kind": "SOURCE_FIELD_PRESENT",
+     "text": "Citizens policy counts for Homeowners Choice and TypTap are reported (group-year scope).",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_report.md",
+      "quote": "Citizens' original 2023 table, visually checked, reports **53,456 Homeowners Choice** and **6,717 TypTap** policies, total **60,173**."
+     },
+     "requirement": null,
+     "claim": "v2"
+    },
+    {
+     "id": "F4",
+     "kind": "RESTRICTED_M_PASS",
+     "text": "v2 passed M only for the restricted gross group object.",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_report.md",
+      "quote": "Accordingly **EF06 v2 passes M for this restricted gross object**."
+     },
+     "requirement": null,
+     "claim": "v2"
+    },
+    {
+     "id": "F5",
+     "kind": "INFORMATION_LIMIT",
+     "text": "The issuer already describes the acquired book and premium contribution.",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_report.md",
+      "quote": "The issuer already describes the acquired book and premium contribution."
+     },
+     "requirement": null,
+     "claim": "v2"
+    }
+   ],
+   "entities": [
+    {
+     "type": "LISTED_COMPANY",
+     "id": "CIK:0001400810",
+     "name": "HCI Group",
+     "identity_basis": "SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR",
+     "locator": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028021/hci-ex99_1.htm"
+    },
+    {
+     "type": "LEGAL_ENTITY",
+     "id": "NAME:Homeowners Choice",
+     "name": "Homeowners Choice (carrier)",
+     "identity_basis": "NAME_ONLY",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_report.md",
+      "quote": "**53,456 Homeowners Choice**"
+     }
+    },
+    {
+     "type": "LEGAL_ENTITY",
+     "id": "NAME:TypTap",
+     "name": "TypTap (carrier)",
+     "identity_basis": "NAME_ONLY",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_report.md",
+      "quote": "**6,717 TypTap**"
+     }
+    }
+   ],
+   "documents": [
+    {
+     "sha256": "f68089cd7e28c90911213dc2a9d8de071fa0555d268273bf7c91508dc9c36748",
+     "locator": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028021/hci-ex99_1.htm",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 756015,
+     "receipt": "docs/strategy/measurement_gate_campaign_ledger.json",
+     "role": "Complete HCI earnings release"
+    },
+    {
+     "sha256": "fc39950acee670d29b0e246d19c4a1b5f7ca1347c6a9c4703b946a1103375c51",
+     "locator": "https://www.citizensfla.com/documents/20702/29465645/2023+Stats.pdf/29ae7065-eb6e-28b8-5841-21e1dbba3049?t=1704899022388",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 76154,
+     "receipt": "docs/strategy/measurement_gate_campaign_ledger.json",
+     "role": "Citizens 2023 statistics"
+    },
+    {
+     "sha256": "0310d3f0cab53c34b16ae83aa065c78ba91bcb551bc003865ebd0d08653a5840",
+     "locator": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028620/hci-20231231.htm",
+     "http_status": 200,
+     "complete": false,
+     "body_bytes": 6291457,
+     "receipt": "docs/strategy/measurement_gate_campaign_ledger.json",
+     "role": "HCI 2023 annual filing, incomplete 6 MiB+1 prefix"
+    }
+   ],
+   "related": [
+    "HIST-F19"
+   ]
+  },
+  {
+   "id": "HIST-EF03",
+   "family": "EF03",
+   "title": "IV-fluid shortage and genuinely available substitute output (not F03)",
+   "report": "docs/strategy/measurement_gate_campaign_cards.md",
+   "historical_closure": {
+    "date": "2026-10-21",
+    "note": "Campaign date; context only, not a graph-ingestion time."
+   },
+   "verdict": {
+    "text": "HOLD / M NOT PASSED",
+    "status_class": "HOLD",
+    "scope": "One indexed issuer passage in the eight-family campaign; no source acquired.",
+    "citation": {
+     "path": "docs/strategy/measurement_gate_campaign_cards.md",
+     "quote": "**HOLD / M NOT PASSED.** Baxter North Cove damage after Hurricane Helene in September 2024."
+    },
+    "scope_citation": {
+     "path": "docs/strategy/measurement_gate_campaign_report.md",
+     "quote": "ICU Medical says it is increasing production, not how many compatible, uncommitted bags it can deliver."
+    }
+   },
+   "claims": [
+    {
+     "id": "v1",
+     "version": 1,
+     "object": "Presentation-compatible output actually available for incremental delivery, net of commitments",
+     "financial_basis": "NOT_ESTABLISHED",
+     "reformulates": null,
+     "post_outcome": false,
+     "counts_as_original": true,
+     "recorded_status": [
+      {
+       "text": "HOLD / M NOT PASSED",
+       "citation": {
+        "path": "docs/strategy/measurement_gate_campaign_cards.md",
+        "quote": "**HOLD / M NOT PASSED.** Baxter North Cove damage after Hurricane Helene in September 2024."
+       }
+      }
+     ]
+    }
+   ],
+   "findings": [
+    {
+     "id": "F1",
+     "kind": "MEASUREMENT_GAP",
+     "text": "A production increase is not spare deliverable capacity.",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_cards.md",
+      "quote": "The original indexed filing says production is being increased and demand is expected to rise; neither is spare deliverable capacity."
+     },
+     "requirement": "REQ_AVAILABLE_CAPACITY",
+     "claim": "v1"
+    },
+    {
+     "id": "F2",
+     "kind": "INFORMATION_LIMIT",
+     "text": "The issuer itself already discusses the supply response.",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_report.md",
+      "quote": "ICU Medical already discusses the supply response."
+     },
+     "requirement": null,
+     "claim": "v1"
+    }
+   ],
+   "entities": [
+    {
+     "type": "LISTED_COMPANY",
+     "id": "NAME:ICU Medical",
+     "name": "ICU Medical",
+     "identity_basis": "NAME_ONLY",
+     "citation": {
+      "path": "docs/strategy/measurement_gate_campaign_cards.md",
+      "quote": "ICU Medical is a named listed potential substitute."
+     }
+    }
+   ],
+   "documents": [],
+   "related": [
+    "HIST-F01",
+    "HIST-F03"
+   ]
+  },
+  {
+   "id": "HIST-F19",
+   "family": "F19",
+   "title": "Insurance guaranty assessments and premium-tax-credit utilisation",
+   "report": "docs/strategy/discovery_bottleneck_report.md",
+   "historical_closure": {
+    "date": "2026-10-21",
+    "note": "Report date; context only, not a graph-ingestion time."
+   },
+   "verdict": {
+    "text": "HOLD / unapproved (leading measurement candidate)",
+    "status_class": "HOLD",
+    "scope": "Bounded F19 source check; the 80 MiB annual-note follow-up was never activated.",
+    "citation": {
+     "path": "docs/strategy/measurement_gate_campaign_report.md",
+     "quote": "F19 remains the preserved leading pre-existing measurement candidate on **HOLD / unapproved**"
+    },
+    "scope_citation": {
+     "path": "docs/strategy/discovery_bottleneck_report.md",
+     "quote": "They do not yet establish the state/cohort-level capacity predictor that would differentiate our proposed investment inference."
+    }
+   },
+   "claims": [
+    {
+     "id": "v1",
+     "version": 1,
+     "object": "Usable future premium-tax offset capacity by state/assessment cohort against assessment burden",
+     "financial_basis": "NET",
+     "reformulates": null,
+     "post_outcome": "UNKNOWN",
+     "counts_as_original": true,
+     "recorded_status": [
+      {
+       "text": "HOLD",
+       "citation": {
+        "path": "docs/strategy/measurement_gate_campaign_report.md",
+        "quote": "F19 remains the preserved leading pre-existing measurement candidate on **HOLD / unapproved**"
+       }
+      }
+     ]
+    }
+   ],
+   "findings": [
+    {
+     "id": "F1",
+     "kind": "MEASUREMENT_GAP",
+     "text": "State/cohort-level capacity predictor not established.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "They do not yet establish the state/cohort-level capacity predictor that would differentiate our proposed investment inference."
+     },
+     "requirement": "REQ_ENTITY_COHORT_JOIN",
+     "claim": "v1"
+    },
+    {
+     "id": "F2",
+     "kind": "MEASUREMENT_GAP",
+     "text": "A guaranty-fund balance change is not credits used.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "**The balance change is not credits used.**"
+     },
+     "requirement": "REQ_REALISED_ACTIVITY",
+     "claim": "v1"
+    },
+    {
+     "id": "F3",
+     "kind": "SOURCE_OMISSION",
+     "text": "The parent filing is an explicitly incomplete prefix.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "It is an **incomplete filing prefix**, not a complete original."
+     },
+     "requirement": "REQ_HISTORICAL_SCHEDULE_OR_VERSION",
+     "claim": "v1"
+    },
+    {
+     "id": "F4",
+     "kind": "SOURCE_FIELD_PRESENT",
+     "text": "Aetna reports a material assessment liability.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "Aetna recognised **$231 million discounted liability and pretax expense**"
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F5",
+     "kind": "EVIDENCE_TO_CHANGE",
+     "text": "Units must join without invented allocations, or the capacity forecast fails.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "If those units cannot be joined without invented allocations, the proposed capacity forecast must fail even after the PDFs are read."
+     },
+     "requirement": "REQ_ENTITY_COHORT_JOIN",
+     "claim": "v1"
+    }
+   ],
+   "entities": [
+    {
+     "type": "LISTED_COMPANY",
+     "id": "CIK:0001122304",
+     "name": "Aetna",
+     "identity_basis": "SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR",
+     "locator": "https://www.sec.gov/Archives/edgar/data/1122304/000112230417000090/form10-q.htm"
+    },
+    {
+     "type": "LISTED_COMPANY",
+     "id": "CIK:0001535929",
+     "name": "Voya Financial",
+     "identity_basis": "SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR",
+     "locator": "https://www.sec.gov/Archives/edgar/data/1535929/000153592918000006/voyafinancialinc201710-kre.htm"
+    },
+    {
+     "type": "LEGAL_ENTITY",
+     "id": "NAME:Voya Retirement Insurance and Annuity Company",
+     "name": "Voya Retirement Insurance and Annuity Company",
+     "identity_basis": "NAME_ONLY",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "The acquired Voya Retirement Insurance and Annuity Company quarterly original"
+     }
+    }
+   ],
+   "documents": [
+    {
+     "sha256": "c45e48e1801eacc63f5cac2d6b0f6addabb686a8208d285b904f5cb5b987fb87",
+     "locator": "https://www.sec.gov/Archives/edgar/data/1122304/000112230417000090/form10-q.htm",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 2724332,
+     "receipt": "docs/strategy/discovery_bottleneck_receipt.json",
+     "role": "Aetna June 2017 10-Q"
+    },
+    {
+     "sha256": "118b537ccb719c1cdaa4b255332a10a52401b180f8100bea31525c1f47e78819",
+     "locator": "https://www.sec.gov/Archives/edgar/data/1535929/000153592918000006/voyafinancialinc201710-kre.htm",
+     "http_status": 200,
+     "complete": false,
+     "body_bytes": 12582913,
+     "receipt": "docs/strategy/discovery_bottleneck_receipt.json",
+     "role": "Voya Financial 2017 10-K, incomplete prefix"
+    },
+    {
+     "sha256": "660f69ea279760a681325a77e165f528beea8b131eab9273f74dff2ab55ac719",
+     "locator": "https://content.naic.org/sites/default/files/inline-files/143_a.pdf",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 314586,
+     "receipt": "docs/strategy/discovery_bottleneck_receipt.json",
+     "role": "NAIC guidance (annual credit-use reconciliation)"
+    }
+   ],
+   "related": [
+    "HIST-EF06"
+   ]
+  },
+  {
+   "id": "HIST-F09",
+   "family": "F09",
+   "title": "Creditor protection and supplier receivables (Toys R Us suppliers)",
+   "report": "docs/strategy/discovery_bottleneck_report.md",
+   "historical_closure": {
+    "date": "2026-10-21",
+    "note": "Report date; context only, not a graph-ingestion time."
+   },
+   "verdict": {
+    "text": "Second investigation priority, not a pilot; key exposure inaccessible",
+    "status_class": "NOT_ADVANCED",
+    "scope": "The checked public Mattel/Hasbro records only.",
+    "citation": {
+     "path": "docs/strategy/discovery_bottleneck_report.md",
+     "quote": "**Second investigation priority, not a pilot.** Checked source cannot quantify the key exposure."
+    },
+    "scope_citation": {
+     "path": "docs/strategy/discovery_bottleneck_report.md",
+     "quote": "the exact net protected exposure is **INACCESSIBLE in this public record**."
+    }
+   },
+   "claims": [
+    {
+     "id": "v1",
+     "version": 1,
+     "object": "Supplier cash exposure actually covered by a dated creditor-protection agreement",
+     "financial_basis": "NET",
+     "reformulates": null,
+     "post_outcome": "UNKNOWN",
+     "counts_as_original": true,
+     "recorded_status": [
+      {
+       "text": "NOT ADVANCED",
+       "citation": {
+        "path": "docs/strategy/discovery_bottleneck_report.md",
+        "quote": "**Second investigation priority, not a pilot.** Checked source cannot quantify the key exposure."
+       }
+      }
+     ]
+    }
+   ],
+   "findings": [
+    {
+     "id": "F1",
+     "kind": "MEASUREMENT_GAP",
+     "text": "Opening debt, remaining balance and collections are redacted.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "Crucially, the source expressly redacts the opening US/Canada receivables, remaining pre-petition balance, cumulative cash collections and additional Canadian detail."
+     },
+     "requirement": "REQ_UNREDACTED_CONTRACT_AMOUNT",
+     "claim": "v1"
+    },
+    {
+     "id": "F2",
+     "kind": "SOURCE_FIELD_PRESENT",
+     "text": "The agreement itself is documented.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "Contract existence is **VERIFIED**"
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F3",
+     "kind": "SCOPE_LIMIT",
+     "text": "Hasbro agreement status is unknown, not an unprotected control.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "It must remain **UNKNOWN**, not an unprotected control"
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F4",
+     "kind": "SCOPE_LIMIT",
+     "text": "The suppliers share one distress shock, not two independent events.",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "These suppliers share one distress shock, not two independent events."
+     },
+     "requirement": null,
+     "claim": "v1"
+    }
+   ],
+   "entities": [
+    {
+     "type": "LISTED_COMPANY",
+     "id": "CIK:0000063276",
+     "name": "Mattel",
+     "identity_basis": "SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR",
+     "locator": "https://www.sec.gov/Archives/edgar/data/63276/000162828018011171/filename1.htm"
+    },
+    {
+     "type": "LISTED_COMPANY",
+     "id": "CIK:0000046080",
+     "name": "Hasbro",
+     "identity_basis": "SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR",
+     "locator": "https://www.sec.gov/Archives/edgar/data/46080/000004608019000008/exhibit991.htm"
+    },
+    {
+     "type": "LEGAL_ENTITY",
+     "id": "NAME:Toys R Us",
+     "name": "Toys R Us (debtor)",
+     "identity_basis": "NAME_ONLY",
+     "citation": {
+      "path": "docs/strategy/discovery_bottleneck_report.md",
+      "quote": "Toys R Us pre-petition receivables"
+     }
+    }
+   ],
+   "documents": [
+    {
+     "sha256": "f69c41806b6231e3c1f3fbd0231fc522419a8fad919073e07946f28e982158fa",
+     "locator": "https://www.sec.gov/Archives/edgar/data/63276/000162828018011171/filename1.htm",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 103528,
+     "receipt": "docs/strategy/discovery_bottleneck_receipt.json",
+     "role": "Mattel SEC correspondence response (amounts redacted)"
+    },
+    {
+     "sha256": "83bf6234bbb5e516335bb5185ef48c6e8005102c5716e8c25cd500cd2b5d2f2b",
+     "locator": "https://www.sec.gov/Archives/edgar/data/46080/000004608019000008/exhibit991.htm",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 808651,
+     "receipt": "docs/strategy/discovery_bottleneck_receipt.json",
+     "role": "Hasbro 2018 earnings release"
+    }
+   ],
+   "related": []
+  },
+  {
+   "id": "HIST-F03",
+   "family": "F03",
+   "title": "Use-specific chemical permission and substitute sales (not EF03)",
+   "report": "docs/strategy/frontier_selection_ii_report.md",
+   "historical_closure": {
+    "date": "2026-10-20",
+    "note": "Report date; context only, not a graph-ingestion time."
+   },
+   "verdict": {
+    "text": "PROMISING BUT MISSING A CRITICAL INPUT",
+    "status_class": "NOT_ADVANCED",
+    "scope": "The two checked authorisation examples only.",
+    "citation": {
+     "path": "docs/strategy/frontier_selection_ii_report.md",
+     "quote": "**PROMISING BUT MISSING A CRITICAL INPUT.**"
+    },
+    "scope_citation": {
+     "path": "docs/strategy/frontier_selection_ii_report.md",
+     "quote": "**F03 remains interesting but not implementable as proposed from this evidence.**"
+    }
+   },
+   "claims": [
+    {
+     "id": "v1",
+     "version": 1,
+     "object": "A decision changing a documented, material, qualified substitute-supplier sales opportunity",
+     "financial_basis": "NOT_ESTABLISHED",
+     "reformulates": null,
+     "post_outcome": "UNKNOWN",
+     "counts_as_original": true,
+     "recorded_status": [
+      {
+       "text": "PROMISING BUT MISSING A CRITICAL INPUT",
+       "citation": {
+        "path": "docs/strategy/frontier_selection_ii_report.md",
+        "quote": "**PROMISING BUT MISSING A CRITICAL INPUT.**"
+       }
+      }
+     ]
+    }
+   ],
+   "findings": [
+    {
+     "id": "F1",
+     "kind": "MEASUREMENT_GAP",
+     "text": "Real substitutes and use-specific permissions exist, but not a qualified substitute sales opportunity.",
+     "citation": {
+      "path": "docs/strategy/frontier_selection_ii_report.md",
+      "quote": "F03 establishes real commercial substitutes and use-specific legal permissions, but not a qualified substitute's material sales opportunity affected by the decision."
+     },
+     "requirement": "REQ_REALISED_ACTIVITY",
+     "claim": "v1"
+    },
+    {
+     "id": "F2",
+     "kind": "MEASUREMENT_GAP",
+     "text": "No qualified formulation, switch contract, expected sales or lost orders identified.",
+     "citation": {
+      "path": "docs/strategy/frontier_selection_ii_report.md",
+      "quote": "It does not identify the relevant customer's qualified formulation, switch contract, expected sales, investment amount or orders lost because incumbent use continued."
+     },
+     "requirement": "REQ_REALISED_ACTIVITY",
+     "claim": "v1"
+    },
+    {
+     "id": "F3",
+     "kind": "SOURCE_OMISSION",
+     "text": "The retrieved notice is a summary, not the full decision or dossier.",
+     "citation": {
+      "path": "docs/strategy/frontier_selection_ii_report.md",
+      "quote": "The retrieved summary is not the full controlling decision or its application/alternatives dossier."
+     },
+     "requirement": "REQ_HISTORICAL_SCHEDULE_OR_VERSION",
+     "claim": "v1"
+    },
+    {
+     "id": "F4",
+     "kind": "SCOPE_LIMIT",
+     "text": "Parent group sales are corporate context, not pigment exposure.",
+     "citation": {
+      "path": "docs/strategy/frontier_selection_ii_report.md",
+      "quote": "is corporate context, not pigment exposure."
+     },
+     "requirement": null,
+     "claim": "v1"
+    },
+    {
+     "id": "F5",
+     "kind": "EVIDENCE_TO_CHANGE",
+     "text": "An as-of qualified customer/product relationship or quantified conditional orders, plus a decision that changes it.",
+     "citation": {
+      "path": "docs/strategy/frontier_selection_ii_report.md",
+      "quote": "For F03: an as-of qualified customer/product relationship, quantified conditional orders or a material disclosed substitution opportunity, plus a decision that changes it."
+     },
+     "requirement": null,
+     "claim": "v1"
+    }
+   ],
+   "entities": [
+    {
+     "type": "LISTED_COMPANY",
+     "id": "NAME:BASF",
+     "name": "BASF",
+     "identity_basis": "NAME_ONLY",
+     "citation": {
+      "path": "docs/strategy/frontier_selection_ii_report.md",
+      "quote": "BASF's dated ownership is not projected into current pigment ownership."
+     }
+    }
+   ],
+   "documents": [
+    {
+     "sha256": "43521a44025750697e9348267a2b474fa620fb3c62171ab5a0d6219a57661db2",
+     "locator": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AC%3A2020%3A447%3AFULL",
+     "http_status": 200,
+     "complete": true,
+     "body_bytes": 979296,
+     "receipt": "docs/strategy/frontier_selection_ii_receipt.json",
+     "role": "Official Journal 2020/C 447/03 summary (not the full decision)"
+    }
+   ],
+   "related": [
+    "HIST-EF03"
+   ]
+  }
+ ]
+}

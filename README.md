@@ -7,7 +7,7 @@
 
 One investment study is complete, reusable research infrastructure is built, and recent disclosure candidates were closed at source gates; the frozen momentum study has complete price enrichment but remains blocked at execution-evidence certification. **No profitable strategy or validated paper/live system has been established.**
 
-**Current direction:** investigate unconventional economic relationships with a credible path to investment value. [Discovery Lab v1](docs/strategy/discovery_lab_design.md) now makes ideas start from recorded observations, documented relationships or dated events, freezes each claim before its outcome is examined and checks it against the unchanged Measurement Gate M; it is built and tested offline, and no live discovery campaign has run. The latest [offshore-obligation verification](docs/strategy/sh09_verification_report.md) could not reconstruct the pre-announcement lease, obligation and recoverable-security chain; no economic pilot is recommended. The [eight-family campaign](docs/strategy/measurement_gate_campaign_report.md) established [Measurement Gate M](docs/strategy/measurement_gate_m.md): prove the distinctive variable and matched outcome before deep research. Its original claims did not pass; a narrower insurer gross-book object is measurable but supplies no demonstrated investment increment. [Insurance assessment/tax-credit measurement](docs/strategy/discovery_bottleneck_report.md) remains on hold and unapproved. Earlier [discovery](docs/strategy/expanded_discovery_report.md), [salmon](docs/strategy/salmon_verification_final_report.md) and [healthcare/chemical](docs/strategy/frontier_selection_ii_report.md) findings are preserved. No new economic test or profitable edge is established; river remains unapproved.
+**Current direction:** investigate unconventional economic relationships with a credible path to investment value. [Discovery Lab v1](docs/strategy/discovery_lab_design.md) now makes ideas start from recorded observations, documented relationships or dated events, freezes each claim before its outcome is examined and checks it against the unchanged Measurement Gate M; it is built and tested offline, and no live discovery campaign has run. The [Economic Knowledge Graph v1](docs/strategy/graph_v1_design.md) is a read-only research-memory view over those ledgers and seven cited historical investigations: it connects records only through exact identifiers, document hashes and documented relationships, explains every link's first unsupported leap, and certifies or authorises nothing. The latest [offshore-obligation verification](docs/strategy/sh09_verification_report.md) could not reconstruct the pre-announcement lease, obligation and recoverable-security chain; no economic pilot is recommended. The [eight-family campaign](docs/strategy/measurement_gate_campaign_report.md) established [Measurement Gate M](docs/strategy/measurement_gate_m.md): prove the distinctive variable and matched outcome before deep research. Its original claims did not pass; a narrower insurer gross-book object is measurable but supplies no demonstrated investment increment. [Insurance assessment/tax-credit measurement](docs/strategy/discovery_bottleneck_report.md) remains on hold and unapproved. Earlier [discovery](docs/strategy/expanded_discovery_report.md), [salmon](docs/strategy/salmon_verification_final_report.md) and [healthcare/chemical](docs/strategy/frontier_selection_ii_report.md) findings are preserved. No new economic test or profitable edge is established; river remains unapproved.
 
 **Selection standard:** seek [economic value and plausible competitive differentiation](docs/strategy/frontier_selection_standard.md). Research and commercial interest can support relevance; obscurity earns no credit. Assess the specific signal and closest substitutes separately from familiarity with its dataset. No remaining profitable advantage has been demonstrated.
 
@@ -72,6 +72,7 @@ Research OS is canonical for sources, populations, identity, timing, experiment 
 | --- | --- | --- |
 | Source provenance | Original-byte archives, SHA-256, request/error receipts, source registries and immutable versions | Bounded sources; complete market coverage is unproved |
 | Discovery Lab | Source passports, observation cards, typed relationships, frozen versioned claims, mechanical M/H checklist, human dispositions and descriptive method comparison in hash-chained ledgers | Offline synthetic and retrospective fixtures only; checklist never certifies M; no live campaign or discovery yield demonstrated |
+| Knowledge graph | Deterministic projection of ledgers plus a cited historical-memory catalogue; assertion-level status, identity/period/hub rules, eight explainable discovery operators, Mermaid/DOT views | Derived and non-authoritative; cross-campaign value shown only on synthetic fixtures; requirement mappings pending human review |
 | SEC / point-in-time pilot | Accession-specific XBRL and full primary text, offline replay, SQLite/Parquet/DuckDB reconciliation; separate acceptance, public-availability, reconstruction and ingestion clocks | Exact public availability UNKNOWN; item segmentation and full historical class bindings incomplete |
 | Accounting and identity | Explicit revenue comparability and effective-date/class contracts; unresolved values stay unavailable | Contracts exist; full triples, listing spans and terminal positions remain uncertified |
 | Experiment controls | Schema validation, frozen hashes, stage gates, durable jobs/trials, ceilings and uncertain-submission reconciliation | Application controls; filesystem owners can modify code/state; human Test/paper decisions remain separate |
@@ -81,7 +82,7 @@ Research OS is canonical for sources, populations, identity, timing, experiment 
 | Adapter boundary | Generic execution interface and defined Nexus adapter | Nexus adapter disabled; historical population preservation not certified |
 | Verification / memory | Public synthetic CI, local integration tests, preservation audits, reports and retained negative findings | Public CI cannot certify private source archives, real-market execution or profitability |
 
-Implementation: [source pilot](src/research/sec_pilot/), [discovery lab](src/research/discovery/), [contracts/compiler](src/research/phase3d/), [local ledger](src/research/phase3d/execution.py), [stage/trial store](src/research/store.py), [tests](tests/).
+Implementation: [source pilot](src/research/sec_pilot/), [discovery lab](src/research/discovery/), [knowledge graph](src/research/graph/), [contracts/compiler](src/research/phase3d/), [local ledger](src/research/phase3d/execution.py), [stage/trial store](src/research/store.py), [tests](tests/).
 
 ## Scientific principles
 
@@ -176,6 +177,7 @@ python -m pip install -r requirements-docs.txt
 python -m src.research.public_checks
 python -m src.research.phase4a --check
 python -m src.research.discovery demo --check
+python -m src.research.graph demo --check
 python -m src.research demo EXP999 --dry-run
 python -m src.presentation.exp001 --check
 ```
@@ -199,6 +201,7 @@ Existing EXP001 integration tests use its already-opened local records for regre
 src/research/         Specifications, stores, source pilots, contracts and gates
 src/research/phase3d/ Proof/replay prototype and synthetic local execution
 src/research/discovery/ Evidence-first discovery ledgers, checklist and offline walkthrough
+src/research/graph/   Derived research-memory graph, historical catalogue and discovery operators
 src/metrics/         Frozen independent metric definitions
 src/nexus/           Legacy local EXP001 processing and Nexus extraction
 src/presentation/    Generated README, canonical tables and figures

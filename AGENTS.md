@@ -1,5 +1,13 @@
 # Repository instructions
 
+## Economic Knowledge Graph v1 implemented offline (2026-10-21)
+
+- `docs/strategy/owner_graph_v1_2026-10-21.md` approved offline engineering only: zero scientific-source acquisition, no pilot, market data, returns, backtest, cloud/paid/authenticated action, experiment or Store change. The supplied 35-page blueprint is summarised in `graph_v1_design.md`; its private original is under ignored `data/raw/graph_v1_20261021/`.
+- `src/research/graph/` (`python -m src.research.graph ...`) is a deterministic, read-only, rebuildable projection over replay-validated Discovery Lab ledgers (`docs/strategy/discovery/**/*.jsonl`) and the non-authoritative `docs/strategy/graph/research_memory_catalogue.json`. It never writes ledgers, certifies evidence, decides M/H, changes a disposition or source stop, or authorises work; every output carries the derived-view banner. If it conflicts with a ledger or report, the source wins.
+- Verification belongs to assertions (observations, relationship assertions); entities/documents are neutral joining points; allocation is separate; paths are connectivity only and never certify exposure. Cross-campaign joins use exact identifiers and content hashes; NAME:/TICKER: entities never join; look-alikes raise identity questions. Synthetic data is isolated in synthetic mode; prospective mode admits live ledgers only; `--known-at` uses append/catalogue recording time, never backdated historical dates.
+- Historical memory (F01, SH09, EF06, EF03, F19, F09, F03) is cited verbatim with report hashes; it creates no observations, relationships, freezes, reviews or dispositions. Requirement mappings and SEC-path CIKs are retrieval aids pending human review (`graph_v1_backfill_audit.md`). Edit the catalogue only with exact quotes and recomputed hashes; never refresh stale citations silently.
+- Regenerate `graph_v1_walkthrough.md` only with `python -m src.research.graph demo --write`. A prospective Discovery Lab + Graph pilot needs a separate owner instruction (protocol in `graph_v1_design.md`). F19 HOLD, SH09 stopped, EXP004 restrictions, EXP001–EXP007 and all prior source stops are unchanged.
+
 ## Discovery Lab v1 implemented offline (2026-10-21)
 
 - `docs/strategy/owner_discovery_lab_2026-10-21.md` authorised local engineering and an offline demonstration only: **zero scientific-source acquisition**, no live discovery campaign, market data, returns, backtest, cloud/paid/authenticated action or experiment. The supplied 26-page report is reviewed critically in `discovery_lab_design.md`; its private original is under ignored `data/raw/discovery_lab_20261021/`.

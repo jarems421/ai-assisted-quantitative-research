@@ -1,0 +1,210 @@
+{
+ "version": "GRAPH_V1_VALIDATION_V001",
+ "recorded_at_utc": "2026-10-21T11:29:10+00:00",
+ "status": "PASS",
+ "starting_head": "e34b47161a83803bea80cfb5d2b144a11fafa953",
+ "owner": "owner_graph_v1_2026-10-21.md",
+ "owner_sha256": "cc17fead365d3af18f17157a9b7600e6f8fe489f11c90245586aac06b7ec3746",
+ "supplied_report": {
+  "pages": 35,
+  "bytes": 276995,
+  "sha256": "e822d02fe2be1ae42317317aa7f8915479bfc8474fe1d150967f8449ff226650",
+  "all_pages_read": true,
+  "external_sources_opened": 0,
+  "private_original": "data/raw/graph_v1_20261021/supplied_report.pdf (ignored)"
+ },
+ "catalogue": {
+  "path": "docs/strategy/graph/research_memory_catalogue.json",
+  "sha256": "3ca363216078a2134837d8e8ea2fc6996ddc49de78027048f3b15aa5482f16bb",
+  "investigations": 7,
+  "mapping_review": "PENDING_HUMAN_REVIEW"
+ },
+ "baseline_before_changes": {
+  "local_tests": 517,
+  "public_tests": 289,
+  "tracked_files": 746
+ },
+ "local_tests": 554,
+ "public_tests": 326,
+ "graph_tests": 37,
+ "skipped": 0,
+ "memory_graph": {
+  "nodes": 97,
+  "edges": 122,
+  "digest": "b662c5569575a7f7ab0e8c360123d97d60b3409ad5000520f73fc2cb3dec862c",
+  "rebuild_identical": true
+ },
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+   ],
+   "returncode": 0,
+   "log": "local_suite.log",
+   "log_sha256": "fa2bf472d1f9c411db5988a09ecaceefba2cd04f64c1ab4a747ceab7ba195193",
+   "test_count": 554
+  },
+  {
+   "name": "public_checks",
+   "command": [
+    "python",
+    "-m",
+    "src.research.public_checks"
+   ],
+   "returncode": 0,
+   "log": "public_checks.log",
+   "log_sha256": "5ec55e731aef78fe90cedfd351b001e20303afd03339d25c51ed09abd17a6aea",
+   "test_count": 326,
+   "note": "test_graph added to PUBLIC_TESTS"
+  },
+  {
+   "name": "presentation",
+   "command": [
+    "python",
+    "-m",
+    "src.presentation.exp001",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "presentation.log",
+   "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+  },
+  {
+   "name": "documentation_links",
+   "command": [
+    "python",
+    "-m",
+    "src.research.phase4a",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "phase4a.log",
+   "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+  },
+  {
+   "name": "exp004_frozen_audit",
+   "command": [
+    "python",
+    "-m",
+    "src.research",
+    "audit",
+    "EXP004"
+   ],
+   "returncode": 0,
+   "log": "exp004_audit.log",
+   "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+  },
+  {
+   "name": "exp004_gap_check",
+   "command": [
+    "python",
+    "-m",
+    "src.research.exp004_execution_gap_report",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "exp004_gap.log",
+   "log_sha256": "64877d6dbac62922a24916bcbcb3a1d6c86f7ded4b936a87d906dd6f6ff6d536",
+   "result": "EXECUTION_GAPS_UNRESOLVED"
+  },
+  {
+   "name": "discovery_lab_walkthrough",
+   "command": [
+    "python",
+    "-m",
+    "src.research.discovery",
+    "demo",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "discovery_demo.log",
+   "log_sha256": "2336547466ce94877bbb36872a22b36dadcfd9aa7a7287bd872116ebc85db0d1"
+  },
+  {
+   "name": "graph_walkthrough",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "demo",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "graph_demo.log",
+   "log_sha256": "78eb3334217f039259ae74c76efba6b3be43b3592bcfe035ab12f575d130e03b",
+   "walkthrough_sha256": "bdbd4fcde2ac613356bf7e2dfcadba9b4d167918dfef6e5b1b705d46f2444a0e"
+  },
+  {
+   "name": "graph_build_rebuild",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "build",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "graph_build.log",
+   "log_sha256": "736c9e59f7a30d7aca80c1bc31593c38efcc04c74485d100cd3d4012063bfe15"
+  },
+  {
+   "name": "graph_utility_check",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "evaluate",
+    "--timing"
+   ],
+   "returncode": 0,
+   "log": "graph_evaluate.log",
+   "log_sha256": "aeade5a1ceb13d15f4bd5a17f1f794440ef1c72a83d10892a3b6a535d7825c64",
+   "note": "synthetic functional check; runtime is not deterministic and is not committed elsewhere"
+  }
+ ],
+ "logs_private_directory": "data/raw/graph_v1_20261021/validation (ignored)",
+ "preservation": {
+  "tracked_files_at_head": 746,
+  "byte_identical": 741,
+  "changed": [
+   "AGENTS.md",
+   "README.md",
+   "docs/acceleration/master_plan.md",
+   "src/presentation/README.template.md",
+   "src/research/public_checks.py"
+  ],
+  "changed_reason": "Living guidance/presentation pointers and the public test list only",
+  "discovery_lab_code_changed": false,
+  "catalogue_cited_reports_changed": false
+ },
+ "scientific_state": {
+  "source_acquisition_requests": 0,
+  "external_bytes": 0,
+  "live_campaigns": 0,
+  "pilots": 0,
+  "market_data_requests": 0,
+  "returns_inspected": false,
+  "backtests": 0,
+  "new_experiments": 0,
+  "store_transitions": 0,
+  "trial_count_changes": 0,
+  "cloud_jobs": 0,
+  "paid_or_authenticated_actions": 0,
+  "F19": "HOLD_UNAPPROVED",
+  "SH09": "STOPPED",
+  "EXP004": "RESTRICTIONS_UNCHANGED"
+ },
+ "utility_check_summary": "Synthetic fixture: all approaches recover the true link; text search adds 2 false and 2 premature identity joins; identifier search matches the graph on claim links but returns 1 period-incompatible context; the graph found no link identifier search missed.",
+ "limits": [
+  "Software and synthetic checks verify mechanics, not research value.",
+  "Requirement mappings and SEC-path identities await human review.",
+  "Hosted CI is reported separately."
+ ]
+}
