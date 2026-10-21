@@ -1,0 +1,61 @@
+{
+  "version": "DISCOVERY_BOTTLENECK_EVIDENCE_PLAN_V001",
+  "owner_instruction": "owner_discovery_bottleneck_2026-10-21.md",
+  "starting_head": "fbf50fb8705ebecbf215e63a289e210d40bc9b26",
+  "review_started_utc": "2026-10-21T05:53:57+00:00",
+  "conservative_common_source_deadline_utc": "2026-10-21T09:53:57+00:00",
+  "authority": "Documentation comparison and at most two read-only source checks; no full economic study, stock returns, new experiment or old-source reopening.",
+  "documentation_comparison": {
+    "F19": "Prefer direct guaranty-assessment liability, recoverable offset and actual utilization fields; investigate whether group materiality and a distinctive forecast survive accounting/industry substitutes.",
+    "F09": "Investigate an actual supplier agreement/status rather than treating a general critical-vendor order as payment entitlement. Separate protected prepetition debt from new shipments and later loss.",
+    "F07": "Third lead: inspection/detention must join a dated vessel-specific hire allocation, not a generic off-hire clause. Public legal precedent is documentation context, not a third detention sample.",
+    "F18": "Rolling scope lists and confidential sanction reasons do not identify transferred test volumes, customer requirements or financially material demand. No source case acquisition selected.",
+    "F14": "Quota/bycatch observations do not identify listed producers' replacement inventory or procurement commitments. No source case acquisition selected."
+  },
+  "source_limits": {
+    "maximum_ordinary_starts_per_candidate": 25,
+    "maximum_combined_original_response_bytes": 31457280,
+    "maximum_single_response_bytes": 12582912,
+    "minimum_seconds_between_ordinary_starts": 1,
+    "automatic_retries": 0,
+    "browser_documentation_search_query_ceiling": 40,
+    "browser_open_click_find_ceiling": 12,
+    "browser_accounting": "Documentation discovery is separate; underlying fetch counts and costs unknown. It is not a way to retrieve a denied original. Thirty-two search queries preceded this plan and exposed snippets, including numerical values; cases are not an untouched evaluation sample."
+  },
+  "F19": {
+    "question": "Are the timing and usability of offsets actually recorded, and can they support an assessment-net-burden question at financially material listed exposure?",
+    "case_frame": "Penn Treaty/ANIC 2017 insolvency as mechanism context; Voya Retirement Insurance and Annuity Company 2017/2018 annual statutory statements as a fixed two-year field/identifier audit; Aetna 2017 first-half original filing as a separately labelled group-materiality check. Voya fields cannot be assigned to Aetna. Selection is diagnostic and availability-based after documentation search, not a representative insurer sample or an economic comparison.",
+    "expected_fields": ["legal insurer and year", "guaranty liability", "recoverable premium tax asset", "asset opening/additions/use/adjustments/closing", "insolvency-specific duration and discounting where reported", "dated parent relationship", "group-level assessment expense/exposure"],
+    "initial_exact_routes": [
+      "https://content.naic.org/sites/default/files/inline-files/143_a.pdf",
+      "https://nolhga.com/the-guaranty-system/insolvency-costs/",
+      "https://investors.voya.com/financials/statutory-statements/default.aspx",
+      "https://s21.q4cdn.com/836187199/files/doc_downloads/voya_download_list/Voya-Retirement-Insurance-and-Annuity-Company-Annual-Statement-2017.PDF",
+      "https://s21.q4cdn.com/836187199/files/doc_downloads/voya_download_list/Voya-Retirement-Insurance-and-Annuity-Company-Annual-Statement-2018.pdf",
+      "https://www.sec.gov/Archives/edgar/data/1122304/000112230417000090/form10-q.htm",
+      "https://content.naic.org/industry/optins/faq",
+      "https://www.johnsonlambert.com/services/premium-tax-services/"
+    ],
+    "fallback_policy": "Explicit issuer/regulator links and exact historical parent filings within the fixed dates may resolve the same fields; no paid statutory database or state tax return request. Do not infer realized capacity from a state law or book asset alone."
+  },
+  "F09": {
+    "question": "Can original public documents identify enforceable/conditional payment protection, its amount and materially exposed supplier, with contemporaneous timing?",
+    "case_frame": "Toys R Us September 2017 Chapter 11 and March 2018 liquidation; fixed listed toy suppliers Mattel and Hasbro. This is one shared distress episode, not two independent shocks. Mattel's later SEC response was located during documentation search and is not a neutral unseen validation outcome. Hasbro remains even if no agreement is located.",
+    "expected_fields": ["petition/order dates", "discretion versus right to payment", "named supplier", "agreement date and conditions", "prepetition versus postpetition balances", "supplier materiality", "later loss/recovery disclosure", "first observed public filing date distinct from contract date"],
+    "initial_exact_routes": [
+      "https://www.sec.gov/Archives/edgar/data/63276/000162828018011171/filename1.htm",
+      "https://www.chicagobooth.edu/research/fama-miller/finance-research/funding/2012-13/critical-vendors-and-bankruptcy",
+      "https://octus.com/products/credit-intelligence/",
+      "https://www.bankruptcyobserver.com/enterprise",
+      "https://scholarlycommons.law.emory.edu/ebdj/vol37/iss1/7/"
+    ],
+    "fallback_policy": "Exact SEC issuer filings, SEC correspondence and legitimate public original docket links for the fixed supplier/episode may be reserved before dispatch. No paid PACER, credentials, claims corpus, expired signed URLs, confidential attachments or names-as-protection proxy. Permission to pay is never coded as payment received."
+  },
+  "evidence_rules": [
+    "For each link use VERIFIED, PLAUSIBLE, MISSING, INACCESSIBLE or NOT REQUIRED. A verified disclosure is not independent verification of the author's causal attribution.",
+    "A missing historical public clock limits Level B, not automatically a valid disclosed Level A study. An unobserved economic variable cannot be repaired by a timing disclaimer.",
+    "No test statistic, forecast scoring, returns, correlation, signal selection from later outcomes or full sample acquisition. Simple reconciliation of source rows is source verification.",
+    "Acquire only sufficient originals to decide observability, materiality and differentiation; do not use every remaining start automatically.",
+    "Keep originals under ignored data/raw/discovery_bottleneck_20261021/. Reuse existing private collector/projection helpers with new isolated state and no dependency changes."
+  ]
+}
