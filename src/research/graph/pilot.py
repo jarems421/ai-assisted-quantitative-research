@@ -308,7 +308,8 @@ def blind(snapshot, logs, salt, blind_out, key_out):
 
         for r in validate_connections(logs[arm], arm):
             held = r['discovery_lab_record']
-            if held and not (any(own.latest(k, held) for k in R.VERSIONED) or held in own.ids('effort')):
+            if held and held.startswith(own.campaign['id'] + '/'):held = held.split('/', 1)[1].rsplit('@', 1)[0]  # own-campaign-qualified form
+            if held and not (any(own.latest(k, held) for k in R.VERSIONED) or any(held in own.ids(k) for k in ('review', 'disposition', 'effort'))):
                 raise PilotError(f"{r['connection_id']}: {r['discovery_lab_record']} is not in the arm {arm} ledger")
             a, b = endpoint(r['source_record']), endpoint(r['target_record'])
             bid = 'ADJ-' + hashlib.sha256(f"{salt}|{arm}|{r['connection_id']}".encode()).hexdigest()[:10]

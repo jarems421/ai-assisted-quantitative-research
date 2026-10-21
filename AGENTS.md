@@ -4,6 +4,7 @@
 
 - `docs/strategy/owner_graph_pilot_r3_2026-10-21.md`, from `owner_graph_pilot_r3_amendment_2026-10-21.md`, is the final bounded amendment: one keyless openFDA request (`limit=50`); P2 inspects at most the 14 frozen 8-K accessions, needing 3 qualifying original EX-10 or Item 1.01 relationships; P4 is unchanged; P1 is not restarted. Cumulative ceilings include revision 2's 4 starts and 5,537,804 bytes. Records go under `docs/strategy/graph_pilot_r3/` and `data/raw/graph_pilot_r3_20261021/`; arm branches are `graph-pilot-r3/<packet>-<arm>`.
 - Revision 2's records and private `final_stop.json` stay unchanged. Fewer than three completed pairs gets no graph-increment classification. No further route changes, budget expansion or replacement packets.
+- Status (`graph_pilot_r3_status.md`): P2 NOT_FORMED (2/14 qualify); P3 and P4 formed and all four campaigns are complete on unmerged `graph-pilot-r3/*` branches. 38/60 starts and 35.4/88 MiB used cumulatively. The blinded exports (P3: 17 items, P4: 19) await owner adjudication; keys are private and hash-sealed. Do not unseal keys, merge arm branches, run `pilot report`, or record adjudications, M/H reviews or dispositions before the owner adjudicates. Two pairs only: descriptive, no classification.
 
 ## Graph pilot stopped at packet freeze; no campaign ran (2026-10-21)
 
