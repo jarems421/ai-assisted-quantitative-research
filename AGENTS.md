@@ -1,5 +1,10 @@
 # Repository instructions
 
+## Graph pilot ACTIVE under owner route amendment (2026-10-21)
+
+- `docs/strategy/owner_graph_pilot_2026-10-21.md` is the active authority, from `owner_graph_pilot_route_amendment_2026-10-21.md`. It amends only the source routes: P1 NOT_FORMED (ECHO ineligible from its own documentation; PHMSA blocked); P2 is the documented SEC `index.json`, then daily form index, then first 8-K submission, forming only if an original EX-10 names an agreement and counterparty; P3 is one keyless openFDA device-enforcement query for 2025-07-01 to 2025-09-30; P4 is the owner's primary recall mechanism.
+- Requests only via `docs/strategy/graph_pilot/fetch_one.py` (receipted, single, no retry); arms only via the fixed `graph_pilot/arm_instructions.md` in fresh worktree sessions on `graph-pilot/<packet>-<arm>` branches, merged after all adjudication. Never register keys, use full-text search, retry a denial, or record human M/H, adjudications or dispositions.
+
 ## Graph pilot conditional go: route preflight stop, not activated (2026-10-21)
 
 - `docs/strategy/owner_graph_pilot_conditional_go_2026-10-21.md` conditionally approved the revision 2 pilot. `graph_pilot_route_preflight.md` records the documentation-only preflight: zero scientific-data requests, no packet probe, no activated authorisation, no campaign.

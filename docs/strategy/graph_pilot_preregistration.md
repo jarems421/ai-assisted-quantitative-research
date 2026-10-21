@@ -4,6 +4,8 @@
 
 Revision 1 was committed at `942650a`. Revision 2 applies the [owner's protocol corrections](owner_graph_pilot_protocol_2026-10-21.md). Every command it names has run against the implemented CLI in the [synthetic dry run](graph_pilot_dry_run.md) ([validation](graph_pilot_protocol_validation.json)).
 
+**Activated 2026-10-21** by [the owner authorisation](owner_graph_pilot_2026-10-21.md), with owner-amended source routes only: P1 `NOT_FORMED` at preflight; P2 uses the documented SEC daily-index route; P3 uses keyless openFDA device enforcement; P4 uses the owner's primary mechanism. All other rules below apply unchanged.
+
 ## Corrections in revision 2
 
 | # | Defect in revision 1 | Correction | Shown by |
