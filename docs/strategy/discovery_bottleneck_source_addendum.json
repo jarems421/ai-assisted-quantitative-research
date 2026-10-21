@@ -1,0 +1,17 @@
+{
+  "version": "DISCOVERY_BOTTLENECK_SOURCE_ADDENDUM_V001",
+  "reason": "Metadata-only size checks found that the fixed Voya 2017 and 2018 annual statutory PDFs are 35,879,217 and 40,190,198 bytes respectively. Neither was downloaded; even one exceeds the entire 30 MiB response allowance. This is a download-size limitation, not missing accounting fields or an access denial.",
+  "unchanged": "Two candidates, historical cases, four-hour/25-start ceilings, combined 30 MiB, no retries of skipped documents, no outcomes or full study.",
+  "F19_legitimate_alternative": {
+    "url": "https://s21.q4cdn.com/836187199/files/doc_downloads/voya_download_list/Voya-Retirement-Insurance-and-Annuity-Company-1st-Quarter-Financials-2018.pdf",
+    "selection": "The earliest 2018 quarterly statement explicitly linked in the already acquired issuer archive, selected by date before requesting it. Inspect whether the same legal entity's note supplies prior-year and current utilization fields. A quarterly record cannot silently replace a full annual outcome; absence of the fields remains missing.",
+    "parent_bridge_url": "https://www.sec.gov/Archives/edgar/data/1535929/000153592918000006/voyafinancialinc201710-kre.htm"
+  },
+  "F09_supporting_originals": [
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/46080/000004608019000008/exhibit991.htm",
+      "purpose": "Fixed Hasbro case: issuer 2018 result disclosure dated February 2019, retrospective financial materiality only, not earlier tradable input. Its subsequent values were visible during discovery and are not a test sample."
+    }
+  ],
+  "no_new_framework": "Use existing projection helper. No remote PDF range reader, crawler or warehouse. Additional exact issuer/SEC links may be reserved before retrieval for the unchanged cases within the original cap."
+}
