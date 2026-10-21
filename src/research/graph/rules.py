@@ -137,13 +137,17 @@ def describe_step(g, i, frm, to):
         if n['attrs']['value'] == R.UNKNOWN:step['missing'].append('VALUE_UNKNOWN')
         if n['attrs']['units'] == R.UNKNOWN:step['missing'].append('UNITS_UNKNOWN')
     if n['kind'] == 'entity':
-        step['identity'] = {'status': n['attrs']['identity_status'], 'types': n['attrs']['types'], 'names': n['attrs']['names']}
+        step['identity'] = {'status': n['attrs']['identity_status'], 'types': n['attrs']['types'], 'memory_types': n['attrs'].get('memory_types', []),
+                            'names': n['attrs']['names']}
     return step
 
 
 def first_unsupported_leap(g, nodes):
     """The first point where the path stops being supported economic evidence."""
     anchor = next((occurrence(g.nodes[x]) for x in nodes if g.nodes[x]['kind'] == 'observation' and occurrence(g.nodes[x])), None)
+    if not any(g.nodes[x]['kind'] in M.ASSERTION_KINDS for x in nodes):
+        return {'node': nodes[-1], 'code': 'NO_ECONOMIC_ASSERTION_ON_PATH',
+                'detail': 'the connection runs only through research records, documents or identities; no observation or relationship asserts it'}
     for x in nodes:
         n = g.nodes[x]; k = n['kind']
         if k in M.ASSERTION_KINDS and not verified_assertion(n):
@@ -154,6 +158,8 @@ def first_unsupported_leap(g, nodes):
             if anchor and inside is None:return {'node': x, 'code': 'PERIOD_UNRESOLVED', 'detail': 'relationship period unknown for the observed date'}
             if anchor and inside is False:return {'node': x, 'code': 'PERIOD_INCOMPATIBLE', 'detail': f"period {n['attrs']['period']} excludes {anchor}"}
         if k == 'entity':
+            if n['attrs']['identity_status'] == 'ARCHIVE_PATH_IDENTIFIER':
+                return {'node': x, 'code': 'IDENTITY_UNCORROBORATED', 'detail': 'archive-path CIK only; issuer identity not corroborated'}
             if n['attrs']['identity_status'] != 'IDENTIFIED':return {'node': x, 'code': 'NO_VERIFIED_IDENTITY', 'detail': n['attrs']['identity_status']}
             if len(n['attrs']['types']) > 1:return {'node': x, 'code': 'ENTITY_TYPE_CONFLICT', 'detail': str(n['attrs']['types'])}
         if k == 'claim' and x not in (nodes[0], nodes[-1]):
@@ -162,9 +168,6 @@ def first_unsupported_leap(g, nodes):
             return {'node': x, 'code': 'RESEARCH_MEMORY_BRIDGE', 'detail': 'connected only through historical research memory'}
         if k == 'document' and x not in (nodes[0], nodes[-1]):
             return {'node': x, 'code': 'SHARED_SOURCE_ONLY', 'detail': 'connected only because both records cite this document'}
-    if not any(g.nodes[x]['kind'] in M.ASSERTION_KINDS for x in nodes):
-        return {'node': nodes[-1], 'code': 'NO_ECONOMIC_ASSERTION_ON_PATH',
-                'detail': 'the connection runs only through research records, documents or identities; no observation or relationship asserts it'}
     allocation = [x for x in nodes if g.nodes[x]['kind'] == 'relationship' and g.nodes[x]['attrs']['allocation_status'] == 'ALLOCATION_UNVERIFIED']
     if allocation:return {'node': allocation[0], 'code': 'ALLOCATION_UNVERIFIED', 'detail': 'no documented quantity transfer along this relationship'}
     return {'node': nodes[-1], 'code': 'FINANCIAL_TRANSMISSION_UNVERIFIED',

@@ -1,5 +1,13 @@
 # Repository instructions
 
+## Graph v1 pre-pilot review; pilot proposed, not active (2026-10-21)
+
+- `docs/strategy/owner_graph_pilot_preflight_2026-10-21.md` authorised targeted corrections and pilot preparation only: no acquisition, live campaign, pilot, market data, paid/authenticated access or stopped-source reopening. Review results: `graph_v1_review.md`.
+- Default catalogue is now `docs/strategy/graph/research_memory_catalogue_v002.json`. V001 (`research_memory_catalogue.json`) stays byte-identical and loadable; never edit it. V002 records 12 cited corrections: F03 to the new `REQ_QUALIFIED_COMMERCIAL_EXPOSURE`; partial retrievals (F19 prefix, F03 summary) are `ACQUISITION_LIMIT` with no requirement; SH09 F4/F10 split; EF06 F2 to documented allocation. Verdicts are unchanged.
+- Archive-path SEC CIKs are `ARCHIVE_PATH_IDENTIFIER` (report link-text name citation required; listing, securities, subsidiaries and ownership not established); their catalogue types are `memory_types` and never create type conflicts; joins carry a caveat.
+- The offline evaluation reads only declared inputs (three synthetic ledgers plus `fixtures.REQUIREMENTS`; no catalogue) and compares against `baseline.py`, a competent structured-ledger search (`baseline-search`), which matches the graph on all synthetic claim connections. Do not reintroduce substring or period-blind baselines.
+- `graph_pilot_preregistration.md` and `proposed_owner_graph_pilot_authorisation.md` are PROPOSED, NOT ACTIVE: 4 packets × 2 arms, 120 min / 6 starts / 10 searches / 8 MiB per campaign, pilot ceiling 18 h / 60 starts / 92 searches / 88 MiB. Do not run any command in it without a separately activated owner document. F19 HOLD, SH09 stopped and all prior stops unchanged.
+
 ## Economic Knowledge Graph v1 implemented offline (2026-10-21)
 
 - `docs/strategy/owner_graph_v1_2026-10-21.md` approved offline engineering only: zero scientific-source acquisition, no pilot, market data, returns, backtest, cloud/paid/authenticated action, experiment or Store change. The supplied 35-page blueprint is summarised in `graph_v1_design.md`; its private original is under ignored `data/raw/graph_v1_20261021/`.

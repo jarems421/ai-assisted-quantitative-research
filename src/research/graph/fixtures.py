@@ -16,6 +16,11 @@ AUTHORITY = 'docs/strategy/owner_graph_v1_2026-10-21.md (offline synthetic fixtu
 ECHO = entity('LISTED_COMPANY', 'SYN_LISTED:ECHO', 'Echo Synthetic Logistics (fictional)')
 T7 = entity('FACILITY', 'SYN_FACILITY:T-7', 'Synthetic Terminal Seven')
 T9 = entity('FACILITY', 'SYN_FACILITY:T-9', 'Synthetic Terminal Nine')
+# Declared, self-contained requirement vocabulary for isolated evaluations (no historical catalogue involved).
+REQUIREMENTS = [{'id': 'REQ_REALISED_ACTIVITY', 'label': 'Realised activity (fixture vocabulary)',
+                 'definition': 'Activity that actually occurred, as distinct from permission or capacity.', 'does_not_mean': ['a ceiling']},
+                {'id': 'REQ_AVAILABLE_CAPACITY', 'label': 'Available capacity (fixture vocabulary)',
+                 'definition': 'Capacity available net of commitments.', 'does_not_mean': ['nameplate capacity']}]
 
 
 def campaign(cid, title, method, question):

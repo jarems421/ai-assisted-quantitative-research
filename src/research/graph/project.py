@@ -157,12 +157,25 @@ def add_document(g, ev, holder, role, scope_fixture):
            synthetic=ev['synthetic'], reused_from=ev['reused_from'])
 
 
-def add_entity(g, e, scope, mention, fixture):
+IDENTITY_RANK = {'IDENTIFIED': 3, 'ARCHIVE_PATH_IDENTIFIER': 2, 'TICKER_ONLY': 1, 'NAME_ONLY': 0}
+ARCHIVE_PATH_RESTRICTION = ('An SEC CIK read from an EDGAR archive path identifies the filing directory; the name is associated only by '
+                            'report link text. Listing, securities, subsidiaries and ownership are not established.')
+
+
+def add_entity(g, e, scope, mention, fixture, memory_basis=None):
+    """Ledger mentions contribute types used for conflict checks; catalogue mentions contribute memory_types only."""
     nid = entity_node_id(e['id'], scope)
-    n = g.node(nid, 'entity', e['name'], attrs={'identifier': e['id'], 'identity_status': identity_status(e['id']),
-                                              'types': set(), 'names': set(), 'mentions': set(), 'fixtures': set()},
+    status = 'ARCHIVE_PATH_IDENTIFIER' if memory_basis == 'SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR' else identity_status(e['id'])
+    n = g.node(nid, 'entity', e['name'], attrs={'identifier': e['id'], 'identity_status': status, 'types': set(), 'memory_types': set(),
+                                              'names': set(), 'mentions': set(), 'fixtures': set(), 'memory_identity_bases': set()},
                restrictions=['An entity node proves nothing about any linked financial proposition.'])
-    n['attrs']['types'].add(e['type']); n['attrs']['names'].add(e['name']); n['attrs']['mentions'].add(mention)
+    if IDENTITY_RANK[status] > IDENTITY_RANK[n['attrs']['identity_status']]:n['attrs']['identity_status'] = status
+    (n['attrs']['memory_types'] if memory_basis else n['attrs']['types']).add(e['type'])
+    if memory_basis:
+        n['attrs']['memory_identity_bases'].add(memory_basis)
+        if memory_basis == 'SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR':
+            n['restrictions'] = sorted(set(n['restrictions']) | {ARCHIVE_PATH_RESTRICTION})
+    n['attrs']['names'].add(e['name']); n['attrs']['mentions'].add(mention)
     n['attrs']['fixtures'].add(fixture)
     if e['id'].startswith('TICKER:'):
         n['restrictions'] = sorted(set(n['restrictions']) | {'A ticker is not a permanent legal-entity identity.'})
@@ -367,7 +380,7 @@ def project_history(g, cat):
                 if f['claim']:g.edge('REQUIRES', f"{hid}/claim-{f['claim']}", f"requirement:{f['requirement']}",
                                      basis='CURATED_HISTORICAL_MAPPING', detail=f['text'])
         for e in inv['entities']:
-            en = add_entity(g, e, iid, hid, 'HISTORICAL_MEMORY')
+            en = add_entity(g, e, iid, hid, 'HISTORICAL_MEMORY', memory_basis=e['identity_basis'])
             g.edge('CONCERNS', hid, en, identity_basis=e['identity_basis'])
         for d in inv['documents']:
             ev = {'sha256': d['sha256'], 'locator': d['locator'], 'depth': 'VERIFIED_ORIGINAL_RECORD' if d['http_status'] == 200 else 'ACCESS_BLOCKED',
@@ -396,8 +409,11 @@ def derive_issues(g):
                                  'note': 'Similar names, different identifiers: never merged; establish identity from originals.'})
 
 
-def build(ledgers=None, catalogue_path=C.CATALOGUE_PATH, mode='memory', known_at=None, with_memory=True):
-    """Build the projection. Raises GraphError on any invalid authoritative input."""
+def build(ledgers=None, catalogue_path=C.CATALOGUE_PATH, mode='memory', known_at=None, with_memory=True, requirements=None):
+    """Build the projection. Raises GraphError on any invalid authoritative input.
+
+    ``requirements`` supplies an explicit requirement vocabulary when ``catalogue_path`` is None, so isolated
+    evaluations depend only on their declared inputs."""
     if mode not in M.MODES:raise GraphError(f'mode must be one of {M.MODES}')
     cutoff = parse_time(known_at) if known_at else None
     g = Graph(mode, cutoff)
@@ -406,8 +422,9 @@ def build(ledgers=None, catalogue_path=C.CATALOGUE_PATH, mode='memory', known_at
         try:cat, issues = C.load(catalogue_path)
         except C.CatalogueError as error:raise GraphError(f'catalogue refused: {error}') from error
         g.issues += issues; g.requirements = C.requirement_ids(cat)
+    if cat is None and requirements is not None:g.requirements = [r['id'] for r in requirements]
     vocabulary = set(g.requirements)
-    for r in (cat['requirements'] if cat else []):
+    for r in (cat['requirements'] if cat else requirements or []):
         g.node(f"requirement:{r['id']}", 'requirement', r['label'], attrs={'definition': r['definition'], 'does_not_mean': r['does_not_mean']},
                restrictions=['A requirement match is a retrieval aid; it never shows that a requirement is met.'])
     seen, pending = {}, []

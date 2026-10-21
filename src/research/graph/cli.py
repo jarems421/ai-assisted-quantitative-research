@@ -88,6 +88,8 @@ def main(argv=None):
     c = sub.add_parser('evaluate', help='offline ordinary-search versus graph comparison on synthetic fixtures')
     c.add_argument('--timing', action='store_true', help='also report (non-deterministic) build runtime')
     c = add('suggestions', 'export suggestions for a target with baseline-discoverability flags (pilot hook)'); c.add_argument('node')
+    c = add('baseline-search', 'competent structured-ledger search WITHOUT the graph (the pilot baseline arm tool)')
+    c.add_argument('campaign'); c.add_argument('observation')
     c = sub.add_parser('adjudications', help='validate a prospective-pilot adjudication log'); c.add_argument('file')
     a = p.parse_args(argv)
     try:
@@ -103,6 +105,13 @@ def main(argv=None):
             if a.timing:print(f"runtime (not deterministic): {report['runtime_seconds']}")
             return
         if a.command == 'adjudications':print(json.dumps(E.validate_log(a.file))); return
+        if a.command == 'baseline-search':
+            from src.research.graph import baseline as B
+            from src.research.graph import catalogue as Cat
+            ledgers = a.ledgers if a.ledgers is not None else discover_ledgers()
+            memory = Cat.load(a.catalogue)[0] if a.mode == 'memory' and not a.exclude_retrospective else None
+            res = B.structured_search(ledgers, a.campaign, a.observation, memory, a.known_at)
+            print(json.dumps({'note': 'Structured-ledger baseline; no graph projection used.', **res}, indent=2, default=str)); return
         g, view = graph_for(a), view_for(a)
         if a.command == 'build':
             kinds = {}
@@ -122,8 +131,10 @@ def main(argv=None):
                'next': lambda: O.next_questions(g, view)}
         if a.command in ops:emit(a, ops[a.command]()); return
         if a.command == 'suggestions':
+            from src.research.graph import catalogue as Cat
             ledgers = a.ledgers if a.ledgers is not None else discover_ledgers()
-            print(json.dumps({'banner': M.BANNER, 'suggestions': E.export_suggestions(g, a.node, ledgers)}, indent=2)); return
+            memory = Cat.load(a.catalogue)[0] if g.catalogue else None
+            print(json.dumps({'banner': M.BANNER, 'suggestions': E.export_suggestions(g, a.node, ledgers, memory, a.known_at)}, indent=2)); return
         if a.command == 'export':
             res = {'neighbourhood': lambda: O.neighbourhood(g, a.nodes[0], view, a.semantic), 'trace': lambda: O.trace(g, a.nodes[0], view),
                    'explain': lambda: O.explain(g, a.nodes[0], a.nodes[1], view, a.semantic)}[a.kind]()

@@ -12,6 +12,8 @@ from src.research.graph import model as M
 from src.research.graph import rules as G
 from src.research.spec import digest
 
+JOINABLE = ('IDENTIFIED', 'ARCHIVE_PATH_IDENTIFIER')
+ARCHIVE_CAVEAT = 'that the archive-path CIK in historical memory is the same economic entity (listing, securities and group structure not established)'
 AUTHORITY = 'NONE: suggestion only. Earlier dispositions, historical verdicts and source stops stand; any work needs separate authority.'
 CLAIM_EDGES = ('PREDICTS_WITH', 'OUTCOME_FROM', 'RELIES_ON', 'EXPOSES')
 STRENGTH = {b: i for i, b in enumerate(M.MATCH_STRENGTH)}
@@ -248,12 +250,14 @@ def shared(g, token, view):
                 groups[o]['matches'].append({'basis': 'EXACT_DOCUMENT_HASH' if identity == 'CONTENT_HASH' else 'SAME_LOCATOR_ONLY',
                                              'via': doc, 'here': x, 'there': other})
         for e, ent in linked(g, x, ('DESCRIBES', 'SUBJECT', 'OBJECT', 'EXPOSES', 'CONCERNS'), 'out'):
-            if g.nodes[ent]['attrs']['identity_status'] != 'IDENTIFIED':continue
+            if g.nodes[ent]['attrs']['identity_status'] not in JOINABLE:continue
             for e2, other in linked(g, ent, ('DESCRIBES', 'SUBJECT', 'OBJECT', 'EXPOSES', 'CONCERNS'), 'in'):
                 o = owner(g, other)
                 if o in scope or not G.visible(g, other, view)[0]:continue
                 groups[o]['matches'].append({'basis': 'EXACT_ENTITY_ID', 'via': ent, 'here': x, 'there': other,
-                                             'hub': g.degree(ent) > M.HUB_DEGREE})
+                                             'hub': g.degree(ent) > M.HUB_DEGREE,
+                                             'identity': 'ARCHIVE_PATH_UNCORROBORATED' if 'SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR' in
+                                             (e['attrs'].get('identity_basis'), e2['attrs'].get('identity_basis')) else g.nodes[ent]['attrs']['identity_status']})
                 groups[o]['kinds_there'].add(g.nodes[other]['kind'])
     here_kinds = {g.nodes[x]['kind'] for x in inputs}
     for o in sorted(groups):
@@ -334,8 +338,10 @@ def complements(g, token, view):
             still_required=['confirm same quantity definition and units', 'a frozen Discovery Lab claim and human review']))
     for e, hist in linked(g, ent, ('CONCERNS',), 'in'):
         used.add(hist)
-        out['results'].append(suggestion('complements', obs, hist, ['EXACT_ENTITY_ID'], connection='historical investigation concerned the same identified object',
-                                         verdict=g.nodes[hist]['attrs']['verdict']['text'], still_required=['read the cited report; the historical verdict stands']))
+        caveat = [ARCHIVE_CAVEAT] if e['attrs'].get('identity_basis') == 'SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR' else []
+        out['results'].append(suggestion('complements', obs, hist, ['EXACT_ENTITY_ID'], connection='historical investigation concerned the same identifier',
+                                         verdict=g.nodes[hist]['attrs']['verdict']['text'],
+                                         still_required=caveat + ['read the cited report; the historical verdict stands']))
     others = [k for k, n in g.nodes.items() if n['kind'] in ('observation', 'relationship') and not n['superseded']]
     out['rejected'] = rejected + keyword_only(g, obs, others, used, view)
     out['results'] = sorted(out['results'], key=lambda r: (STRENGTH.get(r['strength'], 99), r['match']))[:M.MAX_SUGGESTIONS]
@@ -413,6 +419,7 @@ def revisit(g, token, view):
     out = result(g, 'revisit', nid, view); rejected = []
     for obs in targets:
         o = g.nodes[obs]; here = owner(g, obs); ent = entity_of(g, obs); bases = defaultdict(set); via = defaultdict(list)
+        caveats = defaultdict(set)
         for e, doc in linked(g, obs, ('CITES',), 'out'):
             if g.nodes[doc]['attrs']['content_identity'] != 'CONTENT_HASH' or not content_citation(e):continue
             for e2, other in linked(g, doc, ('CITES',), 'in'):
@@ -425,6 +432,7 @@ def revisit(g, token, view):
                 if owner(g, other) == here:continue
                 for c in ([other] if g.nodes[other]['kind'] == 'claim' else claims_using(g, other)):
                     bases[c].add('EXACT_ENTITY_ID'); via[c].append(ent)
+                    if e['attrs'].get('identity_basis') == 'SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR':caveats[c].add(ARCHIVE_CAVEAT)
                     if g.nodes[other]['kind'] == 'relationship':
                         inside = G.period_check(g.nodes[other], G.occurrence(o))
                         if g.nodes[other]['status'] == M.DOCUMENTED_RELATIONSHIP and inside:bases[c].add('DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD')
@@ -438,7 +446,7 @@ def revisit(g, token, view):
         for t in o['attrs']['unknown_tags']:rejected.append({'node': obs, 'code': 'UNKNOWN_TAG', 'tag': t, 'reason': 'tag not in the requirement vocabulary'})
         for c in sorted(bases):
             if not G.visible(g, c, view)[0] or g.nodes[c]['superseded']:continue
-            out['results'].append(evaluate_lead(g, obs, c, bases[c], via[c]))
+            out['results'].append(evaluate_lead(g, obs, c, bases[c], via[c], caveats[c]))
         claims = [k for k, x in g.nodes.items() if x['kind'] in ('claim', 'history_claim') and not x['superseded']]
         rejected += keyword_only(g, obs, claims, set(bases), view)
     out['results'].sort(key=lambda r: (STRENGTH.get(r['strength'], 99), r['match'], r['target']))
@@ -448,10 +456,10 @@ def revisit(g, token, view):
     return out
 
 
-def evaluate_lead(g, obs, claim, bases, via):
+def evaluate_lead(g, obs, claim, bases, via, caveats=()):
     o, c = g.nodes[obs], g.nodes[claim]
     historical = c['kind'] == 'history_claim'
-    unverified = []
+    unverified = sorted(caveats)
     if o['status'] != M.ORIGINAL_FIELD_OBSERVED:unverified.append(f"field not visible in an original ({g.display_status(obs)} {o['reasons']})")
     if not o['attrs']['first_public_certified']:unverified.append('historical availability (first-public time UNKNOWN)')
     tag_only = set(bases) <= {'AUTHOR_TAG_CANDIDATE'}
@@ -494,7 +502,8 @@ def gaps(g, token, view=None):
         st = g.display_status(o)
         out['results'].append({'link': f'predictor {o}', 'state': 'VERIFIED' if G.verified_assertion(g.nodes[o]) else 'UNVERIFIED', 'detail': st})
         ent = entity_of(g, o)
-        if g.nodes[ent]['attrs']['identity_status'] != 'IDENTIFIED':out['results'].append({'link': f'identity {ent}', 'state': 'UNVERIFIED', 'detail': 'NO_VERIFIED_IDENTITY'})
+        if g.nodes[ent]['attrs']['identity_status'] != 'IDENTIFIED':
+            out['results'].append({'link': f'identity {ent}', 'state': 'UNVERIFIED', 'detail': g.nodes[ent]['attrs']['identity_status']})
     if not linked(g, nid, ('PREDICTS_WITH',), 'out'):out['results'].append({'link': 'predictor observation', 'state': 'MISSING', 'detail': 'NO_PREDICTOR_OBSERVATION'})
     for _, r in linked(g, nid, ('RELIES_ON',), 'out'):
         rn = g.nodes[r]

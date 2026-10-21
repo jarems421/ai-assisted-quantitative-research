@@ -4,14 +4,14 @@
 
 **2026-10-21. Implemented offline; no pilot has run.** Graph v1 is a deterministic, read-only, in-memory projection with two inputs: replay-validated Discovery Lab ledgers, and a small non-authoritative historical-memory catalogue. It remembers what research recorded and connects records across campaigns only through exact identifiers, content hashes, documented relationships and a validated requirement vocabulary. Every connection it finds comes with its evidence and its first unsupported economic leap. It writes nothing authoritative, certifies nothing, decides neither M nor H, and authorises no research.
 
-[Owner instruction](owner_graph_v1_2026-10-21.md) · [Guide](graph_v1_guide.md) · [Walkthrough](graph_v1_walkthrough.md) · [Backfill audit](graph_v1_backfill_audit.md) · [Catalogue](graph/research_memory_catalogue.json) · [Validation](graph_v1_validation.json) · Code: [`src/research/graph/`](../../src/research/graph/) · Tests: [`tests/test_graph.py`](../../tests/test_graph.py)
+[Owner instruction](owner_graph_v1_2026-10-21.md) · [Guide](graph_v1_guide.md) · [Walkthrough](graph_v1_walkthrough.md) · [Backfill audit](graph_v1_backfill_audit.md) · [Catalogue V002](graph/research_memory_catalogue_v002.json) · [Pre-pilot review](graph_v1_review.md) · [Validation](graph_v1_validation.json) · Code: [`src/research/graph/`](../../src/research/graph/) · Tests: [`tests/test_graph.py`](../../tests/test_graph.py)
 
 ## Sources of truth and dependencies
 
 ```mermaid
 flowchart LR
     L["Discovery Lab ledgers<br/>docs/strategy/discovery/**/*.jsonl<br/>(authoritative, hash-chained)"] -->|Ledger.load: full rule replay| P["graph/project.py<br/>in-memory projection + digest"]
-    K["Historical-memory catalogue<br/>docs/strategy/graph/research_memory_catalogue.json<br/>(non-authoritative, cites reports)"] -->|catalogue.py: quote + hash validation| P
+    K["Historical-memory catalogue<br/>docs/strategy/graph/research_memory_catalogue_v002.json<br/>(non-authoritative, cites reports)"] -->|catalogue.py: quote + hash validation| P
     R["Historical reports and receipts<br/>(authoritative for their verdicts)"] -.->|read only to verify quotes/hashes| K
     P --> O["operators.py / rules.py<br/>explainable queries"]
     O --> V["render.py<br/>text, Mermaid, DOT<br/>(banner on every output)"]
@@ -36,7 +36,7 @@ flowchart LR
 | entity | `entity:SCHEME:value` (`entity:NAME:<scope>/<name>` for name-only) | entities in records and catalogue | identity status, types seen, names seen |
 | relationship | `relationship:DLC-X/REL-1@v` | relationship version (reified assertion) | assertion status, basis, period, scope, allocation status |
 | claim | `claim:DLC-X/CAND-1@v` | candidate version | revision kind, claim class, freeze references, blockers, human M/H, reviews, dispositions |
-| requirement | `requirement:REQ_*` | catalogue vocabulary (7 classes) | definition and what it does not mean |
+| requirement | `requirement:REQ_*` | catalogue vocabulary (8 classes in V002) | definition and what it does not mean |
 | blocker | `blocker:CODE` | Discovery Lab checklist codes | (a hub; never a bridge) |
 | history, history_claim, history_finding | `history:HIST-F01[/claim-v1 \| /F1]` | catalogue | verbatim verdicts, findings and citations |
 
@@ -68,6 +68,7 @@ Entities and documents carry identity information, not verification. A path thro
 - **Joins:** cross-campaign joins use exact `SCHEME:value` identifiers only.
 - **Name-only entities:** confined to their campaign or investigation.
 - **Look-alikes:** similar names under different identifiers raise `IDENTITY_QUESTION` and are never merged.
+- **Archive-path CIKs (catalogue V002):** a CIK read from an EDGAR archive path is `ARCHIVE_PATH_IDENTIFIER`, not a corroborated issuer identity. It needs a report name citation, contributes only `memory_types`, and every join through it carries a caveat.
 - **Tickers:** `TICKER:` identities are marked `TICKER_ONLY`, with the restriction that a ticker is not a permanent legal-entity identity.
 - **Type conflicts:** the same identifier recorded with different entity types across ledgers raises `ENTITY_TYPE_CONFLICT`. Discovery Lab already refuses this within a single ledger.
 
@@ -150,17 +151,19 @@ Every path is marked `connectivity_only: true`, `exposure_certified: false`, `ca
 
 ## Utility check and prospective pilot protocol
 
-**Offline utility check.** [`evaluate.py`](../../src/research/graph/evaluate.py) compares three approaches on identical synthetic records and five fixed tasks, with ground truth written alongside the fixtures:
-- **Text search** recovered the true connection, but added two false connections and two premature identity joins.
-- **Exact-identifier search** matched the graph on claim connections, but returned one period-incompatible relationship context.
-- **The graph** recovered the connection with zero false or premature joins, and flagged both identity questions.
+**Offline utility check.** Revised in the [pre-pilot review](graph_v1_review.md). [`evaluate.py`](../../src/research/graph/evaluate.py) now reads only declared inputs: three synthetic ledgers and a fixture vocabulary, with no catalogue. It compares three approaches on five fixed tasks, with ground truth written alongside the fixtures:
+- **Naive text search** (a reference lower bound) recovered the true connection, but added two false connections and two premature identity joins.
+- **Competent structured-ledger search** ([`baseline.py`](../../src/research/graph/baseline.py)) uses exact identifiers, content hashes, recorded references, validity periods and known-at. It matched the graph on every claim connection.
+- **The graph** made the same connections and also flagged both identity questions.
 
-**The graph found no link that identifier search missed.** On this evidence its contribution is precision, period and identity discipline, historical memory and explanation, not recall. The result is synthetic and constructed, and it shows behaviour, not superiority.
+**The graph found no link that competent structured search missed.** On this evidence its contribution is precision, period and identity discipline, historical memory and explanation, not recall. The result is synthetic and constructed, and it shows behaviour, not superiority.
 
 **Prospective pilot protocol.** Not launched; it requires separate owner authority.
-1. **Arms.** For each new live campaign, use time-matched arms: a baseline triage using Discovery Lab plus ordinary text and identifier search, and a graph-assisted triage, each given the **same analyst-minute budget**. A fresh assistant session without graph access performs the baseline arm, and its notes are recorded before graph outputs are viewed.
-2. **Suggestion export.** `python -m src.research.graph suggestions TARGET` exports each graph suggestion with mechanical flags showing whether text or identifier search would also have found it.
-3. **Adjudication log.** Each suggestion is logged by a human (`adjudications validate FILE` checks the format) with:
+The full proposed design is in the [pilot pre-registration](graph_pilot_preregistration.md) and the [proposed authorisation](proposed_owner_graph_pilot_authorisation.md). In summary:
+
+1. **Arms.** For each new live campaign, use time-matched arms: a baseline triage using Discovery Lab plus competent structured-ledger search (`baseline-search`), and a graph-assisted triage, each given the **same analyst-minute budget**. A fresh assistant session without graph access performs the baseline arm, and its notes are recorded before graph outputs are viewed.
+2. **Suggestion export.** `python -m src.research.graph suggestions TARGET` exports each graph suggestion with a mechanical flag showing whether competent structured search over the **same** ledgers, catalogue and known-at time would also have found it.
+3. **Adjudication log.** Each suggestion is logged by a human (`adjudications FILE` checks the format) with:
    - **`found_via`:** `GRAPH_ONLY`, `BASELINE_SEARCH_DISCOVERABLE`, `ANALYST_EXTRA_TIME` or `BOTH`.
    - **`outcome`:** `CONFIRMED_AGAINST_ORIGINALS` (which requires the Discovery Lab record that now holds it), `PLAUSIBLE_UNVERIFIED`, `REJECTED_FALSE`, `REJECTED_TRIVIAL` or `NOT_REVIEWED`.
 4. **Metrics:**

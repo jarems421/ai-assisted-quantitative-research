@@ -2,7 +2,7 @@
 
 > DERIVED RESEARCH VIEW - NOT INDEPENDENT EVIDENCE - NO RESEARCH AUTHORITY
 
-Graph v1 lets a researcher ask, whenever something new is recorded: *have we met this object, document, relationship or research problem before, and what genuinely connects them?* It reads Discovery Lab ledgers and the historical-memory catalogue. It writes nothing back and authorises nothing. [Design](graph_v1_design.md) · [Walkthrough](graph_v1_walkthrough.md) · [Backfill audit](graph_v1_backfill_audit.md).
+Graph v1 lets a researcher ask, whenever something new is recorded: *have we met this object, document, relationship or research problem before, and what genuinely connects them?* It reads Discovery Lab ledgers and the historical-memory catalogue. It writes nothing back and authorises nothing. [Design](graph_v1_design.md) · [Walkthrough](graph_v1_walkthrough.md) · [Backfill audit](graph_v1_backfill_audit.md) · [Pre-pilot review](graph_v1_review.md).
 
 ## Quick start
 
@@ -49,8 +49,9 @@ No graph command appends to a ledger or changes a disposition.
 | `next` | Operator H: reusable decisive checks (`PROPOSAL_ONLY`) |
 | `failures`, `orphans` | Bounded negative results; standalone observations retained for later |
 | `export neighbourhood\|explain\|trace NODE... --format mermaid\|dot [--out FILE]` | Focused visual export with a legend and the banner |
-| `suggestions TARGET` | Pilot hook: suggestions with baseline-discoverability flags |
-| `adjudications validate FILE` | Pilot hook: validate a human adjudication log |
+| `suggestions TARGET` | Pilot hook: suggestions flagged with whether competent structured search over the same knowledge would find them |
+| `baseline-search CAMPAIGN OBSERVATION` | The pilot's structured arm: exact-identifier, content-hash, reference, period and known-at search, with no graph projection |
+| `adjudications FILE` | Pilot hook: validate a human adjudication log |
 
 **Common options:**
 
@@ -99,12 +100,13 @@ Unknown first-public times stay `UNKNOWN`. The graph never derives them.
 
 ## Requirement vocabulary and tags
 
-The seven requirement classes are defined in the catalogue, each with what it *does not* mean:
+The eight requirement classes are defined in catalogue V002, each with what it *does not* mean:
 
 | Requirement class | Measurement it names |
 |---|---|
 | `REQ_AVAILABLE_CAPACITY` | Capacity actually available, net of commitments |
 | `REQ_REALISED_ACTIVITY` | Activity that actually occurred |
+| `REQ_QUALIFIED_COMMERCIAL_EXPOSURE` | A documented, qualified commercial opportunity or exposure (added in V002 for F03) |
 | `REQ_RETAINED_NET_ECONOMICS` | Retained or net amounts |
 | `REQ_DOCUMENTED_ALLOCATION` | A documented split of an aggregate |
 | `REQ_ENTITY_COHORT_JOIN` | Matching entity, cohort and period |
@@ -177,4 +179,4 @@ The DOT export uses the same categories.
 | 42 | `test_empty_and_unrelated_inputs_abstain` |
 | 43, 44 | The full local suite, public checks, the Discovery Lab demo check and the EXP004 audits (see the [validation receipt](graph_v1_validation.json)) |
 
-Additional tests cover the walkthrough, the utility check and adjudication-log validation.
+Additional tests cover the walkthrough, the utility check and adjudication-log validation. `GraphReviewRegressionTests` covers the pre-pilot review defects: catalogue V002 corrections and V001 preservation, archive-path CIK identity, evaluation input isolation, competent-baseline fairness and pilot-export memory parity.

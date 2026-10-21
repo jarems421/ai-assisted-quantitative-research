@@ -2,6 +2,8 @@
 
 > DERIVED RESEARCH VIEW - NOT INDEPENDENT EVIDENCE - NO RESEARCH AUTHORITY
 
+**Superseded in part by catalogue V002:** see the correction note at the end and the [pre-pilot review](graph_v1_review.md).
+
 **2026-10-21.** This audit records what the [historical-memory catalogue](graph/research_memory_catalogue.json) contains, what it leaves out on purpose, what it adds only as a retrieval aid, and what stays unresolved. No new scientific source was acquired, and every quote and document hash was checked against tracked repository files when the catalogue was written (`recorded_at_utc` 2026-10-21T11:05:23Z).
 
 ## Decision: catalogue entries, not reconstructed ledgers
@@ -50,3 +52,16 @@ F03 and EF03 are separate entries, with separate reports and separate verdicts. 
 - Name-only entities are not joined across investigations. An identity question is raised only when names are similar within the loaded graph.
 - **Quote currency:** if a cited report changes, the build flags `CITATION_HASH_CHANGED` (quote still present) or `STALE_CITATION` (quote gone). A removed report is flagged `MISSING_SOURCE_DOCUMENT`. No memory is silently refreshed.
 - **Pending review:** the requirement mappings await human review. Until then, treat `same-gap` groupings as curated leads.
+
+## Corrections in catalogue V002
+
+V001 is preserved byte-identical, and [V002](graph/research_memory_catalogue_v002.json) supersedes it. V002 records 12 corrections in `mapping_corrections`, each with its reason and citation:
+- **F03:** F1 and F2 move from realised activity to the new `REQ_QUALIFIED_COMMERCIAL_EXPOSURE`. F3 becomes an `ACQUISITION_LIMIT` with no requirement.
+- **F19:** F3, the incomplete filing prefix, becomes an `ACQUISITION_LIMIT` with no requirement.
+- **SH09:** F4's text and quote now both state the recoverable-net gap. A new F10 carries the outcome-scope quote, mapped to entity/cohort join.
+- **EF06:** F2 moves to documented allocation.
+- **Definitions clarified:** realised activity, historical schedule or version, and entity/cohort join.
+- **SEC CIKs:** each now requires a report name citation and is projected as `ARCHIVE_PATH_IDENTIFIER`, not as a corroborated issuer identity.
+
+The per-family table above describes V001; verdicts are unchanged in V002.
+

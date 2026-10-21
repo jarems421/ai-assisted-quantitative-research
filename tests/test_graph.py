@@ -322,7 +322,9 @@ class GraphTests(unittest.TestCase):
         def rt(self_,*a,**k):opened.append(str(self_.resolve()));return real_text(self_,*a,**k)
         with patch.object(builtins,'open',spy),patch.object(Path,'read_bytes',rb),patch.object(Path,'read_text',rt):
             g=build(self.abc,mode='synthetic');RN.mermaid(g,O.neighbourhood(g,'OBS-GB-1',V))
-        allowed={str(p.resolve()) for p in self.abc}|{str(C.CATALOGUE_PATH.resolve())}|{str((ROOT/p).resolve()) for p in json.loads(C.CATALOGUE_PATH.read_text(encoding='utf-8'))['report_hashes']}
+        cat=json.loads(C.CATALOGUE_PATH.read_text(encoding='utf-8'))
+        allowed={str(p.resolve()) for p in self.abc}|{str(C.CATALOGUE_PATH.resolve()),str((ROOT/cat['supersedes']['path']).resolve())}
+        allowed|={str((ROOT/p).resolve()) for p in cat['report_hashes']}
         self.assertTrue(set(opened)<=allowed,set(opened)-allowed)
         self.assertFalse(any('data' in Path(p).parts and 'raw' in Path(p).parts for p in opened))
         self.assertNotIn('PRIVATE_AUTH',C.CATALOGUE_PATH.read_text(encoding='utf-8'))
@@ -363,14 +365,100 @@ class GraphTests(unittest.TestCase):
         self.assertNotIn('runtime_seconds',report)
 
     def test_adjudication_log_requires_human_decisions(self):
-        good={'suggestion_id':'SUG-0123456789ab','operator':'revisit','found_via':'GRAPH_ONLY','outcome':'CONFIRMED_AGAINST_ORIGINALS',
+        good={'suggestion_id':'SUG-0123456789ab','arm':'GRAPH','operator':'revisit','found_via':'GRAPH_ONLY','outcome':'CONFIRMED_AGAINST_ORIGINALS',
               'analyst_minutes':12,'arm_time_budget_minutes':60,'adjudicator':'Owner','recorded_at_utc':'2026-11-01T00:00:00+00:00',
               'discovery_lab_record':'DLC-X/CAND-1@1','notes':''}
         path=self.dir/'log.jsonl';path.write_text(json.dumps(good)+'\n',encoding='utf-8')
         self.assertEqual(E.validate_log(path),{'CONFIRMED_AGAINST_ORIGINALS':1})
-        for change in ({'adjudicator':'Claude'},{'discovery_lab_record':None},{'found_via':'MAGIC'},{'analyst_minutes':-1}):
+        structured={**good,'arm':'STRUCTURED','suggestion_id':E.connection_id('a','b',['EXACT_ENTITY_ID']),'found_via':'ANALYST_EXTRA_TIME'}
+        path.write_text(json.dumps(structured)+'\n',encoding='utf-8');self.assertEqual(E.validate_log(path),{'CONFIRMED_AGAINST_ORIGINALS':1})
+        for change in ({'adjudicator':'Claude'},{'discovery_lab_record':None},{'found_via':'MAGIC'},{'analyst_minutes':-1},{'arm':'OTHER'},
+                       {'arm':'STRUCTURED'}):
             path.write_text(json.dumps({**good,**change})+'\n',encoding='utf-8')
             with self.assertRaises(ValueError):E.validate_log(path)
+
+
+class GraphReviewRegressionTests(unittest.TestCase):
+    """Defects found in the pre-pilot review: catalogue mappings, archive-path identity, evaluation isolation, baseline fairness."""
+    setUp=GraphTests.setUp;extra=GraphTests.extra;syn_graph=GraphTests.syn_graph
+
+    def test_catalogue_v002_corrects_mappings_and_preserves_v001(self):
+        v1_path=ROOT/'docs/strategy/graph/research_memory_catalogue.json'
+        v1=json.loads(v1_path.read_text(encoding='utf-8'));v2=json.loads(C.CATALOGUE_PATH.read_text(encoding='utf-8'))
+        self.assertEqual(sha(v1_path),v2['supersedes']['sha256']);self.assertEqual(C.load(v1_path)[0]['version'],'GRAPH_MEMORY_CATALOGUE_V001')
+        self.assertEqual({i['id']:i['verdict'] for i in v1['investigations']},{i['id']:i['verdict'] for i in v2['investigations']})
+        f=lambda iid,fid:next(x for x in next(i for i in v2['investigations'] if i['id']==iid)['findings'] if x['id']==fid)
+        req={r['id']:r for r in v2['requirements']}
+        self.assertNotIn('qualified',req['REQ_REALISED_ACTIVITY']['definition'])
+        self.assertEqual({f('HIST-F03','F1')['requirement'],f('HIST-F03','F2')['requirement']},{'REQ_QUALIFIED_COMMERCIAL_EXPOSURE'})
+        for target in (('HIST-F19','F3'),('HIST-F03','F3')):
+            self.assertEqual((f(*target)['kind'],f(*target)['requirement']),('ACQUISITION_LIMIT',None))
+        self.assertFalse([x for i in v2['investigations'] for x in i['findings'] if x['kind']=='ACQUISITION_LIMIT' and x['requirement']])
+        self.assertIn('recoverable-net',f('HIST-SH09','F4')['citation']['quote'])
+        self.assertEqual(f('HIST-SH09','F10')['requirement'],'REQ_ENTITY_COHORT_JOIN')
+        self.assertEqual(f('HIST-EF06','F2')['requirement'],'REQ_DOCUMENTED_ALLOCATION')
+        self.assertTrue(all(c['reason'] for c in v2['mapping_corrections']))
+        g=build(ledgers=[])
+        self.assertNotIn('history:HIST-F03/claim-v1',{r['claim'] for r in O.same_gap(g,'REQ_REALISED_ACTIVITY',V)['results']})
+        self.assertEqual({r['claim'] for r in O.same_gap(g,'REQ_HISTORICAL_SCHEDULE_OR_VERSION',V)['results']},{'history:HIST-SH09/claim-v1'})
+
+    def test_archive_path_cik_is_not_a_corroborated_issuer_identity(self):
+        g=build(ledgers=[]);n=g.nodes['entity:CIK:0000093410']
+        self.assertEqual(n['attrs']['identity_status'],'ARCHIVE_PATH_IDENTIFIER')
+        self.assertEqual((n['attrs']['types'],n['attrs']['memory_types']),([],['LISTED_COMPANY']))
+        self.assertTrue(any('archive path' in r for r in n['restrictions']))
+        self.assertNotIn('entity:NAME:HIST-F19/Voya Retirement Insurance and Annuity Company',{x for e,x,d in g.neighbours('entity:CIK:0001535929')})
+        cat=json.loads(C.CATALOGUE_PATH.read_text(encoding='utf-8'))
+        for e in [e for i in cat['investigations'] for e in i['entities'] if e['identity_basis'].startswith('SEC')]:
+            self.assertIn(f"/edgar/data/{int(e['id'].split(':')[1])}/",e['name_citation']['quote'])
+        bad=copy.deepcopy(cat);bad['investigations'][1]['entities'][0]['name_citation']={'path':'docs/strategy/sh09_verification_report.md','quote':'Chevron'}
+        path=self.dir/'bad.json';path.write_text(json.dumps(bad),encoding='utf-8')
+        with self.assertRaisesRegex(GraphError,'archive path'):build(ledgers=[],catalogue_path=path)
+
+    def test_archive_path_join_carries_a_caveat_and_no_type_conflict(self):
+        o=obs('OBS-V-1','SRC-X','Synthetic test observation about a registrant.',1,'u',entity('LEGAL_ENTITY','CIK:0000093410','Registrant'),
+              '2023-12-20','2023-12-21','2024-01-05T00:00:00+00:00','x')
+        g=build([self.extra('DLC-GSYN-V',[('observation',o)])],mode='synthetic',with_memory=True)
+        self.assertFalse(any(i['code']=='ENTITY_TYPE_CONFLICT' for i in g.issues))
+        self.assertEqual(g.nodes['entity:CIK:0000093410']['attrs']['identity_status'],'IDENTIFIED')
+        leads=[r for r in O.revisit(g,'OBS-V-1',V)['results'] if r['match'].startswith('history:HIST-SH09')]
+        self.assertTrue(leads);self.assertTrue(any('archive-path CIK' in x for x in leads[0]['not_yet_verified']))
+        self.assertEqual(leads[0]['previous_status'],'STOP / M NOT PASSED / H NOT ESTABLISHED')
+
+    def test_evaluation_reads_only_declared_inputs(self):
+        def refuse(*a,**k):raise AssertionError('undeclared input read')
+        with patch('src.research.graph.catalogue.load',refuse),patch('src.research.graph.project.discover_ledgers',refuse):
+            report=E.run(self.paths)
+        self.assertEqual(sorted(report['declared_inputs']['ledgers']),['A.jsonl','B.jsonl','C.jsonl'])
+        self.assertIsNone(report['declared_inputs']['catalogue'])
+        retro=self.extra('DLC-RETRO-Z',[],fixture='RETROSPECTIVE_INSPECTED')
+        with self.assertRaisesRegex(ValueError,'isolation'):E.isolated_graph(self.abc+[retro])
+
+    def test_structured_baseline_is_exact_temporal_and_identity_aware(self):
+        from src.research.graph import baseline as B
+        t7b=entity('FACILITY','SYN_FACILITY:T-7B','Synthetic Terminal Seven B')
+        o=obs('OBS-D-1','SRC-X','Seven B throughput.',1,'Mt/quarter',t7b,'2000-06-30','2000-07-01','2000-08-01T00:00:00+00:00','x')
+        cand=copy.deepcopy(Ledger(self.paths['A']).load().latest('candidate','CAND-GA-1'))
+        cand.update(id='CAND-D-1',method='OBSERVATION_FIRST',entry_record='OBS-D-1',population='Terminal SYN_FACILITY:T-7B only.')
+        cand['predictor']['observation_ids']=['OBS-D-1'];cand['exposure']['relationship_ids']=[];cand['missing_variables']=[]
+        ledgers=self.abc+[self.extra('DLC-GSYN-D',[('observation',o),('candidate',cand)])]
+        self.assertIn('DLC-GSYN-D/CAND-D-1',B.naive_text_search(ledgers,'DLC-GSYN-B','OBS-GB-1'))
+        self.assertNotIn('DLC-GSYN-D/CAND-D-1',B.structured_search(ledgers,'DLC-GSYN-B','OBS-GB-1')['claims'])
+        self.assertEqual(B.structured_search(self.abc,'DLC-GSYN-C','OBS-GC-3')['excluded_contexts'],
+                         [{'record':'DLC-GSYN-A/REL-GA-2','reason':'PERIOD_INCOMPATIBLE'}])
+        named=B.structured_search(self.abc,'DLC-GSYN-C','OBS-GC-2');self.assertTrue(named['identity_join_refused']);self.assertFalse(named['claims'])
+        a_end=Ledger(self.paths['A']).load().events[-1]['recorded_at_utc']
+        later={c['record'] for c in B.structured_search(self.abc,'DLC-GSYN-A','OBS-GA-1')['contexts']}
+        earlier={c['record'] for c in B.structured_search(self.abc,'DLC-GSYN-A','OBS-GA-1',known_at=a_end)['contexts']}
+        self.assertIn('DLC-GSYN-B/OBS-GB-1',later);self.assertNotIn('DLC-GSYN-B/OBS-GB-1',earlier)
+        with self.assertRaisesRegex(ValueError,'not recorded'):B.structured_search(self.abc,'DLC-GSYN-B','OBS-GB-1',known_at=a_end)
+
+    def test_pilot_export_gives_the_baseline_the_same_memory(self):
+        g=build([self.paths['S']],mode='synthetic',with_memory=True);cat=C.load()[0]
+        hist=[s for s in E.export_suggestions(g,'DLC-GSYN-S',[self.paths['S']],cat) if s['match'].startswith('history:')]
+        self.assertTrue(hist);self.assertTrue(all(s['baseline_structured_discoverable'] for s in hist))
+        without=E.export_suggestions(g,'DLC-GSYN-S',[self.paths['S']],None)
+        self.assertFalse(any(s['baseline_structured_discoverable'] for s in without if s['match'].startswith('history:')))
 
 
 if __name__=='__main__':unittest.main()

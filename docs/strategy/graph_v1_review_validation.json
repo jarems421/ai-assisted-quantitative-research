@@ -1,0 +1,240 @@
+{
+ "version": "GRAPH_V1_REVIEW_VALIDATION_V001",
+ "recorded_at_utc": "2026-10-21T12:37:10+00:00",
+ "status": "PASS",
+ "starting_head": "ab00a9761e12da14a6b8a998516cabff1b2a0cf1",
+ "owner": "owner_graph_pilot_preflight_2026-10-21.md",
+ "owner_sha256": "7fa127cbc28f44ee8a2436e3127071aa46c8e1c1f821fe0ee7b44dc096631f72",
+ "catalogue": {
+  "superseded": {
+   "path": "docs/strategy/graph/research_memory_catalogue.json",
+   "sha256": "3ca363216078a2134837d8e8ea2fc6996ddc49de78027048f3b15aa5482f16bb",
+   "byte_identical_to_head": true
+  },
+  "current": {
+   "path": "docs/strategy/graph/research_memory_catalogue_v002.json",
+   "sha256": "afd91e54697f7e47e8844f4076267bae95814cbd12e29e4ec9f97ba9f9a589a9",
+   "investigations": 7,
+   "requirement_classes": 8,
+   "findings": 39,
+   "mapping_corrections": 12
+  },
+  "verdicts_changed": 0
+ },
+ "baseline_before_changes": {
+  "local_tests": 554,
+  "public_tests": 326,
+  "graph_tests": 37,
+  "tracked_files": 766
+ },
+ "local_tests": 560,
+ "public_tests": 332,
+ "graph_tests": 43,
+ "skipped": 0,
+ "memory_graph": {
+  "nodes": 99,
+  "edges": 121,
+  "digest": "8c9167e93b9bb9729b7511933b7e0ae7ceed78becf9fc7a9b3bcd4705426b4e6",
+  "issues": 0,
+  "rebuild_identical": true
+ },
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+   ],
+   "returncode": 0,
+   "log": "local_suite.log",
+   "log_sha256": "1ab8961553a4ce6229b6a07cb1490a3090e02a0cf258968d12b6b4e5c899ee44",
+   "test_count": 560
+  },
+  {
+   "name": "public_checks",
+   "command": [
+    "python",
+    "-m",
+    "src.research.public_checks"
+   ],
+   "returncode": 0,
+   "log": "public_checks.log",
+   "log_sha256": "4814aa7522af02427d20dd9cae762250809638f24cba3fcf10a0abfdf7cbea4b",
+   "test_count": 332,
+   "note": "test_graph already in PUBLIC_TESTS; 6 review regression tests added"
+  },
+  {
+   "name": "presentation",
+   "command": [
+    "python",
+    "-m",
+    "src.presentation.exp001",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "presentation.log",
+   "log_sha256": "00aaa1570db4ee0de535189f102f01393e4ec9c3a4ce8f05fda8730d0f3fb343"
+  },
+  {
+   "name": "documentation_links",
+   "command": [
+    "python",
+    "-m",
+    "src.research.phase4a",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "phase4a.log",
+   "log_sha256": "fb68ffef7cc4ee06bab9e3185026c8ff74945a975e96d50765aa85d013300d38"
+  },
+  {
+   "name": "exp004_frozen_audit",
+   "command": [
+    "python",
+    "-m",
+    "src.research",
+    "audit",
+    "EXP004"
+   ],
+   "returncode": 0,
+   "log": "exp004_audit.log",
+   "log_sha256": "b16c7484da9f808fcbb0ab7fabc4918c5cf2ff3e6bfb3e16bfa010ab0326387d"
+  },
+  {
+   "name": "exp004_gap_check",
+   "command": [
+    "python",
+    "-m",
+    "src.research.exp004_execution_gap_report",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "exp004_gap.log",
+   "log_sha256": "7e7ad7ca43b1973c55330d62553556638111b90c848f9696e15815c311460ca4",
+   "result": "EXECUTION_GAPS_UNRESOLVED"
+  },
+  {
+   "name": "discovery_lab_walkthrough",
+   "command": [
+    "python",
+    "-m",
+    "src.research.discovery",
+    "demo",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "discovery_demo.log",
+   "log_sha256": "c116ab14910a6b2ea2112a96424f18692f8a1dae1555159f5e6cfea24b9b09e6"
+  },
+  {
+   "name": "graph_walkthrough",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "demo",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "graph_demo.log",
+   "log_sha256": "cba61fe99deff301eedd2145dfd0eaf2720e7e0b6305ac17aca5e557e90d25fc",
+   "walkthrough_sha256": "5fd8505ff623e5a7efb840eead5dcbe9b5461aa780496ef3ef919e22d464a193"
+  },
+  {
+   "name": "graph_build_rebuild",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "build",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "graph_build.log",
+   "log_sha256": "e5703f5a29fd0f8edeb36446bc5893afa8e32b544e0556d5246f68208db5bb66"
+  },
+  {
+   "name": "graph_utility_check",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "evaluate",
+    "--timing"
+   ],
+   "returncode": 0,
+   "log": "graph_evaluate.log",
+   "log_sha256": "bc636a07d0faa638d13efc2ae7ddd0fa71c08dbf192c8a571457c31b66176934",
+   "note": "synthetic functional check on declared inputs only; runtime is not deterministic"
+  }
+ ],
+ "logs_private_directory": "data/raw/graph_v1_20261021/review_validation (ignored)",
+ "preservation": {
+  "tracked_files_at_head": 766,
+  "byte_identical": 750,
+  "changed": [
+   "AGENTS.md",
+   "README.md",
+   "docs/acceleration/master_plan.md",
+   "docs/strategy/graph_v1_backfill_audit.md",
+   "docs/strategy/graph_v1_design.md",
+   "docs/strategy/graph_v1_guide.md",
+   "docs/strategy/graph_v1_walkthrough.md",
+   "src/presentation/README.template.md",
+   "src/research/graph/catalogue.py",
+   "src/research/graph/cli.py",
+   "src/research/graph/evaluate.py",
+   "src/research/graph/fixtures.py",
+   "src/research/graph/operators.py",
+   "src/research/graph/project.py",
+   "src/research/graph/rules.py",
+   "tests/test_graph.py"
+  ],
+  "changed_reason": "Graph v1 package, its tests and Graph v1 documentation; living guidance/presentation pointers",
+  "discovery_lab_code_changed": false,
+  "measurement_gate_documents_changed": false,
+  "experiments_changed": false,
+  "catalogue_v001_changed": false,
+  "catalogue_cited_reports_changed": false,
+  "added": [
+   "src/research/graph/baseline.py",
+   "docs/strategy/graph/research_memory_catalogue_v002.json",
+   "docs/strategy/owner_graph_pilot_preflight_2026-10-21.md",
+   "docs/strategy/graph_v1_review.md",
+   "docs/strategy/graph_pilot_preregistration.md",
+   "docs/strategy/proposed_owner_graph_pilot_authorisation.md",
+   "docs/strategy/graph_v1_review_validation.json"
+  ]
+ },
+ "scientific_state": {
+  "source_acquisition_requests": 0,
+  "external_bytes": 0,
+  "live_campaigns": 0,
+  "pilots": 0,
+  "pilot_status": "PROPOSED_NOT_ACTIVE",
+  "market_data_requests": 0,
+  "returns_inspected": false,
+  "backtests": 0,
+  "new_experiments": 0,
+  "store_transitions": 0,
+  "trial_count_changes": 0,
+  "cloud_jobs": 0,
+  "paid_or_authenticated_actions": 0,
+  "F19": "HOLD_UNAPPROVED",
+  "SH09": "STOPPED",
+  "EXP004": "RESTRICTIONS_UNCHANGED"
+ },
+ "utility_check_summary": "Declared synthetic inputs only, no catalogue: text search adds 2 false and 2 premature identity joins; the competent structured search matches the graph on every claim connection, withholds the two unjoinable ones and excludes 1 period-incompatible context; the graph adds identity questions and explanations, not recall.",
+ "limits": [
+  "Software and synthetic checks verify mechanics, not research value.",
+  "Catalogue V002 mappings are reviewed against cited reports by the agent; owner review is still pending.",
+  "Hosted CI is reported separately."
+ ],
+ "walkthrough_sha256_check": true,
+ "documentation_correction": "adjudications validate FILE corrected to adjudications FILE (the CLI's actual form) in the guide, design, pre-registration and proposed authorisation"
+}

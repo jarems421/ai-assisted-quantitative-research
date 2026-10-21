@@ -13,11 +13,15 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-CATALOGUE_PATH = ROOT / 'docs/strategy/graph/research_memory_catalogue.json'
-VERSION = 'GRAPH_MEMORY_CATALOGUE_V001'
+# V002 supersedes V001 (kept byte-identical at research_memory_catalogue.json) with recorded mapping corrections.
+CATALOGUE_PATH = ROOT / 'docs/strategy/graph/research_memory_catalogue_v002.json'
+VERSIONS = ('GRAPH_MEMORY_CATALOGUE_V001', 'GRAPH_MEMORY_CATALOGUE_V002')
 STATUS_CLASSES = ('STOPPED', 'HOLD', 'REJECTED', 'NOT_ADVANCED')
+# ACQUISITION_LIMIT (V002): only part of an existing original was obtained or read. It is not evidence that a
+# historical version is unavailable and maps to no measurement requirement.
 FINDING_KINDS = ('MEASUREMENT_GAP', 'SOURCE_FIELD_PRESENT', 'SOURCE_OMISSION', 'ACCESS_BLOCKED', 'ACCESS_NOTE', 'RETROSPECTIVE_ONLY',
-                 'IDENTITY_LIMIT', 'SCOPE_LIMIT', 'INFORMATION_LIMIT', 'RESTRICTED_M_PASS', 'EVIDENCE_TO_CHANGE')
+                 'IDENTITY_LIMIT', 'SCOPE_LIMIT', 'INFORMATION_LIMIT', 'RESTRICTED_M_PASS', 'EVIDENCE_TO_CHANGE', 'ACQUISITION_LIMIT')
+CORRECTION_KEYS = ('target', 'field', 'from', 'to', 'reason', 'citation')
 IDENTITY_BASES = ('SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR', 'RECORDED_IDENTIFIER', 'NAME_ONLY')
 FINANCIAL_BASES = ('GROSS', 'NET', 'RETAINED_NET', 'NOT_ESTABLISHED')
 
@@ -40,7 +44,12 @@ def load(path=CATALOGUE_PATH, root=ROOT):
     """Return (catalogue, issues). Raises CatalogueError on structural corruption."""
     try:cat = json.loads(Path(path).read_text(encoding='utf-8'))
     except (OSError, ValueError) as error:raise CatalogueError(f'unreadable catalogue: {error}') from error
-    need(isinstance(cat, dict) and cat.get('version') == VERSION, 'unknown catalogue version')
+    need(isinstance(cat, dict) and cat.get('version') in VERSIONS, 'unknown catalogue version')
+    v2 = cat['version'] == VERSIONS[1]
+    if v2:
+        need(set(cat.get('supersedes', {})) == {'path', 'sha256', 'commit'}, 'a V002 catalogue must name the version it supersedes')
+        need(all(set(c) == set(CORRECTION_KEYS) and c['reason'] for c in cat.get('mapping_corrections', [None]) if c is not None)
+             and cat.get('mapping_corrections'), 'V002 mapping corrections need target, field, from, to, reason and citation')
     need(cat.get('status') == 'NON_AUTHORITATIVE_RESEARCH_MEMORY', 'catalogue must declare itself non-authoritative')
     for key in ('recorded_at_utc', 'report_hashes', 'requirements', 'blocker_requirements', 'claim_mappings', 'investigations'):
         need(key in cat, f'catalogue missing {key}')
@@ -69,6 +78,13 @@ def load(path=CATALOGUE_PATH, root=ROOT):
             issues.append({'code': 'CITATION_HASH_CHANGED', 'path': p, 'where': where}); return 'HASH_CHANGED_QUOTE_PRESENT'
         return 'CURRENT'
 
+    if v2:
+        old = root / safe_path(cat['supersedes']['path'])
+        if not old.is_file():issues.append({'code': 'SUPERSEDED_CATALOGUE_MISSING', 'path': cat['supersedes']['path']})
+        elif hashlib.sha256(old.read_bytes()).hexdigest() != cat['supersedes']['sha256']:
+            issues.append({'code': 'SUPERSEDED_CATALOGUE_CHANGED', 'path': cat['supersedes']['path']})
+        for c in cat['mapping_corrections']:
+            if c['citation'] is not None:cite(c['citation'], f"correction {c['target']}")
     ids = set()
     for inv in cat['investigations']:
         iid = inv.get('id', '?'); need(re.fullmatch(r'HIST-[A-Z0-9]+', iid) and iid not in ids, f'invalid or duplicate investigation {iid}')
@@ -98,7 +114,15 @@ def load(path=CATALOGUE_PATH, root=ROOT):
             else:need(not e['id'].startswith('NAME:'), f'{iid}: identified entity cannot use NAME:')
             if e['identity_basis'] == 'SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR':
                 m = re.fullmatch(r'CIK:(\d{10})', e['id']); need(m and e.get('locator') in locators, f'{iid}: SEC identity needs a recorded document locator')
-                need(f'/edgar/data/{int(m.group(1))}/' in e['locator'], f'{iid}: CIK does not match the recorded archive path')
+                path_segment = f'/edgar/data/{int(m.group(1))}/'
+                need(path_segment in e['locator'], f'{iid}: CIK does not match the recorded archive path')
+                if v2:
+                    # The CIK names an EDGAR archive directory. Only a report passage that links this name to that path
+                    # associates them; listing, securities and group structure are never established here.
+                    nc = e.get('name_citation'); need(nc, f'{iid}: SEC identity needs a name_citation linking name and path')
+                    need(path_segment in nc['quote'] and M_first_token(e['name']) in nc['quote'].lower(),
+                         f'{iid}: name_citation must contain the archive path and the entity name')
+                    states.append(cite(nc, f'{iid}.entity.{e["id"]}.name'))
             else:states.append(cite(e['citation'], f'{iid}.entity.{e["id"]}'))
         for d in inv['documents']:
             need(re.fullmatch(r'[0-9a-f]{64}', d.get('sha256', '')), f'{iid}: document needs a sha256')
@@ -110,6 +134,10 @@ def load(path=CATALOGUE_PATH, root=ROOT):
                          else 'HASH_CHANGED_QUOTE_PRESENT' if 'HASH_CHANGED_QUOTE_PRESENT' in states else 'CURRENT')
     cat['_citation_status'] = {i['id']: statuses[i['id']] for i in cat['investigations']}
     return cat, issues
+
+
+def M_first_token(name):
+    return re.findall(r'[a-z0-9]+', name.lower())[0]
 
 
 def requirement_ids(cat):
