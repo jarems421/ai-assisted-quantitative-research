@@ -1,0 +1,40 @@
+{
+  "version": "MEASUREMENT_GATE_CAMPAIGN_PLAN_V001",
+  "owner_instruction": "owner_measurement_gate_campaign_2026-10-21.md",
+  "starting_head": "1e543ec91bd2513d975972b12d87436c89a1737b",
+  "review_started_utc": "2026-10-21T06:55:18+00:00",
+  "conservative_deadline_utc": "2026-10-21T12:55:18+00:00",
+  "limits": {
+    "maximum_working_hours": 6,
+    "maximum_aggregate_dispatch_reservations": 36,
+    "browser_search_queries_reserved": 16,
+    "ordinary_original_HTTP_starts_reserved": 20,
+    "maximum_downloaded_original_response_bytes": 31457280,
+    "maximum_single_response_bytes": 6291456,
+    "minimum_seconds_between_ordinary_starts": 1.05,
+    "browser_direct_opens": 0,
+    "automatic_retries": 0,
+    "paid_services_accounts_credentials_cloud_jobs_market_series_or_economic_tests": 0,
+    "accounting": "Conservatively count each search query as one dispatch reservation as well as every ordinary GET/HEAD/redirect/error. Maximum original HTTP starts therefore 20, below owner's 36-source ceiling. Browser search underlying fetch/retry count and response-body bytes are UNKNOWN; no browser original opens or dataset retrieval. Search snippets are discovery evidence, not archived originals. Owner-supplied local PDF is not a new external acquisition. No silent reallocation beyond 36 combined reservations."
+  },
+  "pdf": {"pages":29,"bytes":320360,"sha256":"02640341c7776fadf08bd88e4ac27737cf8b2aae3a08e8c9c9acb8edbb78a103","snapshot_head_described":"1ecbf0a","actual_newer_work":"short_horizon_discovery_report.md; preserve all ten SH claims and SH09 proposal without automatic activation"},
+  "initial_families": [
+    {"id":"EF01","claim_version":1,"origin":"report_suggested","mechanism":"Rail disruption and actual listed-plant dependence","predictor":"Affected terminal/corridor deterioration interacting with dated plant dependence and demonstrably limited rerouting","outcome":"Same plant shipments/production or issuer separately quantified transport expense","control_frame":"CF Industries / Union Pacific April 2022 shipping restriction; not selected using returns","old_relationship":"New rail-specific constraint; neither river nor a reopening of old transport sources"},
+    {"id":"EF02","claim_version":1,"origin":"report_suggested_contract_class","mechanism":"LNG interruption and contractual replacement/fee allocation","predictor":"Unredacted tolling/force-majeure obligations and contracted volumes applicable to a dated export-facility outage","outcome":"Identified buyer's separately reported replacement cost or retained contractual cash","control_frame":"Freeport June 2022 outage; Osaka Gas/Centrica as candidate counterparties, retain failures","old_relationship":"Related contractual-response theme, distinct from F07 vessel detention/hire allocation; no old source retry"},
+    {"id":"EF03","claim_version":1,"origin":"report_suggested","mechanism":"IV-fluid shortage and truly available substitute output","predictor":"Dated presentation-compatible incremental available capacity/inventory at a listed substitute, rather than approval or nameplate","outcome":"Same supplier/product additional delivered volume or independently reported product revenue","control_frame":"Baxter North Cove 2024 interruption and ICU Medical substitution question","old_relationship":"Related to F03 qualification and prior drug-input discovery; distinct shortage/capacity object, no FDA decision-denominator reopening"},
+    {"id":"EF04","claim_version":1,"origin":"independently_developed","mechanism":"Progressive wagering tax thresholds and retained operator margin","predictor":"Operator-specific cumulative taxable adjusted gross revenue relative to annual statutory brackets, not aggregate handle","outcome":"Separately reported operator/month state tax and retained taxable revenue","control_frame":"Illinois FY2025 progressive sports-wagering tax; DraftKings/FanDuel legal licensees subject to verification","old_relationship":"New gaming-tax claim, not healthcare reimbursement or F19 assessment offsets"},
+    {"id":"EF05","claim_version":1,"origin":"independently_developed","mechanism":"Expiring auto-emission credits and manufacturers' compliance demand","predictor":"Usable bank by credit vintage/expiry and same manufacturer's compliance deficit, not EV production alone","outcome":"Same manufacturer later net credit acquisition/use in compatible regulatory units","control_frame":"EPA model-year 2022/2023 manufacturer compliance records; Tesla/Stellantis exposure must be dated and not assigned from group credit revenue","old_relationship":"Different legal credit market and buyer quantity from SH03 RNG; no SH03 source continuation"},
+    {"id":"EF06","claim_version":1,"origin":"independently_developed","mechanism":"Residual-insurer takeout conversion and retained premium exposure","predictor":"Actual accepted/retained cohort by legal insurer and premium, rather than approved takeout ceiling","outcome":"Same cohort's separately reported policies/premium retained or earned at the listed parent","control_frame":"Florida Citizens 2023/2024 depopulation and HCI subsidiaries; not selected from equity returns","old_relationship":"New insurance origination/cohort mechanism, distinct from F19 insolvency tax-credit utilisation; F19 closed"},
+    {"id":"EF07","claim_version":1,"origin":"independently_developed","mechanism":"Broadband deployment default and support recovery","predictor":"Recipient-specific missed contractual deployment obligation, available cure/security and recoverable support dollars","outcome":"Same legal recipient's actual support recovery/forfeiture payment or separately recorded liability","control_frame":"Connect America Fund II/Lumen or Frontier disclosed milestone/default case, subject to original verification","old_relationship":"New conditional subsidy recovery; no federal procurement award-denominator or old source reopening"},
+    {"id":"EF08","claim_version":1,"origin":"independently_developed","mechanism":"Water pollution penalties and company-specific incentive headroom","predictor":"Confirmed pollution incidents against the exact dated company incentive schedule/cap, not generic ESG counts","outcome":"Same company/year separately determined regulator incentive adjustment in pounds","control_frame":"UK PR19 pollution performance 2022/23 or 2023/24 and United Utilities/Severn Trent","old_relationship":"Different explicit regulated payment consequence from old EPA production inference; no EPA source reopening"}
+  ],
+  "selection_rules": [
+    "Five of eight initial families independently developed; three report suggestions, no ranking taken from PDF.",
+    "Short cards and field controls before deep competition work. Select no more than four families for original measurement attempts, no more than eight ordinary starts for any family; do not use all budget on one candidate.",
+    "Original positive examples are purposive measurement controls, never an untouched empirical sample. No association, returns, outcome-based tuning or economic pilot.",
+    "Use Gate M requirements individually; pathway-only outcomes remain provisional. H is separate: 5-20-session expectation revision must have an identified event, not merely annual statement availability.",
+    "F19 is a preserved opportunity-cost benchmark; no annual-PDF download, new F19 request, old budget consumption or SH09 activation.",
+    "Unknown required fields remain UNVERIFIED. A material reformulation or proxy is a new claim version; retain old stop. Reject/hold/verify/M passed are evidence dispositions, not experiment states.",
+    "Record raw bodies/errors and reservation receipts under ignored new data/raw/measurement_gate_campaign_20261021/; reuse isolated existing collectors/projection logic, no new public framework or dependencies."
+  ]
+}
