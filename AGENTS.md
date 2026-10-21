@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Graph pilot conditional go: route preflight stop, not activated (2026-10-21)
+
+- `docs/strategy/owner_graph_pilot_conditional_go_2026-10-21.md` conditionally approved the revision 2 pilot. `graph_pilot_route_preflight.md` records the documentation-only preflight: zero scientific-data requests, no packet probe, no activated authorisation, no campaign.
+- All six shortlisted data routes were blocked at preflight: ECHO (two-call QID design), PHMSA (documentation 403, route unconfirmed), SEC full-text search (no documented API, query term required), FERC eLibrary (no record route), openFDA (documented API key requirement) and OSHA (key required). P1–P3 would be NOT_FORMED; P4's primary mechanism is distinct from prior work.
+- Await the owner's choice (P4 alone, owner-amended routes, or no pilot). Do not probe any route, guess file URLs, use or register keys, or write `owner_graph_pilot_<date>.md` without that decision. The PHMSA documentation 403 stops that route for the pilot. All earlier stops, F19 HOLD and SH09 STOP are unchanged.
+
 ## Graph pilot protocol revision 2; still proposed, not active (2026-10-21)
 
 - `docs/strategy/owner_graph_pilot_protocol_2026-10-21.md` authorised protocol and narrowly necessary offline code/test/doc corrections only: no source fetch, live campaign, pilot, market data or activation. Revision 2 of `graph_pilot_preregistration.md` and `proposed_owner_graph_pilot_authorisation.md` replaces revision 1 (`942650a`) and lists its corrections.

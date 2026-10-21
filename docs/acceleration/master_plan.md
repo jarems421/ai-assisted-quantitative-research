@@ -1,5 +1,7 @@
 # Research OS: governing roadmap
 
+**2026-10-21 Graph pilot route preflight:** under the owner's [conditional go](../strategy/owner_graph_pilot_conditional_go_2026-10-21.md), a documentation-only [route preflight](../strategy/graph_pilot_route_preflight.md) found that none of the six shortlisted data routes can be used as a single, credential-free original record route. P1–P3 would not form; only the hypothesis-first packet could. The pilot is **not activated**, no data request was made, and an owner decision is pending.
+
 **2026-10-21 Graph pilot protocol revision 2:** under a [follow-up instruction](../strategy/owner_graph_pilot_protocol_2026-10-21.md), the [pre-registration](../strategy/graph_pilot_preregistration.md) and [proposed authorisation](../strategy/proposed_owner_graph_pilot_authorisation.md) were corrected:
 - **Query visibility:** queries use a frozen packet snapshot plus the arm's own records as appended by the query time; a single `--known-at` would have hidden each arm's new observations.
 - **No carry-over:** no arm sees the other arm, other packets or earlier pilot ledgers.
