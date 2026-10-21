@@ -1,0 +1,75 @@
+{
+ "version": "GRAPH_PILOT_BLIND_V2_ALIASED",
+ "derived_from_sha256": "6d28c55cc1cb9940fff72371c883ecaf65e195df07510c4de4b1c8de16e8b6ba",
+ "secret": "2fb0b0055c1f5aca72ff765b7eca3f46",
+ "aliases": {
+  "ADJ-793909d493": {
+   "OBS-G-7": "OBS-A31ac7246",
+   "CAND-G-1": "CAND-A6e8d73de"
+  },
+  "ADJ-e977207739": {
+   "REL-G-2": "REL-A76e5d8c6"
+  },
+  "ADJ-e14ea60127": {
+   "OBS-G-5": "OBS-Acdd1c21d",
+   "OBS-G-1": "OBS-A482566d4"
+  },
+  "ADJ-d4a210e351": {
+   "OBS-G-1": "OBS-A46ebbed8",
+   "REL-G-1": "REL-A25b86b20"
+  },
+  "ADJ-84e34126a1": {
+   "OBS-G-6": "OBS-A9307dc0f",
+   "OBS-G-1": "OBS-Aaca04313"
+  },
+  "ADJ-6fcb2b50a4": {
+   "OBS-4": "OBS-A93430d37",
+   "OBS-7": "OBS-A1663e332",
+   "CAND-1": "CAND-Afee388f7"
+  },
+  "ADJ-db8b15dde2": {
+   "REL-G-1": "REL-Ad636d8a4",
+   "OBS-G-5": "OBS-A15b26376"
+  },
+  "ADJ-6b5b79c2d6": {
+   "OBS-5": "OBS-A0309968f",
+   "OBS-6": "OBS-A0a0af697"
+  },
+  "ADJ-dc62481aff": {
+   "OBS-1": "OBS-A10ffdce7",
+   "OBS-7": "OBS-Adce6cd3e",
+   "CAND-1": "CAND-Ab3d29651"
+  },
+  "ADJ-87143e90ad": {
+   "OBS-5": "OBS-A08cc6827"
+  },
+  "ADJ-ea7badfe21": {
+   "OBS-1": "OBS-A0a88b94c",
+   "OBS-5": "OBS-A878d892a"
+  },
+  "ADJ-ef9beef356": {
+   "OBS-4": "OBS-A6210d639",
+   "OBS-1": "OBS-A23cc7793"
+  },
+  "ADJ-7b96650ced": {
+   "CAND-G-1": "CAND-A63b95f2d"
+  },
+  "ADJ-dffcf49273": {
+   "OBS-1": "OBS-A5cc18af6",
+   "OBS-8": "OBS-Ae6e1befc",
+   "CAND-1": "CAND-A693c5cda"
+  },
+  "ADJ-ab3ea60347": {
+   "OBS-1": "OBS-Aafc6e24b",
+   "OBS-2": "OBS-A4c38dd2d"
+  },
+  "ADJ-c487a29a99": {
+   "OBS-G-1": "OBS-Abddaf20b",
+   "OBS-G-7": "OBS-Ab5359929",
+   "CAND-G-1": "CAND-A6b25b72b"
+  },
+  "ADJ-b30a491381": {
+   "OBS-G-8": "OBS-A1e8c3de3"
+  }
+ }
+}

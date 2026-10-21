@@ -1,0 +1,75 @@
+{
+ "version": "GRAPH_PILOT_BLIND_V001",
+ "snapshot_sha256": "156acba20778a9fe47c5f2d520061849c58ce06b832416ce8ac6f80f643b3bad",
+ "salt": "dcb060b4489c26f2857830d763311dc1",
+ "items": {
+  "ADJ-6b5b79c2d6": {
+   "arm": "S",
+   "connection_id": "CON-637a2826d05b"
+  },
+  "ADJ-6fcb2b50a4": {
+   "arm": "S",
+   "connection_id": "CON-dd0fc1a90796"
+  },
+  "ADJ-793909d493": {
+   "arm": "G",
+   "connection_id": "CON-4d4fc4fc1310"
+  },
+  "ADJ-7b96650ced": {
+   "arm": "G",
+   "connection_id": "CON-4aa1c4a3d060"
+  },
+  "ADJ-84e34126a1": {
+   "arm": "G",
+   "connection_id": "CON-9664d5c8327d"
+  },
+  "ADJ-87143e90ad": {
+   "arm": "S",
+   "connection_id": "CON-17f3660eb752"
+  },
+  "ADJ-ab3ea60347": {
+   "arm": "S",
+   "connection_id": "CON-0af6145bdb00"
+  },
+  "ADJ-b30a491381": {
+   "arm": "G",
+   "connection_id": "CON-6d2e6816cbbf"
+  },
+  "ADJ-c487a29a99": {
+   "arm": "G",
+   "connection_id": "CON-52b013b0806b"
+  },
+  "ADJ-d4a210e351": {
+   "arm": "G",
+   "connection_id": "CON-4d9b9c91ff0a"
+  },
+  "ADJ-db8b15dde2": {
+   "arm": "G",
+   "connection_id": "CON-de9531a967ed"
+  },
+  "ADJ-dc62481aff": {
+   "arm": "S",
+   "connection_id": "CON-629e859003f3"
+  },
+  "ADJ-dffcf49273": {
+   "arm": "S",
+   "connection_id": "CON-e3b3ed79ce72"
+  },
+  "ADJ-e14ea60127": {
+   "arm": "G",
+   "connection_id": "CON-f327f8100705"
+  },
+  "ADJ-e977207739": {
+   "arm": "G",
+   "connection_id": "CON-15f1effa9e04"
+  },
+  "ADJ-ea7badfe21": {
+   "arm": "S",
+   "connection_id": "CON-87ab4886d6bc"
+  },
+  "ADJ-ef9beef356": {
+   "arm": "S",
+   "connection_id": "CON-05ddf715215c"
+  }
+ }
+}

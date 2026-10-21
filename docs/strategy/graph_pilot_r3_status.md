@@ -1,5 +1,7 @@
 # Graph pilot revision 3: execution status (awaiting owner adjudication)
 
+> **Update (2026-10-22):** the owner adjudicated all 36 items (potentially unblinded); keys were unsealed after the logs were committed, arm branches merged, and the descriptive [results](graph_pilot_r3_results.md) recorded: INCONCLUSIVE, two pairs. Dispositions are pending in the [M/H packet](graph_pilot_r3/mh_decision_packet.md).
+
 > **Correction (2026-10-21):** the V001 adjudication sheets referenced below leaked arm-identifying record ids. They are compromised and preserved unchanged; use the V2 aliased materials in the [blinding correction](graph_pilot_r3_blinding_correction.md). The statement in section 6 that mechanical scans found no leaks was wrong; it is kept, with a correction note.
 
 **2026-10-21. Status: all formed campaigns complete; blinded adjudication is pending with the owner.** Revision 3 is an **exploratory amended attempt**. Its routes were changed after the revision 2 source-formation failures had been reviewed ([authority](owner_graph_pilot_r3_2026-10-21.md)). No graph-versus-structured-search outcome is reported yet: arm labels stay sealed until adjudication is complete.

@@ -1,0 +1,535 @@
+{
+ "version": "GRAPH_PILOT_R3_MH_FLAGS_V001",
+ "sealed_until": "owner adjudication of both packets is committed",
+ "window_end": "2025-09-30",
+ "flags": {
+  "P3-S": {
+   "post_window_dates": [
+    {
+     "record": "SRC-1@1",
+     "kind": "source",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": null
+    },
+    {
+     "record": "OBS-1@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-05-22",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T19:20:17.669337+00:00",
+      "source_version": "2026-10-14"
+     }
+    },
+    {
+     "record": "OBS-2@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-05-22",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T19:20:17.669337+00:00",
+      "source_version": "2026-10-14"
+     }
+    },
+    {
+     "record": "OBS-3@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-05-22",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T19:20:17.669337+00:00",
+      "source_version": "2026-10-14"
+     }
+    },
+    {
+     "record": "OBS-4@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-05-23",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T19:20:17.669337+00:00",
+      "source_version": "2026-10-14"
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "candidate": "CAND-1@1",
+     "appended_seq": 23,
+     "first_freeze_seq": 24,
+     "after_outcome_seen": false,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": false,
+     "revision_kind": "ORIGINAL",
+     "recommendation": "HOLD"
+    },
+    {
+     "candidate": "CAND-1@2",
+     "appended_seq": 34,
+     "first_freeze_seq": 24,
+     "after_outcome_seen": true,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": true,
+     "revision_kind": "CLARIFICATION",
+     "recommendation": "STOP"
+    }
+   ],
+   "outcome_mentions_before_freeze": [
+    {
+     "effort": "EFF-18",
+     "seq": 31,
+     "before_first_freeze": false,
+     "description": "[PILOT:READING] Source start 4: SEC archive Form 10-Q for the quarter ended 2025-09-30, accession 0000917520-25-000096 (HTTP 200, complete, 2,003,317 bytes); keyword reading for recall, applicator, sterility, sealant and segment revenue passages (19:35:14-19:35:54 UTC)."
+    },
+    {
+     "effort": "EFF-19",
+     "seq": 37,
+     "before_first_freeze": false,
+     "description": "[PILOT:RECORDING] Recorded the two outcome observations, the post-outcome clarification of CAND-1 with a stop recommendation, a drafted measurement sceptic review, the version freeze and three declined outcome connections (19:35:54-19:37:10 UTC)."
+    }
+   ]
+  },
+  "P3-G": {
+   "post_window_dates": [
+    {
+     "record": "SRC-G-1@1",
+     "kind": "source",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": null
+    },
+    {
+     "record": "OBS-G-1@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-05-22",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T19:20:17.669337+00:00",
+      "source_version": "2026-10-14"
+     }
+    },
+    {
+     "record": "OBS-G-2@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-05-22",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T19:20:17.669337+00:00",
+      "source_version": "2026-10-14"
+     }
+    },
+    {
+     "record": "OBS-G-3@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-05-22",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T19:20:17.669337+00:00",
+      "source_version": "2026-10-14"
+     }
+    },
+    {
+     "record": "OBS-G-4@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-10-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-05-23",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T19:20:17.669337+00:00",
+      "source_version": "2026-10-14"
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "candidate": "CAND-G-1@1",
+     "appended_seq": 17,
+     "first_freeze_seq": 19,
+     "after_outcome_seen": false,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": false,
+     "revision_kind": "ORIGINAL",
+     "recommendation": "HOLD"
+    },
+    {
+     "candidate": "CAND-G-1@2",
+     "appended_seq": 18,
+     "first_freeze_seq": 19,
+     "after_outcome_seen": false,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": false,
+     "revision_kind": "PRE_FREEZE_REVISION",
+     "recommendation": "HOLD"
+    },
+    {
+     "candidate": "CAND-G-1@3",
+     "appended_seq": 24,
+     "first_freeze_seq": 19,
+     "after_outcome_seen": false,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": false,
+     "revision_kind": "CLARIFICATION",
+     "recommendation": "STOP"
+    }
+   ],
+   "outcome_mentions_before_freeze": [
+    {
+     "effort": "EFF-7",
+     "seq": 20,
+     "before_first_freeze": false,
+     "description": "[PILOT:FREEZE_PREP] Checked the candidate's mechanical blockers, made one pre-freeze revision of the predictor units and froze CAND-G-1 v2 before opening any outcome report (19:47:36-19:48:36)."
+    },
+    {
+     "effort": "EFF-8",
+     "seq": 21,
+     "before_first_freeze": false,
+     "description": "[PILOT:READING] Start 3 of 6: frozen outcome check, quarterly report for the period ended 2025-06-30 (accession 0000917520-25-000074), HTTP 200 complete, 1,947,097 bytes; searched its text for the recall, the applicator names, endotoxin and sterility (19:48:36-19:49:36)."
+    },
+    {
+     "effort": "EFF-9",
+     "seq": 22,
+     "before_first_freeze": false,
+     "description": "[PILOT:READING] Start 4 of 6: frozen outcome check, quarterly report for the period ended 2025-09-30 (accession 0000917520-25-000096), HTTP 200 complete, 2,003,317 bytes; same text checks (19:49:36-19:50:36)."
+    },
+    {
+     "effort": "EFF-10",
+     "seq": 28,
+     "before_first_freeze": false,
+     "description": "[PILOT:SOURCE_SEARCH] Search 3 of 10 (19:50:36-19:51:00): looked on www.sec.gov for original filings naming the packet's other recalling firm (SunMed Holdings, LLC, packet OBS-P-1). The index pointed to a business development company's quarterly report listing a similarly named borrower; the index's own summary also displayed later loan fair values, so any loan-value outcome for this firm counts a"
+    },
+    {
+     "effort": "EFF-11",
+     "seq": 35,
+     "before_first_freeze": false,
+     "description": "[PILOT:RECORDING] Recorded the index-only borrower observation and its source passport, froze the outcome clarification CAND-G-1 v3 and drafted two sceptic reviews (19:51:00-19:52:30)."
+    },
+    {
+     "effort": "EFF-12",
+     "seq": 36,
+     "before_first_freeze": false,
+     "description": "[PILOT:GRAPH_QUERY] Queried suggestions for CAND-G-1 and OBS-G-8, reusable decisive checks and standalone records after the outcome check (19:52:30-19:53:00)."
+    }
+   ]
+  },
+  "P4-S": {
+   "post_window_dates": [
+    {
+     "record": "SRC-NHTSA-PART573@1",
+     "kind": "source",
+     "dates_after_window": [
+      "2026-01-14"
+     ],
+     "clocks": null
+    },
+    {
+     "record": "OBS-25V552-POP@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-01-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-08-19",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T20:17:28+00:00",
+      "source_version": "2025-08-26"
+     }
+    },
+    {
+     "record": "OBS-25E054-EQUIPMENT-RECALL@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-01-14"
+     ],
+     "clocks": {
+      "economic_occurrence": "UNKNOWN",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T20:25:14+00:00",
+      "source_version": "2025-09-15"
+     }
+    },
+    {
+     "record": "OBS-MGA-CAMERA-RECALL-CONTINGENCY@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-02-25"
+     ],
+     "clocks": {
+      "economic_occurrence": "UNKNOWN",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T20:28:29+00:00",
+      "source_version": "2026-02-25"
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "candidate": "CAND-RECALL-REMEDY-CAMERA@1",
+     "appended_seq": 16,
+     "first_freeze_seq": 18,
+     "after_outcome_seen": false,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": false,
+     "revision_kind": "ORIGINAL",
+     "recommendation": "HOLD"
+    },
+    {
+     "candidate": "CAND-RECALL-REMEDY-CAMERA@2",
+     "appended_seq": 17,
+     "first_freeze_seq": 18,
+     "after_outcome_seen": false,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": false,
+     "revision_kind": "PRE_FREEZE_REVISION",
+     "recommendation": "HOLD"
+    },
+    {
+     "candidate": "CAND-RECALL-REMEDY-CAMERA@3",
+     "appended_seq": 25,
+     "first_freeze_seq": 18,
+     "after_outcome_seen": false,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": false,
+     "revision_kind": "CLARIFICATION",
+     "recommendation": "HOLD"
+    },
+    {
+     "candidate": "CAND-RECALL-REMEDY-CAMERA@4",
+     "appended_seq": 32,
+     "first_freeze_seq": 18,
+     "after_outcome_seen": true,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": true,
+     "revision_kind": "CLARIFICATION",
+     "recommendation": "STOP"
+    }
+   ],
+   "outcome_mentions_before_freeze": [
+    {
+     "effort": "EFF-008",
+     "seq": 19,
+     "before_first_freeze": false,
+     "description": "[PILOT:SOURCE_SEARCH] Search 4/10 (after freeze): publisher-domain search for remedy-activity reports and notices for recall 25V552. No quarterly report located; result list included an acknowledgement letter (RCAK-25V552-5487) and an equipment recall report 25E054 whose index title names a listed issuer as manufacturer."
+    },
+    {
+     "effort": "EFF-010",
+     "seq": 21,
+     "before_first_freeze": false,
+     "description": "[PILOT:SOURCE_SEARCH] Search 5/10 (after freeze): publisher-domain search for the Part 573.7 quarterly remedy report of recall 25V552. Not located; only acknowledgement letters and the recall report were listed. Outcome route stays unretrieved; no file name was guessed."
+    },
+    {
+     "effort": "EFF-011",
+     "seq": 27,
+     "before_first_freeze": false,
+     "description": "[PILOT:SOURCE_SEARCH] Search 6/10 (after freeze): SEC archive locators for the issuer's 2025 quarterly reports, for any recall-specific cost disclosure. Index snippets mention rear-camera recall contingencies with a different vehicle manufacturer; not relied upon until originals are read."
+    }
+   ]
+  },
+  "P4-G": {
+   "post_window_dates": [
+    {
+     "record": "SRC-1@1",
+     "kind": "source",
+     "dates_after_window": [
+      "2026-01-14"
+     ],
+     "clocks": null
+    },
+    {
+     "record": "OBS-4@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2025-10-14",
+      "2025-12-31",
+      "2026-01-27",
+      "2026-01-28"
+     ],
+     "clocks": {
+      "economic_occurrence": "2025-12-31",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T20:04:23+00:00",
+      "source_version": "2026-01-28"
+     }
+    },
+    {
+     "record": "OBS-5@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-05-07"
+     ],
+     "clocks": {
+      "economic_occurrence": "UNKNOWN",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T20:05:46+00:00",
+      "source_version": "2026-05-07"
+     }
+    },
+    {
+     "record": "OBS-6@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-03-05",
+      "2026-03-19",
+      "2026-03-26"
+     ],
+     "clocks": {
+      "economic_occurrence": "2026-03-19",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T20:07:06+00:00",
+      "source_version": "2026-03-26"
+     }
+    },
+    {
+     "record": "OBS-7@1",
+     "kind": "observation",
+     "dates_after_window": [
+      "2026-03-31"
+     ],
+     "clocks": {
+      "economic_occurrence": "2026-03-31",
+      "first_public": "UNKNOWN",
+      "retrieval": "2026-10-21T20:10:01+00:00",
+      "source_version": "UNKNOWN"
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "candidate": "CAND-1@1",
+     "appended_seq": 18,
+     "first_freeze_seq": 20,
+     "after_outcome_seen": false,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": false,
+     "revision_kind": "ORIGINAL",
+     "recommendation": "HOLD"
+    },
+    {
+     "candidate": "CAND-1@2",
+     "appended_seq": 36,
+     "first_freeze_seq": 20,
+     "after_outcome_seen": true,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": true,
+     "revision_kind": "CLARIFICATION",
+     "recommendation": "STOP"
+    },
+    {
+     "candidate": "CAND-1@3",
+     "appended_seq": 38,
+     "first_freeze_seq": 20,
+     "after_outcome_seen": true,
+     "outcome_inspected_before_freeze": true,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": true,
+     "revision_kind": "CLARIFICATION",
+     "recommendation": "STOP"
+    },
+    {
+     "candidate": "CAND-2@1",
+     "appended_seq": 42,
+     "first_freeze_seq": 43,
+     "after_outcome_seen": true,
+     "outcome_inspected_before_freeze": false,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": true,
+     "revision_kind": "ORIGINAL",
+     "recommendation": "HOLD"
+    },
+    {
+     "candidate": "CAND-2@2",
+     "appended_seq": 49,
+     "first_freeze_seq": 43,
+     "after_outcome_seen": true,
+     "outcome_inspected_before_freeze": true,
+     "returns_inspected": false,
+     "claim_class": "ORIGINAL",
+     "post_outcome": true,
+     "revision_kind": "CLARIFICATION",
+     "recommendation": "STOP"
+    }
+   ],
+   "outcome_mentions_before_freeze": [
+    {
+     "effort": "EFF-11",
+     "seq": 19,
+     "before_first_freeze": true,
+     "description": "[PILOT:FREEZE_PREP] Drafted candidate CAND-1 from OBS-1, OBS-2, REL-1, REL-2 and ran the checklist before inspecting any outcome record."
+    },
+    {
+     "effort": "EFF-23",
+     "seq": 40,
+     "before_first_freeze": false,
+     "description": "[PILOT:FREEZE_PREP] Queried revisit OBS-6 and same-gap for retained net economics; drafted and froze CAND-1 version 2 (clarification after outcome) and version 3 (selection metadata fix: outcome inspected before the v2 freeze). Includes 0.58 minutes from an unrecorded interval ending 20:08:21."
+    },
+    {
+     "effort": "EFF-24",
+     "seq": 44,
+     "before_first_freeze": false,
+     "description": "[PILOT:SOURCE_SEARCH] Search 6/10: locate the listed parent's Q1 2026 results release (Form 8-K Exhibit 99.1) on www.sec.gov Archives; snippet text showing quarterly net sales not used as evidence."
+    },
+    {
+     "effort": "EFF-25",
+     "seq": 45,
+     "before_first_freeze": false,
+     "description": "[PILOT:FREEZE_PREP] Recorded REL-3 (supply relationship 2022-05-17 to 2025-08-08 from 26V189) and drafted and froze CAND-2, a post-outcome net-cost reformulation of CAND-1, before inspecting its issuer-disclosure outcome."
+    },
+    {
+     "effort": "EFF-27",
+     "seq": 51,
+     "before_first_freeze": false,
+     "description": "[PILOT:READING] Searched the Q1 2026 results release text; recorded SRC-4, OBS-7 and CAND-2 version 2 (outcome not observed, STOP recommendation) and froze it."
+    }
+   ]
+  }
+ }
+}

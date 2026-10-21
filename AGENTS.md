@@ -1,5 +1,10 @@
 # Repository instructions
 
+## Graph pilot revision 3 results: INCONCLUSIVE, potentially unblinded (2026-10-22)
+
+- `graph_pilot_r3_results.md`: the owner adjudicated all 36 V2 items with SAW_V001=YES. Keys were unsealed only after the logs were committed, and the arm branches are merged. All 10 graph-operator connections (`same-gap`/`revisit`/`next` requirement-tag analogies) were judged trivial; all 10 confirmations came from analyst reading (8 S, 2 G). Pooled verified connections per hour: S 4.16, G 3.15. Two pairs give no graph-increment classification, and this is not evidence of investment value or a graph null.
+- Original frozen M passes are 0: all five frozen candidates keep 16–20 mechanical blockers. Dispositions await the owner (`graph_pilot_r3/mh_decision_packet.md`); never record them for the owner. The recommendation to tighten the requirement-tag analogy operators is not implemented; it needs a new owner decision and a new evaluation.
+
 ## Graph pilot revision 3 ACTIVE: exploratory amended attempt (2026-10-21)
 
 - `docs/strategy/owner_graph_pilot_r3_2026-10-21.md`, from `owner_graph_pilot_r3_amendment_2026-10-21.md`, is the final bounded amendment: one keyless openFDA request (`limit=50`); P2 inspects at most the 14 frozen 8-K accessions, needing 3 qualifying original EX-10 or Item 1.01 relationships; P4 is unchanged; P1 is not restarted. Cumulative ceilings include revision 2's 4 starts and 5,537,804 bytes. Records go under `docs/strategy/graph_pilot_r3/` and `data/raw/graph_pilot_r3_20261021/`; arm branches are `graph-pilot-r3/<packet>-<arm>`.
