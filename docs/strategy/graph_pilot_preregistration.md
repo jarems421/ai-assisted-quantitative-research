@@ -6,6 +6,8 @@ Revision 1 was committed at `942650a`. Revision 2 applies the [owner's protocol 
 
 **Activated 2026-10-21** by [the owner authorisation](owner_graph_pilot_2026-10-21.md), with owner-amended source routes only: P1 `NOT_FORMED` at preflight; P2 uses the documented SEC daily-index route; P3 uses keyless openFDA device enforcement; P4 uses the owner's primary mechanism. All other rules below apply unchanged.
 
+**Revision 3 (exploratory, 2026-10-21):** after the activated attempt stopped at packet freeze, the owner authorised [one final bounded amendment](owner_graph_pilot_r3_2026-10-21.md). It adds one keyless openFDA request with `limit=50`, a fixed 14-filing SEC extension, and P4 unchanged. Records are separate, under `graph_pilot_r3/`. The design rules below are unchanged.
+
 ## Corrections in revision 2
 
 | # | Defect in revision 1 | Correction | Shown by |

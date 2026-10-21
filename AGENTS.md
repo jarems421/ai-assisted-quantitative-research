@@ -1,5 +1,10 @@
 # Repository instructions
 
+## Graph pilot revision 3 ACTIVE: exploratory amended attempt (2026-10-21)
+
+- `docs/strategy/owner_graph_pilot_r3_2026-10-21.md`, from `owner_graph_pilot_r3_amendment_2026-10-21.md`, is the final bounded amendment: one keyless openFDA request (`limit=50`); P2 inspects at most the 14 frozen 8-K accessions, needing 3 qualifying original EX-10 or Item 1.01 relationships; P4 is unchanged; P1 is not restarted. Cumulative ceilings include revision 2's 4 starts and 5,537,804 bytes. Records go under `docs/strategy/graph_pilot_r3/` and `data/raw/graph_pilot_r3_20261021/`; arm branches are `graph-pilot-r3/<packet>-<arm>`.
+- Revision 2's records and private `final_stop.json` stay unchanged. Fewer than three completed pairs gets no graph-increment classification. No further route changes, budget expansion or replacement packets.
+
 ## Graph pilot stopped at packet freeze; no campaign ran (2026-10-21)
 
 - `graph_pilot_packet_freeze_report.md` and `graph_pilot_receipt.json`: 4 starts, 5,537,804 bytes, 0 searches. P1 was NOT_FORMED at preflight. P2 was NOT_FORMED: the first 8-K (AmEx, 2025-07-01) has no EX-10. P3 was NOT_FORMED: the keyless openFDA response exceeded the 4 MiB size stop, so it is incomplete and fails E3 (the coordinator's `limit=1000` was a design error). P4 was not run, because the owner did not approve a P4-only comparison. Private `data/raw/graph_pilot_20261021/final_stop.json` prohibits further dispatch.
