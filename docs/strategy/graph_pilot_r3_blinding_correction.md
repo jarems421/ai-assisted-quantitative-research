@@ -92,3 +92,23 @@ Freeze times and candidate records are not altered, and this contamination is no
    - run the descriptive report.
 
 **Interpretation rules:** if any adjudication carries `SAW_V001=YES`, the P3/P4 graph comparison is reported as **potentially unblinded**. With only two pairs, it is descriptive in any case.
+
+## AI assessment received (2026-10-21): preserved, not used as adjudication
+
+The owner supplied an [AI assessment](graph_pilot_r3/ai_assessment_2026-10-21.md) of all 36 items. Its machine-readable form is [`ai_assessment.jsonl`](graph_pilot_r3/ai_assessment.jsonl), in a separate schema that the adjudication validator refuses.
+
+**What it says:** 10 `CONFIRMED` (P3 5, three of them "narrowly"; P4 5), 10 `UNVERIFIED` and 16 `TRIVIAL`. Item `25785c7b12` is "Unverified" but marked economically meaningful.
+
+**Why it is not an adjudication:**
+- it was produced with exposure to the V001 sheets;
+- it is not a human adjudication;
+- its external claims are not verified by the coordinator.
+
+Its own recommendation is followed: it is preserved as an AI assessment, and nothing from it is copied into `adjudications.jsonl`.
+
+**Independent-review procedure** (keeps the registered rule that every item is adjudicated):
+1. **Blind first.** An independent human who has seen neither the V001 sheets nor the AI assessment adjudicates **all** 36 items from the V2 sheets, with `EXPOSURE: SAW_V001=NO`. Reviewing only the AI's proposed confirmations would anchor the reviewer and leave items unadjudicated.
+2. **Compare afterwards.** Only after both `adjudications.jsonl` files are committed does the coordinator compare them with the AI assessment, item by item. Disagreements are reported, and neither record overwrites the other.
+3. **If the owner adjudicates instead,** every item carries `SAW_V001=YES`. The owner may read the AI assessment, and the comparison is reported as potentially unblinded.
+
+**The assessment raises one flag for the M/H stage, on a frozen packet record, unverified:** it states that FDA's original recall page shows a posting date of **2025-06-20** for `Z-1958-2025`, whereas the packet's openFDA `report_date` is **2025-07-02**. The two must not be treated as the same first-public date. Packet first-public times stay `UNKNOWN` unless an original publication record is acquired. The assessment's design observations (generic historical analogies; methodological warnings counted as connections; repeated connections inflating counts) are recorded here for the final report. They do not change the frozen rules or the counting.
