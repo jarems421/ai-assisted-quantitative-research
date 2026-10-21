@@ -38,6 +38,15 @@ def report(state):
             'requirement': idea['requirement']['id'], 'information_pathway': idea['information_pathway']}.items(): groups[key][value] += 1
     attempts = list(state.attempts.values())
     costs = [a.get('result', {}).get('provider', {}).get('usage', {}).get('cost', S.UNKNOWN) for a in attempts]
+    route_states = []
+    novelty_states = []
+    for card in cards:
+        current_routes = {r['locator']: r['state'] for r in card['idea']['source_routes']}
+        current_routes.update({r['locator']: r['state'] for r in state.feasibility
+                              if r['idea_id'] == card['id'] and r['version'] == card['version']})
+        route_states += list(current_routes.values())
+        novelty = next((r for r in reversed(state.novelty) if r['idea_id'] == card['id'] and r['version'] == card['version']), None)
+        novelty_states.append(novelty['external_status'] if novelty else 'NOT_CHECKED')
     return {'schema': 'SCOUT_DESCRIPTIVE_REPORT_V001', 'fixture': state.batch['fixture'], 'policy': E.POLICY,
         'protocol_sha256': digest(protocol()), 'archive_head': state.events[-1]['hash'] if state.events else None,
         'generation': {'reserved_attempts': len(attempts), 'valid': sum(a.get('result', {}).get('status') == 'VALID' for a in attempts),
@@ -53,9 +62,9 @@ def report(state):
                                        if x['kind'] == 'POSSIBLE_MECHANISM_DUPLICATE'})},
         'structural_checks': {'warning_free': sum(not a['checks']['checks'] for a in assessments),
             'substantive_coherence': 'MISSING_INDEPENDENT_REVIEW', 'falsifiability_review': 'MISSING_INDEPENDENT_REVIEW'},
-        'source_feasibility': dict(Counter(r['state'] for c in cards for r in c['idea']['source_routes'])),
+        'source_feasibility': dict(Counter(route_states)),
         'source_restrictions': [restriction for c in cards for restriction in E.source_restrictions(state, c)],
-        'external_novelty': {'reviewed_entries': len(state.novelty), 'not_checked_cards': [c['id'] for c in cards
+        'external_novelty': {'reviewed_entries': len(state.novelty), 'current_recorded_states': dict(Counter(novelty_states)), 'not_checked_cards': [c['id'] for c in cards
             if not any(r['idea_id'] == c['id'] and r['version'] == c['version'] and r['external_status'] != 'NOT_CHECKED' for r in state.novelty)]},
         'routing': dict(Counter(state.route(c) for c in cards)), 'shortlist': E.select(state),
         'human_work': {'review_records': len(humans), 'known_minutes': known_minutes, 'unknown_time_entries': missing_time,

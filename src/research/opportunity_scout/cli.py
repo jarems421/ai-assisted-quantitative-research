@@ -115,7 +115,8 @@ def dispatch(a):
     if a.command == 'prepare-batch': return {'requests': [export_prompt(archive, lane, a.per_lane, a.model) for lane in ('FORGE', 'RADAR', 'GAP')]}
     if a.command == 'import-response':
         state = response_import(archive, a.input)
-        return {'attempt_status': list(state.attempts.values())[-1].get('result', {}).get('status'), 'cards': list(state.cards)}
+        return {'attempt_statuses': {aid: r.get('result', {}).get('status', 'PENDING') for aid, r in state.attempts.items()},
+                'cards': list(state.cards)}
     if a.command == 'run':
         if bool(a.responses) == bool(a.local_model): raise S.ScoutError('choose supplied operator responses OR a configured local model')
         if a.responses:

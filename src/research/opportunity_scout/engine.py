@@ -298,7 +298,7 @@ def handoff(state, idea_id):
     return {'schema': 'DISCOVERY_LAB_STARTING_PROPOSAL_V001', 'banner': BANNER, 'status': 'PROPOSAL_ONLY',
             'opportunity_card': card, 'opportunity_card_sha256': digest(card), 'human_scout_review': review,
             'seeds': [state.seeds[sid] for sid in card['idea']['seed_ids']],
-            'historical_duplicates': proximity(state, card), 'source_limitations': [s['limitations'] for s in state.seeds.values()],
+            'historical_duplicates': proximity(state, card), 'source_limitations': [state.seeds[sid]['limitations'] for sid in card['idea']['seed_ids']],
             'discovery_method_proposed': {'RADAR': 'OBSERVATION_FIRST', 'FORGE': 'HYPOTHESIS_FIRST',
                 'GAP': 'HYPOTHESIS_FIRST', 'PLAIN': 'HYPOTHESIS_FIRST'}[card['lane']],
             'unfilled_discovery_fields': ['campaign authority', 'source passports', 'original predictor observations',

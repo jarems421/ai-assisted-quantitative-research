@@ -106,6 +106,24 @@ class EvaluationTests(unittest.TestCase):
 
 
 class CLITests(unittest.TestCase):
+    def test_import_status_reports_the_completed_attempt_with_later_attempts_pending(self):
+        with tempfile.TemporaryDirectory() as td:
+            store = str(Path(td) / 'status')
+            def run(args):
+                out, err = io.StringIO(), io.StringIO()
+                with redirect_stdout(out), redirect_stderr(err): result = main(args)
+                self.assertEqual(result, 0, err.getvalue())
+                return json.loads(out.getvalue())
+            run(['init', store, '--title', 'SYNTHETIC pending attempts', '--synthetic', '--no-memory'])
+            first = run(['prepare', store, '--lane', 'FORGE', '--count', '1', '--model', 'SYNTHETIC_GENERATOR'])
+            second = run(['prepare', store, '--lane', 'FORGE', '--count', '1', '--model', 'SYNTHETIC_GENERATOR'])
+            response = Path(td) / 'response.json'
+            response.write_bytes(canonical({'attempt_id': first['attempt_id'], 'provenance': provenance(provider='OPERATOR_ASSISTED'),
+                                           'output': {'ideas': [idea()]}}))
+            result = run(['import-response', store, str(response)])
+            self.assertEqual(result['attempt_statuses'][first['attempt_id']], 'VALID')
+            self.assertEqual(result['attempt_statuses'][second['attempt_id']], 'PENDING')
+
     def test_complete_operator_assisted_workflow_uses_real_importer(self):
         with tempfile.TemporaryDirectory() as td:
             store = str(Path(td) / 'operator')

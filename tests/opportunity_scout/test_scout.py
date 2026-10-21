@@ -247,6 +247,19 @@ class ScoutTests(unittest.TestCase):
             'reviewed_at': MOMENT, 'private_investor_use': 'UNKNOWN', 'minutes': 'UNKNOWN'}
         with self.assertRaises(S.ScoutError): self.archive.append('novelty', r)
 
+    def test_feasibility_review_updates_the_view_without_rewriting_generated_route(self):
+        state, iid = self.generate(); card = state.latest(iid)
+        self.archive.append('feasibility', {'idea_id': iid, 'version': 1,
+            'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'id': 'SYNTHETIC_REVIEWER'},
+            'locator': card['idea']['source_routes'][0]['locator'], 'state': 'INACCESSIBLE',
+            'fields_needed': ['Dated customer allocation'], 'identity_limit': 'Unknown actual counterparty',
+            'historical_versions': 'UNKNOWN', 'independent_outcome': 'UNKNOWN',
+            'cheapest_check': 'Separate future owner decision; no new request.', 'evidence': [],
+            'minutes': 'UNKNOWN', 'authorises_dispatch': False})
+        state = self.archive.load()
+        self.assertEqual(V.report(state)['source_feasibility'], {'INACCESSIBLE': 1})
+        self.assertEqual(state.latest(iid)['idea']['source_routes'][0]['state'], 'UNTESTED')
+
     def test_shadow_distribution_never_changes_routing(self):
         state, iid = self.generate(); W.triage(self.archive); state = self.archive.load()
         response = {'model': 'jev-1.13.0', 'usage': {'input_tokens': 100, 'output_tokens': 20},
