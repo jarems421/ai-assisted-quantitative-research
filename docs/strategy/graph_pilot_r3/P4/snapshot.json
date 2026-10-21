@@ -1,0 +1,37 @@
+{
+ "version": "GRAPH_PILOT_SNAPSHOT_V001",
+ "packet": "P4",
+ "fixture": "LIVE",
+ "frozen_at_utc": "2026-10-21T19:24:14.966823+00:00",
+ "prior": {
+  "packet_ledger": {
+   "path": "packet.jsonl",
+   "campaign": "DLC-GPKT-4",
+   "method": "HYPOTHESIS_FIRST",
+   "events": 1,
+   "head_hash": "670fe0ebf51b15979ec0d81da6773cb0c03b1ffbb2620fa00119c2b2cca673b3"
+  },
+  "catalogue": {
+   "path": "docs/strategy/graph/research_memory_catalogue_v002.json",
+   "sha256": "afd91e54697f7e47e8844f4076267bae95814cbd12e29e4ec9f97ba9f9a589a9",
+   "recorded_at_utc": "2026-10-21T12:27:17+00:00"
+  },
+  "bundle": []
+ },
+ "arms": {
+  "S": {
+   "ledger": "S.jsonl",
+   "campaign": "DLC-GP4-S"
+  },
+  "G": {
+   "ledger": "G.jsonl",
+   "campaign": "DLC-GP4-G"
+  }
+ },
+ "not_visible_to_either_arm": [
+  "the other arm's ledger, notes and connection log",
+  "every other packet and every earlier pilot ledger, of either arm",
+  "records appended after the query time",
+  "ledger discovery under docs/strategy (inputs are listed, never discovered)"
+ ]
+}

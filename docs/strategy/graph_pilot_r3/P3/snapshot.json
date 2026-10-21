@@ -1,0 +1,43 @@
+{
+ "version": "GRAPH_PILOT_SNAPSHOT_V001",
+ "packet": "P3",
+ "fixture": "LIVE",
+ "frozen_at_utc": "2026-10-21T19:24:14.323566+00:00",
+ "prior": {
+  "packet_ledger": {
+   "path": "packet.jsonl",
+   "campaign": "DLC-GPKT-3",
+   "method": "EVENT_FIRST",
+   "events": 7,
+   "head_hash": "b573457a82fc1d237b8a1dd6eeb3ffd9fcd2bb8bd96cf99a1b778362f037b9f9"
+  },
+  "catalogue": {
+   "path": "docs/strategy/graph/research_memory_catalogue_v002.json",
+   "sha256": "afd91e54697f7e47e8844f4076267bae95814cbd12e29e4ec9f97ba9f9a589a9",
+   "recorded_at_utc": "2026-10-21T12:27:17+00:00"
+  },
+  "bundle": [
+   {
+    "path": "openfda_device_enforcement_2025Q3_limit50.json",
+    "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+    "bytes": 1120085
+   }
+  ]
+ },
+ "arms": {
+  "S": {
+   "ledger": "S.jsonl",
+   "campaign": "DLC-GP3-S"
+  },
+  "G": {
+   "ledger": "G.jsonl",
+   "campaign": "DLC-GP3-G"
+  }
+ },
+ "not_visible_to_either_arm": [
+  "the other arm's ledger, notes and connection log",
+  "every other packet and every earlier pilot ledger, of either arm",
+  "records appended after the query time",
+  "ledger discovery under docs/strategy (inputs are listed, never discovered)"
+ ]
+}
