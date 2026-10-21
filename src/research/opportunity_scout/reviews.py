@@ -17,6 +17,16 @@ FEASIBILITY = S.obj({**TARGET, 'reviewer': ACTOR, 'locator': S.TEXT, 'state': S.
     'fields_needed': S.array(S.TEXT, 12, 1), 'identity_limit': S.TEXT, 'historical_versions': S.TEXT,
     'independent_outcome': S.TEXT, 'cheapest_check': S.TEXT, 'evidence': S.array(S.REF, 10),
     'minutes': S.NUMBER, 'authorises_dispatch': {'const': False}})
+from .readiness import VERSION as READY_VERSION
+FEASIBILITY_V002 = S.obj({**FEASIBILITY['properties'], 'readiness_version': {'const': READY_VERSION},
+    'publisher': S.LABEL, 'measurement_question': S.TEXT, 'assessment': S.TEXT,
+    'conclusion': S.enum(('RESEARCHABLE_PROPOSAL', 'UNRESOLVED', 'NOT_FEASIBLE')),
+    'remaining_unknowns': S.array(S.TEXT, 12, 1)})
+GENERATION_EFFORT = S.obj({'attempt_id': S.LABEL, 'actor': ACTOR, 'human_minutes': S.NUMBER,
+    'wall_seconds': S.NUMBER, 'context_id': S.LABEL, 'fresh_context': S.enum(('YES', 'NO', 'UNKNOWN')),
+    'invocation_status': S.enum(('INVOKED', 'NOT_INVOKED', 'UNKNOWN')),
+    'no_prior_generated_cards': S.enum(('YES', 'NO', 'UNKNOWN')), 'description': S.TEXT})
+GENERATION_EFFORT['properties'].update({'correction_of': S.HASH, 'correction_reason': S.TEXT})
 CRITIC = S.obj({**TARGET, 'model': S.LABEL, 'independent_of_generator': {'const': True},
     'unsupported_steps': S.array(S.TEXT, 10), 'competing_explanations': S.array(S.TEXT, 10, 1),
     'generic_interpretations': S.array(S.TEXT, 10), 'economic_significance_gaps': S.array(S.TEXT, 10),
@@ -63,7 +73,8 @@ def reconsider(state, seed_id, requirements, identifiers):
 
 def apply_review_event(state, kind, r, moment):
     from .engine import require_card
-    schemas = {'novelty': NOVELTY, 'feasibility': FEASIBILITY, 'critic': CRITIC, 'outcome': OUTCOME,
+    schemas = {'novelty': NOVELTY, 'feasibility': FEASIBILITY_V002 if 'readiness_version' in r else FEASIBILITY,
+               'critic': CRITIC, 'outcome': OUTCOME, 'generation_effort': GENERATION_EFFORT,
                'effort': EFFORT, 'reconsideration': RECONSIDER}
     if kind == 'shadow':
         from .providers import validate_shadow
@@ -76,6 +87,17 @@ def apply_review_event(state, kind, r, moment):
         state.reconsiderations.append(copy.deepcopy(r)); return
     if kind == 'effort':
         actor_check(state, r['actor']); state.efforts.append(copy.deepcopy(r)); return
+    if kind == 'generation_effort':
+        actor_check(state, r['actor'])
+        previous = next((x for x in reversed(state.efforts) if x.get('attempt_id') == r['attempt_id']), None)
+        if r['attempt_id'] not in state.attempts:
+            raise S.ScoutError('generation effort needs an existing attempt')
+        if previous:
+            if r.get('correction_of') != digest(previous) or len(r.get('correction_reason', '').split()) < 5:
+                raise S.ScoutError('effort correction needs the previous record hash and a concrete reason')
+        elif 'correction_of' in r or 'correction_reason' in r:
+            raise S.ScoutError('effort correction has no preceding record')
+        state.efforts.append({'kind': 'GENERATION_ATTEMPT', **copy.deepcopy(r)}); return
     card = require_card(state, r)
     if kind == 'critic':
         if r['model'] == card['provenance']['model']: raise S.ScoutError('generator self-review cannot become independent criticism')
@@ -89,6 +111,13 @@ def apply_review_event(state, kind, r, moment):
         for ref in r['evidence']: S.check_ref(ref, state.seeds)
         state.novelty.append(copy.deepcopy(r))
     elif kind == 'feasibility':
+        if 'readiness_version' in r:
+            if not any(x['locator'] == r['locator'] and x['publisher'] == r['publisher'] for x in card['idea']['source_routes']):
+                raise S.ScoutError('feasibility must identify a proposed route on this card version')
+            if r['measurement_question'] != card['idea']['next_step']['question']:
+                raise S.ScoutError('feasibility must address the exact decisive next-step question')
+            if r['conclusion'] == 'RESEARCHABLE_PROPOSAL' and (len(r['assessment'].split()) < 10 or r['assessment'] == S.UNKNOWN):
+                raise S.ScoutError('researchability needs a substantive human explanation; unknowns may remain')
         from .engine import source_restrictions
         if any(x['locator'] == r['locator'] for x in source_restrictions(state, card)) and r['state'] != 'STOPPED':
             raise S.ScoutError('historical source closure stands; Scout cannot reopen it')

@@ -13,7 +13,7 @@ from src.research.spec import canonical, digest
 from src.research.opportunity_scout import engine as E, schema as S, workflow as W
 from src.research.opportunity_scout import evaluation as V
 from src.research.opportunity_scout.storage import Archive, ROOT, input_json
-from src.research.opportunity_scout.fixtures import MOMENT, seed, idea, provenance
+from src.research.opportunity_scout.fixtures import MOMENT, seed, idea, provenance, feasibility
 from src.research.opportunity_scout.providers import JevShadowClient, OllamaProvider, shadow_request, QUESTIONS
 from src.research.opportunity_scout.reviews import reconsider
 
@@ -32,7 +32,7 @@ class ScoutTests(unittest.TestCase):
         return state, next(reversed(state.cards)) if state.cards else None
 
     def review(self, iid, decision='READY', reason_type='RESEARCHABLE'):
-        return {'idea_id': iid, 'version': self.archive.load().latest(iid)['version'], 'decision': decision,
+        return {'readiness_version': 'SCOUT_READY_V002', 'idea_id': iid, 'version': self.archive.load().latest(iid)['version'], 'decision': decision,
             'reason_type': reason_type, 'reason': 'SYNTHETIC workflow decision only; no real human judgment.',
             'uncertainties': ['Synthetic assumptions remain unverified.'],
             'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'id': 'SYNTHETIC_REVIEWER'}, 'minutes': S.UNKNOWN,
@@ -196,6 +196,7 @@ class ScoutTests(unittest.TestCase):
 
     def test_explicit_review_produces_proposal_not_a_discovery_record(self):
         _, iid = self.generate(); W.triage(self.archive)
+        self.archive.append('feasibility', feasibility(self.archive.load().latest(iid)))
         self.archive.append('review', self.review(iid))
         p = E.handoff(self.archive.load(), iid)
         self.assertEqual(p['status'], 'PROPOSAL_ONLY')
@@ -204,6 +205,7 @@ class ScoutTests(unittest.TestCase):
 
     def test_human_routing_is_reversible_and_old_decisions_remain(self):
         _, iid = self.generate(); W.triage(self.archive)
+        self.archive.append('feasibility', feasibility(self.archive.load().latest(iid)))
         self.archive.append('review', self.review(iid))
         self.archive.append('review', self.review(iid, 'INCUBATE', 'UNRESOLVED'))
         state = self.archive.load()
@@ -217,6 +219,7 @@ class ScoutTests(unittest.TestCase):
 
     def test_revisions_preserve_initial_features_and_reset_approval(self):
         state, iid = self.generate(); original = copy.deepcopy(state.latest(iid)); W.triage(self.archive)
+        self.archive.append('feasibility', feasibility(self.archive.load().latest(iid)))
         self.archive.append('review', self.review(iid))
         changed = copy.deepcopy(original['idea']); changed['predictor']['quantity'] = 'A materially different independent customer quantity'
         self.archive.append('revision', {'idea_id': iid, 'from_version': 1, 'idea': changed, 'reason': 'Synthetic material correction after inspection.',

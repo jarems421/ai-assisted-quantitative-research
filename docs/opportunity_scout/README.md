@@ -6,6 +6,8 @@ A local, non-learning stage before Discovery Lab. It turns approved source snipp
 
 ## Start here
 
+[Acceptance corrections](acceptance_review.md), [prospective V002 comparison and exact commands](first_comparison_v002/README.md), and [operational quality audit](operational_quality_audit.md) describe the stricter acceptance rules. Protocol V001 and saved operator examples remain historical artifacts.
+
 Work from the isolated **`codex/opportunity-scout-v1`** checkout, based on main `5f3b7ef91cfca8e7d13661a577a67751165c65cd`. Python 3.11+ and the repository's existing `jsonschema`/timezone support are sufficient. There are no new runtime packages, databases or services. If those minimal existing dependencies are missing, install `jsonschema>=4.23,<5` and `tzdata` in your local environment.
 
 ```powershell
@@ -85,6 +87,8 @@ IO accepts bounded explicit JSON only, rejects duplicate keys/non-finite numbers
 ```powershell
 python -m src.research.opportunity_scout card $scout IDEA-id-from-list
 python -m src.research.opportunity_scout triage $scout
+python -m src.research.opportunity_scout schema feasibility
+python -m src.research.opportunity_scout feasibility $scout your-human-feasibility.json
 python -m src.research.opportunity_scout schema review
 python -m src.research.opportunity_scout review $scout your-human-review.json
 python -m src.research.opportunity_scout handoff $scout IDEA-id-from-list
@@ -92,7 +96,7 @@ python -m src.research.opportunity_scout handoff $scout IDEA-id-from-list
 
 Mechanical checks report missing specificity, malformed chains, predictor/outcome repetition, unsupported novelty language and duplicates. They never certify economic coherence. Exact economic-core duplicates differ from uncertain prose/mechanism overlaps; neither establishes entity identity. Historical requirement matches cite original verdicts and are retrieval aids pending human review.
 
-Automatic routing is only INCUBATE or HUMAN_REVIEW. A human supplies READY or REJECT through an explicit version-targeted review, records uncertainties/reason/time, and can reverse that decision with another append. A source-access problem or missing evidence alone cannot justify REJECT. A human may mark a speculative idea READY if it has a plausible identified route and is worth considering; immediate supporting evidence is not mandatory. READY authorises no work. A handoff additionally requires `approved_handoff: true` for that exact READY version.
+Automatic routing is only INCUBATE or HUMAN_REVIEW. A human supplies READY or REJECT through an explicit version-targeted review and can reverse it through another append. Source access or missing evidence alone cannot justify REJECT. New READY records use `readiness_version: SCOUT_READY_V002` and need a separate current-version **human feasibility** record: exact publisher/identifiable proposed URL, exact next-step measurement question, substantive assessment, `conclusion: RESEARCHABLE_PROPOSAL`, field/identity/version/outcome limits and remaining unknowns. Placeholder prose cannot identify a route. UNTESTED sources and speculation remain eligible; original evidence is not mandatory. `schema feasibility` and `schema review` expose the complete contracts. READY authorises no work and does not evaluate M. Handoff also needs `approved_handoff: true` and rechecks current feasibility. Historical V001 reviews replay without silent upgrading.
 
 The resulting `DISCOVERY_LAB_STARTING_PROPOSAL_V001` contains the complete card, hash, human Scout review, seed limitations, causal assumptions, predictor, outcome/relationship requirements, falsifier, cost estimate, duplicate references and timing limits. It explicitly lists unavailable Discovery Lab fields. It is **not** a fabricated candidate record and does not create or mutate any campaign.
 
@@ -118,7 +122,7 @@ Review records contain their own effort. Use separate `effort` records for **add
 
 ## Frozen evaluation and future learning
 
-The protocol was committed as **`a13d2e3` before implementation/results**. It compares PLAIN, EVIDENCE_ONLY, MECHANISM_ONLY and HYBRID under the same eligible source/memory pool, cutoff and ceilings: six raw cards, three generation attempts × at most 6,000 output tokens, 180 human minutes and zero scientific requests per condition. Hybrid allocates two cards to each lane. Use `init --max-cards 6 --max-attempts 3 --knowledge-cutoff <same timestamp>` for each condition; prepare three two-card prompts (PLAIN/RADAR/FORGE respectively, and one of each hybrid lane).
+V001 was committed as **`a13d2e3` before implementation/results** and remains unchanged. It compares PLAIN, EVIDENCE_ONLY, MECHANISM_ONLY and HYBRID using a common eligible pool and equal ceilings. The first real comparison uses prospective **V002**, frozen in `a5bba7f`, with explicit actual-attempt, invocation, effort, token and context accounting. Use the [frozen package and commands](first_comparison_v002/README.md); archived operator cards are excluded. Equal configured ceilings alone never establish equal actual effort.
 
 `blind STORE --plain ... --evidence ... --mechanism ... --hybrid ... --salt-file private-salt.json` refuses incomplete or unequal-budget comparisons and exports a common reviewer packet plus a hash-sealed private key. Give only the packet to the reviewer. `evaluate-blind packet.json key.json --judgments human-judgments.json --states condition-paths.json` validates labels and can compare Jev separately against independent human labels, mechanical checks and critic answers. Without judgments it reports every missing reviewer. Blinding is partial and procedural; content can reveal the lane and the same owner may operate and review.
 
@@ -133,6 +137,6 @@ python -m unittest discover -s tests/opportunity_scout -v
 python -m src.research.opportunity_scout validate .research/opportunity_scout/operator-example
 ```
 
-**50 Scout tests and 84 existing Discovery Lab/Graph regression tests passed**, zero skipped. These establish software behavior, not economic findings. See the exact [validation record](validation.json).
+The acceptance suite passes **66 Scout tests and 84 existing Discovery Lab/Graph regressions**, zero skipped. These establish software behavior, not economic findings. See [acceptance validation](acceptance_validation.json); the older [50-test validation record](validation.json) is preserved historically.
 
 The real four-condition human comparison has not run. No external novelty search, original-source acquisition, human M/H decision or live model API verification is claimed. Ollama/Jev adapters are contract-tested; operator imports run end to end. The current Codex-authored examples are speculative and unreviewed. A future separately authorised investigation, and actual independent labels, are needed to assess research usefulness. The dashboard branch and all pilot branches remain separate.

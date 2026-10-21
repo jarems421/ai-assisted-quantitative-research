@@ -4,6 +4,8 @@ Two different artifacts exercise the same importer and archive rules. Neither de
 
 ## Synthetic rehearsal
 
+The acceptance revision adds a separate simulated V002 feasibility assessment before the simulated READY decision. Its URL identifies a **fictional** publisher register; no source is fetched. New approvals require the same record shape from a real human and a concrete proposed publisher route. [Acceptance review and first real comparison](acceptance_review.md).
+
 `python -m src.research.opportunity_scout demo --write` regenerates [synthetic_demo.json](synthetic_demo.json). With `--out .research/opportunity_scout/new-demo`, it also retains a complete replayable local archive.
 
 The rehearsal freezes all lane prompts first, records three **SYNTHETIC_FIXTURE** attempts, imports six fictional cards, runs structural/provenance checks and a diversity selection, and records one simulated READY approval. The resulting Discovery Lab packet is explicitly PROPOSAL_ONLY and contains missing fields rather than invented source passports, observations or M/H reviews.

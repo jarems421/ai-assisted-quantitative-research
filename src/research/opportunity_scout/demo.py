@@ -6,7 +6,7 @@ import tempfile
 
 from src.research.spec import canonical, digest
 from . import engine as E, schema as S, workflow as W
-from .fixtures import MOMENT, idea, seed, provenance, negative_controls
+from .fixtures import MOMENT, idea, seed, provenance, negative_controls, feasibility
 from .storage import Archive, ROOT
 from .evaluation import report, protocol
 
@@ -45,7 +45,8 @@ def run(out=None, *, write=False):
         for card in [v[-1] for v in state.cards.values()]:
             archive.append('assessment', E.assess(archive.load(), card), recorded_at=MOMENT)
         ready = next(v[-1] for v in state.cards.values() if v[-1]['lane'] == 'RADAR')
-        review = {'idea_id': ready['id'], 'version': 1, 'decision': 'READY', 'reason_type': 'RESEARCHABLE',
+        archive.append('feasibility', feasibility(ready), recorded_at=MOMENT)
+        review = {'readiness_version': 'SCOUT_READY_V002', 'idea_id': ready['id'], 'version': 1, 'decision': 'READY', 'reason_type': 'RESEARCHABLE',
             'reason': 'SYNTHETIC WORKFLOW DEMONSTRATION ONLY; no real human review or scientific outcome.',
             'uncertainties': ['All economic premises and sources are fictional.'],
             'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'id': 'SYNTHETIC_REVIEWER'}, 'minutes': S.UNKNOWN,

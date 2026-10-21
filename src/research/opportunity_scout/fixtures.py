@@ -82,13 +82,28 @@ def idea(family='CAPACITY_COMPETITION', lane='FORGE', variant=0):
             'weakens': 'The proposed transmission would lack its required operating change even if the broad event occurred.'},
         'next_step': {'question': 'Does an approved local original record state the dated customer allocation needed to distinguish this mechanism?',
             'source_hint': 'Proposed original customer/contract schedule; no dispatch is authorised.', 'analyst_minutes_estimate': S.UNKNOWN},
-        'source_routes': [{'publisher': 'Proposed contract or operating record publisher', 'locator': 'PROPOSAL_ONLY: original dated schedule, route unknown',
+        'source_routes': [{'publisher': 'Fictional Workshop Records Office', 'locator': 'https://records.synthetic.invalid/contracts/allocation-register',
             'fields': ['Dated economic unit', 'Assigned quantity', 'Independent invoice'], 'state': 'UNTESTED', 'evidence': [],
             'limitation': 'No source was contacted and availability is not established.', 'authorises_dispatch': False}],
         'information_pathway': 'A dated operational disclosure, if it exists',
         'overlooked_hypothesis': {'statement': 'A conditional cross-customer allocation may require joining records that are normally reviewed separately; this is only a hypothesis.', 'status': 'HYPOTHESIS_ONLY'},
         'reconsider_when': {'requirements': ['REQ_DOCUMENTED_ALLOCATION'], 'identifiers': [],
             'observation': 'A dated original supplies the required named economic allocation and independent outcome route.'}}
+
+
+def feasibility(card):
+    """Simulated feasibility only; never a real human judgment."""
+    route = card['idea']['source_routes'][0]
+    return {'idea_id': card['id'], 'version': card['version'], 'readiness_version': 'SCOUT_READY_V002',
+        'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'id': 'SYNTHETIC_REVIEWER'},
+        'publisher': route['publisher'], 'locator': route['locator'], 'state': 'UNTESTED',
+        'measurement_question': card['idea']['next_step']['question'],
+        'assessment': 'SYNTHETIC ONLY: this fictional register would allow checking dated customer assignments against independently issued invoices, if published.',
+        'conclusion': 'RESEARCHABLE_PROPOSAL', 'remaining_unknowns': ['All sources and economic premises are fictional.'],
+        'fields_needed': route['fields'], 'identity_limit': 'Named counterparties would still need matching.',
+        'historical_versions': 'UNKNOWN', 'independent_outcome': 'Invoice access is UNKNOWN.',
+        'cheapest_check': 'Inspect the proposed allocation register only after separate authority.',
+        'evidence': [], 'minutes': 'UNKNOWN', 'authorises_dispatch': False}
 
 
 def provenance(model='SYNTHETIC_GENERATOR', provider='SYNTHETIC_FIXTURE'):

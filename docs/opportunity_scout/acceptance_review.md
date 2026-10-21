@@ -1,0 +1,11 @@
+# Acceptance corrections
+
+Started at `cb0cf71` on `codex/opportunity-scout-v1`. Main, dashboard and Graph pilot remain isolated; Phase 1 remains offline and non-learning.
+
+READY requires an identifiable proposed publisher URL and a separate V002 feasibility record for the same card version, publisher, locator and exact decisive next-step question. A human explains researchability, fields needed, identity/version/outcome limits and remaining unknowns. Placeholders, assistant assessments, stale versions or later inaccessible routes cannot support a new READY/handoff. Untested routes and unverified premises remain eligible. This is proposal readiness, not Measurement Gate M. V001 approvals still replay historically; every new handoff checks current feasibility.
+
+Accounting separates ceilings, reservations, completed responses and reported actual invocations. Per-attempt human/wall effort, known token subtotals, unknown entries and context attestations remain visible. Unequal effort within equal caps is reported, not rebalanced. Missing records, reused contexts, mixed models/settings or excess budgets prevent comparative eligibility. V001 bytes are unchanged; prospective [V002](evaluation_protocol_v002.json) was frozen in `a5bba7f` before real generation.
+
+The [operational audit](operational_quality_audit.md) separates family labels, internal proximity, external novelty, feasibility, structure, substantive coherence and economic findings without scoring them. The [first real comparison package](first_comparison_v002/README.md) freezes a common local pool and 12 full prompts. Generation is NOT_RUN because no configured eligible local model was found. It contains no archived generated cards, human labels, source verification or Jev results; reused source selection and the narrow pool are declared limitations.
+
+[Acceptance validation](acceptance_validation.json) records exact checks and hashes. Live model integration, a complete real comparison, independent diversity/coherence, external novelty, original-source feasibility and investment usefulness remain unverified. The operator must choose an eligible local model, use fresh contexts and record effort; actual evaluation judgments and any later READY feasibility approval require humans. No scientific acquisition or pilot activity follows.

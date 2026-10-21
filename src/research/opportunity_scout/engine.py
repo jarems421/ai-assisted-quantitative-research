@@ -25,6 +25,7 @@ BATCH = S.obj({'id': S.LABEL, 'title': S.TEXT, 'fixture': S.enum(('SYNTHETIC', '
 class State:
     def __init__(self):
         self.batch = None
+        self.comparison_binding = None
         self.seeds, self.prompts, self.attempts, self.cards, self.assessments = {}, {}, {}, {}, {}
         self.reviews, self.selections, self.novelty, self.feasibility = [], [], [], []
         self.shadows, self.critics, self.outcomes, self.efforts, self.reconsiderations, self.events = [], [], [], [], [], []
@@ -167,7 +168,7 @@ def require_card(state, record):
     return card
 
 
-def apply(s, kind, r, moment):
+def apply(s, kind, r, moment, *, replay=False):
     """Every append and load uses these rules. No trust in a stored derived routing flag."""
     S.timestamp(moment)
     if kind == 'batch':
@@ -176,6 +177,15 @@ def apply(s, kind, r, moment):
         if S.timestamp(r['knowledge_cutoff']) > S.timestamp(moment): raise S.ScoutError('knowledge cutoff cannot be in the future')
         s.batch = copy.deepcopy(r); return
     if s.batch is None: raise S.ScoutError('initialise a batch first')
+    if kind == 'comparison_binding':
+        S.validate(S.obj({'schema': {'const': 'SCOUT_COMPARISON_RUNTIME_V002'}, 'manifest_sha256': S.HASH,
+            'model': S.LABEL, 'provider': S.enum(('OPERATOR_ASSISTED', 'OLLAMA_LOCAL')),
+            'parameters': {'type': 'object', 'maxProperties': 15}, 'bound_at': S.TEXT,
+            'hosted_transmission_authorised': {'const': False}}), r)
+        if s.comparison_binding or any('result' in a for a in s.attempts.values()):
+            raise S.ScoutError('comparison runtime must bind once before any result')
+        if S.timestamp(r['bound_at']) != S.timestamp(moment): raise S.ScoutError('runtime clock must be its append time')
+        s.comparison_binding = copy.deepcopy(r); return
     if kind == 'seed':
         S.validate_seed(r)
         if r['id'] in s.seeds or len(s.seeds) >= 20: raise S.ScoutError('duplicate seed or seed ceiling')
@@ -199,7 +209,8 @@ def apply(s, kind, r, moment):
         attempt = s.attempts.get(r['attempt_id'])
         if not attempt or 'result' in attempt: raise S.ScoutError('unknown or already completed attempt')
         provider_check(r['provider'], s)
-        if r['provider']['provider'] != attempt['provider']: raise S.ScoutError('provider mismatch')
+        expected_provider = s.comparison_binding['provider'] if s.comparison_binding else attempt['provider']
+        if r['provider']['provider'] != expected_provider: raise S.ScoutError('provider mismatch')
         if r['status'] == 'VALID':
             ideas = parse_result(s, attempt, r['raw_response'])
             if len(s.cards) + len(ideas) > s.batch['max_cards']: raise S.ScoutError('card budget exceeded')
@@ -241,7 +252,8 @@ def apply(s, kind, r, moment):
         if assess(s, card) != r: raise S.ScoutError('assessment must match frozen deterministic checks')
         s.assessments[(card['id'], card['version'])] = copy.deepcopy(r)
     elif kind == 'review':
-        S.validate(S.REVIEW, r, 'human review'); card = require_card(s, r)
+        from .readiness import REVIEW, VERSION as READY_VERSION, require_ready
+        S.validate(REVIEW if 'readiness_version' in r else S.REVIEW, r, 'human review'); card = require_card(s, r)
         if (s.batch['fixture'] == 'SYNTHETIC') != (r['reviewer']['kind'] == 'SYNTHETIC_FIXTURE'):
             raise S.ScoutError('synthetic reviewers and real human decisions remain separate')
         if r['reason'] == S.UNKNOWN or len(r['reason'].split()) < 5:
@@ -250,6 +262,9 @@ def apply(s, kind, r, moment):
         if r['decision'] == 'REJECT' and r['reason_type'] in ('UNRESOLVED', 'SOURCE_ACCESS'):
             raise S.ScoutError('missing evidence or source access alone cannot reject an economic mechanism')
         if r['decision'] == 'READY':
+            if not replay or r.get('readiness_version') == READY_VERSION:
+                S.validate(REVIEW, r, 'new READY review')
+                require_ready(s, card)
             a = assess(s, card)
             if a['checks']['checks']: raise S.ScoutError('unresolved structural warnings need correction before READY')
             stopped = {x['locator'] for x in source_restrictions(s, card)}
@@ -260,7 +275,7 @@ def apply(s, kind, r, moment):
     elif kind == 'selection':
         if r != select(s): raise S.ScoutError('selection must follow the frozen diversity policy and include all candidates')
         s.selections.append(copy.deepcopy(r))
-    elif kind in ('novelty', 'feasibility', 'shadow', 'critic', 'outcome', 'effort', 'reconsideration'):
+    elif kind in ('novelty', 'feasibility', 'shadow', 'critic', 'outcome', 'effort', 'generation_effort', 'reconsideration'):
         from .reviews import apply_review_event
         apply_review_event(s, kind, r, moment)
     else: raise S.ScoutError(f'unsupported event type {kind}')
@@ -295,8 +310,11 @@ def handoff(state, idea_id):
     card = state.latest(idea_id); review = state.current_review(card)
     if not review or review['decision'] != 'READY' or not review['approved_handoff']:
         raise S.ScoutError('handoff needs an explicit human READY review approving this exact version')
+    from .readiness import require_ready
+    feasibility = require_ready(state, card)
     return {'schema': 'DISCOVERY_LAB_STARTING_PROPOSAL_V001', 'banner': BANNER, 'status': 'PROPOSAL_ONLY',
             'opportunity_card': card, 'opportunity_card_sha256': digest(card), 'human_scout_review': review,
+            'human_source_feasibility': feasibility,
             'seeds': [state.seeds[sid] for sid in card['idea']['seed_ids']],
             'historical_duplicates': proximity(state, card), 'source_limitations': [state.seeds[sid]['limitations'] for sid in card['idea']['seed_ids']],
             'discovery_method_proposed': {'RADAR': 'OBSERVATION_FIRST', 'FORGE': 'HYPOTHESIS_FIRST',

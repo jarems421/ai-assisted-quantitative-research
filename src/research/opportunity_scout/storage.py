@@ -74,7 +74,7 @@ class Archive:
             if event['seq'] != index + 1 or event['previous'] != previous or digest(core) != event['hash']:
                 raise ScoutError('archive chain mismatch')
             if s.events and event['recorded_at'] < s.events[-1]['recorded_at']: raise ScoutError('recording time cannot move backwards')
-            apply(s, event['type'], event['record'], event['recorded_at'])
+            apply(s, event['type'], event['record'], event['recorded_at'], replay=True)
             s.events.append(event); previous = event['hash']
         return s
 
