@@ -1,0 +1,1320 @@
+{
+  "version": "MEASUREMENT_GATE_CAMPAIGN_LEDGER_V001",
+  "recorded_at_utc": "2026-10-21T07:42:25.444625+00:00",
+  "owner": "owner_measurement_gate_campaign_2026-10-21.md",
+  "plan": "measurement_gate_campaign_plan.json",
+  "pre_source_checkpoint": "ee70e1a",
+  "starting_head": "1e543ec91bd2513d975972b12d87436c89a1737b",
+  "method": "measurement_gate_m.md",
+  "owner_sha256": "252ab5644716e30d71b9df2c9f181bd29540148133bea5705b0e7b01786f7626",
+  "plan_sha256": "b16ea00fe0795a1c66b999be6cccc2e3efbbf6791dc62b716f8fc40aa0ad0bfe",
+  "method_sha256": "af0727e5d65c8a2ee890ef97a4470b8f9dafdbe20e9b24ecb5e830f259a5cc07",
+  "supplied_report": {
+    "pages": 29,
+    "bytes": 320360,
+    "sha256": "02640341c7776fadf08bd88e4ac27737cf8b2aae3a08e8c9c9acb8edbb78a103",
+    "all_pages_read": true,
+    "link_annotations": 91,
+    "unique_link_targets": 20,
+    "private_original": "data\\raw\\measurement_gate_campaign_20261021\\02640341c7776fadf08bd88e4ac27737cf8b2aae3a08e8c9c9acb8edbb78a103\\owner_supplied_report.pdf",
+    "authority": "INDEPENDENT_CRITIQUE_NOT_EXECUTION_AUTHORITY",
+    "historical_snapshot": "1ecbf0a",
+    "actual_head_newer": true
+  },
+  "summary": {
+    "independent_initial_families": 8,
+    "report_suggested": 3,
+    "independently_developed": 5,
+    "original_source_checked_families": 4,
+    "source_check_families": [
+      "EF04",
+      "EF05",
+      "EF06",
+      "EF08"
+    ],
+    "original_claim_versions": 8,
+    "post_observation_reformulations": 1,
+    "original_claim_M_passes": 0,
+    "restricted_reformulation_M_passes": 1,
+    "level_A_design_candidates": 0,
+    "economic_evaluations": 0,
+    "investment_pilots": 0,
+    "original_claims_with_missing_distinctive_predictor_or_outcome": 8,
+    "additionally_explicit_horizon_problems": [
+      "EF05",
+      "EF08"
+    ],
+    "materiality_unverified_on_distinctive_net_object": [
+      "EF01",
+      "EF02",
+      "EF03",
+      "EF04",
+      "EF05",
+      "EF06",
+      "EF07",
+      "EF08"
+    ],
+    "caution": "Counts overlap; UNVERIFIED is not proof that a field is universally unavailable. One restricted gross-object M pass is not an original-family success. No sum of failure categories is an independent denominator."
+  },
+  "cards": [
+    {
+      "candidate_id": "EF01",
+      "claim_version": 1,
+      "mechanism_name": "Rail bottleneck and plant rerouting dependence",
+      "economic_event_or_constraint": "Union Pacific shipping restrictions affecting CF Industries in April 2022.",
+      "financial_importance": "A fertiliser producer can lose delivered volume during the spring application window; shipment restriction is not a quantified earnings loss.",
+      "listed_company_exposure": "CF Industries (NYSE: CF), Donaldsonville and Port Neal identified in the original indexed issuer release; actual plant/corridor contribution and rerouting slack UNVERIFIED.",
+      "distinctive_predictor": {
+        "quantity": "Plant-specific restricted shipment volume interacting with measured inability to reroute",
+        "units": "cars or product tonnes per plant/corridor/week; alternative deliverable tonnes over the same window",
+        "granularity": "dated plant/corridor, not system dwell"
+      },
+      "original_historical_source": "CF Industries April 14, 2022 release, https://www.cfindustries.com/newsroom/2022/union-pacific-shipping-restrictions ; paragraph beginning On Friday, April 8, 2022. STB weekly reporting is a potential upstream source from the supplied report, not acquired in this campaign.",
+      "positive_measurement_control": "Need one original record of restricted plant shipments AND feasible alternative-mode capacity. Indexed issuer text reports a nearly 20% restriction, not the latter.",
+      "independent_economic_outcome": "Independent same-plant delivered tonnes, production loss or separately quantified freight cost; UNVERIFIED.",
+      "unit_matching": "Plant names are observable in indexed original text. System-wide rail congestion cannot be allocated to the two plants or turned into their lost sales.",
+      "four_information_clocks": {
+        "economic_occurrence": "April 8, 2022 reported restriction; April 14 issuer communication",
+        "first_public_availability": "April 14 release date is reported; earliest public time of restrictions not established",
+        "dataset_timestamp": "Issuer release date, not a weekly STB release clock",
+        "research_retrieval": {
+          "first_ordinary_start_utc": null,
+          "last_ordinary_start_utc": null,
+          "browser_record": "search_03.txt",
+          "first_browser_dispatch_utc": "2026-10-21 07:05:28 UTC",
+          "exact_historical_public_time": "UNVERIFIED"
+        }
+      },
+      "expectation_revision_5_20_sessions": "Days/weeks are natural for shipment disruption, but no earlier measurable signal beyond the issuer warning or residual repricing channel established.",
+      "closest_substitute": "The issuer already identifies affected plants, products and delayed orders. Rail/shipper specialists are an informed audience; no exact commercial plant-rerouting model or academic match verified.",
+      "remaining_inference": "Would need a quantified alternative-capacity asymmetry absent from the contemporaneous warning, incremental to seasonality and known shipment restrictions.",
+      "access_and_version_limits": "No original body, STB week, plant logistics record or output sample acquired. Weekly system metrics do not prove route exclusivity.",
+      "cheapest_decisive_falsification": "One dated plant transport/rerouting record plus an independently reported shipment consequence. Reject if only system congestion or the same issuer warning is available.",
+      "disposition": "REJECT",
+      "exact_evidence_gathered": [
+        "ORIGINAL_INDEXED_ONLY: CF release identifies nearly 20% restriction, two plants and affected products.",
+        "UNVERIFIED: available rerouting capacity and independent plant-level outcome.",
+        "No full source check or economic effect estimated."
+      ],
+      "ordinary_receipt_indices": [],
+      "browser_evidence": [
+        "search_03.txt"
+      ],
+      "measurement_gate": {
+        "status": "NOT_PASSED",
+        "failed_or_unverified_requirements": [
+          "distinctive available-alternative quantity",
+          "independent matched plant outcome",
+          "increment beyond explicit issuer interpretation"
+        ]
+      },
+      "economic_proposition_status": "UNTESTED",
+      "information_proposition_status": "UNVERIFIED",
+      "investment_proposition_status": "NOT_ESTABLISHED",
+      "private_competitive_use": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED",
+      "status_history": [
+        {
+          "at": "pre-source checkpoint ee70e1a",
+          "status": "INITIAL_FIXED_CLAIM"
+        },
+        {
+          "at": "2026-10-21T07:42:25.444625+00:00",
+          "status": "REJECT",
+          "reason": "See exact evidence and failed M requirements; no economic testing"
+        }
+      ],
+      "origin": "report_suggested",
+      "related_prior_hypotheses": "New rail-specific constraint; neither river nor a reopening of old transport sources",
+      "pre_source_control_frame": "CF Industries / Union Pacific April 2022 shipping restriction; not selected using returns",
+      "research_expenditure": {
+        "ordinary_starts": 0,
+        "body_bytes": 0,
+        "browser_queries": "See overlapping exact search log; no invented per-family allocation",
+        "analyst_time": "Only aggregate conservative clock measured; individual active hours UNKNOWN"
+      }
+    },
+    {
+      "candidate_id": "EF02",
+      "claim_version": 1,
+      "mechanism_name": "LNG outage and contractual replacement-cost allocation",
+      "economic_event_or_constraint": "Freeport plant shutdown following the June 2022 fire.",
+      "financial_importance": "Replacement LNG and contractual sales commitments can create a large buyer loss even when an outage lowers domestic gas prices.",
+      "listed_company_exposure": "Osaka Gas is identified in its original financial presentation; Centrica was a pre-source alternative counterparty, not a replacement winner.",
+      "distinctive_predictor": {
+        "quantity": "Actually applicable, unredacted replacement/fee obligation under a dated contract",
+        "units": "contracted tonnes/year, fee currency/unit, required replacement tonnes and net buyer cost",
+        "granularity": "specific contract, buyer, outage and accounting segment"
+      },
+      "original_historical_source": "Osaka Gas/Daigas October 31, 2022 presentation: https://www.daigasgroup.com/en/ir/library/financial-results/__icsFiles/afieldfile/2022/11/14/20221031_3e.pdf ; Topics 2, Impact of Freeport LNG Project’s Plant Shut Down.",
+      "positive_measurement_control": "Need a quantitative governing force-majeure/fee clause tied to an independent outage. Indexed presentation supplies 2.32 mtpa offtake and a 109.5 billion yen expected full-year loss, not the governing allocation.",
+      "independent_economic_outcome": "Separately realised contract replacement/fee cost for the same buyer/outage. A management forecast is not that outcome.",
+      "unit_matching": "Procurement, wholesale-contract and equity-investment effects must remain separate. Group LNG loss cannot be assigned to an unobserved contract clause.",
+      "four_information_clocks": {
+        "economic_occurrence": "June 2022 fire/shutdown; exact event instant not independently acquired",
+        "first_public_availability": "Presentation dated October 31; path contains November 14, which does not certify release time",
+        "dataset_timestamp": "Fiscal-year forecast and historical offtake quantity in indexed presentation",
+        "research_retrieval": {
+          "first_ordinary_start_utc": null,
+          "last_ordinary_start_utc": null,
+          "browser_record": "search_03.txt",
+          "first_browser_dispatch_utc": "2026-10-21 07:05:28 UTC",
+          "exact_historical_public_time": "UNVERIFIED"
+        }
+      },
+      "expectation_revision_5_20_sessions": "Outage/restart updates can revise costs over weeks. The inspected issuer explanation already supplies the broad financial read-through; exact incremental allocation remains missing.",
+      "closest_substitute": "Original issuer explanation and S&P Global original reporting on forecast revisions. No closer paid contractual-allocation feed or academic method certified.",
+      "remaining_inference": "A non-obvious contract-specific liability asymmetry beyond spot LNG prices and disclosed management expectations, not a generic LNG shortage trade.",
+      "access_and_version_limits": "No contract body or realised-cost control downloaded; no inference that all Freeport contracts have identical force-majeure provisions.",
+      "cheapest_decisive_falsification": "One unredacted applicable clause plus separately measured realised buyer cost. Stop if only offtake volume and a forecast are available.",
+      "disposition": "HOLD",
+      "exact_evidence_gathered": [
+        "ORIGINAL_INDEXED_ONLY: offtake 2.32 million tonnes/year; projected 109.5 billion yen loss; separate procurement, wholesale and investment channels.",
+        "UNVERIFIED: applicable contractual fee/replacement quantities and realised same-contract outcome."
+      ],
+      "ordinary_receipt_indices": [],
+      "browser_evidence": [
+        "search_03.txt"
+      ],
+      "measurement_gate": {
+        "status": "NOT_PASSED",
+        "failed_or_unverified_requirements": [
+          "distinctive contractual obligation",
+          "independent realised cost",
+          "same-contract allocation"
+        ]
+      },
+      "economic_proposition_status": "UNTESTED",
+      "information_proposition_status": "UNVERIFIED",
+      "investment_proposition_status": "NOT_ESTABLISHED",
+      "private_competitive_use": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED",
+      "status_history": [
+        {
+          "at": "pre-source checkpoint ee70e1a",
+          "status": "INITIAL_FIXED_CLAIM"
+        },
+        {
+          "at": "2026-10-21T07:42:25.444625+00:00",
+          "status": "HOLD",
+          "reason": "See exact evidence and failed M requirements; no economic testing"
+        }
+      ],
+      "origin": "report_suggested_contract_class",
+      "related_prior_hypotheses": "Related contractual-response theme, distinct from F07 vessel detention/hire allocation; no old source retry",
+      "pre_source_control_frame": "Freeport June 2022 outage; Osaka Gas/Centrica as candidate counterparties, retain failures",
+      "research_expenditure": {
+        "ordinary_starts": 0,
+        "body_bytes": 0,
+        "browser_queries": "See overlapping exact search log; no invented per-family allocation",
+        "analyst_time": "Only aggregate conservative clock measured; individual active hours UNKNOWN"
+      }
+    },
+    {
+      "candidate_id": "EF03",
+      "claim_version": 1,
+      "mechanism_name": "IV-fluid shortage and genuinely available substitute output",
+      "economic_event_or_constraint": "Baxter North Cove damage after Hurricane Helene in September 2024.",
+      "financial_importance": "A substitute might sell additional IV solutions, while deferred procedures can reduce its other product sales; sign and net benefit cannot be assumed.",
+      "listed_company_exposure": "ICU Medical is a named listed potential substitute. Financially material presentation-specific exposure remains UNVERIFIED.",
+      "distinctive_predictor": {
+        "quantity": "Presentation-compatible output/inventory actually available for incremental delivery",
+        "units": "litres or bags by formulation/size per week, net of existing commitments",
+        "granularity": "manufacturing site, presentation, supplier and week"
+      },
+      "original_historical_source": "ICU Medical November 12, 2024 original 10-Q route: https://ir.icumed.com/static-files/30b544d4-3103-4d0f-8bf4-a98b727a2423 ; paragraph on Baxter North Cove.",
+      "positive_measurement_control": "Need a dated numerical incremental available-supply record. The original indexed filing says production is being increased and demand is expected to rise; neither is spare deliverable capacity.",
+      "independent_economic_outcome": "Same presentation/supplier additional delivered units or separately recorded product revenue, not total group revenue.",
+      "unit_matching": "Manufacturer approval, nameplate output and broad IV Solutions revenue cannot supply presentation-level available volume or a cohort outcome.",
+      "four_information_clocks": {
+        "economic_occurrence": "September 2024 plant interruption",
+        "first_public_availability": "November 12 filing route is identified; exact first public supply-availability time not established",
+        "dataset_timestamp": "Quarterly filing and qualitative forward statement, not an inventory timestamp",
+        "research_retrieval": {
+          "first_ordinary_start_utc": null,
+          "last_ordinary_start_utc": null,
+          "browser_record": "search_03.txt",
+          "first_browser_dispatch_utc": "2026-10-21 07:05:28 UTC",
+          "exact_historical_public_time": "UNVERIFIED"
+        }
+      },
+      "expectation_revision_5_20_sessions": "Days/weeks fit hospital ordering and production responses, but observed substitute availability and a distinct expectation-revision event are absent.",
+      "closest_substitute": "ICU Medical itself already discusses increasing production and mixed demand effects. AHA supply-chain bulletins show organised user attention. No specific paid available-capacity product or academic match verified.",
+      "remaining_inference": "Would require materially available compatible supply beyond the disclosed generic response. No generic shortage or approval-only fallback.",
+      "access_and_version_limits": "No FDA request, product corpus or facility sample acquired. This is not a reopening of the earlier FDA decision-denominator investigation.",
+      "cheapest_decisive_falsification": "One contemporaneous original presentation-specific incremental inventory/capacity commitment and same-product delivery outcome. Without it, stop.",
+      "disposition": "HOLD",
+      "exact_evidence_gathered": [
+        "ORIGINAL_INDEXED_ONLY: qualitative production increase, expected IV demand, possible deferred procedures.",
+        "UNVERIFIED: incremental uncommitted capacity, product-matched outcome and financial materiality."
+      ],
+      "ordinary_receipt_indices": [],
+      "browser_evidence": [
+        "search_03.txt"
+      ],
+      "measurement_gate": {
+        "status": "NOT_PASSED",
+        "failed_or_unverified_requirements": [
+          "distinctive available quantity",
+          "matched product outcome",
+          "material listed-product exposure"
+        ]
+      },
+      "economic_proposition_status": "UNTESTED",
+      "information_proposition_status": "UNVERIFIED",
+      "investment_proposition_status": "NOT_ESTABLISHED",
+      "private_competitive_use": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED",
+      "status_history": [
+        {
+          "at": "pre-source checkpoint ee70e1a",
+          "status": "INITIAL_FIXED_CLAIM"
+        },
+        {
+          "at": "2026-10-21T07:42:25.444625+00:00",
+          "status": "HOLD",
+          "reason": "See exact evidence and failed M requirements; no economic testing"
+        }
+      ],
+      "origin": "report_suggested",
+      "related_prior_hypotheses": "Related to F03 qualification and prior drug-input discovery; distinct shortage/capacity object, no FDA decision-denominator reopening",
+      "pre_source_control_frame": "Baxter North Cove 2024 interruption and ICU Medical substitution question",
+      "research_expenditure": {
+        "ordinary_starts": 0,
+        "body_bytes": 0,
+        "browser_queries": "See overlapping exact search log; no invented per-family allocation",
+        "analyst_time": "Only aggregate conservative clock measured; individual active hours UNKNOWN"
+      }
+    },
+    {
+      "candidate_id": "EF04",
+      "claim_version": 1,
+      "mechanism_name": "Progressive wagering-tax thresholds and retained operator margin",
+      "economic_event_or_constraint": "Illinois FY2025 operator tax brackets, checked through July and August 2024 completed-event reports.",
+      "financial_importance": "A rising statutory marginal burden can lower retained revenue without falling handle. Reported licensee tax is not automatically a listed brand’s cost or profit.",
+      "listed_company_exposure": "DraftKings/FanDuel proposed; current IGB page maps them to Casino Queen/Fairmount Park, respectively. Historical contractual economic incidence and material parent exposure UNVERIFIED.",
+      "distinctive_predictor": {
+        "quantity": "Licensee cumulative taxable adjusted gross revenue against dated annual tax brackets and the listed operator’s actual retained share",
+        "units": "USD per licensee/fiscal year; state tax USD per completed-event month; contract share",
+        "granularity": "legal licensee, brand/parent and fiscal period"
+      },
+      "original_historical_source": "IGB monthly report selector https://igbapps.illinois.gov/SportsReports_AEM.aspx ; POST Completed Events / Tax Summary Report, July 2024 and August 2024, CSV. Exact private request hashes retained.",
+      "positive_measurement_control": "Actual CSVs contain State AGR, State Tax, Cook County Tax, Expired Tickets and Total Payment. They establish reported licensee measurements, not the unobserved retained brand share or a fully reconciled cumulative bracket.",
+      "independent_economic_outcome": "Same-licensee reported state tax is observable; actual parent-retained margin and cash settlement are not separately established.",
+      "unit_matching": "July has 13 legal licensees and August has 14: 27 licensee-months, with separate in-person/online/total rows producing 81 deliveries. Offline replay corrected the initial draft assumption of 13 in each month. Never count the three presentations as independent observations or backfill current brand mappings.",
+      "four_information_clocks": {
+        "economic_occurrence": "Completed wagers during July/August 2024",
+        "first_public_availability": "Original page says reports due by end of following month; this is not a demonstrated public posting time",
+        "dataset_timestamp": "Generated report header October 21, 2026 02:12 AM, timezone unstated; historical month labels retained",
+        "research_retrieval": {
+          "first_ordinary_start_utc": "2026-10-21T07:07:09.723143+00:00",
+          "last_ordinary_start_utc": "2026-10-21T07:16:15.961728+00:00",
+          "browser_record": "",
+          "first_browser_dispatch_utc": null,
+          "exact_historical_public_time": "UNVERIFIED"
+        }
+      },
+      "expectation_revision_5_20_sessions": "A bracket crossing might change an earnings nowcast during a quarter; the tax policy is already familiar, actual public release may lag earnings, and no residual market adjustment established.",
+      "closest_substitute": "IGB already reports tax. Brown/Ohl, Tax Design, Efficiency, and Incidence in Sports Betting (original SSRN indexed abstract) is close tax-mechanism research; trade/issuer tax analysis is an obvious baseline. No audited commercial customer/use claim.",
+      "remaining_inference": "Would need a timely firm-retained margin increment beyond published tax totals and ordinary revenue nowcasting. Mechanical statutory arithmetic alone is insufficient.",
+      "access_and_version_limits": "Read-only public POSTs worked. Reports generated today do not certify historical vintages. Official linked legislative endpoint failed transport; no retry. Current authorised-operator table contains later brand names.",
+      "cheapest_decisive_falsification": "Resolve one dated licensee/brand economic-incidence contract, historical bracket and report vintage. Reject if current brand mapping plus state tax is the whole signal.",
+      "disposition": "HOLD",
+      "exact_evidence_gathered": [
+        "OBSERVED: two full CSVs and original index/selector pages.",
+        "July Casino Queen total State AGR USD 23,826,073.45; State Tax USD 4,765,214.69.",
+        "August same licensee USD 22,655,474.10; State Tax USD 5,322,827.04.",
+        "OBSERVED: report categories and current licensee/brand map.",
+        "UNVERIFIED: historical retained share, cumulative/adjustment reconciliation, first public time and independent parent margin."
+      ],
+      "ordinary_receipt_indices": [
+        1,
+        6,
+        9,
+        11,
+        13,
+        14,
+        17,
+        19
+      ],
+      "browser_evidence": [
+        "search_01.txt",
+        "search_02.txt",
+        "search_03.txt",
+        "search_04.txt"
+      ],
+      "measurement_gate": {
+        "status": "NOT_PASSED",
+        "failed_or_unverified_requirements": [
+          "fully scoped cumulative predictor",
+          "dated contractual incidence/parent bridge",
+          "independent retained-margin outcome"
+        ]
+      },
+      "economic_proposition_status": "UNTESTED",
+      "information_proposition_status": "UNVERIFIED",
+      "investment_proposition_status": "NOT_ESTABLISHED",
+      "private_competitive_use": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED",
+      "status_history": [
+        {
+          "at": "pre-source checkpoint ee70e1a",
+          "status": "INITIAL_FIXED_CLAIM"
+        },
+        {
+          "at": "2026-10-21T07:42:25.444625+00:00",
+          "status": "HOLD",
+          "reason": "See exact evidence and failed M requirements; no economic testing"
+        }
+      ],
+      "origin": "independently_developed",
+      "related_prior_hypotheses": "New gaming-tax claim, not healthcare reimbursement or F19 assessment offsets",
+      "pre_source_control_frame": "Illinois FY2025 progressive sports-wagering tax; DraftKings/FanDuel legal licensees subject to verification",
+      "research_expenditure": {
+        "ordinary_starts": 8,
+        "body_bytes": 338917,
+        "browser_queries": "See overlapping exact search log; no invented per-family allocation",
+        "analyst_time": "Only aggregate conservative clock measured; individual active hours UNKNOWN"
+      }
+    },
+    {
+      "candidate_id": "EF05",
+      "claim_version": 1,
+      "mechanism_name": "Auto-credit expiration and compliance demand",
+      "economic_event_or_constraint": "Manufacturer model-year 2022/2023 GHG banks, deficits and regulatory expiry.",
+      "financial_importance": "A bank losing usable credits can create demand for compliance credits; neither physical tonnes nor generic regulatory-credit revenue identifies a cash price or counterparty.",
+      "listed_company_exposure": "Tesla/Stellantis were potential counterparties only. No matched sale, buyer exposure or financially scoped transaction established.",
+      "distinctive_predictor": {
+        "quantity": "Usable credit bank by vintage and manufacturer deficit, with actual acquisition/use",
+        "units": "regulatory GHG credit mass and model-year vintage; exact reported unit requires original field validation",
+        "granularity": "manufacturer/regulatory fleet/model year"
+      },
+      "original_historical_source": "EPA 2024 Automotive Trends Report, section 5, Figure 5.14/Table 5.17: https://www.epa.gov/system/files/documents/2024-11/420r24022.pdf ; original indexed NEPIS text https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P101CUU6.txt .",
+      "positive_measurement_control": "Need one actual manufacturer vintage bank and later compatible acquired/used quantity. Indexed EPA text says detailed deficit-offset calculations are not fully published because some trade information is confidential.",
+      "independent_economic_outcome": "Actual net acquisition/use for the same regulatory manufacturer, not Tesla group credit-sales dollars.",
+      "unit_matching": "A balance change combines generated credits, use, purchases/sales, expiry and forfeiture. It cannot be labelled purchases by subtraction.",
+      "four_information_clocks": {
+        "economic_occurrence": "Model-year 2022/2023 production/compliance",
+        "first_public_availability": "Indexed EPA release dated November 25, 2024; no prior availability certified",
+        "dataset_timestamp": "2024 publication about older model years; current reconstruction is distinct",
+        "research_retrieval": {
+          "first_ordinary_start_utc": "2026-10-21T07:07:14.674090+00:00",
+          "last_ordinary_start_utc": "2026-10-21T07:07:14.674090+00:00",
+          "browser_record": "search_01.txt",
+          "first_browser_dispatch_utc": "2026-10-21 07:04:47 UTC",
+          "exact_historical_public_time": "UNVERIFIED"
+        }
+      },
+      "expectation_revision_5_20_sessions": "A new usable-bank disclosure could affect expectations, but lagged annual data and private trade details weaken the proposed short-horizon demand surprise.",
+      "closest_substitute": "EPA already interprets bank/deficit/expiry. Manufacturer compliance specialists are the natural informed audience; no exact academic or paid transaction forecast independently verified.",
+      "remaining_inference": "A material incremental buyer-demand inference beyond the official compliance report and expected fleet mix, conditional on observable transactions.",
+      "access_and_version_limits": "Exact original PDF returned 404; no resubmission or mirror recovery. Indexed official text supplies a limitation, not an acquired manufacturer row or a universal claim about EPA access.",
+      "cheapest_decisive_falsification": "One disclosed actual manufacturer acquisition/use row, separated from credit generation and expiry. Without it, do not infer net demand or a seller’s revenue.",
+      "disposition": "HOLD",
+      "exact_evidence_gathered": [
+        "OBSERVED original request: HTTP 404, 6,518-byte error body, zero manufacturer observations.",
+        "ORIGINAL_INDEXED_ONLY: vintage/expiry definitions and confidentiality warning.",
+        "UNVERIFIED: exact matched bank/acquisition pair and material counterparty financial bridge."
+      ],
+      "ordinary_receipt_indices": [
+        5
+      ],
+      "browser_evidence": [
+        "search_01.txt"
+      ],
+      "measurement_gate": {
+        "status": "NOT_PASSED",
+        "failed_or_unverified_requirements": [
+          "original predictor field control",
+          "independent transaction/use outcome",
+          "material counterparty bridge"
+        ]
+      },
+      "economic_proposition_status": "UNTESTED",
+      "information_proposition_status": "UNVERIFIED",
+      "investment_proposition_status": "NOT_ESTABLISHED",
+      "private_competitive_use": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED",
+      "status_history": [
+        {
+          "at": "pre-source checkpoint ee70e1a",
+          "status": "INITIAL_FIXED_CLAIM"
+        },
+        {
+          "at": "2026-10-21T07:42:25.444625+00:00",
+          "status": "HOLD",
+          "reason": "See exact evidence and failed M requirements; no economic testing"
+        }
+      ],
+      "origin": "independently_developed",
+      "related_prior_hypotheses": "Different legal credit market and buyer quantity from SH03 RNG; no SH03 source continuation",
+      "pre_source_control_frame": "EPA model-year 2022/2023 manufacturer compliance records; Tesla/Stellantis exposure must be dated and not assigned from group credit revenue",
+      "research_expenditure": {
+        "ordinary_starts": 1,
+        "body_bytes": 6518,
+        "browser_queries": "See overlapping exact search log; no invented per-family allocation",
+        "analyst_time": "Only aggregate conservative clock measured; individual active hours UNKNOWN"
+      }
+    },
+    {
+      "candidate_id": "EF06",
+      "claim_version": 1,
+      "mechanism_name": "Citizens takeout conversion and retained-premium exposure",
+      "economic_event_or_constraint": "2023 Florida Citizens policy takeouts by HCI insurers, rather than regulatory approval ceilings.",
+      "financial_importance": "Actual new business can be large relative to a focused insurer. Gross written, annualised written, earned, ceded and net retained premium are different amounts.",
+      "listed_company_exposure": "HCI (NYSE:HCI), HCPCI and TypTap identified in the dated annual-filing passages. Gross materiality observed; carrier/cohort retained earnings and risk-adjusted margin unverified.",
+      "distinctive_predictor": {
+        "quantity": "Actually accepted and retained cohort by legal insurer AND premium after relevant choices/cancellations, not an approved maximum",
+        "units": "policies and premium USD per legal insurer/assumption cohort; earning period and gross/net basis explicit",
+        "granularity": "carrier x assumption cohort x reporting period"
+      },
+      "original_historical_source": "Citizens 2023 statistics, data as of December 19: source 7, exact link from source 2. HCI 2023 annual Note 1 and Note 13 retained complete passages within source 10’s incomplete prefix; complete March 7, 2024 earnings release source 3.",
+      "positive_measurement_control": "Positive fields exist: Citizens reports HC 53,456 and TypTap 6,717 policies; HCI reports approximately 60,100 and USD 226.4m annualised gross written, USD 143.087m assumed written and USD 23m gross earned. The per-carrier retained-premium predictor and its cancellation/reinsurance bridge are not observed.",
+      "independent_economic_outcome": "The 2023 Citizens gross earned component is separately reported. No exact same-carrier/cohort net retained or risk-adjusted outcome is established.",
+      "unit_matching": "Group annual/Q4 gross objects can be described without allocating them. Do not assign group USD 143.087m/23m to individual carrier or month. Citizens HC dates are November 21 and TypTap December 19; issuer Note 1 describes December and approximate totals. Policy-level/date reconciliation remains unverified.",
+      "four_information_clocks": {
+        "economic_occurrence": "HC November 21 and TypTap December 19, 2023 in agency table; issuer describes December assumptions",
+        "first_public_availability": "First publication UNKNOWN; URL cache timestamp and HTTP Last-Modified are not publication receipts. SEC accession/issuer-release routes are identified",
+        "dataset_timestamp": "Citizens data as of December 19, 2023; issuer year ended December 31; March 7 release; source 10 Last-Modified March 8, 2024 is not public time",
+        "research_retrieval": {
+          "first_ordinary_start_utc": "2026-10-21T07:07:10.773315+00:00",
+          "last_ordinary_start_utc": "2026-10-21T07:14:18.066754+00:00",
+          "browser_record": "",
+          "first_browser_dispatch_utc": null,
+          "exact_historical_public_time": "UNVERIFIED"
+        }
+      },
+      "expectation_revision_5_20_sessions": "Takeout completion could revise a quarterly premium outlook over days/weeks. Actual cohorts and the broad benefit are already discussed by the issuer; no earlier retained-margin input or unexplained market adjustment demonstrated.",
+      "closest_substitute": "HCI’s own assumption/earnings commentary and Citizens’ statistics/board process. The inspected original indexed agency material also discusses the 20% offer rule. No exact paid model or academic match was verified; private use remains UNKNOWN.",
+      "remaining_inference": "Would need retention/risk/reinsurance information beyond approved and assumed book size, or a demonstrably earlier public conversion measure not already interpreted by the issuer.",
+      "access_and_version_limits": "Full 2023 statistics and earnings release acquired. Annual filing lacked length and stopped at 6 MiB+1, explicitly incomplete; relevant complete passages can support scoped facts, not a full filing audit. Guessed ir host failed; exact publisher-linked www/investors hosts worked; archive shell did not establish a contemporaneous 2023 release.",
+      "cheapest_decisive_falsification": "One dated carrier/cohort premium-retention and earning bridge, plus evidence it adds to contemporaneous issuer interpretation. Do not rescue with the gross-only relationship; record that as a separate version.",
+      "disposition": "HOLD",
+      "exact_evidence_gathered": [
+        "OBSERVED: one original Citizens year table, visually checked; two selected carriers, four policy-type entries. HC 39,224+14,232=53,456; TypTap 5,525+1,192=6,717; sum 60,173.",
+        "OBSERVED: complete release USD 23m Citizens gross earned within USD 215.2m Q4 total.",
+        "OBSERVED IN LABELLED PREFIX: Note 1 approximate 60,100, annualised gross USD 226.4m; Note 13 assumed written USD 143.087m, amounts in thousands.",
+        "UNVERIFIED: per-carrier premium/retention, net cohort outcome, exact November/December reconciliation and public informational lead."
+      ],
+      "ordinary_receipt_indices": [
+        2,
+        3,
+        7,
+        10,
+        12,
+        15,
+        16
+      ],
+      "browser_evidence": [
+        "search_01.txt",
+        "search_02.txt",
+        "search_04.txt",
+        "search_05.txt"
+      ],
+      "measurement_gate": {
+        "status": "NOT_PASSED",
+        "failed_or_unverified_requirements": [
+          "original per-carrier retained-premium predictor",
+          "same-granularity retained outcome",
+          "cancellation/reinsurance/date reconciliation"
+        ]
+      },
+      "economic_proposition_status": "UNTESTED",
+      "information_proposition_status": "UNVERIFIED",
+      "investment_proposition_status": "NOT_ESTABLISHED",
+      "private_competitive_use": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED",
+      "status_history": [
+        {
+          "at": "pre-source checkpoint ee70e1a",
+          "status": "INITIAL_FIXED_CLAIM"
+        },
+        {
+          "at": "2026-10-21T07:42:25.444625+00:00",
+          "status": "HOLD",
+          "reason": "See exact evidence and failed M requirements; no economic testing"
+        }
+      ],
+      "origin": "independently_developed",
+      "related_prior_hypotheses": "New insurance origination/cohort mechanism, distinct from F19 insolvency tax-credit utilisation; F19 closed",
+      "pre_source_control_frame": "Florida Citizens 2023/2024 depopulation and HCI subsidiaries; not selected from equity returns",
+      "research_expenditure": {
+        "ordinary_starts": 7,
+        "body_bytes": 7584896,
+        "browser_queries": "See overlapping exact search log; no invented per-family allocation",
+        "analyst_time": "Only aggregate conservative clock measured; individual active hours UNKNOWN"
+      }
+    },
+    {
+      "candidate_id": "EF07",
+      "claim_version": 1,
+      "mechanism_name": "Broadband deployment obligations and subsidy recovery",
+      "economic_event_or_constraint": "Potential missed CAF II buildout conditions and support recovery, distinct from the programme’s scheduled end.",
+      "financial_importance": "Conditional public support can change from revenue into a liability; gross historical support is not the amount repayable.",
+      "listed_company_exposure": "Lumen/Frontier are candidate listed recipients. No specific default, recoverable amount or applicable security/cure case verified; no default allegation is made.",
+      "distinctive_predictor": {
+        "quantity": "Recipient/geography-specific unmet obligation and recoverable support after cure/security rules",
+        "units": "required versus completed locations, deadline and recoverable USD",
+        "granularity": "legal recipient x state/award cohort x milestone"
+      },
+      "original_historical_source": "Lumen FY2024 original filing route https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm ; government-assistance/CAF II discussion.",
+      "positive_measurement_control": "Need an actual missed milestone and quantified recovery. Indexed filing reports approximately USD 500m annual 2015-2021 support, 33-state requirements and USD 59m deferred revenue recognised in Q1 2022, not a default/recovery amount.",
+      "independent_economic_outcome": "Same recipient/state/cohort recovery payment or independently recorded liability; UNVERIFIED.",
+      "unit_matching": "Do not allocate 33-state support or a group accrual to an unobserved local failure. Recognition of deferred revenue is not recovery paid.",
+      "four_information_clocks": {
+        "economic_occurrence": "Programme ended December 31, 2021; Q1 2022 deferred revenue recognition; no verified default date",
+        "first_public_availability": "Exact filing/public version not acquired; accession is a potential route",
+        "dataset_timestamp": "FY2024 filing about prior programme years, not a contemporaneous milestone feed",
+        "research_retrieval": {
+          "first_ordinary_start_utc": null,
+          "last_ordinary_start_utc": null,
+          "browser_record": "search_02.txt",
+          "first_browser_dispatch_utc": "2026-10-21 07:05:16 UTC",
+          "exact_historical_public_time": "UNVERIFIED"
+        }
+      },
+      "expectation_revision_5_20_sessions": "A new recipient-specific recovery decision might reprice liabilities promptly; no such quantified event or public lead established in the chosen example.",
+      "closest_substitute": "FCC/USAC compliance oversight and the issuer’s own risk disclosures already address recovery risk. No specific paid/academic incremental model verified before the measurement failure.",
+      "remaining_inference": "Would need an observable new recovery exposure beyond scheduled subsidy cessation and generic compliance risk.",
+      "access_and_version_limits": "Search-only; no contract, FCC default order, deployment row, authenticated system or recipient corpus requested. No procurement pilot reopened.",
+      "cheapest_decisive_falsification": "One original recipient-specific quantified recovery/default determination and applicable cure/security conditions; otherwise stop.",
+      "disposition": "HOLD",
+      "exact_evidence_gathered": [
+        "ORIGINAL_INDEXED_ONLY: programme scale, duration, geography and deferred recognition.",
+        "UNVERIFIED: missed milestone, net recovery quantity, independent outcome and financial materiality of the specific claim."
+      ],
+      "ordinary_receipt_indices": [],
+      "browser_evidence": [
+        "search_02.txt"
+      ],
+      "measurement_gate": {
+        "status": "NOT_PASSED",
+        "failed_or_unverified_requirements": [
+          "distinctive default/recovery object",
+          "same-cohort outcome",
+          "specific material listed exposure"
+        ]
+      },
+      "economic_proposition_status": "UNTESTED",
+      "information_proposition_status": "UNVERIFIED",
+      "investment_proposition_status": "NOT_ESTABLISHED",
+      "private_competitive_use": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED",
+      "status_history": [
+        {
+          "at": "pre-source checkpoint ee70e1a",
+          "status": "INITIAL_FIXED_CLAIM"
+        },
+        {
+          "at": "2026-10-21T07:42:25.444625+00:00",
+          "status": "HOLD",
+          "reason": "See exact evidence and failed M requirements; no economic testing"
+        }
+      ],
+      "origin": "independently_developed",
+      "related_prior_hypotheses": "New conditional subsidy recovery; no federal procurement award-denominator or old source reopening",
+      "pre_source_control_frame": "Connect America Fund II/Lumen or Frontier disclosed milestone/default case, subject to original verification",
+      "research_expenditure": {
+        "ordinary_starts": 0,
+        "body_bytes": 0,
+        "browser_queries": "See overlapping exact search log; no invented per-family allocation",
+        "analyst_time": "Only aggregate conservative clock measured; individual active hours UNKNOWN"
+      }
+    },
+    {
+      "candidate_id": "EF08",
+      "claim_version": 1,
+      "mechanism_name": "Pollution incidents and regulated incentive headroom",
+      "economic_event_or_constraint": "PR19 utility performance relative to company-specific incentive rules, not generic pollution reputation.",
+      "financial_importance": "An incident could affect allowed revenue, but overlapping rewards, caps, deferrals, restatements and price bases can offset the headline.",
+      "listed_company_exposure": "United Utilities Water and potential listed parent United Utilities; Severn Trent was an alternative frame, not a replacement sample. No pollution-component parent materiality verified.",
+      "distinctive_predictor": {
+        "quantity": "Confirmed pollution performance against the dated company rate/cap/deadband",
+        "units": "Exact PR19 pollution metric denominator and GBP incentive in specified price-year basis; original historical definition UNVERIFIED",
+        "granularity": "company x performance commitment x performance year"
+      },
+      "original_historical_source": "Ofwat November 2023 United Utilities 2022-23 final determination (source 4), Table 2.2; UU August 2024 reconciliation commentary (source 8), Appendix A row PR19UUW_C01-WWN.",
+      "positive_measurement_control": "Original row reports 16.29 for 2022/23 and 27.93 for 2023/24. Exact old-period denominator, applicable penalty schedule and separate pollution incentive output were not acquired. Current PR24 definition cannot supply the historical rule.",
+      "independent_economic_outcome": "Separately determined same-company/year pollution ODI in compatible real-price GBP, not total wastewater or total company ODI.",
+      "unit_matching": "Ofwat total +GBP 25.229m in 2017-18 FYA CPIH prices is across price controls. It cannot be assigned to pollution. Source 8 is a later reconciliation with restatements, not an original 2023 observation vintage.",
+      "four_information_clocks": {
+        "economic_occurrence": "Performance years 2022/23 and 2023/24; metric calendar alignment requires historical definition",
+        "first_public_availability": "Source 4 says APR July 2023, draft September and final November 2023; exact release instants not certified",
+        "dataset_timestamp": "2023 determination adjusts 2024/25 bills; August 2024 reconciliation includes retrospective data",
+        "research_retrieval": {
+          "first_ordinary_start_utc": "2026-10-21T07:07:13.623798+00:00",
+          "last_ordinary_start_utc": "2026-10-21T07:14:20.167107+00:00",
+          "browser_record": "",
+          "first_browser_dispatch_utc": null,
+          "exact_historical_public_time": "UNVERIFIED"
+        }
+      },
+      "expectation_revision_5_20_sessions": "Known annual performance and a later routine adjustment have no demonstrated 5-20-session surprise. An unforeseen, material restatement could be a different claim, not a rescue of this one.",
+      "closest_substitute": "Ofwat and the company already publish performance/payment interpretations and models. No exact commercial/academic incident-headroom product verified; this uncertainty adds no advantage credit.",
+      "remaining_inference": "Would require a timely pollution-specific monetary increment beyond company disclosure and the published reconciliation model.",
+      "access_and_version_limits": "Two complete PDFs acquired. Linked model/index route returned 403 and stopped; no alternate model recovery. OGL applies to Ofwat document subject to stated third-party exceptions; no blanket issuer-data redistribution claim.",
+      "cheapest_decisive_falsification": "Require original historical metric definition/rate and independently recorded pollution-component payment. Reject aggregate ODI substitution or a decision window entirely after issuer interpretation.",
+      "disposition": "HOLD",
+      "exact_evidence_gathered": [
+        "OBSERVED: Ofwat overall GBP +25.229m real-price adjustment, no change draft/final, applied to 2024/25 bills.",
+        "OBSERVED: issuer row PR19UUW_C01-WWN, values 16.29 and 27.93.",
+        "UNVERIFIED: dated metric units/denominator, per-incident incentive headroom, separate pollution payment and material parent increment.",
+        "HTTP 403 on exact linked model index preserved; route not retried."
+      ],
+      "ordinary_receipt_indices": [
+        4,
+        8,
+        18
+      ],
+      "browser_evidence": [
+        "search_01.txt",
+        "search_02.txt",
+        "search_04.txt"
+      ],
+      "measurement_gate": {
+        "status": "NOT_PASSED",
+        "failed_or_unverified_requirements": [
+          "historical predictor definition/schedule",
+          "independent pollution-specific outcome",
+          "component materiality and short-horizon event"
+        ]
+      },
+      "economic_proposition_status": "UNTESTED",
+      "information_proposition_status": "UNVERIFIED",
+      "investment_proposition_status": "NOT_ESTABLISHED",
+      "private_competitive_use": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED",
+      "status_history": [
+        {
+          "at": "pre-source checkpoint ee70e1a",
+          "status": "INITIAL_FIXED_CLAIM"
+        },
+        {
+          "at": "2026-10-21T07:42:25.444625+00:00",
+          "status": "HOLD",
+          "reason": "See exact evidence and failed M requirements; no economic testing"
+        }
+      ],
+      "origin": "independently_developed",
+      "related_prior_hypotheses": "Different explicit regulated payment consequence from old EPA production inference; no EPA source reopening",
+      "pre_source_control_frame": "UK PR19 pollution performance 2022/23 or 2023/24 and United Utilities/Severn Trent",
+      "research_expenditure": {
+        "ordinary_starts": 3,
+        "body_bytes": 1967163,
+        "browser_queries": "See overlapping exact search log; no invented per-family allocation",
+        "analyst_time": "Only aggregate conservative clock measured; individual active hours UNKNOWN"
+      }
+    }
+  ],
+  "post_observation_reformulation": {
+    "candidate_id": "EF06",
+    "claim_version": 2,
+    "derived_after_observation_at_utc": "2026-10-21T07:42:25.444625+00:00",
+    "independent_family": false,
+    "related_original": "EF06 v1",
+    "mechanism_name": "Restricted gross-book measurement benchmark, not retained-margin forecast",
+    "reformulation": "Changes granularity to HCI group/new Citizens business in 2023 and changes financial basis to gross. It cannot stand in for v1’s per-carrier retained-premium inference.",
+    "predictor": "Issuer-reported approximate group assumed book and annualised gross premium, corroborated at group-year scope by Citizens carrier counts.",
+    "outcome": "Separately reported USD 23m Citizens gross earned premium in Q4/year 2023, not net profit or causal gain.",
+    "evidence": [
+      {
+        "index": 3,
+        "url": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028021/hci-ex99_1.htm",
+        "sha256": "f68089cd7e28c90911213dc2a9d8de071fa0555d268273bf7c91508dc9c36748",
+        "complete": true,
+        "status": 200
+      },
+      {
+        "index": 7,
+        "url": "https://www.citizensfla.com/documents/20702/29465645/2023+Stats.pdf/29ae7065-eb6e-28b8-5841-21e1dbba3049?t=1704899022388",
+        "sha256": "fc39950acee670d29b0e246d19c4a1b5f7ca1347c6a9c4703b946a1103375c51",
+        "complete": true,
+        "status": 200
+      },
+      {
+        "index": 10,
+        "url": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028620/hci-20231231.htm",
+        "sha256": "0310d3f0cab53c34b16ae83aa065c78ba91bcb551bc003865ebd0d08653a5840",
+        "complete": false,
+        "status": 200
+      }
+    ],
+    "measurement_gate": {
+      "status": "PASSED",
+      "scope": "RESTRICTED_GROSS_GROUP_OBJECT",
+      "requirements": {
+        "distinctive_quantity": "Actual assumed book versus approval is observed, though not novel",
+        "units": "Policies; annualised gross written USD; actual gross written and earned USD kept separate",
+        "matched_outcome": "HCI group new Citizens business during Q4/2023; no carrier/month allocation",
+        "no_invented_allocation": "Use group reported quantities and source precision only; no derived earned-premium forecast",
+        "public_time_route": "Dated SEC accession/issuer release and agency original exist; exact first-public bounds remain UNKNOWN",
+        "material_exposure": "HCI listed issuer; USD 23m Citizens component versus USD 215.2m Q4 total gross earned"
+      }
+    },
+    "limitations": [
+      "Not a policy-level equality certificate: agency total 60,173 versus management approximately 60,100, and November/December descriptions differ.",
+      "The original annual filing remains incomplete; identified complete Note 1/13 passages and their units are retained, not a full-note/filing audit.",
+      "No claim that approval ceiling predicts actual intake, that annualised premium is earned revenue, or that gross premium is retained margin.",
+      "This is a purposive post-observation reformulation, not a predeclared untouched signal or a successful v1 measurement."
+    ],
+    "horizon_and_competition": "No differentiated short-window inference established; issuer already explains acquired book and premium contribution.",
+    "final_disposition": "REJECT",
+    "disposition_reason": "No differentiated investment inference; no Level A design or acquisition",
+    "economic_proposition_status": "UNTESTED",
+    "information_proposition_status": "UNVERIFIED",
+    "investment_proposition_status": "NOT_ESTABLISHED",
+    "status_history": [
+      {
+        "at": "2026-10-21T07:42:25.444625+00:00",
+        "status": "EXPLICIT_POST_OBSERVATION_REFORMULATION"
+      },
+      {
+        "at": "2026-10-21T07:42:25.444625+00:00",
+        "status": "M_PASSED_RESTRICTED_GROSS_OBJECT"
+      },
+      {
+        "at": "2026-10-21T07:42:25.444625+00:00",
+        "status": "REJECT_FURTHER_INVESTMENT_PRIORITY",
+        "reason": "Measurable descriptive object, no supported differentiated inference; do not count as original-family success"
+      }
+    ]
+  },
+  "acquisition": {
+    "status": "CLOSED",
+    "closed_at_utc": "2026-10-21T07:16:37.378127+00:00",
+    "ordinary_starts": 19,
+    "browser_queries": 17,
+    "combined_reservations": 36,
+    "body_bytes": 9897494,
+    "no_next_phase_authority": true,
+    "initial_allocation": {
+      "searches": 16,
+      "ordinary": 20
+    },
+    "recorded_reallocation": {
+      "recorded_utc": "2026-10-21 07:15:56 UTC",
+      "reason": "Use one remaining HTTP reservation for an exact original-source locator query after issuer archive rendered a feed shell; avoids guessed URL and broad filing refetch",
+      "original_allocation": {
+        "search_queries": 16,
+        "ordinary_starts": 20
+      },
+      "revised_allocation": {
+        "search_queries": 17,
+        "ordinary_starts": 19
+      },
+      "aggregate_maximum": 36,
+      "claim_change": false,
+      "owner_ceilings_unchanged": true
+    },
+    "original_body_MiB": 9.438985824584961,
+    "statuses": {
+      "HTTP200_complete": 14,
+      "HTTP200_incomplete_prefix": 1,
+      "HTTP404_complete_error": 1,
+      "HTTP403_complete_error": 1,
+      "transport_errors": 2
+    },
+    "metadata_only_size_stops": 0,
+    "incomplete_prefix_bytes": 6291457,
+    "paid_spending_initiated": false,
+    "account_invoice_or_debit": "UNKNOWN",
+    "browser_service_cost": "UNKNOWN",
+    "browser_wire_starts_retries_and_bytes": "UNKNOWN",
+    "ordinary_minimum_spacing_seconds": 1.050073,
+    "rights": "Public document/internal verification only; Ofwat original OGL with exceptions; no blanket raw redistribution/API/dataset licence certified. No credential, account, paid service or restricted-source access.",
+    "source_reads_are_not_economic_tests": true
+  },
+  "original_source_receipts": [
+    {
+      "index": 1,
+      "candidate": "EF04",
+      "url": "https://igb.illinois.gov/",
+      "purpose": "Locate exact original monthly sports-wagering report and tax schedule; do not assume a guessed report path",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:07:09.723143+00:00",
+      "finished_at_utc": "2026-10-21T07:07:10.435881+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html;charset=utf-8",
+        "last-modified": "Wed, 21 Oct 2026 04:50:19 GMT",
+        "date": "Wed, 21 Oct 2026 07:07:27 GMT"
+      },
+      "body_bytes": 73674,
+      "body_sha256": "bb0df929fe3d2c5d0807897377681e1a7e15bfe1693b9e738721c5a66ef41956",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 2,
+      "candidate": "EF06",
+      "url": "https://www.citizensfla.com/en/depopulation-resources",
+      "purpose": "Locate exact historical 2023 takeout statistics and fields before selecting a small original",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:07:10.773315+00:00",
+      "finished_at_utc": "2026-10-21T07:07:12.447939+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html;charset=UTF-8"
+      },
+      "body_bytes": 339180,
+      "body_sha256": "e56d8c46637ef542c270c01c84d15cd545418cc559b26b58a2958dd3e7329478",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 3,
+      "candidate": "EF06",
+      "url": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028021/hci-ex99_1.htm",
+      "purpose": "Check actual Citizens cohort earned premium and listed-parent scale, distinct from approved ceiling",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:07:12.573621+00:00",
+      "finished_at_utc": "2026-10-21T07:07:13.175788+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "last-modified": "Thu, 07 Mar 2024 21:30:16 GMT",
+        "date": "Wed, 21 Oct 2026 07:07:30 GMT"
+      },
+      "body_bytes": 756015,
+      "body_sha256": "f68089cd7e28c90911213dc2a9d8de071fa0555d268273bf7c91508dc9c36748",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 4,
+      "candidate": "EF08",
+      "url": "https://www.ofwat.gov.uk/wp-content/uploads/2023/09/Final-determination-of-United-Utilities-in-period-outcome-delivery-incentives-for-2022-23.pdf",
+      "purpose": "Inspect exact pollution performance and separately determined payment on same regulated utility/year",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:07:13.623798+00:00",
+      "finished_at_utc": "2026-10-21T07:07:14.124630+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 07:07:31 GMT",
+        "content-type": "application/pdf",
+        "content-length": "821453",
+        "last-modified": "Mon, 13 Nov 2023 16:37:42 GMT"
+      },
+      "body_bytes": 821453,
+      "body_sha256": "9c7e43f1d13df9d752b29a45e2170892faf46b7dd4102b35d0ead88bf054f04d",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 5,
+      "candidate": "EF05",
+      "url": "https://www.epa.gov/system/files/documents/2024-11/420r24022.pdf",
+      "purpose": "Verify actual manufacturer vintage banks and availability of separate acquisition/use quantities; index declares about 3 MB",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:07:14.674090+00:00",
+      "finished_at_utc": "2026-10-21T07:07:15.521301+00:00",
+      "status": 404,
+      "headers": {
+        "content-type": "text/html",
+        "content-length": "6518",
+        "date": "Wed, 21 Oct 2026 07:07:33 GMT",
+        "etag": "\"6a7f3f7d-1976\""
+      },
+      "body_bytes": 6518,
+      "body_sha256": "199b876d0191032a3361571d3ee1dcf9ff966d7e67f0d3dee13de3bc01fd6e75",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 6,
+      "candidate": "EF04",
+      "url": "https://igb.illinois.gov/sports-wagering/sports-reports.html",
+      "purpose": "Follow original homepage link to locate one historical monthly operator revenue/tax table",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:08:06.243710+00:00",
+      "finished_at_utc": "2026-10-21T07:08:06.524300+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html;charset=utf-8",
+        "last-modified": "Wed, 21 Oct 2026 04:32:46 GMT",
+        "date": "Wed, 21 Oct 2026 07:08:24 GMT"
+      },
+      "body_bytes": 76001,
+      "body_sha256": "e527334fbeacd539e456e3c06276f3521a4efd1baefec690e60d3ba4d76f30c2",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 7,
+      "candidate": "EF06",
+      "url": "https://www.citizensfla.com/documents/20702/29465645/2023+Stats.pdf/29ae7065-eb6e-28b8-5841-21e1dbba3049?t=1704899022388",
+      "purpose": "Inspect official 2023 actual takeout by insurer and premium/retention fields; exact link from archived original index",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:08:07.294053+00:00",
+      "finished_at_utc": "2026-10-21T07:08:08.152191+00:00",
+      "status": 200,
+      "headers": {
+        "last-modified": "Wed, 10 Jan 2024 15:03:42 GMT",
+        "content-type": "application/pdf",
+        "content-length": "76154"
+      },
+      "body_bytes": 76154,
+      "body_sha256": "fc39950acee670d29b0e246d19c4a1b5f7ca1347c6a9c4703b946a1103375c51",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 8,
+      "candidate": "EF08",
+      "url": "https://www.unitedutilities.com/globalassets/z_corporate-site/pr24/august-2024/data-and-models/UUWR_106_Reconciliation-commentary.pdf",
+      "purpose": "Locate original pollution performance and financial ODI entries; retain price basis and calendar/reporting-year distinction",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:08:08.344299+00:00",
+      "finished_at_utc": "2026-10-21T07:08:09.701904+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 07:08:27 GMT",
+        "content-type": "application/pdf",
+        "content-length": "662657",
+        "etag": "\"1DAF8FEF49A8580\"",
+        "last-modified": "Wed, 28 Aug 2024 04:01:27 GMT"
+      },
+      "body_bytes": 662657,
+      "body_sha256": "09b4459053666791fc0ce87b3ab89a8355ceaddcd0a84e1a14b8ab67d95a4a81",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 9,
+      "candidate": "EF04",
+      "url": "https://igbapps.illinois.gov/SportsReports_AEM.aspx",
+      "purpose": "Inspect explicitly embedded official report selector; no form submission or panel acquisition",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:09:03.399787+00:00",
+      "finished_at_utc": "2026-10-21T07:09:04.267070+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "date": "Wed, 21 Oct 2026 07:09:21 GMT",
+        "content-length": "12889"
+      },
+      "body_bytes": 12889,
+      "body_sha256": "2fa0f4f074b6424020333bb3204f05362e540deffd30a2a06af6bfe52835d23c",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 10,
+      "candidate": "EF06",
+      "url": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028620/hci-20231231.htm",
+      "purpose": "Read same-cohort Citizens assumption accounting and dated legal-subsidiary bridge, avoiding invented premium allocation",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:09:04.450210+00:00",
+      "finished_at_utc": "2026-10-21T07:09:05.400320+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "last-modified": "Fri, 08 Mar 2024 21:06:05 GMT",
+        "date": "Wed, 21 Oct 2026 07:09:22 GMT"
+      },
+      "body_bytes": 6291457,
+      "body_sha256": "0310d3f0cab53c34b16ae83aa065c78ba91bcb551bc003865ebd0d08653a5840",
+      "complete": false,
+      "size_stop": "INCOMPLETE_PREFIX_SIZE_STOP",
+      "error_type": null
+    },
+    {
+      "index": 11,
+      "candidate": "EF04",
+      "url": "https://igbapps.illinois.gov/SportsReports_AEM.aspx",
+      "purpose": "One read-only public report request: completed-event tax summary, July 2024 only; POST counted separately from selector GET",
+      "method": "POST",
+      "request_body_sha256": "b2f64d30ca568d53f83a91f1992a6488007eb1be43fac80676fc3702f3c10f9f",
+      "started_at_utc": "2026-10-21T07:12:36.429367+00:00",
+      "finished_at_utc": "2026-10-21T07:12:36.775309+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/csv",
+        "content-length": "5044",
+        "date": "Wed, 21 Oct 2026 07:12:54 GMT"
+      },
+      "body_bytes": 5044,
+      "body_sha256": "8addddeebc21b1451fb434c93caca8dadc7c6ff8f7c2fdd215dd7c63eb812b6e",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 12,
+      "candidate": "EF06",
+      "url": "https://ir.hcigroup.com/",
+      "purpose": "Locate original contemporaneous issuer assumption announcements for competition and cohort-clock check, not a second annual filing request",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:12:37.479636+00:00",
+      "finished_at_utc": "2026-10-21T07:12:37.561097+00:00",
+      "status": null,
+      "headers": null,
+      "body_bytes": 0,
+      "body_sha256": null,
+      "complete": null,
+      "size_stop": null,
+      "error_type": "URLError"
+    },
+    {
+      "index": 13,
+      "candidate": "EF04",
+      "url": "https://igbapps.illinois.gov/SportsReports_AEM.aspx",
+      "purpose": "Second successive fiscal month only, August 2024, completed-event tax summary; distinct read-only query and counted new start",
+      "method": "POST",
+      "request_body_sha256": "21c9bf2edf35c9bc3415244f12fbbe4b61031722da44eb0a88cfd767fea4788e",
+      "started_at_utc": "2026-10-21T07:13:45.022586+00:00",
+      "finished_at_utc": "2026-10-21T07:13:45.266449+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/csv",
+        "content-length": "5353",
+        "date": "Wed, 21 Oct 2026 07:14:02 GMT"
+      },
+      "body_bytes": 5353,
+      "body_sha256": "48d1a28ea34a5c97655e093d9f2ee4e1dbd280146dadfe3d37f7395273c0242b",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 14,
+      "candidate": "EF04",
+      "url": "https://igb.illinois.gov/sports-wagering/sports-law.html",
+      "purpose": "Follow official index link to exact statutory bracket text and distinguish tax liability from company retained profit",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:13:46.072659+00:00",
+      "finished_at_utc": "2026-10-21T07:13:46.926911+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html;charset=utf-8",
+        "last-modified": "Wed, 21 Oct 2026 07:14:04 GMT",
+        "date": "Wed, 21 Oct 2026 07:14:04 GMT"
+      },
+      "body_bytes": 89867,
+      "body_sha256": "cca66b206cfbb21280bcb034775c1d70c964e8209a0e20b40d8517fec8b34a7b",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 15,
+      "candidate": "EF06",
+      "url": "https://www.hcigroup.com/",
+      "purpose": "Publisher website explicitly named in acquired earnings release; distinct legitimate route after guessed ir subdomain DNS error, no authentication bypass",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:13:47.123063+00:00",
+      "finished_at_utc": "2026-10-21T07:13:47.635777+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 07:14:05 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "last-modified": "Wed, 21 Oct 2026 07:14:05 GMT"
+      },
+      "body_bytes": 18120,
+      "body_sha256": "18d02e5e454ad8199e08576a4ede3633b0066af42666c7855c048a936f15d000",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 16,
+      "candidate": "EF06",
+      "url": "https://investors.hcigroup.com/press-releases",
+      "purpose": "Follow exact issuer-linked investor archive to find contemporaneous Citizens assumption disclosure; distinguish competition from later accounting",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:14:18.066754+00:00",
+      "finished_at_utc": "2026-10-21T07:14:18.446607+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 07:14:35 GMT",
+        "content-type": "text/html;charset=utf-8",
+        "etag": "W/\"1898289548\""
+      },
+      "body_bytes": 103970,
+      "body_sha256": "032345af9ebd34dc0a9e85fb23066097979b6836a5a8358a08e1fed4deff3ac8",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 17,
+      "candidate": "EF04",
+      "url": "https://igb.illinois.gov/sports-wagering/sports-authorized-operating-sportsbooks.html",
+      "purpose": "Check original licensee-to-brand mapping before assigning reported state tax to a listed company",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:14:19.116829+00:00",
+      "finished_at_utc": "2026-10-21T07:14:19.876070+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html;charset=utf-8",
+        "last-modified": "Wed, 21 Oct 2026 04:27:04 GMT",
+        "date": "Wed, 21 Oct 2026 07:14:37 GMT"
+      },
+      "body_bytes": 76089,
+      "body_sha256": "c319b4dff2ce6bc910771218d591a1c26a715d155dbe4f666de513e2c2e706b9",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 18,
+      "candidate": "EF08",
+      "url": "https://www.ofwat.gov.uk/regulated-companies/price-review/in-period-odi-determinations/in-period-determinations-for-2022-23/",
+      "purpose": "Follow regulator decision link to identify the exact company model with pollution-specific output; no national panel download",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:14:20.167107+00:00",
+      "finished_at_utc": "2026-10-21T07:14:20.497769+00:00",
+      "status": 403,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 07:14:37 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "483053"
+      },
+      "body_bytes": 483053,
+      "body_sha256": "07a9e9f7305a74a19a732c751dee9061433fd6daeda1faec05d187ea2aa9e5fd",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 19,
+      "candidate": "EF04",
+      "url": "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=3996&ChapterID=25&Chapter=GAMING&MajorTopic=REGULATION",
+      "purpose": "Inspect exact official act linked by IGB to validate tax units and bracket definition; current text cannot certify historical publication",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:16:15.961728+00:00",
+      "finished_at_utc": "2026-10-21T07:16:37.127644+00:00",
+      "status": null,
+      "headers": null,
+      "body_bytes": 0,
+      "body_sha256": null,
+      "complete": null,
+      "size_stop": null,
+      "error_type": "URLError"
+    }
+  ],
+  "browser_searches": [
+    {
+      "time": "2026-10-21 07:04:47 UTC",
+      "queries": [
+        "site.igb.illinois.gov sports wagering July 2024 tax adjusted gross receipts report",
+        "site.hcigroup.com 2023 \"Citizens\" \"premium\" \"assumed\"",
+        "site.epa.gov automotive trends 2023 greenhouse gas credit balances manufacturer expiration",
+        "site.ofwat.gov.uk \"2023-24\" \"pollution incidents\" \"United Utilities\" \"£\""
+      ]
+    },
+    {
+      "time": "2026-10-21 07:05:16 UTC",
+      "queries": [
+        "site.ofwat.gov.uk \"2023-24\" \"pollution incidents\" \"outcome delivery\"",
+        "site.citizensfla.com 2023 depopulation \"Homeowners Choice\" \"premium\"",
+        "site.igb.illinois.gov \"July 2024\" \"Sports Wagering\"",
+        "site.sec.gov Lumen \"Connect America\" \"repay\""
+      ]
+    },
+    {
+      "time": "2026-10-21 07:05:28 UTC",
+      "queries": [
+        "site.cfindustries.com 2022 \"Union Pacific\" \"20\"",
+        "site.osakagas.co.jp 2022 Freeport LNG \"loss\" procurement",
+        "site.icumed.com 2024 \"North Cove\" capacity supply",
+        "site.igb.illinois.gov \"Sports Wagering Reports\""
+      ]
+    },
+    {
+      "time": "2026-10-21 07:06:31 UTC",
+      "queries": [
+        "site.igb.illinois.gov \"sports-wagering-reports\"",
+        "site.ofwat.gov.uk \"2023-24\" \"in-period\" \"United Utilities\"",
+        "HCI Citizens depopulation public data premium analysis S&P",
+        "\"sports betting tax\" incidence research Illinois DraftKings"
+      ]
+    },
+    {
+      "time": "2026-10-21 07:15:56 UTC",
+      "queries": [
+        "\"HCI\" \"2023\" \"53,456\" (site:sec.gov OR site:hcigroup.com)"
+      ]
+    }
+  ],
+  "browser_tool_text_hashes": [
+    {
+      "file": "search_01.txt",
+      "sha256": "034b77dcdbfc08d740a6e2e880b13be2bc002e28ea6b9fca2a35c3dc559c8acd",
+      "bytes": 35224
+    },
+    {
+      "file": "search_02.txt",
+      "sha256": "47e4de86eafdf7900637fdbf6271daa9c28081e830714fbd479668fc575afd32",
+      "bytes": 35819
+    },
+    {
+      "file": "search_03.txt",
+      "sha256": "b52ce4e18daa869c0162bd30c5f9b191740c95b269f5c8647bba39b77c7ca5d4",
+      "bytes": 29329
+    },
+    {
+      "file": "search_04.txt",
+      "sha256": "0c92f40f535b4becce48af6caf51b4e4dd17d6d7235e75a390709ac8330b6a83",
+      "bytes": 30031
+    },
+    {
+      "file": "search_05.txt",
+      "sha256": "380f08f41268ee6f82d2e9cc69d9cb73c1898efeb87ea3aefb8c850090a035a9",
+      "bytes": 68
+    }
+  ],
+  "scientific_state": {
+    "market_series_requests": 0,
+    "returns_inspected_for_selection": false,
+    "incidental_search_price_snippets": "Unrequested stock-price/move snippets appeared in a broad tax search. Quarantined in original tool transcript, never opened as outcomes or used in ranking.",
+    "new_experiments": 0,
+    "old_experiment_reopenings": 0,
+    "sealed_stage_accesses": 0,
+    "source_retries": 0,
+    "denial_bypasses": 0,
+    "contact_messages": 0,
+    "cloud_jobs": 0
+  },
+  "benchmark": {
+    "F19": "Preserved leading pre-existing measurement candidate; HOLD/unapproved; no source request or 80 MiB follow-up",
+    "SH09": "Previous proposal preserved, not activated; no source request",
+    "decision": "STOP_NEW_ACQUISITION_NO_LEVEL_A_DESIGN",
+    "next_phase_authorized": false
+  },
+  "deviations_and_limits": [
+    "One source-allocation transfer recorded before query: 17 searches + 19 originals = unchanged 36 total.",
+    "HCI full filing lacked length and consumed a labelled 6 MiB+1 prefix. This repeats an avoidable broad-filing collection inefficiency; no refetch or completion claim.",
+    "One guessed ir.hcigroup.com host failed DNS/transport; subsequent www and investors hosts were explicitly named/linked by acquired originals, not a denial bypass.",
+    "Official legislative endpoint transport failed; Ofwat model-index 403 and EPA exact-PDF 404 retained without retry.",
+    "Browsed originals via search excerpts are not counted as original-body acquisition or full-paper reading.",
+    "Unrelated FIGA paragraphs in the retained HCI prefix were not analysed or used to reopen F19."
+  ],
+  "implementation": "Focused documents and one structured campaign ledger; isolated existing collector/projection logic, no new public research implementation or generic subsystem"
+}

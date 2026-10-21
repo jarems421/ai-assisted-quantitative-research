@@ -1,0 +1,265 @@
+{
+  "version": "MEASUREMENT_GATE_CAMPAIGN_VALIDATION_V001",
+  "recorded_at_utc": "2026-10-21T07:42:28.792007+00:00",
+  "status": "PASS",
+  "starting_head": "1e543ec91bd2513d975972b12d87436c89a1737b",
+  "pre_source_checkpoint": "ee70e1a",
+  "checks": [
+    {
+      "name": "local_suite",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T07:39:53.766643+00:00",
+      "finished_at_utc": "2026-10-21T07:40:17.972144+00:00",
+      "test_count": 485,
+      "skipped": 0,
+      "log": "local_suite.log",
+      "log_sha256": "835ff53d8292fde6a3aeed12f5b403f944aef47ca9e971917374b3506e32c5f6"
+    },
+    {
+      "name": "public_checks",
+      "command": [
+        "python",
+        "-m",
+        "src.research.public_checks"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T07:40:17.972202+00:00",
+      "finished_at_utc": "2026-10-21T07:40:23.680322+00:00",
+      "test_count": 257,
+      "skipped": 0,
+      "log": "public_checks.log",
+      "log_sha256": "a90605093fc31abb7d0a1aa686c1745bb3d69ee205000edf034e74f91755bfcc"
+    },
+    {
+      "name": "presentation",
+      "command": [
+        "python",
+        "-m",
+        "src.presentation.exp001",
+        "--check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T07:40:23.680396+00:00",
+      "finished_at_utc": "2026-10-21T07:40:24.986670+00:00",
+      "test_count": null,
+      "skipped": 0,
+      "log": "presentation.log",
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "name": "exp004_frozen_audit",
+      "command": [
+        "python",
+        "-m",
+        "src.research",
+        "audit",
+        "EXP004"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T07:40:24.986729+00:00",
+      "finished_at_utc": "2026-10-21T07:40:25.187192+00:00",
+      "test_count": null,
+      "skipped": 0,
+      "log": "exp004_frozen_audit.log",
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    },
+    {
+      "name": "exp004_gap_check",
+      "command": [
+        "python",
+        "-m",
+        "src.research.exp004_execution_gap_report",
+        "--check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T07:40:25.187242+00:00",
+      "finished_at_utc": "2026-10-21T07:40:25.480894+00:00",
+      "test_count": null,
+      "skipped": 0,
+      "log": "exp004_gap_check.log",
+      "log_sha256": "64877d6dbac62922a24916bcbcb3a1d6c86f7ded4b936a87d906dd6f6ff6d536"
+    },
+    {
+      "name": "diff_check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T07:40:25.480939+00:00",
+      "finished_at_utc": "2026-10-21T07:40:25.543215+00:00",
+      "test_count": null,
+      "skipped": 0,
+      "log": "diff_check.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "local_tests": 485,
+  "public_tests": 257,
+  "skipped": 0,
+  "deterministic_presentation_artifacts": 6,
+  "source_replay": {
+    "status": "PASS",
+    "network": "SOCKET_BLOCKED",
+    "ordinary_reservations_and_receipts": 19,
+    "body_hash_checks": 17,
+    "original_bytes": 9897494,
+    "search_transcript_hash_checks": 5,
+    "search_queries": 17,
+    "combined_reservations": 36,
+    "projection_replays": [
+      {
+        "file": "001.json",
+        "sha256": "e25226e773e849593149ba5b9f06502a0b7d763abb4b2cac61752e928480585e",
+        "source_sha256": "bb0df929fe3d2c5d0807897377681e1a7e15bfe1693b9e738721c5a66ef41956"
+      },
+      {
+        "file": "002.json",
+        "sha256": "29e80a90ca6a0f1578680826d8178d8c29ac79b602af4d3b7aa35c9df59c2a59",
+        "source_sha256": "e56d8c46637ef542c270c01c84d15cd545418cc559b26b58a2958dd3e7329478"
+      },
+      {
+        "file": "003.json",
+        "sha256": "77c6ba96e00f3eb8c4f356a9ce4dc450c2904a51b7845f5f11841aac2f61a267",
+        "source_sha256": "f68089cd7e28c90911213dc2a9d8de071fa0555d268273bf7c91508dc9c36748"
+      },
+      {
+        "file": "004.json",
+        "sha256": "221875c68e89f5f87c6842cfc0b9f0ba4ed740593a6bde457c89f31d6b6a9c76",
+        "source_sha256": "9c7e43f1d13df9d752b29a45e2170892faf46b7dd4102b35d0ead88bf054f04d"
+      },
+      {
+        "file": "006.json",
+        "sha256": "2776402fad1a07465aadafa64a91dec87330d6ca68ce6f88e9f76ae53958cbbd",
+        "source_sha256": "e527334fbeacd539e456e3c06276f3521a4efd1baefec690e60d3ba4d76f30c2"
+      },
+      {
+        "file": "007.json",
+        "sha256": "531f96f6cf3c4e0ec506468044e1db062a4c7e9883df1af7628c85ee8a7eae4e",
+        "source_sha256": "fc39950acee670d29b0e246d19c4a1b5f7ca1347c6a9c4703b946a1103375c51"
+      },
+      {
+        "file": "008.json",
+        "sha256": "d9b852c39560754ed9f6cfae0407a6b07af0bc8596707a6f0ae32988d34afa1d",
+        "source_sha256": "09b4459053666791fc0ce87b3ab89a8355ceaddcd0a84e1a14b8ab67d95a4a81"
+      },
+      {
+        "file": "009.json",
+        "sha256": "06f66b07f817464d23668f591f7615dc4a00f7ae925254d8d6278a5b276fdac7",
+        "source_sha256": "2fa0f4f074b6424020333bb3204f05362e540deffd30a2a06af6bfe52835d23c"
+      },
+      {
+        "file": "010_prefix.json",
+        "sha256": "ede8dc0acad165298e3e104e5eba839774ec359246bda3e84c7c2884c104b161",
+        "source_sha256": "0310d3f0cab53c34b16ae83aa065c78ba91bcb551bc003865ebd0d08653a5840"
+      },
+      {
+        "file": "014.json",
+        "sha256": "3aa67fb6ab78ee159bc27d8da19a6b50c40ac7b983249bb2f4504009d9ea69d3",
+        "source_sha256": "cca66b206cfbb21280bcb034775c1d70c964e8209a0e20b40d8517fec8b34a7b"
+      },
+      {
+        "file": "015.json",
+        "sha256": "af34411d94d3b8f75e874df9a1cf0dd26beeab93afc3fccb392c8053c194fe21",
+        "source_sha256": "18d02e5e454ad8199e08576a4ede3633b0066af42666c7855c048a936f15d000"
+      },
+      {
+        "file": "016.json",
+        "sha256": "762cce68e9b7151302e1ad663dd0e6763574241c0b0f920580da19c7d3b0adba",
+        "source_sha256": "032345af9ebd34dc0a9e85fb23066097979b6836a5a8358a08e1fed4deff3ac8"
+      },
+      {
+        "file": "017.json",
+        "sha256": "e7cb34f373891a4707a535ebf961280351b7b8d8fe52eb1c50ec6d0d381f5cc0",
+        "source_sha256": "c319b4dff2ce6bc910771218d591a1c26a715d155dbe4f666de513e2c2e706b9"
+      }
+    ],
+    "csv_checks": [
+      {
+        "receipt_index": 11,
+        "delivered_rows": 39,
+        "licensees": 13,
+        "categories": 3
+      },
+      {
+        "receipt_index": 13,
+        "delivered_rows": 42,
+        "licensees": 14,
+        "categories": 3
+      }
+    ],
+    "csv_delivered_rows": 81,
+    "unique_licensee_months": 27,
+    "supplied_pdf_pages_replayed": 29,
+    "supplied_pdf_sha256": "02640341c7776fadf08bd88e4ac27737cf8b2aae3a08e8c9c9acb8edbb78a103",
+    "initial_claims": 8,
+    "initial_M_passes": 0,
+    "restricted_reformulation_M_passes": 1,
+    "restricted_reformulation_disposition": "REJECT",
+    "economic_tests": 0,
+    "helpers": {
+      "audit.py": "00f3c34948312cdd4abb86456bbb420b6c726084a718a1e7b7a72a169abeb4fe",
+      "fetch.py": "5bd0a8fa97528589671e883504c0b9fe2686f9e2ccdc3f481493c9f6e1b5d4e9",
+      "extract.py": "6d6e75ddae3bb9674edf604ec882a160d9ddff68b70b66cb8ff4d5ec208fe80b",
+      "build_ledger.py": "6b5bf2d1e1303e3ac8e92f2635ff132611ce4cb3298e0e2b5e606e2b1f225b99"
+    }
+  },
+  "source_replay_result_sha256": "bf3e9cae0e974fa07af88fe45a2f4a0ce1e561f68e053d5cda63c001df2c3b7f",
+  "preservation": {
+    "pre_existing_tracked_files": 719,
+    "byte_identical": 714,
+    "deliberately_changed_living_files": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "docs/research_os.md",
+      "src/presentation/README.template.md"
+    ],
+    "baseline_inventory_sha256": "e343dc5b7259c3b6ef3ff7f6aca235ea11868b0135c5f70e99f465f564febea9",
+    "changed_file_hashes": {
+      "AGENTS.md": "b812ee15c0e34792993ea8367e1b694033f44979f86936f861d7d342b61b8c02",
+      "README.md": "5d3496ed01907977b7dc3a5ad6a348a8d0c002e021f2af10d531c5225d06a9d6",
+      "docs/acceleration/master_plan.md": "ae491eeb0491f7ec4d64414e386b6147fa70999ca20e0233cd4338ba07b23d18",
+      "docs/research_os.md": "2e11aeb5b081141d7b8dc7ce206ddeb6aa6b6ee8192c369e1735e96281b7b62a",
+      "src/presentation/README.template.md": "da651665c584bd23b0a392574d4baaa27afdf4a4db02643c9263e30be19bf3cf"
+    },
+    "protected": "All other tracked baseline bytes unchanged, including experiments, historical reports/receipts, canonical processed results, metric code, dependencies and prior stops"
+  },
+  "delivered_document_sha256": {
+    "owner_measurement_gate_campaign_2026-10-21.md": "252ab5644716e30d71b9df2c9f181bd29540148133bea5705b0e7b01786f7626",
+    "measurement_gate_campaign_plan.json": "b16ea00fe0795a1c66b999be6cccc2e3efbbf6791dc62b716f8fc40aa0ad0bfe",
+    "measurement_gate_m.md": "af0727e5d65c8a2ee890ef97a4470b8f9dafdbe20e9b24ecb5e830f259a5cc07",
+    "measurement_gate_campaign_report.md": "0ab41a52d16d44c6dce98ad37cec31b03c064c8283515784b772ac39588c8988",
+    "measurement_gate_campaign_cards.md": "e513a9d18ec666985355d6d148cc0707fb83428c135fc0221ec782fc4ea710cb",
+    "measurement_gate_campaign_ledger.json": "81742c80a34d2b8da999f829b49d3df5faec967272b5a74a4b476de20660c67b"
+  },
+  "clock": {
+    "conservative_start_utc": "2026-10-21T06:55:18+00:00",
+    "source_stop_utc": "2026-10-21T07:16:37.378127+00:00",
+    "six_hour_deadline_utc": "2026-10-21T12:55:18+00:00",
+    "individual_family_active_hours": "UNKNOWN; no fabricated per-family accounting"
+  },
+  "scientific_state": {
+    "economic_evaluations": 0,
+    "stock_return_tests": 0,
+    "investment_pilots": 0,
+    "new_experiments": 0,
+    "paid_spending_initiated": false,
+    "account_invoice_or_debit": "UNKNOWN",
+    "hosted_CI": "Separate delivery observation after final push; not claimed by local checks"
+  },
+  "scope": "Documentation, structured discovery accountability, offline original-source reconciliation and regression/preservation checks; no economic validation",
+  "validation_builder_sha256": "174c7951e03e54ca8a7cebc5b2da003980354d10798a46bbd3238990d592bee9",
+  "relative_document_links_checked": 162,
+  "final_diff_check_returncode": 0
+}
