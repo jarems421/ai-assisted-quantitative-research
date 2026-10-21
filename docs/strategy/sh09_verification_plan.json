@@ -1,0 +1,49 @@
+{
+  "version": "SH09_HISTORICAL_VERIFICATION_PLAN_V001",
+  "owner": "owner_sh09_verification_2026-10-21.md",
+  "owner_sha256": "99564f02e8483255678a3d798e667859b1e980b809ae7b2fc3d69151afd47c29",
+  "starting_head": "dbc624550314d50cde01e1c6c53d40cea9f53730",
+  "conservative_started_utc": "2026-10-21T07:50:33+00:00",
+  "conservative_deadline_utc": "2026-10-21T09:50:33+00:00",
+  "limits": {
+    "analyst_hours": 2,
+    "original_source_starts": 8,
+    "external_body_bytes": 26214400,
+    "browser_search_queries_self_imposed": 16,
+    "browser_open_click_find_actions": 0,
+    "ordinary_client_spacing_seconds": 1.05,
+    "automatic_retries": 0,
+    "paid_authenticated_cloud_market_operations": 0
+  },
+  "claim": "A material change in Chevron recoverable-net predecessor cleanup exposure could be reconstructed from public Cox asset-status/title/cost/security records before the 2024-01-02 issuer announcement. No charge allocation or pseudo-net subtraction.",
+  "sequence": [
+    "Reuse previous evidence with its original depth and hashes; no assertion of original-byte possession",
+    "Find exact original December sale/abandonment record and its historical public clock",
+    "Only if original asset list exists, freeze at most two ascending canonical lease IDs before detailed matching",
+    "Attempt same-lease obligation/cost/security/public-version joins within remaining resources",
+    "Assess separately M, H and independent same-unit outcome route; no pilot/returns"
+  ],
+  "selection": {
+    "unit": "Canonical lease identifier from original relevant sale/abandonment attachment",
+    "maximum_leases": 2,
+    "ordering": "Ascending canonical identifier, deduplicated; preserve federal/state identifiers separately and do not substitute records after inspection",
+    "frame_not_found": "No selected leases; do not infer lease IDs from later issuer correspondence"
+  },
+  "known_original_locators": [
+    "https://chevroncorp.gcs-web.com/static-files/35792537-c5a8-4fbd-8c90-377d15592e11",
+    "https://chevroncorp.gcs-web.com/static-files/51fe92ca-3680-42a4-b804-2c9433cfe667",
+    "https://www.sec.gov/Archives/edgar/data/93410/000009341024000002/cvx-20240102.htm"
+  ],
+  "stops": [
+    "Stop a denied/restricted/paid route, no bypass, retry or account",
+    "Stop campaign early if an indispensable input or event clock cannot be established and further work cannot resolve the joint object",
+    "No unrelated discovery, other debtor/APA acquisition, F19, national lease census, economic test, market data, new experiment or new infrastructure"
+  ],
+  "evidence_labels": [
+    "VERIFIED AS-OF",
+    "VERIFIED ONLY RETROSPECTIVELY",
+    "UNVERIFIED",
+    "CONTRADICTED"
+  ],
+  "implementation": "Private task-specific reuse of collector/projection utilities; tracked plan, report, receipt, validation only. Existing Measurement Gate M unchanged."
+}
