@@ -2,7 +2,7 @@
 
 > DERIVED RESEARCH VIEW - NOT INDEPENDENT EVIDENCE - NO RESEARCH AUTHORITY
 
-Graph v1 lets a researcher ask, whenever something new is recorded: *have we met this object, document, relationship or research problem before, and what genuinely connects them?* It reads Discovery Lab ledgers and the historical-memory catalogue. It writes nothing back and authorises nothing. [Design](graph_v1_design.md) · [Walkthrough](graph_v1_walkthrough.md) · [Backfill audit](graph_v1_backfill_audit.md) · [Pre-pilot review](graph_v1_review.md).
+Graph v1 lets a researcher ask, whenever something new is recorded: *have we met this object, document, relationship or research problem before, and what genuinely connects them?* It reads Discovery Lab ledgers and the historical-memory catalogue. It writes nothing back and authorises nothing. [Design](graph_v1_design.md) · [Walkthrough](graph_v1_walkthrough.md) · [Backfill audit](graph_v1_backfill_audit.md) · [Pre-pilot review](graph_v1_review.md) · [Pilot pre-registration](graph_pilot_preregistration.md) · [Pilot dry run](graph_pilot_dry_run.md).
 
 ## Quick start
 
@@ -51,7 +51,8 @@ No graph command appends to a ledger or changes a disposition.
 | `export neighbourhood\|explain\|trace NODE... --format mermaid\|dot [--out FILE]` | Focused visual export with a legend and the banner |
 | `suggestions TARGET` | Pilot hook: suggestions flagged with whether competent structured search over the same knowledge would find them |
 | `baseline-search CAMPAIGN OBSERVATION` | The pilot's structured arm: exact-identifier, content-hash, reference, period and known-at search, with no graph projection |
-| `adjudications FILE` | Pilot hook: validate a human adjudication log |
+| `pilot snapshot\|verify\|connections\|blind\|adjudications\|account\|report` | Proposed-pilot tooling: freeze a packet's prior inputs, verify an arm's starting copy, validate logs, build the blinded export, check accounting, report pairs |
+| `pilot dry-run [--write\|--check]` | Synthetic end-to-end rehearsal of the pilot through this CLI |
 
 **Common options:**
 
@@ -67,6 +68,7 @@ No graph command appends to a ledger or changes a disposition.
 | `--history` | Include superseded versions |
 | `--exclude-retrospective` | Hide retrospective ledgers and historical memory |
 | `--json` | Print the structured result instead of text |
+| `--snapshot FILE --arm S\|G [--query-at TIME]` | Pilot view: the snapshot's frozen prior inputs plus that arm's own ledger as appended by the query time (default now, never in the future). Refuses `--ledgers`, `--known-at`, `--catalogue`, `--mode` and `--as-of`, and every graph operator for arm S |
 
 ## Reading results
 
@@ -94,7 +96,7 @@ No graph command appends to a ledger or changes a disposition.
 The two time filters answer different questions:
 
 - **`--as-of 2000-06-30` (economic validity):** hides relationships whose dated period does not cover that date, and observations not yet occurred.
-- **`--known-at 2026-11-01T00:00:00Z` (what Research OS had recorded by then):** uses ledger append times. It counts the catalogue from its own `recorded_at_utc`, never from the original investigation dates.
+- **`--known-at 2026-11-01T00:00:00Z` (what Research OS had recorded by then):** uses ledger append times. It counts the catalogue from its own `recorded_at_utc`, never from the original investigation dates. It applies one cutoff to every ledger, so it is for looking back. For an active campaign, use `--snapshot`: frozen prior inputs, plus the campaign's own records as appended by the query time.
 
 Unknown first-public times stay `UNKNOWN`. The graph never derives them.
 

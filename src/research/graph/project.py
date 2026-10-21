@@ -112,14 +112,29 @@ def discover_ledgers(root=LEDGER_ROOT):
     return sorted(root.rglob('*.jsonl')) if root.is_dir() else []
 
 
+def replay(events):
+    s = State()
+    for e in events:fold(e['type'], copy.deepcopy(e['record']), e['derived'], s); s.events.append(e)
+    return s if s.campaign else None
+
+
 def state_at(full, known_at):
     """Prefix replay: the ledger as it stood when its events up to ``known_at`` had been appended."""
     if known_at is None:return full
-    s = State()
-    for e in full.events:
-        if parse_time(e['recorded_at_utc']) > known_at:break
-        fold(e['type'], copy.deepcopy(e['record']), e['derived'], s); s.events.append(e)
-    return s if s.campaign else None
+    return replay([e for e in full.events[:next((i for i, e in enumerate(full.events) if parse_time(e['recorded_at_utc']) > known_at),
+                                                  len(full.events))]])
+
+
+def cut_state(full, cut):
+    """An explicit, auditable per-ledger prefix: exactly ``events`` events whose last hash is ``head_hash`` (a frozen
+    input), or every event appended by ``until`` (an active ledger at query time). Returns (state, description)."""
+    if cut.get('events') is not None:
+        n = cut['events']
+        if not 0 < n <= len(full.events) or full.events[n - 1]['hash'] != cut.get('head_hash'):
+            raise GraphError(f"{full.campaign['id']}: pinned prefix ({n} events, head {str(cut.get('head_hash'))[:12]}) does not match the ledger")
+        return replay(full.events[:n]), {'role': cut.get('role'), 'pinned_events': n}
+    until = parse_time(cut['until']) if isinstance(cut['until'], str) else cut['until']
+    return state_at(full, until), {'role': cut.get('role'), 'appended_by': until.isoformat()}
 
 
 def evidence_items(kind, r):
@@ -409,12 +424,16 @@ def derive_issues(g):
                                  'note': 'Similar names, different identifiers: never merged; establish identity from originals.'})
 
 
-def build(ledgers=None, catalogue_path=C.CATALOGUE_PATH, mode='memory', known_at=None, with_memory=True, requirements=None):
+def build(ledgers=None, catalogue_path=C.CATALOGUE_PATH, mode='memory', known_at=None, with_memory=True, requirements=None, cuts=None):
     """Build the projection. Raises GraphError on any invalid authoritative input.
 
     ``requirements`` supplies an explicit requirement vocabulary when ``catalogue_path`` is None, so isolated
-    evaluations depend only on their declared inputs."""
+    evaluations depend only on their declared inputs. ``cuts`` maps each listed ledger path to its own prefix
+    (see ``cut_state``); it replaces the single ``known_at`` cutoff, which cannot tell frozen prior knowledge
+    from records appended during an active campaign."""
     if mode not in M.MODES:raise GraphError(f'mode must be one of {M.MODES}')
+    if cuts is not None and (known_at or ledgers is None or {str(Path(p)) for p in ledgers} != set(cuts)):
+        raise GraphError('per-ledger cuts need an explicit ledger list, one cut per ledger and no global known-at')
     cutoff = parse_time(known_at) if known_at else None
     g = Graph(mode, cutoff)
     cat = None
@@ -436,11 +455,12 @@ def build(ledgers=None, catalogue_path=C.CATALOGUE_PATH, mode='memory', known_at
             g.excluded.append({'ledger': path.name, 'campaign': cid, 'reason': f'{fixture} records are not admitted in {mode} mode'}); continue
         if cid in seen:raise GraphError(f'duplicate campaign id {cid} in {seen[cid]} and {path.name}')
         seen[cid] = path.name
-        s = state_at(full, cutoff)
+        s, cut = cut_state(full, cuts[str(path)]) if cuts is not None else (state_at(full, cutoff), None)
         if s is None:
             g.excluded.append({'ledger': path.name, 'campaign': cid, 'reason': 'campaign not yet recorded at known-at time'}); continue
+        # A cut input omits the ledger's current length: it changes with later appends and is not knowledge at the cut.
         g.inputs.append({'ledger': path.name, 'campaign': cid, 'fixture': fixture, 'events_used': len(s.events),
-                         'events_total': len(full.events), 'head_hash': s.events[-1]['hash']})
+                         **({'cut': cut} if cut else {'events_total': len(full.events)}), 'head_hash': s.events[-1]['hash']})
         pending += project_campaign(g, s, path.name, vocabulary, cat['blocker_requirements'] if cat else {}, cat['claim_mappings'] if cat else [])
     resolve_related(g, pending)
     if cat:

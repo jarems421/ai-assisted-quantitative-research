@@ -10,7 +10,7 @@ import json
 import sys
 from pathlib import Path
 
-from src.research.graph import demo, evaluate as E, operators as O, render as RN
+from src.research.graph import demo, evaluate as E, operators as O, pilot as P, render as RN
 from src.research.graph import model as M
 from src.research.graph.catalogue import CATALOGUE_PATH
 from src.research.graph.fixtures import build_all
@@ -26,15 +26,21 @@ EXAMPLES = """examples:
   python -m src.research.graph revisit DLC-NEW --ledgers docs/strategy/discovery/new.jsonl
   python -m src.research.graph export neighbourhood HIST-F01 --format mermaid --out view.mmd
   python -m src.research.graph demo --check
+  python -m src.research.graph revisit OBS-1 --snapshot P1/snapshot.json --arm G --query-at 2026-11-02T10:15:00Z
+  python -m src.research.graph pilot dry-run --check
 """
 
 
 def common():
     p = argparse.ArgumentParser(add_help=False)
-    p.add_argument('--mode', choices=M.MODES, default='memory', help='memory (default): live + retrospective + historical memory; '
+    p.add_argument('--mode', choices=M.MODES, help='memory (default): live + retrospective + historical memory; '
                    'prospective: live ledgers only; synthetic: synthetic ledgers only')
     p.add_argument('--ledgers', nargs='*', help=f'ledger files (default: every *.jsonl under {LEDGER_ROOT.relative_to(demo.ROOT)})')
-    p.add_argument('--catalogue', default=str(CATALOGUE_PATH), help='historical-memory catalogue')
+    p.add_argument('--catalogue', help=f'historical-memory catalogue (default {CATALOGUE_PATH.relative_to(demo.ROOT)})')
+    p.add_argument('--snapshot', help='pilot packet snapshot: frozen prior inputs plus the --arm ledger as of --query-at (replaces '
+                   '--ledgers/--known-at/--catalogue/--mode)')
+    p.add_argument('--arm', choices=('S', 'G'), help='pilot arm whose own ledger is visible (S may use baseline-search only)')
+    p.add_argument('--query-at', help='pilot query time (default now; never in the future)')
     p.add_argument('--no-memory', action='store_true', help='synthetic mode without historical memory')
     p.add_argument('--known-at', help='only knowledge appended to Research OS records by this time (ISO date or datetime)')
     p.add_argument('--as-of', help='only relationships valid and observations occurred by this economic date')
@@ -45,7 +51,22 @@ def common():
     return p
 
 
+def pilot_scope(a):
+    """Snapshot mode takes every input from the frozen snapshot; mixing in other inputs is refused."""
+    if not getattr(a, 'snapshot', None):
+        if getattr(a, 'arm', None) or getattr(a, 'query_at', None):raise ValueError('--arm and --query-at need --snapshot')
+        if hasattr(a, 'mode'):a.mode, a.catalogue = a.mode or 'memory', a.catalogue or str(CATALOGUE_PATH)
+        return
+    if not a.arm:raise ValueError('--snapshot needs --arm S or G')
+    mixed = [f for f in ('ledgers', 'known_at', 'catalogue', 'mode', 'as_of') if getattr(a, f) is not None] + (['no_memory'] if a.no_memory else [])
+    if mixed:raise ValueError(f'snapshot inputs are fixed; remove {mixed}')
+    if a.arm == 'S' and a.command != 'baseline-search':raise ValueError('the structured arm uses no graph operator; use baseline-search')
+
+
 def graph_for(a):
+    if a.snapshot:
+        g, view = P.arm_graph(a.snapshot, a.arm, a.query_at); a.visibility = view['receipt']; a.view = view
+        return g
     ledgers = a.ledgers if a.ledgers is not None else None
     return build(ledgers=ledgers, catalogue_path=a.catalogue, mode=a.mode, known_at=a.known_at, with_memory=not a.no_memory)
 
@@ -55,7 +76,55 @@ def view_for(a):
 
 
 def emit(a, res):
+    if getattr(a, 'visibility', None):res = {**res, 'visibility': a.visibility}
     print(json.dumps(res, indent=2, ensure_ascii=False, default=str) if a.json else RN.text(res), end='' if not a.json else '\n')
+
+
+def pilot_parser(sub):
+    c = sub.add_parser('pilot', help='proposed pilot tooling: snapshots, isolation checks, blinding, accounting, paired report (no acquisition)')
+    ps = c.add_subparsers(dest='pilot_command', required=True)
+    x = ps.add_parser('snapshot', help='freeze a packet: pin its ledger prefix, the catalogue hash and the bundle hashes')
+    x.add_argument('out'); x.add_argument('--packet', required=True); x.add_argument('--packet-ledger', required=True)
+    x.add_argument('--arm-ledger', nargs=3, action='append', metavar=('ARM', 'LEDGER', 'CAMPAIGN'), required=True)
+    x.add_argument('--bundle'); x.add_argument('--frozen-at'); x.add_argument('--catalogue', default=str(CATALOGUE_PATH))
+    x = ps.add_parser('verify', help='verify a snapshot (and a bundle copy); both arms must print the same summary')
+    x.add_argument('snapshot'); x.add_argument('--bundle')
+    x = ps.add_parser('connections', help='validate an arm connection log'); x.add_argument('log'); x.add_argument('--arm', choices=P.ARMS, required=True)
+    x = ps.add_parser('blind', help='prepare the shuffled, arm-hidden adjudication export and its sealed key')
+    x.add_argument('snapshot'); x.add_argument('--log', nargs=2, action='append', metavar=('ARM', 'LOG'), required=True)
+    x.add_argument('--salt', required=True); x.add_argument('--out', required=True); x.add_argument('--key', required=True)
+    x = ps.add_parser('adjudications', help='validate a blinded adjudication log'); x.add_argument('blind'); x.add_argument('log')
+    x = ps.add_parser('account', help='effort of one arm by category against the campaign ceilings')
+    x.add_argument('snapshot'); x.add_argument('--arm', choices=P.ARMS, required=True)
+    x = ps.add_parser('report', help='paired per-packet report after unblinding'); x.add_argument('packets', nargs='+'); x.add_argument('--json', action='store_true')
+    x = ps.add_parser('dry-run', help='synthetic end-to-end rehearsal through this CLI')
+    g_ = x.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
+
+
+def run_pilot(a):
+    out = lambda value: print(json.dumps(value, indent=2, ensure_ascii=False, default=str))
+    if a.pilot_command == 'snapshot':
+        arms = {arm: (path, cid) for arm, path, cid in a.arm_ledger}
+        snap, digest_ = P.make_snapshot(a.out, a.packet, a.packet_ledger, arms, a.bundle, a.catalogue, a.frozen_at)
+        out({'written': a.out, 'snapshot_sha256': digest_, 'frozen_at_utc': snap['frozen_at_utc'], 'prior': snap['prior']['packet_ledger']})
+    elif a.pilot_command == 'verify':out(P.verify_summary(a.snapshot, a.bundle))
+    elif a.pilot_command == 'connections':out({'log': a.log, 'arm': a.arm, 'entries': len(P.validate_connections(a.log, a.arm)), 'format': 'PASS'})
+    elif a.pilot_command == 'blind':
+        export = P.blind(a.snapshot, dict(a.log), a.salt, a.out, a.key)
+        out({'written': a.out, 'items': len(export['items']), 'key_written': a.key, 'key_sha256': export['key_sha256']})
+    elif a.pilot_command == 'adjudications':
+        rows = P.validate_adjudications(a.blind, a.log); counts = {}
+        for r in rows.values():counts[r['outcome']] = counts.get(r['outcome'], 0) + 1
+        out({'adjudicated': len(rows), 'outcomes': dict(sorted(counts.items())), 'format': 'PASS'})
+    elif a.pilot_command == 'account':
+        v = P.load_snapshot(a.snapshot); out(P.account(v['base'] / v['snapshot']['arms'][a.arm]['ledger'], a.arm))
+    elif a.pilot_command == 'report':
+        rep = P.report(a.packets); print(json.dumps(rep, indent=2, default=str) if a.json else M.BANNER + '\n' + P.markdown(rep))
+    elif a.pilot_command == 'dry-run':
+        from src.research.graph import pilot_dryrun as DR
+        if a.check:out(DR.check())
+        elif a.write:DR.RECORD.write_text(DR.generate(), encoding='utf-8', newline='\n'); out({'written': str(DR.RECORD.relative_to(demo.ROOT))})
+        else:print(DR.generate(), end='')
 
 
 def main(argv=None):
@@ -90,9 +159,11 @@ def main(argv=None):
     c = add('suggestions', 'export suggestions for a target with baseline-discoverability flags (pilot hook)'); c.add_argument('node')
     c = add('baseline-search', 'competent structured-ledger search WITHOUT the graph (the pilot baseline arm tool)')
     c.add_argument('campaign'); c.add_argument('observation')
-    c = sub.add_parser('adjudications', help='validate a prospective-pilot adjudication log'); c.add_argument('file')
+    pilot_parser(sub)
     a = p.parse_args(argv)
     try:
+        if a.command == 'pilot':run_pilot(a); return
+        pilot_scope(a)
         if a.command == 'demo':
             if a.check:print(json.dumps(demo.check()))
             elif a.write:demo.WALKTHROUGH.write_text(demo.generate(), encoding='utf-8', newline='\n'); print(f'written {demo.WALKTHROUGH.relative_to(demo.ROOT)}')
@@ -104,13 +175,17 @@ def main(argv=None):
             print(M.BANNER); print(E.markdown(report))
             if a.timing:print(f"runtime (not deterministic): {report['runtime_seconds']}")
             return
-        if a.command == 'adjudications':print(json.dumps(E.validate_log(a.file))); return
         if a.command == 'baseline-search':
             from src.research.graph import baseline as B
             from src.research.graph import catalogue as Cat
-            ledgers = a.ledgers if a.ledgers is not None else discover_ledgers()
-            memory = Cat.load(a.catalogue)[0] if a.mode == 'memory' and not a.exclude_retrospective else None
-            res = B.structured_search(ledgers, a.campaign, a.observation, memory, a.known_at)
+            if a.snapshot:
+                view = P.arm_view(a.snapshot, a.arm, a.query_at)
+                res = B.structured_search(view['ledgers'], a.campaign, a.observation, Cat.load(view['catalogue'])[0], None, view['cuts'])
+                res = {'visibility': view['receipt'], **res}
+            else:
+                ledgers = a.ledgers if a.ledgers is not None else discover_ledgers()
+                memory = Cat.load(a.catalogue)[0] if a.mode == 'memory' and not a.exclude_retrospective else None
+                res = B.structured_search(ledgers, a.campaign, a.observation, memory, a.known_at)
             print(json.dumps({'note': 'Structured-ledger baseline; no graph projection used.', **res}, indent=2, default=str)); return
         g, view = graph_for(a), view_for(a)
         if a.command == 'build':
@@ -118,8 +193,10 @@ def main(argv=None):
             for n in g.nodes.values():kinds[n['kind']] = kinds.get(n['kind'], 0) + 1
             info = {'banner': M.BANNER, 'mode': g.mode, 'known_at': a.known_at, 'nodes': len(g.nodes), 'edges': len(g.edges), 'by_kind': kinds,
                     'inputs': g.inputs, 'excluded': g.excluded, 'catalogue': g.catalogue, 'issues': len(g.issues), 'digest': g.digest()}
-            if a.check:info['rebuild_identical'] = build(ledgers=a.ledgers, catalogue_path=a.catalogue, mode=a.mode, known_at=a.known_at,
-                                                         with_memory=not a.no_memory).digest() == info['digest']
+            if a.snapshot:info['visibility'] = a.visibility
+            if a.check and a.snapshot:info['rebuild_identical'] = P.arm_graph(a.snapshot, a.arm, a.visibility['query_at_utc'])[0].digest() == info['digest']
+            elif a.check:info['rebuild_identical'] = build(ledgers=a.ledgers, catalogue_path=a.catalogue, mode=a.mode, known_at=a.known_at,
+                                                           with_memory=not a.no_memory).digest() == info['digest']
             print(json.dumps(info, indent=2))
             if a.check and not info['rebuild_identical']:raise SystemExit(1)
             return
@@ -132,6 +209,9 @@ def main(argv=None):
         if a.command in ops:emit(a, ops[a.command]()); return
         if a.command == 'suggestions':
             from src.research.graph import catalogue as Cat
+            if a.snapshot:
+                found = E.export_suggestions(g, a.node, a.view['ledgers'], Cat.load(a.view['catalogue'])[0], None, a.view['cuts'])
+                print(json.dumps({'banner': M.BANNER, 'visibility': a.visibility, 'suggestions': found}, indent=2)); return
             ledgers = a.ledgers if a.ledgers is not None else discover_ledgers()
             memory = Cat.load(a.catalogue)[0] if g.catalogue else None
             print(json.dumps({'banner': M.BANNER, 'suggestions': E.export_suggestions(g, a.node, ledgers, memory, a.known_at)}, indent=2)); return

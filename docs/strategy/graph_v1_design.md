@@ -158,29 +158,30 @@ Every path is marked `connectivity_only: true`, `exposure_certified: false`, `ca
 
 **The graph found no link that competent structured search missed.** On this evidence its contribution is precision, period and identity discipline, historical memory and explanation, not recall. The result is synthetic and constructed, and it shows behaviour, not superiority.
 
-**Prospective pilot protocol.** Not launched; it requires separate owner authority.
-The full proposed design is in the [pilot pre-registration](graph_pilot_preregistration.md) and the [proposed authorisation](proposed_owner_graph_pilot_authorisation.md). In summary:
+**Prospective pilot protocol.** Not launched; it requires separate owner authority. The design is the [pre-registration, revision 2](graph_pilot_preregistration.md), with a [proposed authorisation](proposed_owner_graph_pilot_authorisation.md) and a [synthetic dry run](graph_pilot_dry_run.md) through the CLI. In summary:
 
-1. **Arms.** For each new live campaign, use time-matched arms: a baseline triage using Discovery Lab plus competent structured-ledger search (`baseline-search`), and a graph-assisted triage, each given the **same analyst-minute budget**. A fresh assistant session without graph access performs the baseline arm, and its notes are recorded before graph outputs are viewed.
-2. **Suggestion export.** `python -m src.research.graph suggestions TARGET` exports each graph suggestion with a mechanical flag showing whether competent structured search over the **same** ledgers, catalogue and known-at time would also have found it.
-3. **Adjudication log.** Each suggestion is logged by a human (`adjudications FILE` checks the format) with:
-   - **`found_via`:** `GRAPH_ONLY`, `BASELINE_SEARCH_DISCOVERABLE`, `ANALYST_EXTRA_TIME` or `BOTH`.
-   - **`outcome`:** `CONFIRMED_AGAINST_ORIGINALS` (which requires the Discovery Lab record that now holds it), `PLAUSIBLE_UNVERIFIED`, `REJECTED_FALSE`, `REJECTED_TRIVIAL` or `NOT_REVIEWED`.
-4. **Metrics:**
-   - Confirmed graph-only connections.
-   - False and trivial suggestions.
-   - Adjudication minutes per confirmed connection.
-   - Time to identify the decisive missing variable.
-   - Repeated dead-end source work avoided.
-   - Original frozen M passes per analyst-hour, and H judgments, reported separately.
-   - Build reproducibility.
+1. **Arms.** Four packets, one per method, each run twice: structured search only (S), and structured search plus the graph (G). Each arm gets the same 120 analyst-minutes, and graph time counts inside them.
+2. **Inputs.** A packet snapshot ([`pilot.py`](../../src/research/graph/pilot.py)) pins the frozen prior knowledge: the packet-ledger prefix, catalogue V002 and the bundle hashes. Every query passes `--snapshot --arm --query-at` and sees that prior knowledge plus the arm's own ledger as appended by the query time. It never sees the other arm, other packets or earlier pilot ledgers. A single `--known-at` cannot express this, because it would hide the arm's own new records.
+3. **Logging and blinding.** Arms log every connection they consider, with their decision. A separate session prepares a shuffled export with arm-hidden fields and a hash-sealed key, and the owner adjudicates it.
+4. **Outcomes.** Seven dimensions, each per analyst-hour of all arm time where relevant:
+   - verified connections;
+   - false or premature joins made;
+   - minutes per connection;
+   - time to decisive falsification;
+   - duplicate research avoided;
+   - review burden;
+   - original frozen M passes, with H reported separately.
+5. **Decision.** A descriptive classification: `GRAPH_INCREMENT_OBSERVED`, `NO_GRAPH_INCREMENT_OBSERVED`, `INCONCLUSIVE` or `INVALID_CRITICAL_STOP`. Zero graph-only connections alone retires nothing, and four pairs support no statistical claim.
 
-**Failure criteria:**
-- **Critical, stop until fixed:** any unverified material shown as verified; any mutation of an authoritative record; any synthetic or retrospective leakage into prospective evaluation.
-- **PROPOSED thresholds, not empirically established:**
-  - **Tighten or remove an operator** if, after at least 20 adjudicated suggestions, more than 80% are `REJECTED_FALSE` or `REJECTED_TRIVIAL`.
-  - **Remove the discovery operators** and keep only `trace`, `explain` and `changes` if, after three live campaigns or 20 new observations (whichever comes later), there are zero `GRAPH_ONLY` confirmed connections.
-  - **Consider a disposable SQLite cache** only if the median build exceeds 5 seconds.
+**Critical stops, halting until fixed:**
+- any unverified material shown as verified;
+- any mutation of an authoritative record;
+- any synthetic or retrospective leakage into pilot views;
+- any cross-arm or earlier-pilot access.
+
+**Other thresholds (proposed, not empirically established):**
+- **Noise:** if more than 80% of graph suggestions are false or trivial (with at least 20 adjudicated), the result cannot count as an increment.
+- **Cache:** consider a disposable SQLite cache only if the median build exceeds 5 seconds.
 
 ## Changes from the architecture plan
 
@@ -189,7 +190,7 @@ The full proposed design is in the [pilot pre-registration](graph_pilot_preregis
 - **Research memory is the default mode (correction 3):** historical memory is visible and labelled; prospective mode excludes it; synthetic data is isolated.
 - **Append time and catalogue time kept apart from historical dates (correction 4):** `--known-at` replays ledger prefixes; transcription is never backdated.
 - **Centrally validated vocabulary (correction 5):** free-text `[REQ:…]` and `[MEASURES:…]` tags are validated, labelled and always candidate-only. Curated mappings live in the catalogue, pending human review.
-- **Evaluation hooks separate graph benefit from extra time (correction 6):** baseline-discoverability flags and the adjudication-log format are in place; no pilot was run.
+- **Evaluation hooks separate graph benefit from extra time (correction 6):** baseline-discoverability flags, snapshot-scoped visibility, blinded adjudication and accounting are in place ([`pilot.py`](../../src/research/graph/pilot.py)); no pilot was run.
 - **Backfill as catalogue memory, not reconstructed retrospective ledgers:** see the [audit](graph_v1_backfill_audit.md).
 - **Document matching restricted to content citations**, as described above.
 

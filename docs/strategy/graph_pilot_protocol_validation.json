@@ -1,0 +1,262 @@
+{
+ "version": "GRAPH_PILOT_PROTOCOL_VALIDATION_V001",
+ "recorded_at_utc": "2026-10-21T14:18:27+00:00",
+ "status": "PASS",
+ "starting_head": "942650ace710e20b68150c65c4b410dd92358da5",
+ "owner": "owner_graph_pilot_protocol_2026-10-21.md",
+ "owner_sha256": "09151c14206041b771ca011c745b9c59bc9003a24b843c7b1ac7160ce6ce7616",
+ "protocol": {
+  "preregistration": "docs/strategy/graph_pilot_preregistration.md",
+  "preregistration_sha256": "331b70afd1a1f0fa574bcf091da19b56c463426e136609a9971d3be309062de9",
+  "authorisation": "docs/strategy/proposed_owner_graph_pilot_authorisation.md",
+  "authorisation_sha256": "0abe9136152a4be5d9c1e7d5e8f24cb790db88a9e2702e6138ccbb4dc7ca64e9",
+  "revision": 2,
+  "supersedes_revision_1_at": "942650a",
+  "status": "PROPOSED_NOT_ACTIVE",
+  "corrections": 11
+ },
+ "dry_run": {
+  "record": "docs/strategy/graph_pilot_dry_run.md",
+  "record_sha256": "0d3224ee3ddc14b7489431ceb151e272bcdfa229aabace02eff4e529ceab35e6",
+  "assertions_passed": 24,
+  "assertions_failed": 0,
+  "fixture": "SYNTHETIC",
+  "network": "blocked",
+  "acquisition": 0,
+  "clock": "deterministic ledger clock 2026-10-21T12:30Z onward; all other code paths unchanged",
+  "proves": [
+   "own observation appended after campaign start is visible to revisit, complements, suggestions and baseline-search at its query time",
+   "records appended after the query time are invisible at that time and visible later; replaying a query time gives an identical digest",
+   "the other arm, other packets and earlier pilot ledgers are never inputs, even for the same identified facility",
+   "both arms verify identical snapshot, packet prefix, catalogue and bundle hashes and see identical frozen prior inputs",
+   "the superseded --known-at START form hides the current observation (defect reproduced)"
+  ]
+ },
+ "baseline_before_changes": {
+  "local_tests": 560,
+  "public_tests": 332,
+  "graph_tests": 43,
+  "tracked_files": 773
+ },
+ "local_tests": 569,
+ "public_tests": 341,
+ "graph_tests": 52,
+ "skipped": 0,
+ "memory_graph": {
+  "digest": "8c9167e93b9bb9729b7511933b7e0ae7ceed78becf9fc7a9b3bcd4705426b4e6",
+  "unchanged_from_942650a": true,
+  "rebuild_identical": true
+ },
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+   ],
+   "returncode": 0,
+   "log": "local_suite.log",
+   "log_sha256": "90215168ed4902f82ea173935cd920186d6db46a9f454f5124f88da8336367dd",
+   "test_count": 569
+  },
+  {
+   "name": "public_checks",
+   "command": [
+    "python",
+    "-m",
+    "src.research.public_checks"
+   ],
+   "returncode": 0,
+   "log": "public_checks.log",
+   "log_sha256": "25a2f229f1c4e054aff0efb10be543d89d4caf4d65deee08e63a1e85da793056",
+   "test_count": 341,
+   "note": "test_graph in PUBLIC_TESTS; 9 protocol regression tests added"
+  },
+  {
+   "name": "presentation",
+   "command": [
+    "python",
+    "-m",
+    "src.presentation.exp001",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "presentation.log",
+   "log_sha256": "00aaa1570db4ee0de535189f102f01393e4ec9c3a4ce8f05fda8730d0f3fb343"
+  },
+  {
+   "name": "documentation_links",
+   "command": [
+    "python",
+    "-m",
+    "src.research.phase4a",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "phase4a.log",
+   "log_sha256": "fb68ffef7cc4ee06bab9e3185026c8ff74945a975e96d50765aa85d013300d38"
+  },
+  {
+   "name": "exp004_frozen_audit",
+   "command": [
+    "python",
+    "-m",
+    "src.research",
+    "audit",
+    "EXP004"
+   ],
+   "returncode": 0,
+   "log": "exp004_audit.log",
+   "log_sha256": "b16c7484da9f808fcbb0ab7fabc4918c5cf2ff3e6bfb3e16bfa010ab0326387d"
+  },
+  {
+   "name": "exp004_gap_check",
+   "command": [
+    "python",
+    "-m",
+    "src.research.exp004_execution_gap_report",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "exp004_gap.log",
+   "log_sha256": "7e7ad7ca43b1973c55330d62553556638111b90c848f9696e15815c311460ca4",
+   "result": "EXECUTION_GAPS_UNRESOLVED"
+  },
+  {
+   "name": "discovery_lab_walkthrough",
+   "command": [
+    "python",
+    "-m",
+    "src.research.discovery",
+    "demo",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "discovery_demo.log",
+   "log_sha256": "c116ab14910a6b2ea2112a96424f18692f8a1dae1555159f5e6cfea24b9b09e6"
+  },
+  {
+   "name": "graph_walkthrough",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "demo",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "graph_demo.log",
+   "log_sha256": "cba61fe99deff301eedd2145dfd0eaf2720e7e0b6305ac17aca5e557e90d25fc"
+  },
+  {
+   "name": "graph_build_rebuild",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "build",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "graph_build.log",
+   "log_sha256": "e5703f5a29fd0f8edeb36446bc5893afa8e32b544e0556d5246f68208db5bb66"
+  },
+  {
+   "name": "graph_pilot_dry_run",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "pilot",
+    "dry-run",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "graph_pilot_dry_run.log",
+   "log_sha256": "0c35613d91dbf189d6e09a083951444b50064a27e806de1a8b7a1104f56e927d",
+   "note": "synthetic rehearsal through the discovery and graph CLIs; record regenerated byte-for-byte"
+  },
+  {
+   "name": "graph_utility_check",
+   "command": [
+    "python",
+    "-m",
+    "src.research.graph",
+    "evaluate",
+    "--timing"
+   ],
+   "returncode": 0,
+   "log": "graph_evaluate.log",
+   "log_sha256": "10c03950a58ae1d0d686ab6e902b50e1384377d887ae49072bcef39a2016f9bc",
+   "note": "synthetic functional check on declared inputs only; runtime is not deterministic"
+  }
+ ],
+ "logs_private_directory": "data/raw/graph_v1_20261021/protocol_validation (ignored)",
+ "preservation": {
+  "tracked_files_at_head": 773,
+  "byte_identical": 758,
+  "changed": [
+   "AGENTS.md",
+   "README.md",
+   "docs/acceleration/master_plan.md",
+   "docs/strategy/graph_pilot_preregistration.md",
+   "docs/strategy/graph_v1_design.md",
+   "docs/strategy/graph_v1_guide.md",
+   "docs/strategy/graph_v1_review.md",
+   "docs/strategy/proposed_owner_graph_pilot_authorisation.md",
+   "src/presentation/README.template.md",
+   "src/research/graph/baseline.py",
+   "src/research/graph/cli.py",
+   "src/research/graph/evaluate.py",
+   "src/research/graph/project.py",
+   "src/research/graph/render.py",
+   "tests/test_graph.py"
+  ],
+  "added": [
+   "docs/strategy/owner_graph_pilot_protocol_2026-10-21.md",
+   "src/research/graph/pilot.py",
+   "src/research/graph/pilot_dryrun.py",
+   "docs/strategy/graph_pilot_dry_run.md",
+   "docs/strategy/graph_pilot_protocol_validation.json"
+  ],
+  "changed_reason": "Graph package input cuts, CLI snapshot mode, pilot tests and pilot/graph documentation; living guidance pointers",
+  "discovery_lab_code_changed": false,
+  "catalogues_changed": false,
+  "measurement_gate_documents_changed": false,
+  "experiments_changed": false,
+  "graph_walkthrough_changed": false,
+  "graph_projection_rules_changed": false,
+  "graph_projection_note": "project.py gains optional per-ledger input cuts (cut inputs omit the growing ledger length); node, edge, status and operator rules are unchanged and the memory digest is identical"
+ },
+ "scientific_state": {
+  "source_acquisition_requests": 0,
+  "external_bytes": 0,
+  "live_campaigns": 0,
+  "pilots": 0,
+  "pilot_status": "PROPOSED_NOT_ACTIVE",
+  "authorisation_activated": false,
+  "market_data_requests": 0,
+  "returns_inspected": false,
+  "backtests": 0,
+  "new_experiments": 0,
+  "store_transitions": 0,
+  "trial_count_changes": 0,
+  "cloud_jobs": 0,
+  "paid_or_authenticated_actions": 0,
+  "F19": "HOLD_UNAPPROVED",
+  "SH09": "STOPPED",
+  "EXP004": "RESTRICTIONS_UNCHANGED"
+ },
+ "limits": [
+  "The dry run is synthetic: it proves visibility, isolation, blinding mechanics and accounting, not research value.",
+  "Blinding is partial: the same owner operates and adjudicates; M/H reviews and dispositions are arm-neutral only by procedure.",
+  "Shortlisted source environments, routes and terms are unverified; the owner fixes them at activation.",
+  "Decision rules are proposals for owner confirmation; four pairs support description, not inference.",
+  "Hosted CI is reported separately."
+ ]
+}

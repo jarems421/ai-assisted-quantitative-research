@@ -1,12 +1,20 @@
 # Repository instructions
 
+## Graph pilot protocol revision 2; still proposed, not active (2026-10-21)
+
+- `docs/strategy/owner_graph_pilot_protocol_2026-10-21.md` authorised protocol and narrowly necessary offline code/test/doc corrections only: no source fetch, live campaign, pilot, market data or activation. Revision 2 of `graph_pilot_preregistration.md` and `proposed_owner_graph_pilot_authorisation.md` replaces revision 1 (`942650a`) and lists its corrections.
+- Pilot queries use a packet snapshot (`python -m src.research.graph ... --snapshot S --arm S|G --query-at T`; `src/research/graph/pilot.py`): the packet ledger prefix, catalogue V002 and bundle are pinned by hash; an arm sees that plus its own ledger as appended by the query time. Never use a single `--known-at` for an active campaign, mix `--ledgers` into a snapshot query, let arm S run graph operators, or give any campaign another arm's, another packet's or an earlier pilot ledger. Arm ledgers stay on `graph-pilot/<packet>-<arm>` branches until all campaigns and adjudications finish.
+- Blinding is partial: `pilot blind` hides arm, ids, operator, attribution, decision, minutes and notes behind a hash-sealed key; the same owner operates and adjudicates, and M/H reviews and dispositions are arm-neutral only by procedure. Never describe it as fully blind.
+- Decisions are descriptive across seven dimensions with all analyst time in the denominator (`pilot report`): zero graph-only connections retires nothing automatically. Packet environments must meet E1–E8 on the probe response itself (HTTP 200 alone never qualifies), with fixed fallback and mechanical selection.
+- `graph_pilot_dry_run.md` is a synthetic rehearsal through the CLI; regenerate only with `python -m src.research.graph pilot dry-run --write`. Ceilings 18 h / 60 starts / 92 searches / 88 MiB remain proposed maximums, not a standing allowance. F19 HOLD, SH09 stopped, Discovery Lab v1, M, experiments and all source stops are unchanged.
+
 ## Graph v1 pre-pilot review; pilot proposed, not active (2026-10-21)
 
 - `docs/strategy/owner_graph_pilot_preflight_2026-10-21.md` authorised targeted corrections and pilot preparation only: no acquisition, live campaign, pilot, market data, paid/authenticated access or stopped-source reopening. Review results: `graph_v1_review.md`.
 - Default catalogue is now `docs/strategy/graph/research_memory_catalogue_v002.json`. V001 (`research_memory_catalogue.json`) stays byte-identical and loadable; never edit it. V002 records 12 cited corrections: F03 to the new `REQ_QUALIFIED_COMMERCIAL_EXPOSURE`; partial retrievals (F19 prefix, F03 summary) are `ACQUISITION_LIMIT` with no requirement; SH09 F4/F10 split; EF06 F2 to documented allocation. Verdicts are unchanged.
 - Archive-path SEC CIKs are `ARCHIVE_PATH_IDENTIFIER` (report link-text name citation required; listing, securities, subsidiaries and ownership not established); their catalogue types are `memory_types` and never create type conflicts; joins carry a caveat.
 - The offline evaluation reads only declared inputs (three synthetic ledgers plus `fixtures.REQUIREMENTS`; no catalogue) and compares against `baseline.py`, a competent structured-ledger search (`baseline-search`), which matches the graph on all synthetic claim connections. Do not reintroduce substring or period-blind baselines.
-- `graph_pilot_preregistration.md` and `proposed_owner_graph_pilot_authorisation.md` are PROPOSED, NOT ACTIVE: 4 packets × 2 arms, 120 min / 6 starts / 10 searches / 8 MiB per campaign, pilot ceiling 18 h / 60 starts / 92 searches / 88 MiB. Do not run any command in it without a separately activated owner document. F19 HOLD, SH09 stopped and all prior stops unchanged.
+- `graph_pilot_preregistration.md` and `proposed_owner_graph_pilot_authorisation.md` are PROPOSED, NOT ACTIVE (now revision 2, above): 4 packets × 2 arms, 120 min / 6 starts / 10 searches / 8 MiB per campaign, pilot ceiling 18 h / 60 starts / 92 searches / 88 MiB. Do not run any command in it without a separately activated owner document. F19 HOLD, SH09 stopped and all prior stops unchanged.
 
 ## Economic Knowledge Graph v1 implemented offline (2026-10-21)
 

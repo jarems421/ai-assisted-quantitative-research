@@ -1,10 +1,10 @@
-import builtins,copy,hashlib,json,shutil,socket,tempfile,unittest
+import builtins,contextlib,copy,hashlib,io,json,shutil,socket,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 from src.research.discovery import records as R
-from src.research.discovery.demo import Clock,clk,entity,rec,syn,observation_first
+from src.research.discovery.demo import Clock,clk,entity,passport,rec,syn,observation_first
 from src.research.discovery.ledger import Ledger
-from src.research.graph import catalogue as C,demo as D,evaluate as E,model as M,operators as O,render as RN
+from src.research.graph import catalogue as C,cli as GCLI,demo as D,evaluate as E,model as M,operators as O,pilot as P,pilot_dryrun as DR,render as RN
 from src.research.graph.fixtures import AUTHORITY,ECHO,T7,build_all,campaign,obs
 from src.research.graph.project import GraphError,build
 from src.research.graph.rules import View,find_paths,verified_assertion
@@ -364,19 +364,6 @@ class GraphTests(unittest.TestCase):
         self.assertEqual(graph.get('RECOVERED'),1);self.assertFalse(graph.get('FALSE_CONNECTION'));self.assertFalse(graph.get('PREMATURE_IDENTITY_JOIN'))
         self.assertNotIn('runtime_seconds',report)
 
-    def test_adjudication_log_requires_human_decisions(self):
-        good={'suggestion_id':'SUG-0123456789ab','arm':'GRAPH','operator':'revisit','found_via':'GRAPH_ONLY','outcome':'CONFIRMED_AGAINST_ORIGINALS',
-              'analyst_minutes':12,'arm_time_budget_minutes':60,'adjudicator':'Owner','recorded_at_utc':'2026-11-01T00:00:00+00:00',
-              'discovery_lab_record':'DLC-X/CAND-1@1','notes':''}
-        path=self.dir/'log.jsonl';path.write_text(json.dumps(good)+'\n',encoding='utf-8')
-        self.assertEqual(E.validate_log(path),{'CONFIRMED_AGAINST_ORIGINALS':1})
-        structured={**good,'arm':'STRUCTURED','suggestion_id':E.connection_id('a','b',['EXACT_ENTITY_ID']),'found_via':'ANALYST_EXTRA_TIME'}
-        path.write_text(json.dumps(structured)+'\n',encoding='utf-8');self.assertEqual(E.validate_log(path),{'CONFIRMED_AGAINST_ORIGINALS':1})
-        for change in ({'adjudicator':'Claude'},{'discovery_lab_record':None},{'found_via':'MAGIC'},{'analyst_minutes':-1},{'arm':'OTHER'},
-                       {'arm':'STRUCTURED'}):
-            path.write_text(json.dumps({**good,**change})+'\n',encoding='utf-8')
-            with self.assertRaises(ValueError):E.validate_log(path)
-
 
 class GraphReviewRegressionTests(unittest.TestCase):
     """Defects found in the pre-pilot review: catalogue mappings, archive-path identity, evaluation isolation, baseline fairness."""
@@ -459,6 +446,186 @@ class GraphReviewRegressionTests(unittest.TestCase):
         self.assertTrue(hist);self.assertTrue(all(s['baseline_structured_discoverable'] for s in hist))
         without=E.export_suggestions(g,'DLC-GSYN-S',[self.paths['S']],None)
         self.assertFalse(any(s['baseline_structured_discoverable'] for s in without if s['match'].startswith('history:')))
+
+
+class GraphPilotProtocolTests(unittest.TestCase):
+    """Pilot protocol corrections: query-time visibility, equivalent inputs, isolation, blinding, accounting and decision rules."""
+
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.dir=Path(self.tmp.name)
+        self.clock=DR.Clock();self.d=self.dir/'P1'
+        self.packet=Ledger.create(self.d/'packet.jsonl',DR.campaign('DLC-GPKT-1','packet'),self.clock)
+        self.packet.append('source',passport('SRC-P-1','register',field='t',units='kt/month',publication='VERIFIED_ORIGINAL_RECORD'))
+        self.packet.append('observation',DR.observation('OBS-P-1','Quay One throughput fell.',{'from':410,'to':265},'kt/month',
+                                                        DR.doc('bundle/x',b'x'),'STATE_CHANGE',source='SRC-P-1'))
+        self.packet.append('relationship',DR.relationship('REL-P-1'))
+        self.bundle=self.dir/'bundle';self.bundle.mkdir();(self.bundle/'x.csv').write_bytes(b'x')
+        self.clock.advance(1);frozen=self.clock.at();self.clock.advance(2)
+        self.snap=self.d/'snapshot.json'
+        P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',{'S':(self.d/'S.jsonl','DLC-GP1-S'),'G':(self.d/'G.jsonl','DLC-GP1-G')},self.bundle,frozen_at=frozen)
+
+    def arm(self,arm):
+        led=Ledger.create(self.d/f'{arm}.jsonl',DR.campaign(f'DLC-GP1-{arm}',arm),self.clock)
+        led.append('source',passport('SRC-1','notices',field='b',units='berths',publication='VERIFIED_ORIGINAL_RECORD'))
+        led.append('observation',DR.observation('OBS-1','Quay One berths closed.',3,'berths',DR.doc('arm/n',DR.NOTICE),'EVENT',
+                                                '[MEASURES:REQ_REALISED_ACTIVITY] closure'))
+        return led,self.clock.at()
+
+    def refused(self,argv):
+        err=io.StringIO()
+        with contextlib.redirect_stderr(err),contextlib.redirect_stdout(io.StringIO()),self.assertRaises(SystemExit) as c:GCLI.main(argv)
+        self.assertEqual(c.exception.code,2);return err.getvalue()
+
+    def test_own_new_records_are_visible_and_later_records_are_not(self):
+        led,t1=self.arm('G')
+        g,view=P.arm_graph(self.snap,'G',t1)
+        self.assertIn('observation:DLC-GP1-G/OBS-1@1',g.nodes)
+        self.assertTrue(O.revisit(g,'OBS-1',V)['results']);self.assertTrue(O.complements(g,'OBS-1',V)['results'])
+        self.assertTrue(E.export_suggestions(g,'DLC-GP1-G',view['ledgers'],C.load(view['catalogue'])[0],None,view['cuts']))
+        start=led.load().events[0]['recorded_at_utc']
+        old=build([self.d/'packet.jsonl',self.d/'G.jsonl'],mode='synthetic',known_at=start)
+        self.assertNotIn('observation:DLC-GP1-G/OBS-1@1',old.nodes)  # the superseded single cutoff hides the current observation
+        self.clock.advance(3);led.append('observation',DR.observation('OBS-2','later',1,'count',DR.doc('arm/l',b'l')))
+        again,_=P.arm_graph(self.snap,'G',t1)
+        self.assertEqual(again.digest(),g.digest());self.assertNotIn('observation:DLC-GP1-G/OBS-2@1',again.nodes)
+        self.assertIn('observation:DLC-GP1-G/OBS-2@1',P.arm_graph(self.snap,'G',self.clock.at())[0].nodes)
+        with self.assertRaisesRegex(P.PilotError,'future'):P.arm_view(self.snap,'G','2099-01-01T00:00:00+00:00')
+        with self.assertRaisesRegex(P.PilotError,'precedes'):P.arm_view(self.snap,'G',DR.START.isoformat())
+
+    def test_arms_share_identical_prior_inputs_and_never_see_each_other(self):
+        from src.research.graph import baseline as B
+        _,ts=self.arm('S');_,tg=self.arm('G')
+        vs=P.arm_view(self.snap,'S',ts);gg,vg=P.arm_graph(self.snap,'G',tg)
+        self.assertEqual(vs['receipt']['frozen_prior'],vg['receipt']['frozen_prior'])
+        self.assertFalse([k for k in gg.nodes if 'DLC-GP1-S' in k])
+        with self.assertRaisesRegex(ValueError,'not recorded'):B.structured_search(vg['ledgers'],'DLC-GP1-S','OBS-1',None,None,vg['cuts'])
+        s_ctx=B.structured_search(vs['ledgers'],'DLC-GP1-S','OBS-1',C.load()[0],None,vs['cuts'])
+        g_ctx=B.structured_search(vg['ledgers'],'DLC-GP1-G','OBS-1',C.load()[0],None,vg['cuts'])
+        self.assertEqual([c['record'] for c in s_ctx['contexts']],[c['record'] for c in g_ctx['contexts']]);self.assertEqual(s_ctx['catalogue'],g_ctx['catalogue'])
+        for arm in P.ARMS:shutil.copytree(self.bundle,self.dir/f'copy-{arm}')
+        self.assertEqual(P.verify_summary(self.snap,self.dir/'copy-S'),P.verify_summary(self.snap,self.dir/'copy-G'))
+
+    def test_snapshot_pins_packet_catalogue_bundle_and_arm_start(self):
+        with self.assertRaisesRegex(P.PilotError,'already exists'):
+            self.arm('S');P.make_snapshot(self.d/'again.json','P1',self.d/'packet.jsonl',{'S':(self.d/'S.jsonl','DLC-GP1-S'),'G':(self.d/'G2.jsonl','DLC-GP1-G')})
+        shutil.copytree(self.bundle,self.dir/'tamper');(self.dir/'tamper/x.csv').write_bytes(b'y')
+        with self.assertRaisesRegex(P.PilotError,'bundle differs'):P.load_snapshot(self.snap,self.dir/'tamper')
+        s=json.loads(self.snap.read_text(encoding='utf-8'));s['prior']['catalogue']['sha256']='0'*64
+        (self.d/'bad.json').write_text(json.dumps(s),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'catalogue differs'):P.load_snapshot(self.d/'bad.json')
+        Ledger.create(self.d/'G.jsonl',DR.campaign('DLC-GP1-G','early'),lambda:'2026-10-21T12:31:00+00:00')
+        with self.assertRaisesRegex(P.PilotError,'began before'):P.arm_view(self.snap,'G')
+        self.packet.append('observation',DR.observation('OBS-P-2','late',1,'count',DR.doc('bundle/z',b'z'),source='SRC-P-1'))
+        with self.assertRaisesRegex(P.PilotError,'changed after'):P.load_snapshot(self.snap)
+
+    def test_cli_snapshot_mode_refuses_mixed_inputs_and_structured_graph_use(self):
+        _,ts=self.arm('S');_,tg=self.arm('G');snap=['--snapshot',str(self.snap)]
+        self.assertIn('uses no graph operator',self.refused(['revisit','OBS-1',*snap,'--arm','S','--query-at',ts]))
+        self.assertIn('snapshot inputs are fixed',self.refused(['revisit','OBS-1',*snap,'--arm','G','--query-at',tg,'--ledgers',str(self.d/'S.jsonl')]))
+        self.assertIn('snapshot inputs are fixed',self.refused(['revisit','OBS-1',*snap,'--arm','G','--known-at',tg]))
+        self.assertIn('need --snapshot',self.refused(['revisit','OBS-1','--arm','G']))
+        self.assertIn('needs --arm',self.refused(['revisit','OBS-1',*snap]))
+        out=io.StringIO()
+        with contextlib.redirect_stdout(out):GCLI.main(['baseline-search','DLC-GP1-S','OBS-1',*snap,'--arm','S','--query-at',ts])
+        self.assertEqual(json.loads(out.getvalue())['visibility']['arm'],'S')
+
+    def log(self,arm,**change):
+        row={'connection_id':P.connection_id('a','b',['EXACT_ENTITY_ID']),'arm':arm,'kind':'CONNECTION','operator':'baseline-search',
+             'found_via':'ANALYST_READING','source_record':f'DLC-GP1-{arm}/OBS-1','target_record':'DLC-GPKT-1/REL-P-1','basis':['EXACT_ENTITY_ID'],
+             'arm_decision':'DECLINED','analyst_minutes':4,'discovery_lab_record':None,'recorded_at_utc':DR.START.isoformat(),'notes':''}
+        return {**row,**change}
+
+    def write_log(self,name,rows):
+        path=self.d/name;path.write_text(''.join(json.dumps(r)+'\n' for r in rows),encoding='utf-8');return path
+
+    def test_connection_logs_enforce_arm_rules(self):
+        self.assertEqual(len(P.validate_connections(self.write_log('ok.jsonl',[self.log('S')]),'S')),1)
+        sug='SUG-0123456789ab'
+        bad=[{'connection_id':sug},{'found_via':'GRAPH_ONLY','operator':'revisit'},{'operator':'revisit'},{'arm_decision':'ACCEPTED'},
+             {'discovery_lab_record':'CAND-1'},{'kind':'AVOIDED_REPEAT'},{'analyst_minutes':-1},{'arm':'G'},{'found_via':'MAGIC'}]
+        for change in bad:
+            with self.assertRaises(P.PilotError,msg=str(change)):P.validate_connections(self.write_log('bad.jsonl',[{**self.log('S'),**change}]),'S')
+        with self.assertRaises(P.PilotError):P.validate_connections(self.write_log('dup.jsonl',[self.log('S'),self.log('S')]),'S')
+        graph_row=self.log('G',connection_id=sug,operator='revisit',found_via='GRAPH_ONLY')
+        self.assertEqual(len(P.validate_connections(self.write_log('g.jsonl',[graph_row]),'G')),1)
+
+    def blinded(self):
+        self.arm('S');self.arm('G')
+        s=[self.log('S'),self.log('S',connection_id=P.connection_id('x','HIST-F01/claim-v1',['AUTHOR_TAG_CANDIDATE']),target_record='HIST-F01/claim-v1',
+                                basis=['AUTHOR_TAG_CANDIDATE'])]
+        g=[self.log('G',connection_id='SUG-0123456789ab',operator='complements',found_via='GRAPH_ONLY',target_record='relationship:DLC-GPKT-1/REL-P-1@1'),
+           self.log('G',kind='AVOIDED_REPEAT',connection_id=P.connection_id('y','HIST-F01/F6',['AVOIDED']),operator='revisit',found_via='GRAPH_ONLY',
+                    target_record='HIST-F01/F6',basis=['AVOIDED: vessel tracks'])]
+        logs={'S':self.write_log('connections-S.jsonl',s),'G':self.write_log('connections-G.jsonl',g)}
+        export=P.blind(self.snap,logs,'test-salt-0123456789',self.d/'blind.json',self.d/'key.json')
+        return export,logs
+
+    def test_blinding_hides_arms_and_adjudication_is_human_and_complete(self):
+        export,logs=self.blinded();text=json.dumps(export['items'])
+        self.assertEqual(len(export['items']),4)
+        for leak in ('DLC-GP1-S','DLC-GP1-G','SUG-','CON-','GRAPH_ONLY','ANALYST_READING','"arm"','DECLINED','complements','baseline-search'):
+            self.assertNotIn(leak,text)
+        self.assertEqual(len({tuple(sorted(i['from'])) for i in export['items'] if i['from']['kind']=='observation'}),1)  # one rendering for both arms
+        self.assertEqual(hashlib.sha256((self.d/'key.json').read_bytes()).hexdigest(),export['key_sha256'])
+        rel=next(i for i in export['items'] if i['to']['kind']=='relationship')
+        good=lambda i,**c:{'blind_id':i['blind_id'],'outcome':'REJECTED_TRIVIAL','economic_meaning':'NOT_MEANINGFUL','checked_evidence':[],
+                           'adjudicator':'Owner','adjudicator_kind':'HUMAN','adjudicator_minutes':2,'recorded_at_utc':DR.START.isoformat(),'notes':'',**c}
+        rows=[good(i) for i in export['items'] if i is not rel]
+        adj=self.write_log('adjudications.jsonl',rows)
+        with self.assertRaisesRegex(P.PilotError,'not adjudicated'):P.validate_adjudications(self.d/'blind.json',adj)
+        sha=rel['to']['evidence'][0]['sha256']
+        for change,why in (({'outcome':'CONFIRMED_AGAINST_ORIGINALS','checked_evidence':['f'*64]},'checked against'),({'adjudicator':'Claude'},'human'),
+                           ({'outcome':'MAYBE'},'invalid outcome')):
+            with self.assertRaisesRegex(P.PilotError,why):P.validate_adjudications(self.d/'blind.json',self.write_log('adjudications.jsonl',rows+[good(rel,**change)]))
+        self.write_log('adjudications.jsonl',rows+[good(rel,outcome='CONFIRMED_AGAINST_ORIGINALS',economic_meaning='MEANINGFUL',checked_evidence=[sha])])
+        live=dict(export,fixture='LIVE');(self.d/'live.json').write_text(json.dumps(live),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'human'):P.validate_adjudications(self.d/'live.json',self.write_log('fx.jsonl',[good(i,adjudicator_kind='SYNTHETIC_FIXTURE') for i in export['items']]))
+        rows=P.unblind(self.d)
+        self.assertEqual(sorted(r['arm'] for r in rows),['G','G','S','S'])
+        (self.d/'key.json').write_bytes((self.d/'key.json').read_bytes()+b' ')
+        with self.assertRaisesRegex(P.PilotError,'sealed'):P.unblind(self.d)
+
+    def test_blinding_refuses_endpoints_outside_the_arm_inputs(self):
+        self.arm('S');self.arm('G')
+        logs={'S':self.write_log('cs.jsonl',[self.log('S',target_record='DLC-GP1-G/OBS-1')]),'G':self.write_log('cg.jsonl',[])}
+        with self.assertRaisesRegex(P.PilotError,'outside the arm S inputs'):P.blind(self.snap,logs,'test-salt-0123456789',self.d/'b.json',self.d/'k.json')
+
+    def test_accounting_counts_all_time_and_flags_violations(self):
+        s,_=self.arm('S');g,_=self.arm('G')
+        eff=lambda i,cat,m,kind='ANALYST_TIME':DR.effort(f'EFF-{i}',cat,m,kind)
+        s.append('effort',eff(1,'READING',10));s.append('effort',eff(2,'GRAPH_QUERY',5))
+        s.append('effort',dict(eff(3,'READING',3),description='untagged'))
+        for i in range(11):s.append('effort',eff(10+i,'SOURCE_SEARCH',1,'SEARCH'))
+        acc=P.account(self.d/'S.jsonl','S')
+        self.assertEqual(acc['used']['analyst_minutes'],29);self.assertEqual(acc['used']['searches'],11)
+        self.assertEqual(sorted({v['code'] for v in acc['violations']}),['GRAPH_TIME_IN_STRUCTURED_ARM','OVER_CAMPAIGN_CEILING','UNCATEGORISED_EFFORT'])
+        g.append('effort',eff(1,'GRAPH_QUERY',10));g.append('effort',eff(2,'SUGGESTION_REVIEW',5));g.append('effort',eff(3,'READING',20))
+        acc=P.account(self.d/'G.jsonl','G')
+        self.assertEqual((acc['used']['analyst_minutes'],acc['graph_minutes'],acc['violations']),(35,15,[]))
+
+    def test_decision_rules_use_every_dimension(self):
+        def arm(**kw):
+            base={'analyst_minutes_all':120,'verified_connections':2,'verified_connections_per_hour':1.0,'graph_only_verified':0,
+                  'false_or_premature_joins_made':2,'median_minutes_per_connection':6,'median_minutes_to_decisive_falsification':60,
+                  'duplicate_research_avoided':0,'original_frozen_m_passes_per_hour':0.0,'review_burden_items':6,'adjudicator_minutes':12,
+                  'graph_suggestions_false_or_trivial':[0,0]}
+            return {**base,**kw}
+        better=[{'S':arm(),'G':arm(false_or_premature_joins_made=0,median_minutes_to_decisive_falsification=40,graph_suggestions_false_or_trivial=[3,8])}]*4
+        verdict,notes=P.classify(better)
+        self.assertEqual(verdict,'GRAPH_INCREMENT_OBSERVED')  # with zero graph-only connections in every pair
+        self.assertTrue(all(p['G']['graph_only_verified']==0 for p in better))
+        worse=[{'S':arm(),'G':arm(verified_connections=1,verified_connections_per_hour=0.5,false_or_premature_joins_made=3)}]*4
+        verdict,notes=P.classify(worse);self.assertEqual(verdict,'NO_GRAPH_INCREMENT_OBSERVED');self.assertIn('separate owner decision',notes[-1])
+        mixed=[{'S':arm(),'G':arm(false_or_premature_joins_made=0,median_minutes_per_connection=9,duplicate_research_avoided=0)}]*2+\
+              [{'S':arm(),'G':arm(median_minutes_per_connection=9,median_minutes_to_decisive_falsification=90)}]*2
+        self.assertEqual(P.classify(mixed)[0],'INCONCLUSIVE')
+        self.assertEqual(P.classify(better[:2])[0],'INCONCLUSIVE')
+        noisy=[{'S':p['S'],'G':dict(p['G'],graph_suggestions_false_or_trivial=[9,10])} for p in better]
+        self.assertEqual(P.classify(noisy)[0],'INCONCLUSIVE')
+        self.assertEqual(P.classify(better,['cross-arm access'])[0],'INVALID_CRITICAL_STOP')
+
+    def test_pilot_dry_run_record_is_current(self):
+        self.assertEqual(DR.check()['dry_run'],'PASS')
 
 
 if __name__=='__main__':unittest.main()

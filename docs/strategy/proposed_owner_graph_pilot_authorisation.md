@@ -1,4 +1,4 @@
-# PROPOSED owner authorisation: first Discovery Lab + Graph v1 pilot
+# PROPOSED owner authorisation: first Discovery Lab + Graph v1 pilot (revision 2)
 
 > **STATUS: PROPOSED, NOT ACTIVE.** This document authorises nothing in its current form.
 >
@@ -6,12 +6,13 @@
 >
 > **What still requires that activation:** every source request, campaign ledger, search query or packet freeze.
 
-This pilot executes the [pre-registration](graph_pilot_preregistration.md). The reasons for the pilot are set out in the [review](graph_v1_review.md).
+This pilot executes the [pre-registration, revision 2](graph_pilot_preregistration.md). The reasons for the pilot are in the [review](graph_v1_review.md), and its corrections in the [protocol instruction](owner_graph_pilot_protocol_2026-10-21.md). Every command in section 6 ran against the implemented CLI in the [synthetic dry run](graph_pilot_dry_run.md).
 
 ## 1. Scope
 
-- **Pilot size:** 4 starting packets, one per Discovery Lab method, × 2 arms (S: structured-ledger search; G: structured search plus Graph v1) = **8 campaigns**, plus **4 packet-freeze steps**.
-- **Campaign records:** campaigns are `LIVE` Discovery Lab ledgers under `docs/strategy/discovery/pilot/S/` and `docs/strategy/discovery/pilot/G/`, with `acquisition_authorized: true` and this activated document as the authority.
+- **Pilot size:** 4 starting packets (one per Discovery Lab method) × 2 arms (S: structured-ledger search; G: structured search plus Graph v1) = **8 campaigns**, plus **4 packet-freeze steps**. No separate operational shakedown is proposed: the synthetic dry run already exercises every command, and a live shakedown would spend source budget without testing anything the dry run does not.
+- **Records:** packet and campaign ledgers are `LIVE` Discovery Lab ledgers under `docs/strategy/graph_pilot/<packet>/`, with `acquisition_authorized: true` and this activated document as their authority. That directory is outside default ledger discovery.
+- **Branches:** arm ledgers and connection logs live on branches `graph-pilot/<packet>-<arm>` until all eight campaigns and their adjudications finish.
 - **Prohibited throughout:**
   - market data, security prices or returns, backtests, trading or brokerage;
   - paid sources, account creation, credentials or authenticated requests;
@@ -20,7 +21,7 @@ This pilot executes the [pre-registration](graph_pilot_preregistration.md). The 
   - any experiment registration, Store transition or change to EXP001–EXP007;
   - any automatic follow-on pilot.
 
-## 2. Budgets
+## 2. Budgets (proposed maximums, not a standing allowance)
 
 | Unit | Analyst minutes | Ordinary source starts | Search queries | External response bytes |
 |---|---:|---:|---:|---:|
@@ -29,34 +30,30 @@ This pilot executes the [pre-registration](graph_pilot_preregistration.md). The 
 | **Pilot ceiling** | **18 hours** | **60** | **92** | **88 MiB** |
 
 **Budget accounting:**
-- **Graph time:** graph querying and suggestion review count inside the 120 campaign minutes. No extension is permitted.
-- **Unused budget:** a campaign's unused budget does not transfer to another campaign, arm or packet.
-- **Unknown costs:** an unknown cost is recorded as UNKNOWN. It does not count as headroom.
+- **Graph time** (querying, suggestion review and follow-up) counts inside the 120 campaign minutes. No extension is permitted.
+- **Unused budget** does not transfer between campaigns, arms or packets.
+- **Unknown costs** are recorded as UNKNOWN; they never count as headroom.
+- **Owner time** as operator or adjudicator is recorded separately and is not part of the arm budgets.
 
 ## 3. Source selection rules
 
-**Eligible packet source environments:**
-- free, public and unauthenticated;
-- published by the original body (regulator, court, agency or issuer filing system);
-- carrying dated records with stable identifiers;
-- with terms that permit retrieval;
-- not on the stop list in section 4.
-
 **Packet rule (decided before any inspection):**
-- **Order of trial:** for each method, take the first eligible environment in the shortlist below, in listed order.
-- **Probe:** the packet-freeze step makes one landing or data request. HTTP 200 qualifies the environment. Any other status stops that environment, counts against the freeze budget, and moves to the next listed environment, with no retry.
-- **Window:** the packet window is the most recent complete calendar quarter that ended at least 12 months before activation.
-- **Records:** the first records in the window matching the method's entry rule (an observation, a documented relationship, an event, or the stated mechanism) form the packet, up to the freeze budget.
-- **Neutrality:** packets are never chosen by overlap with historical memory, by expected outcome or by prices.
+1. **Window:** the most recent complete calendar quarter that ended at least 12 months before activation.
+2. **Probe:** one request per environment, to the exact route fixed in the shortlist. The environment is eligible only if the response meets all eight criteria E1–E8 of the pre-registration: original publisher, open access, complete usable response, at least 3 dated records in the window, stable identifiers, the method's required fields, no persisted stop, and the publisher's own records. **HTTP 200 alone does not qualify.**
+3. **Fallback:** if any criterion fails, record which one and probe the second environment, with no retry. If both fail, that method's packet is NOT_FORMED and is reported. No third environment is tried.
+4. **Selection:** take the qualifying records sorted by record date, then identifier, and keep the first five (or all, if three or four qualify). The packet preparer reads nothing beyond the eligibility fields before selection.
+5. **Neutrality:** packets are never chosen by overlap with historical memory, by expected outcome or by prices.
 
-**Proposed shortlist.** Unverified environments; the owner may amend this before activation.
+**Proposed shortlist.** These environments are unverified. Before activation the owner fixes, for each one, the exact route, the required field names and confirmation of the terms.
 
 | Method | First choice | Second choice |
 |---|---|---|
-| Observation-first | [US EPA ECHO enforcement case data] | [US PHMSA pipeline incident data] |
-| Relationship-first | [SEC EDGAR material-contract exhibits (EX-10) filed in the window] | [FERC eLibrary contract filings] |
-| Event-first | [openFDA device recall records] | [OSHA inspection and citation records] |
+| Observation-first | [US EPA ECHO facility enforcement data service (echo.epa.gov), exact route to be fixed] | [US PHMSA pipeline incident data, exact route to be fixed] |
+| Relationship-first | [SEC EDGAR full-text search for material-contract exhibits (EX-10) filed in the window] | [FERC eLibrary contract filings, exact route to be fixed] |
+| Event-first | [openFDA device recall endpoint] | [OSHA inspection data, exact route to be fixed] |
 | Hypothesis-first | [Owner-written mechanism statement, committed at activation, not previously investigated in Research OS] | [Second owner-written mechanism] |
+
+The ECHO data service is a different host and route from the stopped EPA report PDF (`www.epa.gov/system/files/...`). The owner should confirm this before activation.
 
 **Within a campaign:**
 - **Which sources:** an arm may request further sources only to investigate its packet's records and the claims it forms. It must not run unrelated discovery.
@@ -88,51 +85,70 @@ This pilot executes the [pre-registration](graph_pilot_preregistration.md). The 
 - **Denials:** any 403, 404, other denial, CAPTCHA, login wall or timeout stops that host and route for the rest of the pilot. There are no retries, mirrors or bypasses.
 - **Ceilings:** reaching a campaign or pilot ceiling stops dispatch immediately.
 
-## 5. Activation conditions
+## 5. Activation decision
 
-Before the first request, the owner confirms these in the activated text:
-1. **Shortlist:** the source shortlist (as amended) and the two hypothesis-first mechanism statements.
-2. **Retrieval method:** source retrieval uses the existing manual receipt practice. Alternatively, the owner separately authorises a small bounded fetch utility, built and reviewed before activation. **Recommended:** the utility, to make receipts exact.
-3. **Adjudicator and blinding:** the adjudicator (the owner) and the blinding procedure in the pre-registration.
-4. **Decision rules:** the proposed decision rules, or the owner's replacements.
+The owner decides, in the activated text:
+
+1. **Go or no-go** for the full four-packet, eight-campaign pilot under these ceilings, or a smaller number of packets.
+2. **Shortlist:** the exact routes, field names and terms confirmation for each environment, and the two hypothesis-first mechanism statements.
+3. **Retrieval method:** existing manual receipt practice, or a separately authorised small bounded-fetch utility, built and reviewed before activation. **Recommended:** the utility, to make receipts exact.
+4. **Roles:** that the owner acts as operator and adjudicator, under the pre-registration's separation and blinding procedure, accepting its stated residual leakage.
+5. **Decision rules:** the proposed multi-dimensional classification, or the owner's replacements, fixed before any packet is frozen.
 
 ## 6. Commands, valid only after activation
 
+Every pilot command below (packet freeze, arm, blinding and report) ran in the [dry run](graph_pilot_dry_run.md) with temporary paths in place of these. The preflight lines are the repository's standard checks. Angle brackets mark private locations.
+
 ```sh
-# Preflight (records the starting state in the pilot receipt)
+# Preflight (record in the pilot receipt)
 git status && git log -1 --format=%H
 python -m unittest discover -s tests -v
 python -m src.research.public_checks
-python -m src.research.graph build --check                        # record the memory digest
+python -m src.research.graph pilot dry-run --check
+python -m src.research.graph build --check                    # record the memory digest
 
-# Per campaign: ARM is S or G; LEDGER is docs/strategy/discovery/pilot/ARM/DLC-...jsonl
-python -m src.research.discovery template campaign > campaign.json  # fixture LIVE, method, acquisition_authorized true,
-                                                                    # authority = activated document, budget = section 2
-python -m src.research.discovery init LEDGER campaign.json
-python -m src.research.discovery add LEDGER source|observation|relationship|candidate|review|disposition|effort RECORD.json
-python -m src.research.discovery freeze LEDGER CAND-ID
-python -m src.research.discovery checklist LEDGER CAND-ID
+# Packet freeze (packet preparer); P is P1..P4. Commit the snapshot before any arm starts.
+python -m src.research.discovery init docs/strategy/graph_pilot/P/packet.jsonl CAMPAIGN.json
+python -m src.research.discovery add docs/strategy/graph_pilot/P/packet.jsonl source|observation RECORD.json
+python -m src.research.graph pilot snapshot docs/strategy/graph_pilot/P/snapshot.json --packet P \
+    --packet-ledger docs/strategy/graph_pilot/P/packet.jsonl \
+    --arm-ledger S docs/strategy/graph_pilot/P/S.jsonl DLC-GP-S --arm-ledger G docs/strategy/graph_pilot/P/G.jsonl DLC-GP-G \
+    --bundle data/raw/graph_pilot_<date>/P/bundle
 
-# Structured arm (S): no graph operators
-python -m src.research.graph baseline-search DLC-ID OBS-ID --ledgers docs/strategy/discovery/pilot/S/*.jsonl --known-at START_UTC
+# Each arm, in its own worktree at the snapshot commit (ARM is S or G); first verify the starting inputs
+python -m src.research.graph pilot verify docs/strategy/graph_pilot/P/snapshot.json --bundle <bundle copy>
+python -m src.research.discovery init docs/strategy/graph_pilot/P/ARM.jsonl CAMPAIGN.json
+python -m src.research.discovery add docs/strategy/graph_pilot/P/ARM.jsonl source|observation|relationship|candidate|effort RECORD.json
+python -m src.research.discovery freeze docs/strategy/graph_pilot/P/ARM.jsonl CAND-ID
+SNAP="--snapshot docs/strategy/graph_pilot/P/snapshot.json --arm ARM"    # --query-at defaults to now
 
-# Graph arm (G): the same baseline-search over pilot/G/*.jsonl, plus:
-python -m src.research.graph revisit DLC-ID --ledgers docs/strategy/discovery/pilot/G/*.jsonl --known-at START_UTC
-python -m src.research.graph complements OBS-ID --ledgers docs/strategy/discovery/pilot/G/*.jsonl --known-at START_UTC
-python -m src.research.graph same-gap REQ_... --ledgers docs/strategy/discovery/pilot/G/*.jsonl
-python -m src.research.graph explain NODE_A NODE_B --ledgers docs/strategy/discovery/pilot/G/*.jsonl
-python -m src.research.graph suggestions DLC-ID --ledgers docs/strategy/discovery/pilot/G/*.jsonl --known-at START_UTC > suggestions.json
+# Structured arm (S): baseline-search only
+python -m src.research.graph baseline-search DLC-GP-S OBS-ID $SNAP
+# Graph arm (G): the same baseline-search, plus graph operators
+python -m src.research.graph revisit OBS-ID $SNAP
+python -m src.research.graph complements OBS-ID $SNAP
+python -m src.research.graph suggestions DLC-GP-G $SNAP
+python -m src.research.graph same-gap REQ_... $SNAP
+python -m src.research.graph explain NODE_A NODE_B $SNAP
+python -m src.research.graph pilot connections docs/strategy/graph_pilot/P/connections-ARM.jsonl --arm ARM
+python -m src.research.graph pilot account docs/strategy/graph_pilot/P/snapshot.json --arm ARM
 
-# After both arms of a packet: blinded adjudication, then validation and summaries
-python -m src.research.graph adjudications docs/strategy/discovery/pilot/adjudication_log.jsonl
-python -m src.research.discovery compare docs/strategy/discovery/pilot/S/*.jsonl docs/strategy/discovery/pilot/G/*.jsonl
-python -m src.research.discovery validate docs/strategy/discovery/pilot/S/*.jsonl docs/strategy/discovery/pilot/G/*.jsonl
+# After both arms of the packet finish (blind preparer, then owner)
+python -m src.research.graph pilot blind docs/strategy/graph_pilot/P/snapshot.json \
+    --log S docs/strategy/graph_pilot/P/connections-S.jsonl --log G docs/strategy/graph_pilot/P/connections-G.jsonl \
+    --salt SALT --out docs/strategy/graph_pilot/P/blind.json --key data/raw/graph_pilot_<date>/P/key.json
+python -m src.research.graph pilot adjudications docs/strategy/graph_pilot/P/blind.json docs/strategy/graph_pilot/P/adjudications.jsonl
+# commit the adjudications; copy the key to docs/strategy/graph_pilot/P/key.json; record dispositions with [DECISIVE:ID]
+
+# After all packets
+python -m src.research.discovery validate docs/strategy/graph_pilot/*/S.jsonl docs/strategy/graph_pilot/*/G.jsonl
+python -m src.research.graph pilot report docs/strategy/graph_pilot/P1 docs/strategy/graph_pilot/P2 docs/strategy/graph_pilot/P3 docs/strategy/graph_pilot/P4
 ```
 
-**Always pass `--ledgers` for the running arm.** The default ledger discovery would include both arms.
+**Every graph query passes `--snapshot` and `--arm`.** The tool refuses `--ledgers`, `--known-at`, `--catalogue` and `--mode` alongside a snapshot, and refuses every graph operator for arm S.
 
 ## 7. Deliverables after the pilot
 
-- **Records:** campaign ledgers, the adjudication log, the pilot receipt (requests, bytes, minutes by category, deviations) and a report.
-- **Report content:** Q1 descriptive results per method; Q2 paired results per packet, with every denominator; and the decision under the confirmed rules.
+- **Records:** packet and campaign ledgers, snapshots, connection logs, blinded exports, adjudication logs, unsealed keys, the pilot receipt (requests, bytes, minutes by category, deviations) and a report.
+- **Report content:** Q1 descriptive results per method; Q2 paired results per packet on every dimension, with every denominator; the classification under the confirmed rules; and the residual blinding limits.
 - **Stop point:** no further pilot, acquisition or economic test follows automatically.

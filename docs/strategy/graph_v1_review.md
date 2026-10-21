@@ -10,6 +10,8 @@ It found and corrected four real defects:
 - **Evaluation inputs:** the evaluation depended on the real catalogue.
 - **Baseline:** the baseline was a substring search with no period check, and the pilot export gave the baseline less memory than the graph.
 
+**Follow-up:** the pilot protocol was corrected in [revision 2](graph_pilot_preregistration.md) under a [later instruction](owner_graph_pilot_protocol_2026-10-21.md). It fixes the `--known-at` cutoff, carry-over between arms, blinding, decision rules and packet eligibility; see its corrections table.
+
 [Owner instruction](owner_graph_pilot_preflight_2026-10-21.md) · [Pilot pre-registration (proposed)](graph_pilot_preregistration.md) · [Proposed owner authorisation (not active)](proposed_owner_graph_pilot_authorisation.md) · [Catalogue V002](graph/research_memory_catalogue_v002.json) · [Validation](graph_v1_review_validation.json)
 
 ## 1. Historical requirement mappings

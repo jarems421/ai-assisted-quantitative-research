@@ -4,14 +4,12 @@ Inputs are declared and isolated: three synthetic ledgers plus a fixture require
 historical catalogue, report or discovered ledger is read, and the report records the declared
 inputs' hashes. The task set and ground truth were written with the fixtures, before any system
 ran. Synthetic results show operational behaviour only, never research superiority. This module
-also holds the suggestion export and adjudication-log validation for a later, separately
-authorised prospective pilot; it runs no pilot.
+also holds the suggestion export used by a later, separately authorised prospective pilot; it runs
+no pilot.
 """
 from __future__ import annotations
 
 import hashlib
-import json
-import re
 import time
 from pathlib import Path
 
@@ -121,21 +119,10 @@ def markdown(report):
     return '\n'.join(lines)
 
 
-# -- prospective pilot hooks (no pilot is run) ----------------------------------------------------
-
-FOUND_VIA = ('GRAPH_ONLY', 'BASELINE_SEARCH_DISCOVERABLE', 'ANALYST_EXTRA_TIME', 'BOTH')
-OUTCOMES = ('CONFIRMED_AGAINST_ORIGINALS', 'PLAUSIBLE_UNVERIFIED', 'REJECTED_FALSE', 'REJECTED_TRIVIAL', 'NOT_REVIEWED')
-ARMS = ('STRUCTURED', 'GRAPH')
-LOG_KEYS = ('suggestion_id', 'arm', 'operator', 'found_via', 'outcome', 'analyst_minutes', 'arm_time_budget_minutes', 'adjudicator',
-            'recorded_at_utc', 'discovery_lab_record', 'notes')
+# -- prospective pilot hook (no pilot is run; see pilot.py for snapshots, logs and blinding) ---------------
 
 
-def connection_id(source, target, basis):
-    """Deterministic id for a connection an arm logs itself (graph suggestions keep their SUG- ids)."""
-    return 'CON-' + digest({'from': source, 'to': target, 'basis': sorted(basis)})[:12]
-
-
-def export_suggestions(g, target, ledgers, catalogue=None, known_at=None):
+def export_suggestions(g, target, ledgers, catalogue=None, known_at=None, cuts=None):
     """Graph suggestions for a target, each flagged with whether competent structured search over the SAME
     knowledge (the same ledgers, plus the same catalogue when the graph includes memory) would also find it."""
     view, out = View(), []
@@ -143,7 +130,7 @@ def export_suggestions(g, target, ledgers, catalogue=None, known_at=None):
     obs = O.records_of(g, node) if g.nodes[node]['kind'] == 'campaign' else [node]
     for o in [x for x in obs if g.nodes[x]['kind'] == 'observation']:
         campaign, oid = o.split(':', 1)[1].rsplit('@', 1)[0].split('/')
-        found = B.structured_search(ledgers, campaign, oid, catalogue if g.catalogue else None, known_at)
+        found = B.structured_search(ledgers, campaign, oid, catalogue if g.catalogue else None, known_at, cuts)
         discoverable = set(found['claims']) | {c['record'] for c in found['contexts']} | {f'HIST:{k}' for k in found['catalogue']}
         for r in O.revisit(g, o, view)['results'] + O.complements(g, o, view)['results']:
             key = r['match'].split(':', 1)[1].rsplit('@', 1)[0]
@@ -152,24 +139,3 @@ def export_suggestions(g, target, ledgers, catalogue=None, known_at=None):
                         'target': r['target'], 'match': r['match'], 'match_bases': r['match_bases'],
                         'baseline_structured_discoverable': key in discoverable or (hist is not None and f'HIST:{hist}' in discoverable)})
     return out
-
-
-def validate_log(path):
-    """Validate an adjudication log (JSONL). Returns counts; raises ValueError on an invalid line."""
-    counts = {}
-    for n, line in enumerate(Path(path).read_text(encoding='utf-8').splitlines(), 1):
-        r = json.loads(line)
-        if tuple(sorted(r)) != tuple(sorted(LOG_KEYS)):raise ValueError(f'line {n}: fields must be exactly {LOG_KEYS}')
-        if not re.fullmatch(r'(SUG|CON)-[0-9a-f]{12}', r['suggestion_id']):raise ValueError(f'line {n}: invalid suggestion/connection id')
-        if r['arm'] not in ARMS:raise ValueError(f'line {n}: arm must be one of {ARMS}')
-        if r['arm'] == 'STRUCTURED' and (r['found_via'] in ('GRAPH_ONLY', 'BOTH') or r['suggestion_id'].startswith('SUG-')):
-            raise ValueError(f'line {n}: the structured arm has no graph suggestions')
-        if r['found_via'] not in FOUND_VIA or r['outcome'] not in OUTCOMES:raise ValueError(f'line {n}: invalid found_via/outcome')
-        if r['analyst_minutes'] != 'UNKNOWN' and (not isinstance(r['analyst_minutes'], (int, float)) or r['analyst_minutes'] < 0):
-            raise ValueError(f'line {n}: analyst_minutes must be a non-negative number or UNKNOWN')
-        if r['outcome'] == 'CONFIRMED_AGAINST_ORIGINALS' and not r['discovery_lab_record']:
-            raise ValueError(f'line {n}: a confirmed connection must cite the Discovery Lab record that now holds it')
-        if not r['adjudicator'] or r['adjudicator'].lower().startswith(('claude', 'assistant')):
-            raise ValueError(f'line {n}: adjudication is a human decision')
-        counts[r['outcome']] = counts.get(r['outcome'], 0) + 1
-    return counts

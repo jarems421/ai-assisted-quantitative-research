@@ -15,7 +15,7 @@ from src.research.discovery.ledger import Ledger
 from src.research.discovery.review import covered
 from src.research.discovery import records as R
 from src.research.graph import model as M
-from src.research.graph.project import parse_time, state_at
+from src.research.graph.project import cut_state, parse_time, state_at
 
 CONTENT_ROLES = ('evidence',)
 
@@ -34,11 +34,13 @@ def content_hashes(record, kind):
     return {ev['sha256'] for ev in items if ev.get('sha256')}
 
 
-def load_states(ledgers, known_at=None):
+def load_states(ledgers, known_at=None, cuts=None):
+    """Replayed ledgers, cut at one known-at time or at each ledger's own prefix (the same cuts the graph uses)."""
     cutoff = parse_time(known_at) if known_at else None
     states = {}
     for path in ledgers:
-        s = state_at(Ledger(path).load(), cutoff)
+        full = Ledger(path).load()
+        s = cut_state(full, cuts[str(Path(path))])[0] if cuts is not None else state_at(full, cutoff)
         if s is not None:states[s.campaign['id']] = s
     return states
 
@@ -50,10 +52,11 @@ def target_terms(s, oid):
     return o, o['entity']['id'], content_hashes(o, 'observation'), tags
 
 
-def structured_search(ledgers, campaign, oid, catalogue=None, known_at=None):
+def structured_search(ledgers, campaign, oid, catalogue=None, known_at=None, cuts=None):
     """Claims and context in other campaigns (and historical catalogue entries) connected by exact structure."""
-    states = load_states(ledgers, known_at)
-    if campaign not in states:raise ValueError(f'{campaign} is not recorded at the known-at time')
+    states = load_states(ledgers, known_at, cuts)
+    if campaign not in states:raise ValueError(f'{campaign} is not recorded in the visible inputs at the known-at or query time')
+    if states[campaign].latest('observation', oid) is None:raise ValueError(f'{campaign}/{oid} is not recorded at the query time')
     o, ident, hashes, tags = target_terms(states[campaign], oid)
     moment = R.when(o['clocks']['economic_occurrence']['value'], 'occurrence')
     result = {'observation': f'{campaign}/{oid}', 'claims': {}, 'contexts': [], 'excluded_contexts': [], 'catalogue': {},
