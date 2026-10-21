@@ -1,0 +1,166 @@
+{
+  "version": "DISCOVERY_BOTTLENECK_VALIDATION_V001",
+  "recorded_at_utc": "2026-10-21T06:14:37.149312+00:00",
+  "source_receipt": "discovery_bottleneck_receipt.json",
+  "source_receipt_sha256": "39c6dbf85337c55d2c37398c2c03991c40ae08096a7bbb690ef02d49e1f6e052",
+  "report_sha256": "6dde96fd23500fd01cbdd61228e7f382262db951ea95244043bef8ef94194c73",
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "started_at_utc": "2026-10-21T06:13:06.736314+00:00",
+      "finished_at_utc": "2026-10-21T06:13:36.953603+00:00",
+      "returncode": 0,
+      "log_sha256": "25116b4887ba69c54bde7ac37a0edaee62aea42efbb0976a13d52cea5d058399",
+      "tests": 485,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research.public_checks"
+      ],
+      "started_at_utc": "2026-10-21T06:13:36.954401+00:00",
+      "finished_at_utc": "2026-10-21T06:13:42.713784+00:00",
+      "returncode": 0,
+      "log_sha256": "1c4054179b62ebbefbd7aa73382da4856b7b68f99f69b4d87d5d59d4849b1440",
+      "tests": 257,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.presentation.exp001",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-21T06:13:42.714566+00:00",
+      "finished_at_utc": "2026-10-21T06:13:43.964871+00:00",
+      "returncode": 0,
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research",
+        "audit",
+        "EXP004"
+      ],
+      "started_at_utc": "2026-10-21T06:13:43.965570+00:00",
+      "finished_at_utc": "2026-10-21T06:13:44.164141+00:00",
+      "returncode": 0,
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research.exp004_execution_gap_report",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-21T06:13:44.164759+00:00",
+      "finished_at_utc": "2026-10-21T06:13:44.457665+00:00",
+      "returncode": 0,
+      "log_sha256": "64877d6dbac62922a24916bcbcb3a1d6c86f7ded4b936a87d906dd6f6ff6d536",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        ".research\\discovery_bottleneck_20261021\\audit.py"
+      ],
+      "started_at_utc": "2026-10-21T06:13:44.458342+00:00",
+      "finished_at_utc": "2026-10-21T06:13:44.671905+00:00",
+      "returncode": 0,
+      "log_sha256": "f679ba3a30f8e8454a9d89bf1c9197e639241969f34355f94eb1d1fe43611be2",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-21T06:13:44.672602+00:00",
+      "finished_at_utc": "2026-10-21T06:13:44.764328+00:00",
+      "returncode": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests": null,
+      "skipped": []
+    }
+  ],
+  "local_tests": 485,
+  "public_tests": 257,
+  "skipped": 0,
+  "presentation_artifacts": 6,
+  "offline_evidence": {
+    "response_receipt_body_hash_checks": 18,
+    "nonempty_body_deliveries": 16,
+    "projection_source_hash_links": 13,
+    "two_candidate_scope_preserved": true,
+    "network": "SOCKETS_BLOCKED",
+    "private_helpers": [
+      {
+        "name": "fetch.py",
+        "sha256": "676a103cafde3a32e5c3bc1ab6eb81ae7906dc585c692e83a14efada4cec3ff7"
+      },
+      {
+        "name": "extract.py",
+        "sha256": "339dcf1fa71ff5a7f0ea66f2b2aa583fd597c1df33aee1982a957577afb40526"
+      },
+      {
+        "name": "audit.py",
+        "sha256": "f9086ddc1f91f81a10073352aed8fbcaaed1a2fe64eac9744dd91582251c7ae8"
+      },
+      {
+        "name": "receipt.py",
+        "sha256": "fca7ecda77814f1cb4eba17dc8cfb20f45658be3758f8ceb073274e6b40cdf29"
+      },
+      {
+        "name": "checks.py",
+        "sha256": "376f20862bb9e398baee3900781d2bd0da79e907003e3725513dc078917188e8"
+      }
+    ]
+  },
+  "preservation": {
+    "starting_head": "fbf50fb8705ebecbf215e63a289e210d40bc9b26",
+    "baseline_tracked_files": 708,
+    "unchanged_count": 704,
+    "changed_living_guidance": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "src/presentation/README.template.md"
+    ],
+    "baseline_inventory_sha256": "6f9c19fa3e16567a6f307db096c0a0af3145a18e02e2940a44b981a26baa2c03",
+    "new_research_code_dependencies_tests": 0,
+    "unrelated_untracked_preserved": [
+      ".mcp.json",
+      ".vscode/",
+      "check_catalog.py"
+    ],
+    "raw_history_note": "No earlier source archives were targeted for writes. Regression suite uses already-opened EXP001 records; no new scientific acquisition or held-out access."
+  },
+  "document_checks": {
+    "relative_links_checked": 4,
+    "markdown_fences": "PASS",
+    "JSON_parsing": "PASS"
+  },
+  "scientific_limits": "Delivery validation only. No economic test, independent event census, historically actionable signal, new experiment or executable investment result.",
+  "delivery": "Final commit/push/hosted CI reported separately after this receipt; no claim of completion by receipt alone."
+}

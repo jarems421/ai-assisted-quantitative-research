@@ -1,0 +1,642 @@
+{
+  "version": "DISCOVERY_BOTTLENECK_OBSERVABILITY_V001",
+  "review_date": "2026-10-21",
+  "starting_head": "fbf50fb8705ebecbf215e63a289e210d40bc9b26",
+  "owner_instruction_sha256": "49e5121ee036efee222d4061746dd4b8fb746e8d7379dab49286cdd9d0179ace",
+  "plan": "discovery_bottleneck_plan.json",
+  "addendum": "discovery_bottleneck_source_addendum.json",
+  "pushed_checkpoints": [
+    "4a0440a",
+    "3efb7d4"
+  ],
+  "review_started_utc": "2026-10-21T05:53:57+00:00",
+  "sources_closed_at_utc": "2026-10-21T06:09:30.213832+00:00",
+  "conservative_shared_elapsed_seconds": 933.213832,
+  "selection": {
+    "economic_pilot": "NONE",
+    "next_measurement_priority": "F19",
+    "recommended_strategy_move": 2,
+    "note": "A sharply targeted source check is recommended; neither an investment advantage nor a qualified predictor/outcome pair is demonstrated."
+  },
+  "counts": {
+    "F19": {
+      "starts": 11,
+      "responses": 11,
+      "response_bytes": 27270887,
+      "statuses": {
+        "200": 10,
+        "403": 1
+      },
+      "complete_body_deliveries": 8,
+      "metadata_only_size_stops": 2,
+      "incomplete_nonempty_prefixes": 1,
+      "unspent_starts": 14,
+      "automatic_retries": 0,
+      "state": "PUBLIC_MEASUREMENT_ROUTE_IDENTIFIED; TARGETED_VERIFICATION_REQUIRED",
+      "stop_sha256": "f00da703625bd742aca8b61cb6cbf40b1f549721a16c30bc5c82afb3e3d86e31"
+    },
+    "F09": {
+      "starts": 7,
+      "responses": 7,
+      "response_bytes": 1350738,
+      "statuses": {
+        "200": 7
+      },
+      "complete_body_deliveries": 7,
+      "metadata_only_size_stops": 0,
+      "incomplete_nonempty_prefixes": 0,
+      "unspent_starts": 18,
+      "automatic_retries": 0,
+      "state": "DISTINCTIVE_EXPOSURE_AMOUNT_INACCESSIBLE_IN_CHECKED_PUBLIC_RECORD",
+      "stop_sha256": "9b9c3542fd541dd4bc52cb0b14603038c04eab9d0fe218ecd28de834dea4437a"
+    }
+  },
+  "combined_original_response_bytes": 28621625,
+  "remaining_original_response_bytes": 2835655,
+  "minimum_ordinary_start_spacing_seconds": 1.050057,
+  "browser": {
+    "tool_calls": 11,
+    "search_queries": 40,
+    "direct_opens": 4,
+    "underlying_wire_fetch_retries": "UNKNOWN",
+    "failures": [
+      "UKAS explanatory policy direct opening returned 403; original indexed publisher text supports only documentation-level facts."
+    ],
+    "note": "Search/index snippets are discovery evidence, not archived original annual statement rows. No denied original was retrieved through the browser. Incidental later market/bond/shareholder snippets were not used as research outcomes."
+  },
+  "original_observations": {
+    "F19_Aetna": {
+      "sources": [
+        "F19:006",
+        "F19:011"
+      ],
+      "record": "2017 Q2 Form 10-Q, printed pp.31–32",
+      "period_end": "2017-06-30",
+      "filing_date": "2017-08-03",
+      "accepted_time_as_displayed_timezone_unverified": "2017-08-03 16:26:49",
+      "reported_Penn_Treaty_discounted_liability_and_pretax_expense_USD_millions": 231,
+      "reported_undiscounted_liability_USD_millions": 347,
+      "reported_discount_rate_percent": 3.5,
+      "reported_premium_tax_offset_asset": "No asset for expected premium tax offsets for in-force business because amount was not material; not a claim of zero future recovery.",
+      "historical_recovery_statement": "Historically more than half of assessments ultimately recovered through premium-tax offsets; not a forecast for this liability.",
+      "status": "VERIFIED_ISSUER_DISCLOSURE; NOT_A_NEW_CAUSAL_OR_FORECAST_ESTIMATE"
+    },
+    "F19_Voya_quarter": {
+      "source": "F19:007",
+      "record": "Same named legal insurer March 31 2018 statement, PDF pp.2 and 15",
+      "reported_guaranty_funds_receivable_or_on_deposit_USD": {
+        "2018-03-31": 9407518,
+        "2017-12-31": 9406010
+      },
+      "note14": "Only section F all-other-contingencies is supplied; no detailed assessment/credit-utilization reconciliation.",
+      "status": "VERIFIED_BALANCE_FIELD; ANNUAL_UTILIZATION_NOT_RETRIEVED",
+      "not_permitted": "Do not infer cash tax credits used from the difference between these two book balances."
+    },
+    "F19_Voya_parent": {
+      "source": "F19:008",
+      "source_extent": "INCOMPLETE_ORIGINAL_PREFIX, 12582913 bytes, not complete filing or its full-object hash",
+      "present_sections": [
+        "Historical named subsidiary and dividends table printed pp.134–135",
+        "Guaranty-fund footnote printed p.318"
+      ],
+      "reported_2017_footnote_USD_millions": {
+        "undiscounted_guaranty_liability": 6,
+        "future_premium_tax_credit_asset": 19
+      },
+      "limitations": [
+        "Group scope, held-for-sale/discontinued operations and statutory-versus-GAAP treatment not fully reconciled.",
+        "Do not transfer the subsidiary balance or group footnote to Aetna.",
+        "Tax assets can arise from already paid assessments; asset larger than remaining liability is not a profit or negative cash burden."
+      ]
+    },
+    "F19_annual_metadata": {
+      "sources": [
+        "F19:004",
+        "F19:005"
+      ],
+      "declared_original_bytes": {
+        "2017": 35879217,
+        "2018": 40190198
+      },
+      "downloaded_body_bytes": 0,
+      "status": "SIZE_LIMIT_ONLY; NO_ACCESS_DENIAL",
+      "combined_declared_bytes": 76069415,
+      "annual_utilization_rows": "VISIBLE_IN_PUBLISHER_INDEXED_EXCERPTS_ONLY; NOT_ADOPTED_AS_ORIGINAL_ROW_OBSERVATIONS"
+    },
+    "F19_accounting": {
+      "source": "F19:001",
+      "record": "Original NAIC Issue Paper 143R, historical guidance/exhibits; relevant pp.7–10 and 37–40",
+      "verified": [
+        "Annual asset reconciliation must identify component increases/decreases and amounts charged off.",
+        "LTC insolvency-specific disclosures include discounted/undiscounted assessments and related assets, jurisdictions and weighted payment/recovery years.",
+        "Historical revisions allow expected short-term-health renewals for certain statutory assets, diverging from GAAP treatment."
+      ],
+      "limit": "This is not a current tax-law entitlement certificate, a state allocation dataset or proof that every insurer supplies adequate separate cash outcomes."
+    },
+    "F09_Mattel": {
+      "sources": [
+        "F09:001",
+        "F09:007"
+      ],
+      "record": "Publicly redacted SEC correspondence dated/accepted August 16 2018; first public correspondence-release time not established",
+      "counterparty": "Toys R Us US/Canada Chapter 11 September 2017 and US liquidation March 2018",
+      "verified": [
+        "September 19 2017 general court permission was discretionary, not all vendors entitled to payment.",
+        "September 29 2017 signed Mattel term sheet covered prepetition receivables and new shipments; scheduled collections reported.",
+        "2017 third-quarter gross-sales/receivable reversal approximately USD47m.",
+        "2018 first-quarter receivable write-off approximately USD87m, comprising USD30m current-quarter sales reversal and USD57m bad-debt expense."
+      ],
+      "essential_redactions": [
+        "Opening US/Canada receivables at petition",
+        "Remaining prepetition balance before filing 2017 annual report",
+        "Cumulative global cash collections through liquidation",
+        "Additional Canadian account detail"
+      ],
+      "redaction_marker_occurrences_including_intro": 5,
+      "missing": [
+        "Full term sheet/conditions and amounts",
+        "Separate protected prepetition versus later trade-credit exposure amounts",
+        "Contemporaneous public clock for detailed protection terms"
+      ],
+      "status": "EXISTENCE_AND_MATERIAL_LOSS_DISCLOSURES_VERIFIED; EXACT_NET_PROTECTED_EXPOSURE_INACCESSIBLE_HERE",
+      "not_permitted": "Later write-off does not prove that the protected prepetition claim itself went unpaid; Hasbro absence of an agreement in inspected sources does not mean unprotected."
+    },
+    "F09_Hasbro": {
+      "source": "F09:006",
+      "record": "Issuer full-year 2018 earnings release dated February 8 2019",
+      "verified": "Reported USD52.8m after-tax Toys R Us-related charge, primarily bad debt, and USD220.4m full-year GAAP net earnings.",
+      "not_permitted": "Do not compare an after-tax Hasbro charge with pretax Mattel amounts as a causal protected/unprotected experiment.",
+      "protection_status": "MISSING; NOT_CLASSIFIED_AS_UNPROTECTED"
+    }
+  },
+  "observability_matrix": {
+    "F19": {
+      "event_cost": "VERIFIED",
+      "listed_exposure_and_materiality_Aetna": "VERIFIED",
+      "named_Voya_legal_entity_bridge": "VERIFIED_IN_PREFIX_WITH_SCOPE_LIMITS",
+      "annual_reported_utilization_requirement": "VERIFIED",
+      "actual_annual_utilization_rows": "MISSING_FROM_ORDINARY_ORIGINALS_WITHIN_CURRENT_BYTE_ALLOWANCE",
+      "same_entity_state_and_assessment_cohort_allocation": "MISSING",
+      "capacity_or_surprise_predictor": "MISSING",
+      "independent_outcome_route": "PLAUSIBLE",
+      "first_public_signal_clock": "MISSING_FOR_ANNUAL_NOTE",
+      "execution_fills": "NOT REQUIRED_FOR_LEVEL_A"
+    },
+    "F09": {
+      "distress_episode_and_supplier": "VERIFIED",
+      "Mattel_agreement_existence": "VERIFIED",
+      "exact_protected_cash_exposure": "INACCESSIBLE_IN_PUBLICLY_REDACTED_SOURCE",
+      "Hasbro_agreement_status": "MISSING",
+      "supplier_financial_significance": "VERIFIED_AS_REPORTED",
+      "causal_recovery_comparison": "MISSING",
+      "detailed_historical_public_clock": "MISSING",
+      "private_future_intentions": "NOT REQUIRED_IF_PUBLIC_AMOUNT_AND_RIGHTS_EXIST"
+    },
+    "F07": {
+      "documented_contract_contingency_mechanism": "VERIFIED_DOCUMENTATION_ONLY",
+      "detention_event_sample": "NOT_ACQUIRED",
+      "dated_vessel_specific_hire_allocation": "MISSING",
+      "listed_material_exposure": "MISSING",
+      "short_horizon_market_increment": "PLAUSIBLE_NOT_VERIFIED"
+    }
+  },
+  "competition": {
+    "F19": [
+      "NOLHGA estimates and assessment files already support professional accounting.",
+      "Johnson Lambert explicitly offers guaranty obligations/credits and premium-tax software work (F19:010).",
+      "NAIC OPTins/TriTech linkage was visible in original documentation search, but ordinary FAQ returned 403; no product access or verified investment customers.",
+      "Johnson/Winkler 1994 original institution abstract studies state-level net assessments; not the proposed entity/cohort credit-realization increment."
+    ],
+    "F09": [
+      "Original Booth critical-vendor research already models/tests this mechanism (F09:002); no full-data or method replication.",
+      "Octus advertises claim nature/amount/status and BankruptcyObserver creditor matching (F09:003–004).",
+      "Mattel itself discusses payment and credit-risk assessment; private supplier committee information may exceed public information."
+    ],
+    "F07": [
+      "Japan P&I Club June 2016 original commentary explains fact/contract-dependent off-hire; no assertion of a new legal mechanism."
+    ],
+    "exact_private_trading_use": "UNKNOWN",
+    "remaining_profitable_opportunity": "NOT ESTABLISHED"
+  },
+  "proposed_next_scope": {
+    "candidate": "F19",
+    "type": "Two-original annual-note source investigation only, not an economic pilot",
+    "originals": [
+      "Fixed Voya 2017 annual statement",
+      "Fixed Voya 2018 annual statement"
+    ],
+    "proposed_maximum_response_bytes": 83886080,
+    "reason": "Known original sizes total 76,069,415 bytes. Exclude already acquired oversized parent filing and any wider corpus.",
+    "source_gate": [
+      "Actual credit-use/charge-off reconciliation and units",
+      "Consistent legal-entity/basis reconciliation",
+      "Can a distinctive predictor and independent outcome be measured on the same assessment/cohort unit?",
+      "Material parent exposure and genuinely incremental information beyond issuer/accounting substitutes"
+    ],
+    "decision": "If only aggregate book balances or mixed-cohort uses are observable, reject the state/cohort-specific capacity forecast; do not replace it with an asset-change proxy.",
+    "current_authorization": false
+  },
+  "cost": {
+    "paid_source_requests_initiated": 0,
+    "purchases": 0,
+    "cloud_jobs": 0,
+    "registrations": 0,
+    "credential_loads": 0,
+    "account_or_invoice_debit": "UNKNOWN",
+    "browser_service_cost": "UNKNOWN"
+  },
+  "no_economic_study": {
+    "forecasts_scored": 0,
+    "returns_or_backtests": 0,
+    "private_tax_returns_or_contracts": 0,
+    "new_experiments": 0,
+    "old_stops_or_reserves_opened": 0,
+    "independent_event_census": "NOT_ESTABLISHED"
+  },
+  "sources": [
+    {
+      "candidate": "F19",
+      "index": 1,
+      "url": "https://content.naic.org/sites/default/files/inline-files/143_a.pdf",
+      "purpose": "Frozen F19 source 1: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:08.721036+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:09.481886+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 05:59:26 GMT",
+        "content-type": "application/pdf",
+        "content-length": "314586",
+        "etag": "\"6ace46db-4ccda\"",
+        "last-modified": "Tue, 13 Oct 2026 14:57:31 GMT"
+      },
+      "body_sha256": "660f69ea279760a681325a77e165f528beea8b131eab9273f74dff2ab55ac719",
+      "body_bytes": 314586,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F19",
+      "index": 2,
+      "url": "https://nolhga.com/the-guaranty-system/insolvency-costs/",
+      "purpose": "Frozen F19 source 2: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:09.771317+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:10.063553+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 05:59:27 GMT",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "a2e1d9208b1398b77787c69b0b729a117096618bd39ab7af4fc66880a3def572",
+      "body_bytes": 185696,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F19",
+      "index": 3,
+      "url": "https://investors.voya.com/financials/statutory-statements/default.aspx",
+      "purpose": "Frozen F19 source 3: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:10.821850+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:11.501392+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 05:59:28 GMT",
+        "content-type": "text/html; charset=utf-8"
+      },
+      "body_sha256": "e33d490f52f096929941471d0e6f600bfc7778e23f582427a7ce2b6b4d579380",
+      "body_bytes": 389167,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F19",
+      "index": 4,
+      "url": "https://s21.q4cdn.com/836187199/files/doc_downloads/voya_download_list/Voya-Retirement-Insurance-and-Annuity-Company-Annual-Statement-2017.PDF",
+      "purpose": "Frozen F19 source 4: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:11.872240+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:12.425912+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 05:59:29 GMT",
+        "content-type": "application/pdf",
+        "content-length": "35879217",
+        "last-modified": "Thu, 04 Jun 2020 13:35:06 GMT",
+        "etag": "\"71b281a3cea31d8d065c73af7ee7a631-2\""
+      },
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_bytes": 0,
+      "complete": false,
+      "size_stop": "Declared original exceeds bounded document size; not downloaded"
+    },
+    {
+      "candidate": "F19",
+      "index": 5,
+      "url": "https://s21.q4cdn.com/836187199/files/doc_downloads/voya_download_list/Voya-Retirement-Insurance-and-Annuity-Company-Annual-Statement-2018.pdf",
+      "purpose": "Frozen F19 source 5: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:12.922723+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:13.454305+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 05:59:30 GMT",
+        "content-type": "application/pdf",
+        "content-length": "40190198",
+        "last-modified": "Thu, 04 Jun 2020 13:28:19 GMT",
+        "etag": "\"8d8c51fa704262b27ce83c04da7e9766-2\""
+      },
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_bytes": 0,
+      "complete": false,
+      "size_stop": "Declared original exceeds bounded document size; not downloaded"
+    },
+    {
+      "candidate": "F19",
+      "index": 6,
+      "url": "https://www.sec.gov/Archives/edgar/data/1122304/000112230417000090/form10-q.htm",
+      "purpose": "Frozen F19 source 6: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:13.973214+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:14.434352+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "last-modified": "Wed, 13 Sep 2017 11:20:27 GMT",
+        "date": "Wed, 21 Oct 2026 05:59:31 GMT"
+      },
+      "body_sha256": "c45e48e1801eacc63f5cac2d6b0f6addabb686a8208d285b904f5cb5b987fb87",
+      "body_bytes": 2724332,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F19",
+      "index": 7,
+      "url": "https://s21.q4cdn.com/836187199/files/doc_downloads/voya_download_list/Voya-Retirement-Insurance-and-Annuity-Company-1st-Quarter-Financials-2018.pdf",
+      "purpose": "Pushed addendum: first 2018 quarterly statement from acquired issuer archive; inspect same-entity note without treating quarterly data as an annual result.",
+      "started_at_utc": "2026-10-21T06:01:34.940346+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T06:01:37.227232+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 06:01:52 GMT",
+        "content-type": "application/pdf",
+        "content-length": "10909131",
+        "last-modified": "Thu, 04 Jun 2020 13:33:12 GMT",
+        "etag": "\"0a33264989d1697b6a04019f424ce28b\""
+      },
+      "body_sha256": "4e518a0c63dadd4df763400cd77868c7f5fd647994a0963960f7b7e0903bf7ec",
+      "body_bytes": 10909131,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F19",
+      "index": 8,
+      "url": "https://www.sec.gov/Archives/edgar/data/1535929/000153592918000006/voyafinancialinc201710-kre.htm",
+      "purpose": "Pushed addendum: original dated parent/ownership and group assessment-exposure bridge for Voya 2017, no shareholder-return analysis.",
+      "started_at_utc": "2026-10-21T06:01:37.243671+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T06:01:38.160876+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "last-modified": "Fri, 23 Feb 2018 21:23:03 GMT",
+        "date": "Wed, 21 Oct 2026 06:01:54 GMT"
+      },
+      "body_sha256": "118b537ccb719c1cdaa4b255332a10a52401b180f8100bea31525c1f47e78819",
+      "body_bytes": 12582913,
+      "complete": false,
+      "size_stop": "Unexpected body cap; prefix not a complete original"
+    },
+    {
+      "candidate": "F19",
+      "index": 9,
+      "url": "https://content.naic.org/industry/optins/faq",
+      "purpose": "Predeclared competitor/access context: statutory premium-tax software already integrates filing/payment; no product or account access.",
+      "started_at_utc": "2026-10-21T06:01:39.343907+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T06:01:39.408367+00:00",
+      "status": 403,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 06:01:56 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "5516"
+      },
+      "body_sha256": "39996e494952fbaf7ceec1dfeaf30c1e9563b33ef287d6408a7bed0a72a3ae38",
+      "body_bytes": 5516,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F19",
+      "index": 10,
+      "url": "https://www.johnsonlambert.com/services/premium-tax-services/",
+      "purpose": "Predeclared compliance competitor scope: whether guaranty credits and assessments are already managed by specialist services.",
+      "started_at_utc": "2026-10-21T06:01:40.394307+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T06:01:41.636046+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 06:01:59 GMT",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "43b912db32602820f52dec010fff6665f22949eba407a921d9cdef33976042a9",
+      "body_bytes": 146742,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F19",
+      "index": 11,
+      "url": "https://www.sec.gov/Archives/edgar/data/1122304/000112230417000090/0001122304-17-000090-index.html",
+      "purpose": "Same acquired Aetna quarterly filing: original publication/acceptance metadata for financial disclosure, not the March liquidation date.",
+      "started_at_utc": "2026-10-21T06:05:40.693839+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T06:05:41.011721+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "last-modified": "Thu, 03 Aug 2017 20:26:49 GMT",
+        "date": "Wed, 21 Oct 2026 06:05:58 GMT",
+        "content-length": "12804"
+      },
+      "body_sha256": "b48cec0fe872b0ee7b064aadf7029a4e24e247fe1425b95b33fb707193240b0e",
+      "body_bytes": 12804,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F09",
+      "index": 1,
+      "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828018011171/filename1.htm",
+      "purpose": "Frozen F09 source 1: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:15.023389+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:22.743601+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "last-modified": "Fri, 02 Nov 2018 16:17:19 GMT",
+        "date": "Wed, 21 Oct 2026 05:59:40 GMT",
+        "content-length": "103528"
+      },
+      "body_sha256": "f69c41806b6231e3c1f3fbd0231fc522419a8fad919073e07946f28e982158fa",
+      "body_bytes": 103528,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F09",
+      "index": 2,
+      "url": "https://www.chicagobooth.edu/research/fama-miller/finance-research/funding/2012-13/critical-vendors-and-bankruptcy",
+      "purpose": "Frozen F09 source 2: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:22.758195+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:23.772031+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "date": "Wed, 21 Oct 2026 05:59:39 GMT",
+        "content-length": "101240"
+      },
+      "body_sha256": "1f6c6a47458bb6e21c8b2eeddc813561c84afd0bd7316cd83834ccdeafebefa1",
+      "body_bytes": 101240,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F09",
+      "index": 3,
+      "url": "https://octus.com/products/credit-intelligence/",
+      "purpose": "Frozen F09 source 3: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:23.808473+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:24.122942+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 05:59:41 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "last-modified": "Wed, 21 Oct 2026 05:59:41 GMT"
+      },
+      "body_sha256": "fd8e944671c1d3237e5850afe66ad36f36cbb6361200740550ec3d09bf2d82c0",
+      "body_bytes": 197519,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F09",
+      "index": 4,
+      "url": "https://www.bankruptcyobserver.com/enterprise",
+      "purpose": "Frozen F09 source 4: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:24.858681+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:25.609670+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 05:59:42 GMT",
+        "content-type": "text/html; charset=utf-8"
+      },
+      "body_sha256": "409ad03263aa40048da9581555473d71d9a33c8ce9e8632e1e58dd9a059cca68",
+      "body_bytes": 93896,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F09",
+      "index": 5,
+      "url": "https://scholarlycommons.law.emory.edu/ebdj/vol37/iss1/7/",
+      "purpose": "Frozen F09 source 5: inspect original evidence for the fixed cases and directly competing interpretation; no economic test.",
+      "started_at_utc": "2026-10-21T05:59:25.909229+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T05:59:26.688457+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 05:59:44 GMT",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "body_sha256": "25980f999e9d405174f87c00b116d7bd543eda8918e40bafb2f9b5b3969afa6b",
+      "body_bytes": 39113,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F09",
+      "index": 6,
+      "url": "https://www.sec.gov/Archives/edgar/data/46080/000004608019000008/exhibit991.htm",
+      "purpose": "Pushed addendum: fixed Hasbro supplier retrospective materiality, not a historically early signal or economic test.",
+      "started_at_utc": "2026-10-21T06:01:38.293728+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T06:01:38.594386+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "last-modified": "Fri, 08 Feb 2019 12:36:59 GMT",
+        "date": "Wed, 21 Oct 2026 06:01:55 GMT"
+      },
+      "body_sha256": "83bf6234bbb5e516335bb5185ef48c6e8005102c5716e8c25cd500cd2b5d2f2b",
+      "body_bytes": 808651,
+      "complete": true,
+      "size_stop": null
+    },
+    {
+      "candidate": "F09",
+      "index": 7,
+      "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828018011171/0001628280-18-011171-index.html",
+      "purpose": "Same acquired Mattel public correspondence: original filing date/acceptance metadata, which must not be equated to first public correspondence availability.",
+      "started_at_utc": "2026-10-21T06:05:39.643296+00:00",
+      "method": "GET",
+      "automatic_retries": 0,
+      "authenticated": false,
+      "retrieved_at_utc": "2026-10-21T06:05:39.994098+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "last-modified": "Thu, 16 Aug 2018 20:51:34 GMT",
+        "date": "Wed, 21 Oct 2026 06:05:57 GMT",
+        "content-length": "6791"
+      },
+      "body_sha256": "c054292886bde4196d0a36aac3774883b21ea166de00eaac817f0b0dc88f97c9",
+      "body_bytes": 6791,
+      "complete": true,
+      "size_stop": null
+    }
+  ]
+}

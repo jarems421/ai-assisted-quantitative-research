@@ -1,5 +1,12 @@
 # Repository instructions
 
+## Evidence-first bottleneck investigation closed (2026-10-21)
+
+- `docs/strategy/owner_discovery_bottleneck_2026-10-21.md` authorizes comparison and at most two source checks, four working hours/25 ordinary starts each, 30 MiB combined, no economic study. Pushed plan `4a0440a` selected F19 and F09; addendum `3efb7d4` recorded the quarterly alternative before dispatch. F07/F18/F14 remain documentation-only.
+- `discovery_bottleneck_report.md` recommends no investment pilot; F19 is only the next targeted measurement priority. Aetna's reported assessment is material, and NAIC guidance requires annual credit-use reconciliations. The acquired Voya quarter has balances, not utilization; the 35.9/40.2 MB annual originals were metadata-only size stops. The parent original is an explicitly incomplete 12 MiB-plus-one-byte prefix. Never infer credits used from balance changes or transfer Voya fields to Aetna. Same-state/cohort predictor/outcome alignment remains missing.
+- Mattel's named agreement/collections and later losses are reported, but opening debt, remaining prepetition balance and cumulative collections are publicly redacted. F09 exact net protection is inaccessible in the checked record; Hasbro's unknown agreement is not an unprotected control. Do not attribute later receivable losses to the protected prepetition claim without evidence.
+- Closed at 18 ordinary starts/28,621,625 response bytes, zero retries/spending/cloud jobs. Candidate stops prohibit further dispatch. The two-hour/six-start/80 MiB F19 annual-note check is a concrete proposal requiring separate approval; no new allowance, economic pilot or automatic candidate follows. All old closures, EXP001–EXP007 and river's unapproved status remain unchanged.
+
 ## Frontier Selection II: F02/F03 verification closed (2026-10-20)
 
 - `docs/strategy/owner_frontier_selection_ii_2026-10-20.md` authorized two fixed historical examples per candidate, four working hours, 20 ordinary starts and 20 MiB each, without economic testing. The pre-source plan was pushed in `3e22951`; original URLs in `029866f`. Preserve both clinical routes and both chemical decisions, failed requests and missing links.
