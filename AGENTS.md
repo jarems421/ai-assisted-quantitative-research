@@ -1,5 +1,13 @@
 # Repository instructions
 
+## Discovery Lab v1 implemented offline (2026-10-21)
+
+- `docs/strategy/owner_discovery_lab_2026-10-21.md` authorised local engineering and an offline demonstration only: **zero scientific-source acquisition**, no live discovery campaign, market data, returns, backtest, cloud/paid/authenticated action or experiment. The supplied 26-page report is reviewed critically in `discovery_lab_design.md`; its private original is under ignored `data/raw/discovery_lab_20261021/`.
+- Use `src/research/discovery/` (`python -m src.research.discovery ...`) and `discovery_lab_guide.md` for new discovery work. One append-only, hash-chained JSONL ledger per campaign; loading replays every append rule. Never hand-edit a ledger; corrections are new versions with reasons. Discovery IDs never become `EXP` IDs, enter the Store or change trial counts.
+- The checklist reports blockers and never certifies M. `M_PASSED` needs a frozen claim, zero mechanical blockers and a human M review evidencing all six unchanged requirements. Dispositions are human decisions and authorise nothing. `VERIFY` is PROPOSAL_ONLY; Level A design needs separate owner approval. Assistants (Claude) may draft records and sceptic reviews but never decide or certify clocks, units, identity, obligations, allocations or joins.
+- First-public time only from an original publication record; names never verify relationships; assumed allocations stay UNVERIFIED; unknown costs stay UNKNOWN. Synthetic and retrospective fixtures are labelled and never mixed with live comparisons. The SH09 retrospective control restates recorded evidence and does not re-adjudicate SH09.
+- A live campaign requires a separate owner instruction with equal per-method budgets, committed ledgers/authority before dispatch and existing acquisition-receipt practice. F19 remains HOLD/unapproved, SH09 stopped, EXP004 restrictions and all prior source stops unchanged. Regenerate `discovery_lab_walkthrough.md` only with `python -m src.research.discovery demo --write`.
+
 ## SH09 historical-information verification closed (2026-10-21)
 
 - `docs/strategy/owner_sh09_verification_2026-10-21.md` separately authorised the Cox/Chevron check only: two analyst-hours, eight new original-source starts, 25 MiB, no paid/authenticated source access, cloud, economic pilot or other candidate. Plan `77363a4` was pushed before discovery. Earlier SH09 proposal and Measurement Gate M campaign remain unchanged historical records.

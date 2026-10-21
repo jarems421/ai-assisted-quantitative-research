@@ -1,0 +1,167 @@
+{
+ "version": "DISCOVERY_LAB_V1_VALIDATION_V001",
+ "recorded_at_utc": "2026-10-21T10:20:36+00:00",
+ "status": "PASS",
+ "starting_head": "93067c92affc683bb87cdd19d0dc120d87fd1e2d",
+ "owner": "owner_discovery_lab_2026-10-21.md",
+ "owner_sha256": "1dfeabcfdedd0e4d9a94ad120ce181413da951e97cadad9cbb9119890683946a",
+ "measurement_gate_m": "measurement_gate_m.md",
+ "measurement_gate_m_sha256": "af0727e5d65c8a2ee890ef97a4470b8f9dafdbe20e9b24ecb5e830f259a5cc07",
+ "measurement_gate_m_unchanged": true,
+ "supplied_report": {
+  "pages": 26,
+  "bytes": 266048,
+  "sha256": "c38b8e92f4da94e61dfc53b98eb855e9dc9de0182686780891073ac9e66b7b79",
+  "all_pages_read": true,
+  "private_original": "data/raw/discovery_lab_20261021/supplied_report.pdf (ignored)",
+  "numbered_notes": 36,
+  "listed_sources": 30,
+  "external_sources_opened": 0,
+  "authority": "Recommendations reviewed critically; not a software specification"
+ },
+ "local_tests": 517,
+ "public_tests": 289,
+ "discovery_lab_tests": 32,
+ "skipped": 0,
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+   ],
+   "returncode": 0,
+   "test_count": 517,
+   "log": "local_suite.log",
+   "log_sha256": "c0aa23c0b1bb12fe55ce3af6cd9398230e9961ad1024e4e7280c1ff71baedf82"
+  },
+  {
+   "name": "public_checks",
+   "command": [
+    "python",
+    "-m",
+    "src.research.public_checks"
+   ],
+   "returncode": 0,
+   "test_count": 289,
+   "log": "public_checks.log",
+   "log_sha256": "302d9c3155c1ad8127af8bf5a93bb72c209e0fe050a2412a3cdba143f40774d0",
+   "note": "tests.test_discovery_lab added to PUBLIC_TESTS; network and private reads blocked"
+  },
+  {
+   "name": "presentation",
+   "command": [
+    "python",
+    "-m",
+    "src.presentation.exp001",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "presentation.log",
+   "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe",
+   "note": "README regenerated from template; five generated assets byte-identical"
+  },
+  {
+   "name": "phase4a_documentation_links",
+   "command": [
+    "python",
+    "-m",
+    "src.research.phase4a",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "phase4a.log",
+   "log_sha256": "a7ea43432b5abca99691afd2eaa1549e5400484baf5317eed3214cd32b2fb117"
+  },
+  {
+   "name": "exp004_frozen_audit",
+   "command": [
+    "python",
+    "-m",
+    "src.research",
+    "audit",
+    "EXP004"
+   ],
+   "returncode": 0,
+   "log": "exp004_audit.log",
+   "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+  },
+  {
+   "name": "exp004_gap_check",
+   "command": [
+    "python",
+    "-m",
+    "src.research.exp004_execution_gap_report",
+    "--check"
+   ],
+   "returncode": 0,
+   "result": "EXECUTION_GAPS_UNRESOLVED",
+   "log": "exp004_gap.log",
+   "log_sha256": "64877d6dbac62922a24916bcbcb3a1d6c86f7ded4b936a87d906dd6f6ff6d536"
+  },
+  {
+   "name": "discovery_walkthrough",
+   "command": [
+    "python",
+    "-m",
+    "src.research.discovery",
+    "demo",
+    "--check"
+   ],
+   "returncode": 0,
+   "log": "demo_check.log",
+   "log_sha256": "2336547466ce94877bbb36872a22b36dadcfd9aa7a7287bd872116ebc85db0d1",
+   "walkthrough_sha256": "7e25df6b06c0a803f0825f44d0827678cf71939d0572a5db45acb12c041bc92f"
+  }
+ ],
+ "logs_private_directory": "data/raw/discovery_lab_20261021/validation (ignored)",
+ "preservation": {
+  "tracked_files_at_head": 731,
+  "byte_identical": 726,
+  "changed": [
+   "AGENTS.md",
+   "README.md",
+   "docs/acceleration/master_plan.md",
+   "src/presentation/README.template.md",
+   "src/research/public_checks.py"
+  ],
+  "changed_reason": "Living guidance/presentation pointers and the public test list only",
+  "new_files": [
+   "src/research/discovery/ (6 modules + __init__/__main__)",
+   "tests/test_discovery_lab.py",
+   "docs/strategy/owner_discovery_lab_2026-10-21.md",
+   "docs/strategy/discovery_lab_design.md",
+   "docs/strategy/discovery_lab_guide.md",
+   "docs/strategy/discovery_lab_prompts.md",
+   "docs/strategy/discovery_lab_walkthrough.md",
+   "docs/strategy/discovery_lab_validation.json"
+  ]
+ },
+ "scientific_state": {
+  "source_acquisition_requests": 0,
+  "external_bytes": 0,
+  "searches": 0,
+  "live_campaigns": 0,
+  "market_data_requests": 0,
+  "returns_inspected": false,
+  "backtests": 0,
+  "new_experiments": 0,
+  "store_transitions": 0,
+  "trial_count_changes": 0,
+  "cloud_jobs": 0,
+  "paid_or_authenticated_actions": 0,
+  "F19": "HOLD_UNAPPROVED",
+  "SH09": "STOPPED_NOT_READJUDICATED",
+  "EXP004": "RESTRICTIONS_UNCHANGED"
+ },
+ "limits": [
+  "Software and synthetic fixtures verify mechanics, not discovery yield or any economic claim.",
+  "Ledger integrity is tamper-evident, not tamper-proof; freeze timing relies on honest declaration.",
+  "Hosted CI is reported separately from these local results."
+ ]
+}
