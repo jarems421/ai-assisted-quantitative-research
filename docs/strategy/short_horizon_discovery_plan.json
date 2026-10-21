@@ -1,0 +1,39 @@
+{
+  "version": "SHORT_HORIZON_DISCOVERY_PLAN_V001",
+  "review_date": "2026-10-21",
+  "owner_instruction": "owner_short_horizon_discovery_2026-10-21.md",
+  "scope": "Ten differentiated hypotheses; documentary positive measurement controls and competition assessment, not economic testing, historical population acquisition or a new source campaign.",
+  "limits": {
+    "working_hours": 3,
+    "conservative_started_utc": "2026-10-21T06:26:16+00:00",
+    "conservative_deadline_utc": "2026-10-21T09:26:16+00:00",
+    "browser_search_queries": 40,
+    "browser_open_click_find_actions": 20,
+    "ordinary_acquisition_requests": 0,
+    "paid_data_cloud_jobs_accounts_or_credentials": 0,
+    "economic_tests_or_market_series": 0,
+    "automatic_retries_or_access_bypasses": 0,
+    "accounting": "Browser documentation evidence is not a complete original-byte HTTP archive; underlying wire counts and service cost unknown. No bulk datasets or authenticated API calls. Numerical fields read in source examples validate observability and are not forecasts or return tests."
+  },
+  "fixed_initial_hypotheses": [
+    {"id":"SH01","object":"Shared exact private-credit loan across BDC filings","distinction":"One lender's dated nonaccrual/contractual-income disclosure may reveal another listed holder's unreported economic exposure before its earnings, conditional on exact tranche and reporting-date identity."},
+    {"id":"SH02","object":"Property loan cash-management trigger and REIT upstream liquidity","distinction":"A disclosed cash-trap covenant and same-loan servicer balances can distinguish trapped operating cash from an apparent improvement in property income."},
+    {"id":"SH03","object":"Renewable natural gas pathway credits","distinction":"A dated pathway-status or carbon-intensity change can alter legally eligible unit revenue at an identified producer, distinct from commodity-price or nameplate-volume exposure."},
+    {"id":"SH04","object":"Restaurant alcohol-tax receipts and retained corporate sales","distinction":"A fixed-premise tax receipt can be real consumer demand yet accrue to a franchisee or different operator; dated control changes could alter the value of brand-level sales nowcasts."},
+    {"id":"SH05","object":"Higher-education federal-aid cash access","distinction":"Heightened cash monitoring and documented funding conditions may change a listed college's funding gap without an immediate enrollment change."},
+    {"id":"SH06","object":"Satellite spectrum-clearing milestone payments","distinction":"A certified contractual milestone can change a listed operator's near-term collectible cash rather than its recurring operating revenue."},
+    {"id":"SH07","object":"Airline slot-waiver rights","distinction":"A carrier with a relevant waiver may avoid low-value flights needed to retain slots, unlike a carrier exposed only to the same demand shock."},
+    {"id":"SH08","object":"Refinery emission-event updates and restart failure","distinction":"A failed-restart or duration revision may add operational information beyond the initial outage, if a same-plant independent production outcome exists."},
+    {"id":"SH09","object":"Offshore predecessor decommissioning obligations","distinction":"An operator failure can transfer an observable demand to a former leaseholder rather than the current operator; retained liability and indemnity limits must be distinguished."},
+    {"id":"SH10","object":"Renewable-generator subsidy protection and negative-price regimes","distinction":"Contract-vintage-specific exclusions can leave otherwise similar generation differently protected during negative-price episodes; a useful predictor must add more than restating the payment formula."}
+  ],
+  "selection_rules": [
+    "These are source questions, not asserted original strategies. Demote if the best obtainable substitute already supplies the proposed inference or if its essential predictor/outcome is private or mismatched.",
+    "Before recommending further verification identify an inspected original positive example of each indispensable field and a defensible same-unit join; a product page alone is not a data certificate.",
+    "Assess the business horizon and the information/repricing horizon separately. Do not claim a quarterly outcome has a 20-session economic mechanism merely because earnings dates are close.",
+    "Rank no more than three relative to the existing F19 baseline using the preserved previous report only. F19 remains leading measurement candidate, unapproved and closed. No F19 request or 80 MiB follow-up.",
+    "No old source channel, archived denial, frozen experiment, unused source reserve, sealed stage or stopped pilot is reopened. New source concepts are documentation review only.",
+    "Known issuer events are purposive measurement controls, not an untouched empirical sample. Private competitive use remains unknown; no obscurity/complexity bonus.",
+    "Use no new public analysis implementation or research framework. Preserve owner instructions, a concise substantive report, source/decision record and delivery checks."
+  ]
+}
