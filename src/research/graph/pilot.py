@@ -354,13 +354,16 @@ def validate_adjudications(blind_path, adjudication_path):
     return seen
 
 
-def unblind(packet_dir):
-    """Join adjudications to arm logs through the sealed key, after adjudication is complete and committed."""
+def unblind(packet_dir, export_name='blind.json'):
+    """Join adjudications to arm logs through the sealed key, after adjudication is complete and committed.
+
+    ``export_name`` selects the presentation the adjudicator used (``blind_v2.json`` for an aliased export); its
+    blind ids and key seal are those of the original export."""
     d = Path(packet_dir)
-    export = json.loads((d / 'blind.json').read_text(encoding='utf-8'))
+    export = json.loads((d / export_name).read_text(encoding='utf-8'))
     if sha256(d / 'key.json') != export['key_sha256']:raise PilotError('the key does not match the hash sealed in the blinded export')
     key = json.loads((d / 'key.json').read_text(encoding='utf-8'))
-    adjudications = validate_adjudications(d / 'blind.json', d / 'adjudications.jsonl')
+    adjudications = validate_adjudications(d / export_name, d / 'adjudications.jsonl')
     logs = {arm: {r['connection_id']: r for r in validate_connections(d / f'connections-{arm}.jsonl', arm)} for arm in ARMS}
     rows = []
     for bid, ref in key['items'].items():
@@ -369,6 +372,128 @@ def unblind(packet_dir):
                      **{k: a[k] for k in ('outcome', 'economic_meaning', 'adjudicator_minutes')}})
     if len(rows) != sum(len(x) for x in logs.values()):raise PilotError('every logged connection must appear in the blinded export')
     return rows
+
+
+# -- aliased presentation (BLIND_V2) and recursive leak scanning --------------------------------------
+# V001 exports copied arm-chosen record ids and free text verbatim, so ids such as OBS-G-7 (or an arm's
+# distinctive id style) could identify the arm. V2 is derived from an unchanged V001 export: every record id
+# of the arm's own campaign, wherever it appears, becomes an opaque per-item alias; campaign ids, archive
+# paths and branch names become neutral placeholders. Blind ids, order, evidence hashes and the key seal are
+# unchanged, so the sealed mapping and any adjudication template stay valid.
+
+ALIAS_VERSION = 'GRAPH_PILOT_BLIND_V2_ALIASED'
+RECORD_TOKEN = re.compile(r'\b(?:SRC|OBS|REL|CAND|REV|DSP|EFF)-[A-Za-z0-9_]+(?:[.-][A-Za-z0-9_]+)*')  # never a trailing '.' or '-'
+PACKET_RECORD = re.compile(r'^(?:SRC|OBS|REL)-P-\d+$')
+NEUTRAL = ((re.compile(r'\bDLC-G?P\d+-[SG]\b'), 'CURRENT_ARM_CAMPAIGN'), (re.compile(r'/(P\d+)/[SG]/'), r'/\1/ARM/'),
+           (re.compile(r'graph-pilot(?:-r3)?/P\d+-[SG]\b'), 'ARM_BRANCH'))
+LEAK_PATTERNS = (
+    ('ARM_LETTER_RECORD_ID', re.compile(r'\b(?:SRC|OBS|REL|CAND|REV|DSP|EFF)-[SG](?:[.-][A-Za-z0-9_]+)*\b')),
+    ('ARM_CAMPAIGN_ID', re.compile(r'\bDLC-G?P\d+-[SG]\b')),
+    ('ARM_PATH', re.compile(r'/P\d+/[SG]/')),
+    ('ARM_BRANCH', re.compile(r'graph-pilot(?:-r3)?/P\d+-[SG]\b')),
+    ('ARM_LABEL', re.compile(r'\b(?:[SG] arm|arm [SG]|structured arm|graph arm)\b', re.I)),
+    ('PILOT_CONNECTION_ID', re.compile(r'\b(?:SUG|CON)-[0-9a-f]{12}\b')),
+    ('ATTRIBUTION_OR_DECISION', re.compile(r'\b(?:GRAPH_ONLY|BASELINE_SEARCH_DISCOVERABLE|ANALYST_READING|ACCEPTED|DECLINED)\b')),
+    ('TOOL_WORD', re.compile(r'\b(?:graph|suggestions?|baseline|baseline-search|revisit|complements)\b', re.I)))
+
+
+def strings(value, path='$'):
+    """Every string (keys and values) in a nested JSON value, with its path."""
+    if isinstance(value, str):yield path, value
+    elif isinstance(value, dict):
+        for k, v in value.items():
+            yield f'{path}.<key>', str(k); yield from strings(v, f'{path}.{k}')
+    elif isinstance(value, list):
+        for i, v in enumerate(value):yield from strings(v, f'{path}[{i}]')
+
+
+def scan_leaks(value, own_records=()):
+    """Arm-identifying strings anywhere in a nested value (or a text): patterns plus any listed own-arm record id."""
+    found, own = [], set(own_records)
+    for path, s in (strings(value) if not isinstance(value, str) else [('$text', value)]):
+        for code, pat in LEAK_PATTERNS:
+            found += [{'path': path, 'code': code, 'match': m.group(0)} for m in pat.finditer(s)]
+        found += [{'path': path, 'code': 'OWN_ARM_RECORD_ID', 'match': m.group(0)} for m in RECORD_TOKEN.finditer(s) if m.group(0) in own]
+    return found
+
+
+def own_records(export):
+    return sorted({i[e]['record'] for i in export['items'] for e in ('from', 'to') if i[e]['campaign'] == 'CURRENT_ARM_CAMPAIGN'})
+
+
+def alias_item(item, secret):
+    own = {item[e]['record'] for e in ('from', 'to') if item[e]['campaign'] == 'CURRENT_ARM_CAMPAIGN'}
+    aliases, bid = {}, item['blind_id']
+
+    def alias(token):
+        if PACKET_RECORD.match(token) and token not in own:return token
+        if token not in aliases:
+            digest_ = hashlib.sha256(f'{secret}|{bid}|{token}'.encode()).hexdigest()[:8]
+            aliases[token] = f"{token.split('-', 1)[0]}-A{digest_}"
+        return aliases[token]
+
+    def rewrite(value, key=None):
+        if isinstance(value, dict):return {k: rewrite(v, k) for k, v in value.items()}
+        if isinstance(value, list):return [rewrite(v) for v in value]
+        if not isinstance(value, str) or key in ('blind_id', 'sha256', 'kind', 'campaign', 'depth'):return value
+        out = RECORD_TOKEN.sub(lambda m: alias(m.group(0)), value)
+        for pat, repl in NEUTRAL:out = pat.sub(repl, out)
+        return out
+
+    return rewrite(item), aliases
+
+
+def alias_export(blind_path, out, alias_key_out, secret=None):
+    """Write the versioned aliased presentation of an unchanged V001 export, refusing if any leak remains."""
+    import secrets as _secrets
+    src = Path(blind_path); export = json.loads(src.read_text(encoding='utf-8'))
+    if export.get('version') != BLIND_VERSION:raise PilotError(f'aliasing derives from a {BLIND_VERSION} export')
+    secret = secret or _secrets.token_hex(16)
+    items, maps = [], {}
+    for i in export['items']:
+        new, aliases = alias_item(i, secret); items.append(new); maps[i['blind_id']] = aliases
+    leaks = scan_leaks(items)
+    if leaks:raise PilotError(f'aliased items still leak: {leaks[:5]}')
+    key_sha = write_new(alias_key_out, {'version': ALIAS_VERSION, 'derived_from_sha256': sha256(src), 'secret': secret, 'aliases': maps})
+    v2 = {'version': ALIAS_VERSION, 'packet': export['packet'], 'fixture': export['fixture'], 'snapshot_sha256': export['snapshot_sha256'],
+          'key_sha256': export['key_sha256'], 'derived_from': {'path': src.name, 'sha256': sha256(src), 'version': BLIND_VERSION,
+                                                               'presentation_status': 'COMPROMISED: arm-identifying record ids and id styles were visible'},
+          'alias_key_sha256': key_sha,
+          'aliasing': ['every record id of the current arm campaign, in any field or text, is an opaque per-item alias (kind prefix kept)',
+                       'frozen-packet (SRC/OBS/REL-P-n) and historical (HIST-) references are unchanged',
+                       'campaign ids, archive paths and branch names are neutral placeholders',
+                       'blind ids, item order, evidence hashes, dates, values, periods and texts are otherwise unchanged'],
+          'hidden_from_adjudicator': export['hidden_from_adjudicator'],
+          'instructions': export['instructions'] + ['Aliases are per item: the same alias in two items is not implied to be the same record.'],
+          'items': items, 'leak_scan': {'patterns': [c for c, _ in LEAK_PATTERNS] + ['OWN_ARM_RECORD_ID'], 'findings': 0}}
+    write_new(out, v2)
+    return v2
+
+
+def sheet(export):
+    """Readable adjudication sheet: only fields present in the export, every item in export order."""
+    L = [f"# Packet {export['packet']}: blinded adjudication sheet ({export['version']})", '',
+         f"{len(export['items'])} items, shuffled. Arm, operator, attribution, decision, minutes and notes are hidden"
+         + ('; record ids of the current campaign are per-item aliases.' if export['version'] == ALIAS_VERSION else '.'), '',
+         'For each item record **outcome** (`CONFIRMED_AGAINST_ORIGINALS` with the evidence hashes or locators you checked, `PLAUSIBLE_UNVERIFIED`, '
+         '`REJECTED_FALSE`, `REJECTED_TRIVIAL`) and **economic meaning** (`MEANINGFUL`, `NOT_MEANINGFUL`, `UNCLEAR`).', '']
+    for n, i in enumerate(export['items'], 1):
+        L += [f"## {n}. `{i['blind_id']}` ({i['kind']})", '']
+        if i.get('avoided_action'):L.append('- **Avoided action:** ' + '; '.join(i['avoided_action']))
+        for label in ('from', 'to'):
+            x = i[label]
+            L += [f"- **{label.title()}:** {x['kind']} `{x['campaign']}/{x['record']}`", f"  - Text: {x['text']}"]
+            if x['entities']:L.append('  - Entities: ' + '; '.join(f"`{a['id']}` ({a['name']})" for a in x['entities']))
+            for k in ('value', 'units', 'occurred', 'depth', 'type', 'period', 'basis', 'status', 'outcome'):
+                if k in x:L.append(f'  - {k}: {x[k]}')
+            for ev in x['evidence']:
+                L.append(f"  - Evidence: `{ev['locator']}` depth {ev['depth']}" + (f", sha256 `{ev['sha256']}`" if ev['sha256'] else '')
+                         + (f" — \"{ev['passage']}\"" if ev.get('passage') else ''))
+        s = i['shared_structure']
+        L += [f"- **Mechanical shared structure:** same identified entity {s['same_identified_entity'] or 'none'}; shared document hashes "
+              f"{len(s['shared_document_hashes'])}; shared requirement tags {s['shared_requirement_tags'] or 'none'}"
+              + (f"; relationship period covers observation: {s['relationship_period_covers_observation']}" if 'relationship_period_covers_observation' in s else ''), '']
+    return '\n'.join(L) + '\n'
 
 
 # -- budget accounting and outcomes -----------------------------------------------------------------
@@ -491,11 +616,11 @@ def classify(packets, critical_stops=()):
     return 'INCONCLUSIVE', notes + ['Mixed dimensions: the owner decides whether a larger pilot is worth its cost.']
 
 
-def report(packet_dirs, critical_stops=()):
+def report(packet_dirs, critical_stops=(), export_name='blind.json'):
     """Paired per-packet outcomes for every dimension, the cost of the increment, and the proposed classification."""
     packets = []
     for d in map(Path, packet_dirs):
-        snap = load_snapshot(d / 'snapshot.json')['snapshot']; rows = unblind(d)
+        snap = load_snapshot(d / 'snapshot.json')['snapshot']; rows = unblind(d, export_name)
         packets.append({'packet': snap['packet'], 'method': snap['prior']['packet_ledger']['method'],
                         **{arm: arm_metrics(Ledger(d / snap['arms'][arm]['ledger']).load(), arm, rows) for arm in ARMS}})
     for p in packets:

@@ -1,5 +1,7 @@
 # Graph pilot revision 3: execution status (awaiting owner adjudication)
 
+> **Correction (2026-10-21):** the V001 adjudication sheets referenced below leaked arm-identifying record ids. They are compromised and preserved unchanged; use the V2 aliased materials in the [blinding correction](graph_pilot_r3_blinding_correction.md). The statement in section 6 that mechanical scans found no leaks was wrong; it is kept, with a correction note.
+
 **2026-10-21. Status: all formed campaigns complete; blinded adjudication is pending with the owner.** Revision 3 is an **exploratory amended attempt**. Its routes were changed after the revision 2 source-formation failures had been reviewed ([authority](owner_graph_pilot_r3_2026-10-21.md)). No graph-versus-structured-search outcome is reported yet: arm labels stay sealed until adjudication is complete.
 
 **Only two packet pairs (P3, P4) formed. Under the owner's rule they will be described but receive no graph-increment classification.**
@@ -85,7 +87,7 @@ Recorded in the [freeze report](graph_pilot_packet_freeze_report.md) and its [re
   - `pilot blind` now accepts an accepted connection's ledger record when it is qualified with the arm's own campaign id;
   - it also accepts records of review and disposition kinds.
 - **Packet-builder resume.** The coordinator's P3 packet-builder script failed after the campaign and source records. The same ledger was resumed by appending; nothing was deleted.
-- **Blinding is partial.** The same owner operates and adjudicates. Record content can hint at the arm; this was checked by mechanical scans, which found no leaks in the exports.
+- **Blinding is partial.** The same owner operates and adjudicates. Record content can hint at the arm; this was checked by mechanical scans, which found no leaks in the exports. **[Corrected: wrong. Those scans did not check record ids; P3 leaked `-G-` ids and P4 leaked distinctive id styles. See the [blinding correction](graph_pilot_r3_blinding_correction.md).]**
 
 ## 7. Owner action required
 

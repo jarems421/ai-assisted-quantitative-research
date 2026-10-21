@@ -585,6 +585,17 @@ class GraphPilotProtocolTests(unittest.TestCase):
         (self.d/'key.json').write_bytes((self.d/'key.json').read_bytes()+b' ')
         with self.assertRaisesRegex(P.PilotError,'sealed'):P.unblind(self.d)
 
+    def test_aliased_export_supports_adjudication_and_unblinding(self):
+        export,_=self.blinded();before=sha(self.d/'blind.json')
+        v2=P.alias_export(self.d/'blind.json',self.d/'blind_v2.json',self.dir/'alias.json')
+        self.assertEqual(P.scan_leaks(v2['items'],P.own_records(export)),[])
+        good=lambda i:{'blind_id':i['blind_id'],'outcome':'REJECTED_TRIVIAL','economic_meaning':'NOT_MEANINGFUL','checked_evidence':[],
+                       'adjudicator':'Owner','adjudicator_kind':'HUMAN','adjudicator_minutes':1,'recorded_at_utc':DR.START.isoformat(),'notes':''}
+        self.write_log('adjudications.jsonl',[good(i) for i in v2['items']])
+        self.assertEqual(len(P.validate_adjudications(self.d/'blind_v2.json',self.d/'adjudications.jsonl')),4)
+        self.assertEqual(sorted(r['arm'] for r in P.unblind(self.d,'blind_v2.json')),['G','G','S','S'])
+        self.assertEqual(sha(self.d/'blind.json'),before)
+
     def test_blinding_refuses_endpoints_outside_the_arm_inputs(self):
         self.arm('S');self.arm('G')
         logs={'S':self.write_log('cs.jsonl',[self.log('S',target_record='DLC-GP1-G/OBS-1')]),'G':self.write_log('cg.jsonl',[])}
@@ -626,6 +637,75 @@ class GraphPilotProtocolTests(unittest.TestCase):
 
     def test_pilot_dry_run_record_is_current(self):
         self.assertEqual(DR.check()['dry_run'],'PASS')
+
+
+class GraphPilotBlindingTests(unittest.TestCase):
+    """Revision 3 blinding defect: arm-chosen record ids (OBS-G-7) and id styles leaked through V001 exports."""
+
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.dir=Path(self.tmp.name)
+
+    def endpoint(self,campaign,record,text,locator='https://example.org/doc',passage='p'):
+        return {'kind':'observation','campaign':campaign,'record':record,'text':text,'entities':[{'id':'NAME:Firm','name':'Firm'}],
+                'evidence':[{'locator':locator,'sha256':'a'*64,'depth':'VERIFIED_ORIGINAL_FIELD','passage':passage}],'tags':[],'value':3,'occurred':'2025-07-02'}
+
+    def export(self):
+        items=[{'blind_id':'ADJ-0000000001','kind':'CONNECTION',
+                'from':self.endpoint('CURRENT_ARM_CAMPAIGN','OBS-G-7','Relies on REL-G-1 for CAND-G-1; filed by DLC-GP3-G.',
+                                     'data/raw/graph_pilot_r3_20261021/P3/G/receipts/001.json','see OBS-G-7 and graph-pilot-r3/P3-G'),
+                'to':self.endpoint('FROZEN_PACKET','OBS-P-1','Packet record OBS-P-1 cites HIST-F01/F6.'),
+                'shared_structure':{'same_identified_entity':[],'shared_document_hashes':['a'*64],'shared_requirement_tags':[],'name_or_ticker_only_entities':[]}},
+               {'blind_id':'ADJ-0000000002','kind':'AVOIDED_REPEAT','avoided_action':['not fetching OBS-MGA-SUBSIDIARIES again'],
+                'from':self.endpoint('CURRENT_ARM_CAMPAIGN','OBS-MGA-SUBSIDIARIES','Descriptive id style OBS-MGA-SUBSIDIARIES; also OBS-G-7.'),
+                'to':self.endpoint('HISTORICAL_MEMORY','HIST-F01/F6','Historical finding.'),
+                'shared_structure':{'same_identified_entity':[],'shared_document_hashes':[],'shared_requirement_tags':[],'name_or_ticker_only_entities':[]}}]
+        e={'version':P.BLIND_VERSION,'packet':'P3','fixture':'LIVE','snapshot_sha256':'b'*64,'key_sha256':'c'*64,'hidden_from_adjudicator':['arm'],
+           'instructions':['adjudicate'],'items':items}
+        path=self.dir/'blind.json';path.write_text(json.dumps(e),encoding='utf-8');return path,e
+
+    def test_alias_export_removes_nested_arm_identifiers_and_keeps_evidence(self):
+        path,e=self.export();before=sha(path)
+        codes={f['code'] for f in P.scan_leaks(e['items'],P.own_records(e))}
+        self.assertTrue({'ARM_LETTER_RECORD_ID','OWN_ARM_RECORD_ID','ARM_CAMPAIGN_ID','ARM_PATH','ARM_BRANCH'}<=codes)
+        v2=P.alias_export(path,self.dir/'blind_v2.json',self.dir/'alias.json',secret='s'*32)
+        self.assertEqual(sha(path),before)  # the V001 export is never rewritten
+        self.assertEqual(P.scan_leaks(v2['items'],P.own_records(e)),[])
+        self.assertEqual(P.scan_leaks(P.sheet(v2),P.own_records(e)),[])
+        text=json.dumps(v2['items'])
+        for leak in ('OBS-G-7','REL-G-1','CAND-G-1','DLC-GP3-G','/P3/G/','graph-pilot-r3','OBS-MGA-SUBSIDIARIES'):self.assertNotIn(leak,text)
+        self.assertIn('OBS-P-1',text);self.assertIn('HIST-F01/F6',text);self.assertIn('/P3/ARM/',text)
+        self.assertEqual([i['blind_id'] for i in v2['items']],['ADJ-0000000001','ADJ-0000000002'])
+        self.assertEqual((v2['key_sha256'],v2['derived_from']['sha256']),(e['key_sha256'],before))
+        a,b=v2['items']
+        self.assertEqual(a['from']['evidence'][0]['sha256'],'a'*64);self.assertEqual((a['from']['value'],a['from']['occurred']),(3,'2025-07-02'))
+        self.assertEqual(a['shared_structure'],e['items'][0]['shared_structure'])
+        maps=json.loads((self.dir/'alias.json').read_text(encoding='utf-8'))['aliases']
+        self.assertEqual(a['from']['record'],maps['ADJ-0000000001']['OBS-G-7']);self.assertIn(maps['ADJ-0000000001']['CAND-G-1'],a['from']['text'])
+        self.assertNotEqual(maps['ADJ-0000000001']['OBS-G-7'],maps['ADJ-0000000002']['OBS-G-7'])  # per-item aliases: no cross-item linkage
+        again=P.alias_export(path,self.dir/'again.json',self.dir/'alias2.json',secret='s'*32)
+        self.assertEqual(again['items'],v2['items'])
+        with self.assertRaises(FileExistsError):P.alias_export(path,self.dir/'blind_v2.json',self.dir/'alias3.json')
+        with self.assertRaisesRegex(P.PilotError,'derives from'):P.alias_export(self.dir/'blind_v2.json',self.dir/'x.json',self.dir/'y.json')
+
+    def test_leak_scan_recurses_into_keys_lists_and_text(self):
+        nested={'a':[{'OBS-S-2':'x'},{'deep':['CON-0123456789ab','the G arm wrote this','see SUG-abcdef012345']}],'b':'GRAPH_ONLY and ACCEPTED',
+                'c':'used revisit then baseline-search','d':'biographies; GRAPHIC exhibit; paragraph'}
+        codes=sorted({f['code'] for f in P.scan_leaks(nested)})
+        self.assertEqual(codes,['ARM_LABEL','ARM_LETTER_RECORD_ID','ATTRIBUTION_OR_DECISION','PILOT_CONNECTION_ID','TOOL_WORD'])
+        self.assertFalse(P.scan_leaks({'d':'biographies; GRAPHIC exhibit; paragraph; OBS-P-1'}))
+        self.assertTrue(P.scan_leaks('## item\n- From: `CURRENT_ARM_CAMPAIGN/OBS-7`',own_records=['OBS-7']))
+
+    def test_committed_r3_exports_reproduce_the_defect_and_v2_presentations_are_clean(self):
+        base=ROOT/'docs/strategy/graph_pilot_r3'
+        for packet in ('P3','P4'):
+            v1=json.loads((base/packet/'blind.json').read_text(encoding='utf-8'));own=P.own_records(v1)
+            self.assertTrue(P.scan_leaks(v1['items'],own))  # the original presentation was compromised
+            v2=json.loads((base/packet/'blind_v2.json').read_text(encoding='utf-8'))
+            self.assertEqual(v2['derived_from']['sha256'],sha(base/packet/'blind.json'))
+            self.assertEqual([i['blind_id'] for i in v2['items']],[i['blind_id'] for i in v1['items']])
+            self.assertEqual(P.scan_leaks(v2['items'],own),[])
+            self.assertEqual(P.scan_leaks((base/packet/'adjudication_sheet_v2.md').read_text(encoding='utf-8'),own),[])
+            self.assertEqual((base/packet/'adjudication_sheet_v2.md').read_text(encoding='utf-8'),P.sheet(v2))
 
 
 if __name__=='__main__':unittest.main()

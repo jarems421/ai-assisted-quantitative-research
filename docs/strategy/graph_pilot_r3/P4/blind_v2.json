@@ -1,0 +1,1629 @@
+{
+ "version": "GRAPH_PILOT_BLIND_V2_ALIASED",
+ "packet": "P4",
+ "fixture": "LIVE",
+ "snapshot_sha256": "80a583a790b6e43637ce3da87f4db3f238a630a2c24483b071e2c17e15c1a363",
+ "key_sha256": "270f6da3227fc13051794c78c6d9bcee6f74d7dc26dd0b4320e3fa2e7696c08f",
+ "derived_from": {
+  "path": "blind.json",
+  "sha256": "13b80b6cb1e3191cbbc4d79c0976b27bbf9acf9910eb69eb0a7854cd6d77ec9b",
+  "version": "GRAPH_PILOT_BLIND_V001",
+  "presentation_status": "COMPROMISED: arm-identifying record ids and id styles were visible"
+ },
+ "alias_key_sha256": "9d811ee8d3bf7b0e38ffa980d0bf5065c37b626b2ab74f0b43191e766412a875",
+ "aliasing": [
+  "every record id of the current arm campaign, in any field or text, is an opaque per-item alias (kind prefix kept)",
+  "frozen-packet (SRC/OBS/REL-P-n) and historical (HIST-) references are unchanged",
+  "campaign ids, archive paths and branch names are neutral placeholders",
+  "blind ids, item order, evidence hashes, dates, values, periods and texts are otherwise unchanged"
+ ],
+ "hidden_from_adjudicator": [
+  "arm",
+  "connection_id",
+  "operator",
+  "found_via",
+  "basis",
+  "arm_decision",
+  "analyst_minutes",
+  "discovery_lab_record",
+  "recorded_at_utc",
+  "notes",
+  "arm campaign ids",
+  "graph explanations and match strengths"
+ ],
+ "instructions": [
+  "Adjudicate every item once, against the cited originals, without consulting arm ledgers, logs or sessions.",
+  "CONFIRMED_AGAINST_ORIGINALS must list the evidence identifiers (sha256 or locator) you checked.",
+  "Economic meaning: does the connection link an observed quantity or documented relationship to a listed company's documented exposure, or to a claim's required measurement?",
+  "Aliases are per item: the same alias in two items is not implied to be the same record."
+ ],
+ "items": [
+  {
+   "blind_id": "ADJ-73cda6d4f7",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Aae4bafc7",
+    "text": "NHTSA recall 26V189 (FCA US, LLC; submission date 2026-03-26) covers 178,246 potentially involved 2022-2026 Chrysler Voyager (23,879) and Pacifica (154,367) vehicles built 2022-05-17 to 2025-08-08 with curtain airbags that may not retain sufficient pressure; estimated percentage with defect 30%; Tier 1 component manufacturer Autoliv ASP, Inc.; remedy type Replace (one or both curtain airbags), remedy part 'a CAB with proper pressure retention'. The chronology lists prior recalls 25V302 and 25E033 (filed 2025-05-08) and 25V573 (filed 2025-09-04), and FCA's recognition on 2026-03-05 of a supplier manufacturing issue in certain additional curtain airbags. Later, separately filed recall for the same component and supplier with a population about 181 times that of 25V573; documents that the defect is attributed to a supplier manufacturing issue and that 25V573 was one step in a sequence of recalls. Remedy-part maker Cost allocation between vehicle manufacturer and supplier Number of curtain airbags actually replaced First-public time",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 178246,
+    "units": "vehicles potentially involved",
+    "occurred": "2026-03-19",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Af5686cf0",
+    "text": "Autoliv, Inc.'s Q1 2026 results release reports net sales of $2,753 million (Q1 2025: $2,578 million) and adjusts operating income only for capacity alignments and antitrust related matters. A text search of the release for recall, warranty, Chrysler, FCA and curtain finds recall and warranty only in the forward-looking-statement risk list, Stellantis named as a main Americas growth driver, and a statement that inflatable-curtain sales declined organically, partly offsetting airbag growth. No cost, provision or charge attributed to a vehicle recall appears. The parent's own disclosure for the quarter of the recall expansion; it neither quantifies nor mentions a recall cost, and gives consolidated scale. Form 10-Q warranty and product-liability notes Any customer recovery claim",
+    "entities": [
+     {
+      "id": "CIK:0001034670",
+      "name": "Autoliv, Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526160203/alv-ex99_1.htm",
+      "sha256": "557dd1d3a2e3c63ff798d6303177ecf95873cc3422bdef1e765c111215b51440",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526160203/alv-ex99_1.htm",
+      "sha256": "557dd1d3a2e3c63ff798d6303177ecf95873cc3422bdef1e765c111215b51440",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526160203/alv-ex99_1.htm",
+      "sha256": "557dd1d3a2e3c63ff798d6303177ecf95873cc3422bdef1e765c111215b51440",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526160203/alv-ex99_1.htm",
+      "sha256": "557dd1d3a2e3c63ff798d6303177ecf95873cc3422bdef1e765c111215b51440",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1034670/000119312526160203/alv-ex99_1.htm",
+      "sha256": "557dd1d3a2e3c63ff798d6303177ecf95873cc3422bdef1e765c111215b51440",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 2753,
+    "units": "USD millions, consolidated net sales, Q1 2026",
+    "occurred": "2026-03-31",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:FCA US, LLC"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-b0599d4fbf",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A8d8add86",
+    "text": "The recall quarterly report for 25V573 (document last updated 2026-01-28) records report #1, submitted 2026-01-27, for report quarter 2025-4: recall population 985, total remedied 522, total unreachable 4, total removed 2; owner notification beginning date 2025-10-14. 'Total Remedied' is defined as products remedied, inspected without needing remedy, or returned to inventory. Separately filed realised remedy activity for the same campaign, the activity the mechanism says creates replacement-part demand. Parts installed Remedy-part supplier and price Later quarters (a second document locator exists)",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 522,
+    "units": "products (vehicles) remedied, inspected without needing remedy, or returned to inventory, cumulative as reported for quarter 2025-4",
+    "occurred": "2025-12-31",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-F01/claim-v1",
+    "entities": [
+     {
+      "id": "BW_LOCALITY:10029",
+      "name": "Tuholmane Ø"
+     },
+     {
+      "id": "BW_LOCALITY:10212",
+      "name": "Bogen"
+     },
+     {
+      "id": "BW_LOCALITY:10041",
+      "name": "Kviksholmen"
+     },
+     {
+      "id": "BW_LOCALITY:10213",
+      "name": "Naustneset"
+     },
+     {
+      "id": "MMSI:257210000",
+      "name": "ROSTEIN (wellboat)"
+     },
+     {
+      "id": "MMSI:257262000",
+      "name": "RONJA SUND (wellboat)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10029/vessel/2021/10",
+      "sha256": "fce8a379fa8dd198407483bb512df417dc95b5d236c4ba62012559f596a40d4b",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10213/vessel/2024/10",
+      "sha256": "253a49d06ceeb3b5e7a8984d16d18e70699c24f2bbfe98efe0c4716598ee25f1",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/vesseltrack/257210000/2021/10",
+      "sha256": "d01c12155bfe1fd903110e81067307cc85259d82e400775ee921d17d41ab3660",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/openapi/fishhealth/openapi.json",
+      "sha256": "4b95578a944443798f2afcb8214d10069b6b931cc733c85646716afdac1cf675",
+      "depth": "RECEIPT_HTTP_200"
+     }
+    ],
+    "text": "Cross-owner treatment-resource dependence and available treatment capacity",
+    "tags": [
+     "REQ_AVAILABLE_CAPACITY",
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_REALISED_ACTIVITY"
+    ]
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:FCA US, LLC"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-44c50ee6ea",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Ab1d20668",
+    "text": "NHTSA recall 26V189 (FCA US, LLC; submission date 2026-03-26) covers 178,246 potentially involved 2022-2026 Chrysler Voyager (23,879) and Pacifica (154,367) vehicles built 2022-05-17 to 2025-08-08 with curtain airbags that may not retain sufficient pressure; estimated percentage with defect 30%; Tier 1 component manufacturer Autoliv ASP, Inc.; remedy type Replace (one or both curtain airbags), remedy part 'a CAB with proper pressure retention'. The chronology lists prior recalls 25V302 and 25E033 (filed 2025-05-08) and 25V573 (filed 2025-09-04), and FCA's recognition on 2026-03-05 of a supplier manufacturing issue in certain additional curtain airbags. Later, separately filed recall for the same component and supplier with a population about 181 times that of 25V573; documents that the defect is attributed to a supplier manufacturing issue and that 25V573 was one step in a sequence of recalls. Remedy-part maker Cost allocation between vehicle manufacturer and supplier Number of curtain airbags actually replaced First-public time",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 178246,
+    "units": "vehicles potentially involved",
+    "occurred": "2026-03-19",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-F09/claim-v1",
+    "entities": [
+     {
+      "id": "CIK:0000063276",
+      "name": "Mattel"
+     },
+     {
+      "id": "CIK:0000046080",
+      "name": "Hasbro"
+     },
+     {
+      "id": "NAME:Toys R Us",
+      "name": "Toys R Us (debtor)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/63276/000162828018011171/filename1.htm",
+      "sha256": "f69c41806b6231e3c1f3fbd0231fc522419a8fad919073e07946f28e982158fa",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/46080/000004608019000008/exhibit991.htm",
+      "sha256": "83bf6234bbb5e516335bb5185ef48c6e8005102c5716e8c25cd500cd2b5d2f2b",
+      "depth": "RECEIPT_HTTP_200"
+     }
+    ],
+    "text": "Supplier cash exposure actually covered by a dated creditor-protection agreement",
+    "tags": [
+     "REQ_UNREDACTED_CONTRACT_AMOUNT"
+    ]
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:FCA US, LLC",
+     "NAME:Toys R Us"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-939e76e791",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A5b6be878",
+    "text": "Part 573 equipment recall report 25E054 (submission date Sep 15, 2025) names the manufacturer as 'Magna International Inc.', 337 Magna Drive, Aurora, L4G7K1; brand/trade 'Magna Electronics'; function rearview camera; production dates May 01, 2019 - Nov 27, 2021; 250,292 potentially involved (Ford Flex 17,679; Ford Fiesta 12,234; Lincoln MKT 802; Ram Promaster 141,906; Dodge Journey 77,671), citing recall reports 24V-951 (Ford) and 25V-552 (Chrysler). Component manufacturer: 'Magna Electronics Technology Inc.', 10345 N Holly Rd, Holly MI 48442, Tier 1. Chrysler part numbers 56054158AG, 68284643AC, 68417057AA, 68417055AA. Purchasers: Ford Motor Company and Chrysler (FCA US, LLC). Remedy type Replace; 'Rear view camera will be replaced'; description of cause 'Ongoing'; remedy-component differences and reimbursement referred to the purchasers' reports; 'The purchasers (Ford and Chrysler) are conducting the recalls and notifications'. The equipment manufacturer of record itself filed a defect report for the recalled camera, naming its own name and head-office address; this documents the recalled-part supply far more directly than the vehicle manufacturer's supplier field. It still does not identify the supplier of the remedy camera or any cost-sharing. Supplier of the remedy camera Cost, reimbursement or warranty-recovery amounts Registry identifier linking the filer to the SEC issuer First-public time; retrieved file HTTP Last-Modified is 2026-01-14",
+    "entities": [
+     {
+      "id": "NHTSA_RECALL:25E054",
+      "name": "NHTSA equipment recall 25E054 (Magna rearview camera)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25E054-6654.pdf (pages 1-4)",
+      "sha256": "22b52ff12a64472e63d97fb7a6f27f13cf6288b54c2ac3ce534433a571a37cb5",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 250292,
+    "units": "vehicles potentially involved",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Ab6f01fe4",
+    "text": "Magna International Inc.'s Annual Information Form (EX-1, accession 0001193125-24-080656) gives its registered and head office as 337 Magna Drive, Aurora, Ontario, Canada L4G 7K1 and lists, among principal subsidiaries as of December 31, 2023, 'Magna Electronics Foreign Holdco AB 100% Sweden' and 'Magna Electronics AB 100% Sweden'. No principal subsidiary named exactly 'Magna Electronics' appears. The officer biographies use 'President, Magna Electronics' as a title (April 2019 to February 2021), indicating a business unit name. The Part 573 supplier address is '337 Magna Drive', 'Aurora', postcode 'L4G 7A9', which differs from the head-office postcode L4G 7K1. It tests whether the supplier name in the recall report is a documented legal entity of a listed issuer; the result is a resemblance (name stem, street address), not an identity. Legal entity that supplied part numbers 56054158AG, 68284643AC, 68417057AA, 68417055AA in 2019-2021 Complete subsidiary list (Schedule A is principal subsidiaries only) SEC acceptance time of the exhibit",
+    "entities": [
+     {
+      "id": "SEC_CIK:749098",
+      "name": "Magna International Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000119312524080656/d522979dex1.htm (Section 1 and Schedule A; officer biographies)",
+      "sha256": "d0e2a913e091f1319adeaf8d92b574c7772ebd56c52d910ab96f2fee22d4fab0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "No exact-name principal subsidiary; two Swedish 'Magna Electronics' subsidiaries; business-unit title 'Magna Electronics'",
+    "units": "entity names and jurisdictions",
+    "occurred": "2023-12-31",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": []
+   }
+  },
+  {
+   "blind_id": "ADJ-ac9a4b8b08",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Acd618fe2",
+    "text": "NHTSA recall 25V573 (FCA US, LLC; submission date 2025-09-04) covers 985 potentially involved 2025 Chrysler Voyager (114) and Pacifica (871) vehicles whose curtain airbags may not retain sufficient pressure (FMVSS 226 noncompliance); remedy type Replace, replacing one or both curtain airbags, the remedy part being a curtain airbag built with airbag material from a different lot. Documents a dated recall whose remedy requires replacement components, with a stated maximum population, i.e. the triggering quantity the mechanism needs. First-public time of the report Number of remedy parts actually installed Price or cost of the remedy part Who supplies the remedy part",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 985,
+    "units": "vehicles potentially involved",
+    "occurred": "2025-08-28",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A63291243",
+    "text": "A later Part 573 report document for 25V573 (Submission Date May 07, 2026) leaves Remedy Type blank, gives Related NHTSA Recall Number 26V189, and states that 82C, 86C, 87C (NHTSA Recall ID 25V573) has been superseded by 06D, 10D, 11D (NHTSA Recall ID 26V189). It keeps the same population (871 Pacifica, 114 Voyager) and the same component manufacturer field. Shows that the 2025 remedy record was later revised and the recall superseded, so remedy activity under 25V573 may not be the final replacement and Part 573 documents exist in several dated versions under different document numbers. Reason for supersession Remedy and remedy-part supplier under 26V189 Whether vehicles counted as remedied under 25V573 need a further remedy",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7561.pdf",
+      "sha256": "88f9976abba72bcc0acd997d6e87d3e553bbf6869a2501a4c701ba269b8663d6",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7561.pdf",
+      "sha256": "88f9976abba72bcc0acd997d6e87d3e553bbf6869a2501a4c701ba269b8663d6",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7561.pdf",
+      "sha256": "88f9976abba72bcc0acd997d6e87d3e553bbf6869a2501a4c701ba269b8663d6",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7561.pdf",
+      "sha256": "88f9976abba72bcc0acd997d6e87d3e553bbf6869a2501a4c701ba269b8663d6",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "UNKNOWN",
+    "units": "recall status and remedy fields (no quantity)",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:FCA US, LLC"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-e0917a47b3",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Aa4a048aa",
+    "text": "Part 573 report 25V552 names the component manufacturer of the recalled rear view camera as 'Magna Electronics', address '337 Magna Drive', 'Aurora Foreign States, L4G 7A9', Country: Canada. Tier of supplier and supplier type are blank. The report does not name the manufacturer of the remedy camera, which it says is 'a rearview camera with a different design'. It is the only original statement linking the recalled component to a named supplier; any listed-company exposure must start from it. Registry identity of 'Magna Electronics' and any documented parent Supplier of the remedy camera Any cost-sharing or warranty-recovery terms between the vehicle manufacturer and the supplier",
+    "entities": [
+     {
+      "id": "NAME:Magna Electronics",
+      "name": "Magna Electronics"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V552-6972.pdf (pages 2-4)",
+      "sha256": "c5b46ebdf3cd5b97830aa3f7ac8dea29836ebf81def305824bfa757337a41cf9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Magna Electronics (named supplier of recalled component)",
+    "units": "supplier name and address text",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A1a97d3ae",
+    "text": "Part 573 equipment recall report 25E054 (submission date Sep 15, 2025) names the manufacturer as 'Magna International Inc.', 337 Magna Drive, Aurora, L4G7K1; brand/trade 'Magna Electronics'; function rearview camera; production dates May 01, 2019 - Nov 27, 2021; 250,292 potentially involved (Ford Flex 17,679; Ford Fiesta 12,234; Lincoln MKT 802; Ram Promaster 141,906; Dodge Journey 77,671), citing recall reports 24V-951 (Ford) and 25V-552 (Chrysler). Component manufacturer: 'Magna Electronics Technology Inc.', 10345 N Holly Rd, Holly MI 48442, Tier 1. Chrysler part numbers 56054158AG, 68284643AC, 68417057AA, 68417055AA. Purchasers: Ford Motor Company and Chrysler (FCA US, LLC). Remedy type Replace; 'Rear view camera will be replaced'; description of cause 'Ongoing'; remedy-component differences and reimbursement referred to the purchasers' reports; 'The purchasers (Ford and Chrysler) are conducting the recalls and notifications'. The equipment manufacturer of record itself filed a defect report for the recalled camera, naming its own name and head-office address; this documents the recalled-part supply far more directly than the vehicle manufacturer's supplier field. It still does not identify the supplier of the remedy camera or any cost-sharing. Supplier of the remedy camera Cost, reimbursement or warranty-recovery amounts Registry identifier linking the filer to the SEC issuer First-public time; retrieved file HTTP Last-Modified is 2026-01-14",
+    "entities": [
+     {
+      "id": "NHTSA_RECALL:25E054",
+      "name": "NHTSA equipment recall 25E054 (Magna rearview camera)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25E054-6654.pdf (pages 1-4)",
+      "sha256": "22b52ff12a64472e63d97fb7a6f27f13cf6288b54c2ac3ce534433a571a37cb5",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 250292,
+    "units": "vehicles potentially involved",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Magna Electronics"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-8e30e145a7",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "candidate",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "CAND-A79f52a0f",
+    "text": "A documented safety recall with a Replace remedy creates demand for remedy components; if the economically linked listed supplier makes the remedy part and is paid for it, its replacement-part sales rise with remedy completions. Recall population requiring curtain-airbag replacement, with the recalled component's manufacturer identified Remedy-part maker and commercial terms [REQ:REQ_QUALIFIED_COMMERCIAL_EXPOSURE] Realised remedy installations by quarter [REQ:REQ_REALISED_ACTIVITY] Registry-identified link from the Part 573 supplier to the listed parent's subsidiary, covering the remedy period [REQ:REQ_ENTITY_COHORT_JOIN] Remedy-part price or revenue and listed-parent scale First-public time of the Part 573 report Net economics to the supplier after recall-cost recovery or chargeback, separate from gross remedy-part volume [REQ:REQ_RETAINED_NET_ECONOMICS]",
+    "entities": [
+     {
+      "id": "CIK:0001034670",
+      "name": "Autoliv, Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_QUALIFIED_COMMERCIAL_EXPOSURE",
+     "REQ_REALISED_ACTIVITY",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ],
+    "outcome": "Vehicles remedied under recall 25V573 by reporting quarter (realised remedy installations)"
+   },
+   "to": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-F01/claim-v1",
+    "entities": [
+     {
+      "id": "BW_LOCALITY:10029",
+      "name": "Tuholmane Ø"
+     },
+     {
+      "id": "BW_LOCALITY:10212",
+      "name": "Bogen"
+     },
+     {
+      "id": "BW_LOCALITY:10041",
+      "name": "Kviksholmen"
+     },
+     {
+      "id": "BW_LOCALITY:10213",
+      "name": "Naustneset"
+     },
+     {
+      "id": "MMSI:257210000",
+      "name": "ROSTEIN (wellboat)"
+     },
+     {
+      "id": "MMSI:257262000",
+      "name": "RONJA SUND (wellboat)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10029/vessel/2021/10",
+      "sha256": "fce8a379fa8dd198407483bb512df417dc95b5d236c4ba62012559f596a40d4b",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10213/vessel/2024/10",
+      "sha256": "253a49d06ceeb3b5e7a8984d16d18e70699c24f2bbfe98efe0c4716598ee25f1",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/vesseltrack/257210000/2021/10",
+      "sha256": "d01c12155bfe1fd903110e81067307cc85259d82e400775ee921d17d41ab3660",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/openapi/fishhealth/openapi.json",
+      "sha256": "4b95578a944443798f2afcb8214d10069b6b931cc733c85646716afdac1cf675",
+      "depth": "RECEIPT_HTTP_200"
+     }
+    ],
+    "text": "Cross-owner treatment-resource dependence and available treatment capacity",
+    "tags": [
+     "REQ_AVAILABLE_CAPACITY",
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_REALISED_ACTIVITY"
+    ]
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_REALISED_ACTIVITY"
+    ],
+    "name_or_ticker_only_entities": []
+   }
+  },
+  {
+   "blind_id": "ADJ-0f55586e44",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "candidate",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "CAND-Acbbe5731",
+    "text": "A documented safety recall with a Replace remedy creates demand for remedy components; if the economically linked listed supplier makes the remedy part and is paid for it, its replacement-part sales rise with remedy completions. Recall population requiring curtain-airbag replacement, with the recalled component's manufacturer identified Remedy-part maker and commercial terms [REQ:REQ_QUALIFIED_COMMERCIAL_EXPOSURE] Realised remedy installations by quarter [REQ:REQ_REALISED_ACTIVITY] Registry-identified link from the Part 573 supplier to the listed parent's subsidiary, covering the remedy period [REQ:REQ_ENTITY_COHORT_JOIN] Remedy-part price or revenue and listed-parent scale First-public time of the Part 573 report Net economics to the supplier after recall-cost recovery or chargeback, separate from gross remedy-part volume [REQ:REQ_RETAINED_NET_ECONOMICS]",
+    "entities": [
+     {
+      "id": "CIK:0001034670",
+      "name": "Autoliv, Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_QUALIFIED_COMMERCIAL_EXPOSURE",
+     "REQ_REALISED_ACTIVITY",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ],
+    "outcome": "Vehicles remedied under recall 25V573 by reporting quarter (realised remedy installations)"
+   },
+   "to": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-SH09/claim-v1",
+    "entities": [
+     {
+      "id": "CIK:0000093410",
+      "name": "Chevron Corporation"
+     },
+     {
+      "id": "NAME:W&T Offshore",
+      "name": "W&T Offshore"
+     },
+     {
+      "id": "NAME:Cox estate leases",
+      "name": "Cox-estate leases with outstanding obligations"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.wtoffshore.com/investors/sec-filings/all-sec-filings/content/0001104659-23-126389/0001104659-23-126389.pdf",
+      "sha256": "1d468393d22cfafe99b67b1432a38bcfc0630b85e4e76620a8e9ff5285451651",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000002/cvx-20240102.htm",
+      "sha256": "4c5d6244c33ac20637cfd6b4e6ce4f939bb0ce6f13281f963d8005ba80195766",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://chevroncorp.gcs-web.com/static-files/51fe92ca-3680-42a4-b804-2c9433cfe667",
+      "sha256": "f70acef4d8bb6b5b9c67c042676f0cd5217face3fc2630b0ff877665e86dd36f",
+      "depth": "RECEIPT_HTTP_403"
+     },
+     {
+      "locator": "https://www.courtlistener.com/?q=%22MLCJR%22&type=r&order_by=dateFiled%20asc",
+      "sha256": "dc6f503969324d8da3b8204988ce06ab0be870d8fad8c777fc731daa71fd37c0",
+      "depth": "RECEIPT_HTTP_403"
+     }
+    ],
+    "text": "Change in Chevron recoverable-net predecessor cleanup exposure before 2024-01-02",
+    "tags": [
+     "REQ_DOCUMENTED_ALLOCATION",
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_HISTORICAL_SCHEDULE_OR_VERSION",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ]
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ],
+    "name_or_ticker_only_entities": [
+     "NAME:Cox estate leases",
+     "NAME:W&T Offshore"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-25785c7b12",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A31c75c02",
+    "text": "NHTSA recall 25V573 (FCA US, LLC; submission date 2025-09-04) covers 985 potentially involved 2025 Chrysler Voyager (114) and Pacifica (871) vehicles whose curtain airbags may not retain sufficient pressure (FMVSS 226 noncompliance); remedy type Replace, replacing one or both curtain airbags, the remedy part being a curtain airbag built with airbag material from a different lot. Documents a dated recall whose remedy requires replacement components, with a stated maximum population, i.e. the triggering quantity the mechanism needs. First-public time of the report Number of remedy parts actually installed Price or cost of the remedy part Who supplies the remedy part",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 985,
+    "units": "vehicles potentially involved",
+    "occurred": "2025-08-28",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Ad5e0f823",
+    "text": "The recall quarterly report for 25V573 (document last updated 2026-01-28) records report #1, submitted 2026-01-27, for report quarter 2025-4: recall population 985, total remedied 522, total unreachable 4, total removed 2; owner notification beginning date 2025-10-14. 'Total Remedied' is defined as products remedied, inspected without needing remedy, or returned to inventory. Separately filed realised remedy activity for the same campaign, the activity the mechanism says creates replacement-part demand. Parts installed Remedy-part supplier and price Later quarters (a second document locator exists)",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 522,
+    "units": "products (vehicles) remedied, inspected without needing remedy, or returned to inventory, cumulative as reported for quarter 2025-4",
+    "occurred": "2025-12-31",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:FCA US, LLC"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-d57044feb7",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "candidate",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "CAND-A5cc7a95b",
+    "text": "A documented safety recall with a Replace remedy creates demand for remedy components; if the economically linked listed supplier makes the remedy part and is paid for it, its replacement-part sales rise with remedy completions. Recall population requiring curtain-airbag replacement, with the recalled component's manufacturer identified Remedy-part maker and commercial terms [REQ:REQ_QUALIFIED_COMMERCIAL_EXPOSURE] Realised remedy installations by quarter [REQ:REQ_REALISED_ACTIVITY] Registry-identified link from the Part 573 supplier to the listed parent's subsidiary, covering the remedy period [REQ:REQ_ENTITY_COHORT_JOIN] Remedy-part price or revenue and listed-parent scale First-public time of the Part 573 report Net economics to the supplier after recall-cost recovery or chargeback, separate from gross remedy-part volume [REQ:REQ_RETAINED_NET_ECONOMICS]",
+    "entities": [
+     {
+      "id": "CIK:0001034670",
+      "name": "Autoliv, Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_QUALIFIED_COMMERCIAL_EXPOSURE",
+     "REQ_REALISED_ACTIVITY",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ],
+    "outcome": "Vehicles remedied under recall 25V573 by reporting quarter (realised remedy installations)"
+   },
+   "to": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-F03/claim-v1",
+    "entities": [
+     {
+      "id": "NAME:BASF",
+      "name": "BASF"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AC%3A2020%3A447%3AFULL",
+      "sha256": "43521a44025750697e9348267a2b474fa620fb3c62171ab5a0d6219a57661db2",
+      "depth": "RECEIPT_HTTP_200"
+     }
+    ],
+    "text": "A decision changing a documented, material, qualified substitute-supplier sales opportunity",
+    "tags": [
+     "REQ_QUALIFIED_COMMERCIAL_EXPOSURE"
+    ]
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [
+     "REQ_QUALIFIED_COMMERCIAL_EXPOSURE"
+    ],
+    "name_or_ticker_only_entities": [
+     "NAME:BASF"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-7f15c91948",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Ae625c375",
+    "text": "Part 573 equipment recall report 25E054 (submission date Sep 15, 2025) names the manufacturer as 'Magna International Inc.', 337 Magna Drive, Aurora, L4G7K1; brand/trade 'Magna Electronics'; function rearview camera; production dates May 01, 2019 - Nov 27, 2021; 250,292 potentially involved (Ford Flex 17,679; Ford Fiesta 12,234; Lincoln MKT 802; Ram Promaster 141,906; Dodge Journey 77,671), citing recall reports 24V-951 (Ford) and 25V-552 (Chrysler). Component manufacturer: 'Magna Electronics Technology Inc.', 10345 N Holly Rd, Holly MI 48442, Tier 1. Chrysler part numbers 56054158AG, 68284643AC, 68417057AA, 68417055AA. Purchasers: Ford Motor Company and Chrysler (FCA US, LLC). Remedy type Replace; 'Rear view camera will be replaced'; description of cause 'Ongoing'; remedy-component differences and reimbursement referred to the purchasers' reports; 'The purchasers (Ford and Chrysler) are conducting the recalls and notifications'. The equipment manufacturer of record itself filed a defect report for the recalled camera, naming its own name and head-office address; this documents the recalled-part supply far more directly than the vehicle manufacturer's supplier field. It still does not identify the supplier of the remedy camera or any cost-sharing. Supplier of the remedy camera Cost, reimbursement or warranty-recovery amounts Registry identifier linking the filer to the SEC issuer First-public time; retrieved file HTTP Last-Modified is 2026-01-14",
+    "entities": [
+     {
+      "id": "NHTSA_RECALL:25E054",
+      "name": "NHTSA equipment recall 25E054 (Magna rearview camera)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25E054-6654.pdf (pages 1-4)",
+      "sha256": "22b52ff12a64472e63d97fb7a6f27f13cf6288b54c2ac3ce534433a571a37cb5",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 250292,
+    "units": "vehicles potentially involved",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A7e5fac92",
+    "text": "Magna's Q3 2025 report (MD&A prepared as at October 30, 2025) states Ford 'recently initiated recalls covering approximately 3.6 million vehicles equipped with rear-cameras supplied by us' plus a 15-year extended warranty program for approximately 11.0 million other vehicles, that recall initiation 'does not on its own imply or allocate liability', that remedies may range from software upgrades to 'replacement of the rear-camera' at dealer discretion, and that the issuer is 'unable to estimate our potential exposure, if any'. Its FY2025 consolidated financial statements (auditor report dated February 25, 2026) restate approximately 3.8 million recalled vehicles and up to approximately 14.9 million warranty-program vehicles and state 'Ford is claiming approximately $288 million in costs related to these recalls and warranty claims'; they also record a $132 million payment to Ford in Q4 2025 resolving a separate $352 million two-recall allocation. Neither exhibit mentions the Chrysler/FCA US recall 25V552. FY2025 external revenue from Stellantis was $4,637 million of $42,010 million total. The issuer's own periodic disclosure treats rear-camera recalls of cameras it supplied as a liability and cost exposure, not as replacement revenue, and discloses no item for the FCA US cohort. This bears on the sign and on the cohort join of the frozen claim. Any issuer disclosure specific to the FCA US recall 25V552 Accrued or settled amounts for the Ford claim SEC acceptance times",
+    "entities": [
+     {
+      "id": "SEC_CIK:749098",
+      "name": "Magna International Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000110465925104593/tm2526125d1_ex99-2.htm (MD&A risk update; Note 15 Contingencies)",
+      "sha256": "8546212db8f49d44f3fc80c11f66019c99d0ae2174c9eb7308dea0bd0332ce32",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000110465926019969/tm2530886d5_ex99-2.htm (contingencies note; segment note [d])",
+      "sha256": "21288973f21590e9cffd0174ee675388a81ff94e2905c37edb0cd4471e9dc762",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": {
+     "from": "Q3 2025: exposure not estimable",
+     "to": "FY2025: Ford claim approximately USD 288 million (claim, not accrual)"
+    },
+    "units": "USD millions (claimed costs); vehicles (recall counts)",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": []
+   }
+  },
+  {
+   "blind_id": "ADJ-d847304f89",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A67d5bf0e",
+    "text": "The 25V573 report names Autoliv ASP, Inc. (1320 Pacific Drive, Auburn Hills MI 48326, United States) under Component Manufacturer for right and left side curtain airbags, part numbers 68224526AJ and 68224527AH; the chronology states FCA recognised a supplier manufacturing issue in certain curtain airbags on 2025-08-22. Supplier documentation for the recalled component, as required by the mechanism; also attributes the defect to a supplier manufacturing issue. Registry identifier for Autoliv ASP, Inc. Documented ownership by a listed parent Remedy-part supplier Tier of supplier value (label misaligned in extraction)",
+    "entities": [
+     {
+      "id": "NAME:Autoliv ASP, Inc.",
+      "name": "Autoliv ASP, Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "UNKNOWN",
+    "units": "supplier name and address; component part numbers (no quantity)",
+    "occurred": "2025-08-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A0527b633",
+    "text": "Exhibit 21 to the FY2024 Form 10-K filed under EDGAR archive CIK 1034670 lists, under USA, 'Autoliv ASP, Inc. (Indiana)' among the subsidiaries of Autoliv, Inc. as of December 31, 2024, with all subsidiaries wholly owned unless otherwise indicated (no percentage shown for this entity). Documents a parent-subsidiary relationship at a date inside the recalled-part production period (2024-12-05 to 2025-01-27). Registry identifier linking the Part 573 supplier to the Indiana entity Ownership after 2024-12-31 Filing acceptance date",
+    "entities": [
+     {
+      "id": "NAME:Autoliv ASP, Inc. (Indiana)",
+      "name": "Autoliv ASP, Inc. (Indiana)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1034670/000095017025023852/alv-ex21.htm",
+      "sha256": "06dec9baebdccf5b546350631c73c01fb7513601af9829909fb93adcea7bcb27",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1034670/000095017025023852/alv-ex21.htm",
+      "sha256": "06dec9baebdccf5b546350631c73c01fb7513601af9829909fb93adcea7bcb27",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1034670/000095017025023852/alv-ex21.htm",
+      "sha256": "06dec9baebdccf5b546350631c73c01fb7513601af9829909fb93adcea7bcb27",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "UNKNOWN",
+    "units": "subsidiary listing (no quantity)",
+    "occurred": "2024-12-31",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Autoliv ASP, Inc.",
+     "NAME:Autoliv ASP, Inc. (Indiana)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-01a434479d",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "candidate",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "CAND-A0cdc8033",
+    "text": "A replace-type recall obliges the vehicle manufacturer to install a remedy component in up to the stated population. If the listed company behind the named supplier also supplies the remedy component, the recall creates replacement volume for it; if, as the issuer's own risk disclosure describes, the supplier of the recalled part bears repair/replacement and administrative costs, the same recall is a cost. The sign of the issuer effect therefore depends on who supplies the remedy part and on cost-sharing terms, neither of which is documented. Vehicles potentially involved in a replace-remedy recall whose recalled component has a named supplier Supplier of the remedy rearview camera (different design); the equipment report refers remedy differences to the purchasers' reports Registry-level confirmation that the equipment-recall filer is SEC CIK 749098 Unit price or remedy-part revenue Cost-sharing, reimbursement or warranty-recovery terms; equipment report cause is 'Ongoing' and reimbursement is referred to the purchasers Remedy completion counts (outcome; quarterly report not located) First-public time of either recall report Any issuer disclosure specific to the FCA US cohort (none in the two periodic exhibits read)",
+    "entities": [
+     {
+      "id": "SEC_CIK:749098",
+      "name": "Magna International Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000119312524080656/d522979dex1.htm (risk factors)",
+      "sha256": "d0e2a913e091f1319adeaf8d92b574c7772ebd56c52d910ab96f2fee22d4fab0",
+      "depth": "VERIFIED_ORIGINAL_RECORD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000110465926019969/tm2530886d5_ex99-2.htm (contingencies note)",
+      "sha256": "21288973f21590e9cffd0174ee675388a81ff94e2905c37edb0cd4471e9dc762",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "outcome": "Vehicles remedied under the recall (remedy components installed), as reported in the manufacturer's Part 573.7 quarterly recall reports"
+   },
+   "to": {
+    "kind": "historical_finding",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-F03/F1",
+    "entities": [
+     {
+      "id": "NAME:BASF",
+      "name": "BASF"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "docs/strategy/frontier_selection_ii_report.md",
+      "sha256": null,
+      "depth": "REPORT_QUOTE",
+      "passage": "F03 establishes real commercial substitutes and use-specific legal permissions, but not a qualified substitute's material sales opportunity affected by the decision."
+     }
+    ],
+    "text": "Real substitutes and use-specific permissions exist, but not a qualified substitute sales opportunity.",
+    "tags": [
+     "REQ_QUALIFIED_COMMERCIAL_EXPOSURE"
+    ]
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:BASF"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-34b9b927a9",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Afc36241a",
+    "text": "NHTSA recall 25V573 (FCA US, LLC; submission date 2025-09-04) covers 985 potentially involved 2025 Chrysler Voyager (114) and Pacifica (871) vehicles whose curtain airbags may not retain sufficient pressure (FMVSS 226 noncompliance); remedy type Replace, replacing one or both curtain airbags, the remedy part being a curtain airbag built with airbag material from a different lot. Documents a dated recall whose remedy requires replacement components, with a stated maximum population, i.e. the triggering quantity the mechanism needs. First-public time of the report Number of remedy parts actually installed Price or cost of the remedy part Who supplies the remedy part",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 985,
+    "units": "vehicles potentially involved",
+    "occurred": "2025-08-28",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-F03/claim-v1",
+    "entities": [
+     {
+      "id": "NAME:BASF",
+      "name": "BASF"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AC%3A2020%3A447%3AFULL",
+      "sha256": "43521a44025750697e9348267a2b474fa620fb3c62171ab5a0d6219a57661db2",
+      "depth": "RECEIPT_HTTP_200"
+     }
+    ],
+    "text": "A decision changing a documented, material, qualified substitute-supplier sales opportunity",
+    "tags": [
+     "REQ_QUALIFIED_COMMERCIAL_EXPOSURE"
+    ]
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:BASF",
+     "NAME:FCA US, LLC"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-3268b1a342",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A99678f3a",
+    "text": "Part 573 report 25V552 names the component manufacturer of the recalled rear view camera as 'Magna Electronics', address '337 Magna Drive', 'Aurora Foreign States, L4G 7A9', Country: Canada. Tier of supplier and supplier type are blank. The report does not name the manufacturer of the remedy camera, which it says is 'a rearview camera with a different design'. It is the only original statement linking the recalled component to a named supplier; any listed-company exposure must start from it. Registry identity of 'Magna Electronics' and any documented parent Supplier of the remedy camera Any cost-sharing or warranty-recovery terms between the vehicle manufacturer and the supplier",
+    "entities": [
+     {
+      "id": "NAME:Magna Electronics",
+      "name": "Magna Electronics"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V552-6972.pdf (pages 2-4)",
+      "sha256": "c5b46ebdf3cd5b97830aa3f7ac8dea29836ebf81def305824bfa757337a41cf9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Magna Electronics (named supplier of recalled component)",
+    "units": "supplier name and address text",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Adc0af3d2",
+    "text": "Magna International Inc.'s Annual Information Form (EX-1, accession 0001193125-24-080656) gives its registered and head office as 337 Magna Drive, Aurora, Ontario, Canada L4G 7K1 and lists, among principal subsidiaries as of December 31, 2023, 'Magna Electronics Foreign Holdco AB 100% Sweden' and 'Magna Electronics AB 100% Sweden'. No principal subsidiary named exactly 'Magna Electronics' appears. The officer biographies use 'President, Magna Electronics' as a title (April 2019 to February 2021), indicating a business unit name. The Part 573 supplier address is '337 Magna Drive', 'Aurora', postcode 'L4G 7A9', which differs from the head-office postcode L4G 7K1. It tests whether the supplier name in the recall report is a documented legal entity of a listed issuer; the result is a resemblance (name stem, street address), not an identity. Legal entity that supplied part numbers 56054158AG, 68284643AC, 68417057AA, 68417055AA in 2019-2021 Complete subsidiary list (Schedule A is principal subsidiaries only) SEC acceptance time of the exhibit",
+    "entities": [
+     {
+      "id": "SEC_CIK:749098",
+      "name": "Magna International Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000119312524080656/d522979dex1.htm (Section 1 and Schedule A; officer biographies)",
+      "sha256": "d0e2a913e091f1319adeaf8d92b574c7772ebd56c52d910ab96f2fee22d4fab0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "No exact-name principal subsidiary; two Swedish 'Magna Electronics' subsidiaries; business-unit title 'Magna Electronics'",
+    "units": "entity names and jurisdictions",
+    "occurred": "2023-12-31",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Magna Electronics"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-5f5830a476",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "candidate",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "CAND-A2820961f",
+    "text": "A documented safety recall with a Replace remedy creates demand for remedy components; if the economically linked listed supplier makes the remedy part and is paid for it, its replacement-part sales rise with remedy completions. Recall population requiring curtain-airbag replacement, with the recalled component's manufacturer identified Remedy-part maker and commercial terms [REQ:REQ_QUALIFIED_COMMERCIAL_EXPOSURE] Realised remedy installations by quarter [REQ:REQ_REALISED_ACTIVITY] Registry-identified link from the Part 573 supplier to the listed parent's subsidiary, covering the remedy period [REQ:REQ_ENTITY_COHORT_JOIN] Remedy-part price or revenue and listed-parent scale First-public time of the Part 573 report Net economics to the supplier after recall-cost recovery or chargeback, separate from gross remedy-part volume [REQ:REQ_RETAINED_NET_ECONOMICS]",
+    "entities": [
+     {
+      "id": "CIK:0001034670",
+      "name": "Autoliv, Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLQRT-25V573-0229.pdf",
+      "sha256": "90819f85a11e406313d382db0f8c4e007fcfcac5f7644659340acb1df241496f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_QUALIFIED_COMMERCIAL_EXPOSURE",
+     "REQ_REALISED_ACTIVITY",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ],
+    "outcome": "Vehicles remedied under recall 25V573 by reporting quarter (realised remedy installations)"
+   },
+   "to": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-EF06/claim-v1",
+    "entities": [
+     {
+      "id": "CIK:0001400810",
+      "name": "HCI Group"
+     },
+     {
+      "id": "NAME:Homeowners Choice",
+      "name": "Homeowners Choice (carrier)"
+     },
+     {
+      "id": "NAME:TypTap",
+      "name": "TypTap (carrier)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028021/hci-ex99_1.htm",
+      "sha256": "f68089cd7e28c90911213dc2a9d8de071fa0555d268273bf7c91508dc9c36748",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.citizensfla.com/documents/20702/29465645/2023+Stats.pdf/29ae7065-eb6e-28b8-5841-21e1dbba3049?t=1704899022388",
+      "sha256": "fc39950acee670d29b0e246d19c4a1b5f7ca1347c6a9c4703b946a1103375c51",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028620/hci-20231231.htm",
+      "sha256": "0310d3f0cab53c34b16ae83aa065c78ba91bcb551bc003865ebd0d08653a5840",
+      "depth": "RECEIPT_HTTP_200"
+     }
+    ],
+    "text": "Per-carrier/cohort accepted and retained premium after cancellations and reinsurance",
+    "tags": [
+     "REQ_DOCUMENTED_ALLOCATION",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ]
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [
+     "REQ_RETAINED_NET_ECONOMICS"
+    ],
+    "name_or_ticker_only_entities": [
+     "NAME:Homeowners Choice",
+     "NAME:TypTap"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-f22ae9b504",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A31bc0b04",
+    "text": "Magna's Q3 2025 report (MD&A prepared as at October 30, 2025) states Ford 'recently initiated recalls covering approximately 3.6 million vehicles equipped with rear-cameras supplied by us' plus a 15-year extended warranty program for approximately 11.0 million other vehicles, that recall initiation 'does not on its own imply or allocate liability', that remedies may range from software upgrades to 'replacement of the rear-camera' at dealer discretion, and that the issuer is 'unable to estimate our potential exposure, if any'. Its FY2025 consolidated financial statements (auditor report dated February 25, 2026) restate approximately 3.8 million recalled vehicles and up to approximately 14.9 million warranty-program vehicles and state 'Ford is claiming approximately $288 million in costs related to these recalls and warranty claims'; they also record a $132 million payment to Ford in Q4 2025 resolving a separate $352 million two-recall allocation. Neither exhibit mentions the Chrysler/FCA US recall 25V552. FY2025 external revenue from Stellantis was $4,637 million of $42,010 million total. The issuer's own periodic disclosure treats rear-camera recalls of cameras it supplied as a liability and cost exposure, not as replacement revenue, and discloses no item for the FCA US cohort. This bears on the sign and on the cohort join of the frozen claim. Any issuer disclosure specific to the FCA US recall 25V552 Accrued or settled amounts for the Ford claim SEC acceptance times",
+    "entities": [
+     {
+      "id": "SEC_CIK:749098",
+      "name": "Magna International Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000110465925104593/tm2526125d1_ex99-2.htm (MD&A risk update; Note 15 Contingencies)",
+      "sha256": "8546212db8f49d44f3fc80c11f66019c99d0ae2174c9eb7308dea0bd0332ce32",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000110465926019969/tm2530886d5_ex99-2.htm (contingencies note; segment note [d])",
+      "sha256": "21288973f21590e9cffd0174ee675388a81ff94e2905c37edb0cd4471e9dc762",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": {
+     "from": "Q3 2025: exposure not estimable",
+     "to": "FY2025: Ford claim approximately USD 288 million (claim, not accrual)"
+    },
+    "units": "USD millions (claimed costs); vehicles (recall counts)",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "historical_finding",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-F03/F4",
+    "entities": [
+     {
+      "id": "NAME:BASF",
+      "name": "BASF"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "docs/strategy/frontier_selection_ii_report.md",
+      "sha256": null,
+      "depth": "REPORT_QUOTE",
+      "passage": "is corporate context, not pigment exposure."
+     }
+    ],
+    "text": "Parent group sales are corporate context, not pigment exposure.",
+    "tags": []
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:BASF"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-6f8ec8a40c",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A78c66ea3",
+    "text": "The same Annual Information Form states that cameras are among products 'supplied in multiples of two or four for a single vehicle, which could result in significant cost in the event all need to be replaced', and that OEM or regulator recalls 'could place us at risk for the administrative costs of the recall, in addition to the repair/replacement costs of defective products'. It lists far camera modules and remote camera heads among Electronics products, Stellantis among Electronics top customers, and Aptiv PLC, Continental AG, Denso Corporation, Forvia Group, Robert Bosch GmbH, Valeo S.A. and ZF Group as Electronics competitors. For the supplier of a recalled component, the issuer itself describes a recall as a cost exposure, which reverses the sign assumed by a replacement-demand reading; competitors listed are plausible alternative suppliers of a redesigned remedy camera. Any recall-specific cost, reserve or recovery amount Supplier of the remedy camera",
+    "entities": [
+     {
+      "id": "SEC_CIK:749098",
+      "name": "Magna International Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000119312524080656/d522979dex1.htm (risk factors; Electronics product table)",
+      "sha256": "d0e2a913e091f1319adeaf8d92b574c7772ebd56c52d910ab96f2fee22d4fab0",
+      "depth": "VERIFIED_ORIGINAL_RECORD"
+     }
+    ],
+    "tags": [],
+    "value": "Issuer states recall repair/replacement costs as a risk borne by it; no amount",
+    "units": "qualitative risk statement",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_RECORD"
+   },
+   "to": {
+    "kind": "candidate",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "CAND-A130ba3af",
+    "text": "A replace-type recall obliges the vehicle manufacturer to install a remedy component in up to the stated population. If the listed company behind the named supplier also supplies the remedy component, the recall creates replacement volume for it; if, as the issuer's own risk disclosure describes, the supplier of the recalled part bears repair/replacement and administrative costs, the same recall is a cost. The sign of the issuer effect therefore depends on who supplies the remedy part and on cost-sharing terms, neither of which is documented. Vehicles potentially involved in a replace-remedy recall whose recalled component has a named supplier Supplier of the remedy rearview camera (different design); the equipment report refers remedy differences to the purchasers' reports Registry-level confirmation that the equipment-recall filer is SEC CIK 749098 Unit price or remedy-part revenue Cost-sharing, reimbursement or warranty-recovery terms; equipment report cause is 'Ongoing' and reimbursement is referred to the purchasers Remedy completion counts (outcome; quarterly report not located) First-public time of either recall report Any issuer disclosure specific to the FCA US cohort (none in the two periodic exhibits read)",
+    "entities": [
+     {
+      "id": "SEC_CIK:749098",
+      "name": "Magna International Inc."
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000119312524080656/d522979dex1.htm (risk factors)",
+      "sha256": "d0e2a913e091f1319adeaf8d92b574c7772ebd56c52d910ab96f2fee22d4fab0",
+      "depth": "VERIFIED_ORIGINAL_RECORD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/749098/000110465926019969/tm2530886d5_ex99-2.htm (contingencies note)",
+      "sha256": "21288973f21590e9cffd0174ee675388a81ff94e2905c37edb0cd4471e9dc762",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "outcome": "Vehicles remedied under the recall (remedy components installed), as reported in the manufacturer's Part 573.7 quarterly recall reports"
+   },
+   "shared_structure": {
+    "same_identified_entity": [
+     "SEC_CIK:749098"
+    ],
+    "shared_document_hashes": [
+     "d0e2a913e091f1319adeaf8d92b574c7772ebd56c52d910ab96f2fee22d4fab0"
+    ],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": []
+   }
+  },
+  {
+   "blind_id": "ADJ-6fec14bb2b",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A0e106de5",
+    "text": "NHTSA recall 25V573 (FCA US, LLC; submission date 2025-09-04) covers 985 potentially involved 2025 Chrysler Voyager (114) and Pacifica (871) vehicles whose curtain airbags may not retain sufficient pressure (FMVSS 226 noncompliance); remedy type Replace, replacing one or both curtain airbags, the remedy part being a curtain airbag built with airbag material from a different lot. Documents a dated recall whose remedy requires replacement components, with a stated maximum population, i.e. the triggering quantity the mechanism needs. First-public time of the report Number of remedy parts actually installed Price or cost of the remedy part Who supplies the remedy part",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2025/RCLRPT-25V573-7304.pdf",
+      "sha256": "7a096af8fd9e07df21dc62cdd7de2be8bfb6a9b4d4435b7099117bf893f864f9",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 985,
+    "units": "vehicles potentially involved",
+    "occurred": "2025-08-28",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Ac26d343b",
+    "text": "NHTSA recall 26V189 (FCA US, LLC; submission date 2026-03-26) covers 178,246 potentially involved 2022-2026 Chrysler Voyager (23,879) and Pacifica (154,367) vehicles built 2022-05-17 to 2025-08-08 with curtain airbags that may not retain sufficient pressure; estimated percentage with defect 30%; Tier 1 component manufacturer Autoliv ASP, Inc.; remedy type Replace (one or both curtain airbags), remedy part 'a CAB with proper pressure retention'. The chronology lists prior recalls 25V302 and 25E033 (filed 2025-05-08) and 25V573 (filed 2025-09-04), and FCA's recognition on 2026-03-05 of a supplier manufacturing issue in certain additional curtain airbags. Later, separately filed recall for the same component and supplier with a population about 181 times that of 25V573; documents that the defect is attributed to a supplier manufacturing issue and that 25V573 was one step in a sequence of recalls. Remedy-part maker Cost allocation between vehicle manufacturer and supplier Number of curtain airbags actually replaced First-public time",
+    "entities": [
+     {
+      "id": "NAME:FCA US, LLC",
+      "name": "Chrysler (FCA US, LLC)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://static.nhtsa.gov/odi/rcl/2026/RCLRPT-26V189-0948.pdf",
+      "sha256": "d824654106710dfb17a0a9963278349831e5a3c72f1ac875fe60d2cbc43e4769",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 178246,
+    "units": "vehicles potentially involved",
+    "occurred": "2026-03-19",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:FCA US, LLC"
+    ]
+   }
+  }
+ ],
+ "leak_scan": {
+  "patterns": [
+   "ARM_LETTER_RECORD_ID",
+   "ARM_CAMPAIGN_ID",
+   "ARM_PATH",
+   "ARM_BRANCH",
+   "ARM_LABEL",
+   "PILOT_CONNECTION_ID",
+   "ATTRIBUTION_OR_DECISION",
+   "TOOL_WORD",
+   "OWN_ARM_RECORD_ID"
+  ],
+  "findings": 0
+ }
+}

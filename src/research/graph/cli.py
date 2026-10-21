@@ -97,6 +97,12 @@ def pilot_parser(sub):
     x = ps.add_parser('account', help='effort of one arm by category against the campaign ceilings')
     x.add_argument('snapshot'); x.add_argument('--arm', choices=P.ARMS, required=True)
     x = ps.add_parser('report', help='paired per-packet report after unblinding'); x.add_argument('packets', nargs='+'); x.add_argument('--json', action='store_true')
+    x.add_argument('--export', default='blind.json', help='presentation the adjudicator used (blind_v2.json for an aliased export)')
+    x = ps.add_parser('realias', help='derive the versioned aliased presentation (V2) of an unchanged V001 export; refuses if any leak remains')
+    x.add_argument('blind'); x.add_argument('--out', required=True); x.add_argument('--alias-key', required=True)
+    x = ps.add_parser('sheet', help='render a readable adjudication sheet from an export'); x.add_argument('blind'); x.add_argument('--out', required=True)
+    x = ps.add_parser('leak-scan', help='recursively scan exports (JSON) or sheets (text) for arm-identifying strings')
+    x.add_argument('files', nargs='+'); x.add_argument('--own-from', help='a V001 export whose current-arm record ids also count as leaks')
     x = ps.add_parser('dry-run', help='synthetic end-to-end rehearsal through this CLI')
     g_ = x.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
 
@@ -119,7 +125,21 @@ def run_pilot(a):
     elif a.pilot_command == 'account':
         v = P.load_snapshot(a.snapshot); out(P.account(v['base'] / v['snapshot']['arms'][a.arm]['ledger'], a.arm))
     elif a.pilot_command == 'report':
-        rep = P.report(a.packets); print(json.dumps(rep, indent=2, default=str) if a.json else M.BANNER + '\n' + P.markdown(rep))
+        rep = P.report(a.packets, export_name=a.export); print(json.dumps(rep, indent=2, default=str) if a.json else M.BANNER + '\n' + P.markdown(rep))
+    elif a.pilot_command == 'realias':
+        v2 = P.alias_export(a.blind, a.out, a.alias_key)
+        out({'written': a.out, 'items': len(v2['items']), 'alias_key_written': a.alias_key, 'alias_key_sha256': v2['alias_key_sha256'], 'leaks': 0})
+    elif a.pilot_command == 'sheet':
+        Path(a.out).write_text(P.sheet(json.loads(Path(a.blind).read_text(encoding='utf-8'))), encoding='utf-8', newline='\n'); out({'written': a.out})
+    elif a.pilot_command == 'leak-scan':
+        own = P.own_records(json.loads(Path(a.own_from).read_text(encoding='utf-8'))) if a.own_from else ()
+        results = {}
+        for f in a.files:
+            text = Path(f).read_text(encoding='utf-8')
+            value = json.loads(text) if f.endswith('.json') else text
+            results[f] = P.scan_leaks(value['items'] if isinstance(value, dict) and 'items' in value else value, own)
+        out({f: {'findings': len(r), 'first': r[:10]} for f, r in results.items()})
+        if any(results.values()):raise SystemExit(2)
     elif a.pilot_command == 'dry-run':
         from src.research.graph import pilot_dryrun as DR
         if a.check:out(DR.check())
