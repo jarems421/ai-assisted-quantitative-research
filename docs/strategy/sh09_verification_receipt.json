@@ -1,0 +1,598 @@
+{
+  "version": "SH09_HISTORICAL_VERIFICATION_RECEIPT_V001",
+  "recorded_at_utc": "2026-10-21T08:01:49.564449+00:00",
+  "owner": "owner_sh09_verification_2026-10-21.md",
+  "owner_sha256": "99564f02e8483255678a3d798e667859b1e980b809ae7b2fc3d69151afd47c29",
+  "plan": "sh09_verification_plan.json",
+  "plan_sha256": "f56890cb5e5a7341f60b5631165ba2871b04cc5af02116c713eba82eb05948d6",
+  "pre_source_checkpoint": "77363a4",
+  "starting_head": "dbc624550314d50cde01e1c6c53d40cea9f53730",
+  "method": "measurement_gate_m.md",
+  "method_sha256": "af0727e5d65c8a2ee890ef97a4470b8f9dafdbe20e9b24ecb5e830f259a5cc07",
+  "claim_id": "SH09",
+  "claim_version": "ORIGINAL_DISTINCTIVE_NET_EXPOSURE_CLAIM_PRESERVED",
+  "exact_question": "Could a material change in Chevron recoverable-net predecessor exposure from Cox asset sale/abandonment, engineering and applicable security be reconstructed before 2024-01-02?",
+  "disposition": {
+    "decision": "STOP_HISTORICAL_INFORMATION_NOT_RECONSTRUCTABLE_WITHIN_BOUNDED_CHECK",
+    "reason_type": "UNRESOLVED_RECONSTRUCTION_AND_ROUTE_ACCESS_LIMIT_NOT_DOCUMENTED_IMPOSSIBILITY",
+    "M": "NOT_PASSED",
+    "H": "NOT_ESTABLISHED",
+    "economic_pilot": "NONE",
+    "next_acquisition": "NONE_RECOMMENDED",
+    "retrospective_net_object": "NOT_RECONSTRUCTED; do not label measurable-but-not-actionable",
+    "future_falsification": "Already located original December 12 motion plus actual lease attachment and pre-Jan-2 public evidence; not located. Passing would not resolve title, obligation, cost, security and outcome.",
+    "future_budget_recommended": 0,
+    "no_fallback": true
+  },
+  "history": [
+    {
+      "at": "1e543ec",
+      "status": "SOURCE_VERIFICATION_PROPOSED_ONLY",
+      "record": "short_horizon_discovery_receipt.json"
+    },
+    {
+      "at": "dbc6245",
+      "status": "PRESERVED_UNAPPROVED_PROPOSAL",
+      "record": "measurement_gate_campaign_ledger.json"
+    },
+    {
+      "at": "77363a4",
+      "status": "BOUNDED_VERIFICATION_AUTHORIZED",
+      "record": "sh09_verification_plan.json"
+    },
+    {
+      "at": "2026-10-21T07:57:45.153353+00:00",
+      "status": "STOP_M_NOT_PASSED_H_NOT_ESTABLISHED",
+      "reason": "Original December abandonment filing/asset attachment not acquired; W&T filed agreement omits relevant schedules; court free search denied. Stop unresolved public reconstruction without source rescue or downstream matching."
+    }
+  ],
+  "selection": {
+    "control": "PURPOSIVE_ALREADY_KNOWN_COX_CHEVRON_NOT_UNTOUCHED",
+    "original_asset_list_acquired": false,
+    "rule": "At most two canonical lease identifiers in ascending order, deduplicated, only from original relevant sale/abandonment attachment; no replacement after inspection",
+    "status": "NOT_TRIGGERED",
+    "selected_lease_ids": [],
+    "mapped_leases": 0,
+    "independent_event_sample_size": "NOT_ESTABLISHED",
+    "deferred": [
+      "historical title/assignment and accrued duty",
+      "operator/non-operator and co-obligors",
+      "historical same-asset engineering cost",
+      "applicable security terms and recoverability",
+      "matched economic outcome"
+    ]
+  },
+  "observed_controls": [
+    {
+      "id": "C01",
+      "source_index": 2,
+      "locator": "PDF pp.1-4,8,27; printed agreement section 2.1",
+      "observation": "Agreement execution December 13 and signature December 15, 2023; six named fields; conditional USD 72m purchase. Relevant lease and excluded-asset exhibits not included.",
+      "units": "USD transaction price; named fields, not canonical lease IDs",
+      "status": "VERIFIED ONLY RETROSPECTIVELY",
+      "asof_limit": "Earlier-dated document acquired today; filing acceptance/first-public clock not independently acquired. Not evidence of completed December transfer."
+    },
+    {
+      "id": "C02",
+      "source_index": 2,
+      "locator": "Printed sections 2.5-2.6,7.14,9.2; PDF pp.32-35,44,50",
+      "observation": "Assumed/excluded liabilities differ; several abandonment duties qualified by effective time. Financial support is listed in omitted Schedule 7.14; support does not transfer under section 9.2.",
+      "units": "Contract-specific obligations and timing; no reported net Chevron amount",
+      "status": "VERIFIED ONLY RETROSPECTIVELY",
+      "asof_limit": "No legal-liability adjudication, regulatory release, instrument coverage or collectability certificate."
+    },
+    {
+      "id": "C03",
+      "source_index": 3,
+      "locator": "Current HTML/body and embedded directory component; indexed original listing",
+      "observation": "Search indexed original lists MLCJR; acquired HTML does not supply that case link or the December motion. No script/API reconstruction.",
+      "status": "UNVERIFIED",
+      "asof_limit": "Current directory is not an acquired 2023 docket or publication receipt."
+    },
+    {
+      "id": "C04",
+      "source_index": 5,
+      "locator": "Item 2.02",
+      "observation": "January 2 disclosure describes returning obligations and decade-scale work; USD 3.5-4.0bn combined non-cash after-tax estimate includes California impairments.",
+      "units": "USD combined estimated accounting charge, not Cox-only liability or cash",
+      "status": "VERIFIED ONLY RETROSPECTIVELY",
+      "asof_limit": "Disclosure content at owner-stipulated cutoff; exact intraday first-public time not certified; not a predictor or matched lease outcome."
+    }
+  ],
+  "historical_input_statuses": {
+    "original_motion_and_asset_set": {
+      "status": "UNVERIFIED",
+      "reason": "Not acquired; later reference cannot identify an as-of sample."
+    },
+    "pre_january_publication": {
+      "status": "UNVERIFIED",
+      "reason": "No qualifying original court/agent filing and release evidence."
+    },
+    "chevron_title_and_accrued_obligation": {
+      "status": "UNVERIFIED",
+      "reason": "No selected lease; historical ownership alone insufficient."
+    },
+    "operator_nonoperator_coobligors": {
+      "status": "UNVERIFIED",
+      "reason": "No duty/tenure or responsibility join."
+    },
+    "historical_engineering_vintage": {
+      "status": "UNVERIFIED",
+      "reason": "No historical row, snapshot or API query acquired; current estimates not substituted."
+    },
+    "financial_security_and_recoverability": {
+      "status": "UNVERIFIED",
+      "reason": "No applicable instrument/coverage/beneficiary/priority record; nominal USD 170m not subtracted."
+    },
+    "matched_independent_outcome": {
+      "status": "UNVERIFIED",
+      "reason": "Aggregate charge cannot be allocated to unidentified leases."
+    }
+  },
+  "measurement_gate": {
+    "status": "NOT_PASSED",
+    "unchanged_definition": true,
+    "requirements": [
+      {
+        "requirement": "distinctive_predictor",
+        "status": "NOT_MET",
+        "reason": "No original abandoned/unsold lease set or recoverable-net change measured."
+      },
+      {
+        "requirement": "meaning_and_units",
+        "status": "NOT_MET_FOR_CLAIM",
+        "reason": "USD price, contractual periods and roles observed; no scoped historical engineering/security quantities."
+      },
+      {
+        "requirement": "separate_economic_outcome",
+        "status": "NOT_MET",
+        "reason": "Later aggregate accounting disclosures do not establish a same-lease/cohort outcome."
+      },
+      {
+        "requirement": "valid_historical_join",
+        "status": "NOT_MET",
+        "reason": "No selected asset frame, historical predecessor-obligation or security join."
+      },
+      {
+        "requirement": "public_time_route",
+        "status": "UNRESOLVED",
+        "reason": "Court/agent and issuer/SEC routes identified; decisive original filing, attachment and public bounds not obtained. Exact clocks are not added to M as a universal requirement."
+      },
+      {
+        "requirement": "financial_bridge",
+        "status": "AGGREGATE_ONLY",
+        "reason": "CVX and financial relevance supported; no attributable reconstructed net asset-level predictor."
+      }
+    ]
+  },
+  "horizon": {
+    "status": "NOT_ESTABLISHED",
+    "plausibility": "Newly public unsold/abandoned assets might change expectations over days/weeks although spending takes years.",
+    "missing": "Usable public event clock plus net financial increment over contemporaneous issuer/specialist interpretation.",
+    "calendar_gap_is_not_publication_proof": true,
+    "trading_sessions_counted": false,
+    "returns_inspected": false
+  },
+  "propositions": {
+    "economic": "CREDIBLE_MECHANISM_UNTESTED",
+    "information": "UNVERIFIED",
+    "investment": "NOT_ESTABLISHED",
+    "raw_data_novelty": "FAMILIAR",
+    "mechanism_novelty": "NOT_CLAIMED",
+    "signal_and_join_novelty": "UNVERIFIED",
+    "private_competitive_use": "UNKNOWN"
+  },
+  "four_clocks": {
+    "economic_occurrence": "Reported motion date 2023-12-12; acquired contract executed 2023-12-13; closing not established by the agreement.",
+    "first_public_availability": "Essential motion/list and input versions UNVERIFIED. 2024-01-02 is stipulated issuer-disclosure comparison boundary, not an input-clock certificate.",
+    "dataset_or_document_timestamp": "W&T signature 2023-12-15; later Chevron letters August/November 2024; current website/index/HTTP metadata not historical release.",
+    "research_retrieval": {
+      "first_ordinary_start": "2026-10-21T07:53:03.084506+00:00",
+      "last_ordinary_finish": "2026-10-21T07:56:56.135234+00:00"
+    }
+  },
+  "reused_retrospective_evidence": {
+    "source_receipt": "short_horizon_discovery_receipt.json",
+    "source_receipt_sha256": "428143879fab557a03708530a5fe9fae7a51e809994ddd62b259d329cf1387ad",
+    "prior_tool_text_hashes": [
+      {
+        "file": "sh_open_01.txt",
+        "sha256": "d2136d22141d8522b63f6fc16873a45985f67ea9947dca28e3c77273445a5ef2",
+        "bytes": 32954,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_open_02.txt",
+        "sha256": "3ab4f3697af7b926e779a2cbf531dae07796245b0a9b551bc8165dfd839f7ec3",
+        "bytes": 33693,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_open_03.txt",
+        "sha256": "9d0b9f4e5db4e210c24fdb7f0c38698eff7576b885214f6852abc1233f53b4e2",
+        "bytes": 31985,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_open_04.txt",
+        "sha256": "757893083769f6fead091e2dfe738a2d25b726688333375dfc56de6b4f140ac9",
+        "bytes": 32225,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_01.txt",
+        "sha256": "a9cbacfb9a438f49528bbd2f2fb1afd24761f8bcf811e41659eb829432c7ff3c",
+        "bytes": 37027,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_02.txt",
+        "sha256": "f12d81bfb8a2e4f8fcd817646d8a74a28b5a9c33e13f37dd8c02d857ff92561c",
+        "bytes": 36996,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_03.txt",
+        "sha256": "4f32a331ed2eb237cd976749d161c8f96454c7c099234e21392325b4110eabe0",
+        "bytes": 39724,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_04.txt",
+        "sha256": "8d957d2996280d0819899c4b2279d859eae647bedc387177007f0ff3c57c93ec",
+        "bytes": 34806,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_05.txt",
+        "sha256": "045ed76af4215c662c1fff4d6568f15246bd8a9f8933a79e438a19996c034112",
+        "bytes": 31714,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_06.txt",
+        "sha256": "12ff20245373ebfc3811e882e42df2774c99155b4e9a7fa190f7e49c8c77b25d",
+        "bytes": 35766,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_07.txt",
+        "sha256": "e714073706c7f19efa8835f127792da838b834cfd6aac2304e7e5f0b34c5062a",
+        "bytes": 28812,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_08.txt",
+        "sha256": "fa1520feeb9162d6af5ed8c0784c212918301b16fa2185e9c091509b2d34be1c",
+        "bytes": 37879,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_09.txt",
+        "sha256": "cdd4c9c9293406084d60fc2c4fa538c3be647bbbbb1b2cc4c5328e9ac995b951",
+        "bytes": 36309,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_10.txt",
+        "sha256": "231b86deb30618119571a5c5c525dbbf556b9b953e8bfa2c954b4aea96954741",
+        "bytes": 36833,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      },
+      {
+        "file": "sh_search_11.txt",
+        "sha256": "c7e6fce50413e895a3d31a98b6bc5c6a48a6ea49de26fc6fdde3f76dd7785b22",
+        "bytes": 31068,
+        "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+      }
+    ],
+    "limits": "Browser tool projections are not original publisher bytes. Relevant earlier letter/specialist passages only; no fresh full-document reading or historical-version certificate.",
+    "sources": [
+      {
+        "id": "S27",
+        "url": "https://chevroncorp.gcs-web.com/static-files/51fe92ca-3680-42a4-b804-2c9433cfe667",
+        "kind": "original_issuer_SEC_response",
+        "reading": "opened pp.1-4; relevant later-page indexed excerpts; later section action timeout",
+        "supports": "134 affected leases; partial sale and December 12 2023 motion; BSEE cost route; approximately $170m financial security",
+        "limitation": "Later retrospective explanation, not certified then-public inputs; no full appendix/lease-level reconstruction"
+      },
+      {
+        "id": "S28",
+        "url": "https://chevroncorp.gcs-web.com/static-files/35792537-c5a8-4fbd-8c90-377d15592e11",
+        "kind": "original_issuer_SEC_response",
+        "reading": "opened relevant pp.1-6; not every appendix page",
+        "supports": "Roughly $1.9bn Q4 loss, approximately 80% Cox; recognition change; regulatory versus private obligation distinction",
+        "limitation": "Reported accounting not exact cohort cash spend or independent surprise; actual note has more precise amount/basis"
+      },
+      {
+        "id": "S29",
+        "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000002/cvx-20240102.htm",
+        "kind": "original_issuer_filing",
+        "reading": "opened substantive 8-K",
+        "supports": "January 2 2024 return-obligation announcement and combined $3.5-4.0bn after-tax charges including California impairments",
+        "limitation": "Combined estimate cannot be assigned to cleanup or isolate market reaction"
+      },
+      {
+        "id": "S31",
+        "url": "https://www.data.bsee.gov/Leasing/DecomCostEst/Default.aspx",
+        "kind": "original_agency_data_documentation",
+        "reading": "indexed substantive disclaimer/fields; opened navigation, later section timeout",
+        "supports": "Lease-level P50/P70/P90 cost estimate route; disclaimer excludes liable-company/financial-assurance identification",
+        "limitation": "Current metadata not historical vintage; no lease query/export, liability certificate or matched input row"
+      },
+      {
+        "id": "S32",
+        "url": "https://www.data.bsee.gov/main/leasing.aspx?op=Search",
+        "kind": "original_agency_inventory",
+        "reading": "original indexed inventory",
+        "supports": "Assignment, lease owner and serial-register routes",
+        "limitation": "No dated title chain or public availability certified"
+      },
+      {
+        "id": "S33",
+        "url": "https://www.aeaweb.org/articles?id=10.1257/aer.20160346",
+        "kind": "original_academic_publisher",
+        "reading": "opened abstract/bibliography",
+        "supports": "Boomhower AER 2019 on bankruptcy, insurance and environmental risk",
+        "limitation": "Different Texas policy/industry mechanism, not our predecessor announcement forecast; not replicated"
+      },
+      {
+        "id": "S34",
+        "url": "https://www.kslaw.com/insights/articles/the-role-of-joint-operating-agreements-in-managing-boomerang-liabilities-in-the-gulf-of-america",
+        "kind": "original_practitioner_analysis",
+        "reading": "indexed substantive excerpts; opening mainly navigation",
+        "supports": "Returning decommissioning obligations, JOA interpretation and informed specialists",
+        "limitation": "Not a full legal audit, current law certificate, customer evidence or investment performance"
+      },
+      {
+        "id": "S35",
+        "url": "https://gomdecom.com/blog/predecessor-liability-gulf-bankruptcy",
+        "kind": "first_party_specialist_intelligence",
+        "reading": "opened substantive article",
+        "supports": "Very close Cox/predecessor/security inference; advertised decommissioning intelligence",
+        "limitation": "No verified investment customers, 2023 product or exact timely tradable signal"
+      }
+    ],
+    "retrospective_facts": [
+      "Later reported 205 chain-of-title leases versus 134 with outstanding duties; not an as-of asset list.",
+      "Later described expected sales, smaller transaction and December 12 motion; not a contemporaneous predictor.",
+      "Later referred to public BSEE estimates and about USD 170m security; vintage, coverage and recoverability not verified.",
+      "Aggregate Gulf loss described retrospectively, not assigned to a sampled lease."
+    ],
+    "no_APA_campaign": true
+  },
+  "contemporaneous_competition": {
+    "original_observed": "W&T transaction and contract are direct issuer interpretation; no historical publication clock separately certified.",
+    "chevron_quarterly_baseline": "Later letters describe earlier qualitative disclosures; Q2/Q3 original filings not acquired in this check.",
+    "specialist": "Prior GOMDecom and King & Spalding readings preserved; contemporaneous 2023 exact model/product and purchases UNKNOWN."
+  },
+  "acquisition": {
+    "status": "CLOSED",
+    "closed_at_utc": "2026-10-21T07:57:45.153353+00:00",
+    "ordinary_starts": 5,
+    "ordinary_start_ceiling": 8,
+    "ordinary_unused": 3,
+    "external_body_bytes": 2316148,
+    "external_body_ceiling": 26214400,
+    "browser_search_queries": 16,
+    "browser_search_calls": 4,
+    "browser_open_click_find_actions": 0,
+    "selection": "NO_LEASES_SELECTED_ORIGINAL_ASSET_LIST_NOT_ACQUIRED",
+    "reason": "Original December abandonment filing/asset attachment not acquired; W&T filed agreement omits relevant schedules; court free search denied. Stop unresolved public reconstruction without source rescue or downstream matching.",
+    "no_next_phase_authority": true,
+    "ordinary_minimum_spacing_seconds": 25.578073,
+    "statuses": {
+      "HTTP200_complete": 3,
+      "HTTP403_complete_error": 2
+    },
+    "redirects": 0,
+    "retries": 0,
+    "browser_wire_activity_bytes_and_service_cost": "UNKNOWN",
+    "paid_scientific_spending_initiated": false,
+    "invoice_or_account_debit": "UNKNOWN",
+    "rights": "Public/internal source verification; no blanket redistribution licence certified; originals remain private.",
+    "authentication": "No authenticated scientific source/account actions; authorised Git delivery separate."
+  },
+  "original_receipts": [
+    {
+      "index": 1,
+      "candidate": "SH09",
+      "url": "https://chevroncorp.gcs-web.com/static-files/51fe92ca-3680-42a4-b804-2c9433cfe667",
+      "purpose": "Archive the known retrospective control; identify exact court references and limits without backdating its values",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:53:03.084506+00:00",
+      "finished_at_utc": "2026-10-21T07:53:03.586819+00:00",
+      "status": 403,
+      "headers": {
+        "content-type": "text/html",
+        "content-length": "452",
+        "date": "Wed, 21 Oct 2026 07:53:21 GMT"
+      },
+      "body_bytes": 452,
+      "body_sha256": "f70acef4d8bb6b5b9c67c042676f0cd5217face3fc2630b0ff877665e86dd36f",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 2,
+      "candidate": "SH09",
+      "url": "https://www.wtoffshore.com/investors/sec-filings/all-sec-filings/content/0001104659-23-126389/0001104659-23-126389.pdf",
+      "purpose": "Inspect identified December 2023 W&T original filing and purchase agreement for filed date and actual lease attachment; no later correspondence backfill",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:53:31.110788+00:00",
+      "finished_at_utc": "2026-10-21T07:53:32.286504+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 07:53:48 GMT",
+        "content-type": "application/pdf"
+      },
+      "body_bytes": 2076442,
+      "body_sha256": "1d468393d22cfafe99b67b1432a38bcfc0630b85e4e76620a8e9ff5285451651",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 3,
+      "candidate": "SH09",
+      "url": "https://www.kroll.com/en/restructuring-administration-cases",
+      "purpose": "Locate the exact MLCJR public claims-agent case link from its original inventory; no guessed case host",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:53:56.688861+00:00",
+      "finished_at_utc": "2026-10-21T07:53:57.246427+00:00",
+      "status": 200,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 07:54:14 GMT",
+        "content-type": "text/html; charset=utf-8"
+      },
+      "body_bytes": 198975,
+      "body_sha256": "a0a55f903acf36077b0bc493fe3a2d861708a4ad24656bd2e6d4ea9d5753f22d",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 4,
+      "candidate": "SH09",
+      "url": "https://www.courtlistener.com/?q=%22MLCJR%22&type=r&order_by=dateFiled%20asc",
+      "purpose": "Check one legitimate free RECAP docket search for the exact debtor and original December asset-status filing; no PACER account or payment",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:55:57.821109+00:00",
+      "finished_at_utc": "2026-10-21T07:55:58.015270+00:00",
+      "status": 403,
+      "headers": {
+        "date": "Wed, 21 Oct 2026 07:56:15 GMT",
+        "content-type": "text/html",
+        "content-length": "919"
+      },
+      "body_bytes": 919,
+      "body_sha256": "dc6f503969324d8da3b8204988ce06ab0be870d8fad8c777fc731daa71fd37c0",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    },
+    {
+      "index": 5,
+      "candidate": "SH09",
+      "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000002/cvx-20240102.htm",
+      "purpose": "Archive the exact disclosure cutoff and combined-charge wording for the outcome/competition comparison; not a historical predictor",
+      "method": "GET",
+      "request_body_sha256": null,
+      "started_at_utc": "2026-10-21T07:56:55.800294+00:00",
+      "finished_at_utc": "2026-10-21T07:56:56.135234+00:00",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html",
+        "last-modified": "Tue, 02 Jan 2024 13:00:57 GMT",
+        "date": "Wed, 21 Oct 2026 07:57:13 GMT",
+        "content-length": "39360"
+      },
+      "body_bytes": 39360,
+      "body_sha256": "4c5d6244c33ac20637cfd6b4e6ce4f939bb0ce6f13281f963d8005ba80195766",
+      "complete": true,
+      "size_stop": null,
+      "error_type": null
+    }
+  ],
+  "projections": [
+    {
+      "file": "002.json",
+      "sha256": "aad7fe4b7f6e94eeac3ef9a82cfd875ea5ed2ad08a5e2535cfbd602c11f4ef0e",
+      "source_sha256": "1d468393d22cfafe99b67b1432a38bcfc0630b85e4e76620a8e9ff5285451651"
+    },
+    {
+      "file": "003.json",
+      "sha256": "180a2f1b70e0854bf6aa00bf25b40772e9e4443f5937b89b836da945f7d2a329",
+      "source_sha256": "a0a55f903acf36077b0bc493fe3a2d861708a4ad24656bd2e6d4ea9d5753f22d"
+    },
+    {
+      "file": "005.json",
+      "sha256": "babeb43e8e2d3a3d5548cfda7288b92b6a20354d5769c768d3736026cc66d8b6",
+      "source_sha256": "4c5d6244c33ac20637cfd6b4e6ce4f939bb0ce6f13281f963d8005ba80195766"
+    }
+  ],
+  "browser_searches": [
+    {
+      "utc": "2026-10-21T07:52:39.413137+00:00",
+      "queries": [
+        "\"Cox\" \"December 12, 2023\" \"abandon\" bankruptcy",
+        "\"Cox Operating\" \"23-90295\" abandonment December 2023",
+        "\"Cox\" \"W&T\" \"December\" \"2023\" \"motion\" \"abandon\"",
+        "\"Cox Operating\" bankruptcy claims agent docket December 2023"
+      ]
+    },
+    {
+      "utc": "2026-10-21T07:53:04.673325+00:00",
+      "queries": [
+        "\"MLCJR\" \"December 12, 2023\" abandon",
+        "\"MLCJR\" claims agent case docket",
+        "\"Cox\" \"abandonment\" \"2023\" \"90324\"",
+        "\"Cox\" \"W&T\" \"sale\" \"December 2023\" bankruptcy docket"
+      ]
+    },
+    {
+      "utc": "2026-10-21T07:53:33.466957+00:00",
+      "queries": [
+        "\"MLCJR\" \"claims\" \"Kroll\"",
+        "\"MLCJR\" \"abandon\" \"2023\" \"December\" -site:sec.gov -site:chevroncorp.gcs-web.com -site:sec.boardroomalpha.com",
+        "\"MLCJR\" \"claims agent\" OR \"Epiq\" OR \"Stretto\" OR \"Omni\"",
+        "\"23-90324\" \"12/12/2023\""
+      ]
+    },
+    {
+      "utc": "2026-10-21T07:54:35.139306+00:00",
+      "queries": [
+        "site.cases.ra.kroll.com \"MLCJR\"",
+        "\"MLCJR\" \"restructuring.ra.kroll.com\"",
+        "\"MLCJR\" \"Motion\" \"Abandon\" \"December\" -site:sec.gov -site:chevroncorp.gcs-web.com -site:sec.boardroomalpha.com",
+        "\"23-90324\" \"December 12\""
+      ]
+    }
+  ],
+  "browser_tool_text_hashes": [
+    {
+      "file": "search_01.txt",
+      "sha256": "35174a1bbee78664cb02413a2e12fb8b24977cac80acc247cbd78b598a6c556f",
+      "bytes": 33950
+    },
+    {
+      "file": "search_02.txt",
+      "sha256": "ae405b99b314416898c2f62416f7a1ac18428be85a5a33c3235f73bd3ae7e0e6",
+      "bytes": 31718
+    },
+    {
+      "file": "search_03.txt",
+      "sha256": "9df415b17f652fbec5da9c633e23dc397ecc9320077335f59d3646b67feb54d6",
+      "bytes": 28163
+    },
+    {
+      "file": "search_04.txt",
+      "sha256": "f140ee0e6faa462c8080887ac2621cb66995e951c3dca63af460ba126358b753",
+      "bytes": 27211
+    }
+  ],
+  "limitations": [
+    "Initial search used wrong case-number lead 23-90295; indexed original court material identified joint-administration case 23-90324. All queries retained; no mistaken case document acquired.",
+    "Search-index unrelated proceedings, signed-link results, addresses and current commercial previews were not promoted to evidence or published as raw records.",
+    "No exact original December motion/attachment locator found within the declared discovery bounds; no universal archive-absence claim.",
+    "Source closure is an early unresolved/access stop, not exhaustive use of the two-hour maximum."
+  ],
+  "scientific_state": {
+    "new_experiments": 0,
+    "economic_tests": 0,
+    "market_series": 0,
+    "forecasts": 0,
+    "net_liability_calculations": 0,
+    "cloud_jobs": 0,
+    "source_credentials_loaded": false,
+    "F19": "HOLD_UNAPPROVED_NO_SOURCE",
+    "old_source_stops": "UNCHANGED",
+    "EXP004": "PAUSED_26_UNRESOLVED_NO_FILL_INACTIVE",
+    "no_next_phase_authority": true
+  }
+}

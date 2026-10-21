@@ -1,5 +1,13 @@
 # Repository instructions
 
+## SH09 historical-information verification closed (2026-10-21)
+
+- `docs/strategy/owner_sh09_verification_2026-10-21.md` separately authorised the Cox/Chevron check only: two analyst-hours, eight new original-source starts, 25 MiB, no paid/authenticated source access, cloud, economic pilot or other candidate. Plan `77363a4` was pushed before discovery. Earlier SH09 proposal and Measurement Gate M campaign remain unchanged historical records.
+- `sh09_verification_report.md` records STOP / M NOT PASSED / H NOT ESTABLISHED for bounded historical reconstruction. W&T's complete December 2023 filing describes a conditional purchase but omits lease/excluded-asset/financial-support schedules. The original December 12 motion/list was not acquired. No leases selected, no title/cost/security join or net estimate. This is unresolved reconstruction/access, not proof of universal impossibility or economic falsification.
+- Closed at five starts and 2,316,148 body bytes: three complete 200 responses, two 403 error bodies, no redirects/retries. Sixteen search queries/four calls are separate; browser wire counts unknown. Chevron letter host and free RECAP search denials are retained and not bypassed. Prior browser projections remain projections, not complete publisher-byte archives. Task `final_stop.json` prohibits further dispatch; three starts remain unspent.
+- Later 134-lease/rough $170m security descriptions never supply earlier predictor rows. No full-security subtraction, lease allocation, current BSEE vintage substitution, combined impairment attribution or generic bankruptcy proxy. The unchanged six-part M and separate H both require missing information; no measurable-but-not-actionable or Level A promotion.
+- No further acquisition, pilot, automatic fallback or new discovery round is recommended. F19 remains HOLD/unapproved; its 80 MiB proposal is inactive. Preserve every previous source stop, EXP001–EXP007, EXP004's 26-gap/no-fill boundary, river and all historical selection/trial decisions. Git/GitHub delivery is separate from scientific-source activity.
+
 ## Measurement Gate M and bounded eight-family campaign closed (2026-10-21)
 
 - `docs/strategy/owner_measurement_gate_campaign_2026-10-21.md` authorises a methodology review and bounded discovery only. The 29-page supplied PDF describes older HEAD `1ecbf0a`; preserve the newer SH review and all older decisions. Pre-source checkpoint `ee70e1a` fixed eight families, five independently developed. The six-hour/36-operation/30 MiB authority is task-specific, not a new standing allowance.

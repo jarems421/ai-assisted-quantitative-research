@@ -1,0 +1,178 @@
+{
+  "version": "SH09_HISTORICAL_VERIFICATION_VALIDATION_V001",
+  "recorded_at_utc": "2026-10-21T08:06:15.282280+00:00",
+  "status": "PASS",
+  "starting_head": "dbc624550314d50cde01e1c6c53d40cea9f53730",
+  "pre_source_checkpoint": "77363a4",
+  "local_tests": 485,
+  "public_tests": 257,
+  "skipped": 0,
+  "deterministic_presentation_artifacts": 6,
+  "checks": [
+    {
+      "name": "local_suite",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T08:04:32.190042+00:00",
+      "finished_at_utc": "2026-10-21T08:04:56.734472+00:00",
+      "test_count": 485,
+      "skipped": 0,
+      "log": "local_suite.log",
+      "log_sha256": "f2234348966c5127dcdc5a97cc93a7d2b3e0d311b902c4577502b7ec2653186e"
+    },
+    {
+      "name": "public_checks",
+      "command": [
+        "python",
+        "-m",
+        "src.research.public_checks"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T08:04:56.734533+00:00",
+      "finished_at_utc": "2026-10-21T08:05:02.530757+00:00",
+      "test_count": 257,
+      "skipped": 0,
+      "log": "public_checks.log",
+      "log_sha256": "1d659857ff1979b9301d9e058dd5a50ca21f10b416a5808d2c6e28b470b04a25"
+    },
+    {
+      "name": "presentation",
+      "command": [
+        "python",
+        "-m",
+        "src.presentation.exp001",
+        "--check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T08:05:02.530812+00:00",
+      "finished_at_utc": "2026-10-21T08:05:03.787298+00:00",
+      "test_count": null,
+      "skipped": 0,
+      "log": "presentation.log",
+      "log_sha256": "0bd3ed3aaeeabe73b48ff10a0ccb568315db4cceb2e3b9b5fe0fa373d89e0cfe"
+    },
+    {
+      "name": "exp004_frozen_audit",
+      "command": [
+        "python",
+        "-m",
+        "src.research",
+        "audit",
+        "EXP004"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T08:05:03.787363+00:00",
+      "finished_at_utc": "2026-10-21T08:05:03.990915+00:00",
+      "test_count": null,
+      "skipped": 0,
+      "log": "exp004_frozen_audit.log",
+      "log_sha256": "6af7426b9636f2647ab841559f51f7dc1a53051d53af308bfc12570f65720c23"
+    },
+    {
+      "name": "exp004_gap_check",
+      "command": [
+        "python",
+        "-m",
+        "src.research.exp004_execution_gap_report",
+        "--check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T08:05:03.990975+00:00",
+      "finished_at_utc": "2026-10-21T08:05:04.284105+00:00",
+      "test_count": null,
+      "skipped": 0,
+      "log": "exp004_gap_check.log",
+      "log_sha256": "64877d6dbac62922a24916bcbcb3a1d6c86f7ded4b936a87d906dd6f6ff6d536"
+    },
+    {
+      "name": "diff_check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-10-21T08:05:04.284165+00:00",
+      "finished_at_utc": "2026-10-21T08:05:04.348079+00:00",
+      "test_count": null,
+      "skipped": 0,
+      "log": "diff_check.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "offline_source_replay": {
+    "status": "PASS",
+    "network": "SOCKET_BLOCKED",
+    "request_reservation_receipts": 5,
+    "body_hash_checks": 5,
+    "original_bytes": 2316148,
+    "complete_200_bodies": 3,
+    "complete_403_error_bodies": 2,
+    "projection_replays": 3,
+    "pdf_pages_replayed_not_claimed_all_read": 75,
+    "new_browser_transcript_hash_checks": 4,
+    "reused_prior_transcript_hash_checks": 15,
+    "browser_queries": 16,
+    "selected_lease_ids": [],
+    "economic_tests": 0,
+    "method_gate_bytes_unchanged": true,
+    "ordinary_minimum_spacing_seconds": 25.578073,
+    "helpers": {
+      "audit.py": "961d3bec347f1571ad041647a41b91d4df0c4211b32323f104ff3e6019b498fb",
+      "fetch.py": "d4b10f7ed62cc66597563f40c04bb89e3b12c569d57cd6f78fcc863f0f5f0a9f",
+      "extract.py": "256c6c9d42c59df0948f0b286f053c5e44b4a535de08595d115d7dd70ba94418",
+      "build_receipt.py": "8c73d8b9b75669df1a19433ced7f5a7e9b49a0cdd9072b6fa941fd92e030c5b8"
+    }
+  },
+  "offline_source_replay_result_sha256": "7fb983b4fbaa8339579a26d7190d5f286fbeb3f8fce64863ee66e657e4a1a836",
+  "delivered_document_sha256": {
+    "owner_sh09_verification_2026-10-21.md": "99564f02e8483255678a3d798e667859b1e980b809ae7b2fc3d69151afd47c29",
+    "sh09_verification_plan.json": "f56890cb5e5a7341f60b5631165ba2871b04cc5af02116c713eba82eb05948d6",
+    "sh09_verification_report.md": "33858eb03d2ba0f58bfa25d08987310fd7bbaeaf52ccdba4f06c979b9b931514",
+    "sh09_verification_receipt.json": "41f10a128d70fef15d11b038ed6f28eeebece3edd71377b68e1166f080a58d49"
+  },
+  "preservation": {
+    "pre_existing_tracked_files": 726,
+    "byte_identical": 722,
+    "deliberately_changed_living_files": [
+      "AGENTS.md",
+      "README.md",
+      "docs/acceleration/master_plan.md",
+      "src/presentation/README.template.md"
+    ],
+    "baseline_inventory_sha256": "6949b0fb31f5a7816ae6c448c943df3dbf5f4bc1c8269fa08ccfa35445d0ee4c",
+    "changed_file_sha256": {
+      "AGENTS.md": "99ecae47e99ce1c8af3693ed4dbb2ec9c5d1cd1c821e90c729d6b12fb72a90c0",
+      "README.md": "224999ee262a0ccf4fd2ba600da1aa23ca7412ef36a311b6fa67e3ded23616b8",
+      "docs/acceleration/master_plan.md": "523ec84a71220e3287aaa46e738456f5034f4ac7631147fa773410beddb9a56e",
+      "src/presentation/README.template.md": "9bb6901da344f5f2c6dc17c9655b694e2dcf32cbf1378c3c69daf0c094548724"
+    },
+    "measurement_gate_unchanged_sha256": "af0727e5d65c8a2ee890ef97a4470b8f9dafdbe20e9b24ecb5e830f259a5cc07",
+    "preserved_scope": "All other tracked baseline bytes, including former SH09 reports/receipts, all experiments, historical stops, canonical results, metric code and dependencies"
+  },
+  "clock": {
+    "conservative_started_utc": "2026-10-21T07:50:33+00:00",
+    "source_closed_utc": "2026-10-21T07:57:45.153353+00:00",
+    "deadline_utc": "2026-10-21T09:50:33+00:00"
+  },
+  "scientific_state": {
+    "economic_tests": 0,
+    "market_data": 0,
+    "net_exposure_forecasts": 0,
+    "selected_leases": 0,
+    "paid_scientific_spending_initiated": false,
+    "account_invoice_or_debit": "UNKNOWN"
+  },
+  "hosted_CI": "Separate delivery receipt after final push; not established by local tests",
+  "validation_builder_sha256": "180e513174120d85dd7ea0e7beae08804f7984f78d376496faeba809359ed864",
+  "relative_links_checked": 147,
+  "final_diff_check_returncode": 0
+}
