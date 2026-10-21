@@ -1,5 +1,10 @@
 # Repository instructions
 
+## Graph pilot stopped at packet freeze; no campaign ran (2026-10-21)
+
+- `graph_pilot_packet_freeze_report.md` and `graph_pilot_receipt.json`: 4 starts, 5,537,804 bytes, 0 searches. P1 was NOT_FORMED at preflight. P2 was NOT_FORMED: the first 8-K (AmEx, 2025-07-01) has no EX-10. P3 was NOT_FORMED: the keyless openFDA response exceeded the 4 MiB size stop, so it is incomplete and fails E3 (the coordinator's `limit=1000` was a design error). P4 was not run, because the owner did not approve a P4-only comparison. Private `data/raw/graph_pilot_20261021/final_stop.json` prohibits further dispatch.
+- No snapshot, arm, connection log, adjudication, M/H review or disposition exists; Q2 is unanswered. Do not retry P3, open further SEC filings, run P4 or widen budgets without a new owner decision.
+
 ## Graph pilot ACTIVE under owner route amendment (2026-10-21)
 
 - `docs/strategy/owner_graph_pilot_2026-10-21.md` is the active authority, from `owner_graph_pilot_route_amendment_2026-10-21.md`. It amends only the source routes: P1 NOT_FORMED (ECHO ineligible from its own documentation; PHMSA blocked); P2 is the documented SEC `index.json`, then daily form index, then first 8-K submission, forming only if an original EX-10 names an agreement and counterparty; P3 is one keyless openFDA device-enforcement query for 2025-07-01 to 2025-09-30; P4 is the owner's primary recall mechanism.
