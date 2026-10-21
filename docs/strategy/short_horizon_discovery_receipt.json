@@ -1,0 +1,791 @@
+{
+  "version": "SHORT_HORIZON_DISCOVERY_RECEIPT_V001",
+  "review_date": "2026-10-21",
+  "owner_instruction": "owner_short_horizon_discovery_2026-10-21.md",
+  "owner_instruction_sha256": "1f1746067a4a9656efeb8d69e2d3d746d5f6b03dc6100bad7475cbf01a392146",
+  "plan": "short_horizon_discovery_plan.json",
+  "plan_sha256": "9972c21a91eeacf2c1891625129c7940f048d36795447f1e88e81ab11823d854",
+  "start_head": "1ecbf0ae5f0184739ff72fd7c41562ca7212ff96",
+  "pre_discovery_checkpoint": "5afc225",
+  "conservative_started_utc": "2026-10-21T06:26:16+00:00",
+  "discovery_closed_recorded_utc": "2026-10-21T06:47:26+00:00",
+  "working_ceiling_hours": 3,
+  "actual_activity": {
+    "browser_calls": 15,
+    "browser_search_calls": 11,
+    "browser_search_queries": 40,
+    "browser_open_calls": 4,
+    "browser_open_actions": 20,
+    "click_actions": 0,
+    "find_actions": 0,
+    "ordinary_acquisition_requests": 0,
+    "authenticated_data_calls": 0,
+    "cloud_jobs": 0,
+    "purchases": 0,
+    "new_accounts": 0,
+    "credential_loads": 0,
+    "economic_evaluations": 0,
+    "market_series_requests": 0,
+    "new_experiments": 0,
+    "sealed_stage_accesses": 0,
+    "automatic_retries": 0,
+    "denial_bypasses": 0
+  },
+  "costs": {
+    "paid_scientific_spending_initiated": false,
+    "invoice_or_account_wide_debit": "UNKNOWN",
+    "browser_service_cost": "UNKNOWN",
+    "underlying_browser_wire_count": "UNKNOWN",
+    "underlying_browser_retry_count": "UNKNOWN",
+    "downloaded_scientific_panel_rows": 0,
+    "tool_text_bytes": 517791,
+    "tool_text_not_downloaded_source_bytes": true
+  },
+  "selection": {
+    "fixed_hypotheses": 10,
+    "ranked_new_challengers": [
+      "SH09",
+      "SH03",
+      "SH01"
+    ],
+    "economic_pilot_recommendation": "NONE",
+    "source_verification_proposal": "SH09_ONLY_SEPARATE_OWNER_DECISION",
+    "f19": "PRESERVED_EXISTING_LEADING_MEASUREMENT_CANDIDATE_UNAPPROVED_CLOSED",
+    "f19_source_requests": 0,
+    "complete_historical_actionable_predictor_outcome_pairs": 0,
+    "independent_empirical_sample_size": "NOT_ESTABLISHED",
+    "economic_effects": "NOT_ESTIMATED",
+    "level": "DOCUMENTARY_MEASUREMENT_CONTROLS_ONLY_NOT_A_LEVEL_A_ASSOCIATION_RESULT"
+  },
+  "proposal": {
+    "candidate": "SH09",
+    "approved": false,
+    "started": false,
+    "analyst_hours": 2,
+    "maximum_public_document_starts": 8,
+    "maximum_combined_bytes": 26214400,
+    "frame": "One known Cox/Chevron measurement control; at most two ascending canonical lease IDs from original attachment, selected before detailed matching",
+    "allowed_if_separately_approved": "Free original documents only; dated court/title/cost/security and contemporaneous issuer/substitute comparison",
+    "prohibited": "Paid PACER, account signup, other debtor, lease census, market data, economic testing, old source rescue or automatic F19 fallback"
+  },
+  "candidates": [
+    {
+      "id": "SH01",
+      "object": "Shared exact private-credit loan across BDC filings",
+      "distinction": "One lender's dated nonaccrual/contractual-income disclosure may reveal another listed holder's unreported economic exposure before its earnings, conditional on exact tranche and reporting-date identity.",
+      "status": "SAME_CLAIM_AND_LEAD_NOT_JOINED",
+      "further_verification": "No",
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "decisive_limit": "Exact co-holder cash-status increment and original schedules, not borrower-level mark differences",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH02",
+      "object": "Property loan cash-management trigger and REIT upstream liquidity",
+      "distinction": "A disclosed cash-trap covenant and same-loan servicer balances can distinguish trapped operating cash from an apparent improvement in property income.",
+      "status": "ACTUAL_SAME_LOAN_CASH_OUTCOME_MISSING",
+      "further_verification": "No",
+      "sources": [
+        "S07",
+        "S08",
+        "S09",
+        "S10"
+      ],
+      "decisive_limit": "Covenant existence is not actual swept cash; cure and distribution outcome unjoined",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH03",
+      "object": "Renewable natural gas pathway credits",
+      "distinction": "A dated pathway-status or carbon-intensity change can alter legally eligible unit revenue at an identified producer, distinct from commodity-price or nameplate-volume exposure.",
+      "status": "ENTITLEMENT_EXAMPLE_VERIFIED_RETAINED_OUTCOME_MISSING",
+      "further_verification": "No",
+      "sources": [
+        "S11",
+        "S12"
+      ],
+      "decisive_limit": "CI/retroactive period disclosed; credit ownership, eligible backlog and realised project credits unavailable",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH04",
+      "object": "Restaurant alcohol-tax receipts and retained corporate sales",
+      "distinction": "A fixed-premise tax receipt can be real consumer demand yet accrue to a franchisee or different operator; dated control changes could alter the value of brand-level sales nowcasts.",
+      "status": "CLOSE_OWNERSHIP_AWARE_SUBSTITUTE",
+      "further_verification": "No",
+      "sources": [
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18"
+      ],
+      "decisive_limit": "No original rows/public vintages, material retained parent-sales link or increment beyond provider",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH05",
+      "object": "Higher-education federal-aid cash access",
+      "distinction": "Heightened cash monitoring and documented funding conditions may change a listed college's funding gap without an immediate enrollment change.",
+      "status": "MATERIAL_TIMING_CONDITION_ALREADY_EXPLAINED",
+      "further_verification": "No",
+      "sources": [
+        "S19",
+        "S20"
+      ],
+      "decisive_limit": "Additional 21-day restriction is real, but independent gap/outcome and public informational lead unestablished",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH06",
+      "object": "Satellite spectrum-clearing milestone payments",
+      "distinction": "A certified contractual milestone can change a listed operator's near-term collectible cash rather than its recurring operating revenue.",
+      "status": "MATERIAL_ENTITLEMENT_ALREADY_EXPLAINED",
+      "further_verification": "No",
+      "sources": [
+        "S21",
+        "S22"
+      ],
+      "decisive_limit": "Expected payment not receipt; correlated programme phases and immediate issuer interpretation",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH07",
+      "object": "Airline slot-waiver rights",
+      "distinction": "A carrier with a relevant waiver may avoid low-value flights needed to retain slots, unlike a carrier exposed only to the same demand shock.",
+      "status": "UPTAKE_AND_MARGINAL_ECONOMICS_MISSING",
+      "further_verification": "No",
+      "sources": [
+        "S23"
+      ],
+      "decisive_limit": "Accepted returns and net savings not acquired or measurable from waiver ceiling alone",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH08",
+      "object": "Refinery emission-event updates and restart failure",
+      "distinction": "A failed-restart or duration revision may add operational information beyond the initial outage, if a same-plant independent production outcome exists.",
+      "status": "REVISION_HISTORY_AND_INDEPENDENT_OUTPUT_MISSING",
+      "further_verification": "No",
+      "sources": [
+        "S24",
+        "S25",
+        "S26"
+      ],
+      "decisive_limit": "No original revision/output control; close faster direct-monitoring substitute",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH09",
+      "object": "Offshore predecessor decommissioning obligations",
+      "distinction": "An operator failure can transfer an observable demand to a former leaseholder rather than the current operator; retained liability and indemnity limits must be distinguished.",
+      "status": "POSITIVE_RETROSPECTIVE_CHAIN_ASOF_JOIN_UNVERIFIED",
+      "further_verification": "Propose only; not approved",
+      "sources": [
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "decisive_limit": "One small Cox/Chevron as-of field check justified; no original court/title/cost/security historical join yet",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "SH10",
+      "object": "Renewable-generator subsidy protection and negative-price regimes",
+      "distinction": "Contract-vintage-specific exclusions can leave otherwise similar generation differently protected during negative-price episodes; a useful predictor must add more than restating the payment formula.",
+      "status": "KNOWN_PAYMENT_MODEL_NO_PARENT_NET_INCREMENT",
+      "further_verification": "No",
+      "sources": [
+        "S36",
+        "S37",
+        "S38",
+        "S39",
+        "S40"
+      ],
+      "decisive_limit": "Published formula and vendor model overlap; individual receipts and parent retained economics not established",
+      "economic_evaluation": "NOT_RUN",
+      "exact_private_signal_usage": "UNKNOWN",
+      "profitable_opportunity": "NOT_ESTABLISHED"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://www.bostonfed.org/publications/current-policy-perspectives/2026/early-warnings-private-credit-bdc-portfolios.aspx",
+      "kind": "original_research_institution",
+      "reading": "opened substantive page sections",
+      "supports": "BDC schedule fields; research on predictive BDC disclosures",
+      "limitation": "No data or findings replicated; not the exact proposed early co-holder cash-status join"
+    },
+    {
+      "id": "S02",
+      "url": "https://papers.ssrn.com/sol3/Delivery.cfm/7479079.pdf?abstractid=7479079&mirid=1",
+      "kind": "original_working_paper",
+      "reading": "original search abstract excerpt",
+      "supports": "Nie: same-claim co-holder marks and funding frictions",
+      "limitation": "Full methods not read; estimate not adopted"
+    },
+    {
+      "id": "S03",
+      "url": "https://papers.ssrn.com/sol3/Delivery.cfm/7533698.pdf?abstractid=7533698&mirid=1&type=2",
+      "kind": "original_working_paper",
+      "reading": "original search abstract excerpt",
+      "supports": "Andrade/Lie: shared-loan valuation and fund structure",
+      "limitation": "Not replicated or certified identical to the proposed information clock"
+    },
+    {
+      "id": "S04",
+      "url": "https://www.kanonstone.com/",
+      "kind": "first_party_commercial_offering",
+      "reading": "original search description",
+      "supports": "Advertised cross-fund loan matching/valuation",
+      "limitation": "Coverage, accuracy, investment customers and profits not independently verified"
+    },
+    {
+      "id": "S05",
+      "url": "https://www.oxfordledge.com/bdcs/borrowers/",
+      "kind": "first_party_commercial_offering",
+      "reading": "original search description",
+      "supports": "Cross-BDC borrower comparisons",
+      "limitation": "Borrower match is not exact contract identity"
+    },
+    {
+      "id": "S06",
+      "url": "https://www.markquality.io/research/bdc-marks/2025q3",
+      "kind": "first_party_provider_analysis",
+      "reading": "original search description",
+      "supports": "Peer-mark comparisons and comparability caveats",
+      "limitation": "Vendor counts/quality not adopted"
+    },
+    {
+      "id": "S07",
+      "url": "https://www.sec.gov/Archives/edgar/data/850779/000153949716002327/n620_fwp-x5.htm",
+      "kind": "original_securitisation_terms",
+      "reading": "original indexed terms excerpts",
+      "supports": "Debt-yield/lease cash-trap conditions",
+      "limitation": "No listed-parent or actual activated-sweep join"
+    },
+    {
+      "id": "S08",
+      "url": "https://www.sec.gov/Archives/edgar/data/850779/000153949724002391/n4545-x6_ts.htm",
+      "kind": "original_securitisation_terms",
+      "reading": "original indexed terms excerpts",
+      "supports": "Cash/letter-of-credit cure and lease-sweep rules",
+      "limitation": "Terms do not prove an actual trapped balance"
+    },
+    {
+      "id": "S09",
+      "url": "https://www.sec.gov/Archives/edgar/data/3499/000000349925000004/alx-20241231.htm",
+      "kind": "original_issuer_filing",
+      "reading": "original indexed relevant excerpts",
+      "supports": "ALX property/debt and aggregate restricted-cash route",
+      "limitation": "No same-loan sweep/distribution positive control"
+    },
+    {
+      "id": "S10",
+      "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350724000084/amt-20240331.htm",
+      "kind": "original_issuer_filing",
+      "reading": "original indexed relevant table and footnotes",
+      "supports": "Actual securitisation distribution/coverage disclosure and cash-trap conditions",
+      "limitation": "Tower securitisation context, not selected property-trigger sample; no adverse signal inferred"
+    },
+    {
+      "id": "S11",
+      "url": "https://ir.montaukrenewables.com/news-releases/news-release-details/montauk-renewables-inc-announces-approval-provisional-california",
+      "kind": "original_issuer_release",
+      "reading": "opened full substantive release",
+      "supports": "March 27 2023 certification, CI -260.56, Q4 2022 eligible fuel start; March 28 16:15 EDT release",
+      "limitation": "No independently measured credits issued/sold, retained share, material backlog or regulator-public lead"
+    },
+    {
+      "id": "S12",
+      "url": "https://ww2.arb.ca.gov/sites/default/files/classic/fuels/lcfs/fuelpathways/comments/tier2/b0369_report.pdf",
+      "kind": "original_regulatory_application_route",
+      "reading": "original indexed excerpt; opening served JavaScript verification gate",
+      "supports": "Identifies Pico applicant/model context in index",
+      "limitation": "Full application not inspected, application not certification; no bypass"
+    },
+    {
+      "id": "S13",
+      "url": "https://data.texas.gov/Government-and-Taxes/Mixed-Beverage-Gross-Receipts/naix-2893",
+      "kind": "original_agency_dataset_landing",
+      "reading": "opened landing shell",
+      "supports": "Dataset identification",
+      "limitation": "No original rows rendered or retrieved"
+    },
+    {
+      "id": "S14",
+      "url": "https://catalog.data.gov/dataset/mixed-beverage-gross-receipts",
+      "kind": "government_catalog_metadata",
+      "reading": "indexed metadata",
+      "supports": "Agency, dataset identity and public resource descriptions",
+      "limitation": "Catalog dates are not original observation publication bounds"
+    },
+    {
+      "id": "S15",
+      "url": "https://comptroller.texas.gov/taxes/audit/docs/mixed-beverage-manual.pdf",
+      "kind": "original_agency_manual",
+      "reading": "indexed relevant sections",
+      "supports": "Tax receipt definitions and audit/revision context",
+      "limitation": "No corporate retained-economic-share join or historical snapshots"
+    },
+    {
+      "id": "S16",
+      "url": "https://pourcast.ai/the-well/articles/red-robin-refranchising-texas-beverage-receipts",
+      "kind": "first_party_provider_analysis",
+      "reading": "original indexed description",
+      "supports": "Advertised ownership/franchise/refranchising interpretation",
+      "limitation": "Not independently audited; no vendor numerical results adopted"
+    },
+    {
+      "id": "S17",
+      "url": "https://www.pourcast.ai/the-well/articles/first-watch-texas-same-store-alcohol-decline-steak-mix",
+      "kind": "first_party_provider_analysis",
+      "reading": "original indexed description",
+      "supports": "Brand alcohol analysis and alcohol/total-sales limitation",
+      "limitation": "Not investment-return evidence or independently checked financial data"
+    },
+    {
+      "id": "S18",
+      "url": "https://www.aeaweb.org/conference/2025/program/paper/nzRBfkas",
+      "kind": "original_conference_paper",
+      "reading": "indexed table/data excerpts",
+      "supports": "Texas data used for restaurant entry/exit research",
+      "limitation": "Title/methods not fully audited; no finance-effect estimate adopted"
+    },
+    {
+      "id": "S19",
+      "url": "https://www.sec.gov/Archives/edgar/data/1066134/000110465914046978/a14-15736_18k.htm",
+      "kind": "original_issuer_filing",
+      "reading": "search substantive disclosure and opened page",
+      "supports": "HCM1 plus additional 21-day delay, ordinary 24-72-hour drawdown, explicit cash-shortfall/financing warning",
+      "limitation": "Extreme known measurement control; no independent cash-gap amount or hidden inference established"
+    },
+    {
+      "id": "S20",
+      "url": "https://fsapartners.ed.gov/fsa-print/publication/1003813",
+      "kind": "original_agency_explanation",
+      "reading": "original indexed description",
+      "supports": "HCM1 versus HCM2 funding mechanics",
+      "limitation": "Label not institution-specific delay, disbursements or available cash"
+    },
+    {
+      "id": "S21",
+      "url": "https://www.ses.com/press-release/ses-completes-fccs-c-band-transition-clearing-and-relocation-plan-us",
+      "kind": "original_issuer_release",
+      "reading": "opened relevant release section",
+      "supports": "August 10 2023 Phase II eligibility $2.99bn before stated tax, expected Q4 receipt",
+      "limitation": "Expected receipt is not actual cash; same issuer explains implication"
+    },
+    {
+      "id": "S22",
+      "url": "https://docs.fcc.gov/public/attachments/DA-23-674A1_Rcd.pdf",
+      "kind": "original_agency_order_route",
+      "reading": "original indexed excerpt; direct opening 403",
+      "supports": "Identified validation order and conditional payment mechanics",
+      "limitation": "Full order not independently opened; no denial bypass"
+    },
+    {
+      "id": "S23",
+      "url": "https://www.faa.gov/sites/faa.gov/files/NYC_Waiver_Extension_FAA%20_8-8-23.pdf",
+      "kind": "original_agency_notice",
+      "reading": "opened relevant notice pages",
+      "supports": "Conditional 10% waiver, schedules and industry petitions",
+      "limitation": "No specific accepted returns, marginal cash savings or public historical exposure panel"
+    },
+    {
+      "id": "S24",
+      "url": "https://www.tceq.texas.gov/airquality/emission-events",
+      "kind": "original_agency_guidance",
+      "reading": "opened relevant reporting sections",
+      "supports": "Initial notification 24h after discovery above threshold; final within 14 days of end",
+      "limitation": "Submission clocks not public clocks; emissions not production; no incident pair acquired"
+    },
+    {
+      "id": "S25",
+      "url": "https://www.woodmac.com/link/c9afd8939fd149038cd97b81ff849d26.aspx",
+      "kind": "first_party_commercial_brochure",
+      "reading": "original indexed brochure",
+      "supports": "Unit-level refinery operations/outage monitoring sold for traders/analysts",
+      "limitation": "Coverage, timing advantage and return claims not independently verified"
+    },
+    {
+      "id": "S26",
+      "url": "https://www.woodmac.com/industry/trading-analytics/trading/oil/",
+      "kind": "first_party_commercial_offering",
+      "reading": "original indexed product description",
+      "supports": "Direct refinery restart/outage competition",
+      "limitation": "Vendor comparative performance claims not adopted"
+    },
+    {
+      "id": "S27",
+      "url": "https://chevroncorp.gcs-web.com/static-files/51fe92ca-3680-42a4-b804-2c9433cfe667",
+      "kind": "original_issuer_SEC_response",
+      "reading": "opened pp.1-4; relevant later-page indexed excerpts; later section action timeout",
+      "supports": "134 affected leases; partial sale and December 12 2023 motion; BSEE cost route; approximately $170m financial security",
+      "limitation": "Later retrospective explanation, not certified then-public inputs; no full appendix/lease-level reconstruction"
+    },
+    {
+      "id": "S28",
+      "url": "https://chevroncorp.gcs-web.com/static-files/35792537-c5a8-4fbd-8c90-377d15592e11",
+      "kind": "original_issuer_SEC_response",
+      "reading": "opened relevant pp.1-6; not every appendix page",
+      "supports": "Roughly $1.9bn Q4 loss, approximately 80% Cox; recognition change; regulatory versus private obligation distinction",
+      "limitation": "Reported accounting not exact cohort cash spend or independent surprise; actual note has more precise amount/basis"
+    },
+    {
+      "id": "S29",
+      "url": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000002/cvx-20240102.htm",
+      "kind": "original_issuer_filing",
+      "reading": "opened substantive 8-K",
+      "supports": "January 2 2024 return-obligation announcement and combined $3.5-4.0bn after-tax charges including California impairments",
+      "limitation": "Combined estimate cannot be assigned to cleanup or isolate market reaction"
+    },
+    {
+      "id": "S30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1841666/000178403122000009/apa-20211231.htm",
+      "kind": "original_issuer_filing",
+      "reading": "original indexed note excerpt; full opening size limited",
+      "supports": "2021 legacy-Gulf liability range, security asset, $446m reported loss",
+      "limitation": "No full-note audit; amounts not simple subtraction; shared Fieldwood shock not independent lease observations"
+    },
+    {
+      "id": "S31",
+      "url": "https://www.data.bsee.gov/Leasing/DecomCostEst/Default.aspx",
+      "kind": "original_agency_data_documentation",
+      "reading": "indexed substantive disclaimer/fields; opened navigation, later section timeout",
+      "supports": "Lease-level P50/P70/P90 cost estimate route; disclaimer excludes liable-company/financial-assurance identification",
+      "limitation": "Current metadata not historical vintage; no lease query/export, liability certificate or matched input row"
+    },
+    {
+      "id": "S32",
+      "url": "https://www.data.bsee.gov/main/leasing.aspx?op=Search",
+      "kind": "original_agency_inventory",
+      "reading": "original indexed inventory",
+      "supports": "Assignment, lease owner and serial-register routes",
+      "limitation": "No dated title chain or public availability certified"
+    },
+    {
+      "id": "S33",
+      "url": "https://www.aeaweb.org/articles?id=10.1257/aer.20160346",
+      "kind": "original_academic_publisher",
+      "reading": "opened abstract/bibliography",
+      "supports": "Boomhower AER 2019 on bankruptcy, insurance and environmental risk",
+      "limitation": "Different Texas policy/industry mechanism, not our predecessor announcement forecast; not replicated"
+    },
+    {
+      "id": "S34",
+      "url": "https://www.kslaw.com/insights/articles/the-role-of-joint-operating-agreements-in-managing-boomerang-liabilities-in-the-gulf-of-america",
+      "kind": "original_practitioner_analysis",
+      "reading": "indexed substantive excerpts; opening mainly navigation",
+      "supports": "Returning decommissioning obligations, JOA interpretation and informed specialists",
+      "limitation": "Not a full legal audit, current law certificate, customer evidence or investment performance"
+    },
+    {
+      "id": "S35",
+      "url": "https://gomdecom.com/blog/predecessor-liability-gulf-bankruptcy",
+      "kind": "first_party_specialist_intelligence",
+      "reading": "opened substantive article",
+      "supports": "Very close Cox/predecessor/security inference; advertised decommissioning intelligence",
+      "limitation": "No verified investment customers, 2023 product or exact timely tradable signal"
+    },
+    {
+      "id": "S36",
+      "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1040749/cfd-capacity-market-scheme-update-2021.pdf",
+      "kind": "original_government_document",
+      "reading": "indexed relevant scheme update",
+      "supports": "Negative-pricing contract-policy change",
+      "limitation": "Actual historical project contract overrides broad round assumptions; no payment data acquired"
+    },
+    {
+      "id": "S37",
+      "url": "https://dp.lowcarboncontracts.uk/dataset/?res_format=JSON&tags=CfD&tags=CfD+Payment",
+      "kind": "original_settlement_body_catalog",
+      "reading": "indexed dataset descriptions",
+      "supports": "Historical eligible-generation/payment surface from 2016",
+      "limitation": "Catalog does not establish individual asset receipts, history versions or parent economic share"
+    },
+    {
+      "id": "S38",
+      "url": "https://docs.modoenergy.com/pages/oct-2026/uk-europe/gb/standalone-solar/",
+      "kind": "first_party_commercial_model_documentation",
+      "reading": "original indexed detailed model description",
+      "supports": "Allocation-round negative-price exclusions and foregone-payment modeling",
+      "limitation": "Accuracy/clients/results unverified; current documentation not historical version"
+    },
+    {
+      "id": "S39",
+      "url": "https://doi.org/10.1016/j.eneco.2024.107674",
+      "kind": "original_academic_publisher",
+      "reading": "indexed abstract/excerpt",
+      "supports": "CfD design and producer incentives",
+      "limitation": "Not replicated; not precise parent-equity signal"
+    },
+    {
+      "id": "S40",
+      "url": "https://doi.org/10.1016/j.enpol.2024.113981",
+      "kind": "original_academic_publisher",
+      "reading": "indexed abstract/excerpt",
+      "supports": "Conventional CfD incentive and revenue uncertainty research",
+      "limitation": "Not replicated; no stock-return finding adopted"
+    }
+  ],
+  "searches": [
+    {
+      "call": "sh_search_01",
+      "queries": [
+        "site.sec.gov \"Pluralsight\" \"non-accrual\" \"2024\" \"Ares\"",
+        "\"private credit\" \"same loan\" \"valuations\" research BDC",
+        "site.sec.gov \"cash trap\" \"servicer\" \"10-D\"",
+        "site.sec.gov \"Alexanders\" \"cash trap\""
+      ]
+    },
+    {
+      "call": "sh_search_02",
+      "queries": [
+        "site.sec.gov/Archives \"cash trap\" \"10-D\"",
+        "site.sec.gov/Archives \"cash management\" \"Alexander\" \"731\"",
+        "\"Trepp\" \"cash trap\" \"REIT\"",
+        "site.arb.ca.gov \"pathway\" \"Montauk\" \"carbon intensity\""
+      ]
+    },
+    {
+      "call": "sh_search_03",
+      "queries": [
+        "site.sec.gov \"predecessor\" \"decommissioning\" \"W&T\"",
+        "site.boem.gov \"predecessor\" \"decommissioning\" \"orders\"",
+        "site.treasury.gov \"Heightened Cash Monitoring\" education cash monitoring",
+        "site.ed.gov \"heightened cash monitoring\" \"HCM2\""
+      ]
+    },
+    {
+      "call": "sh_search_04",
+      "queries": [
+        "site.comptroller.texas.gov \"mixed beverage\" \"receipts\" \"data\"",
+        "site.fcc.gov \"SES\" \"accelerated relocation\" \"certification\" \"2023\"",
+        "site.faa.gov \"slot\" \"waiver\" \"2023\" \"10 percent\"",
+        "site.tceq.texas.gov \"emissions event\" \"restart\" \"refinery\""
+      ]
+    },
+    {
+      "call": "sh_search_05",
+      "queries": [
+        "site.lowcarboncontracts.uk \"negative\" \"six\" \"payments\"",
+        "site.data.texas.gov \"Mixed Beverage Gross Receipts\" \"naix\"",
+        "site.sec.gov \"predecessor\" \"decommissioning\" \"Cox\" \"million\"",
+        "site.tceq.texas.gov \"emissions events\" \"database\" \"historical\""
+      ]
+    },
+    {
+      "call": "sh_search_06",
+      "queries": [
+        "site.lowcarboncontracts.uk negative prices CfD contract payments data six hours",
+        "site.tceq.texas.gov air emission event reports database initial final report 24 hours"
+      ]
+    },
+    {
+      "call": "sh_search_07",
+      "queries": [
+        "site.bsee.gov decommissioning cost estimates lease public data 2023 predecessor",
+        "site.sec.gov Chevron January 2 2024 decommissioning former Gulf Mexico assets loss 8-k",
+        "site.sec.gov Alexanders 731 \"restricted cash\" 2024 loan",
+        "site.sec.gov \"heightened cash monitoring\" \"cash\" \"2024\" \"Perdoceo\""
+      ]
+    },
+    {
+      "call": "sh_search_08",
+      "queries": [
+        "\"Cox\" \"predecessor\" \"decommissioning\" \"analysis\" Chevron 2023 2024",
+        "\"decommissioning\" \"bankruptcy\" \"predecessor\" research oil liabilities",
+        "site.lowcarboncontracts.uk \"negative pricing\" \"Allocation Round\"",
+        "site.sec.gov \"heightened cash monitoring\" \"reimbursement\" \"Lincoln\""
+      ]
+    },
+    {
+      "call": "sh_search_09",
+      "queries": [
+        "site.sec.gov APA 2021 Fieldwood \"$446\" \"$1.2\" decommissioning",
+        "\"Drilling Like There’s No Tomorrow\" Boomhower",
+        "site.sec.gov \"heightened cash monitoring\" \"reimbursement\" \"Adtalem\"",
+        "\"negative prices\" \"CfD\" site.modoenergy.com research"
+      ]
+    },
+    {
+      "call": "sh_search_10",
+      "queries": [
+        "\"Trepp\" \"cash trap\" \"restricted\"",
+        "site.sec.gov \"heightened cash monitoring\" \"Corinthian\" \"2014\"",
+        "\"Texas\" \"alcohol sales\" \"earnings\" \"data\" investment",
+        "site.woodmac.com refinery outages Genscape monitoring"
+      ]
+    },
+    {
+      "call": "sh_search_11",
+      "queries": [
+        "site.sec.gov \"cash trap reserve\" \"million\" \"2024\"",
+        "\"Texas\" \"mixed beverage\" \"earnings\" restaurant data investors"
+      ]
+    }
+  ],
+  "explicit_opening_limitations": [
+    {
+      "source": "S27",
+      "action": "Later-section opening after initial original page access",
+      "result": "Browser 400 timeout; no retry"
+    },
+    {
+      "source": "S30",
+      "action": "Full APA filing opening after indexed note excerpt",
+      "result": "Browser 400 content length above 4194305; no retry or alternate acquisition"
+    },
+    {
+      "source": "S22",
+      "action": "Direct FCC order opening",
+      "result": "Browser 403; no retry/bypass"
+    },
+    {
+      "source": "S12",
+      "action": "Direct CARB application opening",
+      "result": "JavaScript verification shell; no bypass"
+    },
+    {
+      "source": "S31",
+      "action": "Later-section opening after navigation response",
+      "result": "Browser 400 timeout; no retry"
+    }
+  ],
+  "other_limits": [
+    "Texas official landing shell; community-created filtered view not authoritative",
+    "Many source descriptions came from original indexed excerpts rather than full papers or data",
+    "King & Spalding opening mainly navigation, substantive evidence from indexed original excerpts",
+    "BSEE current index descriptions not original historical rows",
+    "All named historical events purposive known measurement controls, not an untouched evaluation sample",
+    "No exhaustive bibliographic/product/private-trading search"
+  ],
+  "private_tool_evidence": [
+    {
+      "file": "sh_open_01.txt",
+      "bytes": 32954,
+      "sha256": "d2136d22141d8522b63f6fc16873a45985f67ea9947dca28e3c77273445a5ef2",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_open_02.txt",
+      "bytes": 33693,
+      "sha256": "3ab4f3697af7b926e779a2cbf531dae07796245b0a9b551bc8165dfd839f7ec3",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_open_03.txt",
+      "bytes": 31985,
+      "sha256": "9d0b9f4e5db4e210c24fdb7f0c38698eff7576b885214f6852abc1233f53b4e2",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_open_04.txt",
+      "bytes": 32225,
+      "sha256": "757893083769f6fead091e2dfe738a2d25b726688333375dfc56de6b4f140ac9",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_01.txt",
+      "bytes": 37027,
+      "sha256": "a9cbacfb9a438f49528bbd2f2fb1afd24761f8bcf811e41659eb829432c7ff3c",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_02.txt",
+      "bytes": 36996,
+      "sha256": "f12d81bfb8a2e4f8fcd817646d8a74a28b5a9c33e13f37dd8c02d857ff92561c",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_03.txt",
+      "bytes": 39724,
+      "sha256": "4f32a331ed2eb237cd976749d161c8f96454c7c099234e21392325b4110eabe0",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_04.txt",
+      "bytes": 34806,
+      "sha256": "8d957d2996280d0819899c4b2279d859eae647bedc387177007f0ff3c57c93ec",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_05.txt",
+      "bytes": 31714,
+      "sha256": "045ed76af4215c662c1fff4d6568f15246bd8a9f8933a79e438a19996c034112",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_06.txt",
+      "bytes": 35766,
+      "sha256": "12ff20245373ebfc3811e882e42df2774c99155b4e9a7fa190f7e49c8c77b25d",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_07.txt",
+      "bytes": 28812,
+      "sha256": "e714073706c7f19efa8835f127792da838b834cfd6aac2304e7e5f0b34c5062a",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_08.txt",
+      "bytes": 37879,
+      "sha256": "fa1520feeb9162d6af5ed8c0784c212918301b16fa2185e9c091509b2d34be1c",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_09.txt",
+      "bytes": 36309,
+      "sha256": "cdd4c9c9293406084d60fc2c4fa538c3be647bbbbb1b2cc4c5328e9ac995b951",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_10.txt",
+      "bytes": 36833,
+      "sha256": "231b86deb30618119571a5c5c525dbbf556b9b953e8bfa2c954b4aea96954741",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    },
+    {
+      "file": "sh_search_11.txt",
+      "bytes": 31068,
+      "sha256": "c7e6fce50413e895a3d31a98b6bc5c6a48a6ea49de26fc6fdde3f76dd7785b22",
+      "evidence_type": "BROWSER_TOOL_TEXT_NOT_ORIGINAL_PUBLISHER_BYTES"
+    }
+  ],
+  "preservation": "No prior report/receipt/source stop, experiment, processed result, metric, dependency or old scientific budget changed. Four living guidance/presentation files may gain pointers only.",
+  "source_dispatch": "CLOSED_NO_AUTOMATIC_CONTINUATION"
+}

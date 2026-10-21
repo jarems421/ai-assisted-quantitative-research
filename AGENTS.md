@@ -1,5 +1,12 @@
 # Repository instructions
 
+## Short-horizon evidence-first discovery closed (2026-10-21)
+
+- `docs/strategy/owner_short_horizon_discovery_2026-10-21.md` authorizes 8–12 differentiated documentary hypotheses, not economic testing or full acquisition. Plan `5afc225` fixed ten questions and a three-hour/40-search/20-open ceiling before discovery. All 40 searches/20 opens were used; the new private discovery stop closes further dispatch. No ordinary acquisition, account/credential action, cloud job, market series or economic evaluation occurred.
+- `short_horizon_discovery_report.md` recommends no economic pilot. SH09 offshore predecessor cleanup obligations is the only proposed further verification: original issuer examples identify changing asset-sale/abandonment exposure and material reported losses. Historical public court/title/cost/security inputs were not joined. Regulatory accrued liability is not created or assigned by bankruptcy alone; cost estimates do not identify liable entities, net exposure or recoverable security. Later correspondence cannot supply an earlier predictor.
+- SH03 RNG and SH01 shared BDC claims complete the three-challenger comparison but are not promoted: retained credit outcomes and exact claim/disclosure leads remain missing, with close issuer/research/product substitutes. Other new questions are deferred. All exact private signal use remains UNKNOWN; no data/mechanism/signal novelty or profitability claim follows from a source or provider page.
+- F19 remains the existing leading measurement candidate, unapproved and closed. Its two-annual/80 MiB proposal is NOT activated. No F19 request, old source reopening or automatic fallback occurred. SH09's proposed two-hour/eight-document/25 MiB check likewise requires a separate owner decision; no economic pilot or automatic continuation is authorized. Preserve EXP001–EXP007, EXP004's 26-gap/no-fill boundary, river's unapproved status and all prior receipts/stops.
+
 ## Evidence-first bottleneck investigation closed (2026-10-21)
 
 - `docs/strategy/owner_discovery_bottleneck_2026-10-21.md` authorizes comparison and at most two source checks, four working hours/25 ordinary starts each, 30 MiB combined, no economic study. Pushed plan `4a0440a` selected F19 and F09; addendum `3efb7d4` recorded the quarterly alternative before dispatch. F07/F18/F14 remain documentation-only.

@@ -1,0 +1,116 @@
+{
+  "version": "SHORT_HORIZON_DISCOVERY_VALIDATION_V001",
+  "recorded_at_utc": "2026-10-21T06:52:02.992295+00:00",
+  "source_receipt": "short_horizon_discovery_receipt.json",
+  "source_receipt_sha256": "428143879fab557a03708530a5fe9fae7a51e809994ddd62b259d329cf1387ad",
+  "report_sha256": "ea68eda758ebeb750d5d9ab7d233beeab8803b8eb5393a8a206663a9efd83957",
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "started_at_utc": "2026-10-21T06:51:29.032796+00:00",
+      "finished_at_utc": "2026-10-21T06:51:55.361704+00:00",
+      "returncode": 0,
+      "log_sha256": "bb6eb1448497d1d43f15ceca1cadba0deb3bbf7df9b1b0f37ffa9277af4aafa7",
+      "tests": 485,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research.public_checks"
+      ],
+      "started_at_utc": "2026-10-21T06:51:55.368715+00:00",
+      "finished_at_utc": "2026-10-21T06:52:01.097783+00:00",
+      "returncode": 0,
+      "log_sha256": "46cbc3e3f80d9388875a4a366a2f23e1800bb619d462813b0fdcdb2456a9be7f",
+      "tests": 257,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.presentation.exp001",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-21T06:52:01.104436+00:00",
+      "finished_at_utc": "2026-10-21T06:52:02.333957+00:00",
+      "returncode": 0,
+      "log_sha256": "a54bbb017886315339fd0a80c6eed87ecfd8d2183033af18fe9d9b40ee6f5dde",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research",
+        "audit",
+        "EXP004"
+      ],
+      "started_at_utc": "2026-10-21T06:52:02.339927+00:00",
+      "finished_at_utc": "2026-10-21T06:52:02.537954+00:00",
+      "returncode": 0,
+      "log_sha256": "df14503a8290a5981e2d0b89782247a1f2ec57f00d1faa7c895cd0f2eacc9ffa",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "src.research.exp004_execution_gap_report",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-21T06:52:02.543945+00:00",
+      "finished_at_utc": "2026-10-21T06:52:02.827778+00:00",
+      "returncode": 0,
+      "log_sha256": "166ca039db307471f9bde00b14df29553d1a2a0527f000c654b300309bdc85a7",
+      "tests": null,
+      "skipped": []
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-10-21T06:52:02.833902+00:00",
+      "finished_at_utc": "2026-10-21T06:52:02.892742+00:00",
+      "returncode": 0,
+      "log_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "tests": null,
+      "skipped": []
+    }
+  ],
+  "local_tests": 485,
+  "public_tests": 257,
+  "skipped": 0,
+  "private_tool_transcript_hashes_checked": 15,
+  "transcripts_are_not_original_publisher_bytes": true,
+  "baseline_head": "1ecbf0ae5f0184739ff72fd7c41562ca7212ff96",
+  "baseline_tracked_files": 714,
+  "byte_identical_prior_tracked_files": 710,
+  "deliberately_changed_prior_files": [
+    "AGENTS.md",
+    "README.md",
+    "docs/acceleration/master_plan.md",
+    "src/presentation/README.template.md"
+  ],
+  "scientific_files_changed": [],
+  "new_research_code_dependencies_tests_or_architecture": false,
+  "economic_tests": 0,
+  "source_acquisition_replay": false,
+  "seal_or_source_dispatch": false,
+  "relative_links_checked": 4,
+  "final_document_review_at_utc": "2026-10-21T06:52:49.331670+00:00"
+}
