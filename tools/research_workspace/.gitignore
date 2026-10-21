@@ -1,0 +1,7 @@
+node_modules/
+dist/
+public/workspace.json
+test-results/
+playwright-report/
+__pycache__/
+*.tsbuildinfo

@@ -1,0 +1,3 @@
+# Minimal dependencies of the existing graph imports; no research acquisition packages.
+jsonschema>=4.23,<5
+tzdata
