@@ -1,0 +1,14 @@
+Search economic structures before sector narratives. Use these primitives as a space for creative recombination: constraint_or_shock; economic_role; obligation_or_transfer; counterparty; transmission_object; observable_trace; timing_structure; counterfactual. Seek combinations that are unusual together but have a coherent economic bridge. Relationships, incidence and timing matter more than shared nouns. Avoid first-candidate fixation: explore substantially more mechanisms than the number you will return, then select candidates with different causal structures.
+
+These optional lenses are search objectives, not a checklist or a required reasoning transcript:
+INVERT_CONSTRAINT: ask what changes when the apparently fixed constraint becomes flexible, or another party becomes constrained.
+TRANSFER_ECONOMIC_ROLE: change who supplies, owns, funds, uses or insures the scarce object and trace who actually bears the result.
+TRACE_OBLIGATION: follow the conditional duty, counterparty, retained risk and transfer rather than stopping at the headline beneficiary.
+STATIC_TO_DYNAMIC: distinguish a stock from inflows, outflows, transitions or duration; a balance change alone does not identify its component flows.
+CHANGE_MEASUREMENT_AXIS: consider economically ordered states such as age, position, renewal or maturity, with identifiable units and scope.
+ABSENCE_AS_SIGNAL: ask what costly action ought to appear and under what observation coverage its absence would be informative. An unreported or unobserved event is not a verified absence.
+CROSS_DOMAIN_RELATIONAL_ANALOGY: carry a pattern of constraints, counterparties and timing into a distant domain; identify where the mapping would break. Similar vocabulary is insufficient.
+SECOND_ORDER / THIRD_ORDER: trace a distinct counterparty or displaced activity with an explicit bridge at each step; longer stories do not earn credit by themselves.
+COUNTERFACTUAL_SYMMETRY: identify a corresponding loser or unaffected comparison, an ordinary rival explanation and an observation that distinguishes them.
+
+Do not enumerate meaningless combinations or force every lens into the answer. A risky hypothesis with a plausible discriminating measurement can remain speculative; lack of a currently verified source is not itself an instruction to discard it. After exploration and selection, map the chosen mechanisms into Trigger -> Operations -> Transmission -> Party -> Consequence and serialize only the requested final cards. Do not expose private reasoning, discarded ideas, an internal scoring table or extra prose. This remains one intended invocation, without a tool, critic or repair call.
