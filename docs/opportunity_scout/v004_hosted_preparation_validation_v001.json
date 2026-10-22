@@ -1,0 +1,76 @@
+{
+  "schema": "SCOUT_HOSTED_PREPARATION_VALIDATION_V001",
+  "base_main": "9ac56d33e6b3a7e97dfc3c56faf0e91ef0edeb92",
+  "branch": "codex/opportunity-scout-v004-hosted-readiness-prep",
+  "recommendation_for_proposing": "GO_SINGLE_N1_DESIGN_FOR_REVIEW",
+  "execution_recommendation": "NO_GO_COLLECTOR_AND_BINDINGS_MISSING",
+  "native_compatibility": "INCONCLUSIVE_NOT_OBSERVED",
+  "status": "HOSTED_READINESS_BLOCKED",
+  "new_targeted_checks": 7,
+  "local_regressions": [
+    {
+      "command": "python -m src.research.opportunity_scout.v004_checks",
+      "passed": true,
+      "tests": 236
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "passed": true,
+      "tests": 390
+    },
+    {
+      "command": "python -m unittest tests.test_scout_v004_process_assurance tests.test_scout_v004_r3_process_assurance -v",
+      "passed": true,
+      "tests": 6
+    }
+  ],
+  "files_added": [
+    "docs/opportunity_scout/v004_hosted_readiness_v001.md",
+    "docs/opportunity_scout/hosted_acceptance_v001/prepare.py",
+    "docs/opportunity_scout/hosted_acceptance_v001/protocol.json",
+    "docs/opportunity_scout/hosted_acceptance_v001/request.json",
+    "docs/opportunity_scout/hosted_acceptance_v001/runtime-template.json",
+    "docs/opportunity_scout/hosted_acceptance_v001/system-prompt.txt",
+    "docs/opportunity_scout/hosted_acceptance_v001/manifest.json",
+    "tests/opportunity_scout/test_hosted_readiness_v001.py",
+    "docs/opportunity_scout/v004_hosted_preparation_validation_v001.json"
+  ],
+  "existing_files_modified": [],
+  "preservation": {
+    "tracked": {
+      "files": 278,
+      "unchanged": true
+    },
+    "v003_private": {
+      "files": 28,
+      "unchanged": true
+    },
+    "earlier_private_baseline": {
+      "files": 188,
+      "unchanged": true
+    },
+    "v003": {
+      "authorisation_valid": true,
+      "consumed": 1,
+      "results": 1,
+      "undispatched": 11,
+      "failure_record_reclassified": false
+    }
+  },
+  "documentation_review_only": [
+    "https://code.claude.com/docs/en/headless",
+    "https://code.claude.com/docs/en/cli-reference"
+  ],
+  "collector_implemented": false,
+  "owner_runtime_account_bindings_complete": false,
+  "code_review_scope": "Source audit and automated offline checks; not independent human scientific/security review",
+  "hosted_model_calls": 0,
+  "scientific_dispatches": 0,
+  "account_data_accessed": false,
+  "credential_contents_accessed": false,
+  "account_or_credential_modifications": false,
+  "Graph_files_modified": false,
+  "Path_B_activated": false,
+  "protocol_activated": false,
+  "authorises": []
+}
