@@ -708,4 +708,126 @@ class GraphPilotBlindingTests(unittest.TestCase):
             self.assertEqual((base/packet/'adjudication_sheet_v2.md').read_text(encoding='utf-8'),P.sheet(v2))
 
 
+class GraphV11ConnectionClassTests(unittest.TestCase):
+    """Graph v1.1: economic connection candidates, methodological warnings and unsupported matches (R3 used only as a diagnostic)."""
+
+    def setUp(self):
+        from src.research.graph import connections as K,quality as Q
+        self.K,self.Q=K,Q
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.dir=Path(self.tmp.name)
+        self.paths=Q.build_fixtures(self.dir)
+        self.g=build(self.paths,catalogue_path=None,mode='synthetic',with_memory=False,requirements=Q.VOCABULARY)
+
+    def pick(self,res,match):
+        return next(r for r in res['results'] if r['match'].startswith(match) or r['match']==match)
+
+    def test_recall_and_unrelated_capacity_claim_share_only_a_warning(self):
+        res=O.revisit(self.g,'DLC-QSYN-D/OBS-QD-1',V)
+        w=self.pick(res,'claim:DLC-QSYN-H/CAND-QH-1')
+        self.assertEqual(w['connection_class'],self.K.WARNING);self.assertNotIn('grounding',w)
+        self.assertTrue(w['warning']['not_an_economic_connection']);self.assertEqual(w['warning']['shared_requirements'],['REQ_AVAILABLE_CAPACITY'])
+        self.assertTrue(w['warning']['lesson'])
+        self.assertEqual(res['connection_summary']['methodological_warnings'],1)
+
+    def test_exact_product_identifier_is_a_grounded_candidate_and_outranks_tags(self):
+        res=O.revisit(self.g,'DLC-QSYN-D/OBS-QD-1',V)
+        e=self.pick(res,'claim:DLC-QSYN-R/CAND-QR-1')
+        self.assertEqual(e['connection_class'],self.K.ECONOMIC)
+        self.assertIn('AUTHOR_TAG_CANDIDATE',e['match_bases'])  # the weaker tag is kept, the class follows the stronger evidence
+        gnd=e['grounding'];self.assertTrue(self.K.provenance_complete(e))
+        self.assertEqual([b['basis'] for b in gnd['documented_basis']],['EXACT_ENTITY_ID'])
+        self.assertIn('entity:SYN_PRODUCT:UDI-001',[j['object'] for j in gnd['joining_objects']])
+        self.assertIn('financial exposure of any listed company',gnd['not_established'])
+        classes=[r['connection_class'] for r in res['results']]
+        self.assertEqual(classes,sorted(classes,key=self.K.CLASS_ORDER.get))  # grounded first, always
+
+    def test_documented_supersession_is_grounded_and_period_checked(self):
+        res=O.complements(self.g,'DLC-QSYN-D/OBS-QD-2',V)
+        e=self.pick(res,'relationship:DLC-QSYN-R/REL-QR-1')
+        self.assertEqual(e['connection_class'],self.K.ECONOMIC)
+        self.assertEqual(e['grounding']['temporal']['relationship_period_covers_source'],'YES')
+        self.assertIn('supersedes',json.dumps(e['grounding']['joining_objects']))
+        self.assertEqual(e['grounding']['first_unsupported_inference']['code'],'FINANCIAL_TRANSMISSION_UNVERIFIED')
+
+    def test_out_of_period_relationship_and_name_only_supplier_never_join(self):
+        res=O.complements(self.g,'DLC-QSYN-D/OBS-QD-3',V)
+        self.assertFalse(res['results']);self.assertIn('PERIOD_INCOMPATIBLE',[r['code'] for r in res['rejected']])
+        res=O.complements(self.g,'DLC-QSYN-D/OBS-QD-4',V)
+        self.assertFalse(res['results']);self.assertEqual(res['abstentions'][0]['code'],'NO_VERIFIED_IDENTITY')
+        self.assertEqual(self.g.nodes['entity:NAME:DLC-QSYN-D/Acme Optics']['attrs']['identity_status'],'NAME_ONLY')
+
+    def test_shared_document_is_not_corroboration_and_reused_citation_is_unsupported(self):
+        independent=self.pick(O.shared(self.g,'DLC-QSYN-D/OBS-QD-6',V),'campaign:DLC-QSYN-R')
+        self.assertEqual(independent['connection_class'],self.K.ECONOMIC)
+        self.assertIn('NOT_INDEPENDENT_CORROBORATION',json.dumps(independent['grounding']['joining_objects']))
+        copied=self.pick(O.shared(self.g,'DLC-QSYN-D/OBS-QD-5',V),'campaign:DLC-QSYN-R')
+        self.assertEqual((copied['match_bases'],copied['connection_class']),(['REUSED_CITATION'],self.K.UNSUPPORTED))
+        self.assertIn('unsupported',copied)
+
+    def test_shared_allocation_blocker_and_next_questions_are_warnings_only(self):
+        res=O.same_gap(self.g,'REQ_DOCUMENTED_ALLOCATION',V)
+        self.assertEqual({r['claim'].split(':',1)[1].rsplit('@',1)[0] for r in res['results']},{'DLC-QSYN-H/CAND-QH-1','DLC-QSYN-D/CAND-QD-1'})
+        self.assertTrue(all(r['connection_class']==self.K.WARNING and r['warning']['not_an_economic_connection'] for r in res['results']))
+        self.assertEqual(res['connection_summary']['economic_connection_candidates'],0)
+        nxt=O.next_questions(self.g,V)
+        self.assertTrue(nxt['results']);self.assertTrue(all(r['connection_class']==self.K.WARNING for r in nxt['results']))
+
+    def test_historical_memory_warnings_remain_retrievable(self):
+        paths=build_all(self.dir/'v1',Clock())
+        g=build([paths['S']],mode='synthetic',with_memory=True)
+        res=O.revisit(g,'DLC-GSYN-S',V)
+        hist=[r for r in res['results'] if r['match'].startswith('history:')]
+        self.assertTrue(hist)
+        self.assertTrue(all(r['connection_class']==self.K.WARNING for r in hist))  # R3 failure pattern: capacity tag only
+        self.assertTrue(any(cite.endswith('.md') for r in hist for _,cite in r['warning']['lesson']))
+        self.assertTrue(all(r['previous_status_stands'] for r in hist))
+
+    def test_classes_are_categorical_and_outputs_deterministic_and_read_only(self):
+        K=self.K
+        self.assertEqual(K.classify(['AUTHOR_TAG_CANDIDATE']),K.WARNING);self.assertEqual(K.classify(['REUSED_CITATION']),K.UNSUPPORTED)
+        self.assertEqual(K.classify(['AUTHOR_TAG_CANDIDATE','EXACT_DOCUMENT_HASH']),K.ECONOMIC)
+        before=[sha(p) for p in self.paths]
+        a=json.dumps(O.revisit(self.g,'DLC-QSYN-D/OBS-QD-1',V),sort_keys=True,default=str)
+        g2=build(self.paths,catalogue_path=None,mode='synthetic',with_memory=False,requirements=self.Q.VOCABULARY)
+        self.assertEqual(json.dumps(O.revisit(g2,'DLC-QSYN-D/OBS-QD-1',V),sort_keys=True,default=str),a)
+        self.assertEqual(g2.digest(),self.g.digest());self.assertEqual([sha(p) for p in self.paths],before)
+        self.assertEqual(self.Q.check()['quality'],'PASS')
+
+    def v2row(self,**change):
+        row={'connection_id':P.connection_id('a','b',['EXACT_ENTITY_ID']),'arm':'G','kind':'CONNECTION','operator':'revisit','found_via':'GRAPH_ONLY',
+             'source_record':'DLC-QSYN-D/OBS-QD-1','target_record':'DLC-QSYN-R/CAND-QR-1','basis':['EXACT_ENTITY_ID'],'arm_decision':'DECLINED',
+             'analyst_minutes':1,'discovery_lab_record':None,'recorded_at_utc':'2026-10-22T00:00:00+00:00','notes':'',
+             'log_version':P.CONNECTION_LOG_V2,'origin_suggestion_id':'SUG-0123456789ab','origin_operator':'revisit',
+             'origin_bases':['EXACT_ENTITY_ID'],'connection_class':self.K.ECONOMIC}
+        return {**row,**change}
+
+    def write(self,rows):
+        path=self.dir/'log.jsonl';path.write_text(''.join(json.dumps(r)+'\n' for r in rows),encoding='utf-8');return path
+
+    def test_v2_connection_log_keeps_the_originating_suggestion(self):
+        sug=[s for s in E.export_suggestions(self.g,'DLC-QSYN-D/OBS-QD-1',self.paths) if s['match'].startswith('claim:DLC-QSYN-R')][0]
+        self.assertEqual(sug['connection_class'],self.K.ECONOMIC);self.assertTrue(sug['grounded_explanation_complete'])
+        ok=self.v2row(origin_suggestion_id=sug['suggestion_id'],origin_bases=sug['match_bases'])
+        self.assertEqual(len(P.validate_connections(self.write([ok]),'G',[sug])),1)
+        reading=self.v2row(operator='reading',found_via='ANALYST_READING',origin_suggestion_id=None,origin_operator=None,origin_bases=[],connection_class=None)
+        self.assertEqual(len(P.validate_connections(self.write([reading]),'G')),1)
+        for change,why in (({'origin_suggestion_id':None},'SUG- origin'),({'origin_operator':'complements'},'originating suggestion'),
+                           ({'connection_class':self.K.WARNING},'cannot be logged as an economic connection'),
+                           ({'origin_bases':['AUTHOR_TAG_CANDIDATE']},'differ from the exported'),({'log_version':'X'},'unknown log_version')):
+            with self.assertRaisesRegex(P.PilotError,why):P.validate_connections(self.write([{**ok,**change}]),'G',[sug])
+        warning=self.v2row(kind='METHODOLOGICAL_WARNING',connection_class=self.K.WARNING,origin_bases=['AUTHOR_TAG_CANDIDATE'])
+        self.assertEqual(len(P.validate_connections(self.write([warning]),'G')),1)
+        with self.assertRaisesRegex(P.PilotError,'no graph suggestions'):P.validate_connections(self.write([{**ok,'arm':'S'}]),'S')
+        with self.assertRaisesRegex(P.PilotError,'fields must be exactly'):P.validate_connections(self.write([{k:v for k,v in ok.items() if k!='connection_class'}]),'G')
+
+    def test_r3_historical_records_and_results_are_unchanged(self):
+        base=ROOT/'docs/strategy/graph_pilot_r3'
+        for packet in ('P3','P4'):
+            for arm in P.ARMS:self.assertTrue(P.validate_connections(base/packet/f'connections-{arm}.jsonl',arm))  # V1 rows still valid
+        rep=P.report([base/'P3',base/'P4'],export_name='blind_v2.json')
+        self.assertEqual(rep['classification'],'INCONCLUSIVE')
+        pooled=[n for n in rep['notes'] if n.startswith('pooled')][0]
+        self.assertIn('G 3.151, S 4.162',pooled)
+
+
 if __name__=='__main__':unittest.main()

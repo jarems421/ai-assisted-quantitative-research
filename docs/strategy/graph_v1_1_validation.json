@@ -1,0 +1,89 @@
+{
+ "version": "GRAPH_V1_1_VALIDATION_V001",
+ "recorded_at_utc": "2026-10-22T08:25:44+00:00",
+ "status": "PASS",
+ "branch": "graph-v1.1-discovery-quality",
+ "starting_head": "f1f21a950feb6467d71a81723a42f3b48a5fcc09",
+ "main_untouched": true,
+ "owner": "owner_graph_v1_1_2026-10-22.md",
+ "owner_sha256": "15433722bc817ab40a6bab46fcaee2bb78cc58913cccbbc641891e8f22133f4d",
+ "operator_version": "GRAPH_OPERATORS_V1_1",
+ "connection_log_v2": "GRAPH_PILOT_CONNECTION_V2",
+ "quality_record": {
+  "path": "docs/strategy/graph_v1_1_quality.md",
+  "sha256": "a64987b26d065aa90b0e2a116bdb7c290c170c01ba9a4f41ef80e7815f208080",
+  "scope": "SYNTHETIC_FIXTURE_FUNCTIONAL_CHECK; self-written fixtures; not independent validation"
+ },
+ "r3_preserved": {
+  "files_checked": 35,
+  "uncommitted_changes": "NONE",
+  "report_sha256": "011f3d12639e0238a970ec09641fd7be2babc1b7e933c6fd6232ded16b8462a5",
+  "classification_replayed": "INCONCLUSIVE"
+ },
+ "catalogues": {
+  "v001_sha256": "3ca363216078a2134837d8e8ea2fc6996ddc49de78027048f3b15aa5482f16bb",
+  "v002_sha256": "afd91e54697f7e47e8844f4076267bae95814cbd12e29e4ec9f97ba9f9a589a9"
+ },
+ "network": "none",
+ "acquisition": 0,
+ "r4": "NOT_RUN",
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": "python -m unittest discover -s tests",
+   "returncode": 0,
+   "test_count": 583,
+   "skipped": 0,
+   "log_sha256": "c9cfe6c4760b73996f750739b7c1de3d3c39e4f564fa118df1817fa8e6dda456"
+  },
+  {
+   "name": "graph_tests",
+   "command": "python -m unittest tests.test_graph",
+   "returncode": 0,
+   "test_count": 66
+  },
+  {
+   "name": "public_checks",
+   "command": "python -m src.research.public_checks",
+   "returncode": 0,
+   "test_count": 355
+  },
+  {
+   "name": "quality",
+   "command": "python -m src.research.graph quality --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_demo",
+   "command": "python -m src.research.graph demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "pilot_dry_run",
+   "command": "python -m src.research.graph pilot dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_build",
+   "command": "python -m src.research.graph build --check",
+   "returncode": 0,
+   "digest": "8c9167e93b9bb9729b7511933b7e0ae7ceed78becf9fc7a9b3bcd4705426b4e6",
+   "rebuild_identical": true
+  },
+  {
+   "name": "discovery_demo",
+   "command": "python -m src.research.discovery demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "phase4a",
+   "command": "python -m src.research.phase4a --check",
+   "returncode": 0
+  },
+  {
+   "name": "presentation",
+   "command": "python -m src.presentation.exp001 --check",
+   "returncode": 0
+  }
+ ]
+}

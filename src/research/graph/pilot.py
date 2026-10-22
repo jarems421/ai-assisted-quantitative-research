@@ -27,6 +27,7 @@ from src.research.discovery import records as R
 from src.research.discovery.ledger import Ledger, totals
 from src.research.discovery.review import covered
 from src.research.graph import catalogue as C
+from src.research.graph import connections as K
 from src.research.graph import model as M
 from src.research.graph.baseline import content_hashes, unjoinable
 from src.research.graph.project import build, cut_state, parse_time
@@ -53,6 +54,12 @@ FOUND_VIA = ('GRAPH_ONLY', 'BASELINE_SEARCH_DISCOVERABLE', 'ANALYST_READING', 'B
 ARM_DECISIONS = ('ACCEPTED', 'DECLINED', 'UNRESOLVED')
 OUTCOMES = ('CONFIRMED_AGAINST_ORIGINALS', 'PLAUSIBLE_UNVERIFIED', 'REJECTED_FALSE', 'REJECTED_TRIVIAL')
 MEANING = ('MEANINGFUL', 'NOT_MEANINGFUL', 'UNCLEAR')
+# Prospective V2 connection log (Graph v1.1). V1 rows (R3) stay valid unchanged; a V2 row names its version and keeps the
+# exact originating graph suggestion, so graph-originated connections are always traceable (R3 lost this: CON- ids only).
+CONNECTION_LOG_V2 = 'GRAPH_PILOT_CONNECTION_V2'
+CONNECTION_KEYS_V2 = CONNECTION_KEYS + ('log_version', 'origin_suggestion_id', 'origin_operator', 'origin_bases', 'connection_class')
+CONNECTION_KINDS_V2 = CONNECTION_KINDS + ('METHODOLOGICAL_WARNING',)
+GRAPH_OPERATORS = tuple(o for o in G_OPERATORS if o not in S_OPERATORS)
 ADJUDICATION_KEYS = ('blind_id', 'outcome', 'economic_meaning', 'checked_evidence', 'adjudicator', 'adjudicator_kind', 'adjudicator_minutes',
                      'recorded_at_utc', 'notes')
 HIDDEN_FROM_ADJUDICATOR = ('arm', 'connection_id', 'operator', 'found_via', 'basis', 'arm_decision', 'analyst_minutes', 'discovery_lab_record',
@@ -188,16 +195,45 @@ def arm_graph(snapshot, arm, query_at=None, now=None):
 
 # -- arm connection logs ----------------------------------------------------------------------------
 
-def validate_connections(path, arm):
-    """Every connection or avoided repeat an arm considered, as the arm logged it during the campaign."""
+def validate_v2_origin(r, w, arm, suggestions):
+    """V2 traceability: a graph-originated row names the exact suggestion, its operator, bases and connection class."""
+    if r['log_version'] != CONNECTION_LOG_V2:raise PilotError(f'{w}: unknown log_version {r["log_version"]}')
+    if r['kind'] not in CONNECTION_KINDS_V2:raise PilotError(f'{w}: invalid kind')
+    graph = r['operator'] in GRAPH_OPERATORS or r['found_via'] in ('GRAPH_ONLY', 'BOTH')
+    if graph:
+        if arm == 'S':raise PilotError(f'{w}: the structured arm has no graph suggestions')
+        if not re.fullmatch(r'SUG-[0-9a-f]{12}', str(r['origin_suggestion_id'])):raise PilotError(f'{w}: a graph-originated row keeps its SUG- origin id')
+        if r['origin_operator'] != r['operator'] or not r['origin_bases'] or r['connection_class'] not in K.CLASSES:
+            raise PilotError(f'{w}: origin_operator, origin_bases and connection_class must record the originating suggestion')
+        if r['kind'] == 'CONNECTION' and r['connection_class'] != K.ECONOMIC:
+            raise PilotError(f'{w}: a {r["connection_class"]} cannot be logged as an economic connection; log it as METHODOLOGICAL_WARNING')
+        if suggestions is not None:
+            s = suggestions.get(r['origin_suggestion_id'])
+            if s is None:raise PilotError(f'{w}: {r["origin_suggestion_id"]} is not in the exported suggestions')
+            if sorted(s['match_bases']) != sorted(r['origin_bases']) or s['connection_class'] != r['connection_class'] or s['operator'] != r['origin_operator']:
+                raise PilotError(f'{w}: origin fields differ from the exported suggestion')
+    elif r['origin_suggestion_id'] is not None or r['origin_operator'] is not None or r['origin_bases']:
+        raise PilotError(f'{w}: only graph-originated rows carry suggestion origins')
+    if r['kind'] == 'METHODOLOGICAL_WARNING' and r['connection_class'] not in (K.WARNING, None):
+        raise PilotError(f'{w}: a logged methodological warning has class {K.WARNING}')
+
+
+def validate_connections(path, arm, suggestions=None):
+    """Every connection, warning or avoided repeat an arm considered, as the arm logged it during the campaign.
+
+    Accepts V1 rows (as in R3) and prospective V2 rows; ``suggestions`` (exported suggestion list) lets V2 origins be checked."""
     rows, seen = read_jsonl(path), set()
+    index = {s['suggestion_id']: s for s in suggestions} if suggestions is not None else None
     for n, r in enumerate(rows, 1):
         w = f'{Path(path).name} line {n}'
-        if tuple(sorted(r)) != tuple(sorted(CONNECTION_KEYS)):raise PilotError(f'{w}: fields must be exactly {CONNECTION_KEYS}')
+        v2 = 'log_version' in r
+        keys = CONNECTION_KEYS_V2 if v2 else CONNECTION_KEYS
+        if tuple(sorted(r)) != tuple(sorted(keys)):raise PilotError(f'{w}: fields must be exactly {keys}')
+        if v2:validate_v2_origin(r, w, arm, index)
         if r['arm'] != arm:raise PilotError(f'{w}: logged by arm {r["arm"]}, expected {arm}')
         if not re.fullmatch(r'(SUG|CON)-[0-9a-f]{12}', r['connection_id']) or r['connection_id'] in seen:raise PilotError(f'{w}: invalid or repeated id')
         seen.add(r['connection_id'])
-        if r['kind'] not in CONNECTION_KINDS or r['found_via'] not in FOUND_VIA or r['arm_decision'] not in ARM_DECISIONS:
+        if r['kind'] not in (CONNECTION_KINDS_V2 if v2 else CONNECTION_KINDS) or r['found_via'] not in FOUND_VIA or r['arm_decision'] not in ARM_DECISIONS:
             raise PilotError(f'{w}: invalid kind, found_via or arm_decision')
         if r['operator'] not in (S_OPERATORS if arm == 'S' else G_OPERATORS):raise PilotError(f'{w}: operator {r["operator"]} is not available to arm {arm}')
         if arm == 'S' and (r['connection_id'].startswith('SUG-') or r['found_via'] in ('GRAPH_ONLY', 'BOTH')):
@@ -369,6 +405,7 @@ def unblind(packet_dir, export_name='blind.json'):
     for bid, ref in key['items'].items():
         r, a = logs[ref['arm']][ref['connection_id']], adjudications[bid]
         rows.append({'blind_id': bid, **{k: r[k] for k in ('arm', 'connection_id', 'kind', 'operator', 'found_via', 'arm_decision', 'analyst_minutes')},
+                     **{k: r.get(k) for k in ('log_version', 'origin_suggestion_id', 'connection_class')},
                      **{k: a[k] for k in ('outcome', 'economic_meaning', 'adjudicator_minutes')}})
     if len(rows) != sum(len(x) for x in logs.values()):raise PilotError('every logged connection must appear in the blinded export')
     return rows
@@ -554,7 +591,8 @@ def arm_metrics(s, arm, rows):
     mine = [r for r in rows if r['arm'] == arm]; conn = [r for r in mine if r['kind'] == 'CONNECTION']
     confirmed = lambda r: r['outcome'] == 'CONFIRMED_AGAINST_ORIGINALS' and r['economic_meaning'] == 'MEANINGFUL'
     verified = [r for r in conn if r['arm_decision'] == 'ACCEPTED' and confirmed(r)]
-    graph_items = [r for r in conn if r['connection_id'].startswith('SUG-')]
+    graph_items = [r for r in conn if r['connection_id'].startswith('SUG-') or r.get('origin_suggestion_id')]
+    warnings = [r for r in mine if r['kind'] == 'METHODOLOGICAL_WARNING']
     m = original_m_passes(s); falsify = decisive_minutes(s)
     return {'campaign': s.campaign['id'], 'analyst_minutes_all': minutes, 'graph_minutes': acc['graph_minutes'],
             'verified_connections': len(verified), 'verified_connections_per_hour': per_hour(len(verified), minutes),
@@ -565,6 +603,8 @@ def arm_metrics(s, arm, rows):
             'median_minutes_per_connection': median([r['analyst_minutes'] for r in conn]),
             'median_minutes_to_decisive_falsification': median(falsify.values()), 'decisive_falsification': falsify,
             'duplicate_research_avoided': sum(r['kind'] == 'AVOIDED_REPEAT' and r['outcome'] == 'CONFIRMED_AGAINST_ORIGINALS' for r in mine),
+            'methodological_warnings_logged': len(warnings),
+            'methodological_warnings_confirmed_useful': sum(r['outcome'] == 'CONFIRMED_AGAINST_ORIGINALS' for r in warnings),
             'review_burden_items': len(mine), 'adjudicator_minutes': sum(r['adjudicator_minutes'] for r in mine if r['adjudicator_minutes'] != R.UNKNOWN),
             'suggestion_review_minutes': acc['minutes_by_category']['SUGGESTION_REVIEW'],
             'graph_suggestions_false_or_trivial': [sum(r['outcome'] in ('REJECTED_FALSE', 'REJECTED_TRIVIAL') for r in graph_items), len(graph_items)],

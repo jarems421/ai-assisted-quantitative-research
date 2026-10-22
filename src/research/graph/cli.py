@@ -89,7 +89,8 @@ def pilot_parser(sub):
     x.add_argument('--bundle'); x.add_argument('--frozen-at'); x.add_argument('--catalogue', default=str(CATALOGUE_PATH))
     x = ps.add_parser('verify', help='verify a snapshot (and a bundle copy); both arms must print the same summary')
     x.add_argument('snapshot'); x.add_argument('--bundle')
-    x = ps.add_parser('connections', help='validate an arm connection log'); x.add_argument('log'); x.add_argument('--arm', choices=P.ARMS, required=True)
+    x = ps.add_parser('connections', help='validate an arm connection log (V1, or prospective V2 with suggestion origins)'); x.add_argument('log'); x.add_argument('--arm', choices=P.ARMS, required=True)
+    x.add_argument('--suggestions', help='an exported suggestions JSON; V2 origins must match it exactly')
     x = ps.add_parser('blind', help='prepare the shuffled, arm-hidden adjudication export and its sealed key')
     x.add_argument('snapshot'); x.add_argument('--log', nargs=2, action='append', metavar=('ARM', 'LOG'), required=True)
     x.add_argument('--salt', required=True); x.add_argument('--out', required=True); x.add_argument('--key', required=True)
@@ -114,7 +115,9 @@ def run_pilot(a):
         snap, digest_ = P.make_snapshot(a.out, a.packet, a.packet_ledger, arms, a.bundle, a.catalogue, a.frozen_at)
         out({'written': a.out, 'snapshot_sha256': digest_, 'frozen_at_utc': snap['frozen_at_utc'], 'prior': snap['prior']['packet_ledger']})
     elif a.pilot_command == 'verify':out(P.verify_summary(a.snapshot, a.bundle))
-    elif a.pilot_command == 'connections':out({'log': a.log, 'arm': a.arm, 'entries': len(P.validate_connections(a.log, a.arm)), 'format': 'PASS'})
+    elif a.pilot_command == 'connections':
+        exported = json.loads(Path(a.suggestions).read_text(encoding='utf-8'))['suggestions'] if a.suggestions else None
+        out({'log': a.log, 'arm': a.arm, 'entries': len(P.validate_connections(a.log, a.arm, exported)), 'format': 'PASS'})
     elif a.pilot_command == 'blind':
         export = P.blind(a.snapshot, dict(a.log), a.salt, a.out, a.key)
         out({'written': a.out, 'items': len(export['items']), 'key_written': a.key, 'key_sha256': export['key_sha256']})
@@ -174,6 +177,8 @@ def main(argv=None):
     c.add_argument('--format', choices=('mermaid', 'dot'), default='mermaid'); c.add_argument('--out'); c.add_argument('--semantic', type=int, default=1)
     c = sub.add_parser('demo', help='offline synthetic and historical walkthrough')
     g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
+    c = sub.add_parser('quality', help='Graph v1.1 discovery-quality regression on synthetic fixtures (v1 vs v1.1 vs structured search)')
+    g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     c = sub.add_parser('evaluate', help='offline ordinary-search versus graph comparison on synthetic fixtures')
     c.add_argument('--timing', action='store_true', help='also report (non-deterministic) build runtime')
     c = add('suggestions', 'export suggestions for a target with baseline-discoverability flags (pilot hook)'); c.add_argument('node')
@@ -188,6 +193,12 @@ def main(argv=None):
             if a.check:print(json.dumps(demo.check()))
             elif a.write:demo.WALKTHROUGH.write_text(demo.generate(), encoding='utf-8', newline='\n'); print(f'written {demo.WALKTHROUGH.relative_to(demo.ROOT)}')
             else:print(demo.generate(), end='')
+            return
+        if a.command == 'quality':
+            from src.research.graph import quality as Q
+            if a.check:print(json.dumps(Q.check()))
+            elif a.write:Q.RECORD.write_text(Q.generate(), encoding='utf-8', newline='\n'); print(f'written {Q.RECORD.relative_to(demo.ROOT)}')
+            else:print(Q.generate(), end='')
             return
         if a.command == 'evaluate':
             import tempfile

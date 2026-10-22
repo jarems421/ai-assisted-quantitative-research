@@ -149,6 +149,8 @@ Every path is marked `connectivity_only: true`, `exposure_certified: false`, `ca
 
 **Base views:** `search`, `show`, `neighbourhood`, `trace`, `failures`, `orphans`, and `export` (Mermaid or DOT for a neighbourhood, explanation or trace).
 
+**Graph v1.1 (feature branch, 2026-10-22):** `shared`, `complements`, `same-gap`, `revisit` and `next` now class every result as an economic connection candidate (with a grounded nine-part explanation), a methodological warning (with the earlier lesson) or an unsupported match, and rank candidates first. All `same-gap` and `next` results are warnings. See [graph_v1_1_design.md](graph_v1_1_design.md).
+
 ## Utility check and prospective pilot protocol
 
 **Offline utility check.** Revised in the [pre-pilot review](graph_v1_review.md). [`evaluate.py`](../../src/research/graph/evaluate.py) now reads only declared inputs: three synthetic ledgers and a fixture vocabulary, with no catalogue. It compares three approaches on five fixed tasks, with ground truth written alongside the fixtures:

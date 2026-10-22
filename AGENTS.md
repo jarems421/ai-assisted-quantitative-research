@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Graph v1.1 discovery quality: feature branch, not merged (2026-10-22)
+
+- `docs/strategy/owner_graph_v1_1_2026-10-22.md`; design `graph_v1_1_design.md`. Branch `graph-v1.1-discovery-quality` only; do not merge into `main` without owner review. `src/research/graph/connections.py` classes every `shared`/`complements`/`same-gap`/`revisit`/`next` result: `ECONOMIC_CONNECTION_CANDIDATE` needs an exact document hash, identified entity or period-compatible documented relationship and carries a nine-part grounded explanation; requirement/tag/blocker-only links are `METHODOLOGICAL_WARNING`; reused citations are `UNSUPPORTED_MATCH`. All `same-gap` and `next` results are warnings. Classification is categorical; no scores or LLM judgement. A candidate justifies investigation only.
+- Prospective logs use V2 `GRAPH_PILOT_CONNECTION_V2` with `origin_suggestion_id`/`origin_operator`/`origin_bases`/`connection_class` (`pilot connections --suggestions`); V1 R3 logs, adjudications, exports, keys and results stay unchanged. `quality --check` regenerates `graph_v1_1_quality.md`: a synthetic functional regression on self-written fixtures, not independent validation or a real-world improvement claim.
+- `graph_pilot_r4_protocol_proposed.md` is NOT_RUN and unauthorised. No source request, packet, campaign or adjudication follows without a separate owner activation.
+
 ## Graph pilot R3 closed: five owner REJECTs, AI-assisted adjudication (2026-10-22)
 
 - `owner_graph_pilot_r3_dispositions_2026-10-22.md`: five owner-approved, AI-assisted REJECT dispositions are appended to the arm ledgers (append-only; each names a verbatim `[DECISIVE:ID]`). There is no M_PASSED and no H approval. Their reason types were mapped by the coordinator.
