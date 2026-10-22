@@ -1,10 +1,11 @@
-import builtins,contextlib,copy,hashlib,io,json,shutil,socket,tempfile,unittest
+import builtins,contextlib,copy,hashlib,io,json,os,shutil,socket,subprocess,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 from src.research.discovery import records as R
 from src.research.discovery.demo import Clock,clk,entity,passport,rec,syn,observation_first
 from src.research.discovery.ledger import Ledger
-from src.research.graph import catalogue as C,cli as GCLI,demo as D,evaluate as E,model as M,operators as O,pilot as P,pilot_dryrun as DR,render as RN
+from src.research.graph import catalogue as C,cli as GCLI,demo as D,evaluate as E,implementation as I,model as M,operators as O,pilot as P,pilot_dryrun as DR,render as RN
+from src.research.graph import pilot_r4_dryrun as R4
 from src.research.graph.fixtures import AUTHORITY,ECHO,T7,build_all,campaign,obs
 from src.research.graph.project import GraphError,build
 from src.research.graph.rules import View,find_paths,verified_assertion
@@ -823,7 +824,7 @@ class GraphPilotV2ProvenanceTests(unittest.TestCase):
         GraphPilotProtocolTests.setUp(self)
         frozen=json.loads(self.snap.read_text(encoding='utf-8'))['frozen_at_utc'];self.snap.unlink()  # refreeze the same packet for V2 logs
         P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',{'S':(self.d/'S.jsonl','DLC-GP1-S'),'G':(self.d/'G.jsonl','DLC-GP1-G')},self.bundle,
-                        frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2)
+                        frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2,implementation=R4.synthetic_pin())
         self.arm('S');_,self.t=self.arm('G')
         g,view=P.arm_graph(self.snap,'G',self.t)
         receipt=json.loads(json.dumps(view['receipt']))
@@ -961,5 +962,295 @@ class GraphPilotV2ProvenanceTests(unittest.TestCase):
         with self.assertRaisesRegex(P.PilotError,'connection_log'):P.make_snapshot(self.dir/'x.json','P9',self.d/'packet.jsonl',{},connection_log='V9')
         for packet in ('P3','P4'):self.assertNotIn('connection_log',json.loads((ROOT/f'docs/strategy/graph_pilot_r3/{packet}/snapshot.json').read_text(encoding='utf-8')))
 
+
+class GraphPilotR4ReadinessTests(unittest.TestCase):
+    """R4 readiness Phase A: implementation pinning, timestamp-derived effort, full suggestion accounting, adversarial checks."""
+
+    def setUp(self):
+        self.tmp=Path(tempfile.mkdtemp(prefix='graph-r4-test-'));self.addCleanup(R4.remove_tree,self.tmp)
+
+    def test_pin_binds_commit_and_content_and_defines_dirty_unrelated_and_missing_git(self):
+        impl=R4.pinned_copy(self.tmp/'impl');pin=I.pin(impl)
+        self.assertEqual((I.verify(pin,impl)['status'],len(pin['commit']),pin['normalisation']),('EXACT_COMMIT',40,'CRLF_TO_LF'))
+        self.assertIn('src/research/graph/pilot.py',pin['files']);self.assertIn('src/research/spec.py',pin['files'])
+        for path in ('src/research/sec_pilot/parsing.py','docs/strategy/graph_pilot/fetch_one.py'):self.assertIn(path,pin['files'])  # acquisition and enforcement path
+        self.assertIn('src/research/exp004_policy.py',pin['files'])  # imported only inside a spec.py function: the static closure still follows it
+        self.assertEqual(set(pin['runtime']),{'python','implementation','dependencies'});self.assertIn('jsonschema',pin['runtime']['dependencies'])
+        with self.assertRaisesRegex(I.PinError,'the runtime differs'):I.verify(dict(pin,runtime=dict(pin['runtime'],python='0.0.0')),impl)
+        f=impl/'src/research/discovery/ledger.py';original=f.read_bytes()
+        f.write_bytes(original+b'# local edit\n')
+        with self.assertRaisesRegex(I.PinError,'uncommitted changes'):I.pin(impl)
+        with self.assertRaisesRegex(I.PinError,"'changed': \\['src/research/discovery/ledger.py'\\]"):I.verify(pin,impl)
+        f.write_bytes(original.replace(b'\n',b'\r\n'));self.assertEqual(I.verify(pin,impl)['status'],'EXACT_COMMIT')  # line endings normalised
+        f.write_bytes(original);(impl/'README.md').write_text('unrelated\n',encoding='utf-8')
+        R4.git(impl,'add','-A');R4.git(impl,'commit','-q','-m','unrelated')
+        self.assertEqual(I.verify(pin,impl)['status'],'UNRELATED_COMMIT_CHANGE')
+        (impl/'src/research/graph/new_module.py').write_text('X = 1\n',encoding='utf-8')
+        with self.assertRaisesRegex(I.PinError,"'added'"):I.verify(pin,impl)
+        (impl/'src/research/graph/new_module.py').unlink();bare=self.tmp/'bare'
+        for rel in I.closure(impl)[0]:(bare/rel).parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(impl/rel,bare/rel)
+        with self.assertRaisesRegex(I.PinError,'git metadata is unavailable'):I.pin(bare)
+        self.assertEqual(I.verify(pin,bare)['status'],'GIT_UNAVAILABLE_CONTENT_VERIFIED')
+        with self.assertRaisesRegex(I.PinError,'unknown implementation pin version'):I.verify(dict(pin,version='X'),impl)
+
+    def test_v2_snapshots_require_and_enforce_the_pin_and_legacy_snapshots_are_unpinned(self):
+        GraphPilotProtocolTests.setUp(self)
+        frozen=json.loads(self.snap.read_text(encoding='utf-8'))['frozen_at_utc'];self.snap.unlink()
+        arms={'S':(self.d/'S.jsonl','DLC-GP1-S'),'G':(self.d/'G.jsonl','DLC-GP1-G')}
+        with patch.object(I,'git_state',return_value={'status':'DIRTY','commit':'a'*40,'dirty':['src/research/graph/pilot.py']}):
+            with self.assertRaisesRegex(P.PilotError,'uncommitted changes'):P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',arms,frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2)
+        with patch.object(I,'git_state',return_value={'status':'GIT_UNAVAILABLE','commit':None,'dirty':None}):
+            with self.assertRaisesRegex(P.PilotError,'git metadata is unavailable'):P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',arms,frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2)
+        P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',arms,frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2,implementation=R4.synthetic_pin())
+        _,t=GraphPilotProtocolTests.arm(self,'G')
+        g,view=P.arm_graph(self.snap,'G',t)
+        self.assertEqual(view['receipt']['graph_implementation']['commit'],R4.synthetic_pin()['commit'])
+        snap=json.loads(self.snap.read_text(encoding='utf-8'))
+        wrong=dict(snap,graph_implementation=dict(snap['graph_implementation'],tree_digest='0'*64));(self.d/'wrong.json').write_text(json.dumps(wrong),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'differs from the snapshot pin'):P.arm_graph(self.d/'wrong.json','G',t)
+        (self.d/'none.json').write_text(json.dumps({k:v for k,v in snap.items() if k!='graph_implementation'}),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'must pin'):P.load_snapshot(self.d/'none.json')
+        self.assertEqual(P.verify_summary(self.snap)['implementation']['status'],'UNRELATED_COMMIT_CHANGE')  # synthetic commit, same content
+        for packet in ('P3','P4'):
+            self.assertEqual(P.verify_summary(ROOT/f'docs/strategy/graph_pilot_r3/{packet}/snapshot.json')['implementation'],{'status':'NOT_PINNED_LEGACY'})
+
+    def test_effort_material_threshold_is_the_greater_of_5_minutes_or_10_percent(self):
+        self.assertFalse(P.compare_minutes(20,15)['material']);self.assertTrue(P.compare_minutes(21,15)['material'])  # 5-minute floor
+        self.assertFalse(P.compare_minutes(132,120)['material']);self.assertTrue(P.compare_minutes(133,120)['material'])  # 10% of 120
+        small=P.compare_minutes(16,15.5)
+        self.assertEqual((small['material'],small['difference_minutes'],small['difference_percent']),(False,0.5,3.2))  # still reported
+        self.assertEqual(P.compare_minutes(3,0)['difference_percent'],'UNDEFINED_ZERO_DENOMINATOR')
+        self.assertEqual(P.ratio(0,0)['value'],'UNDEFINED_ZERO_DENOMINATOR');self.assertEqual(P.ratio('UNKNOWN',3)['value'],'UNKNOWN')
+
+    def test_r3_effort_and_accounting_are_diagnostic_and_its_results_are_unchanged(self):
+        base=ROOT/'docs/strategy/graph_pilot_r3';before={f:sha(f) for f in sorted(base.rglob('*')) if f.is_file()}
+        rep=P.report([base/'P3',base/'P4'],export_name='blind_v2.json')
+        self.assertEqual(rep['classification'],'INCONCLUSIVE');self.assertIn('G 3.151, S 4.162',[n for n in rep['notes'] if n.startswith('pooled')][0])
+        accounts=[p['suggestion_accounting'] for p in rep['packets']]
+        self.assertEqual({a['traceability'] for a in accounts},{'NOT_TRACEABLE_V1'})
+        self.assertEqual(sum(a['untraced_graph_operator_rows'] for a in accounts),10)  # R3's ten untraced graph-operator connections
+        self.assertTrue(all(a['totals']['exported']=='UNKNOWN' for a in accounts))
+        for p in rep['packets']:
+            for arm in P.ARMS:
+                e=p['effort_check'][arm]
+                self.assertGreaterEqual(e['excluded_human_decision_records']['disposition'],1)  # the owner's later dispositions are not arm effort
+                self.assertLess(e['observed_span_minutes'],120);self.assertEqual(e['session']['status'],'NOT_RECORDED')
+        self.assertEqual({f:sha(f) for f in sorted(base.rglob('*')) if f.is_file()},before)
+
+    def test_r4_dry_run_record_is_current(self):
+        self.assertEqual(R4.check()['r4_dry_run'],'PASS')
+
+    def test_adversarial_evaluation_is_current_and_reports_the_trivial_identifier_weakness(self):
+        from src.research.graph import adversarial as AD
+        self.assertEqual(AD.check()['adversarial'],'PASS')
+        rep=AD.run(self.tmp/'adv');v11,st=rep['totals']['graph_v1_1'],rep['totals']['structured_search']
+        self.assertEqual((v11['true_positives'],v11['false_negatives'],v11['identity_or_timing_errors']),(4,0,0))
+        self.assertEqual(v11['false_positives_by_challenge'],{'trivial shared identifier':2})  # reported as found, not tuned away
+        self.assertEqual(st['false_positives'],4);self.assertEqual(v11['warnings_correct'],1)
+
+
+class GraphPilotR4HardeningTests(unittest.TestCase):
+    """Phase A hardening: effort-evidence gate, row/suggestion accounting levels, uniform pin, v1.2 rule mechanics."""
+
+    def arm(self,**kw):
+        base={'analyst_minutes_all':60,'verified_connections':2,'verified_connections_per_hour':2.0,'graph_only_verified':0,'false_or_premature_joins_made':2,
+              'median_minutes_per_connection':6,'median_minutes_to_decisive_falsification':60,'duplicate_research_avoided':0,'original_frozen_m_passes':0,
+              'original_frozen_m_passes_per_hour':0.0,'review_burden_items':6,'adjudicator_minutes':12,'graph_suggestions_false_or_trivial':[0,0]}
+        return {**base,**kw}
+
+    def packets(self,evidence,session=(60,60)):
+        effort=lambda m:{'session':{'status':'RECORDED','minutes':m} if m else {'status':'NOT_RECORDED','minutes':'UNKNOWN'},'observed_span_minutes':50}
+        g=self.arm(false_or_premature_joins_made=0,median_minutes_to_decisive_falsification=40,verified_connections=3,verified_connections_per_hour=3.0)
+        return [{'S':self.arm(),'G':g,'effort_check':{'S':effort(session[0]),'G':effort(session[1])},'effort_evidence':{'S':evidence[0],'G':evidence[1]}}]*3
+
+    def test_definitive_classifications_need_supporting_effort_evidence(self):
+        final,primary,sens,notes=P.final_classification(self.packets(('CONSISTENT','CONSISTENT')))
+        self.assertEqual((final,primary),('GRAPH_INCREMENT_OBSERVED','GRAPH_INCREMENT_OBSERVED'))
+        final,primary,sens,_=P.final_classification(self.packets(('INCOMPLETE','CONSISTENT')))  # robust under the attested-session sensitivity
+        self.assertEqual((final,sens['session']),('GRAPH_INCREMENT_OBSERVED','GRAPH_INCREMENT_OBSERVED'))
+        final,primary,sens,notes=P.final_classification(self.packets(('CONTRADICTORY','CONSISTENT')))
+        self.assertEqual((final,primary),('INCONCLUSIVE','GRAPH_INCREMENT_OBSERVED'));self.assertTrue(any('EFFORT_EVIDENCE_UNRESOLVED' in n for n in notes))
+        final,_,sens,_=P.final_classification(self.packets(('INCOMPLETE','CONSISTENT'),session=(None,60)))
+        self.assertTrue(sens['session'].startswith('NOT_VALID'));self.assertEqual(final,'INCONCLUSIVE')
+        final,_,sens,_=P.final_classification(self.packets(('MATERIAL_DISCREPANCY','CONSISTENT'),session=(10,600)))  # sensitivity reverses the rate comparison: not definitive
+        self.assertNotEqual(sens['session'],'GRAPH_INCREMENT_OBSERVED');self.assertEqual(final,'INCONCLUSIVE')
+        self.assertTrue(any('Primary measure: self-reported analyst minutes' in n for n in notes))
+
+    def test_accounting_rates_use_compatible_levels_and_rows_keep_their_outcomes(self):
+        V2=GraphPilotV2ProvenanceTests;case=V2('test_exact_origins_are_accepted_and_every_mismatch_is_refused');V2.setUp(case);self.addCleanup(case.doCleanups)
+        dup=case.row(case.econ,connection_id=P.connection_id('a','b',['second look']),basis=['second look'],arm_decision='DECLINED')
+        case.write_log('connections-G.jsonl',[case.row(case.econ,arm_decision='ACCEPTED',discovery_lab_record='CAND-1'),dup,case.row(case.warn)])
+        a=P.suggestion_accounting(case.d)['by_class'][K_ECONOMIC]
+        self.assertEqual((a['logged_rows'],a['logged_suggestions'],a['rows_sharing_an_origin']),(2,1,2))
+        self.assertEqual(a['rates']['declined_share_of_logged_rows'],{'numerator':1,'denominator':2,'value':0.5})
+        self.assertEqual(a['rates']['all_declined_share_of_logged_suggestions'],{'numerator':0,'denominator':1,'value':0.0})
+        rows=[{'arm':'G','connection_id':r['connection_id'],'origin_suggestion_id':r['origin_suggestion_id'],'connection_class':r['connection_class'],
+               'kind':r['kind'],'arm_decision':r['arm_decision'],'outcome':o,'economic_meaning':'MEANINGFUL'}
+              for r,o in zip(P.read_jsonl(case.d/'connections-G.jsonl'),('CONFIRMED_AGAINST_ORIGINALS','REJECTED_FALSE','REJECTED_TRIVIAL'))]
+        b=P.suggestion_accounting(case.d,rows)
+        e=b['by_class'][K_ECONOMIC]['adjudicated']
+        self.assertEqual((e['rows_adjudicated'],e['rows']['CONFIRMED_AGAINST_ORIGINALS'],e['rows']['REJECTED_FALSE'],e['suggestions_with_conflicting_outcomes']),(2,1,1,1))
+        self.assertEqual((b['confirmed_economic_discoveries']['rows'],b['confirmed_economic_discoveries']['distinct_origin_suggestions']),(1,1))
+
+    def test_pin_is_enforced_on_structured_search_graph_and_replay_paths(self):
+        V2=GraphPilotV2ProvenanceTests;case=V2('test_exact_origins_are_accepted_and_every_mismatch_is_refused');V2.setUp(case);self.addCleanup(case.doCleanups)
+        real=I.content;changed=lambda root=I.ROOT:{**real(root),'tree_digest':'0'*64}
+        s_when=Ledger(case.d/'S.jsonl').load().events[-1]['recorded_at_utc']
+        with patch.object(I,'content',changed):
+            for fn in (lambda:P.arm_view(case.snap,'S',s_when),lambda:P.arm_graph(case.snap,'G',case.t),lambda:P.load_suggestion_exports(P.default_exports(case.snap),case.snap),
+                       lambda:P.derived_effort(case.d,'G'),lambda:P.suggestion_accounting(case.d),lambda:P.load_snapshot(case.snap)):
+                with self.assertRaisesRegex(P.PilotError,'differs from the snapshot pin'):fn()
+            err=io.StringIO()
+            with contextlib.redirect_stderr(err),contextlib.redirect_stdout(io.StringIO()),self.assertRaises(SystemExit):
+                GCLI.main(['baseline-search','DLC-GP1-S','OBS-1','--snapshot',str(case.snap),'--arm','S','--query-at',s_when])
+            self.assertIn('differs from the snapshot pin',err.getvalue())
+        self.assertEqual(P.arm_view(case.snap,'G',case.t)['receipt']['implementation_check']['status'],'UNRELATED_COMMIT_CHANGE')
+
+    def test_v1_2_rule_mechanics_and_v1_1_default_unchanged(self):
+        from src.research.graph import connections as K
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);d=Path(tmp.name);clock=Clock()
+        reg=entity('REGULATOR','SYN_AUTH:A-1','Synthetic authority')
+        a=Ledger.create(d/'A.jsonl',campaign('DLC-MECH-A','a','OBSERVATION_FIRST','?'),clock);a.append('source',passport('SRC-A','s',field='f',units='u'))
+        a.append('observation',obs('OBS-A','SRC-A','Authority count.',1,'count',reg,'2025-01-01','2025-01-01','2026-10-01T00:00:00+00:00','x'))
+        b=Ledger.create(d/'B.jsonl',campaign('DLC-MECH-B','b','OBSERVATION_FIRST','?'),clock);b.append('source',passport('SRC-B','s',field='f',units='u'))
+        b.append('observation',obs('OBS-B','SRC-B','Authority act.',1,'count',reg,'2025-02-01','2025-02-01','2026-10-01T00:00:00+00:00','y'))
+        g=build([d/'A.jsonl',d/'B.jsonl'],catalogue_path=None,mode='synthetic',with_memory=False,requirements=__import__('src.research.graph.quality',fromlist=['VOCABULARY']).VOCABULARY)
+        v11=O.complements(g,'DLC-MECH-B/OBS-B',V)['results'][0]
+        self.assertEqual(v11['connection_class'],K.ECONOMIC);self.assertNotIn('classification_rules',v11)  # v1.1 default untouched
+        K.use_rules(g,K.CLASSIFICATION_V1_2)
+        v12=O.complements(g,'DLC-MECH-B/OBS-B',V)['results'][0]
+        self.assertEqual((v12['connection_class'],v12['classification_rules']),(K.UNSUPPORTED,K.CLASSIFICATION_V1_2))
+        self.assertEqual(v12['generic_identifier']['entities'],[{'entity':'entity:SYN_AUTH:A-1','category':'REGULATOR'}])
+        self.assertEqual(v12['suggestion_id'],v11['suggestion_id'])  # ids are rule-independent
+        with self.assertRaisesRegex(ValueError,'classification rules'):K.use_rules(g,'V9')
+        reg_=K.load_register();self.assertEqual(reg_['identifiers'],[])
+
+
+
+class GraphV12HoldoutTests(unittest.TestCase):
+    """The v1.2 holdout, written after the rule was registered (commit 426c211); results pinned as found, not tuned."""
+
+    def test_holdout_record_is_current_and_results_are_as_registered(self):
+        import subprocess
+        from src.research.graph import holdout_v1_2 as HO
+        self.assertEqual(HO.check()['holdout'],'PASS')
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);rep=HO.run(Path(tmp.name))
+        v11,v12=rep['totals']['graph_v1_1'],rep['totals']['graph_v1_2']
+        self.assertEqual((v12['true_positives'],v12['false_negatives'],v11['false_negatives']),(5,0,0))
+        self.assertEqual((v11['false_positives_by_case'],v12['false_positives_by_case']),(['H1','H2','H3','H7','H10'],['H7']))  # H7: declared expected miss
+        self.assertEqual(v11['review_load'],v12['review_load'])  # labelling never hides items
+        rule_commit=HO.RULE_COMMIT
+        def git(*a):return subprocess.run(['git',*a],cwd=ROOT,capture_output=True,text=True)
+        if git('cat-file','-t',rule_commit).returncode!=0:
+            if os.environ.get('GITHUB_ACTIONS'):self.fail('CI must check out full history (fetch-depth: 0) so the registration order is verified')
+            self.skipTest('git history unavailable outside CI')
+        self.assertEqual(git('merge-base','--is-ancestor',rule_commit,'HEAD').returncode,0)  # the rule commit precedes the holdout
+        self.assertEqual(git('cat-file','-e',f'{rule_commit}:docs/strategy/graph_v1_2_rule_registration.md').returncode,0)
+        self.assertEqual(git('cat-file','-e',f'{rule_commit}:docs/strategy/graph/generic_identifiers_v001.json').returncode,0)
+        for absent in ('src/research/graph/holdout_v1_2.py','docs/strategy/graph_v1_2_holdout.md'):
+            self.assertNotEqual(git('cat-file','-e',f'{rule_commit}:{absent}').returncode,0)  # the holdout did not exist when the rule was frozen
+        self.assertEqual(git('diff','--quiet',rule_commit,'HEAD','--','docs/strategy/graph/generic_identifiers_v001.json').returncode,0)  # register unchanged since
+
+
+class GraphPilotProvenanceAndConfigurationTests(unittest.TestCase):
+    """Saved execution provenance is validated separately from replay; the registered R4 graph configuration is frozen."""
+
+    def setUp(self):
+        V2=GraphPilotV2ProvenanceTests;self.case=V2('test_exact_origins_are_accepted_and_every_mismatch_is_refused');V2.setUp(self.case)
+        self.addCleanup(self.case.doCleanups)
+        self.export=self.case.d/P.SUGGESTION_EXPORT_DIR/'001-suggestions.json';self.original=self.export.read_bytes()
+
+    def tamper(self,change,whole_receipt=False):
+        # Change only the saved execution-provenance record (or, for removal, the receipt holding it); every other field stays intact.
+        doc=json.loads(self.original);change(doc['visibility'] if whole_receipt else doc['visibility']['implementation_check'])
+        self.export.write_text(json.dumps(doc),encoding='utf-8')
+
+    def load(self):return P.load_suggestion_exports(P.default_exports(self.case.snap),self.case.snap)
+
+    def test_modified_execution_provenance_is_refused_before_sealing(self):
+        saved=json.loads(self.original)['visibility']['implementation_check']
+        self.assertEqual(saved['status'],'UNRELATED_COMMIT_CHANGE')  # synthetic pin commit differs from the running HEAD
+        main=subprocess.run(['git','rev-parse','origin/main'],cwd=ROOT,capture_output=True,text=True).stdout.strip() or saved['running_commit']
+        cases=((lambda c:c.update(running_commit='f'*40),'not in this repository'),
+               (lambda c:c.update(running_commit=main) if main!=saved['running_commit'] else c.update(running_commit='e'*40),'differs from the pin at|not in this repository'),
+               (lambda c:c.update(status='EXACT_COMMIT'),'inconsistent'),
+               (lambda c:c.update(dirty_pinned_paths=sorted(set(c['dirty_pinned_paths'])|{'src/research/spec.py'}) if 'src/research/spec.py' not in c['dirty_pinned_paths'] else c['dirty_pinned_paths'].remove('src/research/spec.py')),'declares uncommitted pinned paths'),
+               (lambda c:c.update(running_commit='HEAD'),'40-hex'),(lambda c:c.update(status='VERIFIED'),'is not one of'),
+               (lambda c:c.update(extra='x'),'exactly the fields'),(lambda c:c.pop('dirty_pinned_paths'),'exactly the fields'),
+               (lambda c:c.update(status='GIT_UNAVAILABLE_CONTENT_VERIFIED'),'names no running commit'))
+        for change,why in cases:
+            self.tamper(change)
+            with self.assertRaisesRegex(P.PilotError,why):self.load()
+        self.tamper(lambda v:v.pop('implementation_check'),whole_receipt=True)
+        with self.assertRaisesRegex(P.PilotError,'record \\(implementation_check\\) is missing'):self.load()
+        logs={'S':self.case.write_log('connections-S.jsonl',[self.case.reading('S')]),'G':self.case.write_log('connections-G.jsonl',[self.case.row(self.case.econ)])}
+        self.tamper(lambda c:c.update(running_commit='f'*40))
+        with self.assertRaisesRegex(P.PilotError,'not in this repository'):P.blind(self.case.snap,logs,'test-salt-0123456789',self.case.d/'b.json',self.case.d/'k.json')
+        self.export.write_bytes(self.original)
+        P.blind(self.case.snap,logs,'test-salt-0123456789',self.case.d/'blind.json',self.case.d/'key.json')
+        sealed=json.loads((self.case.d/'key.json').read_text(encoding='utf-8'))['suggestion_exports'][0]['execution_provenance']
+        self.assertEqual((sealed['level'],sealed['running_commit']),('COMMIT_CONSISTENT_WITH_PIN',saved['running_commit']))
+
+    def test_legitimate_replay_at_an_unrelated_commit_is_accepted(self):
+        moved=lambda root=I.ROOT,paths=None:{'status':'CLEAN','commit':'1'*40,'dirty':[]}  # HEAD has moved on; pinned content unchanged
+        with patch.object(I,'git_state',moved):
+            index,manifest=self.load()
+            self.assertTrue(index)
+            self.assertEqual(P.arm_view(self.case.snap,'G',self.case.t)['receipt']['implementation_check']['running_commit'],'1'*40)
+        self.assertEqual(manifest[0]['execution_provenance']['level'],'COMMIT_CONSISTENT_WITH_PIN')
+
+    def test_validator_scope_is_consistency_not_proof(self):
+        snap=json.loads(self.case.snap.read_text(encoding='utf-8'));files=list(snap['graph_implementation']['files'])
+        older=subprocess.run(['git','rev-list','--max-count=1','HEAD~1'],cwd=ROOT,capture_output=True,text=True).stdout.strip()
+        if not older:self.skipTest('no earlier commit available')
+        at=I.files_at_commit(I.ROOT,older,files);differing=sorted(p for p in files if at.get(p)!=snap['graph_implementation']['files'][p])
+        claim={'status':'UNRELATED_COMMIT_CHANGE','running_commit':older,'dirty_pinned_paths':differing}
+        ok=P.validate_execution_provenance(claim,snap,self.case.t,'probe')  # consistent, so accepted: consistency is all it can show
+        self.assertEqual(ok['level'],'COMMIT_CONSISTENT_WITH_PIN');self.assertIn('not a cryptographic',ok['does_not_establish'])
+        with self.assertRaisesRegex(P.PilotError,'dated after the query'):
+            P.validate_execution_provenance(claim,dict(snap,fixture='LIVE'),'2000-01-01T00:00:00+00:00','probe')
+        from datetime import datetime,timedelta  # exact boundary: no clock-skew allowance is registered
+        dated=datetime.fromisoformat(I.commit_time(I.ROOT,older))
+        live=dict(snap,fixture='LIVE')
+        self.assertEqual(P.validate_execution_provenance(claim,live,dated.isoformat(),'probe')['date_check'],'COMMIT_DATED_BEFORE_QUERY')  # equal: no later than
+        for late in (timedelta(seconds=1),timedelta(minutes=4,seconds=59)):
+            with self.assertRaisesRegex(P.PilotError,'dated after the query'):
+                P.validate_execution_provenance(claim,live,(dated-late).isoformat(),'probe')  # commit one second (or under 5 minutes) after the query
+
+    def test_hand_recorded_times_never_postdate_their_commits_and_corrections_are_preserved(self):
+        from datetime import datetime
+        def added(path):
+            out=subprocess.run(['git','log','--diff-filter=A','--format=%H %cI','--',path],cwd=ROOT,capture_output=True,text=True).stdout.split()
+            return out[-2:] if out else None
+        corr=json.loads((ROOT/'docs/strategy/graph_timestamp_corrections_2026-10-22.json').read_text(encoding='utf-8'))
+        for path in ('docs/strategy/graph_pilot_r4_graph_configuration_v002.json','docs/strategy/graph_timestamp_corrections_2026-10-22.json'):
+            first=added(path)
+            if first is None:
+                if os.environ.get('GITHUB_ACTIONS'):self.fail(f'{path} must be committed')
+                continue  # not yet committed in a local working tree
+            recorded=datetime.fromisoformat(json.loads((ROOT/path).read_text(encoding='utf-8'))['recorded_at_utc'])
+            self.assertLessEqual(recorded,datetime.fromisoformat(first[1]),path)  # never later than the commit that introduced it
+        for c in corr['corrections']:  # the defective files are preserved byte-for-byte and their defect is real
+            self.assertEqual(sha(ROOT/c['file']),c['sha256'])
+            self.assertGreater(datetime.fromisoformat(c['recorded_at_utc_as_written']),datetime.fromisoformat(c['commit_committer_date_utc']))
+        v1=json.loads((ROOT/'docs/strategy/graph_pilot_r4_graph_configuration_v001.json').read_text(encoding='utf-8'));v2=P.load_r4_configuration()
+        same=('graph_operator_version','classification','generic_register','connection_log','implementation_pin_version','register_policy','dependency_boundary')
+        self.assertEqual({k:v1[k] for k in same},{k:v2[k] for k in same})  # identical configuration; only time fields corrected
+        self.assertEqual(v2['supersedes']['sha256'],sha(ROOT/'docs/strategy/graph_pilot_r4_graph_configuration_v001.json'))
+
+    def test_registered_r4_configuration_is_frozen_and_is_the_v2_default(self):
+        from src.research.graph import connections as K
+        cfg=P.load_r4_configuration()
+        self.assertEqual((cfg['graph_operator_version'],cfg['classification']),('GRAPH_OPERATORS_V1_1','GRAPH_CLASSIFICATION_V1_2'))
+        self.assertEqual(cfg['generic_register']['sha256'],sha(ROOT/cfg['generic_register']['path']))
+        snap=json.loads(self.case.snap.read_text(encoding='utf-8'))
+        self.assertEqual((snap['classification']['rules'],snap['r4_configuration']['conforms']),(K.CLASSIFICATION_V1_2,True))
+        bad=self.case.dir/'cfg.json';bad.write_text(json.dumps(dict(cfg,generic_register=dict(cfg['generic_register'],sha256='0'*64))),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'differs from the registered R4 configuration'):P.load_r4_configuration(bad)
+        GraphPilotProtocolTests.setUp(self.case)  # a fresh packet frozen with an explicit deviation
+        frozen=json.loads(self.case.snap.read_text(encoding='utf-8'))['frozen_at_utc'];self.case.snap.unlink()
+        P.make_snapshot(self.case.snap,'P1',self.case.d/'packet.jsonl',{'S':(self.case.d/'S.jsonl','DLC-GP1-S'),'G':(self.case.d/'G.jsonl','DLC-GP1-G')},
+                        frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2,implementation=R4.synthetic_pin(),classification=K.CLASSIFICATION_V1_1)
+        self.assertFalse(json.loads(self.case.snap.read_text(encoding='utf-8'))['r4_configuration']['conforms'])  # a deviation is recorded
 
 if __name__=='__main__':unittest.main()

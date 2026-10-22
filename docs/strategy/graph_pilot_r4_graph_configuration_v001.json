@@ -1,0 +1,18 @@
+{
+ "version": "GRAPH_PILOT_R4_GRAPH_CONFIGURATION_V001",
+ "recorded_at_utc": "2026-10-22T12:00:00+00:00",
+ "status": "PROPOSED R4 graph configuration, frozen prospectively by owner decision (2026-10-22). Not an activation: R4 is NOT_RUN and unauthorised.",
+ "graph_operator_version": "GRAPH_OPERATORS_V1_1",
+ "classification": "GRAPH_CLASSIFICATION_V1_2",
+ "generic_register": {
+  "path": "docs/strategy/graph/generic_identifiers_v001.json",
+  "version": "GRAPH_GENERIC_IDENTIFIERS_V001",
+  "sha256": "39dd7026b03d5db83c191e1ae56b55c2eab27eb7e3322c6082422b7923915b04"
+ },
+ "connection_log": "GRAPH_PILOT_CONNECTION_V2",
+ "implementation_pin_version": "GRAPH_IMPLEMENTATION_PIN_V002",
+ "register_policy": "No register entries are added by tuning against the v1.2 holdout. Holdout case H7 (a generic institution recorded with an ordinary type and an LEI) stays an observed limitation. Any expansion needs independently grounded identifiers or taxonomy and a new register version, evaluated prospectively.",
+ "dependency_boundary": "The strict, over-approximating static import closure of GRAPH_IMPLEMENTATION_PIN_V002 is accepted for R4, with the environmental stability requirements in graph_pilot_r4_readiness_v003.md section 3.",
+ "evidence": ["graph_v1_2_rule_registration.md (registered in 426c211 before its holdout)", "graph_v1_2_holdout.md"],
+ "preserved_unchanged": ["Graph v1.1 evaluations: graph_v1_1_quality.md, graph_v1_1_adversarial.md, graph_v1_walkthrough.md, graph_pilot_dry_run.md", "Graph Pilot R3 records and results", "GRAPH_CLASSIFICATION_V1_1 remains the default outside R4 snapshots"]
+}

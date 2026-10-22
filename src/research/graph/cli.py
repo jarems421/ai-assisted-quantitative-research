@@ -10,6 +10,7 @@ import json
 import sys
 from pathlib import Path
 
+from src.research.graph import connections as K
 from src.research.graph import demo, evaluate as E, operators as O, pilot as P, render as RN
 from src.research.graph import model as M
 from src.research.graph.catalogue import CATALOGUE_PATH
@@ -87,7 +88,10 @@ def pilot_parser(sub):
     x.add_argument('out'); x.add_argument('--packet', required=True); x.add_argument('--packet-ledger', required=True)
     x.add_argument('--arm-ledger', nargs=3, action='append', metavar=('ARM', 'LEDGER', 'CAMPAIGN'), required=True)
     x.add_argument('--bundle'); x.add_argument('--frozen-at'); x.add_argument('--catalogue', default=str(CATALOGUE_PATH))
-    x.add_argument('--connection-log', choices=[P.CONNECTION_LOG_V2], help='freeze the packet for V2 suggestion-traceable connection logs (prospective pilots)')
+    x.add_argument('--connection-log', choices=[P.CONNECTION_LOG_V2],
+                   help='freeze the packet for V2 suggestion-traceable logs (prospective pilots); also pins the exact Graph implementation (needs a clean git checkout)')
+    x.add_argument('--classification', choices=list(K.CLASSIFICATIONS),
+                   help='connection-classification ruleset for a V2 snapshot (default: the registered R4 configuration; any other choice is recorded as a deviation)')
     x = ps.add_parser('verify', help='verify a snapshot (and a bundle copy); both arms must print the same summary')
     x.add_argument('snapshot'); x.add_argument('--bundle')
     x = ps.add_parser('connections', help='validate an arm connection log (V1, or prospective V2 with suggestion origins)'); x.add_argument('log'); x.add_argument('--arm', choices=P.ARMS, required=True)
@@ -100,6 +104,15 @@ def pilot_parser(sub):
     x = ps.add_parser('adjudications', help='validate a blinded adjudication log'); x.add_argument('blind'); x.add_argument('log')
     x = ps.add_parser('account', help='effort of one arm by category against the campaign ceilings')
     x.add_argument('snapshot'); x.add_argument('--arm', choices=P.ARMS, required=True)
+    x = ps.add_parser('effort', help='timestamp-derived elapsed time beside self-reported minutes for one arm campaign (R4 readiness)')
+    x.add_argument('packet'); x.add_argument('--arm', choices=P.ARMS, required=True)
+    x = ps.add_parser('session-attest', help='the human arm operator personally attests a session START or STOP, at the moment it happens (immutable)')
+    x.add_argument('packet'); x.add_argument('--arm', choices=P.ARMS, required=True); x.add_argument('--event', choices=P.SESSION_EVENTS, required=True)
+    x.add_argument('--by', required=True, help='your own name: assistants may not attest')
+    x = ps.add_parser('suggestion-accounting', help='exported, logged, declined and unlogged graph suggestions by class, with denominators')
+    x.add_argument('packet'); x.add_argument('--export', help='after adjudication: the presentation used (adds adjudicated outcomes)')
+    x = ps.add_parser('r4-dry-run', help='R4 readiness Phase A synthetic rehearsal with mutation checks (not an R4 run)')
+    g_ = x.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     x = ps.add_parser('report', help='paired per-packet report after unblinding'); x.add_argument('packets', nargs='+'); x.add_argument('--json', action='store_true')
     x.add_argument('--export', default='blind.json', help='presentation the adjudicator used (blind_v2.json for an aliased export)')
     x = ps.add_parser('realias', help='derive the versioned aliased presentation (V2) of an unchanged V001 export; refuses if any leak remains')
@@ -115,7 +128,8 @@ def run_pilot(a):
     out = lambda value: print(json.dumps(value, indent=2, ensure_ascii=False, default=str))
     if a.pilot_command == 'snapshot':
         arms = {arm: (path, cid) for arm, path, cid in a.arm_ledger}
-        snap, digest_ = P.make_snapshot(a.out, a.packet, a.packet_ledger, arms, a.bundle, a.catalogue, a.frozen_at, connection_log=a.connection_log)
+        snap, digest_ = P.make_snapshot(a.out, a.packet, a.packet_ledger, arms, a.bundle, a.catalogue, a.frozen_at, connection_log=a.connection_log,
+                                        classification=a.classification)
         out({'written': a.out, 'snapshot_sha256': digest_, 'frozen_at_utc': snap['frozen_at_utc'], 'prior': snap['prior']['packet_ledger']})
     elif a.pilot_command == 'verify':out(P.verify_summary(a.snapshot, a.bundle))
     elif a.pilot_command == 'connections':
@@ -126,6 +140,16 @@ def run_pilot(a):
     elif a.pilot_command == 'blind':
         export = P.blind(a.snapshot, dict(a.log), a.salt, a.out, a.key, a.suggestion_exports)
         out({'written': a.out, 'items': len(export['items']), 'key_written': a.key, 'key_sha256': export['key_sha256']})
+    elif a.pilot_command == 'r4-dry-run':
+        from src.research.graph import pilot_r4_dryrun as R4
+        if a.check:out(R4.check())
+        else:
+            text = R4.generate()
+            if a.write:R4.RECORD.write_text(text, encoding='utf-8', newline='\n'); print(f'written {R4.RECORD.relative_to(R4.ROOT).as_posix()}')
+            else:print(text, end='')
+    elif a.pilot_command == 'effort':out(P.derived_effort(a.packet, a.arm))
+    elif a.pilot_command == 'session-attest':out(P.attest_session(a.packet, a.arm, a.event, a.by))
+    elif a.pilot_command == 'suggestion-accounting':out(P.suggestion_accounting(a.packet, P.unblind(a.packet, a.export) if a.export else None))
     elif a.pilot_command == 'adjudications':
         rows = P.validate_adjudications(a.blind, a.log); counts = {}
         for r in rows.values():counts[r['outcome']] = counts.get(r['outcome'], 0) + 1
@@ -184,6 +208,10 @@ def main(argv=None):
     g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     c = sub.add_parser('quality', help='Graph v1.1 discovery-quality regression on synthetic fixtures (v1 vs v1.1 vs structured search)')
     g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
+    c = sub.add_parser('adversarial', help='Graph v1.1 adversarial synthetic evaluation (reused citations, trivial identifiers, periods, tags)')
+    g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
+    c = sub.add_parser('holdout', help='GRAPH_CLASSIFICATION_V1_2 holdout written after the rule was registered (v1.1 vs v1.2 vs structured search)')
+    g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     c = sub.add_parser('evaluate', help='offline ordinary-search versus graph comparison on synthetic fixtures')
     c.add_argument('--timing', action='store_true', help='also report (non-deterministic) build runtime')
     c = add('suggestions', 'export suggestions for a target with baseline-discoverability flags (pilot hook)'); c.add_argument('node')
@@ -204,6 +232,18 @@ def main(argv=None):
             if a.check:print(json.dumps(Q.check()))
             elif a.write:Q.RECORD.write_text(Q.generate(), encoding='utf-8', newline='\n'); print(f'written {Q.RECORD.relative_to(demo.ROOT)}')
             else:print(Q.generate(), end='')
+            return
+        if a.command == 'adversarial':
+            from src.research.graph import adversarial as AD
+            if a.check:print(json.dumps(AD.check()))
+            elif a.write:AD.RECORD.write_text(AD.generate(), encoding='utf-8', newline='\n'); print(f'written {AD.RECORD.relative_to(demo.ROOT).as_posix()}')
+            else:print(AD.generate(), end='')
+            return
+        if a.command == 'holdout':
+            from src.research.graph import holdout_v1_2 as HO
+            if a.check:print(json.dumps(HO.check()))
+            elif a.write:HO.RECORD.write_bytes(HO.generate().encode('utf-8')); print(f'written {HO.RECORD.relative_to(demo.ROOT).as_posix()}')
+            else:print(HO.generate(), end='')
             return
         if a.command == 'evaluate':
             import tempfile
