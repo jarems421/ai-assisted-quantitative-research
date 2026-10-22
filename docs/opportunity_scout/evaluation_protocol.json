@@ -1,0 +1,36 @@
+{
+  "version": "SCOUT_EVALUATION_PROTOCOL_V001",
+  "frozen_before_implementation": true,
+  "base_commit": "5f3b7ef91cfca8e7d13661a577a67751165c65cd",
+  "scope": "OFFLINE_SOFTWARE_EVALUATION_ONLY",
+  "conditions": ["PLAIN", "EVIDENCE_ONLY", "MECHANISM_ONLY", "HYBRID"],
+  "budget_per_condition": {"raw_cards": 6, "generation_attempts": 3, "max_output_tokens_per_attempt": 6000, "human_minutes": 180, "scientific_source_requests": 0},
+  "hybrid_allocation": {"RADAR": 2, "FORGE": 2, "GAP": 2},
+  "plain_baseline": "Competent general economic ideation with the common seed/memory pool, identical card schema and budget; no prescribed mechanism transformations.",
+  "controls": [
+    {"id": "GENERIC_THEME", "kind": "GENERIC_MARKET_THEME", "expected_check": "surface generic/non-distinctive predictor for review"},
+    {"id": "PARAPHRASED_DUPLICATE", "kind": "MECHANISM_REPHRASING", "expected_check": "flag uncertain semantic/mechanism overlap; never certify economic identity"},
+    {"id": "UNSUPPORTED_SUPPLIER", "kind": "UNSUPPORTED_RELATIONSHIP", "expected_check": "refuse documented link without supplied provenance"},
+    {"id": "FABRICATED_CITATION", "kind": "INVALID_PROVENANCE", "expected_check": "refuse absent seed or inexact source quote"},
+    {"id": "IMPOSSIBLE_CLOCK", "kind": "HISTORICAL_TIMING", "expected_check": "refuse first-public time inferred from event or document date"},
+    {"id": "BROKEN_CHAIN", "kind": "INCOHERENT_CHAIN", "expected_check": "refuse malformed stage order; substantive coherence still requires review"},
+    {"id": "UNFALSIFIABLE", "kind": "NO_FALSIFIER", "expected_check": "flag missing meaningful falsification for review"},
+    {"id": "VALID_LOW_NOVELTY", "kind": "KNOWN_MECHANISM", "expected_check": "do not equate coherence or strong evidence with novelty"},
+    {"id": "COHERENT_SPECULATION", "kind": "NO_EVIDENCE_YET", "expected_check": "retain in incubator with a concrete reconsideration requirement"}
+  ],
+  "metrics": {
+    "mechanism_diversity": "Distinct frozen mechanism-family categories and mechanism/evidence niches; show sector, role, lane, requirement and pathway counts separately.",
+    "duplicates": "Exact core duplicates / all imported cards; uncertain proximity pairs shown separately, never counted as confirmed duplicates.",
+    "structural_coherence": "Mechanical chain/schema consistency count; substantive economic coherence remains a separate independent reviewer judgment.",
+    "falsifiability": "Explicit checkable falsifier count and independent reviewer judgment; never inferred from nonempty prose alone.",
+    "evidence_integrity": "Invalid provenance cases / attempted imports, with raw invalid responses preserved; semantic entailment requires human review.",
+    "novelty": "Internal proximity, external evidence-backed review and structural mechanism review reported separately; NOT_CHECKED never becomes novel.",
+    "feasibility": "Counts by documented, untested, inaccessible, unknown and stopped route; no route becomes acquisition authority.",
+    "workload": "All recorded human minutes, unknown entries and uninvestigated candidates remain in the denominator.",
+    "handoffs_per_human_hour": "Human-approved distinct handoff proposals / all human hours; null when any required time or review is missing.",
+    "false_rejections_of_speculation": "Reviewed coherent speculative controls routed REJECT / independently judged coherent speculative controls; null without independent judgments.",
+    "jev": "Per-question agreement, errors and Brier score only against available independent binary human labels; separate deterministic and critic comparisons; missing labels explicit. Never claim calibration from this small demonstration."
+  },
+  "blinding": "Common card format, generator/model/lane/IDs/routing hidden behind a sealed mapping; same owner may operate and review, so partial procedural blinding only.",
+  "analysis": "Descriptive only. No composite quality score, significance claim, adaptive policy, fake reviewer labels or scientific/investment conclusion. Missing or unequal-budget conditions remain incomplete. Synthetic controls and operator-generated speculative examples are never pooled as real evidence."
+}
