@@ -1,5 +1,10 @@
 # Repository instructions
 
+## Graph Pilot R4 feasibility audit and pause recommendation (2026-10-22)
+
+- `docs/strategy/graph_pilot_r4_feasibility_audit_v001.md`: offline overlap/stop audit and public documentation/terms review only; no dataset, API, listing or bulk route was fetched or probed. Classification INCONCLUSIVE_MORE_OFFLINE_EVIDENCE_NEEDED: observation-first has no documented route with confirmed terms (CAISO E2 ambiguous; FDIC financial data excluded as outcome-bearing; price reports excluded), relationship-first has only GLEIF under F1(a), event-first has CPSC then FDIC history. Documented availability is never E1–E8 eligibility; E2 needs the owner and E3–E6 a probe. FSIS is excluded (recorded 403, unclear scope treated as host-level). Never copy private receipt content into tracked files.
+- `graph_pilot_r4_pause_recommendation_v001.md` recommends pausing R4 pending a future owner decision. It is a recommendation, not an owner decision: R4 stays NOT_RUN, all drafts stay non-authoritative and no historical status changes. Do not resume R4 preparation, preflight, recruitment or activation without an explicit owner instruction.
+
 ## Graph Pilot R4 operational package: documentation only, no activation authority
 
 - `graph_pilot_r4_reviewer_guide_v001.md`, `graph_pilot_r4_runbook_v001.md`, `graph_pilot_r4_source_plan_v001.md`, `graph_pilot_r4_activation_template_v001.md` and `graph_pilot_r4_operational_readiness_v001.md` are drafts that bind only when a completed owner activation document names them by hash. R4 is NOT_RUN until the owner commits `owner_graph_pilot_r4_<date>.md` to `main`. Never fill owner fields, make D1/F1/F2/U1/R1 or ceiling decisions, or commit the template as that document for the owner. Never recruit, impersonate or act as a reviewer, operator or attester.
