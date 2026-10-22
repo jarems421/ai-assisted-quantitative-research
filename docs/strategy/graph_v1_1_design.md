@@ -93,13 +93,15 @@ Full table: [graph_v1_1_quality.md](graph_v1_1_quality.md). Run `python -m src.r
 | Missed valid connections | 0 | 0 | 0 |
 | Trivial or unsupported matches presented as connections | 3 | 0 | 2 |
 | Identity or timing errors | 0 | 0 | 0 |
-| Review burden (items presented as connections) | 6 | 3 | 5 |
+| Items presented as economic connections | 6 | 3 | 5 |
+| Items requiring analyst attention (all results, any class) | 7 | 7 | 6 |
 | Warnings retained as warnings (of 2) | 0 | 2 | 0 |
 | Historical memory retrieved (of 2) / presented as connections / kept as cited warnings | 2 / 2 / 0 | 2 / 0 / 2 | 2 / 2 / 0 |
 
 **Reading this honestly:**
 
-- v1.1 finds exactly what v1 found. The gain is in presentation and review burden, not in new discoveries.
+- v1.1 finds exactly what v1 found. The gain is in presentation, not in new discoveries.
+- Fewer items are *offered as discoveries* (6 to 3). The analyst still sees the same 7 items, now labelled as candidates, warnings or unsupported matches. **Total review load is not reduced.** What changes is what an item claims to be, and so what a hurried reader would count. Structured search shows 6 items.
 - Structured search also finds every valid connection here. As in the v1 review, the graph shows no discovery advantage over competent structured search on synthetic fixtures.
 - Structured search reports tag-only and copied-evidence matches as plain results, and it has no same-gap view.
 - These are functional checks on fixtures written by the implementer: no real-world accuracy, discovery or investment claim follows.
@@ -112,23 +114,52 @@ R3's graph arms logged graph-operator connections under fresh `CON-` ids. The or
 
 | Field | Rule |
 |---|---|
-| `origin_suggestion_id` | Required (`SUG-` + 12 hex) for any row whose operator is a graph operator, or whose `found_via` is `GRAPH_ONLY` or `BOTH`; `null` otherwise |
-| `origin_operator`, `origin_bases` | Must equal the suggestion's operator and exact match bases |
+| `origin_suggestion_id` | Required (`SUG-` + 12 hex) for any graph-originated row: a graph operator, `found_via` `GRAPH_ONLY` or `BOTH`, or a `SUG-` connection id. `null` otherwise. A `SUG-` connection id must equal it |
+| `origin_operator`, `origin_bases` | Must equal the originating suggestion's operator and exact match bases |
 | `connection_class` | The suggestion's class. A `CONNECTION` row must be `ECONOMIC_CONNECTION_CANDIDATE` |
 | `kind` | Adds `METHODOLOGICAL_WARNING`, so a warning the arm found useful is logged and scored separately |
 
-**Validation.**
+**The frozen suggestion export.**
 
-- `pilot connections LOG --arm G --suggestions EXPORTED.json` checks each origin against the exported suggestion list.
-- The structured arm cannot log graph origins.
+- **What it is.** At each query, the graph arm saves the snapshot-mode JSON of the suggesting command it ran under `<packet>/suggestions-G/`. The suggesting commands are `suggestions`, `revisit`, `complements`, `shared`, `same-gap` and `next`.
+- **Ids.** Suggestion ids are content-derived (`operators.suggestion_id`: operator, target, match and bases), so they can be recomputed. `same-gap` and `next` rows now carry ids too.
+- **Verification.** `pilot.load_suggestion_exports` accepts a saved output only if it names arm G and this packet's snapshot hash, every id recomputes, every class follows from its bases, and the query **replays exactly** from the snapshot at its recorded query time.
+  - Replay is what refuses an edited class or a fabricated but self-consistent suggestion. A mutation test confirms this.
+
+**Checks on every graph-originated V2 row.** Each check runs against that export:
+
+- the id is present in the export;
+- the operator, the command used, the bases and the class match the suggestion;
+- the endpoints are the suggestion's own (a record inside a suggested campaign or investigation counts);
+- the row was recorded no earlier than the query that issued the suggestion;
+- the row came from a suggesting operator, not an inspection command such as `explain`.
+
+**Without the export, the row is refused.** The check is not optional:
+
+- `validate_connections` refuses any graph-originated V2 row without the export index.
+- `pilot blind` loads `suggestions-G/` by default and seals the file hashes in the private key. The manifest is not in the adjudicator export, whose file names would reveal the arm.
+- `pilot unblind` and `pilot report` re-hash and replay the sealed files, and refuse any change made after blinding.
+- `pilot connections` takes `--suggestions FILES --packet-snapshot SNAP`.
+
+**V2-declared packets.**
+
+- `pilot snapshot --connection-log GRAPH_PILOT_CONNECTION_V2` freezes the packet for V2 logs. Every later step then refuses V1 rows, so origin checking cannot be avoided by logging in the old format.
+- The snapshot also pins the operator version; a graph built by different operators is refused.
+- Snapshots without the field, such as the R2 dry run and R3, keep V1 behaviour.
+
+**Reporting.**
+
 - Unblinding carries `log_version`, `origin_suggestion_id` and `connection_class`.
-- `pilot report` counts graph items by origin and reports `methodological_warnings_logged` and `methodological_warnings_confirmed_useful` separately from connections.
+- `pilot report` keeps the economic-candidate headline (`graph_suggestions_false_or_trivial`, over `CONNECTION` rows). It adds `graph_rows_false_or_trivial_by_class` over every graph-originated row, so warnings are never dropped from view.
+- It reports `methodological_warnings_logged` and `methodological_warnings_confirmed_useful` separately from connections.
+
+**Determinism fix.** `REUSED_CITATION` and `SAME_LOCATOR_ONLY` were missing from `MATCH_STRENGTH`, so tied bases fell back to set-iteration order. That could change a `shared` result's `strength` and `SUG-` id between runs. Both are now ranked, and basis ordering breaks ties by name.
 
 **Backward compatibility.** V1 rows (R3) validate unchanged. R3's logs, adjudications, sealed exports, keys, results and dispositions are untouched. A test re-validates them, re-runs `pilot report --export blind_v2.json` and checks INCONCLUSIVE and pooled `G 3.151, S 4.162`.
 
 ## Validation
 
-`python -m unittest discover -s tests` passes, with 10 new v1.1 tests. The graph, quality, dry-run, demo, build and public checks all pass. Receipt: [graph_v1_1_validation.json](graph_v1_1_validation.json).
+`python -m unittest discover -s tests` passes, with 15 new v1.1 tests (11 classification and quality, 4 V2 provenance). The graph, quality, dry-run, demo, build and public checks all pass. Receipt: [graph_v1_1_validation.json](graph_v1_1_validation.json).
 
 | Test | Shows |
 |---|---|
@@ -140,7 +171,7 @@ R3's graph arms logged graph-operator connections under fresh `CON-` ids. The or
 | Shared document; reused citation | Candidate marked not independent; reused citation unsupported |
 | Historical memory | The real-catalogue warnings stay retrievable, cited, and their verdicts stand |
 | Determinism | Classes categorical; repeat builds identical; inputs unchanged |
-| V2 log | Origin required and matched; warnings cannot be logged as connections; S arm refused |
+| V2 provenance | Exact origin required against the replayed frozen export; edited, fabricated or foreign exports refused; export sealed at blinding and rechecked at unblinding; V1 rows refused in V2-frozen packets; operator version pinned |
 | R3 | Historical records and results unchanged |
 
 ## Critical review: what is still unverified
@@ -151,7 +182,7 @@ R3's graph arms logged graph-operator connections under fresh `CON-` ids. The or
 4. **Reuse detection depends on authors.** `REUSED_CITATION` relies on `reused_from` being recorded. Copied evidence without it still looks like an independent citation of the same document hash, which is itself never treated as corroboration.
 5. **Lessons are only as good as the records.** A warning's lesson quotes tagged missing variables and the falsification route, or the cited historical finding. Requirement mappings in the catalogue remain retrieval aids pending human review.
 6. **First-public times stay mostly UNKNOWN.** Temporal compatibility checks economic periods. It cannot certify that information was public at a decision time.
-7. **Logging compliance is procedural.** V2 makes the origin checkable but cannot force an arm to log a graph-assisted idea as graph-originated. The R4 draft adds timestamp-derived effort and session-transcript checks.
+7. **Attribution is still procedural.** V2 checks every row that claims a graph origin, but an arm could record a graph-assisted idea as `ANALYST_READING`. Nothing in the logs can detect that; the R4 draft adds session-transcript and timestamp checks. Replay also assumes the same code and inputs, which the operator-version pin and snapshot hashes enforce. The git commit is not pinned yet.
 8. **R3 is not reinterpreted.** Its free-text bases cannot be reclassified mechanically. Its INCONCLUSIVE result, dispositions and provenance amendment stand.
 
 Main is untouched. Merging needs owner review.

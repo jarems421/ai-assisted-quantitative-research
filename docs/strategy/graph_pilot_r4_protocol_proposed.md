@@ -22,7 +22,7 @@ No prices, returns, backtests or investment claims. M passes and H judgments are
 | Only two pairs formed; no classification possible | Four packets are planned. A **graph-increment classification requires at least three completed pairs**, as preregistered. An ordered reserve list of eligible environments is fixed before any request. If a packet fails to form, the next reserve is probed mechanically, never chosen after seeing content. With fewer than three pairs the result is descriptive only, and no budget expansion or replacement campaign follows |
 | Reused packets and routes; R2/R3 sources | **Fresh packets only.** No source, host route, filing set or record used in R1–R3 or earlier Research OS campaigns. Packet ledgers start empty of pilot history |
 | The openFDA `limit=1000` response exceeded the size stop | **Size-safe routes only.** Each route must document a page-size or record limit. The request uses a limit whose worst-case documented record size fits under the per-start byte stop, with half the stop as margin. An over-size response is a NOT_FORMED stop, never retried |
-| `SUG-` ids were lost; the suggestion-rejection metric read 0/0 | **V2 connection logs are mandatory** (`GRAPH_PILOT_CONNECTION_V2`). Every graph-originated row keeps `origin_suggestion_id`, `origin_operator`, `origin_bases` and `connection_class`, validated with `pilot connections --suggestions` against the exported suggestions |
+| `SUG-` ids were lost; the suggestion-rejection metric read 0/0 | **V2 connection logs are mandatory.** Each packet is frozen with `pilot snapshot --connection-log GRAPH_PILOT_CONNECTION_V2`, so V1 rows are refused and the operator version is pinned. The graph arm saves every suggesting query's snapshot-mode JSON under `<packet>/suggestions-G/` at query time. Every graph-originated row keeps `origin_suggestion_id`, `origin_operator`, `origin_bases` and `connection_class`. These must match a suggestion that replays from the snapshot, with the same endpoints, issued before the row. `pilot blind` seals the export hashes in the key; `unblind` and `report` recheck them |
 | Requirement-tag analogies were counted as connections | Graph operators run at `GRAPH_OPERATORS_V1_1`. A warning can only be logged as `METHODOLOGICAL_WARNING`; the validator refuses it as `CONNECTION`. Warnings are a separate dimension |
 | Self-logged minutes over-stated some arms by about 9 minutes | **Timestamp-derived effort.** Each effort's minutes are checked against ledger append times and the session start and end. Both self-logged and derived minutes are reported. A difference above 10% or 5 minutes per campaign is a flagged deviation |
 | Two arms wrote connection logs at the end | Logs are written as connections are considered. Each row's `recorded_at_utc` must fall inside the campaign window and precede the arm's final freeze |
@@ -49,13 +49,13 @@ All per-hour outcomes use all analyst minutes, including graph query and suggest
 | Dimension | Definition |
 |---|---|
 | Verified economic connections per hour | ACCEPTED rows of class `ECONOMIC_CONNECTION_CANDIDATE` (G) or analyst connections (S), adjudicated CONFIRMED and MEANINGFUL. Graph-originated ones (by `origin_suggestion_id`) are reported as a subset |
-| Graph suggestions false or trivial | The share of exported suggestions with a logged V2 row adjudicated REJECTED_FALSE or REJECTED_TRIVIAL, by class. Unlogged suggestions are counted as not evaluated |
+| Graph suggestions false or trivial | Over logged economic candidates (`graph_suggestions_false_or_trivial`) and over every graph-originated row by class (`graph_rows_false_or_trivial_by_class`). Exported suggestions with no logged row are counted as not evaluated |
 | Useful methodological warnings | `METHODOLOGICAL_WARNING` rows and avoided repeats adjudicated CONFIRMED useful. Reported separately; never added to connections |
 | False or premature joins | As revision 2 |
 | Minutes per evaluated connection | As revision 2 |
 | Time to decisive falsification | As revision 2 (`[DECISIVE:ID]`) |
 | Original frozen M passes per hour | As revision 2; H reported separately |
-| Review burden | Items reviewed, adjudicator minutes, suggestion-review minutes |
+| Review burden | Every item of every class the adjudicator reviewed, adjudicator minutes, suggestion-review minutes. Fewer items labelled as connections is not lower burden |
 
 Analysis is descriptive only: per-packet paired differences and pooled totals, every denominator shown, with no p-values. The rules in `pilot report` apply only with three or more completed pairs. They are proposals for the owner to confirm at activation and are not empirically established.
 
@@ -76,7 +76,9 @@ These are not implemented on this branch.
 1. A derived-effort report from append and session timestamps.
 2. Per-item `SAW_ARM_INFO` exposure for adjudicators other than the owner, generalising the R3 `SAW_V001` note.
 3. A two-adjudicator log with agreement reporting.
-4. Snapshot fields pinning the graph commit and `operator_version`.
+4. Pinning the graph git commit in the snapshot. `connection_log` and `graph_operator_version` are already implemented.
+5. An adjudication vocabulary for warnings ("useful lesson" or "not useful"). Today a warning is adjudicated with the connection outcomes.
+6. A count of exported-but-unlogged suggestions in `pilot report`, read from the sealed manifest.
 
 Each needs tests and a synthetic dry run (`pilot dry-run`) before any activation.
 

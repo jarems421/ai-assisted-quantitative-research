@@ -54,7 +54,8 @@ No graph command appends to a ledger or changes a disposition.
 | `baseline-search CAMPAIGN OBSERVATION` | The pilot's structured arm: exact-identifier, content-hash, reference, period and known-at search, with no graph projection |
 | `pilot snapshot\|verify\|connections\|blind\|adjudications\|account\|report` | Proposed-pilot tooling: freeze a packet's prior inputs, verify an arm's starting copy, validate logs, build the blinded export, check accounting, report pairs |
 | `pilot dry-run [--write\|--check]` | Synthetic end-to-end rehearsal of the pilot through this CLI |
-| `pilot connections LOG --arm G [--suggestions FILE]` | Validate a V1 log, or a V2 log whose graph-originated rows keep their exact `SUG-` origin, operator, bases and class |
+| `pilot connections LOG --arm G [--suggestions FILE... --packet-snapshot SNAP]` | Validate a V1 log, or a V2 log whose graph-originated rows match the frozen, replayed suggestion export exactly (id, operator, bases, class, endpoints, time). Graph-originated V2 rows are refused without the export |
+| `pilot snapshot ... --connection-log GRAPH_PILOT_CONNECTION_V2` | Freeze a prospective packet for V2 logs: V1 rows refused, operator version pinned. The graph arm saves each suggesting query's `--json` output under `<packet>/suggestions-G/`; `pilot blind` seals their hashes in the key |
 | `quality [--write\|--check]` | Graph v1.1 synthetic regression: v1, v1.1 and structured search on the same fixtures |
 
 **Common options:**

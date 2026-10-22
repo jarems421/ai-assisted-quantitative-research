@@ -87,13 +87,16 @@ def pilot_parser(sub):
     x.add_argument('out'); x.add_argument('--packet', required=True); x.add_argument('--packet-ledger', required=True)
     x.add_argument('--arm-ledger', nargs=3, action='append', metavar=('ARM', 'LEDGER', 'CAMPAIGN'), required=True)
     x.add_argument('--bundle'); x.add_argument('--frozen-at'); x.add_argument('--catalogue', default=str(CATALOGUE_PATH))
+    x.add_argument('--connection-log', choices=[P.CONNECTION_LOG_V2], help='freeze the packet for V2 suggestion-traceable connection logs (prospective pilots)')
     x = ps.add_parser('verify', help='verify a snapshot (and a bundle copy); both arms must print the same summary')
     x.add_argument('snapshot'); x.add_argument('--bundle')
     x = ps.add_parser('connections', help='validate an arm connection log (V1, or prospective V2 with suggestion origins)'); x.add_argument('log'); x.add_argument('--arm', choices=P.ARMS, required=True)
-    x.add_argument('--suggestions', help='an exported suggestions JSON; V2 origins must match it exactly')
+    x.add_argument('--suggestions', nargs='+', help='the frozen suggestion export (saved snapshot-mode outputs); V2 graph rows must match it exactly')
+    x.add_argument('--packet-snapshot', help='the packet snapshot the export is replayed against (required with --suggestions)')
     x = ps.add_parser('blind', help='prepare the shuffled, arm-hidden adjudication export and its sealed key')
     x.add_argument('snapshot'); x.add_argument('--log', nargs=2, action='append', metavar=('ARM', 'LOG'), required=True)
     x.add_argument('--salt', required=True); x.add_argument('--out', required=True); x.add_argument('--key', required=True)
+    x.add_argument('--suggestion-exports', nargs='+', help=f'frozen graph-arm suggestion outputs (default: {P.SUGGESTION_EXPORT_DIR}/*.json beside the snapshot)')
     x = ps.add_parser('adjudications', help='validate a blinded adjudication log'); x.add_argument('blind'); x.add_argument('log')
     x = ps.add_parser('account', help='effort of one arm by category against the campaign ceilings')
     x.add_argument('snapshot'); x.add_argument('--arm', choices=P.ARMS, required=True)
@@ -112,14 +115,16 @@ def run_pilot(a):
     out = lambda value: print(json.dumps(value, indent=2, ensure_ascii=False, default=str))
     if a.pilot_command == 'snapshot':
         arms = {arm: (path, cid) for arm, path, cid in a.arm_ledger}
-        snap, digest_ = P.make_snapshot(a.out, a.packet, a.packet_ledger, arms, a.bundle, a.catalogue, a.frozen_at)
+        snap, digest_ = P.make_snapshot(a.out, a.packet, a.packet_ledger, arms, a.bundle, a.catalogue, a.frozen_at, connection_log=a.connection_log)
         out({'written': a.out, 'snapshot_sha256': digest_, 'frozen_at_utc': snap['frozen_at_utc'], 'prior': snap['prior']['packet_ledger']})
     elif a.pilot_command == 'verify':out(P.verify_summary(a.snapshot, a.bundle))
     elif a.pilot_command == 'connections':
-        exported = json.loads(Path(a.suggestions).read_text(encoding='utf-8'))['suggestions'] if a.suggestions else None
-        out({'log': a.log, 'arm': a.arm, 'entries': len(P.validate_connections(a.log, a.arm, exported)), 'format': 'PASS'})
+        if a.suggestions and not a.packet_snapshot:raise ValueError('--suggestions is replayed against --packet-snapshot')
+        index = P.load_suggestion_exports(a.suggestions, a.packet_snapshot)[0] if a.suggestions else None
+        v2 = bool(a.packet_snapshot) and P.load_snapshot(a.packet_snapshot)['snapshot'].get('connection_log') == P.CONNECTION_LOG_V2
+        out({'log': a.log, 'arm': a.arm, 'entries': len(P.validate_connections(a.log, a.arm, index, v2)), 'format': 'PASS'})
     elif a.pilot_command == 'blind':
-        export = P.blind(a.snapshot, dict(a.log), a.salt, a.out, a.key)
+        export = P.blind(a.snapshot, dict(a.log), a.salt, a.out, a.key, a.suggestion_exports)
         out({'written': a.out, 'items': len(export['items']), 'key_written': a.key, 'key_sha256': export['key_sha256']})
     elif a.pilot_command == 'adjudications':
         rows = P.validate_adjudications(a.blind, a.log); counts = {}
@@ -242,7 +247,7 @@ def main(argv=None):
             from src.research.graph import catalogue as Cat
             if a.snapshot:
                 found = E.export_suggestions(g, a.node, a.view['ledgers'], Cat.load(a.view['catalogue'])[0], None, a.view['cuts'])
-                print(json.dumps({'banner': M.BANNER, 'visibility': a.visibility, 'suggestions': found}, indent=2)); return
+                print(json.dumps({'banner': M.BANNER, 'input': a.node, 'visibility': a.visibility, 'suggestions': found}, indent=2)); return
             ledgers = a.ledgers if a.ledgers is not None else discover_ledgers()
             memory = Cat.load(a.catalogue)[0] if g.catalogue else None
             print(json.dumps({'banner': M.BANNER, 'suggestions': E.export_suggestions(g, a.node, ledgers, memory, a.known_at)}, indent=2)); return

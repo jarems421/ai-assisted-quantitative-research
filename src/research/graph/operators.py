@@ -118,9 +118,18 @@ def records_of(g, nid):
     return [nid]
 
 
+def order_bases(bases):
+    return sorted(set(bases), key=lambda b: (STRENGTH.get(b, 99), b))  # name tie-break: never set-iteration order
+
+
+def suggestion_id(operator, target, match, bases):
+    """Content-derived id: anyone holding an exported suggestion can recompute it from operator, target, match and bases."""
+    return 'SUG-' + digest({'operator': operator, 'target': target, 'match': match, 'bases': order_bases(bases)})[:12]
+
+
 def suggestion(operator, target, match, bases, **details):
-    bases = sorted(set(bases), key=lambda b: STRENGTH.get(b, 99))
-    sid = 'SUG-' + digest({'operator': operator, 'target': target, 'match': match, 'bases': bases})[:12]
+    bases = order_bases(bases)
+    sid = suggestion_id(operator, target, match, bases)
     out = {'suggestion_id': sid, 'status': M.SUGGESTION_ONLY, 'target': target, 'match': match, 'match_bases': bases,
            'strength': bases[0] if bases else 'NONE'}
     out.update(details); out['authority'] = AUTHORITY
@@ -378,7 +387,8 @@ def same_gap(g, token, view):
         rows[claim].append({'basis': e['attrs'].get('basis', 'MECHANICAL_BLOCKER'), 'detail': e['attrs'].get('detail')})
     for claim in sorted(rows):
         bases = sorted({r['basis'] for r in rows[claim]})
-        out['results'].append({'claim': claim, 'origin': owner(g, claim), 'fixture': g.nodes[claim]['fixture'], 'status': claim_status(g, claim),
+        out['results'].append({'suggestion_id': suggestion_id('same-gap', nid, claim, bases), 'target': nid, 'match': claim, 'match_bases': order_bases(bases),
+                               'claim': claim, 'origin': owner(g, claim), 'fixture': g.nodes[claim]['fixture'], 'status': claim_status(g, claim),
                                'link_bases': bases, 'candidate_only': bases == ['AUTHOR_TAG_CANDIDATE'],
                                'why_blocked': [r['detail'] for r in rows[claim]],
                                'evidence': [g.nodes[f]['attrs']['citation'] for _, f in linked(g, claim, ('HAS_FINDING',), 'out')
@@ -556,7 +566,8 @@ def next_questions(g, view):
     for req in sorted(set(by_req) | set(history)):
         claims = sorted(by_req.get(req, ()))
         proposals = [d['verify'] for c in claims for d in g.nodes[c]['attrs']['dispositions'] if d['verify']]
-        rows.append({'requirement': req, 'open_claims': claims, 'open_claim_count': len(claims),
+        rows.append({'suggestion_id': suggestion_id('next', req, req, ['REQUIREMENT_MATCH']), 'target': req, 'match': req, 'match_bases': ['REQUIREMENT_MATCH'],
+                     'requirement': req, 'open_claims': claims, 'open_claim_count': len(claims),
                      'historical_investigations': sorted(history.get(req, ())), 'decisive_checks': [g.nodes[c]['attrs']['falsification'] for c in claims],
                      'recorded_verify_proposals': proposals, 'has_specific_route': bool(proposals),
                      'connection_class': K.WARNING,

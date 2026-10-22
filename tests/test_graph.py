@@ -10,6 +10,7 @@ from src.research.graph.project import GraphError,build
 from src.research.graph.rules import View,find_paths,verified_assertion
 
 ROOT=Path(__file__).resolve().parents[1]
+K_ECONOMIC='ECONOMIC_CONNECTION_CANDIDATE'
 V=View()
 
 
@@ -793,32 +794,16 @@ class GraphV11ConnectionClassTests(unittest.TestCase):
         self.assertEqual(g2.digest(),self.g.digest());self.assertEqual([sha(p) for p in self.paths],before)
         self.assertEqual(self.Q.check()['quality'],'PASS')
 
-    def v2row(self,**change):
-        row={'connection_id':P.connection_id('a','b',['EXACT_ENTITY_ID']),'arm':'G','kind':'CONNECTION','operator':'revisit','found_via':'GRAPH_ONLY',
-             'source_record':'DLC-QSYN-D/OBS-QD-1','target_record':'DLC-QSYN-R/CAND-QR-1','basis':['EXACT_ENTITY_ID'],'arm_decision':'DECLINED',
-             'analyst_minutes':1,'discovery_lab_record':None,'recorded_at_utc':'2026-10-22T00:00:00+00:00','notes':'',
-             'log_version':P.CONNECTION_LOG_V2,'origin_suggestion_id':'SUG-0123456789ab','origin_operator':'revisit',
-             'origin_bases':['EXACT_ENTITY_ID'],'connection_class':self.K.ECONOMIC}
-        return {**row,**change}
-
-    def write(self,rows):
-        path=self.dir/'log.jsonl';path.write_text(''.join(json.dumps(r)+'\n' for r in rows),encoding='utf-8');return path
-
-    def test_v2_connection_log_keeps_the_originating_suggestion(self):
+    def test_exported_suggestions_carry_class_and_grounding_completeness(self):
         sug=[s for s in E.export_suggestions(self.g,'DLC-QSYN-D/OBS-QD-1',self.paths) if s['match'].startswith('claim:DLC-QSYN-R')][0]
         self.assertEqual(sug['connection_class'],self.K.ECONOMIC);self.assertTrue(sug['grounded_explanation_complete'])
-        ok=self.v2row(origin_suggestion_id=sug['suggestion_id'],origin_bases=sug['match_bases'])
-        self.assertEqual(len(P.validate_connections(self.write([ok]),'G',[sug])),1)
-        reading=self.v2row(operator='reading',found_via='ANALYST_READING',origin_suggestion_id=None,origin_operator=None,origin_bases=[],connection_class=None)
-        self.assertEqual(len(P.validate_connections(self.write([reading]),'G')),1)
-        for change,why in (({'origin_suggestion_id':None},'SUG- origin'),({'origin_operator':'complements'},'originating suggestion'),
-                           ({'connection_class':self.K.WARNING},'cannot be logged as an economic connection'),
-                           ({'origin_bases':['AUTHOR_TAG_CANDIDATE']},'differ from the exported'),({'log_version':'X'},'unknown log_version')):
-            with self.assertRaisesRegex(P.PilotError,why):P.validate_connections(self.write([{**ok,**change}]),'G',[sug])
-        warning=self.v2row(kind='METHODOLOGICAL_WARNING',connection_class=self.K.WARNING,origin_bases=['AUTHOR_TAG_CANDIDATE'])
-        self.assertEqual(len(P.validate_connections(self.write([warning]),'G')),1)
-        with self.assertRaisesRegex(P.PilotError,'no graph suggestions'):P.validate_connections(self.write([{**ok,'arm':'S'}]),'S')
-        with self.assertRaisesRegex(P.PilotError,'fields must be exactly'):P.validate_connections(self.write([{k:v for k,v in ok.items() if k!='connection_class'}]),'G')
+        self.assertEqual(sug['suggestion_id'],O.suggestion_id(sug['operator'],sug['target'],sug['match'],sug['match_bases']))  # recomputable
+
+    def test_same_gap_and_next_rows_have_recomputable_ids_and_basis_order_is_deterministic(self):
+        for res,op in ((O.same_gap(self.g,'REQ_DOCUMENTED_ALLOCATION',V),'same-gap'),(O.next_questions(self.g,V),'next')):
+            for r in res['results']:self.assertEqual(r['suggestion_id'],O.suggestion_id(op,r['target'],r['match'],r['match_bases']))
+        self.assertEqual(O.order_bases(['SAME_LOCATOR_ONLY','REUSED_CITATION']),O.order_bases(['REUSED_CITATION','SAME_LOCATOR_ONLY']))
+        self.assertEqual(O.suggestion_id('shared','a','b',['REUSED_CITATION','SAME_LOCATOR_ONLY']),O.suggestion_id('shared','a','b',['SAME_LOCATOR_ONLY','REUSED_CITATION']))
 
     def test_r3_historical_records_and_results_are_unchanged(self):
         base=ROOT/'docs/strategy/graph_pilot_r3'
@@ -828,6 +813,127 @@ class GraphV11ConnectionClassTests(unittest.TestCase):
         self.assertEqual(rep['classification'],'INCONCLUSIVE')
         pooled=[n for n in rep['notes'] if n.startswith('pooled')][0]
         self.assertIn('G 3.151, S 4.162',pooled)
+
+
+class GraphPilotV2ProvenanceTests(unittest.TestCase):
+    """Prospective V2 workflow: a graph-originated row is accepted only against the frozen, replayable suggestion export."""
+    arm=GraphPilotProtocolTests.arm;log=GraphPilotProtocolTests.log;write_log=GraphPilotProtocolTests.write_log
+
+    def setUp(self):
+        GraphPilotProtocolTests.setUp(self)
+        frozen=json.loads(self.snap.read_text(encoding='utf-8'))['frozen_at_utc'];self.snap.unlink()  # refreeze the same packet for V2 logs
+        P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',{'S':(self.d/'S.jsonl','DLC-GP1-S'),'G':(self.d/'G.jsonl','DLC-GP1-G')},self.bundle,
+                        frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2)
+        self.arm('S');_,self.t=self.arm('G')
+        g,view=P.arm_graph(self.snap,'G',self.t)
+        receipt=json.loads(json.dumps(view['receipt']))
+        self.sugg={'banner':M.BANNER,'input':'DLC-GP1-G','visibility':receipt,
+                   'suggestions':E.export_suggestions(g,'DLC-GP1-G',view['ledgers'],C.load(view['catalogue'])[0],None,view['cuts'])}
+        self.gap=json.loads(json.dumps({**O.same_gap(g,'REQ_REALISED_ACTIVITY',V),'visibility':receipt},default=str))
+        self.save('001-suggestions.json',self.sugg);self.save('002-same-gap.json',self.gap)
+        self.clock.advance(1);self.now=self.clock.at()
+        self.index,self.manifest=P.load_suggestion_exports(P.default_exports(self.snap),self.snap)
+        self.econ=next(e for e in self.index.values() if e['match']=='relationship:DLC-GPKT-1/REL-P-1@1')
+        self.warn=next(e for e in self.index.values() if e['operator']=='same-gap')
+
+    def save(self,name,doc):
+        d=self.d/P.SUGGESTION_EXPORT_DIR;d.mkdir(exist_ok=True)
+        (d/name).write_text(json.dumps(doc,indent=1,default=str),encoding='utf-8');return d/name
+
+    def row(self,e,**change):
+        r=self.log('G',connection_id=e['suggestion_id'],operator=e['commands'][0],found_via='GRAPH_ONLY',
+                   source_record=e['target'] if e['source_endpoints'] else 'DLC-GP1-G/OBS-1',
+                   target_record=e['target_endpoints'][0],basis=list(e['match_bases']),recorded_at_utc=self.now,
+                   kind='CONNECTION' if e['connection_class']==K_ECONOMIC else 'METHODOLOGICAL_WARNING')
+        r.update(log_version=P.CONNECTION_LOG_V2,origin_suggestion_id=e['suggestion_id'],origin_operator=e['operator'],
+                 origin_bases=list(e['match_bases']),connection_class=e['connection_class'])
+        return {**r,**change}
+
+    def reading(self,arm):
+        return self.log(arm,recorded_at_utc=self.now,log_version=P.CONNECTION_LOG_V2,origin_suggestion_id=None,origin_operator=None,
+                        origin_bases=[],connection_class=None)
+
+    def check(self,rows,arm='G',index='frozen'):
+        return P.validate_connections(self.write_log('log.jsonl',rows),arm,self.index if index=='frozen' else index,True)
+
+    def test_exact_origins_are_accepted_and_every_mismatch_is_refused(self):
+        self.assertEqual(self.econ['connection_class'],K_ECONOMIC);self.assertEqual(self.warn['connection_class'],'METHODOLOGICAL_WARNING')
+        self.assertEqual(len(self.check([self.row(self.econ),self.row(self.warn),self.reading('G')])),3)
+        other=next(e for e in self.index.values() if e['suggestion_id']!=self.econ['suggestion_id'] and e['operator']=='complements')
+        bad=(({},None,'none was supplied'),
+             ({'origin_suggestion_id':'SUG-'+'0'*12,'connection_id':'SUG-'+'0'*12},'frozen','not in the frozen suggestion export'),
+             ({'origin_operator':'revisit'},'frozen','origin operator'),({'operator':'complements'},'frozen','origin operator'),
+             ({'origin_bases':['EXACT_ENTITY_ID']},'frozen','bases or class'),
+             ({'connection_class':'METHODOLOGICAL_WARNING','kind':'METHODOLOGICAL_WARNING'},'frozen','bases or class'),
+             ({'target_record':'DLC-GPKT-1/OBS-P-1'},'frozen','endpoints'),({'source_record':'DLC-GPKT-1/OBS-P-1'},'frozen','endpoints'),
+             ({'recorded_at_utc':DR.START.isoformat()},'frozen','recorded before'),
+             ({'connection_id':other['suggestion_id']},'frozen','is its origin id'),({'operator':'explain'},'frozen','suggestion-producing'),
+             ({'origin_suggestion_id':None},'frozen','SUG- origin'),({'log_version':'X'},'frozen','unknown log_version'))
+        for change,index,why in bad:
+            with self.assertRaisesRegex(P.PilotError,why,msg=str(change)):self.check([self.row(self.econ,**change)],index=None if index is None else 'frozen')
+        with self.assertRaisesRegex(P.PilotError,'cannot be logged as an economic connection'):self.check([self.row(self.warn,kind='CONNECTION')])
+        with self.assertRaisesRegex(P.PilotError,'V1 rows are refused'):
+            self.check([self.log('G',connection_id=self.econ['suggestion_id'],operator='complements',found_via='GRAPH_ONLY')])
+        with self.assertRaisesRegex(P.PilotError,'no graph suggestions'):self.check([self.row(self.econ,arm='S')],arm='S',index=None)
+        with self.assertRaisesRegex(P.PilotError,'only graph-originated'):self.check([dict(self.reading('G'),origin_suggestion_id=self.econ['suggestion_id'])])
+        args=['pilot','connections',str(self.write_log('cli.jsonl',[self.row(self.econ)])),'--arm','G']
+        out=io.StringIO()
+        with contextlib.redirect_stdout(out):GCLI.main(args+['--suggestions',*map(str,P.default_exports(self.snap)),'--packet-snapshot',str(self.snap)])
+        self.assertEqual(json.loads(out.getvalue())['format'],'PASS')
+        err=io.StringIO()
+        with contextlib.redirect_stderr(err),contextlib.redirect_stdout(io.StringIO()),self.assertRaises(SystemExit):GCLI.main(args)
+        self.assertIn('frozen suggestion export',err.getvalue())
+
+    def test_edited_fabricated_or_foreign_exports_are_refused(self):
+        files=P.default_exports(self.snap);original=files[0].read_bytes()
+        last=self.sugg['suggestions'][-1];fake={**last,'match':'observation:DLC-GPKT-1/OBS-P-9@1'}  # self-consistent: only replay can expose it
+        fake['suggestion_id']=O.suggestion_id(fake['operator'],fake['target'],fake['match'],fake['match_bases'])
+        edited=json.loads(original);w=next(s for s in edited['suggestions'] if s['connection_class']=='METHODOLOGICAL_WARNING')
+        w['connection_class']=K_ECONOMIC  # a warning relabelled as an economic connection
+        for doc,why in ((edited,'does not replay|class differs'),
+                        ({**self.sugg,'suggestions':self.sugg['suggestions']+[fake]},'does not replay'),
+                        ({**self.sugg,'visibility':dict(self.sugg['visibility'],arm='S')},'not a graph-arm output'),
+                        ({**self.sugg,'visibility':dict(self.sugg['visibility'],snapshot_sha256='0'*64)},'not a graph-arm output')):
+            files[0].write_text(json.dumps(doc),encoding='utf-8')
+            with self.assertRaisesRegex(P.PilotError,why):P.load_suggestion_exports(files,self.snap)
+        files[0].write_bytes(original)
+        self.assertEqual(P.load_suggestion_exports(files,self.snap)[0],self.index)
+
+    def test_blinding_seals_the_export_and_unblinding_rechecks_it(self):
+        logs={'S':self.write_log('connections-S.jsonl',[self.reading('S')]),'G':self.write_log('connections-G.jsonl',[self.row(self.econ),self.row(self.warn)])}
+        moved=self.d/'moved';(self.d/P.SUGGESTION_EXPORT_DIR).rename(moved)
+        with self.assertRaisesRegex(P.PilotError,'none was supplied'):P.blind(self.snap,logs,'test-salt-0123456789',self.d/'b0.json',self.d/'k0.json')
+        moved.rename(self.d/P.SUGGESTION_EXPORT_DIR)
+        export=P.blind(self.snap,logs,'test-salt-0123456789',self.d/'blind.json',self.d/'key.json')
+        key=json.loads((self.d/'key.json').read_text(encoding='utf-8'))
+        self.assertEqual([m['sha256'] for m in key['suggestion_exports']],[m['sha256'] for m in self.manifest])
+        text=json.dumps(export)
+        for leak in ('SUG-',P.SUGGESTION_EXPORT_DIR,'same-gap','complements'):self.assertNotIn(leak,text)
+        v2=P.alias_export(self.d/'blind.json',self.d/'blind_v2.json',self.dir/'alias.json')  # R4 presents only the aliased, leak-scanned export
+        self.assertEqual(P.scan_leaks(v2['items'],P.own_records(export)),[])
+        self.write_log('adjudications.jsonl',[{'blind_id':i['blind_id'],'outcome':'REJECTED_TRIVIAL','economic_meaning':'NOT_MEANINGFUL','checked_evidence':[],
+                                               'adjudicator':'Owner','adjudicator_kind':'HUMAN','adjudicator_minutes':1,'recorded_at_utc':self.now,'notes':''}
+                                              for i in v2['items']])
+        rows=P.unblind(self.d,'blind_v2.json')
+        self.assertEqual(sorted(r['origin_suggestion_id'] for r in rows if r['arm']=='G'),sorted([self.econ['suggestion_id'],self.warn['suggestion_id']]))
+        self.assertEqual({r['connection_class'] for r in rows if r['arm']=='G'},{K_ECONOMIC,'METHODOLOGICAL_WARNING'})
+        g_metrics=P.arm_metrics(Ledger(self.d/'G.jsonl').load(),'G',rows)
+        self.assertEqual(g_metrics['graph_suggestions_false_or_trivial'],[1,1])  # economic candidates logged as connections
+        self.assertEqual(g_metrics['graph_rows_false_or_trivial_by_class'],{K_ECONOMIC:[1,1],'METHODOLOGICAL_WARNING':[1,1]})
+        self.assertEqual((g_metrics['methodological_warnings_logged'],g_metrics['review_burden_items']),(1,2))
+        target=P.default_exports(self.snap)[0];target.write_bytes(target.read_bytes()+b' ')
+        with self.assertRaisesRegex(P.PilotError,'changed after blinding'):P.unblind(self.d,'blind_v2.json')
+        target.write_bytes(target.read_bytes()[:-1]);self.assertTrue(P.unblind(self.d,'blind_v2.json'))
+        self.snap.rename(self.d/'moved.json')  # without the sealed snapshot the V2 rules cannot be assumed away
+        with self.assertRaisesRegex(P.PilotError,'snapshot is missing'):P.unblind(self.d,'blind_v2.json')
+
+    def test_v2_snapshot_pins_the_operator_version_and_old_snapshots_stay_v1(self):
+        snap=json.loads(self.snap.read_text(encoding='utf-8'))
+        self.assertEqual((snap['connection_log'],snap['graph_operator_version']),(P.CONNECTION_LOG_V2,'GRAPH_OPERATORS_V1_1'))
+        (self.d/'old.json').write_text(json.dumps(dict(snap,graph_operator_version='GRAPH_OPERATORS_V1_0')),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'pins GRAPH_OPERATORS_V1_0'):P.arm_graph(self.d/'old.json','G',self.t)
+        with self.assertRaisesRegex(P.PilotError,'connection_log'):P.make_snapshot(self.dir/'x.json','P9',self.d/'packet.jsonl',{},connection_log='V9')
+        for packet in ('P3','P4'):self.assertNotIn('connection_log',json.loads((ROOT/f'docs/strategy/graph_pilot_r3/{packet}/snapshot.json').read_text(encoding='utf-8')))
 
 
 if __name__=='__main__':unittest.main()

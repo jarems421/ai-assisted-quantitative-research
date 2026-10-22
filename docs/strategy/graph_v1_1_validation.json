@@ -1,9 +1,9 @@
 {
  "version": "GRAPH_V1_1_VALIDATION_V001",
- "recorded_at_utc": "2026-10-22T08:25:44+00:00",
+ "recorded_at_utc": "2026-10-22T08:47:29+00:00",
  "status": "PASS",
  "branch": "graph-v1.1-discovery-quality",
- "starting_head": "f1f21a950feb6467d71a81723a42f3b48a5fcc09",
+ "starting_head": "09cab202de5a40c597db072827f29a5c7fea41f2",
  "main_untouched": true,
  "owner": "owner_graph_v1_1_2026-10-22.md",
  "owner_sha256": "15433722bc817ab40a6bab46fcaee2bb78cc58913cccbbc641891e8f22133f4d",
@@ -11,7 +11,7 @@
  "connection_log_v2": "GRAPH_PILOT_CONNECTION_V2",
  "quality_record": {
   "path": "docs/strategy/graph_v1_1_quality.md",
-  "sha256": "a64987b26d065aa90b0e2a116bdb7c290c170c01ba9a4f41ef80e7815f208080",
+  "sha256": "e96e8cce6a7918dcc3e1c0d54a6e33c19b73d2172efafb9775674fe29425364d",
   "scope": "SYNTHETIC_FIXTURE_FUNCTIONAL_CHECK; self-written fixtures; not independent validation"
  },
  "r3_preserved": {
@@ -32,21 +32,21 @@
    "name": "local_suite",
    "command": "python -m unittest discover -s tests",
    "returncode": 0,
-   "test_count": 583,
+   "test_count": 588,
    "skipped": 0,
-   "log_sha256": "c9cfe6c4760b73996f750739b7c1de3d3c39e4f564fa118df1817fa8e6dda456"
+   "log_sha256": "b0e31f51614bcbbf411ea35bf0ade6f26b8fdc10d3827eed354156c68067b20e"
   },
   {
    "name": "graph_tests",
    "command": "python -m unittest tests.test_graph",
    "returncode": 0,
-   "test_count": 66
+   "test_count": 71
   },
   {
    "name": "public_checks",
    "command": "python -m src.research.public_checks",
    "returncode": 0,
-   "test_count": 355
+   "test_count": 360
   },
   {
    "name": "quality",

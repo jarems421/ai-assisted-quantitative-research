@@ -165,14 +165,16 @@ def run(directory):
     g = build(paths, catalogue_path=None, mode='synthetic', with_memory=False, requirements=VOCABULARY)
     rows, totals = [], {s: {'grounded_found': 0, 'missed_valid': 0, 'unsupported_as_connection': 0, 'identity_or_timing_errors': 0,
                            'presented_as_connections': 0, 'warnings_retained': 0} for s in ('graph_v1', 'graph_v1_1', 'structured_search')}
-    complete = []
+    complete, shown = [], {'graph': set(), 'structured': set()}  # every item an analyst must look at, whatever its class
     for task in TASKS:
         res, items = graph_items(g, task)
+        shown['graph'] |= {(task['operator'], task['query'], k) for k, _ in items}
         hit = dict(items).get(task['pair']) if task['pair'] else None
         v11_class = hit['connection_class'] if hit else None
         v1_connection = hit is not None  # R3 practice: every result was counted as a connection suggestion
         v11_connection = v11_class == K.ECONOMIC
         sp = structured(paths, task)
+        if sp is not None:shown['structured'] |= {(task['operator'], task['query'], k) for k in sp if not k.startswith('campaign:')}  # campaign keys are match aliases
         s_connection = None if sp is None else (task['pair'] in sp)
         for system, connected in (('graph_v1', v1_connection), ('graph_v1_1', v11_connection), ('structured_search', s_connection)):
             if connected is None:continue
@@ -189,6 +191,8 @@ def run(directory):
         rows.append({'task': task['id'], 'operator': task['operator'], 'truth': task['truth'], 'v1': 'connection' if v1_connection else 'none',
                      'v1_1': v11_class or 'none', 'structured': 'n/a' if s_connection is None else ('connection' if s_connection else 'none'),
                      'abstained': [a['code'] for a in res.get('abstentions', [])], 'rejected': sorted({x['code'] for x in res.get('rejected', [])})})
+    for system, n in (('graph_v1', len(shown['graph'])), ('graph_v1_1', len(shown['graph'])), ('structured_search', len(shown['structured']))):
+        totals[system]['items_shown'] = n  # v1 and v1.1 return the same result sets; v1.1 only classes and orders them
     order = O.revisit(g, 'DLC-QSYN-D/OBS-QD-1', View())['results']
     return {'scope': 'SYNTHETIC_FIXTURE_FUNCTIONAL_CHECK', 'operator_version': K.OPERATOR_VERSION, 'tasks': rows, 'totals': totals,
             'provenance_complete': f'{sum(complete)}/{len(complete)}', 'grounded_ranked_first': [r['connection_class'] for r in order],
@@ -206,7 +210,8 @@ def markdown(rep):
         L.append(f"| {r['task']} | {r['operator']} | {r['truth']} | {r['v1']} | {r['v1_1']} | {r['structured']} | {', '.join(r['abstained'] + r['rejected']) or '-'} |")
     labels = {'grounded_found': 'Grounded connections presented (of 3 valid)', 'missed_valid': 'Missed valid connections',
               'unsupported_as_connection': 'Trivial or unsupported matches presented as connections', 'identity_or_timing_errors': 'Identity or timing errors',
-              'presented_as_connections': 'Review burden (items presented as connections)', 'warnings_retained': 'Warnings retained as warnings (of 2)'}
+              'presented_as_connections': 'Items presented as economic connections', 'warnings_retained': 'Warnings retained as warnings (of 2)',
+              'items_shown': 'Items requiring analyst attention (all results, any class)'}
     L += ['', '| Measure | Graph v1 | Graph v1.1 | Structured search |', '|---|---:|---:|---:|']
     for k, label in labels.items():
         L.append(f"| {label} | {rep['totals']['graph_v1'][k]} | {rep['totals']['graph_v1_1'][k]} | {rep['totals']['structured_search'][k]} |")
@@ -217,6 +222,9 @@ def markdown(rep):
         L.append(f"| {label} | {mem[k]['graph_v1']} | {mem[k]['graph_v1_1']} | {mem[k]['structured_search']} |")
     L += ['', f"- Provenance: {rep['provenance_complete']} v1.1 economic candidates carry every grounded-explanation part.",
           f"- Ordering for `revisit OBS-QD-1`: {', '.join(rep['grounded_ranked_first'])} (grounded first).",
+          '- "Items presented as economic connections" is not the whole analyst review load. v1.1 lowers the number of items offered as '
+          'discoveries; it shows the analyst the same items as v1, because warnings and unsupported matches stay visible (now labelled). '
+          'Abstentions and rejections are listed separately and not counted as items.',
           '- Structured search has no same-gap equivalent (Q8 n/a); it reports tag-only and copied-evidence matches as plain results.',
           '- v1 kept the two warnings as results but labelled them connections; v1.1 keeps them, as warnings with their lessons.',
           f"- Historical memory: `revisit DLC-GSYN-S/OBS-GS-1` (synthetic wellboat fixture) against the committed V002 catalogue reaches "

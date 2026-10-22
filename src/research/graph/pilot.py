@@ -60,6 +60,10 @@ CONNECTION_LOG_V2 = 'GRAPH_PILOT_CONNECTION_V2'
 CONNECTION_KEYS_V2 = CONNECTION_KEYS + ('log_version', 'origin_suggestion_id', 'origin_operator', 'origin_bases', 'connection_class')
 CONNECTION_KINDS_V2 = CONNECTION_KINDS + ('METHODOLOGICAL_WARNING',)
 GRAPH_OPERATORS = tuple(o for o in G_OPERATORS if o not in S_OPERATORS)
+# Graph-originated V2 rows must come from an operator that issues SUG- ids, saved as its snapshot-mode JSON in the
+# packet's frozen suggestion export directory at query time. Inspection operators (explain, trace, ...) issue none.
+SUGGESTING_OPERATORS = ('revisit', 'complements', 'shared', 'same-gap', 'next', 'suggestions')
+SUGGESTION_EXPORT_DIR = 'suggestions-G'
 ADJUDICATION_KEYS = ('blind_id', 'outcome', 'economic_meaning', 'checked_evidence', 'adjudicator', 'adjudicator_kind', 'adjudicator_minutes',
                      'recorded_at_utc', 'notes')
 HIDDEN_FROM_ADJUDICATOR = ('arm', 'connection_id', 'operator', 'found_via', 'basis', 'arm_decision', 'analyst_minutes', 'discovery_lab_record',
@@ -96,8 +100,12 @@ def connection_id(source, target, basis):
 
 # -- frozen packet snapshot -------------------------------------------------------------------------
 
-def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CATALOGUE_PATH, frozen_at=None, now=None):
-    """Freeze one packet's prior knowledge. ``arms`` maps S and G to (ledger path, campaign id); neither ledger may exist yet."""
+def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CATALOGUE_PATH, frozen_at=None, now=None, connection_log=None):
+    """Freeze one packet's prior knowledge. ``arms`` maps S and G to (ledger path, campaign id); neither ledger may exist yet.
+
+    ``connection_log=CONNECTION_LOG_V2`` (prospective pilots) freezes the packet for V2 logs: every arm row must then be V2,
+    with graph rows checked against the frozen suggestion export, and the graph operators are pinned to this version."""
+    if connection_log not in (None, CONNECTION_LOG_V2):raise PilotError(f'connection_log is {CONNECTION_LOG_V2} or omitted')
     out, now = Path(out), utc(now)
     frozen = utc(frozen_at) if frozen_at else now
     if frozen > now:raise PilotError('a snapshot cannot be frozen in the future')
@@ -122,6 +130,7 @@ def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CAT
                       'bundle': [{'path': f.relative_to(bundle).as_posix(), 'sha256': sha256(f), 'bytes': f.stat().st_size} for f in files]},
             'arms': {a: {'ledger': rel(paths[a]), 'campaign': arms[a][1]} for a in ARMS},
             'not_visible_to_either_arm': list(NOT_VISIBLE)}
+    if connection_log:snap.update({'connection_log': connection_log, 'graph_operator_version': K.OPERATOR_VERSION})
     return snap, write_new(out, snap)
 
 
@@ -187,46 +196,132 @@ def arm_view(snapshot, arm, query_at=None, now=None):
 def arm_graph(snapshot, arm, query_at=None, now=None):
     """Graph v1 over exactly the arm's visible inputs. Only the graph arm uses it."""
     view = arm_view(snapshot, arm, query_at, now)
+    pinned = view['snapshot'].get('graph_operator_version')
+    if pinned not in (None, K.OPERATOR_VERSION):raise PilotError(f'the snapshot pins {pinned}; these operators are {K.OPERATOR_VERSION}')
     g = build(view['ledgers'], catalogue_path=view['catalogue'], mode=view['mode'], with_memory=True, cuts=view['cuts'])
     if g.excluded or len(g.inputs) != 2 or not g.catalogue:raise PilotError(f'arm inputs incomplete: {g.excluded}')
     view['receipt']['graph_digest'] = g.digest()
     return g, view
 
 
+# -- frozen suggestion export (V2) -------------------------------------------------------------------
+
+def export_entries(doc):
+    """Suggestions in one saved snapshot-mode output: a `suggestions` export or a suggesting operator's --json."""
+    if 'suggestions' in doc:rows, command = [(s['operator'], s) for s in doc['suggestions']], 'suggestions'
+    elif doc.get('operator') in SUGGESTING_OPERATORS:rows, command = [(doc['operator'], r) for r in doc['results']], doc['operator']
+    else:raise PilotError(f'not a suggestion output; save the snapshot-mode JSON of one of {SUGGESTING_OPERATORS}')
+    out = []
+    for op, r in rows:
+        if op == 'next':targets = r['open_claims'] + r['historical_investigations']
+        else:targets = [r['match']]
+        out.append({'suggestion_id': r['suggestion_id'], 'command': command, 'operator': op, 'target': r['target'], 'match': r['match'],
+                    'match_bases': list(r['match_bases']), 'connection_class': r['connection_class'],
+                    # same-gap and next link the arm's own record to a recorded claim; other operators fix both ends
+                    'source_endpoints': None if op in ('same-gap', 'next') else [r['target']], 'target_endpoints': targets})
+    return out
+
+
+def replay(g, view, doc):
+    """Re-run the saved query on the arm graph at its recorded query time (the graph is deterministic)."""
+    from src.research.graph import evaluate as E
+    from src.research.graph import operators as O
+    from src.research.graph.rules import View
+    if 'suggestions' in doc:return {'suggestions': E.export_suggestions(g, doc['input'], view['ledgers'], C.load(view['catalogue'])[0], None, view['cuts'])}
+    v = View(**doc['view'])
+    run = {'revisit': O.revisit, 'complements': O.complements, 'shared': O.shared, 'same-gap': O.same_gap}
+    res = O.next_questions(g, v) if doc['operator'] == 'next' else run[doc['operator']](g, doc['input'], v)
+    return json.loads(json.dumps(res, default=str))
+
+
+def load_suggestion_exports(files, snapshot):
+    """The graph arm's frozen suggestion export: each saved output must belong to this packet snapshot and arm G, and must
+    replay exactly from the snapshot at its recorded query time, so no suggestion can be edited, added or reclassified.
+    Returns the suggestion index and a manifest of file hashes (sealed in the blinding key)."""
+    from src.research.graph import operators as O
+    v, index, manifest = load_snapshot(snapshot), {}, []
+    for f in sorted(Path(x) for x in files):
+        doc = json.loads(f.read_text(encoding='utf-8')); vis = doc.get('visibility') or {}
+        if vis.get('arm') != 'G' or vis.get('snapshot_sha256') != v['sha256']:raise PilotError(f'{f.name}: not a graph-arm output for this packet snapshot')
+        entries = export_entries(doc)
+        g, view = arm_graph(snapshot, 'G', vis['query_at_utc'])
+        if vis.get('graph_digest') not in (None, g.digest()):raise PilotError(f'{f.name}: graph digest differs from the snapshot replay')
+        if export_entries(dict(replay(g, view, doc), operator=doc.get('operator'))) != entries:
+            raise PilotError(f'{f.name}: does not replay from the snapshot at its query time; the export was edited or produced elsewhere')
+        for e in entries:
+            if O.suggestion_id(e['operator'], e['target'], e['match'], e['match_bases']) != e['suggestion_id']:raise PilotError(f'{f.name}: {e["suggestion_id"]} does not recompute')
+            if e['connection_class'] != (K.WARNING if e['operator'] in ('same-gap', 'next') else K.classify(e['match_bases'])):
+                raise PilotError(f'{f.name}: {e["suggestion_id"]} class differs from its bases')
+            prev = index.get(e['suggestion_id'])
+            e = dict(e, export=f.name, query_at_utc=vis['query_at_utc'], commands=sorted({e['command']} | set(prev['commands'] if prev else ())))
+            if prev and parse_time(prev['query_at_utc']) <= parse_time(e['query_at_utc']):e = dict(prev, commands=e['commands'])  # earliest issue stands
+            index[e['suggestion_id']] = e
+        manifest.append({'path': Path(os.path.relpath(f.resolve(), Path(snapshot).resolve().parent)).as_posix(), 'sha256': sha256(f),
+                         'query_at_utc': vis['query_at_utc'], 'suggestions': len(entries)})
+    return index, manifest
+
+
+def default_exports(snapshot):
+    d = Path(snapshot).parent / SUGGESTION_EXPORT_DIR
+    return sorted(d.glob('*.json')) if d.is_dir() else []
+
+
+def covers(suggested, logged):
+    """A logged endpoint must be the suggested record, or a record inside a suggested campaign or investigation."""
+    s, x = ref_key(suggested), ref_key(logged)
+    return x == s or x.startswith(s + '/')
+
+
 # -- arm connection logs ----------------------------------------------------------------------------
 
+def graph_originated(r):
+    return r['operator'] in GRAPH_OPERATORS or r['found_via'] in ('GRAPH_ONLY', 'BOTH') or r['connection_id'].startswith('SUG-')
+
+
 def validate_v2_origin(r, w, arm, suggestions):
-    """V2 traceability: a graph-originated row names the exact suggestion, its operator, bases and connection class."""
+    """V2 traceability: a graph-originated row names the exact suggestion it came from, and that suggestion must be in the
+    frozen export with the same operator, bases, class and endpoints, issued before the row was recorded."""
     if r['log_version'] != CONNECTION_LOG_V2:raise PilotError(f'{w}: unknown log_version {r["log_version"]}')
     if r['kind'] not in CONNECTION_KINDS_V2:raise PilotError(f'{w}: invalid kind')
-    graph = r['operator'] in GRAPH_OPERATORS or r['found_via'] in ('GRAPH_ONLY', 'BOTH')
-    if graph:
+    if not graph_originated(r):
+        if r['origin_suggestion_id'] is not None or r['origin_operator'] is not None or r['origin_bases']:
+            raise PilotError(f'{w}: only graph-originated rows carry suggestion origins')
+    else:
         if arm == 'S':raise PilotError(f'{w}: the structured arm has no graph suggestions')
+        if r['operator'] not in SUGGESTING_OPERATORS:
+            raise PilotError(f'{w}: a graph-originated row comes from a suggestion-producing operator {SUGGESTING_OPERATORS}, not {r["operator"]}')
         if not re.fullmatch(r'SUG-[0-9a-f]{12}', str(r['origin_suggestion_id'])):raise PilotError(f'{w}: a graph-originated row keeps its SUG- origin id')
-        if r['origin_operator'] != r['operator'] or not r['origin_bases'] or r['connection_class'] not in K.CLASSES:
+        if r['connection_id'].startswith('SUG-') and r['connection_id'] != r['origin_suggestion_id']:raise PilotError(f'{w}: a SUG- connection id is its origin id')
+        if not r['origin_bases'] or r['connection_class'] not in K.CLASSES:
             raise PilotError(f'{w}: origin_operator, origin_bases and connection_class must record the originating suggestion')
         if r['kind'] == 'CONNECTION' and r['connection_class'] != K.ECONOMIC:
             raise PilotError(f'{w}: a {r["connection_class"]} cannot be logged as an economic connection; log it as METHODOLOGICAL_WARNING')
-        if suggestions is not None:
-            s = suggestions.get(r['origin_suggestion_id'])
-            if s is None:raise PilotError(f'{w}: {r["origin_suggestion_id"]} is not in the exported suggestions')
-            if sorted(s['match_bases']) != sorted(r['origin_bases']) or s['connection_class'] != r['connection_class'] or s['operator'] != r['origin_operator']:
-                raise PilotError(f'{w}: origin fields differ from the exported suggestion')
-    elif r['origin_suggestion_id'] is not None or r['origin_operator'] is not None or r['origin_bases']:
-        raise PilotError(f'{w}: only graph-originated rows carry suggestion origins')
+        if suggestions is None:
+            raise PilotError(f'{w}: a graph-originated V2 row is checked against the frozen suggestion export; none was supplied')
+        s = suggestions.get(r['origin_suggestion_id'])
+        if s is None:raise PilotError(f'{w}: {r["origin_suggestion_id"]} is not in the frozen suggestion export')
+        if r['origin_operator'] != s['operator'] or r['operator'] not in s['commands']:raise PilotError(f'{w}: origin operator differs from the originating suggestion')
+        if list(r['origin_bases']) != s['match_bases'] or r['connection_class'] != s['connection_class']:
+            raise PilotError(f'{w}: origin bases or class differ from the exported suggestion')
+        if (s['source_endpoints'] is not None and not any(covers(e, r['source_record']) for e in s['source_endpoints'])) or \
+                not any(covers(e, r['target_record']) for e in s['target_endpoints']):
+            raise PilotError(f'{w}: endpoints are not those of the originating suggestion')
+        if parse_time(r['recorded_at_utc']) < parse_time(s['query_at_utc']):raise PilotError(f'{w}: recorded before its originating suggestion was issued')
     if r['kind'] == 'METHODOLOGICAL_WARNING' and r['connection_class'] not in (K.WARNING, None):
         raise PilotError(f'{w}: a logged methodological warning has class {K.WARNING}')
 
 
-def validate_connections(path, arm, suggestions=None):
+def validate_connections(path, arm, suggestions=None, require_v2=False):
     """Every connection, warning or avoided repeat an arm considered, as the arm logged it during the campaign.
 
-    Accepts V1 rows (as in R3) and prospective V2 rows; ``suggestions`` (exported suggestion list) lets V2 origins be checked."""
-    rows, seen = read_jsonl(path), set()
-    index = {s['suggestion_id']: s for s in suggestions} if suggestions is not None else None
+    Accepts V1 rows (as in R3) unchanged and prospective V2 rows. ``suggestions`` is the index from
+    ``load_suggestion_exports``; every graph-originated V2 row is refused without it. ``require_v2`` (a packet snapshot
+    frozen for V2 logs) refuses V1 rows, so origin checking cannot be avoided by logging in the old format."""
+    rows, seen, index = read_jsonl(path), set(), suggestions
     for n, r in enumerate(rows, 1):
         w = f'{Path(path).name} line {n}'
         v2 = 'log_version' in r
+        if require_v2 and not v2:raise PilotError(f'{w}: this packet was frozen for {CONNECTION_LOG_V2} logs; V1 rows are refused')
         keys = CONNECTION_KEYS_V2 if v2 else CONNECTION_KEYS
         if tuple(sorted(r)) != tuple(sorted(keys)):raise PilotError(f'{w}: fields must be exactly {keys}')
         if v2:validate_v2_origin(r, w, arm, index)
@@ -320,14 +415,17 @@ def shared_structure(a, b):
     return out
 
 
-def blind(snapshot, logs, salt, blind_out, key_out):
+def blind(snapshot, logs, salt, blind_out, key_out, suggestion_exports=None):
     """Prepare the adjudicator's export: shuffled, arm-hidden items with identical provenance rendering for both arms.
 
     Run by a session that is neither arm, after both arms of the packet finish. The key (blind id -> arm and
     connection id, plus the salt) is written separately and its hash recorded in the export, so it cannot be
-    changed once adjudication begins."""
+    changed once adjudication begins. V2 graph rows are checked against the frozen suggestion export
+    (default: ``suggestions-G/*.json`` beside the snapshot), whose file hashes are sealed in the key."""
     if not salt or len(salt) < 16:raise PilotError('the blinding salt needs at least 16 characters, chosen by the preparer and kept in the key')
     v = load_snapshot(snapshot); snap = v['snapshot']; cat = C.load(v['catalogue'])[0]
+    files = default_exports(snapshot) if suggestion_exports is None else list(suggestion_exports)
+    index, manifest = load_suggestion_exports(files, snapshot) if files else (None, [])
     packet = cut_state(Ledger(v['packet_ledger']).load(), {'events': snap['prior']['packet_ledger']['events'],
                                                          'head_hash': snap['prior']['packet_ledger']['head_hash']})[0]
     items, key = [], {}
@@ -342,7 +440,7 @@ def blind(snapshot, logs, salt, blind_out, key_out):
             if campaign not in labels:raise PilotError(f'{ref} is outside the arm {arm} inputs (packet, own ledger, catalogue)')
             return ledger_endpoint(labels[campaign][0], rid, labels[campaign][1])
 
-        for r in validate_connections(logs[arm], arm):
+        for r in validate_connections(logs[arm], arm, index if arm == 'G' else None, snap.get('connection_log') == CONNECTION_LOG_V2):
             held = r['discovery_lab_record']
             if held and held.startswith(own.campaign['id'] + '/'):held = held.split('/', 1)[1].rsplit('@', 1)[0]  # own-campaign-qualified form
             if held and not (any(own.latest(k, held) for k in R.VERSIONED) or any(held in own.ids(k) for k in ('review', 'disposition', 'effort'))):
@@ -354,7 +452,9 @@ def blind(snapshot, logs, salt, blind_out, key_out):
             items.append(item); key[bid] = {'arm': arm, 'connection_id': r['connection_id']}
     items.sort(key=lambda i: i['blind_id'])
     random.Random(int(hashlib.sha256(f"{salt}|{v['sha256']}".encode()).hexdigest()[:16], 16)).shuffle(items)
-    key_sha = write_new(key_out, {'version': BLIND_VERSION, 'snapshot_sha256': v['sha256'], 'salt': salt, 'items': dict(sorted(key.items()))})
+    sealed = {'version': BLIND_VERSION, 'snapshot_sha256': v['sha256'], 'salt': salt, 'items': dict(sorted(key.items()))}
+    if manifest:sealed['suggestion_exports'] = manifest  # private with the key: file names would reveal the graph arm
+    key_sha = write_new(key_out, sealed)
     export = {'version': BLIND_VERSION, 'packet': snap['packet'], 'fixture': snap['fixture'], 'snapshot_sha256': v['sha256'], 'key_sha256': key_sha,
               'hidden_from_adjudicator': list(HIDDEN_FROM_ADJUDICATOR),
               'instructions': ['Adjudicate every item once, against the cited originals, without consulting arm ledgers, logs or sessions.',
@@ -400,7 +500,16 @@ def unblind(packet_dir, export_name='blind.json'):
     if sha256(d / 'key.json') != export['key_sha256']:raise PilotError('the key does not match the hash sealed in the blinded export')
     key = json.loads((d / 'key.json').read_text(encoding='utf-8'))
     adjudications = validate_adjudications(d / export_name, d / 'adjudications.jsonl')
-    logs = {arm: {r['connection_id']: r for r in validate_connections(d / f'connections-{arm}.jsonl', arm)} for arm in ARMS}
+    # The sealed snapshot decides the log rules (V2-frozen or legacy V1); a missing or different snapshot is refused, never assumed V1.
+    if not (d / 'snapshot.json').is_file() or sha256(d / 'snapshot.json') != key['snapshot_sha256']:
+        raise PilotError('the packet snapshot is missing or differs from the one sealed in the key')
+    index = None
+    frozen_v2 = json.loads((d / 'snapshot.json').read_text(encoding='utf-8')).get('connection_log') == CONNECTION_LOG_V2
+    if key.get('suggestion_exports'):
+        for m in key['suggestion_exports']:
+            if not (d / m['path']).is_file() or sha256(d / m['path']) != m['sha256']:raise PilotError(f"frozen suggestion export {m['path']} changed after blinding")
+        index = load_suggestion_exports([d / m['path'] for m in key['suggestion_exports']], d / 'snapshot.json')[0]
+    logs = {arm: {r['connection_id']: r for r in validate_connections(d / f'connections-{arm}.jsonl', arm, index if arm == 'G' else None, frozen_v2)} for arm in ARMS}
     rows = []
     for bid, ref in key['items'].items():
         r, a = logs[ref['arm']][ref['connection_id']], adjudications[bid]
@@ -593,6 +702,9 @@ def arm_metrics(s, arm, rows):
     verified = [r for r in conn if r['arm_decision'] == 'ACCEPTED' and confirmed(r)]
     graph_items = [r for r in conn if r['connection_id'].startswith('SUG-') or r.get('origin_suggestion_id')]
     warnings = [r for r in mine if r['kind'] == 'METHODOLOGICAL_WARNING']
+    traced = [r for r in mine if r.get('origin_suggestion_id')]  # V2 graph rows of every kind; warnings are never hidden from the count
+    by_class = {c: [sum(r['outcome'] in ('REJECTED_FALSE', 'REJECTED_TRIVIAL') for r in traced if r['connection_class'] == c),
+                    sum(r['connection_class'] == c for r in traced)] for c in K.CLASSES if any(r['connection_class'] == c for r in traced)}
     m = original_m_passes(s); falsify = decisive_minutes(s)
     return {'campaign': s.campaign['id'], 'analyst_minutes_all': minutes, 'graph_minutes': acc['graph_minutes'],
             'verified_connections': len(verified), 'verified_connections_per_hour': per_hour(len(verified), minutes),
@@ -608,6 +720,7 @@ def arm_metrics(s, arm, rows):
             'review_burden_items': len(mine), 'adjudicator_minutes': sum(r['adjudicator_minutes'] for r in mine if r['adjudicator_minutes'] != R.UNKNOWN),
             'suggestion_review_minutes': acc['minutes_by_category']['SUGGESTION_REVIEW'],
             'graph_suggestions_false_or_trivial': [sum(r['outcome'] in ('REJECTED_FALSE', 'REJECTED_TRIVIAL') for r in graph_items), len(graph_items)],
+            'graph_rows_false_or_trivial_by_class': by_class,
             'original_frozen_m_passes': m, 'original_frozen_m_passes_per_hour': per_hour(m, minutes),
             'h_plausible_human': sum(1 for r in s.reviews if r['kind'] == 'H' and r['judgments']['judgment'] == 'PLAUSIBLE'
                                      and R.human_equivalent(r['reviewer']['kind'], s.fixture)),
