@@ -4,8 +4,9 @@
 param()
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
+. (Join-Path $PSScriptRoot 'queue.ps1')
 $scoutRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../../..'))
-$scoutDirectory = Join-Path $scoutRoot '.research/opportunity_scout/n1-admin-observer-v001'
+$scoutDirectory = Join-Path $scoutRoot '.research/opportunity_scout/n1-admin-observer-v002'
 $scoutFile = $null
 $scoutWriter = $null
 $scoutSeq = 0
@@ -31,6 +32,24 @@ function Write-ScoutRecord([string]$Kind, $Data) {
     $script:scoutWriter.Flush()
     $script:scoutFile.Flush($true)
     $script:scoutPrevious = $scoutDigest
+}
+
+function Write-ScoutQueuedProcessEvent(
+    [System.Management.Automation.PSEventArgs]$QueuedEvent,
+    [string]$StartSource, [string]$StopSource
+) {
+    if ($QueuedEvent.SourceIdentifier -notin @($StartSource, $StopSource)) { throw 'UNEXPECTED_EVENT_SOURCE' }
+    $scoutNative = $QueuedEvent.SourceEventArgs.NewEvent
+    $scoutData = [ordered]@{pid = [int]$scoutNative.ProcessID; name = [string]$scoutNative.ProcessName
+        event_filetime = [string]$scoutNative.TIME_CREATED
+        queue_event_identifier = [int]$QueuedEvent.EventIdentifier}
+    if ($QueuedEvent.SourceIdentifier -eq $StartSource) {
+        $scoutData.parent_pid = [int]$scoutNative.ParentProcessID
+        Write-ScoutRecord 'START' $scoutData
+    } else { Write-ScoutRecord 'EXIT' $scoutData }
+    $scoutPersistedSeq = $script:scoutSeq
+    Acknowledge-ScoutQueuedEvent -QueuedEvent $QueuedEvent
+    Write-ScoutRecord 'QUEUE_ACK' ([ordered]@{record_seq = $scoutPersistedSeq; queue_event_identifier = [int]$QueuedEvent.EventIdentifier})
 }
 
 try {
@@ -60,7 +79,7 @@ try {
     } finally { $scoutClaim.Dispose() }
     $scoutFile = [IO.File]::Open((Join-Path $scoutDirectory 'events.jsonl'), [IO.FileMode]::CreateNew, [IO.FileAccess]::Write, [IO.FileShare]::Read)
     $scoutWriter = New-Object IO.StreamWriter($scoutFile, (New-Object Text.UTF8Encoding($false)))
-    Write-ScoutRecord 'HEADER' ([ordered]@{schema = 'SCOUT_N1_PROCESS_OBSERVER_V001'; pid = $PID; session = [guid]::NewGuid().ToString(); claude_invocations = 0})
+    Write-ScoutRecord 'HEADER' ([ordered]@{schema = 'SCOUT_N1_PROCESS_OBSERVER_V002'; pid = $PID; session = [guid]::NewGuid().ToString(); claude_invocations = 0})
     # Subscribe before snapshot so short-lived starts aren't reduced to polling.
     $null = Register-WmiEvent -Namespace 'root\cimv2' -Class Win32_ProcessStartTrace -SourceIdentifier $scoutStartId
     $scoutSubscriptions += $scoutStartId
@@ -75,17 +94,9 @@ try {
     $scoutLastHeartbeat = -1000
     while ($scoutClock.Elapsed.TotalSeconds -lt 360) {
         if (Test-Path -LiteralPath (Join-Path $scoutDirectory 'stop.request')) { break }
-        $scoutEvents = @(Get-Event -ErrorAction SilentlyContinue | Where-Object { $_.SourceIdentifier -in $scoutSubscriptions })
-        if ($scoutEvents.Count -gt 10000) { throw 'EVENT_QUEUE_LIMIT' }
+        $scoutEvents = @(Get-ScoutQueuedEvents -SourceIdentifiers $scoutSubscriptions)
         foreach ($scoutEvent in $scoutEvents) {
-            $scoutNative = $scoutEvent.SourceEventArgs.NewEvent
-            $scoutData = [ordered]@{pid = [int]$scoutNative.ProcessID; name = [string]$scoutNative.ProcessName
-                event_filetime = [string]$scoutNative.TIME_CREATED}
-            if ($scoutEvent.SourceIdentifier -eq $scoutStartId) {
-                $scoutData.parent_pid = [int]$scoutNative.ParentProcessID
-                Write-ScoutRecord 'START' $scoutData
-            } else { Write-ScoutRecord 'EXIT' $scoutData }
-            Remove-Event -EventIdentifier $scoutEvent.EventIdentifier
+            Write-ScoutQueuedProcessEvent -QueuedEvent $scoutEvent -StartSource $scoutStartId -StopSource $scoutStopId
         }
         if ($scoutClock.ElapsedMilliseconds - $scoutLastHeartbeat -ge 1000) {
             foreach ($scoutSubscription in $scoutSubscriptions) {
@@ -106,7 +117,9 @@ try {
     exit 1
 } finally {
     foreach ($scoutSubscription in $scoutSubscriptions) { Unregister-Event -SourceIdentifier $scoutSubscription -ErrorAction SilentlyContinue }
-    foreach ($scoutSubscription in $scoutSubscriptions) { Get-Event -SourceIdentifier $scoutSubscription -ErrorAction SilentlyContinue | Remove-Event -ErrorAction SilentlyContinue }
+    foreach ($scoutPending in @(Get-ScoutQueuedEvents -SourceIdentifiers $scoutSubscriptions)) {
+        Acknowledge-ScoutQueuedEvent -QueuedEvent $scoutPending
+    }
     if ($null -ne $scoutWriter) { $scoutWriter.Dispose() }
     if ($null -ne $scoutFile) { $scoutFile.Dispose() }
 }

@@ -15,6 +15,14 @@ class Records:
         self.previous = '0' * 64
 
     def row(self, kind, data, elapsed=0):
+        if kind in ('START', 'EXIT'):
+            data = {**data, 'queue_event_identifier': data.get('queue_event_identifier', 7)}
+            raw = self.one(kind, data, elapsed)
+            persisted_seq = self.seq
+            return raw + self.one('QUEUE_ACK', {'record_seq': persisted_seq, 'queue_event_identifier': data['queue_event_identifier']}, elapsed)
+        return self.one(kind, data, elapsed)
+
+    def one(self, kind, data, elapsed=0):
         self.seq += 1
         record = json.dumps({'seq': self.seq, 'previous': self.previous, 'elapsed_ms': elapsed,
                              'kind': kind, 'data': data}, separators=(',', ':'))
@@ -132,6 +140,33 @@ class ObserverTests(unittest.TestCase):
         state.feed(r.row('HEADER', {'schema': M.VERSION, 'claude_invocations': 0}))
         with self.assertRaises(M.Refused):
             state.feed(r.row('EXIT', {'pid': 12, 'name': 'python.exe', 'event_filetime': '100'}))
+
+    def test_colliding_queue_ids_are_preserved_with_one_ack_per_event(self):
+        r = Records(); state = M.Stream(); state.feed(r.prefix())
+        state.feed(r.row('START', {'pid': 50, 'parent_pid': 10, 'name': 'python.exe', 'event_filetime': '101', 'queue_event_identifier': 7}))
+        state.feed(r.row('EXIT', {'pid': 50, 'name': 'python.exe', 'event_filetime': '102', 'queue_event_identifier': 7}))
+        self.assertEqual(state.seq, 7)
+        self.assertIsNone(state.pending_ack)
+        state.proof(50, 10, 'python.exe', 100)
+
+    def test_missing_wrong_or_duplicate_ack_stops_without_ignoring_error(self):
+        for fault in ('missing', 'wrong_record', 'wrong_id', 'duplicate'):
+            r = Records(); state = M.Stream(); state.feed(r.prefix())
+            state.feed(r.one('START', {'pid': 50, 'parent_pid': 10, 'name': 'python.exe', 'event_filetime': '101', 'queue_event_identifier': 7}))
+            ack = {'record_seq': 4, 'queue_event_identifier': 7}
+            if fault == 'duplicate':
+                state.feed(r.one('QUEUE_ACK', ack))
+            with self.subTest(fault=fault), self.assertRaises(M.Refused):
+                if fault == 'missing':
+                    state.feed(r.one('HEARTBEAT', {'subscriptions_present': True}))
+                else:
+                    if fault == 'wrong_record': ack['record_seq'] = 3
+                    if fault == 'wrong_id': ack['queue_event_identifier'] = 8
+                    state.feed(r.one('QUEUE_ACK', ack))
+
+    def test_v001_header_cannot_be_migrated_to_v002(self):
+        with self.assertRaises(M.Refused):
+            M.Stream().feed(Records().row('HEADER', {'schema': 'SCOUT_N1_PROCESS_OBSERVER_V001', 'claude_invocations': 0}))
 
     def test_cli_cannot_accept_auth_executable_or_argv(self):
         for args in [[], ['--auth'], ['--observe-only', '--binary', 'claude.exe']]:

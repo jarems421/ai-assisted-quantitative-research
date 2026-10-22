@@ -16,8 +16,8 @@ from ..storage import ROOT, unlinked
 from ..v004_monitoring import account_metadata, compare_metadata
 from ..schema import json_loads
 
-VERSION = 'SCOUT_N1_PROCESS_OBSERVER_V001'
-DIRECTORY = ROOT / '.research/opportunity_scout/n1-admin-observer-v001'
+VERSION = 'SCOUT_N1_PROCESS_OBSERVER_V002'
+DIRECTORY = ROOT / '.research/opportunity_scout/n1-admin-observer-v002'
 CHILD = ROOT / 'tests/fixtures/scout_n1_observer_child.py'
 MAX_BYTES = 2 * 1024 * 1024
 IS_WINDOWS = os.name == 'nt'
@@ -53,6 +53,7 @@ class Stream:
         self.ended = False
         self.starts = {}
         self.exits = set()
+        self.pending_ack = None
 
     def feed(self, data):
         require(not self.ended or not data, 'trailing bytes after END')
@@ -81,6 +82,12 @@ class Stream:
     def _record(self, record):
         kind, data = record['kind'], record['data']
         require(isinstance(data, dict), 'invalid event data')
+        if self.pending_ack is not None:
+            require(kind == 'QUEUE_ACK', 'persisted event missing exact acknowledgement')
+        if kind == 'QUEUE_ACK':
+            require(self.pending_ack is not None and data == self.pending_ack, 'unmatched queue acknowledgement')
+            self.pending_ack = None
+            return
         if not self.seq:
             require(kind == 'HEADER' and data.get('schema') == VERSION and data.get('claude_invocations') == 0, 'observer header required')
             return
@@ -95,10 +102,12 @@ class Stream:
             key = (data['pid'], data['event_filetime'])
             require(key not in self.starts, 'duplicate process start')
             self.starts[key] = data
+            self.pending_ack = {'record_seq': record['seq'], 'queue_event_identifier': data['queue_event_identifier']}
         elif kind == 'EXIT':
             require(self.snapshot, 'snapshot missing')
             self._process(data, exiting=True)
             self.exits.add((data['pid'], data['event_filetime'], data['name'].lower()))
+            self.pending_ack = {'record_seq': record['seq'], 'queue_event_identifier': data['queue_event_identifier']}
         elif kind == 'HEARTBEAT':
             require(self.snapshot and data == {'subscriptions_present': True}, 'lost subscriptions/snapshot')
             require(self.heartbeat is None or record['elapsed_ms'] - self.heartbeat <= 5000, 'producer heartbeat gap')
@@ -112,6 +121,8 @@ class Stream:
     @staticmethod
     def _process(data, initial=False, exiting=False):
         keys = {'pid', 'name', 'creation_filetime' if initial else 'event_filetime'}
+        if not initial:
+            keys.add('queue_event_identifier')
         if not exiting:
             keys.add('parent_pid')
         require(isinstance(data, dict) and set(data) == keys, 'process metadata field scope')
@@ -122,6 +133,7 @@ class Stream:
         require(isinstance(data['name'], str) and len(data['name']) <= 260, 'process name')
         if not initial:
             require(isinstance(data['event_filetime'], str) and data['event_filetime'].isdigit() and int(data['event_filetime']) > 0, 'event timestamp')
+            require(type(data['queue_event_identifier']) is int and data['queue_event_identifier'] >= 0, 'local queue identifier')
         require(data['name'].lower() not in ('claude.exe', 'claude'), 'Claude process contaminates window')
 
     def proof(self, pid, parent, name, earliest_filetime):
