@@ -26,6 +26,7 @@ class State:
     def __init__(self):
         self.batch = None
         self.comparison_binding = None
+        self.v003_dispatches = {}
         self.seeds, self.prompts, self.attempts, self.cards, self.assessments = {}, {}, {}, {}, {}
         self.reviews, self.selections, self.novelty, self.feasibility = [], [], [], []
         self.shadows, self.critics, self.outcomes, self.efforts, self.reconsiderations, self.events = [], [], [], [], [], []
@@ -112,7 +113,10 @@ def source_restrictions(state, card):
 
 
 def provider_check(provider, state):
-    S.validate(S.PROVIDER, provider, 'provider provenance')
+    hosted = provider.get('provider') == 'CLAUDE_CODE_SUBSCRIPTION'
+    if hosted and (not state.comparison_binding or state.comparison_binding['schema'] != 'SCOUT_COMPARISON_RUNTIME_V003'):
+        raise S.ScoutError('Claude provenance requires a separately frozen V003 comparison')
+    S.validate(S.PROVIDER_V003 if hosted else S.PROVIDER, provider, 'provider provenance')
     start = S.timestamp(provider['invoked_at']) if provider['invoked_at'] != S.UNKNOWN else None
     end = S.timestamp(provider['completed_at']) if provider['completed_at'] != S.UNKNOWN else None
     if start and end and start > end: raise S.ScoutError('provider timestamps reversed')
@@ -178,14 +182,27 @@ def apply(s, kind, r, moment, *, replay=False):
         s.batch = copy.deepcopy(r); return
     if s.batch is None: raise S.ScoutError('initialise a batch first')
     if kind == 'comparison_binding':
-        S.validate(S.obj({'schema': {'const': 'SCOUT_COMPARISON_RUNTIME_V002'}, 'manifest_sha256': S.HASH,
+        if r.get('schema') == 'SCOUT_COMPARISON_RUNTIME_V003':
+            from .v003 import validate_binding
+            validate_binding(r)
+        else:
+            S.validate(S.obj({'schema': {'const': 'SCOUT_COMPARISON_RUNTIME_V002'}, 'manifest_sha256': S.HASH,
             'model': S.LABEL, 'provider': S.enum(('OPERATOR_ASSISTED', 'OLLAMA_LOCAL')),
             'parameters': {'type': 'object', 'maxProperties': 15}, 'bound_at': S.TEXT,
-            'hosted_transmission_authorised': {'const': False}}), r)
+                'hosted_transmission_authorised': {'const': False}}), r)
         if s.comparison_binding or any('result' in a for a in s.attempts.values()):
             raise S.ScoutError('comparison runtime must bind once before any result')
         if S.timestamp(r['bound_at']) != S.timestamp(moment): raise S.ScoutError('runtime clock must be its append time')
         s.comparison_binding = copy.deepcopy(r); return
+    if kind == 'v003_dispatch':
+        S.validate(S.obj({'attempt_id': S.LABEL, 'context_id': S.LABEL,
+            'request_sha256': S.HASH, 'authorisation_sha256': S.HASH, 'started_at': S.TEXT}), r)
+        if (not s.comparison_binding or s.comparison_binding['schema'] != 'SCOUT_COMPARISON_RUNTIME_V003'
+                or r['attempt_id'] not in s.attempts or r['attempt_id'] in s.v003_dispatches
+                or 'result' in s.attempts[r['attempt_id']]):
+            raise S.ScoutError('V003 dispatch is single use and must follow a frozen runtime')
+        if S.timestamp(r['started_at']) != S.timestamp(moment): raise S.ScoutError('dispatch clock mismatch')
+        s.v003_dispatches[r['attempt_id']] = copy.deepcopy(r); return
     if kind == 'seed':
         S.validate_seed(r)
         if r['id'] in s.seeds or len(s.seeds) >= 20: raise S.ScoutError('duplicate seed or seed ceiling')
@@ -203,12 +220,19 @@ def apply(s, kind, r, moment, *, replay=False):
         if r['provider'] == 'SYNTHETIC_FIXTURE' and s.batch['fixture'] != 'SYNTHETIC': raise S.ScoutError('fixture provider refused')
         S.timestamp(r['started_at']); s.attempts[r['id']] = copy.deepcopy(r)
     elif kind == 'attempt_result':
-        S.validate(S.obj({'attempt_id': S.LABEL, 'provider': S.PROVIDER, 'raw_response': {'type': 'string', 'maxLength': 1000000},
+        hosted = bool(s.comparison_binding and s.comparison_binding['schema'] == 'SCOUT_COMPARISON_RUNTIME_V003')
+        S.validate(S.obj({'attempt_id': S.LABEL, 'provider': S.PROVIDER_V003 if hosted else S.PROVIDER, 'raw_response': {'type': 'string', 'maxLength': 1000000},
                          'raw_import': {'type': 'string', 'maxLength': 1000000},
                          'status': S.enum(('VALID', 'INVALID', 'ERROR')), 'error': {'type': ['string', 'null'], 'maxLength': 4000}}), r)
         attempt = s.attempts.get(r['attempt_id'])
         if not attempt or 'result' in attempt: raise S.ScoutError('unknown or already completed attempt')
         provider_check(r['provider'], s)
+        if hosted:
+            if r['attempt_id'] not in s.v003_dispatches: raise S.ScoutError('V003 result has no durable dispatch receipt')
+            if r['provider']['parameters'] != s.comparison_binding['parameters']:
+                raise S.ScoutError('V003 controls differ from binding')
+            if r['status'] == 'VALID' and r['provider']['model'] != s.comparison_binding['model']:
+                raise S.ScoutError('V003 model substitution refused')
         expected_provider = s.comparison_binding['provider'] if s.comparison_binding else attempt['provider']
         if r['provider']['provider'] != expected_provider: raise S.ScoutError('provider mismatch')
         if r['status'] == 'VALID':

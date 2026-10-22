@@ -87,6 +87,9 @@ PROVIDER = obj({'model': LABEL, 'provider': enum(('OPERATOR_ASSISTED', 'OLLAMA_L
                 'invoked_at': TEXT, 'completed_at': TEXT, 'parameters': {'type': 'object', 'maxProperties': 15},
                 'seed': {'anyOf': [{'type': 'integer'}, {'const': UNKNOWN}]}, 'usage': USAGE,
                 'context_declaration': TEXT, 'operator': LABEL})
+# V001/V002 contracts stay unchanged. Hosted provenance is admitted only under a
+# V003 binding by the replay engine, never by the generic import path.
+PROVIDER_V003 = obj({**PROVIDER['properties'], 'provider': {'const': 'CLAUDE_CODE_SUBSCRIPTION'}})
 REVIEW = obj({'idea_id': LABEL, 'version': {'type': 'integer', 'minimum': 1},
               'decision': enum(ROUTES), 'reason_type': enum(('STRUCTURAL', 'DUPLICATE', 'UNFALSIFIABLE',
                   'CONTRADICTED', 'UNWORKABLE', 'UNRESOLVED', 'SOURCE_ACCESS', 'RESEARCHABLE')),

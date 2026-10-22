@@ -1,0 +1,123 @@
+{
+  "schema": "SCOUT_V003_IMPLEMENTATION_VALIDATION",
+  "recorded_at": "2026-10-22T08:54:44.476962+00:00",
+  "status": "V003 IMPLEMENTED / SYNTHETIC PREFLIGHT COMPLETE / REAL GENERATION NOT_RUN",
+  "starting_commit": "75513d083077f47220ed3c28b1f0115132da1a98",
+  "branch": "codex/opportunity-scout-v003-claude",
+  "tests": [
+    {
+      "command": "python -m unittest discover -s tests/opportunity_scout -v",
+      "tests": 98,
+      "result": "PASS",
+      "log_sha256": "7fbb0c495ce44717fbafff1b14bc50320cd1e74ff3af5747716e23c7946034a2"
+    },
+    {
+      "command": "python -m unittest tests.test_discovery_lab tests.test_graph -v",
+      "tests": 84,
+      "result": "PASS",
+      "log_sha256": "ec276425f2c78c85dae285b7967cde203ce2ad53fefee90f14c88d9b6394c4ff"
+    }
+  ],
+  "preexisting_scout_documents_unchanged_sha256": {
+    "docs/opportunity_scout/README.md": "15cefa8086061277c26065785a721809e5544049536dcdc7629c225f43e3bd37",
+    "docs/opportunity_scout/acceptance_review.md": "1fe1047b9dcef385a3c9fec5a2f1aafaa2f59274435679594d7267171fdd8d46",
+    "docs/opportunity_scout/acceptance_validation.json": "1b3fe700dd4861be305c8370c1a67460a0d4d4da50e2514ece7e9ec84ca7dfc6",
+    "docs/opportunity_scout/design.md": "b95243a0cfc586d92198de14a5a366cb75c9e6aeda9a7fae00e92949a469a563",
+    "docs/opportunity_scout/evaluation_protocol.json": "55cfbceb9a232cb5cf0702ad2a916654f18a8533ca2614fb5760eaaa0cb60540",
+    "docs/opportunity_scout/evaluation_protocol_v002.json": "18d2498d0f2a22fb38ec002c4189f61c4541175f479389acb65865d1e7fa530f",
+    "docs/opportunity_scout/first_comparison_v002/EVIDENCE_ONLY-blueprint.json": "32c834e99e8bc3af5032e2c39d7046827423d6f29630c829555f01346236e01b",
+    "docs/opportunity_scout/first_comparison_v002/HYBRID-blueprint.json": "10a3f8e0b6e33d379a6b17db48f08a83d83cc736953aa00584843eff15bc876e",
+    "docs/opportunity_scout/first_comparison_v002/MECHANISM_ONLY-blueprint.json": "1accddcef35bd7d5bf594f7223a81244efd7fbca9b22b6f8389dc219131a958b",
+    "docs/opportunity_scout/first_comparison_v002/PLAIN-blueprint.json": "ba6c8c047d1d6969703e3893834fe6ceaec99e9e68271c1cbfa0127641e7d47f",
+    "docs/opportunity_scout/first_comparison_v002/README.md": "f2fa895b5d8996d59f7c26bc27289597728b212b71103d2fd1891403bbc83321",
+    "docs/opportunity_scout/first_comparison_v002/comparison-manifest.json": "37898adfc0e8a00321e4428fd2a20c26317760b8b00cea45cddc0e87484ab272",
+    "docs/opportunity_scout/first_comparison_v002/seed_pool.json": "69e30951dbdc8cfbb883694c001501be1132f0edcf8093937447a699f03b084e",
+    "docs/opportunity_scout/future_learning.md": "a0d2d83d0cce0a9f2a14bf3bb9edc0f54a7456e298266f0dc55707d478fb3acf",
+    "docs/opportunity_scout/operational_quality_audit.json": "d36e7da91d68470f315ced31302992d9ec5e578e884b86fdab5d2fd460f3bdf8",
+    "docs/opportunity_scout/operational_quality_audit.md": "1130bb860373e833f0f95c283ebd07972c2ac148e2c0def8ebfadec45d364b85",
+    "docs/opportunity_scout/operator_example/cards.json": "7c5e95fa66a612bfeb27e58dc5caaadfacbfcc9ef8fe8d6eca3ad784a8423888",
+    "docs/opportunity_scout/operator_example/forge-prompt.json": "aa34d760d9d91ab462d64546c12569cd045377577ea04e54ea4e8955990a9a00",
+    "docs/opportunity_scout/operator_example/forge-response.json": "90e90e87770a61f229d9f651df5f39c34ba7991520e7499b4fdd40157826691b",
+    "docs/opportunity_scout/operator_example/gap-prompt.json": "b3acc76003486036ef7f7151c6e92592c0ed5ce7726bb0f31468155f8661c375",
+    "docs/opportunity_scout/operator_example/gap-response.json": "068622f728e9cd8a04571571de77679853b7d4f386505ece6c4261025293a584",
+    "docs/opportunity_scout/operator_example/radar-prompt.json": "238f4402a0e8f7aa5793ddad30a9c9720848dcdf495835308079fb94698226f3",
+    "docs/opportunity_scout/operator_example/radar-response.json": "c932c3ce02fa300b7831470826c58b4af2dc0d4ea910620eff4303124461df8a",
+    "docs/opportunity_scout/operator_example/report.json": "2011608b2984a2f06720f5c9ec706e628ace89b286a9ececabf8dc265fce0e60",
+    "docs/opportunity_scout/operator_example/seeds.json": "69e30951dbdc8cfbb883694c001501be1132f0edcf8093937447a699f03b084e",
+    "docs/opportunity_scout/synthetic_demo.json": "eb2179a66ed097e993910fc18228de74a1c231f062be91009fa5fcde3f645f3e",
+    "docs/opportunity_scout/validation.json": "95c6a5d3da5e31807e4726ad53b5503414816a5aab3728d88e9495165e6a8907",
+    "docs/opportunity_scout/walkthrough.md": "5865d185cca63a5e0c2c0cb018b5d1c6343bbfdc542e47e0361f5eef8e5e67a3"
+  },
+  "synthetic_preflight": {
+    "passed": true,
+    "receipt_sha256": "9669cf29a9499bcfea8366ced7496674c9f4710634ea0cd701b766058fc8b2fe",
+    "receipt_file_sha256": "bb91efef755b50becb9cd78deb5b7414967a0581eeda54472b4ce0239fefb186",
+    "offline_validation_replay": {
+      "original_receipt_sha256": "c492ea3d3357c62d6e27690aabcbb2bca9327ccfaef3e4123e468918f6d486d0",
+      "reason": "Count distinct assistant message IDs; thinking and output chunks can share one message ID. Original failed validator receipt stays byte-identical. No new invocation.",
+      "validated_at": "2026-10-22T08:47:39.821968+00:00"
+    },
+    "development_account_files_unchanged": true,
+    "cli_version": "2.1.302 (Claude Code)",
+    "canonical_model": "claude-opus-5-5",
+    "effort_requested": "medium",
+    "effort_observed": "UNKNOWN",
+    "immutable_model_build_verified": false,
+    "final_pair": [
+      {
+        "requested_model": "opus",
+        "actual_model": "claude-opus-5-5",
+        "wall_seconds": 3.208201,
+        "usage": {
+          "cost": "UNKNOWN",
+          "currency": "UNKNOWN",
+          "input_tokens": 1224,
+          "output_tokens": 58
+        },
+        "thinking_tokens": 0,
+        "isolation_verified": true,
+        "stdout_sha256": "d4765401c86f91886897dc19afcf609da3cb8d80d0ae0f0399340c639f6fb28a",
+        "invoked_at": "2026-10-22T08:46:16.010043+00:00",
+        "completed_at": "2026-10-22T08:46:19.218230+00:00"
+      },
+      {
+        "requested_model": "claude-opus-5-5",
+        "actual_model": "claude-opus-5-5",
+        "wall_seconds": 6.542131,
+        "usage": {
+          "cost": "UNKNOWN",
+          "currency": "UNKNOWN",
+          "input_tokens": 1224,
+          "output_tokens": 117
+        },
+        "thinking_tokens": 58,
+        "isolation_verified": true,
+        "stdout_sha256": "737c8620062497e8d05f34b1f9b81302a3377f972800b5e8f930a352d37f0ad1",
+        "invoked_at": "2026-10-22T08:46:19.219394+00:00",
+        "completed_at": "2026-10-22T08:46:25.761514+00:00"
+      }
+    ]
+  },
+  "implementation_total_synthetic_cli_generation_invocations": 5,
+  "underlying_provider_request_count": "UNKNOWN",
+  "research_inputs_transmitted": false,
+  "scientific_source_requests": 0,
+  "real_cli_generation_invocations": 0,
+  "manifest_sha256": "f4827d55671b09bc9b28e82f99a99d703b31c6ada040ff3c596f87791f5506dd",
+  "real_durable_dispatches": 0,
+  "hosted_owner_authorisation_valid": false,
+  "real_command_without_consent": {
+    "exit_code": 2,
+    "dispatches_after": 0,
+    "result": "REFUSED_BEFORE_CLIENT_CONSTRUCTION"
+  },
+  "real_comparison_ready": false,
+  "blocking_owner_decisions": [
+    "Exact hash-specific hosted-input approval",
+    "Explicit acceptance of canonical model ID without immutable build pin"
+  ],
+  "human_judgments": "NOT_PROVIDED",
+  "jev": "NOT_RUN",
+  "original_cli_outputs": "Retained privately under ignored .research/opportunity_scout; not committed",
+  "authorises": []
+}

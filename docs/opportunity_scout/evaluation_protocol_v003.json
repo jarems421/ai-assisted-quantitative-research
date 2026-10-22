@@ -1,0 +1,73 @@
+{
+  "version": "SCOUT_EVALUATION_PROTOCOL_V003",
+  "status": "PROSPECTIVE_PREPARED_REAL_GENERATION_NOT_RUN",
+  "revises": "SCOUT_EVALUATION_PROTOCOL_V002",
+  "acceptance_base_commit": "75513d083077f47220ed3c28b1f0115132da1a98",
+  "reason": "Prospective Claude Code research-subscription adapter, exact hosted-input consent, explicit canonical Opus identity and Medium effort. V001/V002 are unchanged and V002 remains local-only NOT_RUN.",
+  "conditions": [
+    "PLAIN",
+    "EVIDENCE_ONLY",
+    "MECHANISM_ONLY",
+    "HYBRID"
+  ],
+  "budget_per_condition": {
+    "raw_cards": 6,
+    "generation_attempts": 3,
+    "cards_per_attempt": 2,
+    "max_output_tokens_per_attempt": 6000,
+    "max_input_tokens_per_attempt": 30000,
+    "generation_human_minutes": 30,
+    "generation_wall_seconds": 1800,
+    "human_review_minutes": 180,
+    "scientific_source_requests": 0
+  },
+  "allocation": {
+    "PLAIN": [
+      "PLAIN",
+      "PLAIN",
+      "PLAIN"
+    ],
+    "EVIDENCE_ONLY": [
+      "RADAR",
+      "RADAR",
+      "RADAR"
+    ],
+    "MECHANISM_ONLY": [
+      "FORGE",
+      "FORGE",
+      "FORGE"
+    ],
+    "HYBRID": [
+      "FORGE",
+      "RADAR",
+      "GAP"
+    ]
+  },
+  "inputs": "Identical eligible seed/memory pool and knowledge cutoff. Forge intentionally receives neither seed nor memory; Radar receives seeds; Gap receives memory; Plain receives both. These differences define the experimental conditions; actual input usage is reported.",
+  "generation": "Freeze exact prompts before any result. Bind one model, provider and sampling settings for all 12 requests before any invocation. Every invocation is a new stateless context with no previous generated cards, even within a condition. Do not use archived examples. One response per request, no repair calls, retries, best-of sampling, silent substitution or replacement of failed attempts. Failed and abandoned attempts consume their slot. Record server usage or UNKNOWN, human minutes, wall seconds and an operator context attestation for each attempt.",
+  "accounting": "Report actual reserved/completed/valid/failed attempts, per-attempt and total known tokens with unknown-entry counts, actual human and wall effort, model/settings differences and missing context attestations. Equal ceilings do not establish equal actual effort. Actual token/time differences within common caps are descriptive, not a reason to equalise results after generation. Missing usage/effort leaves budget compliance UNKNOWN and comparative eligibility false. Actual excess, mixed models/settings or reused contexts is a protocol deviation. No prorating or retroactive budget changes. Include cached-read and cache-creation input tokens in input totals; preserve components and available thinking tokens separately. Provider list-price estimates are not subscription charges. Output cap is requested through CLI environment; input cap is checked against reported usage after dispatch, with subsequent dispatch stopped on excess. Human setup/monitoring minutes remain UNKNOWN until appended by the operator. Generation wall time measures the subprocess; timeout includes startup. Common token caps are ceilings, not guarantees of a complete card.",
+  "reviews": "Use all 24 original version-one cards in common format; no shortlist or repaired cards. A human independent of generation judges coherence, falsifiability, research worthiness and evidence integrity. Keep unknown labels. Review without condition/model metadata or key; content can reveal lanes, so blinding is partial procedural. Same-owner operation/review is a declared limitation. Record all review minutes; no inferred labels. Mechanism diversity needs a separate human comparison of economic transmission, affected roles and decisive measurements, not a family-label count. Malformed output remains in the private receipt; expose only allowlisted economic card fields and visible missing/invalid slots, never raw envelopes or logs. Review all slots. Missing cards are not repaired. Human labels on invalid or missing slots may be UNKNOWN. AI-assisted judgments must never be attested as independent human reviews.",
+  "analysis": "Descriptive dimensions separately; no composite quality score, adaptive ranker, significance, economic validation, novelty or investment claim. Invalid/incomplete conditions remain visible. Source access and scientific novelty are NOT_CHECKED unless independently assessed with evidence under separate authority. READY is a proposal, never M/H.",
+  "hosted_transmission_authorised": false,
+  "scientific_source_acquisition_authorised": false,
+  "provider": {
+    "name": "CLAUDE_CODE_SUBSCRIPTION",
+    "account": "Separate .claude-research subscription only; never development account or API-key billing.",
+    "effort": "medium",
+    "temperature": "UNKNOWN",
+    "seed": "UNKNOWN",
+    "identity": "Resolve opus only on fixed fictional preflight, then verify explicitly selected canonical model ID. Immutable weights/build unavailable; owner must explicitly accept this limitation before official execution.",
+    "execution": "One subprocess per visible attempt; provider/model request count UNKNOWN. StructuredOutput is formatting only; no other tools, MCP, skills, source access, repository or prior contexts. No retry or fallback."
+  },
+  "isolation": "Safe and restricted modes, no setting sources, no skills, no tools except CLI StructuredOutput, explicit empty MCP configuration, dontAsk permissions, no Chrome, replaced system prompt, fresh sterile temporary directory, fresh UUID, no session persistence. Strip inherited credential/provider/IDE variables. Managed policy presence blocks dispatch. CLI controls are not an OS sandbox or proof of every server-side action.",
+  "hosted_consent": "Owner-supplied identity/date and affirmative record covering exact byte SHA-256 files, canonical manifest/runtime/protocol hashes, all 12 requests and content scope, provider/model/Medium effort, privacy limitations and explicit acceptance of canonical-ID-only reproducibility. No automatic or inferred approval.",
+  "failure_policy": "Durable per-attempt dispatch event before subprocess; no automatic resumption after any dispatch. Any invalid response, failure, identity/isolation error or cap excess stops the remaining run. Failed/interrupted attempts consume slots. Untouched reservations remain NOT_RUN, never replaced. A blinded packet exposes every generated card, including invalid and surplus cards, with missing reserved slots visible even for an incomplete stopped run. A stopped incomplete run cannot produce an official complete comparison.",
+  "limitations": [
+    "The narrow retrospective EF06 excerpt and frozen memory pool are copied from V002 without refreshing or adding prior generated ideas; selection involved development and limits generalisation.",
+    "Content may reveal lanes despite removal of condition/model metadata. Reviewer involvement or familiarity must be disclosed in human notes.",
+    "The CLI may have unobservable provider requests and service internals; visible invocation counts are not wire counts.",
+    "Canonical model IDs can be remapped by the service; exact immutable weights/build cannot be certified.",
+    "Managed settings and future CLI changes can invalidate isolation; binary hash, CLI version and preflight inspection are bound.",
+    "Unknown usage/effort blocks comparative eligibility; no invented prices, seeds, temperature or human judgments."
+  ]
+}

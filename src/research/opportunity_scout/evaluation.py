@@ -15,8 +15,8 @@ PROTOCOL_PATH = ROOT / 'docs/opportunity_scout/evaluation_protocol.json'
 
 
 def protocol(version='V001'):
-    if version not in ('V001', 'V002'): raise S.ScoutError('unknown evaluation protocol')
-    path = PROTOCOL_PATH if version == 'V001' else PROTOCOL_PATH.with_name('evaluation_protocol_v002.json')
+    if version not in ('V001', 'V002', 'V003'): raise S.ScoutError('unknown evaluation protocol')
+    path = PROTOCOL_PATH if version == 'V001' else PROTOCOL_PATH.with_name('evaluation_protocol_' + version.lower() + '.json')
     return S.json_loads(path.read_text(encoding='utf-8'))
 
 
@@ -146,7 +146,7 @@ def evaluate_blind(packet, sealed, judgments):
             'research_worthy': S.enum(('YES', 'NO', 'UNKNOWN')), 'evidence_integrity': S.enum(('YES', 'NO', 'UNKNOWN')),
             'minutes': S.NUMBER, 'notes': S.TEXT,
             'atomic_answers': S.obj({q: S.enum(('yes', 'no', 'unsure')) for q in __import__('src.research.opportunity_scout.providers', fromlist=['QUESTIONS']).QUESTIONS})}
-        if version == 'V002': properties['independent_of_generation'] = {'const': True}
+        if version in ('V002', 'V003'): properties['independent_of_generation'] = {'const': True}
         S.validate(S.obj(properties), review)
         if review['blind_id'] not in expected or review['blind_id'] in seen: raise S.ScoutError('unknown or duplicate blinded review')
         seen.add(review['blind_id']); rows.append(copy_review(review, sealed))
