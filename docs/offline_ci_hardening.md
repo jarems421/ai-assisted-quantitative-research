@@ -131,6 +131,11 @@ run fixed local Python children on both systems outside the no-process guard.
 N1 collector tests remain on Windows to preserve native process assurance; Linux
 fixture success cannot certify Windows Job Objects, creation timestamps or cleanup.
 Pure OS metadata/path fixtures in Scout do not count as native OS assurance.
+The first Linux Scout run demonstrated that setup-python's `python` symlink is
+refused by the existing N1 fixture binary-binding gate. The Linux workflow now
+executes the resolved interpreter binary itself before entering the same guarded
+Scout suite. It does not mock `sys.executable`, weaken symlink refusal or change
+the fixture/production binding code. All original test methods remain unchanged.
 
 ## Maintainability assessment
 
