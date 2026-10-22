@@ -186,7 +186,30 @@ launch. The remaining live observer/runtime/consent gates stay unchanged.
 
 ## Verification receipt
 
-Local Windows: additional suite **212 passed, 0 skipped, 11 excluded**;
-guard self-tests **8 passed**; existing process suites **31 passed**. Exact-head
-GitHub matrix results and full public/Scout runtime counts will be recorded after
-the draft PR runs. Linux correctness is not claimed from local Windows execution.
+Local Windows verification: **918 passed, zero skipped** (403 public, 264 Scout,
+212 additional, 6 cross-process locks, 25 N1 collector and 8 selected guard tests).
+The 11 method/class exclusions plus 5 isolated-parser tests are excluded explicitly;
+they are not reported as passes. No original test method was edited.
+
+| Workflow selection | Windows | Linux |
+|---|---:|---:|
+| Existing guarded public suite | 403 | 403 |
+| Existing guarded Scout suite | 264 | 264 |
+| Additional restricted suite | 212 | 212 |
+| Portable guard tests | 7 | 7 |
+| Native guard test | 1 Windows | 1 Linux |
+| Actual Python process lock tests | 6 | 6 |
+| Native N1 collector tests | 25 | Excluded: Windows assurance |
+| Total selected | **918** | **893** |
+
+The first native CI runs found the timezone, extended-path and descriptor issues
+described above; those failed attempts remain in GitHub history. On code commit
+`05f9d18`, both OS jobs passed the additional suite and their native guard test;
+Linux also passed the existing public suite before this receipt was written.
+The final full-workflow conclusions and links are recorded in
+[draft PR #16](https://github.com/jarems421/ai-assisted-quantitative-research/pull/16);
+[its checks](https://github.com/jarems421/ai-assisted-quantitative-research/pull/16/checks)
+show the current exact-head outcome. Platform-conditioned workflow steps are
+exclusions, distinct from unittest skips. The unchanged original Windows workflow
+additionally repeats its original 698 tests; do not add these duplicates to the
+unique coverage totals. These counts describe software fixtures, not research results.
