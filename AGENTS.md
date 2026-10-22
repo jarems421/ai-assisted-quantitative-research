@@ -1,5 +1,9 @@
 # Repository instructions
 
+## Graph Pilot R4 pre-activation feasibility audit (2026-10-22)
+
+- `docs/strategy/graph_pilot_r4_feasibility_audit_v001.md`: offline overlap/stop audit and public documentation/terms review only; no dataset, API, listing or bulk route was fetched or probed, and its proposals (replacement reserves, F1(a), F2=2) are recommendations, not registrations. Classification FEASIBLE_FOR_OWNER_REGISTRATION_REVIEW is conditional on owner-adopted reserves and two secured independent reviewers; every route stays `CANDIDATE_UNVERIFIED`. FSIS is excluded (recorded 403, unclear scope treated as host-level). Never copy private receipt content into tracked files.
+
 ## Graph Pilot R4 operational package: documentation only, no activation authority
 
 - `graph_pilot_r4_reviewer_guide_v001.md`, `graph_pilot_r4_runbook_v001.md`, `graph_pilot_r4_source_plan_v001.md`, `graph_pilot_r4_activation_template_v001.md` and `graph_pilot_r4_operational_readiness_v001.md` are drafts that bind only when a completed owner activation document names them by hash. R4 is NOT_RUN until the owner commits `owner_graph_pilot_r4_<date>.md` to `main`. Never fill owner fields, make D1/F1/F2/U1/R1 or ceiling decisions, or commit the template as that document for the owner. Never recruit, impersonate or act as a reviewer, operator or attester.
