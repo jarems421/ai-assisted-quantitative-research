@@ -16,6 +16,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from zoneinfo import reset_tzpath
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / 'tests/offline_inventory.json'
@@ -172,6 +173,9 @@ def run():
     # No credential environment is passed to tests. Fixtures may add fictional values.
     env = {k: os.environ[k] for k in ('PATH', 'SYSTEMROOT', 'WINDIR', 'COMSPEC', 'PATHEXT',
                                      'LD_LIBRARY_PATH') if k in os.environ}
+    # Linux otherwise prefers /usr/share/zoneinfo over the pinned tzdata wheel.
+    # Use that same reviewed dependency on both platforms, without OS data reads.
+    reset_tzpath(())
     sys.dont_write_bytecode = True
     with tempfile.TemporaryDirectory(prefix='research-offline-') as tmp:
         scratch = Path(tmp)

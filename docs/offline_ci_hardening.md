@@ -94,6 +94,9 @@ scratch. Bytecode lookup is redirected to scratch. Real repository files are
 read-only; fixture stores named `data/raw` or `experiments` are allowed only inside
 scratch. Linux fd-relative cleanup resolves the actual directory descriptor;
 unsupported platforms fail closed. Symlink creation is refused.
+The first native Linux run demonstrated a blocked `/usr/share/zoneinfo` read:
+the additional runner now selects the pinned `tzdata` wheel on both systems using
+`zoneinfo.reset_tzpath(())`. Production calendar/metric code is unchanged.
 
 These are guards for reviewed Python tests, **not an OS security sandbox for
 hostile tests or native extensions**. SQLite/PyArrow/DuckDB perform some native IO
