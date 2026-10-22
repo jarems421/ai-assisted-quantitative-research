@@ -16,13 +16,17 @@ import os
 import shutil
 import stat
 import subprocess
+import contextlib
+import io
 import tempfile
 from datetime import timedelta
 from pathlib import Path
+from unittest.mock import patch
 
 from src.research.discovery.demo import passport
 from src.research.discovery.ledger import Ledger
 from src.research.graph import catalogue as C
+from src.research.graph import cli as GCLI
 from src.research.graph import evaluate as E
 from src.research.graph import implementation as I
 from src.research.graph import model as M
@@ -53,7 +57,7 @@ def remove_tree(path):
 def pinned_copy(directory, root=ROOT):
     """Copy the pinned implementation set into a fresh git repository with one fixed-date commit."""
     d = Path(directory); d.mkdir(parents=True, exist_ok=True)
-    for rel in I.pinned_paths(root):
+    for rel in I.closure(root)[0]:
         (d / rel).parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(Path(root) / rel, d / rel)
     git(d, 'init', '-q'); git(d, 'add', '-A'); git(d, 'commit', '-q', '-m', 'Synthetic pinned copy of the Graph implementation')
     return d
@@ -102,15 +106,22 @@ def pinning(c, d):
     extra = impl / 'src/research/graph/extra_module.py'; extra.write_text('X = 1\n', encoding='utf-8')
     c.refused('pin', 'an added implementation file refuses verification', lambda: I.verify(pin, impl), "'added': ['src/research/graph/extra_module.py']")
     extra.unlink()
-    (impl / 'docs').mkdir(); (impl / 'docs/unrelated.md').write_text('Unrelated change.\n', encoding='utf-8')
+    (impl / 'unrelated').mkdir(); (impl / 'unrelated/notes.md').write_text('Unrelated change.\n', encoding='utf-8')
     git(impl, 'add', '-A'); git(impl, 'commit', '-q', '-m', 'Unrelated documentation change')
     c.ok('pin', 'an unrelated commit with identical implementation passes as UNRELATED_COMMIT_CHANGE',
          I.verify(pin, impl)['status'] == 'UNRELATED_COMMIT_CHANGE', I.verify(pin, impl)['status'])
     bare = d / 'no-git'
-    for rel in I.pinned_paths(impl):(bare / rel).parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(impl / rel, bare / rel)
+    for rel in I.closure(impl)[0]:(bare / rel).parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(impl / rel, bare / rel)
     c.refused('pin', 'missing git metadata cannot be pinned', lambda: I.pin(bare), 'git metadata is unavailable')
     c.ok('pin', 'missing git metadata at verification still enforces content', I.verify(pin, bare)['status'] == 'GIT_UNAVAILABLE_CONTENT_VERIFIED',
          I.verify(pin, bare)['status'])
+    boundary = {'src/research/sec_pilot/parsing.py', 'docs/strategy/graph_pilot/fetch_one.py', 'src/research/spec.py'}
+    c.ok('pin', 'the boundary includes the R4 fetch tool and the offline guard (static import closure)', boundary <= set(pin['files']),
+         f"{sorted(boundary & set(pin['files']))}")
+    c.ok('pin', 'the pin records Python and dependency versions', set(pin['runtime']) == {'python', 'implementation', 'dependencies'},
+         f"Python recorded; {len(pin['runtime']['dependencies'])} distributions recorded")
+    other = dict(pin, runtime=dict(pin['runtime'], python='0.0.0'))
+    c.refused('pin', 'a different Python or dependency version refuses verification', lambda: I.verify(other, impl), 'the runtime differs')
     return pin
 
 
@@ -186,12 +197,14 @@ def arms(pk, clock):
     return {'S': (s_start, s_end), 'G': (g_start, g_end)}
 
 
-def session(path, arm, bounds, recorded_by=None):
-    """Operator-recorded session bounds: the session opens with the campaign record and closes at its last record."""
-    start, end = bounds
-    Path(path).write_text(json.dumps({'version': P.SESSION_VERSION, 'arm': arm, 'started_at_utc': start.isoformat(), 'ended_at_utc': end.isoformat(),
-                                      'recorded_by': recorded_by or {'name': 'Synthetic operator stand-in (fixture)', 'kind': 'SYNTHETIC_FIXTURE'},
-                                      'notes': 'synthetic rehearsal'}), encoding='utf-8')
+OPERATOR = 'Synthetic operator stand-in (fixture)'
+
+
+def attest(pk, arm, bounds):
+    """The operator stand-in attests START as the campaign opens and STOP after its last record (separate immutable files)."""
+    start, stop = bounds
+    P.attest_session(pk, arm, 'START', OPERATOR, 'SYNTHETIC_FIXTURE', now=start)
+    P.attest_session(pk, arm, 'STOP', OPERATOR, 'SYNTHETIC_FIXTURE', now=stop)
 
 
 def logs(pk, bounds):
@@ -210,7 +223,9 @@ def logs(pk, bounds):
              'connection_class': e['connection_class']}
         return {**r, **change}
     rel = next(e for e in econ if 'REL-P-1' in e['match']); same = next(e for e in econ if 'OBS-P-1' in e['match'])
-    g_rows = [row(rel, 'ACCEPTED', 'EFF-G-3'), row(same, 'DECLINED'), row(warn, 'UNRESOLVED')]
+    second = row(same, 'UNRESOLVED', connection_id=P.connection_id(same['target'], same['target_endpoints'][0], ['second look at the same suggestion']),
+                 basis=['second look at the same suggestion'])  # a second row sharing one origin
+    g_rows = [row(rel, 'ACCEPTED', 'EFF-G-3'), row(same, 'DECLINED'), second, row(warn, 'UNRESOLVED')]
     s_rows = [{'connection_id': P.connection_id('DLC-GR4-S/OBS-1', 'DLC-GR4PKT/REL-P-1', ['EXACT_ENTITY_ID']), 'arm': 'S', 'kind': 'CONNECTION',
                'operator': 'baseline-search', 'found_via': 'ANALYST_READING', 'source_record': 'DLC-GR4-S/OBS-1', 'target_record': 'DLC-GR4PKT/REL-P-1',
                'basis': ['EXACT_ENTITY_ID'], 'arm_decision': 'DECLINED', 'analyst_minutes': 3, 'discovery_lab_record': None,
@@ -221,28 +236,44 @@ def logs(pk, bounds):
     return index
 
 
-def effort_checks(c, pk, bounds):
-    session(pk / 'session-S.json', 'S', bounds['S']); session(pk / 'session-G.json', 'G', bounds['G'])
+def effort_checks(c, pk, bounds, legacy):
+    attest(pk, 'S', bounds['S']); attest(pk, 'G', bounds['G'])
     g, s = P.derived_effort(pk, 'G'), P.derived_effort(pk, 'S')
     codes = lambda e: sorted({f['code'] for f in e['flags']})
-    c.ok('effort', 'contemporaneous G logging: derived and self-reported minutes agree within the threshold', 'EFFORT_DISCREPANCY' not in codes(g),
-         f"span {g['observed_span_minutes']} vs self {g['self_reported']['analyst_minutes']}; session {g['session']['minutes']}; flags {codes(g) or 'none'}")
+    c.ok('effort', 'contemporaneous G logging: no material discrepancy; the difference is still reported; evidence CONSISTENT',
+         'EFFORT_DISCREPANCY' not in codes(g) and 'EFFORT_DIFFERENCE_BELOW_THRESHOLD' in codes(g) and g['effort_evidence'] == 'CONSISTENT',
+         f"session {g['session']['minutes']} vs self {g['self_reported']['analyst_minutes']} ({g['comparisons']['session']['difference_minutes']} min, "
+         f"{g['comparisons']['session']['difference_percent']}%); {g['effort_evidence']}")
+    small = P.compare_minutes(54, 50)
+    c.ok('effort', 'material threshold is the greater of 5 minutes or 10% of the comparator; smaller differences are reported',
+         small['material'] is False and small['difference_minutes'] == 4 and P.compare_minutes(130, 120)['material'] is False
+         and P.compare_minutes(133, 120)['material'] is True,
+         f"54 vs 50: {small['difference_minutes']} min / {small['difference_percent']}%, threshold {small['material_threshold_minutes']}; 133 vs 120 material")
     c.ok('effort', 'graph query and suggestion-review time are reported where measurable',
          g['graph_time']['queries_recorded'] == 2 and g['graph_time']['self_reported_minutes'] == 9 and 'GRAPH_MINUTES_EXCEED_OBSERVED_WINDOWS' not in codes(g),
          f"{g['graph_time']['queries_recorded']} recorded queries; {g['graph_time']['self_reported_minutes']} self-reported graph minutes; "
          f"review windows <= {g['graph_time']['review_window_minutes_upper_bound']} min")
-    c.ok('effort', 'an inflated S effort is flagged against span, session and its append interval',
-         {'EFFORT_DISCREPANCY', 'EFFORT_EXCEEDS_APPEND_INTERVAL', 'SELF_REPORTED_EXCEEDS_SESSION'} <= set(codes(s)),
-         f"span {s['observed_span_minutes']} vs self {s['self_reported']['analyst_minutes']}; flags {codes(s)}")
-    (pk / 'session-S.json').rename(pk / 'session-S.hold')
+    c.ok('effort', 'an inflated S effort is flagged against the session and its append interval; evidence CONTRADICTORY',
+         {'EFFORT_DISCREPANCY', 'EFFORT_EXCEEDS_APPEND_INTERVAL', 'SELF_REPORTED_EXCEEDS_SESSION'} <= set(codes(s)) and s['effort_evidence'] == 'CONTRADICTORY',
+         f"session {s['session']['minutes']} vs self {s['self_reported']['analyst_minutes']}; {s['effort_evidence']}")
+    c.ok('effort', 'long gaps are descriptive only and never subtracted', s['gap_policy'].startswith('DESCRIPTIVE_ONLY'), s['gap_policy'])
+    held = {e: pk / f'session-S-{e.lower()}.hold' for e in P.SESSION_EVENTS}
+    for e in P.SESSION_EVENTS:P.session_path(pk, 'S', e).rename(held[e])
     s2 = P.derived_effort(pk, 'S')
-    c.ok('effort', 'missing session bounds are reported, never inferred', s2['session'] == {'status': 'NOT_RECORDED', 'minutes': 'UNKNOWN'}
-         and 'SESSION_BOUNDS_NOT_RECORDED' in codes(s2), f"session {s2['session']['status']}, minutes {s2['session']['minutes']}")
-    (pk / 'session-S.hold').rename(pk / 'session-S.json')
-    bad = pk / 'session-bad.json'; session(bad, 'S', bounds['S'], {'name': 'Claude', 'kind': 'ASSISTANT'})
-    c.refused('effort', 'session bounds recorded by an assistant are refused',
-              lambda: P.load_session(bad, 'S', P.parse_time('2026-10-21T00:00:00+00:00'), 'SYNTHETIC'), 'recorded by the human operator')
-    bad.unlink()
+    c.ok('effort', 'missing session attestations are reported, never inferred', s2['session'] == {'status': 'NOT_RECORDED', 'minutes': 'UNKNOWN'}
+         and 'SESSION_BOUNDS_NOT_RECORDED' in codes(s2) and s2['effort_evidence'] in ('INCOMPLETE', 'MATERIAL_DISCREPANCY'),
+         f"session {s2['session']['status']}, minutes {s2['session']['minutes']}")
+    held['START'].rename(P.session_path(pk, 'S', 'START'))
+    s3 = P.derived_effort(pk, 'S')
+    c.ok('effort', 'a START without its STOP is INCOMPLETE_NO_STOP', s3['session']['status'] == 'INCOMPLETE_NO_STOP', s3['session']['status'])
+    held['STOP'].rename(P.session_path(pk, 'S', 'STOP'))
+    c.refused('effort', 'an attestation is immutable (a second START is refused)', lambda: P.attest_session(pk, 'S', 'START', OPERATOR, 'SYNTHETIC_FIXTURE'),
+              'already exists and is immutable')
+    c.refused('effort', 'assistant self-attestation is refused by name', lambda: P.attest_session(legacy, 'S', 'START', 'Claude (assistant)', 'SYNTHETIC_FIXTURE'),
+              'assistant self-attestation is refused')
+    c.refused('effort', 'an attestation by a non-human kind is refused', lambda: P.attest_session(legacy, 'S', 'START', 'Operator', 'ASSISTANT'),
+              'attested by the human arm operator personally')
+    c.refused('effort', 'a STOP needs its START', lambda: P.attest_session(legacy, 'G', 'STOP', 'Operator', 'SYNTHETIC_FIXTURE'), 'needs its START')
     exports = pk / P.SUGGESTION_EXPORT_DIR; exports.rename(pk / 'exports.hold')
     g2 = P.derived_effort(pk, 'G')
     c.ok('effort', 'graph minutes without any recorded graph query are flagged', 'GRAPH_TIME_WITHOUT_RECORDED_QUERIES' in codes(g2), codes(g2))
@@ -252,16 +283,24 @@ def effort_checks(c, pk, bounds):
 def accounting_checks(c, pk, index):
     a = P.suggestion_accounting(pk)
     e, w, u = (a['by_class'][k] for k in ('ECONOMIC_CONNECTION_CANDIDATE', 'METHODOLOGICAL_WARNING', 'UNSUPPORTED_MATCH'))
-    c.ok('accounting', 'exported = logged + exported-but-unlogged, per class',
+    c.ok('accounting', 'exported = logged + exported-but-unlogged suggestions, per class',
          all(x['exported'] == x['logged_suggestions'] + x['exported_unlogged'] for x in (e, w, u)),
          f"economic {e['exported']}={e['logged_suggestions']}+{e['exported_unlogged']}; warning {w['exported']}={w['logged_suggestions']}+{w['exported_unlogged']}; "
          f"unsupported {u['exported']}")
-    c.ok('accounting', 'declined suggestions are counted', e['logged_by_decision'] == {'ACCEPTED': 1, 'DECLINED': 1, 'UNRESOLVED': 0},
-         e['logged_by_decision'])
-    c.ok('accounting', 'a zero denominator is explicit, not zero', u['rates']['logged_share_of_exported']['value'] == 'UNDEFINED_ZERO_DENOMINATOR',
-         u['rates']['logged_share_of_exported'])
+    c.ok('accounting', 'two rows sharing one origin: rows and suggestions are counted separately',
+         (e['logged_rows'], e['logged_suggestions'], e['rows_sharing_an_origin']) == (3, 2, 2)
+         and e['rows_by_decision'] == {'ACCEPTED': 1, 'DECLINED': 1, 'UNRESOLVED': 1}
+         and e['suggestions_by_decision'] == {'ANY_ACCEPTED': 1, 'ALL_DECLINED': 0, 'UNRESOLVED_OR_MIXED': 1},
+         f"{e['logged_rows']} rows, {e['logged_suggestions']} suggestions; rows {e['rows_by_decision']}; suggestions {e['suggestions_by_decision']}")
+    r = e['rates']
+    c.ok('accounting', 'every rate pairs a numerator and denominator of the same level',
+         (r['declined_share_of_logged_rows']['numerator'], r['declined_share_of_logged_rows']['denominator']) == (1, 3)
+         and (r['all_declined_share_of_logged_suggestions']['numerator'], r['all_declined_share_of_logged_suggestions']['denominator']) == (0, 2),
+         f"declined rows 1/3; all-declined suggestions 0/2")
+    c.ok('accounting', 'a zero denominator is explicit, not zero', u['rates']['logged_share_of_exported_suggestions']['value'] == 'UNDEFINED_ZERO_DENOMINATOR',
+         u['rates']['logged_share_of_exported_suggestions'])
     c.ok('accounting', 'outcomes are NOT_ADJUDICATED before adjudication', e['adjudicated'] == 'NOT_ADJUDICATED' and
-         a['confirmed_economic_discoveries']['count'] == 'NOT_ADJUDICATED', e['adjudicated'])
+         a['confirmed_economic_discoveries']['rows'] == 'NOT_ADJUDICATED', e['adjudicated'])
     exports = pk / P.SUGGESTION_EXPORT_DIR; exports.rename(pk / 'exports.hold')
     m = P.suggestion_accounting(pk)
     c.ok('accounting', 'a missing V2 export makes exported counts UNKNOWN, never zero',
@@ -280,20 +319,56 @@ def blind_and_report(c, pk, index):
     (pk / 'adjudications.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in rows), encoding='utf-8')
     unblinded = P.unblind(pk, 'blind_v2.json')
     a = P.suggestion_accounting(pk, unblinded)
-    disc, warn = a['confirmed_economic_discoveries']['count'], a['methodological_warnings_confirmed']['count']
-    c.ok('accounting', 'after adjudication, outcomes are counted per class with denominators',
-         isinstance(a['by_class']['ECONOMIC_CONNECTION_CANDIDATE']['adjudicated'], dict),
-         {k: a['by_class'][k]['adjudicated'] for k in ('ECONOMIC_CONNECTION_CANDIDATE', 'METHODOLOGICAL_WARNING')})
+    disc, warn = a['confirmed_economic_discoveries']['rows'], a['methodological_warnings_confirmed']['rows']
+    ea = a['by_class']['ECONOMIC_CONNECTION_CANDIDATE']['adjudicated']
+    c.ok('accounting', 'after adjudication, every row keeps its own outcome (never overwritten by origin)',
+         ea['rows_adjudicated'] == 3 and ea['suggestions_adjudicated'] == 2, f"{ea['rows_adjudicated']} rows, {ea['suggestions_adjudicated']} suggestions; {ea['rows']}")
+    same = next(r for r in unblinded if r['arm'] == 'G' and r['connection_id'].startswith('CON-'))
+    split = [dict(r, outcome='REJECTED_FALSE') if r['connection_id'] == same['connection_id'] else r for r in unblinded]
+    sa = P.suggestion_accounting(pk, split)['by_class']['ECONOMIC_CONNECTION_CANDIDATE']['adjudicated']
+    c.ok('accounting', 'two rows of one suggestion with different outcomes are both counted and the conflict is reported',
+         sa['suggestions_with_conflicting_outcomes'] >= 1 and sa['rows']['REJECTED_FALSE'] >= 1, f"conflicting suggestions {sa['suggestions_with_conflicting_outcomes']}; {sa['rows']}")
     forced = [dict(r, outcome='CONFIRMED_AGAINST_ORIGINALS', economic_meaning='MEANINGFUL', arm_decision='ACCEPTED')
               if r.get('connection_class') == 'METHODOLOGICAL_WARNING' else r for r in unblinded]
     f = P.suggestion_accounting(pk, forced)
     c.ok('accounting', 'a warning confirmed as useful is never counted as an economic discovery',
-         f['confirmed_economic_discoveries']['count'] == disc and f['methodological_warnings_confirmed']['count'] == warn + 1,
-         f"discoveries {disc} -> {f['confirmed_economic_discoveries']['count']}; warnings confirmed {warn} -> {f['methodological_warnings_confirmed']['count']}")
+         f['confirmed_economic_discoveries']['rows'] == disc and f['methodological_warnings_confirmed']['rows'] == warn + 1,
+         f"discoveries {disc} -> {f['confirmed_economic_discoveries']['rows']}; warnings confirmed {warn} -> {f['methodological_warnings_confirmed']['rows']}")
+    stop = P.session_path(pk, 'G', 'STOP'); original = stop.read_bytes()
+    stop.write_bytes(original.replace(b'stopped', b'ended'))
+    c.refused('effort', 'an attestation edited after blinding refuses unblinding', lambda: P.unblind(pk, 'blind_v2.json'), 'changed after blinding')
+    stop.write_bytes(original)
     rep = P.report([pk], export_name='blind_v2.json')
-    c.ok('report', 'the paired report carries effort checks and suggestion accounting; one pair stays INCONCLUSIVE',
-         rep['classification'] == 'INCONCLUSIVE' and 'effort_check' in rep['packets'][0] and 'suggestion_accounting' in rep['packets'][0], rep['classification'])
+    c.ok('report', 'the report states the primary measure, both sensitivities and the effort evidence; one pair stays INCONCLUSIVE',
+         rep['classification'] == 'INCONCLUSIVE' and rep['effort_evidence_summary'] == ['CONSISTENT', 'CONTRADICTORY']
+         and set(rep['classification_sensitivity']) == {'session', 'observed_span'},
+         f"{rep['classification']}; evidence {rep['effort_evidence_summary']}; sensitivities {rep['classification_sensitivity']}")
     return a, rep
+
+
+def uniform_pin_checks(c, pk):
+    """Simulate a changed implementation: every snapshot-bound entry point, for both arms, must refuse."""
+    real = I.content
+    def changed(root=I.ROOT):
+        now = real(root); files = dict(now['files'], **{'src/research/graph/baseline.py': '0' * 64})
+        return {**now, 'files': files, 'tree_digest': '0' * 64}
+    snap = pk / 'snapshot.json'; when = Ledger(pk / 'S.jsonl').load().events[-1]['recorded_at_utc']; g_when = Ledger(pk / 'G.jsonl').load().events[-1]['recorded_at_utc']
+
+    def cli(*argv):
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()) as err:
+            try:GCLI.main(list(argv))
+            except SystemExit:
+                if 'differs from the snapshot pin' in err.getvalue():raise P.PilotError('differs from the snapshot pin')
+                raise
+    paths = {'structured-search arm view (S, API)': lambda: P.arm_view(snap, 'S', when),
+             'structured search (S, CLI baseline-search)': lambda: cli('baseline-search', 'DLC-GR4-S', 'OBS-1', '--snapshot', str(snap), '--arm', 'S', '--query-at', when),
+             'graph query (G, API arm_graph)': lambda: P.arm_graph(snap, 'G', g_when),
+             'graph query (G, CLI revisit)': lambda: cli('revisit', 'OBS-1', '--snapshot', str(snap), '--arm', 'G', '--query-at', g_when),
+             'export replay': lambda: P.load_suggestion_exports(P.default_exports(snap), snap),
+             'unblinding': lambda: P.unblind(pk, 'blind_v2.json'), 'effort': lambda: P.derived_effort(pk, 'S'),
+             'suggestion accounting': lambda: P.suggestion_accounting(pk), 'verify': lambda: P.verify_summary(snap)}
+    with patch.object(I, 'content', changed):
+        for name, fn in paths.items():c.refused('uniform pin', f'{name} refuses a changed implementation', fn, 'differs from the snapshot pin')
 
 
 def run(directory):
@@ -303,9 +378,10 @@ def run(directory):
     bounds = arms(pk, clock)
     tamper_checks(c, pk)
     index = logs(pk, bounds)
-    effort_checks(c, pk, bounds)
+    effort_checks(c, pk, bounds, d / 'legacy')
     before = accounting_checks(c, pk, index)
     after, rep = blind_and_report(c, pk, index)
+    uniform_pin_checks(c, pk)
     return {'checks': c.rows, 'accounting_before': before, 'accounting_after': after, 'effort': rep['packets'][0]['effort_check']}
 
 
@@ -318,20 +394,24 @@ def markdown(res):
          '| Area | Check | Observed | Result |', '|---|---|---|---|']
     for r in res['checks']:
         L.append(f"| {r['area']} | {r['check']} | {str(r['observed']).replace('|', '/')} | {r['result']} |")
-    L += ['', '## Effort (synthetic packet P1)', '', '| Arm | Observed span (min) | Session (min) | Self-reported (min) | Flags |', '|---|---:|---:|---:|---|']
+    L += ['', '## Effort (synthetic packet P1; primary measure = self-reported minutes)', '',
+          '| Arm | Observed span (min) | Attested session (min) | Self-reported (min) | Difference vs session | Evidence | Flags |', '|---|---:|---:|---:|---|---|---|']
     for arm in P.ARMS:
-        e = res['effort'][arm]
+        e = res['effort'][arm]; cmp_ = e['comparisons'].get('session') or e['comparisons']['observed_span']
         L.append(f"| {arm} | {e['observed_span_minutes']} | {e['session']['minutes']} | {e['self_reported']['analyst_minutes']} | "
-                 f"{', '.join(sorted({f['code'] for f in e['flags']})) or 'none'} |")
+                 f"{cmp_['difference_minutes']} min ({cmp_['difference_percent']}%) | {e['effort_evidence']} | {', '.join(sorted({f['code'] for f in e['flags']})) or 'none'} |")
     L += ['', '## Suggestion accounting (arm G, after the stand-in adjudication)', '',
-          '| Class | Exported | Logged | Accepted / declined / unresolved | Exported, unlogged | Adjudicated outcomes |', '|---|---:|---:|---|---:|---|']
+          '| Class | Exported | Logged suggestions | Exported, unlogged | Logged rows | Rows accepted / declined / unresolved | Adjudicated rows |',
+          '|---|---:|---:|---:|---:|---|---|']
     for k, x in res['accounting_after']['by_class'].items():
-        dec = x['logged_by_decision']
-        adj = ', '.join(f'{o}: {n}' for o, n in x['adjudicated'].items() if n) or 'none'
-        L.append(f"| {k} | {x['exported']} | {x['logged_suggestions']} | {dec['ACCEPTED']} / {dec['DECLINED']} / {dec['UNRESOLVED']} | {x['exported_unlogged']} | {adj} |")
+        dec = x['rows_by_decision']
+        adj = ', '.join(f'{o}: {n}' for o, n in x['adjudicated']['rows'].items() if n) or 'none'
+        L.append(f"| {k} | {x['exported']} | {x['logged_suggestions']} | {x['exported_unlogged']} | {x['logged_rows']} | "
+                 f"{dec['ACCEPTED']} / {dec['DECLINED']} / {dec['UNRESOLVED']} | {adj} |")
     a = res['accounting_after']
-    L += ['', f"- Confirmed economic discoveries: {a['confirmed_economic_discoveries']['count']} (rule: {a['confirmed_economic_discoveries']['rule']}).",
-          f"- Methodological warnings confirmed: {a['methodological_warnings_confirmed']['count']}; never counted as discoveries.",
+    L += ['', f"- Confirmed economic discoveries: {a['confirmed_economic_discoveries']['rows']} row(s), "
+              f"{a['confirmed_economic_discoveries']['distinct_origin_suggestions']} suggestion(s) (rule: {a['confirmed_economic_discoveries']['rule']}).",
+          f"- Methodological warnings confirmed: {a['methodological_warnings_confirmed']['rows']}; never counted as discoveries.",
           f"- {sum(r['result'] == 'PASS' for r in res['checks'])}/{len(res['checks'])} checks passed."]
     return '\n'.join(L) + '\n'
 

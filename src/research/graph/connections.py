@@ -15,14 +15,31 @@ economic connection. This module separates the two, using the match bases operat
 * UNSUPPORTED_MATCH - neither: for example a citation reused from the other record, or a locator-only match.
 
 Classification is categorical, from recorded bases; no score or model judgement is used.
+
+Rulesets (prospective, chosen per snapshot; the default stays V1_1 so every v1.1 output and frozen record is unchanged):
+
+* ``GRAPH_CLASSIFICATION_V1_1`` - the rules above.
+* ``GRAPH_CLASSIFICATION_V1_2`` - owner policy (2026-10-22): a generic shared identifier is insufficient by itself.
+  When every identified object behind ``EXACT_ENTITY_ID`` is generic (recorded type REGULATOR or GEOGRAPHY, or an
+  identifier matched by the versioned register ``docs/strategy/graph/generic_identifiers_v001.json``, e.g. ISO 10383
+  exchange codes), that basis does not ground. A documented relationship or the same document still grounds, and a
+  non-generic shared object alongside a generic one still grounds. The downgraded item records why. Registered before
+  any holdout fixture for it was written; evaluated only on a separate holdout, never on the v1.1 adversarial set.
 """
 from __future__ import annotations
+
+import json
+from pathlib import Path
 
 from src.research.discovery import records as R
 from src.research.graph import model as M
 from src.research.graph import rules as G
 
 OPERATOR_VERSION = 'GRAPH_OPERATORS_V1_1'
+CLASSIFICATION_V1_1, CLASSIFICATION_V1_2 = 'GRAPH_CLASSIFICATION_V1_1', 'GRAPH_CLASSIFICATION_V1_2'
+CLASSIFICATIONS = (CLASSIFICATION_V1_1, CLASSIFICATION_V1_2)
+GENERIC_REGISTER = Path(__file__).resolve().parents[3] / 'docs/strategy/graph/generic_identifiers_v001.json'
+GENERIC_REGISTER_VERSION = 'GRAPH_GENERIC_IDENTIFIERS_V001'
 ECONOMIC = 'ECONOMIC_CONNECTION_CANDIDATE'
 WARNING = 'METHODOLOGICAL_WARNING'
 UNSUPPORTED = 'UNSUPPORTED_MATCH'
@@ -39,7 +56,9 @@ METHODOLOGICAL = {
     'MECHANICAL_BLOCKER': 'both claims are blocked by the same mechanical checklist blocker',
     'REQUIREMENT_MATCH': 'both records share a requirement class'}
 UNSUPPORTED_BASES = {'REUSED_CITATION': 'one record cites evidence copied from the other (reused_from); the same evidence, not a second record',
-                     'SAME_LOCATOR_ONLY': 'only a document locator matches; no content hash'}
+                     'SAME_LOCATOR_ONLY': 'only a document locator matches; no content hash',
+                     'GENERIC_SHARED_IDENTIFIER': 'the only shared identified object is a generic institutional identifier (a regulator, exchange, '
+                                                  'geography or other generic role); insufficient by itself under GRAPH_CLASSIFICATION_V1_2'}
 NOT_ESTABLISHED = ['financial exposure of any listed company', 'causation or transmission of a quantity', 'materiality',
                    'allocation of any quantity to a counterparty', 'that the records describe the same quantity definition and units']
 WARNING_MEANING = ('These records share an unresolved research requirement, so the earlier investigation is a relevant warning about '
@@ -152,12 +171,56 @@ def warn(g, source, target, bases, via):
             'use': 'Reuse the earlier recorded gap, falsification route or failure before acquiring similar evidence.'}
 
 
+def load_register(path=GENERIC_REGISTER):
+    reg = json.loads(Path(path).read_text(encoding='utf-8'))
+    if reg.get('version') != GENERIC_REGISTER_VERSION:raise ValueError(f'not a {GENERIC_REGISTER_VERSION} register')
+    for key in ('entity_types', 'identifier_prefixes', 'identifiers'):
+        if not isinstance(reg.get(key), list) or not all(isinstance(x, dict) and x.get('category') and x.get('rationale') for x in reg[key]):
+            raise ValueError(f'register {key} entries each need a category and a rationale')
+    return reg
+
+
+def use_rules(g, rules=CLASSIFICATION_V1_1, register=None):
+    """Select the classification ruleset for queries on this graph (V1_2 also needs the generic-identifier register)."""
+    if rules not in CLASSIFICATIONS:raise ValueError(f'classification rules are one of {CLASSIFICATIONS}')
+    g.classification, g.generic_register = rules, (register or load_register()) if rules == CLASSIFICATION_V1_2 else None
+    return g
+
+
+def generic_category(g, nid):
+    """The generic institutional category of an entity node, or None. Never from a name."""
+    reg, a = g.generic_register, g.nodes[nid]['attrs']
+    types = set(a.get('types', ())) | set(a.get('memory_types', ()))
+    for x in reg['entity_types']:
+        if x['type'] in types:return x['category']
+    for x in reg['identifier_prefixes']:
+        if a['identifier'].startswith(x['prefix']):return x['category']
+    for x in reg['identifiers']:
+        if a['identifier'] == x['id']:return x['category']
+    return None
+
+
+def apply_rules(g, item, bases, via):
+    """The bases that count under the graph's ruleset, and the generic-identifier explanation when V1_2 removes one."""
+    if getattr(g, 'classification', CLASSIFICATION_V1_1) == CLASSIFICATION_V1_1 or 'EXACT_ENTITY_ID' not in bases:return list(bases), None
+    vias = list(via) + [m.get('via') for m in item.get('matches', [])]
+    entities = sorted({v for v in vias if isinstance(v, str) and v.startswith('entity:') and v in g.nodes})
+    categories = {e: generic_category(g, e) for e in entities}
+    if not entities or not all(categories.values()):return list(bases), None
+    return [b for b in bases if b != 'EXACT_ENTITY_ID'], {
+        'rule': CLASSIFICATION_V1_2, 'entities': [{'entity': e, 'category': c} for e, c in categories.items()],
+        'note': 'every shared identified object here is a generic institutional identifier; EXACT_ENTITY_ID does not ground this item'}
+
+
 def annotate(g, item, source, target, bases, via):
     """Add the connection class and its explanation to an operator result (in place); returns it."""
-    item['connection_class'] = classify(bases)
-    if item['connection_class'] == ECONOMIC:item['grounding'] = ground(g, source, target, bases, via)
-    elif item['connection_class'] == WARNING:item['warning'] = warn(g, source, target, bases, via)
-    else:item['unsupported'] = {'reason': [UNSUPPORTED_BASES.get(b, b) for b in sorted(set(bases))],
+    effective, generic = apply_rules(g, item, bases, via)
+    item['connection_class'] = classify(effective)
+    if generic:item['generic_identifier'] = generic
+    if getattr(g, 'classification', CLASSIFICATION_V1_1) != CLASSIFICATION_V1_1:item['classification_rules'] = g.classification
+    if item['connection_class'] == ECONOMIC:item['grounding'] = ground(g, source, target, effective, via)
+    elif item['connection_class'] == WARNING:item['warning'] = warn(g, source, target, effective, via)
+    else:item['unsupported'] = {'reason': [UNSUPPORTED_BASES.get(b, b) for b in sorted(set(effective))] + ([UNSUPPORTED_BASES['GENERIC_SHARED_IDENTIFIER']] if generic else []),
                                 'note': 'cannot justify even a provisional economic connection; retained for transparency'}
     return item
 

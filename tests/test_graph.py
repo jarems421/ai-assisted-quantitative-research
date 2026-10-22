@@ -973,7 +973,10 @@ class GraphPilotR4ReadinessTests(unittest.TestCase):
         impl=R4.pinned_copy(self.tmp/'impl');pin=I.pin(impl)
         self.assertEqual((I.verify(pin,impl)['status'],len(pin['commit']),pin['normalisation']),('EXACT_COMMIT',40,'CRLF_TO_LF'))
         self.assertIn('src/research/graph/pilot.py',pin['files']);self.assertIn('src/research/spec.py',pin['files'])
-        self.assertNotIn('src/research/sec_pilot/parsing.py',pin['files'])
+        for path in ('src/research/sec_pilot/parsing.py','docs/strategy/graph_pilot/fetch_one.py'):self.assertIn(path,pin['files'])  # acquisition and enforcement path
+        self.assertIn('src/research/exp004_policy.py',pin['files'])  # imported only inside a spec.py function: the static closure still follows it
+        self.assertEqual(set(pin['runtime']),{'python','implementation','dependencies'});self.assertIn('jsonschema',pin['runtime']['dependencies'])
+        with self.assertRaisesRegex(I.PinError,'the runtime differs'):I.verify(dict(pin,runtime=dict(pin['runtime'],python='0.0.0')),impl)
         f=impl/'src/research/discovery/ledger.py';original=f.read_bytes()
         f.write_bytes(original+b'# local edit\n')
         with self.assertRaisesRegex(I.PinError,'uncommitted changes'):I.pin(impl)
@@ -984,8 +987,8 @@ class GraphPilotR4ReadinessTests(unittest.TestCase):
         self.assertEqual(I.verify(pin,impl)['status'],'UNRELATED_COMMIT_CHANGE')
         (impl/'src/research/graph/new_module.py').write_text('X = 1\n',encoding='utf-8')
         with self.assertRaisesRegex(I.PinError,"'added'"):I.verify(pin,impl)
-        bare=self.tmp/'bare';shutil.copytree(impl/'src',bare/'src')
-        (bare/'src/research/graph/new_module.py').unlink()
+        (impl/'src/research/graph/new_module.py').unlink();bare=self.tmp/'bare'
+        for rel in I.closure(impl)[0]:(bare/rel).parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(impl/rel,bare/rel)
         with self.assertRaisesRegex(I.PinError,'git metadata is unavailable'):I.pin(bare)
         self.assertEqual(I.verify(pin,bare)['status'],'GIT_UNAVAILABLE_CONTENT_VERIFIED')
         with self.assertRaisesRegex(I.PinError,'unknown implementation pin version'):I.verify(dict(pin,version='X'),impl)
@@ -1011,10 +1014,12 @@ class GraphPilotR4ReadinessTests(unittest.TestCase):
         for packet in ('P3','P4'):
             self.assertEqual(P.verify_summary(ROOT/f'docs/strategy/graph_pilot_r3/{packet}/snapshot.json')['implementation'],{'status':'NOT_PINNED_LEGACY'})
 
-    def test_effort_threshold_reads_the_r4_rule_literally_and_reports_both_conditions(self):
-        self.assertEqual(P.compare_minutes(20,15)['exceeds_5_minutes'],False);self.assertTrue(P.compare_minutes(20,15)['flagged'])  # 10% of 15
-        self.assertTrue(P.compare_minutes(126,120)['exceeds_5_minutes']);self.assertFalse(P.compare_minutes(126,120)['exceeds_10_percent'])
-        self.assertFalse(P.compare_minutes(16,15.5)['flagged'])
+    def test_effort_material_threshold_is_the_greater_of_5_minutes_or_10_percent(self):
+        self.assertFalse(P.compare_minutes(20,15)['material']);self.assertTrue(P.compare_minutes(21,15)['material'])  # 5-minute floor
+        self.assertFalse(P.compare_minutes(132,120)['material']);self.assertTrue(P.compare_minutes(133,120)['material'])  # 10% of 120
+        small=P.compare_minutes(16,15.5)
+        self.assertEqual((small['material'],small['difference_minutes'],small['difference_percent']),(False,0.5,3.2))  # still reported
+        self.assertEqual(P.compare_minutes(3,0)['difference_percent'],'UNDEFINED_ZERO_DENOMINATOR')
         self.assertEqual(P.ratio(0,0)['value'],'UNDEFINED_ZERO_DENOMINATOR');self.assertEqual(P.ratio('UNKNOWN',3)['value'],'UNKNOWN')
 
     def test_r3_effort_and_accounting_are_diagnostic_and_its_results_are_unchanged(self):
@@ -1042,6 +1047,83 @@ class GraphPilotR4ReadinessTests(unittest.TestCase):
         self.assertEqual((v11['true_positives'],v11['false_negatives'],v11['identity_or_timing_errors']),(4,0,0))
         self.assertEqual(v11['false_positives_by_challenge'],{'trivial shared identifier':2})  # reported as found, not tuned away
         self.assertEqual(st['false_positives'],4);self.assertEqual(v11['warnings_correct'],1)
+
+
+class GraphPilotR4HardeningTests(unittest.TestCase):
+    """Phase A hardening: effort-evidence gate, row/suggestion accounting levels, uniform pin, v1.2 rule mechanics."""
+
+    def arm(self,**kw):
+        base={'analyst_minutes_all':60,'verified_connections':2,'verified_connections_per_hour':2.0,'graph_only_verified':0,'false_or_premature_joins_made':2,
+              'median_minutes_per_connection':6,'median_minutes_to_decisive_falsification':60,'duplicate_research_avoided':0,'original_frozen_m_passes':0,
+              'original_frozen_m_passes_per_hour':0.0,'review_burden_items':6,'adjudicator_minutes':12,'graph_suggestions_false_or_trivial':[0,0]}
+        return {**base,**kw}
+
+    def packets(self,evidence,session=(60,60)):
+        effort=lambda m:{'session':{'status':'RECORDED','minutes':m} if m else {'status':'NOT_RECORDED','minutes':'UNKNOWN'},'observed_span_minutes':50}
+        g=self.arm(false_or_premature_joins_made=0,median_minutes_to_decisive_falsification=40,verified_connections=3,verified_connections_per_hour=3.0)
+        return [{'S':self.arm(),'G':g,'effort_check':{'S':effort(session[0]),'G':effort(session[1])},'effort_evidence':{'S':evidence[0],'G':evidence[1]}}]*3
+
+    def test_definitive_classifications_need_supporting_effort_evidence(self):
+        final,primary,sens,notes=P.final_classification(self.packets(('CONSISTENT','CONSISTENT')))
+        self.assertEqual((final,primary),('GRAPH_INCREMENT_OBSERVED','GRAPH_INCREMENT_OBSERVED'))
+        final,primary,sens,_=P.final_classification(self.packets(('INCOMPLETE','CONSISTENT')))  # robust under the attested-session sensitivity
+        self.assertEqual((final,sens['session']),('GRAPH_INCREMENT_OBSERVED','GRAPH_INCREMENT_OBSERVED'))
+        final,primary,sens,notes=P.final_classification(self.packets(('CONTRADICTORY','CONSISTENT')))
+        self.assertEqual((final,primary),('INCONCLUSIVE','GRAPH_INCREMENT_OBSERVED'));self.assertTrue(any('EFFORT_EVIDENCE_UNRESOLVED' in n for n in notes))
+        final,_,sens,_=P.final_classification(self.packets(('INCOMPLETE','CONSISTENT'),session=(None,60)))
+        self.assertTrue(sens['session'].startswith('NOT_VALID'));self.assertEqual(final,'INCONCLUSIVE')
+        final,_,sens,_=P.final_classification(self.packets(('MATERIAL_DISCREPANCY','CONSISTENT'),session=(10,600)))  # sensitivity reverses the rate comparison: not definitive
+        self.assertNotEqual(sens['session'],'GRAPH_INCREMENT_OBSERVED');self.assertEqual(final,'INCONCLUSIVE')
+        self.assertTrue(any('Primary measure: self-reported analyst minutes' in n for n in notes))
+
+    def test_accounting_rates_use_compatible_levels_and_rows_keep_their_outcomes(self):
+        V2=GraphPilotV2ProvenanceTests;case=V2('test_exact_origins_are_accepted_and_every_mismatch_is_refused');V2.setUp(case);self.addCleanup(case.doCleanups)
+        dup=case.row(case.econ,connection_id=P.connection_id('a','b',['second look']),basis=['second look'],arm_decision='DECLINED')
+        case.write_log('connections-G.jsonl',[case.row(case.econ,arm_decision='ACCEPTED',discovery_lab_record='CAND-1'),dup,case.row(case.warn)])
+        a=P.suggestion_accounting(case.d)['by_class'][K_ECONOMIC]
+        self.assertEqual((a['logged_rows'],a['logged_suggestions'],a['rows_sharing_an_origin']),(2,1,2))
+        self.assertEqual(a['rates']['declined_share_of_logged_rows'],{'numerator':1,'denominator':2,'value':0.5})
+        self.assertEqual(a['rates']['all_declined_share_of_logged_suggestions'],{'numerator':0,'denominator':1,'value':0.0})
+        rows=[{'arm':'G','connection_id':r['connection_id'],'origin_suggestion_id':r['origin_suggestion_id'],'connection_class':r['connection_class'],
+               'kind':r['kind'],'arm_decision':r['arm_decision'],'outcome':o,'economic_meaning':'MEANINGFUL'}
+              for r,o in zip(P.read_jsonl(case.d/'connections-G.jsonl'),('CONFIRMED_AGAINST_ORIGINALS','REJECTED_FALSE','REJECTED_TRIVIAL'))]
+        b=P.suggestion_accounting(case.d,rows)
+        e=b['by_class'][K_ECONOMIC]['adjudicated']
+        self.assertEqual((e['rows_adjudicated'],e['rows']['CONFIRMED_AGAINST_ORIGINALS'],e['rows']['REJECTED_FALSE'],e['suggestions_with_conflicting_outcomes']),(2,1,1,1))
+        self.assertEqual((b['confirmed_economic_discoveries']['rows'],b['confirmed_economic_discoveries']['distinct_origin_suggestions']),(1,1))
+
+    def test_pin_is_enforced_on_structured_search_graph_and_replay_paths(self):
+        V2=GraphPilotV2ProvenanceTests;case=V2('test_exact_origins_are_accepted_and_every_mismatch_is_refused');V2.setUp(case);self.addCleanup(case.doCleanups)
+        real=I.content;changed=lambda root=I.ROOT:{**real(root),'tree_digest':'0'*64}
+        s_when=Ledger(case.d/'S.jsonl').load().events[-1]['recorded_at_utc']
+        with patch.object(I,'content',changed):
+            for fn in (lambda:P.arm_view(case.snap,'S',s_when),lambda:P.arm_graph(case.snap,'G',case.t),lambda:P.load_suggestion_exports(P.default_exports(case.snap),case.snap),
+                       lambda:P.derived_effort(case.d,'G'),lambda:P.suggestion_accounting(case.d),lambda:P.load_snapshot(case.snap)):
+                with self.assertRaisesRegex(P.PilotError,'differs from the snapshot pin'):fn()
+            err=io.StringIO()
+            with contextlib.redirect_stderr(err),contextlib.redirect_stdout(io.StringIO()),self.assertRaises(SystemExit):
+                GCLI.main(['baseline-search','DLC-GP1-S','OBS-1','--snapshot',str(case.snap),'--arm','S','--query-at',s_when])
+            self.assertIn('differs from the snapshot pin',err.getvalue())
+        self.assertEqual(P.arm_view(case.snap,'G',case.t)['receipt']['implementation_check']['status'],'UNRELATED_COMMIT_CHANGE')
+
+    def test_v1_2_rule_mechanics_and_v1_1_default_unchanged(self):
+        from src.research.graph import connections as K
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);d=Path(tmp.name);clock=Clock()
+        reg=entity('REGULATOR','SYN_AUTH:A-1','Synthetic authority')
+        a=Ledger.create(d/'A.jsonl',campaign('DLC-MECH-A','a','OBSERVATION_FIRST','?'),clock);a.append('source',passport('SRC-A','s',field='f',units='u'))
+        a.append('observation',obs('OBS-A','SRC-A','Authority count.',1,'count',reg,'2025-01-01','2025-01-01','2026-10-01T00:00:00+00:00','x'))
+        b=Ledger.create(d/'B.jsonl',campaign('DLC-MECH-B','b','OBSERVATION_FIRST','?'),clock);b.append('source',passport('SRC-B','s',field='f',units='u'))
+        b.append('observation',obs('OBS-B','SRC-B','Authority act.',1,'count',reg,'2025-02-01','2025-02-01','2026-10-01T00:00:00+00:00','y'))
+        g=build([d/'A.jsonl',d/'B.jsonl'],catalogue_path=None,mode='synthetic',with_memory=False,requirements=__import__('src.research.graph.quality',fromlist=['VOCABULARY']).VOCABULARY)
+        v11=O.complements(g,'DLC-MECH-B/OBS-B',V)['results'][0]
+        self.assertEqual(v11['connection_class'],K.ECONOMIC);self.assertNotIn('classification_rules',v11)  # v1.1 default untouched
+        K.use_rules(g,K.CLASSIFICATION_V1_2)
+        v12=O.complements(g,'DLC-MECH-B/OBS-B',V)['results'][0]
+        self.assertEqual((v12['connection_class'],v12['classification_rules']),(K.UNSUPPORTED,K.CLASSIFICATION_V1_2))
+        self.assertEqual(v12['generic_identifier']['entities'],[{'entity':'entity:SYN_AUTH:A-1','category':'REGULATOR'}])
+        self.assertEqual(v12['suggestion_id'],v11['suggestion_id'])  # ids are rule-independent
+        with self.assertRaisesRegex(ValueError,'classification rules'):K.use_rules(g,'V9')
+        reg_=K.load_register();self.assertEqual(reg_['identifiers'],[])
 
 
 if __name__=='__main__':unittest.main()

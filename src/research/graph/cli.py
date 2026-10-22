@@ -10,6 +10,7 @@ import json
 import sys
 from pathlib import Path
 
+from src.research.graph import connections as K
 from src.research.graph import demo, evaluate as E, operators as O, pilot as P, render as RN
 from src.research.graph import model as M
 from src.research.graph.catalogue import CATALOGUE_PATH
@@ -89,6 +90,7 @@ def pilot_parser(sub):
     x.add_argument('--bundle'); x.add_argument('--frozen-at'); x.add_argument('--catalogue', default=str(CATALOGUE_PATH))
     x.add_argument('--connection-log', choices=[P.CONNECTION_LOG_V2],
                    help='freeze the packet for V2 suggestion-traceable logs (prospective pilots); also pins the exact Graph implementation (needs a clean git checkout)')
+    x.add_argument('--classification', choices=list(K.CLASSIFICATIONS), default=K.CLASSIFICATION_V1_1, help='connection-classification ruleset recorded in a V2 snapshot')
     x = ps.add_parser('verify', help='verify a snapshot (and a bundle copy); both arms must print the same summary')
     x.add_argument('snapshot'); x.add_argument('--bundle')
     x = ps.add_parser('connections', help='validate an arm connection log (V1, or prospective V2 with suggestion origins)'); x.add_argument('log'); x.add_argument('--arm', choices=P.ARMS, required=True)
@@ -103,6 +105,9 @@ def pilot_parser(sub):
     x.add_argument('snapshot'); x.add_argument('--arm', choices=P.ARMS, required=True)
     x = ps.add_parser('effort', help='timestamp-derived elapsed time beside self-reported minutes for one arm campaign (R4 readiness)')
     x.add_argument('packet'); x.add_argument('--arm', choices=P.ARMS, required=True)
+    x = ps.add_parser('session-attest', help='the human arm operator personally attests a session START or STOP, at the moment it happens (immutable)')
+    x.add_argument('packet'); x.add_argument('--arm', choices=P.ARMS, required=True); x.add_argument('--event', choices=P.SESSION_EVENTS, required=True)
+    x.add_argument('--by', required=True, help='your own name: assistants may not attest')
     x = ps.add_parser('suggestion-accounting', help='exported, logged, declined and unlogged graph suggestions by class, with denominators')
     x.add_argument('packet'); x.add_argument('--export', help='after adjudication: the presentation used (adds adjudicated outcomes)')
     x = ps.add_parser('r4-dry-run', help='R4 readiness Phase A synthetic rehearsal with mutation checks (not an R4 run)')
@@ -122,7 +127,8 @@ def run_pilot(a):
     out = lambda value: print(json.dumps(value, indent=2, ensure_ascii=False, default=str))
     if a.pilot_command == 'snapshot':
         arms = {arm: (path, cid) for arm, path, cid in a.arm_ledger}
-        snap, digest_ = P.make_snapshot(a.out, a.packet, a.packet_ledger, arms, a.bundle, a.catalogue, a.frozen_at, connection_log=a.connection_log)
+        snap, digest_ = P.make_snapshot(a.out, a.packet, a.packet_ledger, arms, a.bundle, a.catalogue, a.frozen_at, connection_log=a.connection_log,
+                                        classification=a.classification)
         out({'written': a.out, 'snapshot_sha256': digest_, 'frozen_at_utc': snap['frozen_at_utc'], 'prior': snap['prior']['packet_ledger']})
     elif a.pilot_command == 'verify':out(P.verify_summary(a.snapshot, a.bundle))
     elif a.pilot_command == 'connections':
@@ -141,6 +147,7 @@ def run_pilot(a):
             if a.write:R4.RECORD.write_text(text, encoding='utf-8', newline='\n'); print(f'written {R4.RECORD.relative_to(R4.ROOT).as_posix()}')
             else:print(text, end='')
     elif a.pilot_command == 'effort':out(P.derived_effort(a.packet, a.arm))
+    elif a.pilot_command == 'session-attest':out(P.attest_session(a.packet, a.arm, a.event, a.by))
     elif a.pilot_command == 'suggestion-accounting':out(P.suggestion_accounting(a.packet, P.unblind(a.packet, a.export) if a.export else None))
     elif a.pilot_command == 'adjudications':
         rows = P.validate_adjudications(a.blind, a.log); counts = {}
