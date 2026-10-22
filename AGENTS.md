@@ -1,8 +1,9 @@
 # Repository instructions
 
-## Graph Pilot R4 pre-activation feasibility audit (2026-10-22)
+## Graph Pilot R4 feasibility audit and pause recommendation (2026-10-22)
 
-- `docs/strategy/graph_pilot_r4_feasibility_audit_v001.md`: offline overlap/stop audit and public documentation/terms review only; no dataset, API, listing or bulk route was fetched or probed, and its proposals (replacement reserves, F1(a), F2=2) are recommendations, not registrations. Classification FEASIBLE_FOR_OWNER_REGISTRATION_REVIEW is conditional on owner-adopted reserves and two secured independent reviewers; every route stays `CANDIDATE_UNVERIFIED`. FSIS is excluded (recorded 403, unclear scope treated as host-level). Never copy private receipt content into tracked files.
+- `docs/strategy/graph_pilot_r4_feasibility_audit_v001.md`: offline overlap/stop audit and public documentation/terms review only; no dataset, API, listing or bulk route was fetched or probed. Classification INCONCLUSIVE_MORE_OFFLINE_EVIDENCE_NEEDED: observation-first has no documented route with confirmed terms (CAISO E2 ambiguous; FDIC financial data excluded as outcome-bearing; price reports excluded), relationship-first has only GLEIF under F1(a), event-first has CPSC then FDIC history. Documented availability is never E1–E8 eligibility; E2 needs the owner and E3–E6 a probe. FSIS is excluded (recorded 403, unclear scope treated as host-level). Never copy private receipt content into tracked files.
+- `graph_pilot_r4_pause_recommendation_v001.md` recommends pausing R4 pending a future owner decision. It is a recommendation, not an owner decision: R4 stays NOT_RUN, all drafts stay non-authoritative and no historical status changes. Do not resume R4 preparation, preflight, recruitment or activation without an explicit owner instruction.
 
 ## Graph Pilot R4 operational package: documentation only, no activation authority
 
