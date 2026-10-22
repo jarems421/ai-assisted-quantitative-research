@@ -1,5 +1,10 @@
 # Repository instructions
 
+## Graph Pilot R4 two-model AI adjudication variant: PROPOSED, not registered (2026-10-22)
+
+- `docs/strategy/graph_pilot_r4_ai_adjudication_proposal_v001.md`, frozen texts in `docs/strategy/graph_pilot_r4_ai_review/` (checklist, Stage A and Stage B prompts, templates) and `src/research/graph/ai_review.py` (`pilot ai-package|ai-review-check|ai-review-seal|ai-cross-inputs|ai-reconcile`). Offline design only: no model call, hosted-model use, source retrieval or activation is authorised, and R4 stays NOT_RUN and paused.
+- The human Phase B design is unchanged and never fed by this path: AI outputs are `reviewer_kind: AI_MODEL`, never written to `adjudications-R`/`warning-usefulness-R` logs, never conforming, always under the AI-ADJUDICATED banner. Never edit a model answer to pass validation (failed attempts are preserved); never relabel from cross-reviews, confidence or a third reading; disagreements stay `AI_UNRESOLVED_DISAGREEMENT`. Frozen texts are versioned by hash: change them only as a new version, and keep them free of leak-scan words. The repository is public: browsing reviewers are potentially unblinded, and R4 artefacts should stay off the remote until Stage C.
+
 ## Graph Pilot R4 operational package: documentation only, no activation authority
 
 - `graph_pilot_r4_reviewer_guide_v001.md`, `graph_pilot_r4_runbook_v001.md`, `graph_pilot_r4_source_plan_v001.md`, `graph_pilot_r4_activation_template_v001.md` and `graph_pilot_r4_operational_readiness_v001.md` are drafts that bind only when a completed owner activation document names them by hash. R4 is NOT_RUN until the owner commits `owner_graph_pilot_r4_<date>.md` to `main`. Never fill owner fields, make D1/F1/F2/U1/R1 or ceiling decisions, or commit the template as that document for the owner. Never recruit, impersonate or act as a reviewer, operator or attester.
