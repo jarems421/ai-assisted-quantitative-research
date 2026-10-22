@@ -128,5 +128,18 @@
     "manifest_sha256": "bebe3be33da857d1335d566fdc17caceff7895886e81ec971dce75ea0daf2e5e",
     "reason": "Frozen before the final replay.py edit; no longer loads under final code. Retained unchanged, not reused."
   },
-  "github_ci": "PENDING"
+  "github_ci": {
+    "pull_request": 7,
+    "run_id": 39776694868,
+    "tested_commit": "PR merge of 9aaf42d with main ca9f4ce",
+    "conclusion": "FAILURE_UNRELATED_PRE_EXISTING",
+    "failing_test": "tests.test_graph.GraphPilotProvenanceAndConfigurationTests.test_modified_execution_provenance_is_refused_before_sealing",
+    "cause": "Graph-pilot test assumes origin/main has different pinned graph content from HEAD; false for any branch that leaves graph files untouched. Passes on main itself. Not modified here (separate graph workstream).",
+    "scout_steps_run_in_ci": false,
+    "local_merge_tree_equivalent": {
+      "public_checks": "376/377 passed; same single graph failure",
+      "v004_checks": "229/229 passed",
+      "process_assurance": "6/6 passed"
+    }
+  }
 }
