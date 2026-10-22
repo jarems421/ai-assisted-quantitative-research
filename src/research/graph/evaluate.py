@@ -14,6 +14,7 @@ import time
 from pathlib import Path
 
 from src.research.graph import baseline as B
+from src.research.graph import connections as K
 from src.research.graph import model as M
 from src.research.graph import operators as O
 from src.research.graph.fixtures import REQUIREMENTS
@@ -137,5 +138,6 @@ def export_suggestions(g, target, ledgers, catalogue=None, known_at=None, cuts=N
             hist = r['match'].split(':', 1)[1].split('/')[0] if r['match'].startswith('history:') else None
             out.append({'suggestion_id': r['suggestion_id'], 'operator': 'revisit' if 'previous_status' in r else 'complements',
                         'target': r['target'], 'match': r['match'], 'match_bases': r['match_bases'],
-                        'baseline_structured_discoverable': key in discoverable or (hist is not None and f'HIST:{hist}' in discoverable)})
+                        'baseline_structured_discoverable': key in discoverable or (hist is not None and f'HIST:{hist}' in discoverable),
+                        'connection_class': r['connection_class'], 'grounded_explanation_complete': K.provenance_complete(r)})
     return out

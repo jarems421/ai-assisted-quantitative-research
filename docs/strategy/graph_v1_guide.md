@@ -2,7 +2,7 @@
 
 > DERIVED RESEARCH VIEW - NOT INDEPENDENT EVIDENCE - NO RESEARCH AUTHORITY
 
-Graph v1 lets a researcher ask, whenever something new is recorded: *have we met this object, document, relationship or research problem before, and what genuinely connects them?* It reads Discovery Lab ledgers and the historical-memory catalogue. It writes nothing back and authorises nothing. [Design](graph_v1_design.md) · [Walkthrough](graph_v1_walkthrough.md) · [Backfill audit](graph_v1_backfill_audit.md) · [Pre-pilot review](graph_v1_review.md) · [Pilot pre-registration](graph_pilot_preregistration.md) · [Pilot dry run](graph_pilot_dry_run.md).
+Graph v1 lets a researcher ask, whenever something new is recorded: *have we met this object, document, relationship or research problem before, and what genuinely connects them?* It reads Discovery Lab ledgers and the historical-memory catalogue. It writes nothing back and authorises nothing. [Design](graph_v1_design.md) · [Walkthrough](graph_v1_walkthrough.md) · [Backfill audit](graph_v1_backfill_audit.md) · [Pre-pilot review](graph_v1_review.md) · [Pilot pre-registration](graph_pilot_preregistration.md) · [Pilot dry run](graph_pilot_dry_run.md) · [v1.1 connection classes](graph_v1_1_design.md).
 
 ## Quick start
 
@@ -15,6 +15,7 @@ python -m src.research.graph explain HIST-SH09 CIK:0000093410   # why no exposur
 python -m src.research.graph failures                           # bounded negative results, with scope
 python -m src.research.graph demo --check                       # reproducible demos A-F
 python -m src.research.graph evaluate                           # offline ordinary-search vs graph check
+python -m src.research.graph quality --check                    # v1.1 synthetic discovery-quality regression
 python -m unittest tests.test_graph -v
 ```
 
@@ -53,6 +54,9 @@ No graph command appends to a ledger or changes a disposition.
 | `baseline-search CAMPAIGN OBSERVATION` | The pilot's structured arm: exact-identifier, content-hash, reference, period and known-at search, with no graph projection |
 | `pilot snapshot\|verify\|connections\|blind\|adjudications\|account\|report` | Proposed-pilot tooling: freeze a packet's prior inputs, verify an arm's starting copy, validate logs, build the blinded export, check accounting, report pairs |
 | `pilot dry-run [--write\|--check]` | Synthetic end-to-end rehearsal of the pilot through this CLI |
+| `pilot connections LOG --arm G [--suggestions FILE... --packet-snapshot SNAP]` | Validate a V1 log, or a V2 log whose graph-originated rows match the frozen, replayed suggestion export exactly (id, operator, bases, class, endpoints, time). Graph-originated V2 rows are refused without the export |
+| `pilot snapshot ... --connection-log GRAPH_PILOT_CONNECTION_V2` | Freeze a prospective packet for V2 logs: V1 rows refused, operator version pinned. The graph arm saves each suggesting query's `--json` output under `<packet>/suggestions-G/`; `pilot blind` seals their hashes in the key |
+| `quality [--write\|--check]` | Graph v1.1 synthetic regression: v1, v1.1 and structured search on the same fixtures |
 
 **Common options:**
 
@@ -74,10 +78,15 @@ No graph command appends to a ledger or changes a disposition.
 
 **Every output starts with the banner. Treat it literally.**
 
+- **Connection class (v1.1):** every `revisit`, `complements`, `shared`, `same-gap` and `next` result has a `connection_class`, and the output ends with a `connection_summary`:
+  - **`ECONOMIC_CONNECTION_CANDIDATE`** rests on an exact document hash, an identified object or a documented relationship covering the date. It carries `grounding`: records, basis, joining objects, economic objects and roles, temporal check, what is established, what is not, the first unsupported inference and why it is worth investigating. It is a reason to investigate, never evidence of exposure.
+  - **`METHODOLOGICAL_WARNING`** rests only on a shared requirement, tag, mapping or blocker. It carries `warning`: the shared requirement and the earlier record's lesson. Read it as "this was hard to measure before", never as "these events are connected". All `same-gap` and `next` results are warnings.
+  - **`UNSUPPORTED_MATCH`**, for example a citation copied from the other record (`REUSED_CITATION`), is kept for transparency only.
+  - Candidates always list first, so a tag match never outranks a grounded one.
 - **Status on the record:** each record shows its assertion status, for example `ORIGINAL_FIELD_OBSERVED`, `ORIGINAL_DOCUMENT_REFERENCED` (document seen, field not verified), `DOCUMENTED_RELATIONSHIP` (with a separate allocation status) or `RECORDED_UNVERIFIED` (with a reason).
 - **Joining points:** entities and documents only join records. Reaching a company tells you nothing about its exposure.
 - **Suggestions:**
-  - **`strength`** is the strongest match basis: exact document hash, then exact entity, then documented relationship in a compatible period, then requirement match, then author tag.
+  - **`strength`** is the strongest match basis: exact document hash, then exact entity, then documented relationship in a compatible period, then requirement match, then author tag. Results sort by connection class first, then strength.
   - **`candidate_only: true`** means the match rests on a free-text author tag.
   - **`previous_status_stands: true`** is always set.
   - **`authority`** always says that no work is authorised.
@@ -182,3 +191,5 @@ The DOT export uses the same categories.
 | 43, 44 | The full local suite, public checks, the Discovery Lab demo check and the EXP004 audits (see the [validation receipt](graph_v1_validation.json)) |
 
 Additional tests cover the walkthrough, the utility check and adjudication-log validation. `GraphReviewRegressionTests` covers the pre-pilot review defects: catalogue V002 corrections and V001 preservation, archive-path CIK identity, evaluation input isolation, competent-baseline fairness and pilot-export memory parity.
+
+`GraphV11ConnectionClassTests` covers Graph v1.1: warnings versus economic candidates, grounded explanations, class ordering, reused citations, historical-memory warnings, the V2 suggestion-traceable connection log and R3 preservation ([design](graph_v1_1_design.md)).
