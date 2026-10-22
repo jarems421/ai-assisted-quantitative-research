@@ -234,10 +234,24 @@ def replay(g, view, doc):
     return json.loads(json.dumps(res, default=str))
 
 
+def receipt_core(receipt):
+    """A visibility receipt without its one volatile field: the arm ledger's total length when the output was saved."""
+    core = json.loads(json.dumps(receipt, default=str))
+    core.get('own_ledger', {}).pop('events_total', None)
+    return core
+
+
+def replayed_output(g, view, doc):
+    """What the saved output must equal, field for field, apart from its visibility envelope (checked separately)."""
+    if 'suggestions' in doc:return {'banner': M.BANNER, 'input': doc.get('input'), 'suggestions': json.loads(json.dumps(replay(g, view, doc)['suggestions']))}
+    return replay(g, view, doc)
+
+
 def load_suggestion_exports(files, snapshot):
     """The graph arm's frozen suggestion export: each saved output must belong to this packet snapshot and arm G, and must
-    replay exactly from the snapshot at its recorded query time, so no suggestion can be edited, added or reclassified.
-    Returns the suggestion index and a manifest of file hashes (sealed in the blinding key)."""
+    replay exactly from the snapshot at its recorded query time. Equality covers the whole saved output (results, grounded
+    explanations, warnings, rejections, abstentions, notes and summary), not only the indexed suggestion fields, and the
+    visibility receipt must equal the replayed receipt except the volatile arm-ledger length. Returns the suggestion index and a manifest of file hashes (sealed in the blinding key)."""
     from src.research.graph import operators as O
     v, index, manifest = load_snapshot(snapshot), {}, []
     for f in sorted(Path(x) for x in files):
@@ -245,9 +259,11 @@ def load_suggestion_exports(files, snapshot):
         if vis.get('arm') != 'G' or vis.get('snapshot_sha256') != v['sha256']:raise PilotError(f'{f.name}: not a graph-arm output for this packet snapshot')
         entries = export_entries(doc)
         g, view = arm_graph(snapshot, 'G', vis['query_at_utc'])
-        if vis.get('graph_digest') not in (None, g.digest()):raise PilotError(f'{f.name}: graph digest differs from the snapshot replay')
-        if export_entries(dict(replay(g, view, doc), operator=doc.get('operator'))) != entries:
-            raise PilotError(f'{f.name}: does not replay from the snapshot at its query time; the export was edited or produced elsewhere')
+        if receipt_core(vis) != receipt_core(view['receipt']):raise PilotError(f'{f.name}: visibility receipt differs from its snapshot replay')
+        body, expected = {k: x for k, x in doc.items() if k != 'visibility'}, replayed_output(g, view, doc)
+        if body != expected:
+            fields = sorted(k for k in set(body) | set(expected) if body.get(k) != expected.get(k))
+            raise PilotError(f'{f.name}: saved output differs from its snapshot replay in {fields}; the export was edited or produced elsewhere')
         for e in entries:
             if O.suggestion_id(e['operator'], e['target'], e['match'], e['match_bases']) != e['suggestion_id']:raise PilotError(f'{f.name}: {e["suggestion_id"]} does not recompute')
             if e['connection_class'] != (K.WARNING if e['operator'] in ('same-gap', 'next') else K.classify(e['match_bases'])):

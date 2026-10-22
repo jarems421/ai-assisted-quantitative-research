@@ -124,7 +124,8 @@ R3's graph arms logged graph-operator connections under fresh `CON-` ids. The or
 - **What it is.** At each query, the graph arm saves the snapshot-mode JSON of the suggesting command it ran under `<packet>/suggestions-G/`. The suggesting commands are `suggestions`, `revisit`, `complements`, `shared`, `same-gap` and `next`.
 - **Ids.** Suggestion ids are content-derived (`operators.suggestion_id`: operator, target, match and bases), so they can be recomputed. `same-gap` and `next` rows now carry ids too.
 - **Verification.** `pilot.load_suggestion_exports` accepts a saved output only if it names arm G and this packet's snapshot hash, every id recomputes, every class follows from its bases, and the query **replays exactly** from the snapshot at its recorded query time.
-  - Replay is what refuses an edited class or a fabricated but self-consistent suggestion. A mutation test confirms this.
+  - The comparison covers the **whole saved output**: results, grounded explanations, warning lessons, rejections, abstentions, notes and summary, plus any added field. Only the visibility receipt is exempt from that comparison. It is checked separately against the replayed receipt, excluding only the arm ledger's total length, which later appends legitimately change.
+  - Replay is what refuses an edited class, a fabricated but self-consistent suggestion, or an explanation or lesson rewritten after the query. Mutation tests change non-indexed fields while keeping the id, bases and class, and confirm each is refused.
 
 **Checks on every graph-originated V2 row.** Each check runs against that export:
 
@@ -159,7 +160,7 @@ R3's graph arms logged graph-operator connections under fresh `CON-` ids. The or
 
 ## Validation
 
-`python -m unittest discover -s tests` passes, with 15 new v1.1 tests (11 classification and quality, 4 V2 provenance). The graph, quality, dry-run, demo, build and public checks all pass. Receipt: [graph_v1_1_validation.json](graph_v1_1_validation.json).
+`python -m unittest discover -s tests` passes, with 16 new v1.1 tests (11 classification and quality, 5 V2 provenance). The graph, quality, dry-run, demo, build and public checks all pass. Receipt: [graph_v1_1_validation.json](graph_v1_1_validation.json).
 
 | Test | Shows |
 |---|---|
@@ -171,7 +172,7 @@ R3's graph arms logged graph-operator connections under fresh `CON-` ids. The or
 | Shared document; reused citation | Candidate marked not independent; reused citation unsupported |
 | Historical memory | The real-catalogue warnings stay retrievable, cited, and their verdicts stand |
 | Determinism | Classes categorical; repeat builds identical; inputs unchanged |
-| V2 provenance | Exact origin required against the replayed frozen export; edited, fabricated or foreign exports refused; export sealed at blinding and rechecked at unblinding; V1 rows refused in V2-frozen packets; operator version pinned |
+| V2 provenance | Exact origin required against the replayed frozen export; edited (including non-indexed explanation and warning fields), fabricated or foreign exports refused; export sealed at blinding and rechecked at unblinding; V1 rows refused in V2-frozen packets; operator version pinned |
 | R3 | Historical records and results unchanged |
 
 ## Critical review: what is still unverified

@@ -1,9 +1,9 @@
 {
  "version": "GRAPH_V1_1_VALIDATION_V001",
- "recorded_at_utc": "2026-10-22T08:47:29+00:00",
+ "recorded_at_utc": "2026-10-22T08:56:04+00:00",
  "status": "PASS",
  "branch": "graph-v1.1-discovery-quality",
- "starting_head": "09cab202de5a40c597db072827f29a5c7fea41f2",
+ "starting_head": "f793aa5dde67b971c3280f8b26621b2bc57269b2",
  "main_untouched": true,
  "owner": "owner_graph_v1_1_2026-10-22.md",
  "owner_sha256": "15433722bc817ab40a6bab46fcaee2bb78cc58913cccbbc641891e8f22133f4d",
@@ -32,21 +32,21 @@
    "name": "local_suite",
    "command": "python -m unittest discover -s tests",
    "returncode": 0,
-   "test_count": 588,
+   "test_count": 589,
    "skipped": 0,
-   "log_sha256": "b0e31f51614bcbbf411ea35bf0ade6f26b8fdc10d3827eed354156c68067b20e"
+   "log_sha256": "698ff900e2c5ea916155adcb512d9520d644f92e0b6d91155e1c54f06838f9d1"
   },
   {
    "name": "graph_tests",
    "command": "python -m unittest tests.test_graph",
    "returncode": 0,
-   "test_count": 71
+   "test_count": 72
   },
   {
    "name": "public_checks",
    "command": "python -m src.research.public_checks",
    "returncode": 0,
-   "test_count": 360
+   "test_count": 361
   },
   {
    "name": "quality",
