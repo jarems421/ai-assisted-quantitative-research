@@ -1,5 +1,7 @@
 # Graph Pilot R4: two-model AI adjudication variant (PROPOSED, version 001)
 
+> **Superseded for the software design by [version 002](graph_pilot_r4_ai_adjudication_proposal_v002.md)** (assurance hardening). Kept unchanged below as history; V1 package, answer and seal formats are no longer accepted.
+
 > **PROPOSED — NOT REGISTERED — NO EXPERIMENTAL AUTHORITY.**
 > - R4 is NOT_RUN. It is recommended to be paused (PR #12).
 > - Nothing here authorises a model call, hosted-model use, source retrieval, packet, review or activation.
