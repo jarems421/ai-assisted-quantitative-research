@@ -62,6 +62,9 @@ No graph command appends to a ledger or changes a disposition.
 | `pilot suggestion-accounting PACKET [--export NAME]` | R4 readiness: exported, logged, declined and unlogged graph suggestions by class, with denominators |
 | `pilot r4-dry-run [--write\|--check]` | R4 readiness Phase A synthetic rehearsal with mutation checks (not an R4 run) |
 | `pilot session-attest PACKET --arm S\|G --event START\|STOP --by NAME` | The human arm operator's own immutable session attestation, written as the event happens (assistants refused) |
+| `pilot adjudication-seal PACKET --reviewer R1\|R2 --by NAME` | Phase B: a human reviewer personally seals their economic and usefulness logs by hash (immutable; assistants refused) |
+| `pilot adjudication-agreement PACKET [--export NAME]` | Phase B: validate both sealed reviewers; consensus, agreement (kappa), exposure, reveal order and conformance |
+| `pilot r4-phase-b-dry-run [--write\|--check]` | Phase B synthetic rehearsal of dual human adjudication (not an R4 run) |
 | `holdout [--write\|--check]` | GRAPH_CLASSIFICATION_V1_2 holdout, written after the rule was registered: v1.1 vs v1.2 vs structured search |
 
 **Common options:**

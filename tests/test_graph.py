@@ -1253,4 +1253,62 @@ class GraphPilotProvenanceAndConfigurationTests(unittest.TestCase):
                         frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2,implementation=R4.synthetic_pin(),classification=K.CLASSIFICATION_V1_1)
         self.assertFalse(json.loads(self.case.snap.read_text(encoding='utf-8'))['r4_configuration']['conforms'])  # a deviation is recorded
 
+
+class GraphPilotPhaseBTests(unittest.TestCase):
+    """Phase B: dual human adjudication, exposure, warning usefulness and conformance (synthetic only)."""
+
+    @classmethod
+    def setUpClass(cls):
+        from src.research.graph import pilot_r4_phase_b_dryrun as PB
+        cls.PB=PB;cls.tmp=Path(tempfile.mkdtemp(prefix='graph-phase-b-test-'));cls.res=PB.run(cls.tmp);cls.p1=cls.tmp/'P1'
+
+    @classmethod
+    def tearDownClass(cls):R4.remove_tree(cls.tmp)
+
+    def test_agreement_statistics_and_undefined_cases(self):
+        from src.research.graph import adjudication as AD
+        a={'1':'C','2':'P','3':'P','4':'C'};b={'1':'C','2':'P','3':'T','4':'C'}
+        r=AD.agreement(a,b);self.assertEqual((r['items'],r['agreements'],r['kappa']),(4,3,0.6))
+        self.assertEqual(r['disagreements'],[{'blind_id':'3','R1':'P','R2':'T'}])
+        self.assertEqual(AD.agreement({},{})['kappa'],'UNDEFINED_ZERO_DENOMINATOR')
+        self.assertEqual(AD.agreement({'1':'C','2':'C'},{'1':'C','2':'C'})['kappa'],'UNDEFINED_NO_VARIATION')
+
+    def test_rehearsal_record_is_current_and_every_check_passes(self):
+        self.assertTrue(all(r['result']=='PASS' for r in self.res['checks']))
+        self.assertEqual(self.PB.check()['r4_phase_b_dry_run'],'PASS')
+
+    def test_usefulness_never_becomes_an_economic_discovery(self):
+        from src.research.graph import adjudication as AD
+        dual=AD.dual(self.p1,'blind_v2.json');base=P.suggestion_accounting(self.p1,P.unblind(self.p1,'blind_v2.json',dual['adjudications']))
+        forced={b:(dict(a,usefulness='USEFUL_LESSON_REUSED') if a['usefulness'] is not None else a) for b,a in dual['adjudications'].items()}
+        after=P.suggestion_accounting(self.p1,P.unblind(self.p1,'blind_v2.json',forced))
+        self.assertEqual(after['confirmed_economic_discoveries'],base['confirmed_economic_discoveries'])
+        self.assertEqual(after['methodological_warnings_confirmed']['rows'],base['methodological_warnings_confirmed']['rows']+1)
+        rows=P.unblind(self.p1,'blind_v2.json',forced)
+        self.assertTrue(all(r['outcome']=='NOT_ECONOMICALLY_ADJUDICATED' for r in rows if r['kind']!='CONNECTION'))
+
+    def test_deviation_never_admits_and_conformance_needs_everything(self):
+        from src.research.graph import adjudication as AD
+        snap=P.load_snapshot(self.p1/'snapshot.json')['snapshot'];dual=AD.dual(self.p1,'blind_v2.json')
+        self.assertEqual(AD.conformance(self.p1,snap,dual)['status'],'CONFORMING')
+        for change,problem in (({'r4_configuration':dict(snap['r4_configuration'],conforms=False)},'NON_CONFORMING_CONFIGURATION'),
+                               ({'r4_configuration':None},'NON_CONFORMING_CONFIGURATION'),({'fixture':'LIVE'},None)):
+            c=AD.conformance(self.p1,{**snap,**change},dual)
+            if problem:self.assertIn(problem,c['problems'])
+            else:self.assertEqual(c['status'],'CONFORMING')  # reveal order VERIFIED also satisfies a live packet
+        for key,problem in (('CONFLICTED','ADJUDICATOR_CONFLICT'),('NOT_INDEPENDENT','ADJUDICATION_NOT_INDEPENDENT')):
+            self.assertIn(problem,AD.conformance(self.p1,snap,{**dual,'item_status':{**dual['item_status'],key:1}})['problems'])
+        self.assertIn('REVEAL_ORDER_UNVERIFIED',AD.conformance(self.p1,{**snap,'fixture':'LIVE'},{**dual,'reveal_order':{'status':'NOT_COMMITTED'}})['problems'])
+        self.assertIn('ADJUDICATION_NOT_DUAL',AD.conformance(self.p1,snap,{'status':'ADJUDICATION_NOT_DUAL'})['problems'])
+        with self.assertRaisesRegex(P.PilotError,'an assistant cannot adjudicate'):AD.seal(self.tmp/'P2','blind_v2.json','R1','ChatGPT reviewer','SYNTHETIC_FIXTURE')
+
+    def test_legacy_reports_are_unchanged_by_phase_b(self):
+        base=ROOT/'docs/strategy/graph_pilot_r3'
+        rep=P.report([base/'P3',base/'P4'],export_name='blind_v2.json')
+        self.assertEqual((rep['classification'],rep['excluded_from_primary']),('INCONCLUSIVE',[]))
+        self.assertIn('G 3.151, S 4.162',[n for n in rep['notes'] if n.startswith('pooled')][0])
+        self.assertTrue(all('conformance' not in p and 'warning_usefulness' not in p['G'] for p in rep['packets']))
+        self.assertEqual(DR.check()['dry_run'],'PASS')
+
+
 if __name__=='__main__':unittest.main()

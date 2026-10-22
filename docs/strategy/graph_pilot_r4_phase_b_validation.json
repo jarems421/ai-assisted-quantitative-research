@@ -1,0 +1,141 @@
+{
+ "version": "GRAPH_PILOT_R4_PHASE_B_VALIDATION_V001",
+ "recorded_at_utc": "2026-10-22T11:55:48+00:00",
+ "status": "PASS",
+ "branch": "graph-pilot-r4-phase-b",
+ "base_main": "ca9f4ce0ee2a45c207c2e1158cd4d2f78f6679d3",
+ "main_untouched": true,
+ "report": {
+  "path": "docs/strategy/graph_pilot_r4_phase_b_v001.md",
+  "sha256": "92dc6b95c2c93f5639aafa29da81926d242bc842286cd71b5edc11e86728d5df"
+ },
+ "records": {
+  "docs/strategy/graph_pilot_r4_dry_run.md": "8040493f868a2b680db4416a381d51e58e93ca2c206f5cc1b0998a87a18d52d5",
+  "docs/strategy/graph_v1_1_adversarial.md": "ebb4bdc896ab1fb72fb779e46650386ab5e49eaba4bcde9ef76799af44b82135",
+  "docs/strategy/graph_v1_1_quality.md": "e96e8cce6a7918dcc3e1c0d54a6e33c19b73d2172efafb9775674fe29425364d",
+  "docs/strategy/graph_v1_2_holdout.md": "9516c98db0951f6b4c2d58d03db18b1bb08d48cf415c1cc82243b1832a42baf1",
+  "docs/strategy/graph_pilot_dry_run.md": "0d3224ee3ddc14b7489431ceb151e272bcdfa229aabace02eff4e529ceab35e6",
+  "docs/strategy/graph_v1_walkthrough.md": "cee4645ff4d9e71bcc72c3c9c33eaf2c7c341630ff120ed605dac6f9551ab926",
+  "docs/strategy/graph_pilot_r4_phase_b_dry_run.md": "ce502c11a53def899aee8e23008187802b9ec5a28b0b7ad58779b77a1f0519b0"
+ },
+ "protected_paths_changed_vs_main": {
+  "r3": "NONE",
+  "opportunity_scout": "NONE",
+  "v1_1_and_v1_2_records": "NONE"
+ },
+ "r4": "NOT_RUN",
+ "network": "none",
+ "acquisition": 0,
+ "scope": "SYNTHETIC_FIXTURES_ONLY; not an independent or real-world benchmark",
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": "python -m unittest discover -s tests",
+   "returncode": 0,
+   "test_count": 812,
+   "log_sha256": "e3b83c6332b8a70f520bf903cea396b66d6a72aa338459fb5154c0c9dc48e1c0"
+  },
+  {
+   "name": "graph_tests",
+   "command": "python -m unittest tests.test_graph",
+   "returncode": 0,
+   "test_count": 93
+  },
+  {
+   "name": "public_checks",
+   "command": "python -m src.research.public_checks",
+   "returncode": 0,
+   "test_count": 382
+  },
+  {
+   "name": "r4_dry_run",
+   "command": "python -m src.research.graph pilot r4-dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "adversarial",
+   "command": "python -m src.research.graph adversarial --check",
+   "returncode": 0
+  },
+  {
+   "name": "holdout_v1_2",
+   "command": "python -m src.research.graph holdout --check",
+   "returncode": 0
+  },
+  {
+   "name": "r4_phase_b_dry_run",
+   "command": "python -m src.research.graph pilot r4-phase-b-dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "quality",
+   "command": "python -m src.research.graph quality --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_demo",
+   "command": "python -m src.research.graph demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "pilot_dry_run_r2",
+   "command": "python -m src.research.graph pilot dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_build",
+   "command": "python -m src.research.graph build --check",
+   "returncode": 0,
+   "digest": "8c9167e93b9bb9729b7511933b7e0ae7ceed78becf9fc7a9b3bcd4705426b4e6",
+   "rebuild_identical": true
+  },
+  {
+   "name": "discovery_demo",
+   "command": "python -m src.research.discovery demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "phase4a",
+   "command": "python -m src.research.phase4a --check",
+   "returncode": 0
+  },
+  {
+   "name": "presentation",
+   "command": "python -m src.presentation.exp001 --check",
+   "returncode": 0
+  }
+ ],
+ "base_main_verification": {
+  "main": "ca9f4ce0ee2a45c207c2e1158cd4d2f78f6679d3",
+  "merge": "merge commit of PR #3 (parents ee6d7f9, 603b21e)",
+  "post_merge_ci": "success",
+  "registration_order_commits_in_main": [
+   "426c21119a25e9786f2fc4fd405bf4de914d6ab6",
+   "3bf047474b686c95f468415c68822dc675a8c505",
+   "603b21e5d569a6bc5312cd38a5e47e0e787876f8"
+  ],
+  "clean_worktree_suite": "798 tests: 2 errors from ignored private raw data absent in a fresh worktree (EXP001 raw files; Phase 3C parser input); both pass in the full checkout"
+ },
+ "mutation_checks": {
+  "script": "scratchpad mutation harness (not tracked)",
+  "caught": 13,
+  "total": 13,
+  "safeguards": [
+   "consensus requires both reviewers",
+   "attesters are conflicted",
+   "AI assessment exposure breaks independence",
+   "seal hashes checked",
+   "reveal order enforced",
+   "economic log limited to CONNECTION items",
+   "deviation cannot admit to primary",
+   "non-conforming packets excluded from primary",
+   "configuration conformance checked",
+   "two different humans",
+   "assistant names refused",
+   "usefulness never a discovery",
+   "reuse needs an avoided action"
+  ]
+ },
+ "ai_substitution": "No AI or assistant judgment, seal, exposure declaration or deviation is accepted; reviewer and owner stand-ins in rehearsals are labelled SYNTHETIC_FIXTURE and refused in live packets.",
+ "phase_a_record_regenerated": "graph_pilot_r4_dry_run.md: one line changed (its single-log V2 packet is now excluded from the primary comparison; session sensitivity NOT_VALID; still INCONCLUSIVE)."
+}

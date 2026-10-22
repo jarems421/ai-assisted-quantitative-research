@@ -47,7 +47,7 @@
 | accounting | two rows of one suggestion with different outcomes are both counted and the conflict is reported | conflicting suggestions 1; {'CONFIRMED_AGAINST_ORIGINALS': 1, 'PLAUSIBLE_UNVERIFIED': 1, 'REJECTED_FALSE': 1, 'REJECTED_TRIVIAL': 0} | PASS |
 | accounting | a warning confirmed as useful is never counted as an economic discovery | discoveries 1 -> 1; warnings confirmed 0 -> 1 | PASS |
 | effort | an attestation edited after blinding refuses unblinding | refused: changed after blinding | PASS |
-| report | the report states the primary measure, both sensitivities and the effort evidence; one pair stays INCONCLUSIVE | INCONCLUSIVE; evidence ['CONSISTENT', 'CONTRADICTORY']; sensitivities {'session': 'INCONCLUSIVE', 'observed_span': 'INCONCLUSIVE'} | PASS |
+| report | the report states the primary measure, both sensitivities and the effort evidence; one pair stays INCONCLUSIVE | INCONCLUSIVE; evidence ['CONSISTENT', 'CONTRADICTORY']; sensitivities {'session': 'NOT_VALID: a derived denominator is missing for some arm', 'observed_span': 'NOT_VALID: a derived denominator is missing for some arm'} | PASS |
 | uniform pin | structured-search arm view (S, API) refuses a changed implementation | refused: differs from the snapshot pin | PASS |
 | uniform pin | structured search (S, CLI baseline-search) refuses a changed implementation | refused: differs from the snapshot pin | PASS |
 | uniform pin | graph query (G, API arm_graph) refuses a changed implementation | refused: differs from the snapshot pin | PASS |

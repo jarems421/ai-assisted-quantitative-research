@@ -111,6 +111,13 @@ def pilot_parser(sub):
     x.add_argument('--by', required=True, help='your own name: assistants may not attest')
     x = ps.add_parser('suggestion-accounting', help='exported, logged, declined and unlogged graph suggestions by class, with denominators')
     x.add_argument('packet'); x.add_argument('--export', help='after adjudication: the presentation used (adds adjudicated outcomes)')
+    x = ps.add_parser('adjudication-seal', help='Phase B: a reviewer personally seals their economic and usefulness logs by hash (immutable)')
+    x.add_argument('packet'); x.add_argument('--reviewer', choices=['R1', 'R2'], required=True); x.add_argument('--by', required=True)
+    x.add_argument('--export', default='blind_v2.json')
+    x = ps.add_parser('adjudication-agreement', help='Phase B: validate both sealed reviewers; consensus, agreement, exposure and conformance')
+    x.add_argument('packet'); x.add_argument('--export', default='blind_v2.json')
+    x = ps.add_parser('r4-phase-b-dry-run', help='R4 Phase B synthetic rehearsal of dual human adjudication (not an R4 run)')
+    g_ = x.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     x = ps.add_parser('r4-dry-run', help='R4 readiness Phase A synthetic rehearsal with mutation checks (not an R4 run)')
     g_ = x.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     x = ps.add_parser('report', help='paired per-packet report after unblinding'); x.add_argument('packets', nargs='+'); x.add_argument('--json', action='store_true')
@@ -140,6 +147,20 @@ def run_pilot(a):
     elif a.pilot_command == 'blind':
         export = P.blind(a.snapshot, dict(a.log), a.salt, a.out, a.key, a.suggestion_exports)
         out({'written': a.out, 'items': len(export['items']), 'key_written': a.key, 'key_sha256': export['key_sha256']})
+    elif a.pilot_command == 'adjudication-seal':
+        from src.research.graph import adjudication as AD
+        out(AD.seal(a.packet, a.export, a.reviewer, a.by))
+    elif a.pilot_command == 'adjudication-agreement':
+        from src.research.graph import adjudication as AD
+        res = AD.dual(a.packet, a.export); snap = P.load_snapshot(Path(a.packet) / 'snapshot.json')['snapshot']
+        out({**{k: v for k, v in res.items() if k != 'adjudications'}, 'conformance': AD.conformance(a.packet, snap, res)})
+    elif a.pilot_command == 'r4-phase-b-dry-run':
+        from src.research.graph import pilot_r4_phase_b_dryrun as PB
+        if a.check:out(PB.check())
+        else:
+            text = PB.generate()
+            if a.write:PB.RECORD.write_bytes(text.encode('utf-8')); print(f'written {PB.RECORD.relative_to(PB.ROOT).as_posix()}')
+            else:print(text, end='')
     elif a.pilot_command == 'r4-dry-run':
         from src.research.graph import pilot_r4_dryrun as R4
         if a.check:out(R4.check())
