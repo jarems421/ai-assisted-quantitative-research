@@ -14,30 +14,40 @@ the chosen executable, not account/configuration files. No installation, update,
 login, process termination or model query is included.
 
 ```powershell
-Get-Command claude -All -ErrorAction SilentlyContinue |
-    Select-Object CommandType, Source
+$scoutClaudePaths = @(
+    (Get-Command claude.exe -CommandType Application -All -ErrorAction SilentlyContinue).Source
+    (Join-Path $env:USERPROFILE '.local\bin\claude.exe')
+    (Join-Path $env:LOCALAPPDATA 'Microsoft\WinGet\Packages\Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe\claude.exe')
+) | Where-Object {
+    $_ -and (Test-Path -LiteralPath $_ -PathType Leaf)
+} | Select-Object -Unique
+
+if (-not $scoutClaudePaths) {
+    Write-Output 'No native Claude executable found in these locations.'
+}
+foreach ($scoutClaudePath in $scoutClaudePaths) {
+    Get-Item -LiteralPath $scoutClaudePath |
+        Select-Object FullName, Length, Attributes, LinkType, Target | Format-List
+    Get-FileHash -LiteralPath $scoutClaudePath -Algorithm SHA256 | Format-List
+    (Get-Item -LiteralPath $scoutClaudePath).VersionInfo |
+        Select-Object FileVersion, ProductVersion | Format-List
+}
 Get-Command python -All -ErrorAction SilentlyContinue |
-    Select-Object CommandType, Source
+    Select-Object CommandType, Source | Format-List
 [Environment]::OSVersion.Version
 $PSVersionTable.PSVersion
 ```
 
-Select the actual native `claude.exe` application path from the result. Do not
+The WinGet candidate is the exact location recorded in the existing V003 setup
+documentation; discovery reads only the executable, never runs V003. These few
+locations are not an exhaustive installation search. Select the actual native
+`claude.exe` application path from the result. Do not
 invoke an alias/function, npm `.cmd`/`.ps1` shim, WSL installation or an unresolved
 link. Multiple installations require selecting exactly one, not deleting others.
 If no native executable is found, report that and stop: installation or updating
 would be a separate owner action with download/write/configuration risks.
 
-```powershell
-$scoutClaudeExe = 'C:\REPLACE-WITH-EXACT-ABSOLUTE-PATH\claude.exe'
-Get-Item -LiteralPath $scoutClaudeExe |
-    Select-Object FullName, Length, Attributes, LinkType, Target
-Get-FileHash -LiteralPath $scoutClaudeExe -Algorithm SHA256
-(Get-Item -LiteralPath $scoutClaudeExe).VersionInfo |
-    Select-Object FileVersion, ProductVersion
-```
-
-Replace the placeholder before running. Share command type, selected path, SHA256
+No placeholder replacement is needed in this discovery block. Share selected path, SHA256
 and version metadata; local user names in paths may be redacted in public reports
 (the eventual private binding needs the exact path). These commands reveal local
 paths and read executable bytes. A hash identifies bytes; it is not a trust or
@@ -58,7 +68,15 @@ Choose the existing intended Python executable from step 1; do not install or
 upgrade dependencies yet. For that executable only:
 
 ```powershell
-$scoutPythonExe = 'C:\REPLACE-WITH-EXACT-ABSOLUTE-PATH\python.exe'
+$scoutPythonPaths = @(
+    (Get-Command python.exe -CommandType Application -All -ErrorAction SilentlyContinue).Source |
+        Where-Object { $_ -and $_ -notlike '*\Microsoft\WindowsApps\*' } |
+        Select-Object -Unique
+)
+if ($scoutPythonPaths.Count -ne 1) {
+    throw 'Expected one actual Python executable; report discovery results before proceeding.'
+}
+$scoutPythonExe = $scoutPythonPaths[0]
 & $scoutPythonExe -I -c "import sys, platform, importlib.metadata as m; print(sys.executable); print(platform.python_version()); print({n:m.version(n) for n in ('jsonschema','referencing','jsonschema-specifications')})"
 ```
 
@@ -206,3 +224,23 @@ certifies the tested local behavior, not native compatibility. This change adds
 only this checklist; no production code, frozen artifact, approval or historical
 record was changed. No Claude invocation, account inspection, consent registration
 or hosted request occurred.
+
+## Static follow-up on this workstation
+
+The owner's PATH/default-location search found no executable. A subsequent static
+check found the previously documented WinGet executable at
+`C:\Users\runni\AppData\Local\Microsoft\WinGet\Packages\Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe\claude.exe`.
+It is a regular file with no reported link target, 290,211,488 bytes; SHA256
+`3ab075f78998efef8b87f491c2e4a39c309dddf44e51d0103eba4f3713d2a0ae`.
+FileVersion and ProductVersion both report `2.1.302.0`. This is static executable
+metadata, not an observed CLI version, compatibility result or registered binding.
+No installation or PATH change is necessary for an absolute-path launch.
+
+The existing Python resolved to
+`C:\Users\runni\AppData\Local\Programs\Python\Python313\python.exe`:
+Python `3.13.15`, jsonschema `4.26.0`, referencing `0.37.0`,
+jsonschema-specifications `2025.9.1`, observed using isolated Python metadata only.
+No Claude invocation or account inspection occurred. Steps 1-2 need no repetition
+on this unchanged machine; the immediate owner input is step 3's already-known
+research-setup facts. Fresh hashes/runtime verification remain required before
+any separately approved invocation. All N1 execution bindings remain unset.
