@@ -178,6 +178,16 @@ def run(directory):
     c.refused('dual', 'R1 and R2 must be two different humans', lambda: AD.dual(p3, EXPORT), 'two different humans')
     (p3 / 'adjudication-seal-R2.json').unlink()
     c.ok('dual', 'a single sealed reviewer is not dual adjudication', AD.dual(p3, EXPORT)['status'] == 'ADJUDICATION_NOT_DUAL', 'ADJUDICATION_NOT_DUAL')
+    c.refused('dual', 'a prospective packet cannot be unblinded before both reviewers seal', lambda: P.unblind(p3, EXPORT), 'only after both reviewers have sealed')
+    # Both seals and both reviewers' logs first appear in ONE commit: neither seal precedes the other's judgments.
+    p4 = base / 'P4'; shutil.copytree(p2, p4, ignore=shutil.ignore_patterns('adjudication-seal-*', 'adjudications-*', 'warning-usefulness-*'))
+    lg = judgments(p4)[3]
+    for rv in AD.REVIEWERS:
+        write_logs(p4, rv, *lg[rv]); AD.seal(p4, EXPORT, rv, REVIEWER[rv], 'SYNTHETIC_FIXTURE')
+    commit(base, [p4], 'P4 seals and logs together')
+    same_commit = AD.dual(p4, EXPORT)['reveal_order']
+    c.ok('dual', 'seals and logs first appearing in the same commit are a reveal-order violation (strict ancestry)',
+         same_commit['status'] == 'VIOLATED' and 'same commit' in same_commit['detail'], same_commit['detail'])
     bad = p2 / 'deviation-002.json'
     bad.write_text(json.dumps({**json.loads((p2 / 'deviation-001.json').read_text(encoding='utf-8')), 'treatment': 'INCLUDE_IN_PRIMARY'}), encoding='utf-8')
     c.refused('conformance', 'no deviation record can admit a packet to the primary comparison', lambda: AD.deviations(p2, 'SYNTHETIC'), 'can never enter the primary')

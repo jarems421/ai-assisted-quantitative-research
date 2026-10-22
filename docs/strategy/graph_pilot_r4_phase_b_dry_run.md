@@ -23,6 +23,8 @@
 | dual | a log revealed before the other reviewer sealed is a reveal-order violation | R1 economic log was committed before R2 sealed | PASS |
 | dual | R1 and R2 must be two different humans | refused: two different humans | PASS |
 | dual | a single sealed reviewer is not dual adjudication | ADJUDICATION_NOT_DUAL | PASS |
+| dual | a prospective packet cannot be unblinded before both reviewers seal | refused: only after both reviewers have sealed | PASS |
+| dual | seals and logs first appearing in the same commit are a reveal-order violation (strict ancestry) | R1 economic log first appears in the same commit as the R2 seal | PASS |
 | conformance | no deviation record can admit a packet to the primary comparison | refused: can never enter the primary | PASS |
 | conformance | only the conforming packet enters the primary comparison; the non-conforming one is listed with its owner deviation | P2 excluded: ['NON_CONFORMING_CONFIGURATION', 'REVEAL_ORDER_VIOLATED']; deviation preserved | PASS |
 | usefulness | usefulness is reported separately and never counted as an economic discovery | G usefulness assessed 1 (unresolved 1); economic discoveries 1 | PASS |
@@ -39,4 +41,4 @@
 - Consensus rule: an outcome counts only where both reviewers agree; otherwise UNRESOLVED_DISAGREEMENT, never resolved by an AI or operator.
 - Reveal order: VERIFIED.
 - Primary comparison: 1 conforming packet pair(s) in the primary comparison; 1 excluded and listed.
-- 21/21 checks passed.
+- 23/23 checks passed.

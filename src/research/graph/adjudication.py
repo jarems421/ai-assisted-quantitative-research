@@ -9,7 +9,7 @@
   reviewer's judgments or an AI assessment) or CONFLICTED (operated or attested an arm, declared or matched by name).
 * **Sealing.** Each reviewer seals both logs by hash (``adjudication-seal-<R>.json``, written once) and declares that they
   had no access to the other reviewer's judgments. Logs changed after sealing are refused. In a git repository the
-  reveal order is checked: neither reviewer's log may first appear in a commit that precedes the other reviewer's seal.
+  reveal order is checked: each reviewer's logs must first appear in a commit strictly after the other reviewer's seal.
 * **Consensus (proposed registered rule).** An item's outcome counts only where both reviewers agree; any disagreement is
   ``UNRESOLVED_DISAGREEMENT``, reported and never resolved by an AI, an operator or a third reading in this tool.
 * **Conformance.** A prospective (V2) packet enters the primary comparison only if its snapshot conforms to the registered
@@ -190,7 +190,7 @@ def first_commit(root, rel):
 
 
 def reveal_order(packet_dir):
-    """VERIFIED when, in git, each reviewer's logs first appear no earlier than the other reviewer's seal."""
+    """VERIFIED when, in git, each reviewer's logs first appear in a commit strictly after the other reviewer's seal commit."""
     d = Path(packet_dir).resolve()
     top = git(d, 'rev-parse', '--show-toplevel')
     if top.returncode != 0:return {'status': 'NOT_COMMITTED', 'detail': 'packet is not in a git repository'}
@@ -202,9 +202,14 @@ def reveal_order(packet_dir):
     if any(c is None for v in commits.values() for c in v.values()):return {'status': 'NOT_COMMITTED', 'detail': 'a log or seal is not committed'}
     for rv, other in (('R1', 'R2'), ('R2', 'R1')):
         for k in ('economic', 'usefulness'):
-            if k in commits[rv] and git(root, 'merge-base', '--is-ancestor', commits[other]['seal'], commits[rv][k]).returncode != 0:
+            if k not in commits[rv]:continue
+            seal_c, log_c = commits[other]['seal'], commits[rv][k]
+            # Strict ancestry: the other reviewer's seal must be in an EARLIER commit. git's --is-ancestor also succeeds when the
+            # two commits are the same, which would let a seal and the judgments it should precede be revealed together.
+            if seal_c == log_c:return {'status': 'VIOLATED', 'detail': f'{rv} {k} log first appears in the same commit as the {other} seal'}
+            if git(root, 'merge-base', '--is-ancestor', seal_c, log_c).returncode != 0:
                 return {'status': 'VIOLATED', 'detail': f'{rv} {k} log was committed before {other} sealed'}
-    return {'status': 'VERIFIED', 'detail': 'each log first appears no earlier than the other reviewer\'s seal'}
+    return {'status': 'VERIFIED', 'detail': "each log first appears strictly after the other reviewer's seal"}
 
 
 def agreement(a, b):

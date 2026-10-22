@@ -1,0 +1,127 @@
+{
+ "version": "GRAPH_PILOT_R4_PHASE_B_VALIDATION_V002",
+ "recorded_at_utc": "2026-10-22T12:51:15+00:00",
+ "status": "PASS",
+ "branch": "graph-pilot-r4-phase-b",
+ "base_main": "ca9f4ce0ee2a45c207c2e1158cd4d2f78f6679d3",
+ "main_untouched": true,
+ "report": {
+  "path": "docs/strategy/graph_pilot_r4_phase_b_v002.md",
+  "sha256": "466259ef10539c6496f82eb361768808a50486fadd27cfd9d3eea5818d869544"
+ },
+ "records": {
+  "docs/strategy/graph_pilot_r4_dry_run.md": "8040493f868a2b680db4416a381d51e58e93ca2c206f5cc1b0998a87a18d52d5",
+  "docs/strategy/graph_v1_1_adversarial.md": "ebb4bdc896ab1fb72fb779e46650386ab5e49eaba4bcde9ef76799af44b82135",
+  "docs/strategy/graph_v1_1_quality.md": "e96e8cce6a7918dcc3e1c0d54a6e33c19b73d2172efafb9775674fe29425364d",
+  "docs/strategy/graph_v1_2_holdout.md": "9516c98db0951f6b4c2d58d03db18b1bb08d48cf415c1cc82243b1832a42baf1",
+  "docs/strategy/graph_pilot_dry_run.md": "0d3224ee3ddc14b7489431ceb151e272bcdfa229aabace02eff4e529ceab35e6",
+  "docs/strategy/graph_v1_walkthrough.md": "cee4645ff4d9e71bcc72c3c9c33eaf2c7c341630ff120ed605dac6f9551ab926",
+  "docs/strategy/graph_pilot_r4_phase_b_dry_run.md": "616122e04093f90efa394edd9b39f2a914c1396fc0517d0b7dd765f32954ab58"
+ },
+ "protected_paths_changed_vs_main": {
+  "r3": "NONE",
+  "opportunity_scout": "NONE",
+  "v1_1_and_v1_2_records": "NONE"
+ },
+ "r4": "NOT_RUN",
+ "network": "none",
+ "acquisition": 0,
+ "scope": "SYNTHETIC_FIXTURES_ONLY; not an independent or real-world benchmark",
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": "python -m unittest discover -s tests",
+   "returncode": 0,
+   "test_count": 817,
+   "log_sha256": "118410c0046ce4d66da827f75a39f66ad15cb2f06ef9a0df054ede6944be3bcb"
+  },
+  {
+   "name": "graph_tests",
+   "command": "python -m unittest tests.test_graph",
+   "returncode": 0,
+   "test_count": 98
+  },
+  {
+   "name": "public_checks",
+   "command": "python -m src.research.public_checks",
+   "returncode": 0,
+   "test_count": 387
+  },
+  {
+   "name": "r4_dry_run",
+   "command": "python -m src.research.graph pilot r4-dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "adversarial",
+   "command": "python -m src.research.graph adversarial --check",
+   "returncode": 0
+  },
+  {
+   "name": "holdout_v1_2",
+   "command": "python -m src.research.graph holdout --check",
+   "returncode": 0
+  },
+  {
+   "name": "r4_phase_b_dry_run",
+   "command": "python -m src.research.graph pilot r4-phase-b-dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "quality",
+   "command": "python -m src.research.graph quality --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_demo",
+   "command": "python -m src.research.graph demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "pilot_dry_run_r2",
+   "command": "python -m src.research.graph pilot dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_build",
+   "command": "python -m src.research.graph build --check",
+   "returncode": 0,
+   "digest": "8c9167e93b9bb9729b7511933b7e0ae7ceed78becf9fc7a9b3bcd4705426b4e6",
+   "rebuild_identical": true
+  },
+  {
+   "name": "discovery_demo",
+   "command": "python -m src.research.discovery demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "phase4a",
+   "command": "python -m src.research.phase4a --check",
+   "returncode": 0
+  },
+  {
+   "name": "presentation",
+   "command": "python -m src.presentation.exp001 --check",
+   "returncode": 0
+  }
+ ],
+ "review_corrections": {
+  "reveal_order": "strict ancestry; same-commit seal and logs VIOLATED (real throwaway git regression)",
+  "cohort_boundary": "legacy packets excluded from mixed R4 primary cohorts with LEGACY_PACKET_OUTSIDE_R4_PRIMARY_COHORT; pure legacy reports unchanged",
+  "unknown_costs": "adjudicator, suggestion-review and graph minute totals UNKNOWN when any entry is unknown; known subtotals and unknown counts kept; medians report excluded entries",
+  "r3_computed_report_change": "adjudicator_minutes 0 -> UNKNOWN (all 36 R3 adjudications record UNKNOWN); direction EQUAL -> NOT_COMPARABLE; classification, pooled rates and notes unchanged; R3 files unchanged",
+  "unblinding": "prospective packets unblinded only from both valid seals via unblind(); report lists NOT_UNBLINDED otherwise; supplied consensus synthetic-only; key secrecy procedural",
+  "blinding_policy": "proposed: inclusion primary, packet-exclusion sensitivity must agree, else INCONCLUSIVE",
+  "test_adapted": "GraphPilotV2ProvenanceTests.test_blinding_seals_the_export_and_unblinding_rechecks_it unblinds a single-log synthetic V2 packet; it now passes rehearsal_single_log=True (the new gate refuses otherwise)"
+ },
+ "mutation_checks": {
+  "caught": 21,
+  "total": 21,
+  "note": "8 new safeguards plus the 13 Phase B mutations repeated (one re-expressed after its target line changed)"
+ },
+ "clean_checkout_limitation": "fresh worktree without ignored private data: test_exp001.FinalTestIntegrationTests and test_phase3c_parser.IsolatedOriginalTests.test_original_namespace_scale_unit_and_aggregate_rejection_offline error (missing private inputs); both pass in the full checkout; public CI does not need private data",
+ "scout_checks_local": {
+  "v004_checks": "OK",
+  "test_scout_v004_process_assurance": "OK"
+ }
+}

@@ -941,7 +941,7 @@ class GraphPilotV2ProvenanceTests(unittest.TestCase):
         self.write_log('adjudications.jsonl',[{'blind_id':i['blind_id'],'outcome':'REJECTED_TRIVIAL','economic_meaning':'NOT_MEANINGFUL','checked_evidence':[],
                                                'adjudicator':'Owner','adjudicator_kind':'HUMAN','adjudicator_minutes':1,'recorded_at_utc':self.now,'notes':''}
                                               for i in v2['items']])
-        rows=P.unblind(self.d,'blind_v2.json')
+        rows=P.unblind(self.d,'blind_v2.json',rehearsal_single_log=True)  # single legacy log on a synthetic V2 packet: Phase B allows it only as a rehearsal
         self.assertEqual(sorted(r['origin_suggestion_id'] for r in rows if r['arm']=='G'),sorted([self.econ['suggestion_id'],self.warn['suggestion_id']]))
         self.assertEqual({r['connection_class'] for r in rows if r['arm']=='G'},{K_ECONOMIC,'METHODOLOGICAL_WARNING'})
         g_metrics=P.arm_metrics(Ledger(self.d/'G.jsonl').load(),'G',rows)
@@ -949,10 +949,10 @@ class GraphPilotV2ProvenanceTests(unittest.TestCase):
         self.assertEqual(g_metrics['graph_rows_false_or_trivial_by_class'],{K_ECONOMIC:[1,1],'METHODOLOGICAL_WARNING':[1,1]})
         self.assertEqual((g_metrics['methodological_warnings_logged'],g_metrics['review_burden_items']),(1,2))
         target=P.default_exports(self.snap)[0];target.write_bytes(target.read_bytes()+b' ')
-        with self.assertRaisesRegex(P.PilotError,'changed after blinding'):P.unblind(self.d,'blind_v2.json')
-        target.write_bytes(target.read_bytes()[:-1]);self.assertTrue(P.unblind(self.d,'blind_v2.json'))
+        with self.assertRaisesRegex(P.PilotError,'changed after blinding'):P.unblind(self.d,'blind_v2.json',rehearsal_single_log=True)
+        target.write_bytes(target.read_bytes()[:-1]);self.assertTrue(P.unblind(self.d,'blind_v2.json',rehearsal_single_log=True))
         self.snap.rename(self.d/'moved.json')  # without the sealed snapshot the V2 rules cannot be assumed away
-        with self.assertRaisesRegex(P.PilotError,'snapshot is missing'):P.unblind(self.d,'blind_v2.json')
+        with self.assertRaisesRegex(P.PilotError,'snapshot is missing'):P.unblind(self.d,'blind_v2.json',rehearsal_single_log=True)
 
     def test_v2_snapshot_pins_the_operator_version_and_old_snapshots_stay_v1(self):
         snap=json.loads(self.snap.read_text(encoding='utf-8'))
@@ -1309,6 +1309,74 @@ class GraphPilotPhaseBTests(unittest.TestCase):
         self.assertIn('G 3.151, S 4.162',[n for n in rep['notes'] if n.startswith('pooled')][0])
         self.assertTrue(all('conformance' not in p and 'warning_usefulness' not in p['G'] for p in rep['packets']))
         self.assertEqual(DR.check()['dry_run'],'PASS')
+
+class GraphPilotPhaseBReviewTests(unittest.TestCase):
+    """Review findings on PR #6: strict reveal order, cohort boundary, unknown reviewer time, unblinding and blinding policy."""
+
+    @classmethod
+    def setUpClass(cls):
+        from src.research.graph import adjudication as AD,pilot_r4_phase_b_dryrun as PB
+        cls.AD,cls.PB=AD,PB;cls.tmp=Path(tempfile.mkdtemp(prefix='graph-phase-b-review-'));cls.res=PB.run(cls.tmp);cls.p1=cls.tmp/'P1'
+
+    @classmethod
+    def tearDownClass(cls):R4.remove_tree(cls.tmp)
+
+    def test_same_commit_reveal_is_refused_and_legitimate_order_kept(self):
+        checks={r['check']:r for r in self.res['checks']}
+        self.assertEqual(checks['seals and logs first appearing in the same commit are a reveal-order violation (strict ancestry)']['result'],'PASS')
+        self.assertEqual(checks['git reveal order verified (seals committed before logs)']['result'],'PASS')
+        self.assertEqual(checks['a log revealed before the other reviewer sealed is a reveal-order violation']['result'],'PASS')
+        self.assertEqual(self.AD.reveal_order(self.tmp/'P4')['status'],'VIOLATED')
+        self.assertEqual(self.AD.reveal_order(self.p1)['status'],'VERIFIED')
+
+    def test_legacy_packets_never_enter_or_count_towards_the_r4_primary_cohort(self):
+        base=ROOT/'docs/strategy/graph_pilot_r3'
+        mixed=P.report([base/'P3',base/'P4',self.p1],export_name='blind_v2.json')
+        legacy={x['packet']:x['problems'] for x in mixed['excluded_from_primary']}
+        self.assertEqual(legacy,{'P3':['LEGACY_PACKET_OUTSIDE_R4_PRIMARY_COHORT'],'P4':['LEGACY_PACKET_OUTSIDE_R4_PRIMARY_COHORT']})
+        self.assertTrue(any(n.startswith('1 conforming packet pair(s) in the primary comparison; 2 excluded') for n in mixed['notes']))
+        self.assertIn('Fewer than three comparable packet pairs.',mixed['notes'])  # three packets supplied; only one counts
+        self.assertEqual(mixed['classification'],'INCONCLUSIVE')
+        self.assertTrue(all('G' in p for p in mixed['packets']))  # legacy packets keep their descriptive metrics
+        pure=P.report([base/'P3',base/'P4'],export_name='blind_v2.json')
+        self.assertEqual((pure['classification'],pure['excluded_from_primary'],pure['blinding_sensitivity']),('INCONCLUSIVE',[],None))
+        self.assertIn('G 3.151, S 4.162',[n for n in pure['notes'] if n.startswith('pooled')][0])
+
+    def test_unknown_reviewer_time_propagates(self):
+        AD=self.AD;self.assertEqual(AD.minutes(3,'UNKNOWN'),'UNKNOWN')
+        dual=AD.dual(self.p1,'blind_v2.json');rows=P.unblind(self.p1,'blind_v2.json',dual['adjudications'])
+        g_item=next(r['blind_id'] for r in rows if r['arm']=='G' and r['kind']=='CONNECTION')
+        forced={b:(dict(a,adjudicator_minutes=AD.minutes(2,'UNKNOWN')) if b==g_item else a) for b,a in dual['adjudications'].items()}
+        m=P.arm_metrics(Ledger(self.p1/'G.jsonl').load(),'G',P.unblind(self.p1,'blind_v2.json',forced))
+        known=sum(r['adjudicator_minutes'] for r in rows if r['arm']=='G' and r['blind_id']!=g_item)
+        self.assertEqual((m['adjudicator_minutes'],m['adjudicator_minutes_known'],m['adjudicator_minutes_unknown_entries']),('UNKNOWN',known,1))
+        self.assertEqual(P.direction('UNKNOWN',3,'lower'),'NOT_COMPARABLE')
+        r3=P.report([ROOT/'docs/strategy/graph_pilot_r3/P3'],export_name='blind_v2.json')['packets'][0]
+        self.assertEqual((r3['G']['adjudicator_minutes'],r3['G']['adjudicator_minutes_unknown_entries'],r3['directions']['adjudicator_minutes']),('UNKNOWN',9,'NOT_COMPARABLE'))
+
+    def test_prospective_outcomes_stay_sealed_until_both_reviewers_seal(self):
+        p3=self.tmp/'P3'
+        with self.assertRaisesRegex(P.PilotError,'only after both reviewers have sealed'):P.unblind(p3,'blind_v2.json')
+        rep=P.report([p3],export_name='blind_v2.json')
+        self.assertEqual(rep['packets'][0]['outcomes'],'NOT_UNBLINDED: both reviewers must seal valid logs first')
+        self.assertIn('ADJUDICATION_NOT_DUAL',rep['excluded_from_primary'][0]['problems'])
+        dual=self.AD.dual(self.p1,'blind_v2.json');real=P.load_snapshot
+        live=lambda path,bundle=None:(lambda v:{**v,'snapshot':dict(v['snapshot'],fixture='LIVE')})(real(path,bundle))
+        with patch.object(P,'load_snapshot',live),self.assertRaisesRegex(P.PilotError,'never from supplied adjudications'):
+            P.unblind(self.p1,'blind_v2.json',dual['adjudications'])
+        with patch.object(P,'load_snapshot',live),self.assertRaisesRegex(P.PilotError,'only after both reviewers have sealed'):
+            P.unblind(p3,'blind_v2.json',rehearsal_single_log=True)  # the rehearsal flag never applies to a live packet
+
+    def test_potentially_unblinded_policy_is_fixed_and_can_withhold_a_definitive_result(self):
+        arm=lambda **kw:{**{'analyst_minutes_all':60,'verified_connections':2,'verified_connections_per_hour':2.0,'graph_only_verified':0,'false_or_premature_joins_made':2,
+                            'median_minutes_per_connection':6,'median_minutes_to_decisive_falsification':60,'duplicate_research_avoided':0,'original_frozen_m_passes':0,
+                            'original_frozen_m_passes_per_hour':0.0,'review_burden_items':6,'adjudicator_minutes':12,'graph_suggestions_false_or_trivial':[0,0]},**kw}
+        g=arm(false_or_premature_joins_made=0,median_minutes_to_decisive_falsification=40,verified_connections=3,verified_connections_per_hour=3.0)
+        pk=lambda name,flag:{'packet':name,'S':arm(),'G':g,'conformance':{'potentially_unblinded':flag}}
+        self.assertEqual(P.blinding_sensitivity([pk('A',False),pk('B',False),pk('C',False)])['gate'],'NOT_APPLICABLE')
+        flagged=P.blinding_sensitivity([pk('A',True),pk('B',False),pk('C',False)])
+        self.assertEqual((flagged['potentially_unblinded_packets'],flagged['classification'],flagged['gate']),(['A'],'INCONCLUSIVE','UNRESOLVED'))
+        self.assertEqual(P.blinding_sensitivity([pk('A',True),pk('B',False),pk('C',False),pk('D',False)])['gate'],'CONSISTENT')
 
 
 if __name__=='__main__':unittest.main()
