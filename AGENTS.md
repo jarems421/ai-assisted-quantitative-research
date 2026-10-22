@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Graph Pilot R4 operational package: documentation only, no activation authority
+
+- `graph_pilot_r4_reviewer_guide_v001.md`, `graph_pilot_r4_runbook_v001.md`, `graph_pilot_r4_source_plan_v001.md`, `graph_pilot_r4_activation_template_v001.md` and `graph_pilot_r4_operational_readiness_v001.md` are drafts that bind only when a completed owner activation document names them by hash. R4 is NOT_RUN until the owner commits `owner_graph_pilot_r4_<date>.md` to `main`. Never fill owner fields, make D1/F1/F2/U1/R1 or ceiling decisions, or commit the template as that document for the owner. Never recruit, impersonate or act as a reviewer, operator or attester.
+- Source claims are `CANDIDATE_UNVERIFIED` until an approved preflight. Freshness F1(a) (no previously used host) applies unless the owner prospectively adopts F1(b). No freshness rule reopens a persisted host- or route-level stop or an equivalent route; unclear stop scope means host-level. Activation: prepare and record the environment offline first, identify the activation commit from Git history, and verify digest and runtime in a receipt before any request.
+- Isolation: operators (including one human running both arms, and the owner) read no substantive arm output until both arms of a packet finish; supervision is procedural and safety only. Keys and arm branches stay off `main` until every campaign and adjudication finishes, then merge with merge commits (no squash/rebase/delete) and reveal order is re-checked. Hosted AI arm sessions need a separate owner registration of model/runtime, account context, resource exposure and stopping arrangements.
+
 ## Graph Pilot R4 Phase B: dual human adjudication, branch `graph-pilot-r4-phase-b`, draft PR, not merged (2026-10-22)
 
 - `docs/strategy/graph_pilot_r4_phase_b_v003.md` (zero-item packets, content-verified reveal order; v001/v002 kept); code `src/research/graph/adjudication.py`. Synthetic only; R4 NOT_RUN and unauthorised. Never record, draft or substitute a reviewer's judgment, seal, exposure declaration or deviation: these are human acts (assistant names are refused). Never resolve a disagreement; it stays `UNRESOLVED_DISAGREEMENT`.
