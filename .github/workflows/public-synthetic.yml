@@ -26,3 +26,5 @@ jobs:
         run: python -m src.research.opportunity_scout.v004_checks
       - name: Verify Scout locks between local Python processes using fictional journals
         run: python -m unittest tests.test_scout_v004_process_assurance tests.test_scout_v004_r3_process_assurance -v
+      - name: Verify N1 byte capture with fixed harmless local Python subprocess fixtures
+        run: python -m unittest tests.test_scout_n1_collector_process_assurance -v
