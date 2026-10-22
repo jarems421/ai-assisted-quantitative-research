@@ -1502,11 +1502,21 @@ class GraphAIReviewTests(unittest.TestCase):
         return {'template_version':self.AI.CROSS_ANSWER_V1,'auditor_declaration':{'used_only_package_files':'YES','sources_outside_package':[],'integrity_notes':''},
                 'items':items,'systematic_differences':'','limitations':''}
 
-    def full(self,a=None,b=None,issue=None,model_b=None,mode_b='EVIDENCE_PACK_ONLY',cross=True):
-        pkg=self.package();self.put(pkg,'A',a or self.answer(pkg));self.put(pkg,'B',b or self.answer(pkg),model=model_b,mode=mode_b)
+    def full(self,a=None,b=None,issue=None,model_b=None,mode_b='EVIDENCE_PACK_ONLY',cross=True,order='VERIFIED',evidence=None):
+        """One package through both stages. ``order``: VERIFIED commits seals before answers in a throwaway repository,
+        ALL_AT_ONCE commits everything together (a reveal-order violation), NONE leaves it uncommitted."""
+        type(self).n+=1;pkg=self.tmp/f'pkg{self.n}';self.AI.build_package(self.export,evidence or self.ev,pkg,own_from=self.own)
+        self.put(pkg,'A',a or self.answer(pkg));self.put(pkg,'B',b or self.answer(pkg),model=model_b,mode=mode_b)
         for s in self.AI.SLOTS:self.AI.seal(pkg,'primary',s,self.OPERATOR,now=self.SEALED)
         if cross:
             for s in self.AI.SLOTS:self.put(pkg,s,self.audit(pkg,issue),'cross');self.AI.seal(pkg,'cross',s,self.OPERATOR,now=self.SEALED)
+        if order!='NONE':
+            R4.git(pkg,'init','-q');add=lambda *names:(R4.git(pkg,'add',*names),R4.git(pkg,'commit','-q','-m','step'))
+            if order=='ALL_AT_ONCE':add('-A')
+            else:
+                add('package.json','items.md','evidence','texts','response_template.json','cross_review_template.json')
+                add('ai-review-seal-A.json','ai-review-seal-B.json');add('ai-review-A.json','ai-review-B.json')
+                if cross:add('ai-cross-review-seal-A.json','ai-cross-review-seal-B.json');add('ai-cross-review-A.json','ai-cross-review-B.json')
         return pkg,self.AI.reconcile(pkg)
 
     def test_package_is_neutral_complete_and_hash_bound(self):
@@ -1537,7 +1547,7 @@ class GraphAIReviewTests(unittest.TestCase):
 
     def test_primary_answers_are_validated_never_repaired(self):
         pkg=self.package();good=self.answer(pkg);f=self.put(pkg,'A',good);v=self.AI.validate_primary(pkg,f)
-        self.assertTrue(all(r['verification']=='VERIFIED' for r in v['items'].values()));self.assertFalse(v['external_access'])
+        self.assertTrue(all(r['verification']=='VERIFIED_EXACT' for r in v['items'].values()));self.assertFalse(v['external_access'])
         conn=next(n for n,r in enumerate(good['items']) if r['kind']=='CONNECTION');warn=next(n for n,r in enumerate(good['items']) if r['kind']!='CONNECTION')
         cases=[(lambda a:a['items'].pop(),'not answered'),(lambda a:a['items'][conn].update(extra=1),'fields must be exactly'),
                (lambda a:a['items'][conn].update(outcome='CONFIRMED_AGAINST_ORIGINALS'),'outcome is one of'),
@@ -1574,36 +1584,69 @@ class GraphAIReviewTests(unittest.TestCase):
 
     def test_reconciliation_counts_only_agreement_with_verified_quotes(self):
         pkg,rec=self.full();conn=[r for r in rec['items'] if r['kind']=='CONNECTION']
+        self.assertTrue(rec['conforming']);self.assertEqual(rec['nonconformance'],[])
         self.assertTrue(all(r['ai_label']=='AI_AGREED_CONFIRMED' and r['robust'] for r in conn))
-        self.assertEqual(rec['counts']['robust_ai_verified_economic_connections'],len(conn));self.assertIn('not human judgments',rec['banner'])
+        self.assertEqual(rec['conforming_counts']['robust_ai_verified_economic_connections'],len(conn));self.assertIn('not human judgments',rec['banner'])
         self.assertTrue(all(r['ai_label']=='AI_AGREED_USEFUL_NOT_USED' and r['ai_meaning'] is None for r in rec['items'] if r['kind']!='CONNECTION'))
-        first=conn[0]['blind_id'];_,rec=self.full(b=self.answer(self.tmp/f'pkg{self.n}',flip=(first,)))
+        first=conn[0]['blind_id'];_,rec=self.full(b=self.answer(pkg,flip=(first,)))
         self.assertEqual({r['blind_id']:r['ai_label'] for r in rec['items']}[first],'AI_UNRESOLVED_DISAGREEMENT')
-        p=self.package();_,rec=self.full(a=self.answer(p,quote='Quay One handled 999 kt'))
+        _,rec=self.full(a=self.answer(pkg,quote='Quay One handled 999 kt'))
         self.assertTrue(all(r['ai_label']=='AI_AGREED_CONFIRMED_QUOTE_NOT_FOUND' and not r['ai_verified_economic_connection']
                             for r in rec['items'] if r['kind']=='CONNECTION'))
 
+    def test_only_character_exact_quotes_verify(self):
+        """The checklist asks for character-exact quotes: a whitespace- or case-normalised match is reported, never counted."""
+        pkg,_=self.full(order='NONE');good=self.answer(pkg)
+        for quote in (self.QUOTE.upper(),self.QUOTE.replace(' ','  '),self.QUOTE.replace('Quay One','Quay\nOne')):
+            _,rec=self.full(a=self.answer(pkg,quote=quote))
+            conn=[r for r in rec['items'] if r['kind']=='CONNECTION']
+            self.assertTrue(all(r['A']['verification']=='NORMALISED_ONLY' and r['B']['verification']=='VERIFIED_EXACT' for r in conn),quote)
+            self.assertTrue(all(r['ai_label']=='AI_AGREED_CONFIRMED_NORMALISED_MATCH_ONLY' and not r['ai_verified_economic_connection'] and not r['robust'] for r in conn))
+            self.assertEqual(rec['conforming_counts']['ai_verified_economic_connections'],0)
+            self.assertEqual(rec['diagnostic_counts']['normalised_match_only'],len(rec['items']))  # the warning's quote is altered too
+        loc=copy.deepcopy(good)
+        for r in loc['items']:r['support']=[{**r['support'][0],'quote':'','location':'entry'}]
+        _,rec=self.full(a=loc);self.assertTrue(all(r['ai_label']=='AI_AGREED_CONFIRMED_NOT_MACHINE_VERIFIED' for r in rec['items'] if r['kind']=='CONNECTION'))
+
+    def test_unverified_or_violated_order_never_counts_scientifically(self):
+        _,ok=self.full()
+        for order,status in (('NONE','NOT_COMMITTED'),('ALL_AT_ONCE','VIOLATED')):
+            _,rec=self.full(order=order)
+            self.assertEqual(rec['stage_order']['status'],status);self.assertFalse(rec['conforming'])
+            self.assertIn(f'STAGE_ORDER_{status}',rec['nonconformance']);self.assertIsNone(rec['conforming_counts'])
+            self.assertFalse(any(r['robust'] for r in rec['items']))
+            self.assertEqual(rec['diagnostic_counts'],ok['diagnostic_counts'])  # diagnostics preserved separately, unchanged
+            self.assertEqual([r['ai_label'] for r in rec['items']],[r['ai_label'] for r in ok['items']])
+            self.assertIn('withheld',self.AI.markdown(rec))
+
+    def test_no_shortcut_produces_a_conforming_result(self):
+        """Missing cross-reviews, identical or unknown models, browsing, declared outside sources and missing evidence all withhold."""
+        _,base=self.full();pkg=self.tmp/f'pkg{self.n}'
+        outside=self.answer(pkg);outside['items'][0]['sources_outside_package']=['https://example.org/page']
+        missing=self.tmp/'ev-missing-conf';shutil.copytree(self.ev,missing);sorted(missing.iterdir())[0].unlink()
+        cases=[({'cross':False},'CROSS_REVIEW_A_UNAVAILABLE'),({'model_b':'synthetic-model-A'},'MODEL_IDENTITY_NOT_DISTINCT'),
+               ({'model_b':'UNKNOWN'},'MODEL_IDENTITY_UNKNOWN_B'),({'mode_b':'BROWSING_ALLOWED'},'EXTERNAL_ACCESS_PRIMARY_B'),
+               ({'a':outside},'EXTERNAL_ACCESS_PRIMARY_A'),({'evidence':missing},'EVIDENCE_MISSING_FROM_PACKAGE')]
+        for kw,reason in cases:
+            _,rec=self.full(**kw)
+            self.assertFalse(rec['conforming'],reason);self.assertIn(reason,rec['nonconformance']);self.assertIsNone(rec['conforming_counts'])
+            self.assertFalse(any(r['robust'] for r in rec['items']),reason)
+        _,contested=self.full(issue='FACTUAL_ERROR')  # a conforming package whose audits contest every item: labels kept, none robust
+        self.assertTrue(contested['conforming']);self.assertEqual(contested['conforming_counts']['robust_ai_verified_economic_connections'],0)
+        self.assertEqual(contested['conforming_counts']['ai_verified_economic_connections'],base['conforming_counts']['ai_verified_economic_connections'])
+
     def test_confidence_cross_review_and_exposure_never_change_labels(self):
-        _,base=self.full();p=self.package();_,low=self.full(a=self.answer(p,confidence='LOW'))
+        _,base=self.full();pkg=self.tmp/f'pkg{self.n}';_,low=self.full(a=self.answer(pkg,confidence='LOW'))
         self.assertEqual([r['ai_label'] for r in base['items']],[r['ai_label'] for r in low['items']])
         _,contested=self.full(issue='FACTUAL_ERROR')
         self.assertEqual([r['ai_label'] for r in base['items']],[r['ai_label'] for r in contested['items']])
-        self.assertEqual(contested['counts']['robust_ai_verified_economic_connections'],0)
-        _,same=self.full(model_b='synthetic-model-A');self.assertFalse(same['reviewers_distinct']);self.assertEqual(same['counts']['robust_ai_verified_economic_connections'],0)
         _,browsed=self.full(mode_b='BROWSING_ALLOWED');self.assertTrue(browsed['reviewers']['B']['external_access'])
-        self.assertTrue(any('potentially unblinded' in n for n in browsed['notes']));self.assertEqual(browsed['counts']['robust_ai_verified_economic_connections'],0)
-        _,partial=self.full(cross=False);self.assertEqual(partial['counts']['robust_ai_verified_economic_connections'],0)
-        self.assertEqual(partial['counts']['ai_verified_economic_connections'],base['counts']['ai_verified_economic_connections'])
+        self.assertTrue(any('potentially unblinded' in n for n in browsed['notes']))
+        self.assertEqual([r['ai_label'] for r in base['items']],[r['ai_label'] for r in browsed['items']])
 
     def test_stage_order_requires_seals_before_answers_in_git(self):
-        pkg,_=self.full();AI=self.AI;repo=pkg
-        R4.git(repo,'init','-q');add=lambda *names:(R4.git(repo,'add',*names),R4.git(repo,'commit','-q','-m','step'))
-        add('package.json','items.md','evidence','texts','response_template.json','cross_review_template.json')
-        add('ai-review-seal-A.json','ai-review-seal-B.json');add('ai-review-A.json','ai-review-B.json')
-        add('ai-cross-review-seal-A.json','ai-cross-review-seal-B.json');add('ai-cross-review-A.json','ai-cross-review-B.json')
-        self.assertEqual(AI.stage_order(pkg)['status'],'VERIFIED')
-        pkg2,_=self.full();R4.git(pkg2,'init','-q');R4.git(pkg2,'add','-A');R4.git(pkg2,'commit','-q','-m','all at once')
-        self.assertEqual(AI.stage_order(pkg2)['status'],'VIOLATED')
+        pkg,rec=self.full();self.assertEqual(self.AI.stage_order(pkg)['status'],'VERIFIED')
+        pkg2,_=self.full(order='ALL_AT_ONCE');self.assertEqual(self.AI.stage_order(pkg2)['status'],'VIOLATED')
         self.assertEqual(sorted(p.name for p in pkg.glob('adjudications-*')),[])  # the human logs are never written by this path
 
     def test_frozen_texts_and_templates_are_neutral_and_match_the_validator(self):

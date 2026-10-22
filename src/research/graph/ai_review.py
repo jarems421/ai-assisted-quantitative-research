@@ -17,9 +17,14 @@ packet conform to the human dual-review rule. Every output is labelled as model 
   An audit carries no labels of its own and is never counted as a review. It is sealed the same way.
 * **Order.** In git, each answer must first appear strictly after the other slot's seal for that stage, and each
   cross-review strictly after both primary answers.
-* **Stage C (reconciliation).** Deterministic: quotes are checked against the evidence files; an outcome counts only
-  where both answers agree; any difference is ``AI_UNRESOLVED_DISAGREEMENT``. Audits add findings and a robustness flag;
-  they never change a label. Confidence is reported, never used.
+* **Stage C (reconciliation).** Deterministic: quotes are checked against the evidence files, and only character-exact
+  quotes verify (normalised matches are reported separately); an outcome counts only where both answers agree; any
+  difference is ``AI_UNRESOLVED_DISAGREEMENT``. Audits add findings and a robustness flag; they never change a label.
+  Confidence is reported, never used. Scientific (conforming) counts are withheld unless the stage order is VERIFIED,
+  both cross-reviews exist, the two model identities are known and distinct, nothing was consulted outside the package
+  and no evidence is missing; diagnostic counts are always reported separately.
+* **Adjudication, not discovery.** Reviewers and auditors judge the given items against the given evidence only. A
+  browsing run, or one declaring outside sources, is never a conforming adjudication.
 """
 from __future__ import annotations
 
@@ -216,7 +221,13 @@ def load_package(package_dir):
 
 
 def check_support(s, allowed, pkg, d, where):
-    """FOUND, NOT_FOUND or UNVERIFIABLE for one support entry; refuses an entry citing evidence the item does not cite."""
+    """One support entry, checked against its evidence file; refuses an entry citing evidence the item does not cite.
+
+    ``EXACT``: the quote occurs character for character in the file's text (HTML: tags removed, entities decoded, whitespace
+    untouched), as the checklist requires. ``NORMALISED_ONLY``: it occurs only after collapsing whitespace and case, which is
+    reported but never counts as exact verification. ``LOCATION_RESOLVES``: no quote, and a JSON-pointer location exists
+    (not a check of what it says). ``NOT_FOUND``: checkable but absent. ``UNVERIFIABLE``: missing file or a format that
+    cannot be checked mechanically."""
     if not isinstance(s, dict) or tuple(sorted(s)) != tuple(sorted(SUPPORT_KEYS)):fail(f'{where}: support entries have exactly {SUPPORT_KEYS}')
     if s['evidence_sha256'] not in allowed:fail(f'{where}: support cites {s["evidence_sha256"]!r}, which this item does not cite')
     if not isinstance(s['quote'], str) or not isinstance(s['location'], str):fail(f'{where}: quote and location are text')
@@ -226,9 +237,10 @@ def check_support(s, allowed, pkg, d, where):
     if s['quote'].strip():
         text = evidence_text(Path(d) / e['file'])
         if text is None:return 'UNVERIFIABLE'
-        return 'FOUND' if normalise(s['quote']) in normalise(text) else 'NOT_FOUND'
+        if s['quote'] in (html.unescape(text) if e['format'] == 'html' else text):return 'EXACT'
+        return 'NORMALISED_ONLY' if normalise(s['quote']) in normalise(text) else 'NOT_FOUND'
     if s['location'].startswith('/') and e['format'] == 'json':
-        try:resolve_pointer(json.loads((Path(d) / e['file']).read_text(encoding='utf-8')), s['location']); return 'FOUND'
+        try:resolve_pointer(json.loads((Path(d) / e['file']).read_text(encoding='utf-8')), s['location']); return 'LOCATION_RESOLVES'
         except (KeyError, IndexError, ValueError):return 'NOT_FOUND'
     return 'UNVERIFIABLE'
 
@@ -241,9 +253,18 @@ def resolve_pointer(doc, pointer):
 
 
 def verification(statuses):
+    """VERIFIED_EXACT only when every quote is character-exact; NORMALISED_ONLY and NOT_MACHINE_VERIFIED never count as verified."""
     if not statuses:return 'NO_SUPPORT'
     if 'NOT_FOUND' in statuses:return 'NOT_FOUND'
-    return 'VERIFIED' if all(s == 'FOUND' for s in statuses) else 'UNVERIFIABLE'
+    if all(s == 'EXACT' for s in statuses):return 'VERIFIED_EXACT'
+    return 'NORMALISED_ONLY' if all(s in ('EXACT', 'NORMALISED_ONLY') for s in statuses) else 'NOT_MACHINE_VERIFIED'
+
+
+def evidence_suffix(v):
+    """The label suffix for an agreed evidence-bearing label whose quotes are not both character-exact."""
+    if 'NOT_FOUND' in v:return '_QUOTE_NOT_FOUND'
+    if v == ('VERIFIED_EXACT', 'VERIFIED_EXACT'):return ''
+    return '_NORMALISED_MATCH_ONLY' if set(v) <= {'VERIFIED_EXACT', 'NORMALISED_ONLY'} else '_NOT_MACHINE_VERIFIED'
 
 
 def check_provenance(p, stage, pkg_texts, where):
@@ -441,20 +462,36 @@ def economic_label(a, b):
     if a['outcome'] != b['outcome']:return 'AI_UNRESOLVED_DISAGREEMENT'
     o = a['outcome']; v = (a['verification'], b['verification'])
     if 'NOT_FOUND' in v:return f'AI_AGREED_{o}_QUOTE_NOT_FOUND'
-    if o in EVIDENCE_OUTCOMES and v != ('VERIFIED', 'VERIFIED'):return f'AI_AGREED_{o}_NOT_MACHINE_VERIFIED'
-    return f'AI_AGREED_{o}'
+    return f'AI_AGREED_{o}' + (evidence_suffix(v) if o in EVIDENCE_OUTCOMES else '')
 
 
 def usefulness_label(a, b):
     if a['usefulness'] != b['usefulness']:return 'AI_UNRESOLVED_DISAGREEMENT'
     u = a['usefulness']; v = (a['verification'], b['verification'])
     if 'NOT_FOUND' in v:return f'AI_AGREED_{u}_QUOTE_NOT_FOUND'
-    if u == 'USEFUL_LESSON_REUSED' and v != ('VERIFIED', 'VERIFIED'):return f'AI_AGREED_{u}_NOT_MACHINE_VERIFIED'
-    return f'AI_AGREED_{u}'
+    return f'AI_AGREED_{u}' + (evidence_suffix(v) if u == 'USEFUL_LESSON_REUSED' else '')
+
+
+def nonconformance(order, cross, prim, pkg, distinct):
+    """Every reason the package result is not a conforming AI-adjudicated result; empty only when all conditions hold."""
+    reasons = [] if order['status'] == 'VERIFIED' else [f"STAGE_ORDER_{order['status']}"]
+    for s in SLOTS:
+        if s not in cross:reasons.append(f'CROSS_REVIEW_{s}_UNAVAILABLE')
+        if prim[s]['provenance']['model_identifier'].strip().upper() in ('', 'UNKNOWN'):reasons.append(f'MODEL_IDENTITY_UNKNOWN_{s}')
+        if prim[s]['external_access']:reasons.append(f'EXTERNAL_ACCESS_PRIMARY_{s}')
+        if s in cross and cross[s]['external_access']:reasons.append(f'EXTERNAL_ACCESS_CROSS_{s}')
+    if not distinct:reasons.append('MODEL_IDENTITY_NOT_DISTINCT')
+    if any(e['file'] == 'MISSING_FROM_PACKAGE' for e in pkg['evidence'].values()):reasons.append('EVIDENCE_MISSING_FROM_PACKAGE')
+    return reasons
 
 
 def reconcile(package_dir):
-    """Stage C: deterministic item-level reconciliation of two sealed answers, with sealed cross-review findings attached."""
+    """Stage C: deterministic item-level reconciliation of two sealed answers, with sealed cross-review findings attached.
+
+    Item labels and ``diagnostic_counts`` are always reported. ``conforming_counts`` (the only counts that may enter any
+    scientific comparison) and item ``robust`` require a conforming package: verified stage order, both cross-reviews,
+    two known and distinct model identities, no access outside the package and no missing evidence. Otherwise they are
+    withheld, with every reason listed."""
     d = Path(package_dir); pkg, pkg_sha = load_package(d)
     seals = {s: load_seal(d, 'primary', s) for s in SLOTS}
     prim = {s: validate_primary(d, files(d, 'primary', s)['answer']) for s in SLOTS}
@@ -466,6 +503,7 @@ def reconcile(package_dir):
     if not distinct:notes.append('Both primary answers name the same model identifier: they are not independent reviews.')
     for s in SLOTS:
         if prim[s]['external_access']:notes.append(f'Primary {s} had or declared access outside the package: its answers are potentially unblinded (the repository is public).')
+    order = stage_order(d); reasons = nonconformance(order, cross, prim, pkg, distinct); conforming = not reasons
     rows = []
     for i in pkg['items']:
         b = i['blind_id']; a_, b_ = prim['A']['items'][b], prim['B']['items'][b]
@@ -478,29 +516,35 @@ def reconcile(package_dir):
             findings[auditor] = {side: {'support_check': r[f'review_{side}']['support_check'], 'issues': sorted({x['type'] for x in r[f'review_{side}']['issues']}),
                                         'self_audit': side == auditor} for side in SLOTS}
             findings[auditor]['disagreement_nature'] = r['disagreement_nature']
-            findings[auditor]['missed_evidence_found'] = r['missed_evidence_status'].count('FOUND')
+            findings[auditor]['missed_evidence_exact'] = r['missed_evidence_status'].count('EXACT')
+            findings[auditor]['missed_evidence_normalised_only'] = r['missed_evidence_status'].count('NORMALISED_ONLY')
         contested = any(set(findings[a][side]['issues']) & set(SERIOUS_ISSUES) or findings[a][side]['support_check'] == 'UNSUPPORTED'
                         for a in findings for side in SLOTS)
         verified_connection = economic and label == 'AI_AGREED_CONFIRMED' and meaning == 'AI_AGREED_MEANINGFUL'
+        item_robust = verified_connection and len(findings) == len(SLOTS) and not contested
         rows.append({'blind_id': b, 'kind': i['kind'],
                      'A': {k: a_[k] for k in ('outcome', 'economic_meaning', 'usefulness', 'confidence', 'verification')},
                      'B': {k: b_[k] for k in ('outcome', 'economic_meaning', 'usefulness', 'confidence', 'verification')},
                      'ai_label': label, 'ai_meaning': meaning, 'ai_verified_economic_connection': verified_connection,
                      'cross_review': findings, 'cross_review_complete': len(findings) == len(SLOTS),
-                     'robust': verified_connection and len(findings) == len(SLOTS) and not contested and distinct
-                               and not any(prim[s]['external_access'] for s in SLOTS)})
+                     'robust_item_conditions': item_robust, 'robust': item_robust and conforming})
     count = lambda pred: sum(1 for r in rows if pred(r))
     econ = [r for r in rows if r['kind'] in AD.ECONOMIC_KINDS]
+    diagnostic = {'items': len(rows), 'connection_items': len(econ), 'warning_items': len(rows) - len(econ),
+                  'agreed_labels': count(lambda r: r['ai_label'].startswith('AI_AGREED_')),
+                  'unresolved_disagreements': count(lambda r: r['ai_label'] == 'AI_UNRESOLVED_DISAGREEMENT'),
+                  'quote_not_found': count(lambda r: 'NOT_FOUND' in (r['A']['verification'], r['B']['verification'])),
+                  'normalised_match_only': count(lambda r: 'NORMALISED_ONLY' in (r['A']['verification'], r['B']['verification'])),
+                  'ai_verified_economic_connections': count(lambda r: r['ai_verified_economic_connection']),
+                  'robust_item_conditions_met': count(lambda r: r['robust_item_conditions'])}
+    scientific = {'ai_verified_economic_connections': diagnostic['ai_verified_economic_connections'],
+                  'robust_ai_verified_economic_connections': count(lambda r: r['robust'])} if conforming else None
     return {'version': RECONCILIATION_V1, 'banner': BANNER, 'packet': pkg['packet'], 'package_sha256': pkg_sha,
             'reviewers': {s: {k: prim[s]['provenance'][k] for k in ('product', 'model_identifier', 'mode', 'run_by')} | {'external_access': prim[s]['external_access'],
                               'sealed_at_utc': seals[s]['sealed_at_utc']} for s in SLOTS},
-            'reviewers_distinct': distinct, 'stage_order': stage_order(d), 'integrity_flags': pkg['integrity_flags'],
-            'counts': {'items': len(rows), 'connection_items': len(econ), 'warning_items': len(rows) - len(econ),
-                       'agreed_labels': count(lambda r: r['ai_label'].startswith('AI_AGREED_')),
-                       'unresolved_disagreements': count(lambda r: r['ai_label'] == 'AI_UNRESOLVED_DISAGREEMENT'),
-                       'quote_not_found': count(lambda r: 'NOT_FOUND' in (r['A']['verification'], r['B']['verification'])),
-                       'ai_verified_economic_connections': count(lambda r: r['ai_verified_economic_connection']),
-                       'robust_ai_verified_economic_connections': count(lambda r: r['robust'])},
+            'reviewers_distinct': distinct, 'stage_order': order, 'integrity_flags': pkg['integrity_flags'],
+            'conforming': conforming, 'nonconformance': reasons,
+            'diagnostic_counts': diagnostic, 'conforming_counts': scientific,
             'items': rows, 'notes': notes}
 
 
@@ -509,7 +553,10 @@ def markdown(rec):
          f"Stage order: **{rec['stage_order']['status']}** ({rec['stage_order']['detail']}). Reviewers distinct: **{rec['reviewers_distinct']}**.", '',
          '| Slot | Product | Model identifier | Mode | External access |', '|---|---|---|---|---|']
     L += [f"| {s} | {v['product']} | `{v['model_identifier']}` | {v['mode']} | {v['external_access']} |" for s, v in rec['reviewers'].items()]
-    L += ['', '| Count | Value |', '|---|---|'] + [f'| {k} | {v} |' for k, v in rec['counts'].items()]
+    L += ['', f"Conforming: **{rec['conforming']}**" + (f" (withheld: {', '.join(rec['nonconformance'])})" if rec['nonconformance'] else ''), '']
+    L += ['| Diagnostic count | Value |', '|---|---|'] + [f'| {k} | {v} |' for k, v in rec['diagnostic_counts'].items()]
+    L += ['', '| Conforming count | Value |', '|---|---|'] + ([f'| {k} | {v} |' for k, v in rec['conforming_counts'].items()] if rec['conforming_counts']
+                                                           else ['| (withheld) | not a conforming result |'])
     L += ['', '| Item | Kind | A | B | AI label | Meaning | Quotes A/B | Robust |', '|---|---|---|---|---|---|---|---|']
     for r in rec['items']:
         lab = lambda x: x['outcome'] or x['usefulness']

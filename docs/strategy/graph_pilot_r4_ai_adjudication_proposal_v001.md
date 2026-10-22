@@ -89,15 +89,18 @@
 
 | Check | Result |
 |---|---|
-| Quote, text formats (JSON, HTML with tags stripped, plain text) | Whitespace- and case-normalised containment: `FOUND` or `NOT_FOUND` |
-| JSON pointer location | Must resolve |
-| PDFs, archives, images, missing files | `UNVERIFIABLE` |
+| Quote occurs character for character in the file text (JSON, plain text; HTML with tags removed and entities decoded, whitespace untouched), as the checklist requires | `EXACT` |
+| Quote occurs only after collapsing whitespace and case | `NORMALISED_ONLY`: reported, **never counted as verified** |
+| Quote absent from a checkable file | `NOT_FOUND` |
+| No quote, and a JSON-pointer location that resolves | `LOCATION_RESOLVES`: says where, not what; not verified |
+| PDFs, archives, images, missing files, other locations | `UNVERIFIABLE` |
 
 Per answer and item, the verification is:
 
-- `VERIFIED`: every entry `FOUND`;
+- `VERIFIED_EXACT`: every entry `EXACT`;
 - `NOT_FOUND`: any entry `NOT_FOUND`;
-- `UNVERIFIABLE`: anything else;
+- `NORMALISED_ONLY`: all entries exact or normalised, at least one normalised;
+- `NOT_MACHINE_VERIFIED`: anything else;
 - `NO_SUPPORT`: no entries.
 
 A support entry citing a file the item does not cite is **refused at validation**.
@@ -108,18 +111,41 @@ A support entry citing a file the item does not cite is **refused at validation*
 |---|---|---|
 | The two answers differ | `AI_UNRESOLVED_DISAGREEMENT` | `AI_UNRESOLVED_DISAGREEMENT` |
 | Same, and either has a `NOT_FOUND` quote | `AI_AGREED_<O>_QUOTE_NOT_FOUND` | `AI_AGREED_<U>_QUOTE_NOT_FOUND` |
-| Same `CONFIRMED`/`FALSE`, but not both `VERIFIED` | `AI_AGREED_<O>_NOT_MACHINE_VERIFIED` | Same rule for `USEFUL_LESSON_REUSED` |
+| Same `CONFIRMED`/`FALSE`; quotes exact or normalised, at least one normalised | `AI_AGREED_<O>_NORMALISED_MATCH_ONLY` | Same rule for `USEFUL_LESSON_REUSED` |
+| Same `CONFIRMED`/`FALSE`; otherwise not both `VERIFIED_EXACT` | `AI_AGREED_<O>_NOT_MACHINE_VERIFIED` | Same rule for `USEFUL_LESSON_REUSED` |
 | Same, otherwise | `AI_AGREED_<O>` | `AI_AGREED_<U>` |
 
 - **Meaning** is reconciled separately: `AI_AGREED_<M>` or `AI_UNRESOLVED_DISAGREEMENT`.
-- **AI-verified economic connection** = `AI_AGREED_CONFIRMED` **and** `AI_AGREED_MEANINGFUL`.
-- **Robust** additionally requires all of:
+- **AI-verified economic connection** (item level) = `AI_AGREED_CONFIRMED` **and** `AI_AGREED_MEANINGFUL`. This needs character-exact quotes from both answers.
+- **Robust** additionally requires:
   - both cross-reviews present;
   - neither auditor reports `UNSUPPORTED`, `FACTUAL_ERROR`, `MISQUOTE`, `UNSUPPORTED_CONCLUSION` or `INVENTED_CONTENT` against either answer;
-  - two distinct model identifiers;
-  - neither primary answer had access outside the package.
+  - a conforming package (below).
 - **Disputed items stay disputed.** There is no third reading, no confidence weighting and no auditor arbitration. The variant registers no separate resolution mechanism.
 - **Reported, never used:** confidence, self-audit (each auditor's own answer is marked), integrity flags, missed evidence and model identifiers.
+
+**Conformance gate.** A package result is **conforming** only if every condition below holds. The failing condition is listed in `nonconformance` under the reason shown:
+
+| Condition | Reason when it fails |
+|---|---|
+| Stage order is `VERIFIED` | `STAGE_ORDER_NOT_COMMITTED` or `STAGE_ORDER_VIOLATED` |
+| Both cross-reviews are sealed and valid | `CROSS_REVIEW_<slot>_UNAVAILABLE` |
+| Both model identities are known | `MODEL_IDENTITY_UNKNOWN_<slot>` |
+| The two model identities are distinct | `MODEL_IDENTITY_NOT_DISTINCT` |
+| No primary or cross answer browsed or declared an outside source | `EXTERNAL_ACCESS_PRIMARY_<slot>` or `EXTERNAL_ACCESS_CROSS_<slot>` |
+| No cited evidence is missing from the package | `EVIDENCE_MISSING_FROM_PACKAGE` |
+
+- **Only a conforming result has `conforming_counts`.** These are the only counts that may enter any scientific comparison. For a non-conforming result they are `null`, and no item is `robust`.
+- **Diagnostics are kept separately.** Item labels and `diagnostic_counts` are always reported, unchanged, so a non-conforming run stays inspectable without counting.
+- **Integrity flags** (instruction-like text) are reported. They do not by themselves withhold the result.
+
+**Adjudication, not discovery.** Both stages judge the given items against the given evidence only:
+
+- reviewers cannot add items, sources or connections, because the schema is closed;
+- auditors cite only files the item already cites;
+- an answer that browsed, or used any source outside the package, is a diagnostic record, never a conforming adjudication.
+
+Open-ended Deep Research is a research and discovery activity, and would need its own separate authorisation and design. It is not part of this variant.
 
 ## 5. Evidence-pack-only versus unrestricted Deep Research browsing
 
@@ -134,7 +160,7 @@ A support entry citing a file the item does not cite is **refused at validation*
 
 **Recommendations:**
 
-- **Both primary reviewers evidence-pack-only.** For the GPT reviewer, prefer a mode with browsing disabled. If Deep Research must browse, record `BROWSING_ALLOWED`. The reconciliation then marks that reviewer's answers potentially unblinded, and nothing they touch counts as robust.
+- **Both primary reviewers evidence-pack-only.** For the GPT reviewer, prefer a mode with browsing disabled. If Deep Research must browse, record `BROWSING_ALLOWED`. The reconciliation then marks that reviewer's answers potentially unblinded, and the whole package result is non-conforming: its scientific counts are withheld, and only diagnostics remain.
 - **Keep R4 artefacts off the public remote until Stage C.** That covers exports, packages, answers, seals and arm branches; commit locally. Reveal order needs commits, not pushes. Making the repository private is an account setting: your decision, not taken here.
 
 ## 6. Prompt-injection risks
@@ -223,6 +249,6 @@ If D1 also uses AI arms, the loop becomes AI-generated research evaluated by AI.
 - validators for primary answers and cross-reviews (closed schema, item-evidence-only support, no relabelling in audits);
 - once-only seals;
 - the git stage-order check;
-- deterministic reconciliation, with a Markdown table.
+- deterministic reconciliation with a conformance gate (diagnostic counts always; conforming counts only when every condition holds), with a Markdown table.
 
-The ten tests in `tests/test_graph.py` (`GraphAIReviewTests`) use synthetic packets in temporary directories. There are no network or model calls, and no human logs are written.
+The thirteen tests in `tests/test_graph.py` (`GraphAIReviewTests`), including adversarial cases for uncommitted or violated order, normalised-only quotes, missing cross-reviews, identical or unknown models, browsing, outside sources and missing evidence, use synthetic packets in temporary directories. There are no network or model calls, and no human logs are written.
