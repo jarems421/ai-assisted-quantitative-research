@@ -1,0 +1,114 @@
+{
+ "version": "GRAPH_PILOT_R4_READINESS_VALIDATION_V004",
+ "recorded_at_utc": "2026-10-22T11:17:45+00:00",
+ "status": "PASS",
+ "branch": "graph-pilot-r4-readiness",
+ "base_main": "adc1584ca0926d7ddea17e0ee711a8945f62e0c1",
+ "main_untouched": true,
+ "report": {
+  "path": "docs/strategy/graph_pilot_r4_readiness_v004.md",
+  "sha256": "9b9039b34bb1773ab6d118a25a756358446c8b477c18d6c5d0367485b26ed27d"
+ },
+ "records": {
+  "docs/strategy/graph_pilot_r4_dry_run.md": "d352aed3c37c9f6290d9664a7932809c40da69d4ae7cadb08704bdabd87790a4",
+  "docs/strategy/graph_v1_1_adversarial.md": "ebb4bdc896ab1fb72fb779e46650386ab5e49eaba4bcde9ef76799af44b82135",
+  "docs/strategy/graph_v1_1_quality.md": "e96e8cce6a7918dcc3e1c0d54a6e33c19b73d2172efafb9775674fe29425364d",
+  "docs/strategy/graph_v1_2_holdout.md": "9516c98db0951f6b4c2d58d03db18b1bb08d48cf415c1cc82243b1832a42baf1",
+  "docs/strategy/graph_pilot_dry_run.md": "0d3224ee3ddc14b7489431ceb151e272bcdfa229aabace02eff4e529ceab35e6",
+  "docs/strategy/graph_v1_walkthrough.md": "cee4645ff4d9e71bcc72c3c9c33eaf2c7c341630ff120ed605dac6f9551ab926",
+  "docs/strategy/graph_timestamp_corrections_2026-10-22.json": "6f2278eafb411596205e4cc2d48bd85235a3c6e9b944299041c471e4fd2d6d80"
+ },
+ "protected_paths_changed_vs_main": {
+  "r3": "NONE",
+  "opportunity_scout": "NONE"
+ },
+ "r4": "NOT_RUN",
+ "network": "none",
+ "acquisition": 0,
+ "scope": "SYNTHETIC_FIXTURES_ONLY; not an independent or real-world benchmark",
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": "python -m unittest discover -s tests",
+   "returncode": 0,
+   "test_count": 703,
+   "log_sha256": "3490aa32b16d05079a053a5abc6640ced112c48b4a510e6f6383a3bbf626dff9"
+  },
+  {
+   "name": "graph_tests",
+   "command": "python -m unittest tests.test_graph",
+   "returncode": 0,
+   "test_count": 88
+  },
+  {
+   "name": "public_checks",
+   "command": "python -m src.research.public_checks",
+   "returncode": 0,
+   "test_count": 377
+  },
+  {
+   "name": "r4_dry_run",
+   "command": "python -m src.research.graph pilot r4-dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "adversarial",
+   "command": "python -m src.research.graph adversarial --check",
+   "returncode": 0
+  },
+  {
+   "name": "holdout_v1_2",
+   "command": "python -m src.research.graph holdout --check",
+   "returncode": 0
+  },
+  {
+   "name": "quality",
+   "command": "python -m src.research.graph quality --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_demo",
+   "command": "python -m src.research.graph demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "pilot_dry_run_r2",
+   "command": "python -m src.research.graph pilot dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_build",
+   "command": "python -m src.research.graph build --check",
+   "returncode": 0,
+   "digest": "8c9167e93b9bb9729b7511933b7e0ae7ceed78becf9fc7a9b3bcd4705426b4e6",
+   "rebuild_identical": true
+  },
+  {
+   "name": "discovery_demo",
+   "command": "python -m src.research.discovery demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "phase4a",
+   "command": "python -m src.research.phase4a --check",
+   "returncode": 0
+  },
+  {
+   "name": "presentation",
+   "command": "python -m src.presentation.exp001 --check",
+   "returncode": 0
+  }
+ ],
+ "corrections": {
+  "commit_date_rule": "no tolerance: a running commit dated after the query (even by 1 s) is refused; boundary-tested; mutation restoring the 5-minute allowance caught",
+  "timestamps": "docs/strategy/graph_timestamp_corrections_2026-10-22.json: configuration V001 and generic register V001 hand-entered recorded_at_utc later than their commits; both preserved; configuration superseded by V002 (identical content)",
+  "activation_requirement": "a snapshot with r4_configuration.conforms=false is never a conforming R4 packet (documented; enforcement is activation tooling)"
+ },
+ "r4_graph_configuration": {
+  "path": "docs/strategy/graph_pilot_r4_graph_configuration_v002.json",
+  "supersedes": "docs/strategy/graph_pilot_r4_graph_configuration_v001.json",
+  "operators": "GRAPH_OPERATORS_V1_1",
+  "classification": "GRAPH_CLASSIFICATION_V1_2",
+  "status": "PROPOSED, FROZEN PROSPECTIVELY"
+ }
+}

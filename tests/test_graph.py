@@ -1209,6 +1209,34 @@ class GraphPilotProvenanceAndConfigurationTests(unittest.TestCase):
         self.assertEqual(ok['level'],'COMMIT_CONSISTENT_WITH_PIN');self.assertIn('not a cryptographic',ok['does_not_establish'])
         with self.assertRaisesRegex(P.PilotError,'dated after the query'):
             P.validate_execution_provenance(claim,dict(snap,fixture='LIVE'),'2000-01-01T00:00:00+00:00','probe')
+        from datetime import datetime,timedelta  # exact boundary: no clock-skew allowance is registered
+        dated=datetime.fromisoformat(I.commit_time(I.ROOT,older))
+        live=dict(snap,fixture='LIVE')
+        self.assertEqual(P.validate_execution_provenance(claim,live,dated.isoformat(),'probe')['date_check'],'COMMIT_DATED_BEFORE_QUERY')  # equal: no later than
+        for late in (timedelta(seconds=1),timedelta(minutes=4,seconds=59)):
+            with self.assertRaisesRegex(P.PilotError,'dated after the query'):
+                P.validate_execution_provenance(claim,live,(dated-late).isoformat(),'probe')  # commit one second (or under 5 minutes) after the query
+
+    def test_hand_recorded_times_never_postdate_their_commits_and_corrections_are_preserved(self):
+        from datetime import datetime
+        def added(path):
+            out=subprocess.run(['git','log','--diff-filter=A','--format=%H %cI','--',path],cwd=ROOT,capture_output=True,text=True).stdout.split()
+            return out[-2:] if out else None
+        corr=json.loads((ROOT/'docs/strategy/graph_timestamp_corrections_2026-10-22.json').read_text(encoding='utf-8'))
+        for path in ('docs/strategy/graph_pilot_r4_graph_configuration_v002.json','docs/strategy/graph_timestamp_corrections_2026-10-22.json'):
+            first=added(path)
+            if first is None:
+                if os.environ.get('GITHUB_ACTIONS'):self.fail(f'{path} must be committed')
+                continue  # not yet committed in a local working tree
+            recorded=datetime.fromisoformat(json.loads((ROOT/path).read_text(encoding='utf-8'))['recorded_at_utc'])
+            self.assertLessEqual(recorded,datetime.fromisoformat(first[1]),path)  # never later than the commit that introduced it
+        for c in corr['corrections']:  # the defective files are preserved byte-for-byte and their defect is real
+            self.assertEqual(sha(ROOT/c['file']),c['sha256'])
+            self.assertGreater(datetime.fromisoformat(c['recorded_at_utc_as_written']),datetime.fromisoformat(c['commit_committer_date_utc']))
+        v1=json.loads((ROOT/'docs/strategy/graph_pilot_r4_graph_configuration_v001.json').read_text(encoding='utf-8'));v2=P.load_r4_configuration()
+        same=('graph_operator_version','classification','generic_register','connection_log','implementation_pin_version','register_policy','dependency_boundary')
+        self.assertEqual({k:v1[k] for k in same},{k:v2[k] for k in same})  # identical configuration; only time fields corrected
+        self.assertEqual(v2['supersedes']['sha256'],sha(ROOT/'docs/strategy/graph_pilot_r4_graph_configuration_v001.json'))
 
     def test_registered_r4_configuration_is_frozen_and_is_the_v2_default(self):
         from src.research.graph import connections as K

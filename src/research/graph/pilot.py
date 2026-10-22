@@ -48,13 +48,15 @@ CATEGORY_TAG = re.compile(r'\[PILOT:([A-Z_]+)\]')
 DECISIVE_TAG = re.compile(r'\[DECISIVE:([A-Z]+-[A-Za-z0-9_.-]+)\]')
 CEILINGS = {'analyst_minutes': 120, 'source_starts': 6, 'searches': 10, 'bytes': 8 * 2 ** 20}
 # Owner decision (2026-10-22): the proposed R4 graph configuration, frozen prospectively. V2 snapshots default to it.
-R4_CONFIGURATION = C.ROOT / 'docs/strategy/graph_pilot_r4_graph_configuration_v001.json'
-R4_CONFIGURATION_VERSION = 'GRAPH_PILOT_R4_GRAPH_CONFIGURATION_V001'
+# V002 supersedes V001 (identical configuration; V001's hand-entered recorded_at_utc was later than its own commit and is
+# preserved unchanged; see docs/strategy/graph_timestamp_corrections_2026-10-22.json).
+R4_CONFIGURATION = C.ROOT / 'docs/strategy/graph_pilot_r4_graph_configuration_v002.json'
+R4_CONFIGURATION_VERSION = 'GRAPH_PILOT_R4_GRAPH_CONFIGURATION_V002'
 # Saved execution provenance (the implementation_check of every visibility receipt).
 PROVENANCE_KEYS = ('status', 'running_commit', 'dirty_pinned_paths')
 PROVENANCE_STATUSES = ('EXACT_COMMIT', 'UNRELATED_COMMIT_CHANGE', 'GIT_UNAVAILABLE_CONTENT_VERIFIED')
 PROVENANCE_ESTABLISHES = ('the saved record is well formed and consistent with the snapshot pin; the named commit exists in this repository, is dated '
-                          'no later than the query (by its self-declared committer date), and its pinned files differ from the pinned content '
+                          'no later than the query (by its self-declared committer date; no skew allowance), and its pinned files differ from the pinned content '
                           'exactly at the declared uncommitted paths, so it could have run the pinned code')
 PROVENANCE_PROCEDURAL = ('that the query actually ran at that commit: a git commit, its date and local history are self-reported and not a '
                          'cryptographic or external attestation; a fabricated record naming another consistent commit cannot be distinguished')
@@ -335,7 +337,9 @@ def validate_execution_provenance(saved, snap, query_at, where, root=None):
         raise PilotError(f'{where}: the saved record declares uncommitted pinned paths {dirty}, but commit {commit[:12]} differs from the pin at {differing}')
     dated = I.commit_time(root, commit)
     if snap.get('fixture') == 'SYNTHETIC':date_check = 'NOT_APPLICABLE_SYNTHETIC_CLOCK'  # fixture query times are a fixed synthetic clock
-    elif dated is None or parse_time(dated) > parse_time(query_at) + timedelta(minutes=ATTESTATION_LAG_MINUTES):
+    # No clock-skew allowance is registered: a commit dated even one second after the query is refused. (The human
+    # attestation lag is a different rule and is deliberately not reused here.) Pilot machines need a synchronised clock.
+    elif dated is None or parse_time(dated) > parse_time(query_at):
         raise PilotError(f'{where}: the saved running commit {commit[:12]} is dated after the query')
     else:date_check = 'COMMIT_DATED_BEFORE_QUERY'
     return {'level': 'COMMIT_CONSISTENT_WITH_PIN', 'status': status, 'running_commit': commit, 'dirty_pinned_paths': dirty, 'date_check': date_check,
