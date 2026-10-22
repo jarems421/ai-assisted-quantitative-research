@@ -1300,7 +1300,7 @@ class GraphPilotPhaseBTests(unittest.TestCase):
             self.assertIn(problem,AD.conformance(self.p1,snap,{**dual,'item_status':{**dual['item_status'],key:1}})['problems'])
         self.assertIn('REVEAL_ORDER_UNVERIFIED',AD.conformance(self.p1,{**snap,'fixture':'LIVE'},{**dual,'reveal_order':{'status':'NOT_COMMITTED'}})['problems'])
         self.assertIn('ADJUDICATION_NOT_DUAL',AD.conformance(self.p1,snap,{'status':'ADJUDICATION_NOT_DUAL'})['problems'])
-        with self.assertRaisesRegex(P.PilotError,'an assistant cannot adjudicate'):AD.seal(self.tmp/'P2','blind_v2.json','R1','ChatGPT reviewer','SYNTHETIC_FIXTURE')
+        with self.assertRaisesRegex(P.PilotError,'an assistant cannot adjudicate'):AD.seal(self.tmp/'P2','blind_v2.json','R1','ChatGPT reviewer',{'saw_arm_info':'NO','seen':[],'operated_or_attested_arm':'NO','note':''},'SYNTHETIC_FIXTURE')
 
     def test_legacy_reports_are_unchanged_by_phase_b(self):
         base=ROOT/'docs/strategy/graph_pilot_r3'
@@ -1377,6 +1377,62 @@ class GraphPilotPhaseBReviewTests(unittest.TestCase):
         flagged=P.blinding_sensitivity([pk('A',True),pk('B',False),pk('C',False)])
         self.assertEqual((flagged['potentially_unblinded_packets'],flagged['classification'],flagged['gate']),(['A'],'INCONCLUSIVE','UNRESOLVED'))
         self.assertEqual(P.blinding_sensitivity([pk('A',True),pk('B',False),pk('C',False),pk('D',False)])['gate'],'CONSISTENT')
+
+
+class GraphPilotPhaseBZeroItemTests(unittest.TestCase):
+    """Zero-row packets are reviewed, sealed and reported explicitly; reveal order uses the sealed bytes' commits."""
+
+    @classmethod
+    def setUpClass(cls):
+        from src.research.graph import adjudication as AD,pilot_r4_phase_b_dryrun as PB
+        cls.AD,cls.PB=AD,PB;cls.tmp=Path(tempfile.mkdtemp(prefix='graph-phase-b-zero-'));cls.res=PB.run(cls.tmp);cls.p5=cls.tmp/'P5'
+        cls.clean={'saw_arm_info':'NO','seen':[],'operated_or_attested_arm':'NO','note':''}
+
+    @classmethod
+    def tearDownClass(cls):R4.remove_tree(cls.tmp)
+
+    def fresh(self,name):
+        d=self.tmp/name;shutil.copytree(self.p5,d,ignore=shutil.ignore_patterns('adjudication-seal-*','adjudications-*','warning-usefulness-*'))
+        for rv in self.AD.REVIEWERS:self.PB.write_logs(d,rv,[],[])
+        return d
+
+    def test_zero_item_packet_is_sealed_verified_conforming_and_reported(self):
+        AD=self.AD;dual=AD.dual(self.p5,'blind_v2.json')
+        self.assertEqual((dual['status'],dual['items'],dual['reveal_order']['status'],dual['adjudications']),('DUAL_SEALED',0,'VERIFIED',{}))
+        for k in ('outcome','economic_meaning','usefulness'):
+            self.assertEqual((dual['agreement'][k]['items'],dual['agreement'][k]['raw_agreement']['value'],dual['agreement'][k]['kappa']),
+                             (0,'UNDEFINED_ZERO_DENOMINATOR','UNDEFINED_ZERO_DENOMINATOR'))
+        self.assertEqual(P.unblind(self.p5,'blind_v2.json'),[])
+        seals=[json.loads(AD.files(self.p5,rv)['seal'].read_text(encoding='utf-8')) for rv in AD.REVIEWERS]
+        self.assertEqual([s['logs']['economic']['items'] for s in seals],[0,0]);self.assertNotEqual(seals[0]['adjudicator']['name'],seals[1]['adjudicator']['name'])
+        self.assertTrue(all(r['result']=='PASS' for r in self.res['checks'] if r['area']=='zero items'))
+
+    def test_zero_item_reviewer_conflict_and_identity_still_enforced(self):
+        AD=self.AD;d=self.fresh('Z1')
+        AD.seal(d,'blind_v2.json','R1',R4.OPERATOR,self.clean,'SYNTHETIC_FIXTURE')  # the session attester reviews
+        AD.seal(d,'blind_v2.json','R2',self.PB.REVIEWER['R2'],self.clean,'SYNTHETIC_FIXTURE')
+        dual=AD.dual(d,'blind_v2.json');self.assertEqual(dual['reviewer_status']['R1'],'CONFLICTED')
+        self.assertIn('ADJUDICATOR_CONFLICT',AD.conformance(d,P.load_snapshot(d/'snapshot.json')['snapshot'],dual)['problems'])
+        d2=self.fresh('Z2')
+        for rv in AD.REVIEWERS:AD.seal(d2,'blind_v2.json',rv,self.PB.REVIEWER['R1'],self.clean,'SYNTHETIC_FIXTURE')
+        with self.assertRaisesRegex(P.PilotError,'two different humans'):AD.dual(d2,'blind_v2.json')
+        d3=self.fresh('Z3')
+        AD.seal(d3,'blind_v2.json','R1',self.PB.REVIEWER['R1'],{**self.clean,'seen':['AI_ASSESSMENT']},'SYNTHETIC_FIXTURE')
+        AD.seal(d3,'blind_v2.json','R2',self.PB.REVIEWER['R2'],self.clean,'SYNTHETIC_FIXTURE')
+        self.assertIn('ADJUDICATION_NOT_INDEPENDENT',AD.conformance(d3,P.load_snapshot(d3/'snapshot.json')['snapshot'],AD.dual(d3,'blind_v2.json'))['problems'])
+        old=json.loads(AD.files(d3,'R2')['seal'].read_text(encoding='utf-8'));old.pop('reviewer_exposure');old['version']='GRAPH_PILOT_ADJUDICATION_SEAL_V001'
+        AD.files(d3,'R2')['seal'].write_text(json.dumps(old),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'not a GRAPH_PILOT_ADJUDICATION_SEAL_V002 seal'):AD.dual(d3,'blind_v2.json')
+
+    def test_reveal_order_uses_commits_holding_the_sealed_bytes(self):
+        checks={r['check']:r['result'] for r in self.res['checks']}
+        self.assertEqual(checks['a log whose committed history holds other content (a placeholder first) is a violation, not VERIFIED'],'PASS')
+        self.assertEqual(checks['a seal rewritten after its first commit is a violation, even though it still validates'],'PASS')
+        self.assertEqual(self.AD.reveal_order(self.tmp/'P1')['status'],'VERIFIED')
+        d=self.tmp/'P1';s=self.AD.files(d,'R1')['seal'];original=s.read_bytes()
+        s.write_bytes(original+b' ')  # uncommitted edit: the committed history holds other bytes, so it fails closed
+        self.assertEqual(self.AD.reveal_order(d)['status'],'VIOLATED');s.write_bytes(original)
+        self.assertEqual(self.AD.reveal_order(d)['status'],'VERIFIED')
 
 
 if __name__=='__main__':unittest.main()

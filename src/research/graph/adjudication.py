@@ -31,7 +31,9 @@ from src.research.graph import pilot as P
 
 ADJUDICATION_V2 = 'GRAPH_PILOT_ADJUDICATION_V2'
 USEFULNESS_V1 = 'GRAPH_PILOT_WARNING_USEFULNESS_V1'
-SEAL_VERSION = 'GRAPH_PILOT_ADJUDICATION_SEAL_V001'
+# V002 adds a mandatory reviewer-level exposure declaration, which also makes a zero-item packet auditable: a reviewer with
+# no items to judge still declares their identity and exposure in the seal over their (explicitly empty) logs.
+SEAL_VERSION = 'GRAPH_PILOT_ADJUDICATION_SEAL_V002'
 DEVIATION_VERSION = 'GRAPH_PILOT_DEVIATION_V001'
 REVIEWERS = ('R1', 'R2')
 EXPOSURE_SOURCES = ('ARM_LEDGER', 'CONNECTION_LOG', 'ARM_SESSION', 'BLINDING_KEY', 'ALIAS_KEY', 'SUGGESTION_EXPORT', 'V001_EXPORT',
@@ -46,7 +48,7 @@ USEFULNESS_KEYS = ('blind_id', 'usefulness', 'avoided_action', 'checked_evidence
 ECONOMIC_KINDS, USEFULNESS_KINDS = ('CONNECTION',), ('METHODOLOGICAL_WARNING', 'AVOIDED_REPEAT')
 UNRESOLVED = 'UNRESOLVED_DISAGREEMENT'
 STATUS_ORDER = ('CLEAN', 'POTENTIALLY_UNBLINDED', 'NOT_INDEPENDENT', 'CONFLICTED')
-SEAL_KEYS = ('version', 'packet', 'reviewer', 'adjudicator', 'export', 'logs', 'sealed_at_utc', 'statement')
+SEAL_KEYS = ('version', 'packet', 'reviewer', 'adjudicator', 'reviewer_exposure', 'export', 'logs', 'sealed_at_utc', 'statement')
 DEVIATION_KEYS = ('version', 'packet', 'kind', 'reason', 'decided_by', 'decided_at_utc', 'treatment')
 DEVIATION_TREATMENTS = ('EXCLUDED_FROM_PRIMARY', 'SECONDARY_DESCRIPTIVE_ONLY')
 SEAL_STATEMENT = ("I made these judgments myself, without access to the other reviewer's judgments or any AI assessment, and without "
@@ -120,6 +122,8 @@ def validate_reviewer(packet_dir, export_name, reviewer, fixture):
     d = Path(packet_dir); export = json.loads((d / export_name).read_text(encoding='utf-8'))
     items, economic, usefulness = partition(export)
     conflicts, f, name, status = attesters(d), files(d, reviewer), None, {}
+    for k in ('economic', 'usefulness'):
+        if not f[k].is_file():raise P.PilotError(f'{f[k].name}: each reviewer writes both logs, explicitly empty when there are no such items')
     econ = {}
     for n, r in enumerate(P.read_jsonl(f['economic']), 1):
         w = f"{f['economic'].name} line {n}"
@@ -133,7 +137,7 @@ def validate_reviewer(packet_dir, export_name, reviewer, fixture):
         status[r['blind_id']] = exposure_status(r['exposure'], r['adjudicator'], conflicts, w); econ[r['blind_id']] = r
     if set(econ) != economic:raise P.PilotError(f"{f['economic'].name}: {len(economic - set(econ))} CONNECTION items are not adjudicated")
     use = {}
-    for n, r in enumerate(P.read_jsonl(f['usefulness']) if f['usefulness'].is_file() else [], 1):
+    for n, r in enumerate(P.read_jsonl(f['usefulness']), 1):
         w = f"{f['usefulness'].name} line {n}"
         if tuple(sorted(r)) != tuple(sorted(USEFULNESS_KEYS)):raise P.PilotError(f'{w}: fields must be exactly {USEFULNESS_KEYS}')
         name = common_row(r, w, reviewer, name, fixture, USEFULNESS_V1)
@@ -150,15 +154,21 @@ def validate_reviewer(packet_dir, export_name, reviewer, fixture):
     return {'reviewer': reviewer, 'adjudicator': name, 'economic': econ, 'usefulness': use, 'status': status}
 
 
-def seal(packet_dir, export_name, reviewer, name, kind='HUMAN', now=None):
-    """The reviewer's own immutable seal over both of their logs (hashes), written when they finish."""
+def seal(packet_dir, export_name, reviewer, name, exposure, kind='HUMAN', now=None):
+    """The reviewer's own immutable seal over both of their logs (hashes), written when they finish.
+
+    ``exposure`` is the reviewer's own declaration over the whole review (same fields as an item's). With zero items to
+    judge, the logs are explicitly empty files and the seal alone carries the reviewer's identity and exposure: no
+    judgment, usefulness score or effort is invented."""
     d = Path(packet_dir); snap = P.load_snapshot(d / 'snapshot.json')['snapshot']
     check_person(name, kind, snap['fixture'], f'seal {reviewer}')
     v = validate_reviewer(d, export_name, reviewer, snap['fixture'])
-    if v['adjudicator'] != person(name):raise P.PilotError('the seal is written by the reviewer whose logs it seals')
+    if v['adjudicator'] is not None and v['adjudicator'] != person(name):raise P.PilotError('the seal is written by the reviewer whose logs it seals')
+    exposure_status(exposure, name, attesters(d), f'seal {reviewer}')
     f = files(d, reviewer)
-    logs = {k: {'path': f[k].name, 'sha256': P.sha256(f[k]) if f[k].is_file() else None, 'items': len(v[k])} for k in ('economic', 'usefulness')}
+    logs = {k: {'path': f[k].name, 'sha256': P.sha256(f[k]), 'items': len(v[k])} for k in ('economic', 'usefulness')}
     doc = {'version': SEAL_VERSION, 'packet': snap['packet'], 'reviewer': reviewer, 'adjudicator': {'name': name, 'kind': kind},
+           'reviewer_exposure': exposure,
            'export': {'name': export_name, 'sha256': P.sha256(d / export_name)}, 'logs': logs, 'sealed_at_utc': P.utc(now).isoformat(),
            'statement': SEAL_STATEMENT}
     try:P.write_new(f['seal'], doc)
@@ -174,9 +184,15 @@ def load_seal(packet_dir, reviewer, export_name, logs_checked):
         now = P.sha256(f[k]) if f[k].is_file() else None
         if now != s['logs'][k]['sha256']:raise P.PilotError(f'{w}: the {k} log changed after sealing')
     if s['statement'] != SEAL_STATEMENT:raise P.PilotError(f'{w}: the seal carries the independence statement')
-    latest = max(P.parse_time(r['recorded_at_utc']) for r in list(logs_checked['economic'].values()) + list(logs_checked['usefulness'].values()))
-    if P.parse_time(s['sealed_at_utc']) < latest:raise P.PilotError(f'{w}: sealed before the last judgment it seals')
-    if person(s['adjudicator']['name']) != logs_checked['adjudicator']:raise P.PilotError(f'{w}: sealed by someone other than the reviewer')
+    fixture = P.load_snapshot(Path(packet_dir) / 'snapshot.json')['snapshot']['fixture']
+    check_person(s['adjudicator'].get('name'), s['adjudicator'].get('kind'), fixture, w)
+    judged = list(logs_checked['economic'].values()) + list(logs_checked['usefulness'].values())
+    if s['logs']['economic']['items'] != len(logs_checked['economic']) or s['logs']['usefulness']['items'] != len(logs_checked['usefulness']):
+        raise P.PilotError(f'{w}: sealed item counts differ from the logs')
+    if judged:  # with zero items there is no judgment for the seal to follow
+        if P.parse_time(s['sealed_at_utc']) < max(P.parse_time(r['recorded_at_utc']) for r in judged):raise P.PilotError(f'{w}: sealed before the last judgment it seals')
+        if person(s['adjudicator']['name']) != logs_checked['adjudicator']:raise P.PilotError(f'{w}: sealed by someone other than the reviewer')
+    s['reviewer_status'] = exposure_status(s['reviewer_exposure'], s['adjudicator']['name'], attesters(packet_dir), w)
     return s
 
 
@@ -184,9 +200,19 @@ def git(root, *args):
     return subprocess.run(['git', '-C', str(root), *args], capture_output=True, text=True, timeout=60)
 
 
-def first_commit(root, rel):
-    out = git(root, 'log', '--diff-filter=A', '--format=%H', '--', rel).stdout.split()
-    return out[-1] if out else None
+def content_first_commit(root, rel, current):
+    """The first commit holding the CURRENT bytes of a sealed file, or why there is none.
+
+    Every commit reachable from HEAD that touches the path must hold exactly the current bytes (``git hash-object
+    --no-filters``): a placeholder committed first, a later change, a deletion or a re-addition is CHANGED. So the commit
+    used for ordering always contains the content actually sealed and validated, not merely a file of that name."""
+    want = git(root, 'hash-object', '--no-filters', str(current)).stdout.strip()
+    commits = git(root, 'log', '--format=%H', '--reverse', '--', rel).stdout.split()
+    if not commits:return None, 'NOT_COMMITTED'
+    for c in commits:
+        blob = git(root, 'rev-parse', '--verify', '--quiet', f'{c}:{rel}')
+        if blob.returncode != 0 or blob.stdout.strip() != want:return None, 'CHANGED'
+    return commits[0], 'OK'
 
 
 def reveal_order(packet_dir):
@@ -197,9 +223,13 @@ def reveal_order(packet_dir):
     root = Path(top.stdout.strip()); rel = lambda p: Path(p).resolve().relative_to(root).as_posix()
     commits = {}
     for rv in REVIEWERS:
-        f = files(d, rv)
-        commits[rv] = {k: first_commit(root, rel(f[k])) for k in ('economic', 'usefulness', 'seal') if f[k].is_file()}
-    if any(c is None for v in commits.values() for c in v.values()):return {'status': 'NOT_COMMITTED', 'detail': 'a log or seal is not committed'}
+        f, commits[rv] = files(d, rv), {}
+        for k in ('economic', 'usefulness', 'seal'):
+            if not f[k].is_file():return {'status': 'NOT_COMMITTED', 'detail': f'{rv} {k} file is missing'}
+            first, state = content_first_commit(root, rel(f[k]), f[k])
+            if state == 'CHANGED':return {'status': 'VIOLATED', 'detail': f'{rv} {k} file: committed history does not hold only the sealed content'}
+            if state == 'NOT_COMMITTED':return {'status': 'NOT_COMMITTED', 'detail': f'{rv} {k} file is not committed'}
+            commits[rv][k] = first
     for rv, other in (('R1', 'R2'), ('R2', 'R1')):
         for k in ('economic', 'usefulness'):
             if k not in commits[rv]:continue
@@ -240,7 +270,8 @@ def dual(packet_dir, export_name='blind_v2.json'):
     fixture = P.load_snapshot(d / 'snapshot.json')['snapshot']['fixture']
     v = {rv: validate_reviewer(d, export_name, rv, fixture) for rv in REVIEWERS}
     seals = {rv: load_seal(d, rv, export_name, v[rv]) for rv in REVIEWERS}
-    if v['R1']['adjudicator'] == v['R2']['adjudicator']:raise P.PilotError('R1 and R2 must be two different humans')
+    who = {rv: v[rv]['adjudicator'] or person(seals[rv]['adjudicator']['name']) for rv in REVIEWERS}  # zero items: the seal names the reviewer
+    if who['R1'] == who['R2']:raise P.PilotError('R1 and R2 must be two different humans')
     items = partition(json.loads((d / export_name).read_text(encoding='utf-8')))[0]
     status = {b: worst(v['R1']['status'][b], v['R2']['status'][b]) for b in items}
     adjudications = {}
@@ -260,8 +291,10 @@ def dual(packet_dir, export_name='blind_v2.json'):
               'economic_meaning': agreement(field('R1', 'economic', 'economic_meaning'), field('R2', 'economic', 'economic_meaning')),
               'usefulness': agreement(field('R1', 'usefulness', 'usefulness'), field('R2', 'usefulness', 'usefulness'))}
     counts = {s: sum(x == s for x in status.values()) for s in STATUS_ORDER}
-    return {'status': 'DUAL_SEALED', 'adjudications': adjudications, 'agreement': report, 'item_status': counts,
-            'potentially_unblinded': counts['POTENTIALLY_UNBLINDED'] > 0, 'reveal_order': reveal_order(d),
+    reviewer_status = {rv: seals[rv]['reviewer_status'] for rv in REVIEWERS}
+    return {'status': 'DUAL_SEALED', 'adjudications': adjudications, 'agreement': report, 'item_status': counts, 'reviewer_status': reviewer_status,
+            'items': len(items),
+            'potentially_unblinded': counts['POTENTIALLY_UNBLINDED'] > 0 or 'POTENTIALLY_UNBLINDED' in reviewer_status.values(), 'reveal_order': reveal_order(d),
             'reviewers': {rv: {'sealed_at_utc': seals[rv]['sealed_at_utc'], 'economic_items': len(v[rv]['economic']),
                                'usefulness_items': len(v[rv]['usefulness'])} for rv in REVIEWERS},
             'consensus_rule': 'an outcome counts only where both reviewers agree; otherwise UNRESOLVED_DISAGREEMENT, never resolved by an AI or operator'}
@@ -289,8 +322,9 @@ def conformance(packet_dir, snap, dual_result):
     if not cfg or cfg.get('conforms') is not True:problems.append('NON_CONFORMING_CONFIGURATION')
     if dual_result['status'] != 'DUAL_SEALED':problems.append('ADJUDICATION_NOT_DUAL')
     else:
-        if dual_result['item_status']['CONFLICTED']:problems.append('ADJUDICATOR_CONFLICT')
-        if dual_result['item_status']['NOT_INDEPENDENT']:problems.append('ADJUDICATION_NOT_INDEPENDENT')
+        reviewer = set(dual_result.get('reviewer_status', {}).values())
+        if dual_result['item_status']['CONFLICTED'] or 'CONFLICTED' in reviewer:problems.append('ADJUDICATOR_CONFLICT')
+        if dual_result['item_status']['NOT_INDEPENDENT'] or 'NOT_INDEPENDENT' in reviewer:problems.append('ADJUDICATION_NOT_INDEPENDENT')
         reveal = dual_result['reveal_order']['status']
         if reveal == 'VIOLATED':problems.append('REVEAL_ORDER_VIOLATED')
         elif reveal != 'VERIFIED' and snap['fixture'] != 'SYNTHETIC':problems.append('REVEAL_ORDER_UNVERIFIED')

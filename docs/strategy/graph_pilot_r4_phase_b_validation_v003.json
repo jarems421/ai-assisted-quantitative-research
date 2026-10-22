@@ -1,0 +1,124 @@
+{
+ "version": "GRAPH_PILOT_R4_PHASE_B_VALIDATION_V003",
+ "recorded_at_utc": "2026-10-22T14:45:01+00:00",
+ "status": "PASS",
+ "branch": "graph-pilot-r4-phase-b",
+ "base_main": "ca9f4ce0ee2a45c207c2e1158cd4d2f78f6679d3",
+ "main_untouched": true,
+ "report": {
+  "path": "docs/strategy/graph_pilot_r4_phase_b_v003.md",
+  "sha256": "3b603129cc9c718ed884e745b2e563fca54cd7dc373044b20d17492cce8a6165"
+ },
+ "records": {
+  "docs/strategy/graph_pilot_r4_dry_run.md": "8040493f868a2b680db4416a381d51e58e93ca2c206f5cc1b0998a87a18d52d5",
+  "docs/strategy/graph_v1_1_adversarial.md": "ebb4bdc896ab1fb72fb779e46650386ab5e49eaba4bcde9ef76799af44b82135",
+  "docs/strategy/graph_v1_1_quality.md": "e96e8cce6a7918dcc3e1c0d54a6e33c19b73d2172efafb9775674fe29425364d",
+  "docs/strategy/graph_v1_2_holdout.md": "9516c98db0951f6b4c2d58d03db18b1bb08d48cf415c1cc82243b1832a42baf1",
+  "docs/strategy/graph_pilot_dry_run.md": "0d3224ee3ddc14b7489431ceb151e272bcdfa229aabace02eff4e529ceab35e6",
+  "docs/strategy/graph_v1_walkthrough.md": "cee4645ff4d9e71bcc72c3c9c33eaf2c7c341630ff120ed605dac6f9551ab926",
+  "docs/strategy/graph_pilot_r4_phase_b_dry_run.md": "8032e3622f3807f2e2e4f1380eb5a8ace0861d42b506e89d8d62862e570fcf42"
+ },
+ "protected_paths_changed_vs_main": {
+  "r3": "NONE",
+  "opportunity_scout": "NONE",
+  "v1_1_and_v1_2_records": "NONE"
+ },
+ "r4": "NOT_RUN",
+ "network": "none",
+ "acquisition": 0,
+ "scope": "SYNTHETIC_FIXTURES_ONLY; not an independent or real-world benchmark",
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": "python -m unittest discover -s tests",
+   "returncode": 0,
+   "test_count": 820,
+   "log_sha256": "34a63474b69003e8276f9a06319534c0bbf8316371248b145fda4a2fa7bfbffe"
+  },
+  {
+   "name": "graph_tests",
+   "command": "python -m unittest tests.test_graph",
+   "returncode": 0,
+   "test_count": 101
+  },
+  {
+   "name": "public_checks",
+   "command": "python -m src.research.public_checks",
+   "returncode": 0,
+   "test_count": 390
+  },
+  {
+   "name": "r4_dry_run",
+   "command": "python -m src.research.graph pilot r4-dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "adversarial",
+   "command": "python -m src.research.graph adversarial --check",
+   "returncode": 0
+  },
+  {
+   "name": "holdout_v1_2",
+   "command": "python -m src.research.graph holdout --check",
+   "returncode": 0
+  },
+  {
+   "name": "r4_phase_b_dry_run",
+   "command": "python -m src.research.graph pilot r4-phase-b-dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "quality",
+   "command": "python -m src.research.graph quality --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_demo",
+   "command": "python -m src.research.graph demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "pilot_dry_run_r2",
+   "command": "python -m src.research.graph pilot dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_build",
+   "command": "python -m src.research.graph build --check",
+   "returncode": 0,
+   "digest": "8c9167e93b9bb9729b7511933b7e0ae7ceed78becf9fc7a9b3bcd4705426b4e6",
+   "rebuild_identical": true
+  },
+  {
+   "name": "discovery_demo",
+   "command": "python -m src.research.discovery demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "phase4a",
+   "command": "python -m src.research.phase4a --check",
+   "returncode": 0
+  },
+  {
+   "name": "presentation",
+   "command": "python -m src.presentation.exp001 --check",
+   "returncode": 0
+  }
+ ],
+ "corrections": {
+  "zero_item_packets": "both logs required (explicitly empty); seal V002 carries identity and reviewer-level exposure; sealed-after-judgment check only when judgments exist; agreement UNDEFINED_ZERO_DENOMINATOR; packet reported and eligible for the primary comparison; nothing invented",
+  "reveal_order_content": "ordering uses the first commit holding the exact sealed bytes; any other committed content for a seal or log path (placeholder, later change, deletion, uncommitted edit) is VIOLATED; never-committed files NOT_COMMITTED",
+  "residual": "history rewriting and out-of-band viewing are procedural; byte comparison fails closed under text conversion"
+ },
+ "rehearsal": "30/30 (existing 23 checks unchanged, 7 added)",
+ "mutation_checks": {
+  "caught": 26,
+  "total": 26,
+  "note": "5 new safeguards, 8 from v002 and 13 from v001 repeated against the extended tests; two re-expressed after their target lines changed"
+ },
+ "clean_checkout_limitation": "fresh worktree without ignored private data: test_exp001.FinalTestIntegrationTests and test_phase3c_parser.IsolatedOriginalTests.test_original_namespace_scale_unit_and_aggregate_rejection_offline error (missing private inputs); both pass in the full checkout; public CI does not need private data",
+ "scout_checks_local": {
+  "v004_checks": "OK",
+  "test_scout_v004_process_assurance": "OK"
+ }
+}

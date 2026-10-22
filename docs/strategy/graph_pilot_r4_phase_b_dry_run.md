@@ -26,6 +26,13 @@
 | dual | a prospective packet cannot be unblinded before both reviewers seal | refused: only after both reviewers have sealed | PASS |
 | dual | seals and logs first appearing in the same commit are a reveal-order violation (strict ancestry) | R1 economic log first appears in the same commit as the R2 seal | PASS |
 | conformance | no deviation record can admit a packet to the primary comparison | refused: can never enter the primary | PASS |
+| zero items | a zero-row packet has an empty frozen export | 0 items | PASS |
+| zero items | a reviewer must still write both logs, explicitly empty | refused: explicitly empty | PASS |
+| zero items | a zero-item seal still needs a reviewer-level exposure declaration | refused: exposure must have exactly | PASS |
+| zero items | two different sealed reviewers, verified reveal order and explicit zero denominators; the packet conforms | DUAL_SEALED, 0 items, reveal VERIFIED, kappa UNDEFINED_ZERO_DENOMINATOR, CONFORMING | PASS |
+| zero items | the zero-row packet is reported and enters the primary comparison with zero counts, not dropped | in primary; G verified 0, review items 0, adjudicator minutes 0 | PASS |
+| dual | a log whose committed history holds other content (a placeholder first) is a violation, not VERIFIED | R1 economic file: committed history does not hold only the sealed content | PASS |
+| dual | a seal rewritten after its first commit is a violation, even though it still validates | VERIFIED -> VIOLATED: R1 seal file: committed history does not hold only the sealed content | PASS |
 | conformance | only the conforming packet enters the primary comparison; the non-conforming one is listed with its owner deviation | P2 excluded: ['NON_CONFORMING_CONFIGURATION', 'REVEAL_ORDER_VIOLATED']; deviation preserved | PASS |
 | usefulness | usefulness is reported separately and never counted as an economic discovery | G usefulness assessed 1 (unresolved 1); economic discoveries 1 | PASS |
 | report | one conforming pair stays INCONCLUSIVE | INCONCLUSIVE | PASS |
@@ -41,4 +48,4 @@
 - Consensus rule: an outcome counts only where both reviewers agree; otherwise UNRESOLVED_DISAGREEMENT, never resolved by an AI or operator.
 - Reveal order: VERIFIED.
 - Primary comparison: 1 conforming packet pair(s) in the primary comparison; 1 excluded and listed.
-- 23/23 checks passed.
+- 30/30 checks passed.
