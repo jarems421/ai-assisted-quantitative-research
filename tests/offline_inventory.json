@@ -1,0 +1,1502 @@
+{
+  "tests/opportunity_scout/test_acceptance.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "AccountingAcceptanceTests.test_actual_attempt_counts_are_checked_even_with_six_cards_and_equal_ceilings",
+      "AccountingAcceptanceTests.test_actual_effort_differences_within_caps_are_reported_without_rebalancing",
+      "AccountingAcceptanceTests.test_blinded_packet_discloses_incomplete_accounting_without_revealing_conditions",
+      "AccountingAcceptanceTests.test_missing_usage_and_effort_remain_unknown_with_known_subtotals",
+      "AccountingAcceptanceTests.test_reused_context_mixed_models_and_token_excess_are_deviations",
+      "AccountingAcceptanceTests.test_v002_requires_independent_review_attestation_and_reports_review_budget",
+      "PackageAcceptanceTests.test_changed_blueprint_and_late_model_binding_are_refused",
+      "PackageAcceptanceTests.test_generation_effort_correction_preserves_history_and_uses_latest_record",
+      "PackageAcceptanceTests.test_local_runner_uses_twelve_frozen_stateless_requests_without_redispatch",
+      "PackageAcceptanceTests.test_package_is_reproducible_with_twelve_new_prompts_and_no_generated_cards",
+      "PackageAcceptanceTests.test_runtime_binding_is_immutable_and_covers_actual_model_and_settings",
+      "ReadinessAcceptanceTests.test_identifiable_route_alone_is_insufficient_but_speculation_can_receive_human_approval",
+      "ReadinessAcceptanceTests.test_legacy_ready_replays_but_cannot_be_newly_appended_or_handed_off",
+      "ReadinessAcceptanceTests.test_placeholders_cannot_be_ready_even_with_a_human_feasibility_record",
+      "ReadinessAcceptanceTests.test_quality_audit_keeps_structure_feasibility_novelty_and_findings_separate",
+      "ReadinessAcceptanceTests.test_wrong_question_assistant_and_later_access_failure_cannot_satisfy_handoff"
+    ]
+  },
+  "tests/opportunity_scout/test_evaluation.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "CLITests.test_complete_operator_assisted_workflow_uses_real_importer",
+      "CLITests.test_import_status_reports_the_completed_attempt_with_later_attempts_pending",
+      "CLITests.test_invalid_input_returns_nonzero_without_authority_writes",
+      "EvaluationTests.test_four_conditions_have_equal_limits_and_common_inputs",
+      "EvaluationTests.test_future_learning_retains_uninvestigated_and_missing_selection",
+      "EvaluationTests.test_generator_metadata_is_hidden_with_partial_blinding_declared",
+      "EvaluationTests.test_incomplete_or_unequal_budget_comparison_cannot_be_scored",
+      "EvaluationTests.test_missing_reviewers_are_reported_without_fake_labels",
+      "EvaluationTests.test_shadow_agreement_uses_actual_distributions_not_confidence_as_truth",
+      "EvaluationTests.test_shadow_metrics_stay_unknown_without_independent_labels",
+      "EvaluationTests.test_synthetic_reviews_cannot_be_passed_off_as_actual_human_labels",
+      "EvaluationTests.test_wrong_seal_or_changed_card_content_is_refused"
+    ]
+  },
+  "tests/opportunity_scout/test_hosted_readiness_v001.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "HostedReadinessProposalTests.test_check_cli_is_read_only_and_preserves_exact_artifacts",
+      "HostedReadinessProposalTests.test_documented_shape_inspired_but_fictional_wrapper_is_not_native_acceptance",
+      "HostedReadinessProposalTests.test_fictional_seed_consent_is_explicit_unadopted_and_cannot_flip_schema_flags",
+      "HostedReadinessProposalTests.test_fixture_preserves_complete_schema_projection_and_unverified_source_depth",
+      "HostedReadinessProposalTests.test_hosted_origin_is_not_made_fictional_by_using_fictional_input",
+      "HostedReadinessProposalTests.test_native_monitoring_cannot_be_relabelled_as_a_passed_fictional_window",
+      "HostedReadinessProposalTests.test_one_call_protocol_retains_r3_and_does_not_approve_missing_branches",
+      "HostedReadinessProposalTests.test_package_reconstructs_exact_bytes_and_remains_unbound",
+      "HostedReadinessProposalTests.test_removed_write_action_is_rejected_before_validation_without_mutation"
+    ]
+  },
+  "tests/opportunity_scout/test_n1_collector_bindings.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "N1BindingTests.test_bad_bindings_or_consent_never_launch_or_consume",
+      "N1BindingTests.test_changed_system_bytes_and_dirty_cwd_are_rejected",
+      "N1BindingTests.test_native_templates_cannot_enter_fixture_launcher",
+      "N1BindingTests.test_unchanged_review_proposal_and_unknown_native_semantics"
+    ]
+  },
+  "tests/opportunity_scout/test_n1_readiness.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "NativeReadinessTests.test_account_plan_cannot_impersonate_a_passed_window",
+      "NativeReadinessTests.test_missing_fixture_or_mismatched_verification_is_rejected",
+      "NativeReadinessTests.test_missing_owner_consent_and_fixture_success_cannot_enable_native",
+      "NativeReadinessTests.test_registry_cannot_dirty_sterile_working_directory",
+      "NativeReadinessTests.test_runtime_contract_consistency_is_not_authority"
+    ]
+  },
+  "tests/opportunity_scout/test_prompt_research.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "EvaluationResearchTests.test_balanced_frozen_order_and_fixed_denominators",
+      "EvaluationResearchTests.test_duplicate_flags_are_not_scientific_novelty_or_M_decisions",
+      "EvaluationResearchTests.test_inclusive_resource_components_conflicts_and_billing_are_separate",
+      "EvaluationResearchTests.test_invalid_surplus_failures_and_unknown_effort_are_not_dropped",
+      "EvaluationResearchTests.test_stop_deviations_preserved_but_format_failure_is_separate",
+      "PromptResearchTests.test_changed_versioned_resource_fails_without_affecting_baseline",
+      "PromptResearchTests.test_creative_objectives_and_truthful_unchanged_enum_contract",
+      "PromptResearchTests.test_explicit_versions_and_frozen_plain_default",
+      "PromptResearchTests.test_generated_cards_never_leak_and_lane_access_stays_isolated",
+      "PromptResearchTests.test_hash_and_full_schema_tampering_rejected",
+      "PromptResearchTests.test_lane_and_citation_fabrication_are_rejected",
+      "PromptResearchTests.test_legacy_engine_refuses_v002_instead_of_implicitly_activating_it",
+      "PromptResearchTests.test_prefixes_stops_and_clock_rules_are_preserved",
+      "PromptResearchTests.test_reject_malformed_repair_extra_fields_and_new_enum",
+      "PromptResearchTests.test_same_lane_inputs_cutoff_and_full_schema_without_runtime_cap",
+      "PromptResearchTests.test_v004_packages_and_default_prompt_inputs_remain_unchanged",
+      "PromptResearchTests.test_valid_fictional_outputs_use_original_semantic_validator"
+    ]
+  },
+  "tests/opportunity_scout/test_scout.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "ScoutTests.test_another_git_worktree_is_outside_scout_archive_scope",
+      "ScoutTests.test_contradicted_assertion_is_preserved_and_never_promoted",
+      "ScoutTests.test_credential_and_private_raw_inputs_are_not_opened",
+      "ScoutTests.test_demo_is_reproducible_and_no_human_labels_or_model_calls_are_invented",
+      "ScoutTests.test_exact_and_reworded_duplicates_are_not_economic_identity",
+      "ScoutTests.test_existing_original_field_is_inherited_with_exact_artifact_binding",
+      "ScoutTests.test_explicit_review_produces_proposal_not_a_discovery_record",
+      "ScoutTests.test_external_novelty_requires_independent_evidence_backed_findings",
+      "ScoutTests.test_fabricated_citation_cannot_become_a_fact",
+      "ScoutTests.test_feasibility_review_updates_the_view_without_rewriting_generated_route",
+      "ScoutTests.test_first_public_not_derived_from_event_or_document_date",
+      "ScoutTests.test_forge_cannot_claim_unseen_source_or_history",
+      "ScoutTests.test_generation_budget_has_no_silent_retry_or_fixture_fallback",
+      "ScoutTests.test_human_routing_is_reversible_and_old_decisions_remain",
+      "ScoutTests.test_invalid_chain_preserves_raw_generation_and_error",
+      "ScoutTests.test_jev_requires_separate_payload_approval_and_no_key_is_assumed",
+      "ScoutTests.test_json_duplicates_nan_and_extra_fields_are_refused",
+      "ScoutTests.test_later_outcomes_do_not_change_frozen_selection_or_generation_features",
+      "ScoutTests.test_memory_reads_no_active_ledgers_and_preserves_verdicts",
+      "ScoutTests.test_metadata_cannot_be_promoted_to_documented_economic_link",
+      "ScoutTests.test_mismatched_original_hash_cannot_become_verified_support",
+      "ScoutTests.test_modified_hash_chain_and_recomputed_rule_bypass_both_fail",
+      "ScoutTests.test_no_automatic_ready_or_handoff",
+      "ScoutTests.test_ollama_wire_boundary_is_local_bounded_and_not_a_fixture_fallback",
+      "ScoutTests.test_radar_and_gap_require_their_real_inputs",
+      "ScoutTests.test_reconsideration_requires_exact_requirement_and_never_promotes",
+      "ScoutTests.test_response_size_candidate_count_and_token_budget_are_enforced",
+      "ScoutTests.test_revisions_preserve_initial_features_and_reset_approval",
+      "ScoutTests.test_seed_hash_must_match_and_original_depth_is_inherited_only",
+      "ScoutTests.test_shadow_distribution_never_changes_routing",
+      "ScoutTests.test_shortlist_preserves_speculation_and_multiple_mechanisms",
+      "ScoutTests.test_source_access_failure_cannot_reject_a_coherent_mechanism",
+      "ScoutTests.test_source_stop_cannot_be_reopened_by_generation",
+      "ScoutTests.test_speculative_idea_survives_without_evidence",
+      "ScoutTests.test_synthetic_and_actual_human_labels_do_not_mix",
+      "ScoutTests.test_three_lane_contexts_are_independent",
+      "ScoutTests.test_unknown_cost_and_review_time_remain_unknown",
+      "ScoutTests.test_unsafe_paths_output_overwrites_and_unterminated_event_fail_closed"
+    ]
+  },
+  "tests/opportunity_scout/test_v003.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "AdapterTests.test_account_env_is_child_only_and_drops_all_credential_provider_and_ide_overrides",
+      "AdapterTests.test_actual_argv_fresh_context_medium_tools_and_machine_output",
+      "AdapterTests.test_additional_visible_generation_or_repair_is_rejected",
+      "AdapterTests.test_credentials_are_withheld_from_failure_artifacts",
+      "AdapterTests.test_development_account_and_missing_research_auth_are_refused",
+      "AdapterTests.test_elapsed_time_uses_monotonic_clock",
+      "AdapterTests.test_fixed_synthetic_preflight_resolves_and_checks_explicit_identity",
+      "AdapterTests.test_inspection_requires_supported_flags_and_subscription_not_api_auth",
+      "AdapterTests.test_invalid_json_duplicate_keys_and_timeout_keep_failures_without_retry",
+      "AdapterTests.test_managed_policy_presence_fails_before_subprocess",
+      "AdapterTests.test_model_mismatch_or_second_model_is_rejected",
+      "AdapterTests.test_no_transmission_without_payload_specific_consent",
+      "AdapterTests.test_observed_effort_override_and_changed_structured_output_are_rejected",
+      "AdapterTests.test_rate_limit_auth_and_process_failure_never_fall_back",
+      "AdapterTests.test_repository_tool_mcp_skill_and_agent_leaks_fail_isolation",
+      "AdapterTests.test_thinking_and_output_chunks_with_same_message_id_are_one_generation",
+      "AdapterTests.test_unknown_usage_stays_unknown",
+      "AdapterTests.test_usage_includes_cached_inputs_and_cost_is_not_subscription_charge",
+      "AdapterTests.test_windows_discovery_finds_known_winget_path_without_shell_alias",
+      "ComparisonTests.test_blinding_reviews_all_cards_with_no_metadata_or_fabricated_human_labels",
+      "ComparisonTests.test_execution_without_consent_cannot_construct_a_client",
+      "ComparisonTests.test_failed_attempt_is_consumed_durably_stops_and_never_retries",
+      "ComparisonTests.test_interrupted_subprocess_blocks_resumption_before_second_dispatch",
+      "ComparisonTests.test_invalid_json_and_surplus_cards_are_retained_and_reviewed_without_replacement",
+      "ComparisonTests.test_preflight_drift_refuses_model_dispatch",
+      "ComparisonTests.test_preflight_success_flags_cannot_hide_tampered_original_envelope",
+      "ComparisonTests.test_prospective_package_preserves_source_bytes_and_allocation",
+      "ComparisonTests.test_raw_malformed_output_is_private_but_failed_slots_stay_visible",
+      "ComparisonTests.test_receipt_tampering_and_recomputed_chain_rule_bypass_fail",
+      "ComparisonTests.test_template_false_approval_wrong_model_changed_files_and_future_dates_are_refused",
+      "ComparisonTests.test_twelve_mocked_attempts_have_fresh_frozen_inputs_and_no_redispatch",
+      "ComparisonTests.test_v003_human_review_contract_requires_independence_and_keeps_fixture_labels_separate"
+    ]
+  },
+  "tests/opportunity_scout/test_v004_assurance.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "JournalAssuranceTests.test_complete_consumption_suffix_removal_is_detected",
+      "JournalAssuranceTests.test_complete_result_suffix_removal_is_detected",
+      "JournalAssuranceTests.test_interruption_between_witness_and_append_cannot_reuse_slot",
+      "JournalAssuranceTests.test_invalid_recording_tag_does_not_leave_same_handle_retryable",
+      "JournalAssuranceTests.test_original_handle_cannot_reselect_after_finish_interruption",
+      "JournalAssuranceTests.test_raw_evidence_survives_evaluation_interruption",
+      "JournalAssuranceTests.test_submission_witness_mutation_fails_closed"
+    ]
+  },
+  "tests/opportunity_scout/test_v004_budget_review.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "CombinedBudgetReviewTests.test_active_prospective_protocol_and_accounting_do_not_drift",
+      "CombinedBudgetReviewTests.test_all_three_input_categories_and_output_count_once",
+      "CombinedBudgetReviewTests.test_conflicting_thinking_detail_is_not_silently_normalised",
+      "CombinedBudgetReviewTests.test_exact_combined_boundary_is_inclusive_and_no_hidden_grace_band",
+      "CombinedBudgetReviewTests.test_heavily_cached_consumption_is_not_discounted",
+      "CombinedBudgetReviewTests.test_input_has_no_old_separate_ceiling",
+      "CombinedBudgetReviewTests.test_missing_bad_or_noninteger_usage_never_becomes_zero",
+      "CombinedBudgetReviewTests.test_new_allowance_does_not_rehabilitate_historical_V003",
+      "CombinedBudgetReviewTests.test_output_guide_does_not_become_a_new_output_ceiling_or_target",
+      "CombinedBudgetReviewTests.test_subscription_billing_and_provider_completeness_are_never_inferred",
+      "CombinedBudgetReviewTests.test_unknown_thinking_does_not_invalidate_observed_total_output"
+    ]
+  },
+  "tests/opportunity_scout/test_v004_diagnostics.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "DiagnosticsTests.test_cached_usage_is_counted_once_from_terminal_not_repeated_chunks",
+      "DiagnosticsTests.test_designated_auth_status_and_error_type_are_recognised",
+      "DiagnosticsTests.test_designated_rate_limit_and_stderr_fallback_are_narrow",
+      "DiagnosticsTests.test_development_metadata_change_stops_probes_and_records_unresolved_guard",
+      "DiagnosticsTests.test_diagnostic_two_turn_probe_does_not_change_one_generation_eligibility",
+      "DiagnosticsTests.test_environment_is_separate_from_generation_independence",
+      "DiagnosticsTests.test_fixed_probe_runner_no_arbitrary_prompt_fallback_or_retry",
+      "DiagnosticsTests.test_full_schema_two_cards_and_realistic_fictional_load_are_fixed",
+      "DiagnosticsTests.test_missing_usage_precludes_a_pass_and_model_cap_is_not_actual_request_cap",
+      "DiagnosticsTests.test_model_mismatch_fails_even_with_valid_output",
+      "DiagnosticsTests.test_multiple_formatting_calls_are_not_relabelled_as_one_generation",
+      "DiagnosticsTests.test_output_limit_retry_is_distinct_from_formatting_and_network_retries",
+      "DiagnosticsTests.test_raw_one_generation_needs_zero_tools_and_locally_valid_unrepaired_json",
+      "DiagnosticsTests.test_reprompt_or_second_request_id_cannot_hide_behind_one_message_id",
+      "DiagnosticsTests.test_structured_terminal_max_turns_wins_over_auth_substrings",
+      "DiagnosticsTests.test_terminal_text_cannot_silently_replace_original_output",
+      "DiagnosticsTests.test_thinking_and_formatting_chunks_share_one_message_but_not_a_second_generation",
+      "DiagnosticsTests.test_timeout_and_auth_failure_stop_remaining_probe_slots_without_retry",
+      "DiagnosticsTests.test_type_mismatch_is_exposed_without_private_error_messages_or_repair",
+      "DiagnosticsTests.test_uuids_plugin_names_and_generated_auth_text_never_imply_auth_failure"
+    ]
+  },
+  "tests/opportunity_scout/test_v004_monitoring.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "MonitoringReviewTests.test_account_snapshot_never_opens_or_hashes_credential_contents",
+      "MonitoringReviewTests.test_changed_file_and_replacement_are_guard_failures_without_attribution",
+      "MonitoringReviewTests.test_clean_sampled_window_still_never_authorises_probe_or_proves_noninterference",
+      "MonitoringReviewTests.test_command_lines_and_reversed_sample_times_are_refused",
+      "MonitoringReviewTests.test_only_parent_recorded_probe_may_appear_in_active_middle_sample",
+      "MonitoringReviewTests.test_per_probe_baseline_cannot_hide_earlier_drift",
+      "MonitoringReviewTests.test_pid_reuse_or_missing_process_visibility_is_not_clean",
+      "MonitoringReviewTests.test_same_size_and_times_do_not_prove_equal_contents",
+      "MonitoringReviewTests.test_separate_development_process_contaminates_quiet_window",
+      "MonitoringReviewTests.test_unobservable_or_incomplete_path_coverage_cannot_pass"
+    ]
+  },
+  "tests/opportunity_scout/test_v004_r3.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "R3JournalPackageTests.test_complete_fictional_schedule_independent_component_and_condition_oracle",
+      "R3JournalPackageTests.test_elevated_format_failure_consumed_then_next_frozen_slot",
+      "R3JournalPackageTests.test_emergency_receipt_preserves_valid_content_and_all_denominators",
+      "R3JournalPackageTests.test_failed_finish_preserves_consumption_and_cannot_choose_another_answer",
+      "R3JournalPackageTests.test_final_slot_emergency_retains_all_records_without_event_free_completion",
+      "R3JournalPackageTests.test_interruption_is_unknown_consumption_not_zero_and_cannot_resume",
+      "R3JournalPackageTests.test_legacy_r2_result_and_source_inventory_preserved_not_reinterpreted",
+      "R3JournalPackageTests.test_low_usage_third_generation_stops_later_dispatch_and_keeps_denominators",
+      "R3JournalPackageTests.test_non_synthetic_package_is_never_dispatchable",
+      "R3JournalPackageTests.test_package_changes_and_extra_files_fail_closed",
+      "R3JournalPackageTests.test_package_policy_runtime_requests_schema_projection_all_bound",
+      "R3JournalPackageTests.test_unencodable_counter_metadata_preserves_raw_bytes_and_interrupted_consumption",
+      "R3JournalPackageTests.test_unknown_usage_and_contaminated_windows_stop_independently",
+      "R3JournalPackageTests.test_witness_suffix_rollback_and_raw_evidence_tamper_detected",
+      "R3RecordedStreamTests.test_122304_append_only_continuation_permitted_without_shortening",
+      "R3RecordedStreamTests.test_all_cache_components_once_thinking_and_model_totals_not_added",
+      "R3RecordedStreamTests.test_auth_words_in_stdout_are_not_auth_failure",
+      "R3RecordedStreamTests.test_boundary_oracle_through_complete_transport",
+      "R3RecordedStreamTests.test_final_conflict_does_not_erase_simultaneously_reported_emergency",
+      "R3RecordedStreamTests.test_format_failure_separate_from_elevated_and_emergency_usage",
+      "R3RecordedStreamTests.test_missing_negative_boolean_float_and_conflicting_final_usage_stop",
+      "R3RecordedStreamTests.test_repairs_replacements_request_context_and_model_changes_always_stop",
+      "R3RecordedStreamTests.test_third_generation_is_integrity_stop_at_both_resource_levels",
+      "R3RecordedStreamTests.test_timeout_auth_and_failed_terminal_keep_resource_and_content_separate",
+      "R3RecordedStreamTests.test_unchanged_full_schema_and_lane_citation_semantics_enforced",
+      "R3TelemetryTests.test_conflicting_nonmonotone_or_malformed_supplied_counters_fail_closed",
+      "R3TelemetryTests.test_duplicate_samples_not_summed_and_emergency_is_decision_only",
+      "R3TelemetryTests.test_emergency_evidence_survives_later_conflict_and_final_below_live",
+      "R3TelemetryTests.test_no_live_meter_is_not_zero_or_measurement_failure",
+      "R3TelemetryTests.test_untrusted_source_or_changed_session_cannot_issue_numeric_cancellation"
+    ]
+  },
+  "tests/opportunity_scout/test_v004_readiness.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Existing v004_checks: synthetic/fake provider inputs and temporary journals; process/network/private-read guards. Metadata/OS branches here are fixture checks, not native process proof.",
+    "declared_tests": [
+      "ReadinessTests.test_60000_inclusive_and_output_guide_not_cap",
+      "ReadinessTests.test_all_twelve_and_lane_validations_keep_fixed_denominators",
+      "ReadinessTests.test_auth_words_and_uuid_substrings_are_not_auth_errors",
+      "ReadinessTests.test_changed_model",
+      "ReadinessTests.test_changed_session_context",
+      "ReadinessTests.test_child_env_drops_credentials_ide_and_provider_overrides_without_modification",
+      "ReadinessTests.test_clean_window_from_a_different_attempt_cannot_be_reused",
+      "ReadinessTests.test_combined_cached_budget_excess_stops",
+      "ReadinessTests.test_concurrent_development_process_stops",
+      "ReadinessTests.test_contaminated_account_metadata_window_stops_without_leakage_claim",
+      "ReadinessTests.test_crash_after_durable_marker_cannot_resume_or_reset",
+      "ReadinessTests.test_designated_auth_failure_stops",
+      "ReadinessTests.test_exact_append_only_output_limit_continuation",
+      "ReadinessTests.test_frozen_order_balance_and_residual_carryover_are_explicit",
+      "ReadinessTests.test_generated_blueprint_input_is_refused",
+      "ReadinessTests.test_journal_tampering_is_rejected",
+      "ReadinessTests.test_lock_contention_does_not_consume",
+      "ReadinessTests.test_malformed_format_consumes_and_can_only_advance_to_next_frozen_slot",
+      "ReadinessTests.test_missing_request_id",
+      "ReadinessTests.test_monitoring_context_must_match_consumed_stream_context",
+      "ReadinessTests.test_no_research_account_fallback",
+      "ReadinessTests.test_notice_after_complete_candidate_cannot_be_repair_or_replacement",
+      "ReadinessTests.test_package_implementation_or_payload_changes_fail_closed",
+      "ReadinessTests.test_package_preserves_full_schema_and_exact_scientific_projection",
+      "ReadinessTests.test_package_rejects_extra_file_and_cannot_overwrite",
+      "ReadinessTests.test_rate_limit_stops",
+      "ReadinessTests.test_real_package_can_be_frozen_but_cannot_enter_offline_run",
+      "ReadinessTests.test_receipt_or_original_stream_tampering_is_rejected",
+      "ReadinessTests.test_regeneration_instead_of_append_does_not_match_terminal",
+      "ReadinessTests.test_rewritten_snapshot_or_changed_request_same_message",
+      "ReadinessTests.test_same_message_thinking_and_text_are_fragments_not_new_generation",
+      "ReadinessTests.test_second_generation_without_notice",
+      "ReadinessTests.test_source_boundary_no_process_or_network_runner",
+      "ReadinessTests.test_success_preserves_exact_bytes_schema_and_unknown_provider_billing",
+      "ReadinessTests.test_terminal_model_usage_conflict",
+      "ReadinessTests.test_thinking_is_not_added_again",
+      "ReadinessTests.test_third_generation",
+      "ReadinessTests.test_timeout_retains_partial_stream_and_all_simultaneous_faults",
+      "ReadinessTests.test_tool_schema_repair_is_prohibited",
+      "ReadinessTests.test_unexplained_request_id",
+      "ReadinessTests.test_unknown_notice_or_task_change_is_not_accepted_as_output_recovery",
+      "ReadinessTests.test_unknown_observation_or_short_idle_window_stops",
+      "ReadinessTests.test_usage_unknown_never_compliant",
+      "RecordedContractTests.test_auth_fallback_is_stderr_only_before_envelope",
+      "RecordedContractTests.test_conflict_does_not_leave_budget_within_allowance_label",
+      "RecordedContractTests.test_lane_semantic_and_citation_validation_not_just_json_schema",
+      "RecordedContractTests.test_malformed_envelope_types_never_escape_without_a_failure",
+      "RecordedContractTests.test_max_turns_does_not_become_auth_due_to_data",
+      "RecordedContractTests.test_monitoring_gap_short_window_missing_parent_and_file_fields_fail",
+      "RecordedContractTests.test_multiple_or_missing_terminal_is_run_stop",
+      "RecordedContractTests.test_old_frozen_directories_refused_for_new_output",
+      "RecordedContractTests.test_surplus_stringified_and_duplicate_key_output_is_not_normalised",
+      "RecordedContractTests.test_unknown_usage_and_numeric_bool_are_not_compliant"
+    ]
+  },
+  "tests/test_capabilities.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic population identity/pause failures; real paused entrypoints stop before transport.",
+    "declared_tests": [
+      "PauseTests.test_exp004_entrypoints_stop_before_io_credentials_or_network",
+      "PauseTests.test_malformed_pause_file_fails_closed",
+      "PauseTests.test_other_experiments_and_local_compilation_remain_available",
+      "PauseTests.test_synthetic_jobs_pause_leaves_scientific_state_and_transport_untouched",
+      "PopulationTests.test_certified_empty_population_is_distinct_from_missing_evidence",
+      "PopulationTests.test_current_alias_and_punctuation_rewrite_fail",
+      "PopulationTests.test_duplicate_missing_and_ambiguous_identity_fail",
+      "PopulationTests.test_order_independent_exact_population",
+      "PopulationTests.test_pruning_and_equal_count_substitution_fail",
+      "PopulationTests.test_unknown_capability_and_partial_evidence_fail"
+    ]
+  },
+  "tests/test_congress_parquet_local.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "PyArrow and DuckDB on temporary fictional tables; no lake credentials.",
+    "declared_tests": [
+      "CongressionalParquetTests.test_real_arrow_naive_utc_conversion_and_duckdb_version_query"
+    ]
+  },
+  "tests/test_congress_sprint.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "CongressSprintTests.test_confirmation_and_unfrozen_outcomes_denied",
+      "CongressSprintTests.test_future_contributor_is_descriptive_only_and_filtered",
+      "CongressSprintTests.test_future_version_supersession_no_old_entry",
+      "CongressSprintTests.test_original_paths_include_declared_senate_paper_and_deny_escape",
+      "CongressSprintTests.test_printed_and_resolved_never_conflated",
+      "CongressSprintTests.test_printed_status_does_not_require_redundant_resolved_field",
+      "CongressSprintTests.test_purchase_sale_unknown_and_asset_missingness",
+      "CongressSprintTests.test_same_security_entry_dedup_later_date_retained",
+      "CongressSprintTests.test_second_later_open_after_modeled_eod_weekend_holiday_dst",
+      "CongressSprintTests.test_source_matching_cannot_hide_action_or_date_disagreement"
+    ]
+  },
+  "tests/test_custom_exp002.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Pure synthetic publication visibility/ambiguity inputs.",
+    "declared_tests": [
+      "DisclosedVisibilityTests.test_backdated_observation_does_not_enter_before_publication",
+      "DisclosedVisibilityTests.test_future_prefix_and_ambiguous_points",
+      "DisclosedVisibilityTests.test_weekend_cutoff_and_delayed_observation"
+    ]
+  },
+  "tests/test_discovery_lab.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "DiscoveryLabTests.test_acquisition_needs_authority_and_respects_budget",
+      "DiscoveryLabTests.test_aggregate_to_cohort_allocation_stays_unverified",
+      "DiscoveryLabTests.test_all_methods_apply_identical_measurement_rules",
+      "DiscoveryLabTests.test_cli_round_trip_and_prompts",
+      "DiscoveryLabTests.test_comparison_reports_counts_without_ranking",
+      "DiscoveryLabTests.test_complete_fields_still_need_a_human_judgment",
+      "DiscoveryLabTests.test_dated_relationship_must_cover_the_observation",
+      "DiscoveryLabTests.test_dispositions_are_human_decisions_that_authorise_nothing",
+      "DiscoveryLabTests.test_entity_identifiers_must_be_consistent",
+      "DiscoveryLabTests.test_every_record_field_is_required",
+      "DiscoveryLabTests.test_frozen_claim_cannot_change_silently",
+      "DiscoveryLabTests.test_incomplete_card_is_never_certified",
+      "DiscoveryLabTests.test_level_a_needs_m_pass_and_separate_h",
+      "DiscoveryLabTests.test_live_campaign_needs_recorded_authority_and_novelty_lint_covers_observations",
+      "DiscoveryLabTests.test_material_change_creates_new_version_and_keeps_old",
+      "DiscoveryLabTests.test_method_entry_rules",
+      "DiscoveryLabTests.test_missing_public_time_certificate_is_never_verified_as_of",
+      "DiscoveryLabTests.test_observation_may_exist_without_a_hypothesis",
+      "DiscoveryLabTests.test_offline_demo_makes_no_external_requests_and_preserves_records",
+      "DiscoveryLabTests.test_original_observation_keeps_units_and_provenance",
+      "DiscoveryLabTests.test_outcome_cannot_be_copied_from_predictor",
+      "DiscoveryLabTests.test_reference_revised_after_freeze_is_flagged",
+      "DiscoveryLabTests.test_relationship_cannot_be_inferred_from_coincident_names",
+      "DiscoveryLabTests.test_renamed_claim_must_declare_its_predecessor",
+      "DiscoveryLabTests.test_replay_rejects_rule_bypass_even_with_a_valid_chain",
+      "DiscoveryLabTests.test_review_must_acknowledge_what_was_not_checked",
+      "DiscoveryLabTests.test_review_references_must_exist",
+      "DiscoveryLabTests.test_reviewer_uncertainty_and_human_reasons_are_retained",
+      "DiscoveryLabTests.test_source_passport_next_evidence_is_qualitative",
+      "DiscoveryLabTests.test_synthetic_and_live_evidence_are_segregated",
+      "DiscoveryLabTests.test_unknown_costs_remain_unknown",
+      "DiscoveryLabTests.test_unsupported_novelty_and_return_inspection_are_refused"
+    ]
+  },
+  "tests/test_exp001.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic metric/calendar/parser inputs; private integration class explicitly excluded.",
+    "declared_tests": [
+      "FinalTestIntegrationTests.test_exactly_one_event_backed_close_for_each_test_session",
+      "FinalTestIntegrationTests.test_existing_development_validation_outputs_and_definitions_unchanged",
+      "FinalTestIntegrationTests.test_new_york_boundary_not_utc_midnight_and_default_test_seal",
+      "FinalTestIntegrationTests.test_no_duplicate_test_dates",
+      "FinalTestIntegrationTests.test_no_missing_or_nonfinite_test_equity",
+      "FinalTestIntegrationTests.test_no_test_market_date_after_authorized_october_8",
+      "FinalTestIntegrationTests.test_raw_inputs_and_manifest_unchanged",
+      "FinalTestIntegrationTests.test_rerunning_processor_and_report_is_byte_deterministic",
+      "FinalTestIntegrationTests.test_strictly_increasing_test_dates",
+      "PerformanceTests.test_drawdown_peak_trough_recovery_and_period_reset",
+      "PerformanceTests.test_invalid_values_and_dates_fail",
+      "PerformanceTests.test_linear_quantiles_and_corrected_kurtosis",
+      "PerformanceTests.test_sample_sd_sharpe_and_all_observation_downside",
+      "PerformanceTests.test_tail_counts_use_daily_returns_denominator",
+      "PerformanceTests.test_tied_peak_dates_use_latest_peak",
+      "PerformanceTests.test_total_return_uses_funding_daily_returns_start_at_second_close",
+      "PerformanceTests.test_zero_volatility_and_no_losses_are_null",
+      "SelectionAndReconciliationTests.test_development_only_rules_disqualify_high_sharpe_bad_drawdown",
+      "SelectionAndReconciliationTests.test_reconciliation_flags_material_delta_without_changing_numbers",
+      "SessionTests.test_duplicate_missing_equity_and_out_of_period_rows_fail",
+      "SessionTests.test_event_backed_early_close_precedes_stale_1600_tick",
+      "SessionTests.test_missing_session_evidence_fails_without_fallback",
+      "SessionTests.test_offline_calendar_boundaries_and_exceptional_closures",
+      "SessionTests.test_raw_parser_preserves_null_collateral_and_rejects_future"
+    ],
+    "exclude": {
+      "FinalTestIntegrationTests": "Private raw EXP001 inputs; setUpClass calls process(workspace), rewriting canonical processed results/report. Never import this class via execution."
+    }
+  },
+  "tests/test_exp002_cohorts.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic amendment and cohort clocks.",
+    "declared_tests": [
+      "CohortAuditTests.test_cohort_uses_public_ny_date_deduplicates_managers",
+      "CohortAuditTests.test_future_cutoff_and_immature_denominator",
+      "CohortAuditTests.test_later_restatement_cannot_rewrite_earlier_state",
+      "CohortAuditTests.test_missing_and_ambiguous_amendments_fail_closed"
+    ]
+  },
+  "tests/test_exp002_coverage.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic coverage and identity inputs.",
+    "declared_tests": [
+      "CoverageAuditTests.test_absent_source_is_not_verified_zero_or_usable_coverage",
+      "CoverageAuditTests.test_cutoff_and_ambiguous_identity_fail_closed",
+      "CoverageAuditTests.test_ended_price_is_excluded_and_duplicate_month_is_rejected",
+      "CoverageAuditTests.test_rename_joins_source_by_identity_and_staleness_expires"
+    ]
+  },
+  "tests/test_exp002_design.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Pure proposed evaluation accounting on literals.",
+    "declared_tests": [
+      "DesignPlanTests.test_ablation_families_do_not_repeat_irrelevant_axes",
+      "DesignPlanTests.test_four_conditional_folds_and_three_remote_stresses_count_every_trial",
+      "DesignPlanTests.test_undeclared_axis_and_duplicate_values_are_rejected"
+    ]
+  },
+  "tests/test_exp002_final_contracts.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic contracts, splits, bootstrap arrays and costs.",
+    "declared_tests": [
+      "FinalContracts.test_bootstrap_deterministic_and_invalid_inputs",
+      "FinalContracts.test_cost_stress_counts_both_sides_and_never_fabricates_execution",
+      "FinalContracts.test_execution_equals_frozen_decision_and_stale_values_never_trade",
+      "FinalContracts.test_naive_sec_timezone_standard_and_daylight",
+      "FinalContracts.test_overlapping_addition_and_missing_original_rejected",
+      "FinalContracts.test_paired_bootstrap_identical_series_zero_differences",
+      "FinalContracts.test_same_day_restatement_needs_explicit_amendment_sequence",
+      "FinalContracts.test_session_freshness_cannot_cross_formation_cutoff",
+      "FinalContracts.test_split_continuity_and_future_prefix"
+    ]
+  },
+  "tests/test_exp002_identity.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic dated mappings and missing-observation checks.",
+    "declared_tests": [
+      "IdentityContractTests.test_conflicting_or_outside_mapping_never_first_wins",
+      "IdentityContractTests.test_missing_identity_and_future_amendments_never_zero",
+      "IdentityContractTests.test_requires_mapping_span_not_just_listing_span"
+    ]
+  },
+  "tests/test_exp003_design.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic identity/trial planning; read-only tracked specs/provenance/hash assertions.",
+    "declared_tests": [
+      "EXP003DesignTests.test_closed_EXP002_files_unchanged",
+      "EXP003DesignTests.test_draft_cannot_freeze_from_placeholders",
+      "EXP003DesignTests.test_reduced_controls_and_all_attempt_accounting",
+      "EXP003DesignTests.test_renames_and_ended_histories",
+      "EXP003DesignTests.test_reused_tickers_and_type_ambiguity_fail_closed",
+      "EXP003DesignTests.test_snapshot_aliases_staleness_and_ignored_filters"
+    ]
+  },
+  "tests/test_exp003_readiness.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic policy inputs, local SDK authoring, tracked draft specs; no client.",
+    "declared_tests": [
+      "EXP003ReadinessTests.test_absent_events_without_certificate_never_zero",
+      "EXP003ReadinessTests.test_audited_window_and_identity_required_for_zero",
+      "EXP003ReadinessTests.test_benchmarks_are_sdk_structures_not_remote_portfolios",
+      "EXP003ReadinessTests.test_both_effects_and_every_fold_participation_required",
+      "EXP003ReadinessTests.test_calendar_first_sessions_and_cutoff",
+      "EXP003ReadinessTests.test_new_policy_does_not_bypass_source_gate",
+      "EXP003ReadinessTests.test_selection_fixed_sensitivity_then_turnover_ties",
+      "EXP003ReadinessTests.test_shortfall_does_not_inflate_remaining_positions",
+      "EXP003ReadinessTests.test_standalone_high_sharpe_cannot_qualify"
+    ]
+  },
+  "tests/test_exp004_amendment.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic split inputs; amendment refusals operate on temporary stores/copies.",
+    "declared_tests": [
+      "AmendmentTests.test_aliases_group_by_stable_identity_not_ticker",
+      "AmendmentTests.test_amendment_after_development_is_rejected",
+      "AmendmentTests.test_amendment_with_existing_job_is_rejected",
+      "AmendmentTests.test_invalid_and_explicit_revision_ambiguity_are_fail_closed",
+      "AmendmentTests.test_noneligible_ambiguous_groups_remain_in_ledger",
+      "AmendmentTests.test_only_single_rule_may_change",
+      "AmendmentTests.test_ordinary_and_same_factor_duplicate_are_unique_without_revision_history",
+      "AmendmentTests.test_window_stays_unavailable_until_maximum_horizon_ages_out"
+    ]
+  },
+  "tests/test_exp004_design.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic policy/SDK authoring and public tracked specs/processed-result hash assertions read-only; private coverage check excluded.",
+    "declared_tests": [
+      "EXP004DesignTests.test_closed_experiments_and_results_unchanged",
+      "EXP004DesignTests.test_compiled_sdk_and_evaluation_ledger",
+      "EXP004DesignTests.test_complete_surface_no_advancement_and_fixed_ties",
+      "EXP004DesignTests.test_each_fold_participation_and_three_positive_folds",
+      "EXP004DesignTests.test_existing_price_evidence_inception_and_determinism",
+      "EXP004DesignTests.test_median_fold_over_single_or_pooled_optimum",
+      "EXP004DesignTests.test_price_momentum_split_and_future_prefix",
+      "EXP004DesignTests.test_primary_comparator_and_direction_not_standalone_sharpe",
+      "EXP004DesignTests.test_schema_draft_and_sealed_access",
+      "EXP004DesignTests.test_stable_id_ties_and_cash_shortfall"
+    ],
+    "exclude": {
+      "EXP004DesignTests.test_existing_price_evidence_inception_and_determinism": "Reads private raw EXP003 coverage receipts; never probe local availability."
+    }
+  },
+  "tests/test_exp004_execution.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Temporary fictional published manifests; local SDK authoring; no submit.",
+    "declared_tests": [
+      "BindingTests.test_each_cell_uses_its_frozen_rank_and_shared_date_validity_schedule",
+      "BindingTests.test_equal_weight_has_no_topk_and_spy_exact_run_inception",
+      "BindingTests.test_no_held_out_or_extra_cells",
+      "BindingTests.test_publication_freeze_mismatch_rejected",
+      "BindingTests.test_silent_native_universe_pruning_cannot_be_submitted"
+    ]
+  },
+  "tests/test_exp004_execution_gaps.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "ExecutionGapEvidenceTests.test_one_unresolved_case_prevents_amendment",
+      "ExecutionGapEvidenceTests.test_provider_context_cannot_extend_into_sealed_market_dates",
+      "ExecutionGapEvidenceTests.test_recovery_requires_every_contract_field",
+      "ExecutionGapEvidenceTests.test_scale_screen_does_not_accept_split_units_or_derive_price",
+      "ExecutionGapEvidenceTests.test_scientific_budget_and_duplicate_submission",
+      "ExecutionGapEvidenceTests.test_vendor_absence_or_zero_volume_does_not_certify_no_trade"
+    ]
+  },
+  "tests/test_exp004_frozen_price_bridge.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "FrozenPriceBridgeTests.test_all_frozen_rows_enriched_does_not_imply_execution_day_exists",
+      "FrozenPriceBridgeTests.test_duplicate_and_missing_rows_fail",
+      "FrozenPriceBridgeTests.test_enrichment_retains_frozen_identity_and_excludes_source_extra",
+      "FrozenPriceBridgeTests.test_exact_close_and_positive_open_required",
+      "FrozenPriceBridgeTests.test_price_only_plan_excludes_identity_join_and_sealed_dates"
+    ]
+  },
+  "tests/test_exp004_local_execution.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "LocalEXP004Tests.test_EW_and_SPY_once_and_initial_NAV",
+      "LocalEXP004Tests.test_SPY_is_explicit_ETF_exception_not_a_CS_universe_filter",
+      "LocalEXP004Tests.test_cancellation_recovery_cannot_be_invented",
+      "LocalEXP004Tests.test_cash_dividend_entitlement_then_payment",
+      "LocalEXP004Tests.test_cash_merger_manual_proceeds",
+      "LocalEXP004Tests.test_close_only_schema_never_supplies_open",
+      "LocalEXP004Tests.test_ended_held_security_cannot_forward_fill",
+      "LocalEXP004Tests.test_extra_in_month_and_wrong_open_rejected",
+      "LocalEXP004Tests.test_fractional_95percent_funding_fee_cash_manual",
+      "LocalEXP004Tests.test_missing_price_ambiguous_identity_and_substitution_fail",
+      "LocalEXP004Tests.test_monthly_sell_before_buy_and_empty_cash",
+      "LocalEXP004Tests.test_no_real_fixture_or_later_sessions_or_unpushed_certificate",
+      "LocalEXP004Tests.test_rank_ties_and_top20_40_and_shortfall",
+      "LocalEXP004Tests.test_receipt_is_repeatable_and_synthetic_reference_unchanged",
+      "LocalEXP004Tests.test_rename_keeps_identity",
+      "LocalEXP004Tests.test_split_preserves_value",
+      "LocalEXP004Tests.test_stock_merger_evidenced_successor",
+      "LocalEXP004Tests.test_unpaid_entitlement_cannot_fund_buys_and_no_leverage"
+    ]
+  },
+  "tests/test_exp004_preparation.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic numeric inputs and read-only tracked freeze/manifest assertions.",
+    "declared_tests": [
+      "EXP004PreparationTests.test_counts_do_not_create_numeric_rank_or_zero",
+      "EXP004PreparationTests.test_duplicate_missing_future_and_ambiguous_inputs_fail",
+      "EXP004PreparationTests.test_frozen_methodology_remains_exact",
+      "EXP004PreparationTests.test_preparation_manifest_is_hashed_and_prevents_submissions",
+      "EXP004PreparationTests.test_valid_fixture_generates_both_horizons_and_shortfall_targets"
+    ]
+  },
+  "tests/test_exp004_sources.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Pure request bounds/calendar/lineage; tracked freeze read-only.",
+    "declared_tests": [
+      "EXP004SourceTests.test_bound_queries_cannot_read_later_market_data",
+      "EXP004SourceTests.test_calendar_and_availability_reuse_completed_contract",
+      "EXP004SourceTests.test_same_date_actions_require_lineage_not_a_guessed_ratio",
+      "EXP004SourceTests.test_source_work_never_changes_frozen_methodology"
+    ]
+  },
+  "tests/test_exp004_supplement.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "SupplementTests.test_exact_Lake_allowlist_does_not_lift_backtest_pause",
+      "SupplementTests.test_exact_keys_and_CLOSE_do_not_accept_equal_count_substitution",
+      "SupplementTests.test_open_missing_nonpositive_and_nonfinite_fail_closed"
+    ]
+  },
+  "tests/test_exp004_vpg_identity.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "VPGIdentityTests.test_class_issuer_overlap_or_competing_record_blocks",
+      "VPGIdentityTests.test_suffix_alone_cannot_establish_namespace_drift"
+    ]
+  },
+  "tests/test_fda_pilot.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "FDAFrameTests.test_approval_selection_is_not_repaired_by_unknown_alternative",
+      "FDAFrameTests.test_document_scope_locators_do_not_become_denominator_certificate",
+      "FDAFrameTests.test_freeze_filters_and_fixed_conditional_months",
+      "FDAFrameTests.test_gate1_and_event_freeze_precede_gate2",
+      "FDAFrameTests.test_gate1_request_ceiling_including_retry_reservations",
+      "FDAFrameTests.test_missingness_private_applicants_and_rights_ambiguity_retained",
+      "FDAFrameTests.test_original_bytes_and_access_stop_use_existing_archive",
+      "FDAFrameTests.test_procurement_price_and_registration_routes_not_present",
+      "FDAFrameTests.test_reviewed_redirect_keeps_stop_bytes_and_invalidates_on_new_error"
+    ]
+  },
+  "tests/test_graph.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: synthetic fixtures and read-only tracked contracts/history; temporary mutations only. Graph also uses local git history and throwaway git commits.",
+    "declared_tests": [
+      "GraphAIReviewTests.test_cli_builds_and_checks_without_network",
+      "GraphAIReviewTests.test_confidence_cross_review_and_exposure_never_change_labels",
+      "GraphAIReviewTests.test_cross_review_never_relabels",
+      "GraphAIReviewTests.test_frozen_texts_and_templates_are_neutral_and_match_the_validator",
+      "GraphAIReviewTests.test_no_shortcut_produces_a_conforming_result",
+      "GraphAIReviewTests.test_only_character_exact_quotes_verify",
+      "GraphAIReviewTests.test_package_is_neutral_complete_and_hash_bound",
+      "GraphAIReviewTests.test_package_refuses_unscanned_or_leaking_exports_and_flags_injection",
+      "GraphAIReviewTests.test_primary_answers_are_validated_never_repaired",
+      "GraphAIReviewTests.test_reconciliation_counts_only_agreement_with_verified_quotes",
+      "GraphAIReviewTests.test_seals_are_once_only_and_cross_review_waits_for_both",
+      "GraphAIReviewTests.test_stage_order_requires_seals_before_answers_in_git",
+      "GraphAIReviewTests.test_unverified_or_violated_order_never_counts_scientifically",
+      "GraphPilotBlindingTests.test_alias_export_removes_nested_arm_identifiers_and_keeps_evidence",
+      "GraphPilotBlindingTests.test_committed_r3_exports_reproduce_the_defect_and_v2_presentations_are_clean",
+      "GraphPilotBlindingTests.test_leak_scan_recurses_into_keys_lists_and_text",
+      "GraphPilotPhaseBReviewTests.test_legacy_packets_never_enter_or_count_towards_the_r4_primary_cohort",
+      "GraphPilotPhaseBReviewTests.test_potentially_unblinded_policy_is_fixed_and_can_withhold_a_definitive_result",
+      "GraphPilotPhaseBReviewTests.test_prospective_outcomes_stay_sealed_until_both_reviewers_seal",
+      "GraphPilotPhaseBReviewTests.test_same_commit_reveal_is_refused_and_legitimate_order_kept",
+      "GraphPilotPhaseBReviewTests.test_unknown_reviewer_time_propagates",
+      "GraphPilotPhaseBTests.test_agreement_statistics_and_undefined_cases",
+      "GraphPilotPhaseBTests.test_deviation_never_admits_and_conformance_needs_everything",
+      "GraphPilotPhaseBTests.test_legacy_reports_are_unchanged_by_phase_b",
+      "GraphPilotPhaseBTests.test_rehearsal_record_is_current_and_every_check_passes",
+      "GraphPilotPhaseBTests.test_usefulness_never_becomes_an_economic_discovery",
+      "GraphPilotPhaseBZeroItemTests.test_reveal_order_uses_commits_holding_the_sealed_bytes",
+      "GraphPilotPhaseBZeroItemTests.test_zero_item_packet_is_sealed_verified_conforming_and_reported",
+      "GraphPilotPhaseBZeroItemTests.test_zero_item_reviewer_conflict_and_identity_still_enforced",
+      "GraphPilotProtocolTests.test_accounting_counts_all_time_and_flags_violations",
+      "GraphPilotProtocolTests.test_aliased_export_supports_adjudication_and_unblinding",
+      "GraphPilotProtocolTests.test_arms_share_identical_prior_inputs_and_never_see_each_other",
+      "GraphPilotProtocolTests.test_blinding_hides_arms_and_adjudication_is_human_and_complete",
+      "GraphPilotProtocolTests.test_blinding_refuses_endpoints_outside_the_arm_inputs",
+      "GraphPilotProtocolTests.test_cli_snapshot_mode_refuses_mixed_inputs_and_structured_graph_use",
+      "GraphPilotProtocolTests.test_connection_logs_enforce_arm_rules",
+      "GraphPilotProtocolTests.test_decision_rules_use_every_dimension",
+      "GraphPilotProtocolTests.test_own_new_records_are_visible_and_later_records_are_not",
+      "GraphPilotProtocolTests.test_pilot_dry_run_record_is_current",
+      "GraphPilotProtocolTests.test_snapshot_pins_packet_catalogue_bundle_and_arm_start",
+      "GraphPilotProvenanceAndConfigurationTests.test_hand_recorded_times_never_postdate_their_commits_and_corrections_are_preserved",
+      "GraphPilotProvenanceAndConfigurationTests.test_legitimate_replay_at_an_unrelated_commit_is_accepted",
+      "GraphPilotProvenanceAndConfigurationTests.test_modified_execution_provenance_is_refused_before_sealing",
+      "GraphPilotProvenanceAndConfigurationTests.test_registered_r4_configuration_is_frozen_and_is_the_v2_default",
+      "GraphPilotProvenanceAndConfigurationTests.test_validator_scope_is_consistency_not_proof",
+      "GraphPilotR4HardeningTests.test_accounting_rates_use_compatible_levels_and_rows_keep_their_outcomes",
+      "GraphPilotR4HardeningTests.test_definitive_classifications_need_supporting_effort_evidence",
+      "GraphPilotR4HardeningTests.test_pin_is_enforced_on_structured_search_graph_and_replay_paths",
+      "GraphPilotR4HardeningTests.test_v1_2_rule_mechanics_and_v1_1_default_unchanged",
+      "GraphPilotR4ReadinessTests.test_adversarial_evaluation_is_current_and_reports_the_trivial_identifier_weakness",
+      "GraphPilotR4ReadinessTests.test_effort_material_threshold_is_the_greater_of_5_minutes_or_10_percent",
+      "GraphPilotR4ReadinessTests.test_pin_binds_commit_and_content_and_defines_dirty_unrelated_and_missing_git",
+      "GraphPilotR4ReadinessTests.test_r3_effort_and_accounting_are_diagnostic_and_its_results_are_unchanged",
+      "GraphPilotR4ReadinessTests.test_r4_dry_run_record_is_current",
+      "GraphPilotR4ReadinessTests.test_v2_snapshots_require_and_enforce_the_pin_and_legacy_snapshots_are_unpinned",
+      "GraphPilotV2ProvenanceTests.test_blinding_seals_the_export_and_unblinding_rechecks_it",
+      "GraphPilotV2ProvenanceTests.test_edited_fabricated_or_foreign_exports_are_refused",
+      "GraphPilotV2ProvenanceTests.test_exact_origins_are_accepted_and_every_mismatch_is_refused",
+      "GraphPilotV2ProvenanceTests.test_replay_covers_the_full_saved_output_not_only_indexed_fields",
+      "GraphPilotV2ProvenanceTests.test_v2_snapshot_pins_the_operator_version_and_old_snapshots_stay_v1",
+      "GraphReviewRegressionTests.test_archive_path_cik_is_not_a_corroborated_issuer_identity",
+      "GraphReviewRegressionTests.test_archive_path_join_carries_a_caveat_and_no_type_conflict",
+      "GraphReviewRegressionTests.test_catalogue_v002_corrects_mappings_and_preserves_v001",
+      "GraphReviewRegressionTests.test_evaluation_reads_only_declared_inputs",
+      "GraphReviewRegressionTests.test_pilot_export_gives_the_baseline_the_same_memory",
+      "GraphReviewRegressionTests.test_structured_baseline_is_exact_temporal_and_identity_aware",
+      "GraphTests.test_build_is_deterministic_across_locations",
+      "GraphTests.test_contradicted_and_superseded_records_remain_inspectable",
+      "GraphTests.test_corrupted_catalogue_refuses_build",
+      "GraphTests.test_cross_ledger_entity_type_conflict_is_exposed",
+      "GraphTests.test_document_reference_and_schema_do_not_verify_a_quantity",
+      "GraphTests.test_duplicate_campaign_ids_refused",
+      "GraphTests.test_ef06_versions_are_separate_economic_objects",
+      "GraphTests.test_empty_and_unrelated_inputs_abstain",
+      "GraphTests.test_entity_nodes_do_not_block_verified_traversal",
+      "GraphTests.test_f01_and_sh09_gain_no_fictional_economic_facts",
+      "GraphTests.test_frozen_claim_keeps_its_version_references",
+      "GraphTests.test_graph_operations_are_offline",
+      "GraphTests.test_high_degree_hubs_do_not_bridge_results",
+      "GraphTests.test_historical_states_are_preserved_verbatim",
+      "GraphTests.test_keywords_and_unknown_tags_create_no_links",
+      "GraphTests.test_long_paths_are_capped_and_never_self_certify",
+      "GraphTests.test_missing_and_changed_reports_are_flagged_not_filled",
+      "GraphTests.test_modern_relationship_is_not_applied_to_an_earlier_date",
+      "GraphTests.test_namespaced_identities_are_stable_and_distinct",
+      "GraphTests.test_new_campaign_yields_an_explainable_cross_campaign_suggestion",
+      "GraphTests.test_reads_only_declared_inputs_and_never_private_archives",
+      "GraphTests.test_reformulations_stay_distinct_from_originals",
+      "GraphTests.test_relationship_and_allocation_are_separate_assertions",
+      "GraphTests.test_retrospective_and_historical_records_are_labelled",
+      "GraphTests.test_retrospective_description_stays_unverified",
+      "GraphTests.test_shared_document_is_one_document_and_never_independent_corroboration",
+      "GraphTests.test_similar_names_and_name_only_entities_never_merge",
+      "GraphTests.test_structural_steps_do_not_reject_short_semantic_paths",
+      "GraphTests.test_suggestions_never_become_verified_relationships",
+      "GraphTests.test_synthetic_never_enters_memory_or_prospective_views",
+      "GraphTests.test_tampered_ledger_refuses_build",
+      "GraphTests.test_ticker_is_not_a_legal_entity_identity",
+      "GraphTests.test_transcription_time_is_not_backdated",
+      "GraphTests.test_unknown_clocks_stay_unknown_and_first_public_is_never_derived",
+      "GraphTests.test_verified_path_does_not_certify_exposure",
+      "GraphTests.test_walkthrough_and_utility_check",
+      "GraphV11ConnectionClassTests.test_classes_are_categorical_and_outputs_deterministic_and_read_only",
+      "GraphV11ConnectionClassTests.test_documented_supersession_is_grounded_and_period_checked",
+      "GraphV11ConnectionClassTests.test_exact_product_identifier_is_a_grounded_candidate_and_outranks_tags",
+      "GraphV11ConnectionClassTests.test_exported_suggestions_carry_class_and_grounding_completeness",
+      "GraphV11ConnectionClassTests.test_historical_memory_warnings_remain_retrievable",
+      "GraphV11ConnectionClassTests.test_out_of_period_relationship_and_name_only_supplier_never_join",
+      "GraphV11ConnectionClassTests.test_r3_historical_records_and_results_are_unchanged",
+      "GraphV11ConnectionClassTests.test_recall_and_unrelated_capacity_claim_share_only_a_warning",
+      "GraphV11ConnectionClassTests.test_same_gap_and_next_rows_have_recomputable_ids_and_basis_order_is_deterministic",
+      "GraphV11ConnectionClassTests.test_shared_allocation_blocker_and_next_questions_are_warnings_only",
+      "GraphV11ConnectionClassTests.test_shared_document_is_not_corroboration_and_reused_citation_is_unsupported",
+      "GraphV12HoldoutTests.test_holdout_record_is_current_and_results_are_as_registered"
+    ]
+  },
+  "tests/test_house_source_validation.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "HouseValidationTests.test_asset_normalization_ignores_spacing_punctuation_only",
+      "HouseValidationTests.test_checkbox_columns_extract_action_without_expected_action",
+      "HouseValidationTests.test_configuration_has_no_expected_fields",
+      "HouseValidationTests.test_gate_requires_55_and_retains_unknowns",
+      "HouseValidationTests.test_nonpurchase_extracted_as_purchase_also_fails",
+      "HouseValidationTests.test_ocr_extracts_source_row_without_expected_values",
+      "HouseValidationTests.test_ocr_unknown_is_not_zero_or_sale",
+      "HouseValidationTests.test_render_and_text_tampering_rejected",
+      "HouseValidationTests.test_repeated_asset_cannot_use_uncertified_ocr_ordinal",
+      "HouseValidationTests.test_repeated_core_equivalence_does_not_select_expected_date",
+      "HouseValidationTests.test_resolver_symbol_not_original_comparison",
+      "HouseValidationTests.test_senate_outside_scope_and_unknown_chamber_not_house",
+      "HouseValidationTests.test_source_action_date_disagreement_not_hidden_by_association",
+      "HouseValidationTests.test_source_bitmap_checkbox_requires_one_unambiguous_cell",
+      "HouseValidationTests.test_worker_rejects_new_original_or_expected_field"
+    ]
+  },
+  "tests/test_integrations_v2.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "IntegrationTests.test_amended_version_cannot_leak_through_event_first_date",
+      "IntegrationTests.test_comparison_budget_does_not_reset_per_provider",
+      "IntegrationTests.test_daily_quarter_date_representation_and_shared_accession_not_dropped",
+      "IntegrationTests.test_derived_provider_never_promoted_by_official_url",
+      "IntegrationTests.test_frozen_lexicographic_selection_not_profitability",
+      "IntegrationTests.test_nexus_literal_input_no_remote_surface",
+      "IntegrationTests.test_proof_refuses_execution_and_changed_contract",
+      "IntegrationTests.test_publisher_redirect_archived_reviewed_and_deny_not_overridden",
+      "IntegrationTests.test_registry_refuses_unused_dependency_or_evidence_promotion",
+      "IntegrationTests.test_sec_denominator_no_item_or_issuer_filter",
+      "IntegrationTests.test_snapshot_hash_length_and_path",
+      "IntegrationTests.test_stream_batch_state_capacity_and_reset",
+      "IntegrationTests.test_ticker_source_member_missingness_preserved",
+      "IntegrationTests.test_window_irregular_bucket_expiry_and_out_of_order"
+    ]
+  },
+  "tests/test_item202_availability.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "AcceptanceRemedyTests.test_adjusted_earlier_filed_date_cannot_advance_acceptance_anchor",
+      "AcceptanceRemedyTests.test_bound_later_than_every_candidate_public_unknown",
+      "AcceptanceRemedyTests.test_calendar_missing_and_corrupt",
+      "AcceptanceRemedyTests.test_confirmation_source_rejected",
+      "AcceptanceRemedyTests.test_equal_pre_during_after_acceptance",
+      "AcceptanceRemedyTests.test_friday_weekend",
+      "AcceptanceRemedyTests.test_header_identity_and_conflicts",
+      "AcceptanceRemedyTests.test_holiday_and_dst",
+      "AcceptanceRemedyTests.test_literal_est_and_seasonal_candidates_retained",
+      "AcceptanceRemedyTests.test_midnight_disagreement_unavailable_not_hidden_by_global_max",
+      "AcceptanceRemedyTests.test_missing_acceptance",
+      "AcceptanceRemedyTests.test_source_calendar_hash_and_mourning_close",
+      "AcceptanceRemedyTests.test_source_conflict_and_invalid_timestamp",
+      "AcceptanceRemedyTests.test_v001_and_old_global_policy_history"
+    ]
+  },
+  "tests/test_item202_closure.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "Item202ClosureTests.test_adjusted_date_can_make_rule_precede_acceptance",
+      "Item202ClosureTests.test_approval_and_missing_evidence_do_not_activate_policy",
+      "Item202ClosureTests.test_calendar_failure_and_rule_substitution_rejected",
+      "Item202ClosureTests.test_dst_changes_open_utc_without_changing_local_rule",
+      "Item202ClosureTests.test_next_open_strictly_excludes_filing_date",
+      "Item202ClosureTests.test_public_stop_receipts_retain_unknowns_and_conditional_authority",
+      "Item202ClosureTests.test_weekend_and_full_day_holiday_calendar"
+    ]
+  },
+  "tests/test_item202_cover.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "CoverTests.test_body_table_cannot_repair_missing_cover",
+      "CoverTests.test_continuous_path_needs_no_full_history",
+      "CoverTests.test_current_figi_does_not_establish_historical_bridge",
+      "CoverTests.test_formatted_text",
+      "CoverTests.test_header_synonyms_and_explicit_prose",
+      "CoverTests.test_inception_and_symmetric_control_identity",
+      "CoverTests.test_labels_below_values_and_quoted_symbol",
+      "CoverTests.test_lifecycle_after_exit_not_required",
+      "CoverTests.test_missing_session_open_fails",
+      "CoverTests.test_multi_security_and_different_exchanges_retained",
+      "CoverTests.test_multiple_common_no_selection",
+      "CoverTests.test_no_outcomes_without_pushed_scientific_freeze",
+      "CoverTests.test_non_common_classes_excluded",
+      "CoverTests.test_plain_html_without_inline",
+      "CoverTests.test_rename_split_dividend_evidence",
+      "CoverTests.test_standalone_common_is_a_source_class_title",
+      "CoverTests.test_terminal_path_not_dropped",
+      "CoverTests.test_whitespace_unicode_and_spacers"
+    ]
+  },
+  "tests/test_item202_date_bound.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "DateBoundTests.test_all_confusion_cells_and_unknown",
+      "DateBoundTests.test_confirmation_cannot_enter_envelope",
+      "DateBoundTests.test_dst_and_holiday",
+      "DateBoundTests.test_earlier_official_filed_date_cannot_advance_raw_anchor",
+      "DateBoundTests.test_explicit_offset_and_max_filed_adjustment",
+      "DateBoundTests.test_feed_archive_never_extracts_paths_to_disk",
+      "DateBoundTests.test_filed_conflict_and_missing_header_unavailable",
+      "DateBoundTests.test_freeze_before_performance_and_confirmation_rejection",
+      "DateBoundTests.test_general_source_title_variants_and_reference_fail_closed",
+      "DateBoundTests.test_historical_clock_artifacts_preserved",
+      "DateBoundTests.test_invalid_or_missing_iso_fails_closed",
+      "DateBoundTests.test_later_envelope_is_conservative_latency",
+      "DateBoundTests.test_lexical_and_literal_dates_are_separate",
+      "DateBoundTests.test_missing_or_corrupt_calendar_unavailable",
+      "DateBoundTests.test_monotonicity_over_all_synthetic_calendar_anchors",
+      "DateBoundTests.test_original_archive_header_reconciliation",
+      "DateBoundTests.test_primary_heading_and_cross_reference_distinction",
+      "DateBoundTests.test_raw_later_than_envelope_is_failure_not_correction",
+      "DateBoundTests.test_raw_midnight_candidates_not_collapsed",
+      "DateBoundTests.test_same_day_equal_open_and_unknown_public_time",
+      "DateBoundTests.test_streaming_oldload_selects_only_declared_header"
+    ]
+  },
+  "tests/test_item202_identity.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "IdentityTests.test_amendment_never_signal_or_control",
+      "IdentityTests.test_confirmation_and_post_event_unreachable",
+      "IdentityTests.test_cover_point_is_not_a_span",
+      "IdentityTests.test_coverage_year_denominators_and_ambiguity",
+      "IdentityTests.test_historical_receipt_preserved_with_separate_correction",
+      "IdentityTests.test_identity_transport_denial_is_immutable_no_retry",
+      "IdentityTests.test_only_confirmed_events_and_controls",
+      "IdentityTests.test_provider_price_route_refused_before_transport",
+      "IdentityTests.test_unknown_excluded_symmetrically"
+    ]
+  },
+  "tests/test_item202_population.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "PopulationTests.test_cofiler_header_requires_each_legal_filer_not_accession_alone",
+      "PopulationTests.test_conflicting_same_filer_accession_kept",
+      "PopulationTests.test_daily_compact_and_iso_dates_deterministic",
+      "PopulationTests.test_daily_rejects_wrong_schema_future_and_path",
+      "PopulationTests.test_denial_is_archived_and_persistently_stopped_without_retry",
+      "PopulationTests.test_disjoint_sources_duplicate_counts_nonnegative",
+      "PopulationTests.test_empty_index_is_not_missing_filing_imputation",
+      "PopulationTests.test_ended_missing_provider_and_unresolved_terminal_block",
+      "PopulationTests.test_equivalent_rows_and_cofilers_do_not_disappear",
+      "PopulationTests.test_fake_daily_transport_archive_cache_and_no_contact_receipt",
+      "PopulationTests.test_lifecycle_missing_cannot_become_full_identity",
+      "PopulationTests.test_multiple_classes_need_predeclared_selection",
+      "PopulationTests.test_original_item_and_amendment_version_only",
+      "PopulationTests.test_passed_timing_and_classification_artifacts_unchanged",
+      "PopulationTests.test_point_current_ticker_not_projected_back",
+      "PopulationTests.test_pre_event_query_bounds_and_confirmation",
+      "PopulationTests.test_prior_year_row_retained_as_scope_count_not_event",
+      "PopulationTests.test_rename_same_stable_security_retains_both_spans",
+      "PopulationTests.test_reviewed_404_is_document_missingness_and_denial_still_stops",
+      "PopulationTests.test_span_contains_event_exclusive_end",
+      "PopulationTests.test_union_and_each_neutral_population_state"
+    ]
+  },
+  "tests/test_item202_source.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "SourceClosureTests.test_cutoff_and_wrong_quarter_fail",
+      "SourceClosureTests.test_full_period_census_determinism_and_forms",
+      "SourceClosureTests.test_future_metadata_fields_not_read",
+      "SourceClosureTests.test_metadata_missing_not_zero_and_labels_are_not_primary_certificates",
+      "SourceClosureTests.test_raw_alias_and_double_conversion_not_silently_repaired"
+    ]
+  },
+  "tests/test_merger_pilot.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "MergerPilotTests.test_complete_predecision_evidence_before_gate2",
+      "MergerPilotTests.test_error_bytes_immutable_cached_and_stop_not_reviewed_away",
+      "MergerPilotTests.test_exact_manifest_ceiling_filters_and_months",
+      "MergerPilotTests.test_no_prices_or_registration_or_old_family_routes",
+      "MergerPilotTests.test_redirect_retained_without_substitution",
+      "MergerPilotTests.test_target_acquirer_lifecycle_and_unknown_separate",
+      "MergerPilotTests.test_three_family_exhaustion_never_launches_candidate_four",
+      "MergerPilotTests.test_treatment_only_is_not_repaired_by_unknown_alternative",
+      "MergerPilotTests.test_twelfth_start_ceiling_persists_before_dispatch"
+    ]
+  },
+  "tests/test_nexus_local_installed.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Pinned installed SDK literal HTML projection only; no client.",
+    "declared_tests": [
+      "InstalledLocalHelperTests.test_pinned_html_projection_offline"
+    ]
+  },
+  "tests/test_offline_checks.py": {
+    "baseline_ci": false,
+    "runner": "guard-tests",
+    "reason": "Dedicated guard self-tests with fictional paths and denied operations; run separately so expected denials do not contaminate the suite latch.",
+    "declared_tests": [
+      "GuardTests.test_allowed_fixture_reads_and_scratch_atomic_writes",
+      "GuardTests.test_credentials_even_when_accidentally_allowlisted",
+      "GuardTests.test_dns_tcp_loopback_and_udp_denied",
+      "GuardTests.test_inventory_covers_every_module_and_rejects_new_tests",
+      "GuardTests.test_open_os_open_and_write_guards",
+      "GuardTests.test_shell_and_hosted_process_denied_before_launch",
+      "GuardTests.test_swallowed_violation_still_latched",
+      "LinuxGuardTests.test_native_fd_relative_cleanup_where_supported",
+      "WindowsGuardTests.test_native_windows_extended_paths_use_same_boundary"
+    ]
+  },
+  "tests/test_phase3_final.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "CommonFactorObstructionTests.test_common_component_cancels_from_residual_variance_but_not_mean",
+      "CommonFactorObstructionTests.test_incomplete_or_nonfinite_group_algebra_fails_closed",
+      "CommonFactorObstructionTests.test_unseen_common_variance_enters_weighted_mean_quadratic_form"
+    ]
+  },
+  "tests/test_phase3c.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Fake HTTP transports, tracked cohort contract, synthetic numeric arrays; temporary receipts.",
+    "declared_tests": [
+      "ChainTests.test_concept_context_basis_perimeter_and_version_fail",
+      "ChainTests.test_missing_comparative_and_precision_intervals",
+      "ChainTests.test_three_original_numeric_chain_no_growth_series",
+      "InferenceTests.test_dependence_effective_n_and_holm_failures",
+      "InferenceTests.test_synthetic_null_positive_negative_and_determinism",
+      "InferenceTests.test_zero_variance_missing_nav_and_few_blocks_fail_closed",
+      "PopulationTests.test_class_rename_ticker_reuse_exchange_transfer_and_overlap",
+      "PopulationTests.test_figi_ambiguity_and_dated_identity_not_current_metadata",
+      "PopulationTests.test_merger_delisting_cancellation_and_terminal_missing",
+      "PopulationTests.test_survivor_delisted_omission_failed_retrieval_and_denominator",
+      "PriceTests.test_raw_schema_splits_dividends_and_missing_sessions",
+      "SourceTests.test_frozen_cohort_integrity_and_determinism",
+      "SourceTests.test_interrupted_http_stream_preserves_every_received_byte",
+      "SourceTests.test_original_bytes_versions_cache_and_transport_bounds",
+      "SourceTests.test_oversize_prefix_retained_and_stop_not_overwritten",
+      "SourceTests.test_persistent_restriction_redirect_and_error_receipts",
+      "SourceTests.test_source_registry_classification_and_missing_fields",
+      "StageTests.test_existing_pause_and_absent_experiment_no_state_writes",
+      "StageTests.test_sealed_stage_source_control_and_certificate_isolation"
+    ]
+  },
+  "tests/test_phase3c_parser.py": {
+    "baseline_ci": false,
+    "runner": "excluded",
+    "reason": "Developer-local .research/sec-pilot-venv/Scripts/python.exe with pinned EdgarTools 5.62.0; subprocess not covered by runner guards. SEC test self-skips if absent; Phase3C does not. No source acquisition needed by literals, but portable isolated environment not yet provisioned.",
+    "declared_tests": [
+      "IsolatedOriginalTests.test_original_namespace_scale_unit_and_aggregate_rejection_offline"
+    ]
+  },
+  "tests/test_phase3d_approval.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "PilotApprovalTests.test_exact_owner_scope_accepted_without_clock_or_activation_promotion",
+      "PilotApprovalTests.test_missing_decision_unapproved_and_changed_policy_lineage_rejected",
+      "PilotApprovalTests.test_owner_reply_and_original_review_packet_cannot_change"
+    ]
+  },
+  "tests/test_phase3d_certification.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "CertificationTests.test_dated_identity_endpoints_overlap_and_ticker_reuse",
+      "CertificationTests.test_no_fuzzy_extension_segment_or_instant",
+      "CertificationTests.test_perimeter_comparative_recast_and_duplicate_original",
+      "CertificationTests.test_review_is_exact_source_value_and_trusted_receipt",
+      "CertificationTests.test_reviewed_mapping_and_three_original_contract",
+      "CertificationTests.test_terminal_review_is_not_delisting_zero_fill"
+    ]
+  },
+  "tests/test_phase3d_closure_inference.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "ClosureInferenceTests.test_compiler_refuses_impossible_design_with_unchanged_certified_status",
+      "ClosureInferenceTests.test_git_difference_is_distinct_from_code_difference",
+      "ClosureInferenceTests.test_hac_white_noise_variance_and_studentized_determinism",
+      "ClosureInferenceTests.test_resolution_blocks_old_sign_design_and_low_power"
+    ]
+  },
+  "tests/test_phase3d_closure_sources.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "ClosureSourceTests.test_entity_span_preserves_original_encoded_length",
+      "ClosureSourceTests.test_lifecycle_cutoff_rejects_future_bodies_without_losing_cases",
+      "ClosureSourceTests.test_markup_split_heading_and_original_locator",
+      "ClosureSourceTests.test_missing_sources_generate_unavailable_packet_not_review_receipt"
+    ]
+  },
+  "tests/test_phase3d_execution.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "ExecutionTests.test_action_order_and_receivable_unknowns_fail",
+      "ExecutionTests.test_actual_turnover_fees_and_cash_no_hidden_scale",
+      "ExecutionTests.test_cash_acquisition_no_disappearance",
+      "ExecutionTests.test_disappearance_even_unheld_and_unknown_terminal_fail",
+      "ExecutionTests.test_dividend_receivable_payment_no_double_credit",
+      "ExecutionTests.test_future_signal_missing_price_substitution_and_overlap_fail",
+      "ExecutionTests.test_ordinary_buy_hold_sell_hand_accounting",
+      "ExecutionTests.test_real_execution_and_nexus_disabled",
+      "ExecutionTests.test_receipt_reconciliation_catches_equal_count_changes",
+      "ExecutionTests.test_rename_keeps_stable_identity_and_population",
+      "ExecutionTests.test_split_keeps_economic_value",
+      "ExecutionTests.test_stock_conversion_and_explicit_cancellation"
+    ]
+  },
+  "tests/test_phase3d_inference.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "InferenceTests.test_exact_enumeration_discreteness_and_holm_power_ceiling",
+      "InferenceTests.test_inversion_coverage_under_all_sign_assignments",
+      "InferenceTests.test_paired_alignment_dependence_scope_and_determinism"
+    ]
+  },
+  "tests/test_phase3d_proof.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "ProofTests.test_authority_manifest_and_environment_mutations",
+      "ProofTests.test_deterministic_immutable_manifest_and_exact_replay",
+      "ProofTests.test_every_referenced_role_mutation_fails",
+      "ProofTests.test_missing_contract_gate_terminal_and_future_source",
+      "ProofTests.test_unapproved_policy_and_inference_even_with_updated_hash"
+    ]
+  },
+  "tests/test_phase3e_feasibility.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "Phase3EFeasibilityTests.test_contributor_bound_is_not_a_signal_or_certified_chain",
+      "Phase3EFeasibilityTests.test_date_coverage_does_not_grant_authority_and_stages_cannot_overlap",
+      "Phase3EFeasibilityTests.test_legacy_programme_cannot_fit_pilot_approval"
+    ]
+  },
+  "tests/test_phase3er_design.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "RedesignBoundaryTests.test_calendar_extension_is_separate_and_elapsed_only",
+      "RedesignBoundaryTests.test_dst_rollover_contradiction_and_cutoff_are_unavailable",
+      "RedesignBoundaryTests.test_source_route_rejects_prices_full_submissions_and_company_facts"
+    ]
+  },
+  "tests/test_phase3er_inference.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "RedesignInferenceTests.test_failed_correction_run_restores_frozen_generator",
+      "RedesignInferenceTests.test_generator_correction_is_analytic_and_non_ar_unchanged",
+      "RedesignInferenceTests.test_metadata_gap_and_clock_failure_do_not_create_a_state",
+      "RedesignInferenceTests.test_sign_discreteness_and_unbounded95_cannot_advance",
+      "RedesignInferenceTests.test_student_reference_and_unequal_session_weights",
+      "RedesignInferenceTests.test_zero_variance_nan_and_missing_groups_fail_closed"
+    ]
+  },
+  "tests/test_pit_signals.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Fictional PIT rows and temporary signal export; publication refusal only.",
+    "declared_tests": [
+      "CustomExportTests.test_deterministic_points_immutable_version",
+      "CustomExportTests.test_duplicate_missing_decisions_and_future_contributors_rejected",
+      "CustomExportTests.test_missing_rows_emit_validity_not_zero_signal",
+      "CustomExportTests.test_unauthorized_tampered_or_production_publication_rejected",
+      "PITSignalTests.test_after_cutoff_and_weekend_publication",
+      "PITSignalTests.test_correction_does_not_restart_window",
+      "PITSignalTests.test_future_amendment_does_not_rewrite_old_view",
+      "PITSignalTests.test_joint_owners_duplicate_legs_and_people",
+      "PITSignalTests.test_late_institutional_amendment_and_missing_not_zero",
+      "PITSignalTests.test_matched_cohort_and_manager_disappearance",
+      "PITSignalTests.test_missing_feed_and_ambiguous_active_versions",
+      "PITSignalTests.test_pit_prefix_invariance_many_future_appends",
+      "PITSignalTests.test_quarter_buffer_holiday_and_dst_cutoff",
+      "PITSignalTests.test_security_rename_uses_effective_stable_identity",
+      "PITSignalTests.test_unknown_purchase_quantity_is_not_certified_zero"
+    ]
+  },
+  "tests/test_procurement_pilot.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "ProcurementPilotTests.test_date_only_is_not_observed_timestamp_or_filing_policy",
+      "ProcurementPilotTests.test_earliest_is_complete_source_order_not_amount_or_recipient",
+      "ProcurementPilotTests.test_error_body_immutable_stop_cache_and_no_host_rotation",
+      "ProcurementPilotTests.test_lineage_duplicate_and_missing_are_explicit",
+      "ProcurementPilotTests.test_manifest_freeze_slots_and_nested_filters",
+      "ProcurementPilotTests.test_price_performance_and_unrelated_routes_are_unavailable",
+      "ProcurementPilotTests.test_redirect_and_interruption_count_and_fail_closed",
+      "ProcurementPilotTests.test_retry_reservations_and_total_ceiling_persist",
+      "ProcurementPilotTests.test_unavailable_slots_and_private_ambiguous_cases_are_not_dropped"
+    ]
+  },
+  "tests/test_research_os.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "EXP999 temporary stores and fake SDK/MCP; tracked schema/pricing; OS font renderer explicitly excluded.",
+    "declared_tests": [
+      "AnalysisTests.test_actual_dynamic_builder_and_cost_gate",
+      "AnalysisTests.test_aurora_roles_blocked_and_quality_not_return",
+      "AnalysisTests.test_controls_and_ablations",
+      "AnalysisTests.test_corpus_cutoff",
+      "AnalysisTests.test_holm_includes_unsuccessful_trials",
+      "AnalysisTests.test_isolated_optimum_and_flat_plateau",
+      "AnalysisTests.test_paired_bootstrap_deterministic_and_pair_preserving",
+      "AnalysisTests.test_rank_stability",
+      "AnalysisTests.test_regimes_do_not_stitch_nonadjacent_closes",
+      "AnalysisTests.test_walk_forward_no_later_fold_leakage",
+      "BudgetTests.test_daily_screen_and_optimizer_asset_factor",
+      "BudgetTests.test_expired_huge_and_reserved_budget",
+      "BudgetTests.test_walk_forward_fold_multiplier_and_aurora_quote",
+      "JobTests.test_all_optimizer_cells_count_in_ledger",
+      "JobTests.test_cumulative_eval_ceiling_counts_prior_jobs",
+      "JobTests.test_dry_run_no_job_or_trial_or_network",
+      "JobTests.test_frozen_candidate_can_select_explicit_benchmark",
+      "JobTests.test_idempotent_submission_and_events_first",
+      "JobTests.test_interrupted_extraction_resumes_saved_pages",
+      "JobTests.test_missing_bridge_blocks_submission",
+      "JobTests.test_no_skipping_failed_validation_job",
+      "JobTests.test_out_of_range_simulation_but_admin_dates_preserved",
+      "JobTests.test_range_and_fee_contract_before_network",
+      "JobTests.test_read_transient_retry_and_permanent_no_retry",
+      "JobTests.test_sdk_missing_key_and_live_operation_rejected",
+      "JobTests.test_successful_assessed_candidate_freeze_and_frozen_hash",
+      "JobTests.test_test_and_paper_need_separate_human_approval",
+      "JobTests.test_unacknowledged_submission_never_retried",
+      "JobTests.test_unknown_schema_does_not_silently_end_pagination",
+      "JobTests.test_validation_cannot_change_candidate",
+      "ReportingTests.test_cli_dry_propose_and_invalid_authorization_leave_no_files",
+      "ReportingTests.test_demo_no_real_nexus_or_workspace_mutation",
+      "ReportingTests.test_metrics_use_existing_frozen_definitions_and_are_deterministic",
+      "ReportingTests.test_optimizer_understated_config_and_paper_without_receipt_rejected",
+      "ReportingTests.test_report_cards_charts_and_benchmark_differences",
+      "ReportingTests.test_wrong_close_and_missing_values_rejected",
+      "SchemaTests.test_availability_not_trade_date",
+      "SchemaTests.test_complete_spec",
+      "SchemaTests.test_development_cannot_see_validation_or_test",
+      "SchemaTests.test_missing_field_and_unknown_field",
+      "SchemaTests.test_new_york_session_boundary",
+      "SchemaTests.test_nonfinite_json_and_inconsistent_fees_rejected",
+      "SchemaTests.test_overlap_reversed_inner_and_test_seal",
+      "SchemaTests.test_point_in_time_and_immutable_exp001",
+      "SchemaTests.test_sealed_requires_specific_authorization",
+      "SchemaTests.test_validation_cannot_see_test",
+      "StoreTests.test_assessed_metrics_and_provenance_cannot_be_rewritten",
+      "StoreTests.test_candidate_freeze_requires_eligible_trial",
+      "StoreTests.test_live_stage_never_exists",
+      "StoreTests.test_raw_immutable_and_path_safe",
+      "StoreTests.test_sequential_transition_and_freeze_hash",
+      "StoreTests.test_trials_keep_failed_results"
+    ],
+    "exclude": {
+      "ReportingTests.test_report_cards_charts_and_benchmark_differences": "Figure rendering enumerates machine system fonts (Windows font files / Linux fontconfig subprocess); outside the current restricted IO profile. Needs a separately reviewed bundled-font fixture, not a scientific validation gap."
+    }
+  },
+  "tests/test_scout_n1_collector_process_assurance.py": {
+    "baseline_ci": true,
+    "runner": "process",
+    "reason": "Existing CI: fixed Python pipe fixtures and temporary captures; native Windows PID/creation-time/Job handling. Keep Windows execution; Linux native assurance not established.",
+    "declared_tests": [
+      "N1ProcessTests.test_audit_is_read_only_and_detects_raw_and_journal_tampering",
+      "N1ProcessTests.test_closed_stdin_cannot_be_reported_as_complete",
+      "N1ProcessTests.test_concurrent_stderr_flood_does_not_deadlock_or_lose_bytes",
+      "N1ProcessTests.test_consumed_before_spawn_and_storage_failure_fail_closed",
+      "N1ProcessTests.test_consumed_claim_blocks_rebinding_to_another_capture_path",
+      "N1ProcessTests.test_delayed_descendant_eof_is_drained_after_parent_exit",
+      "N1ProcessTests.test_failed_process_creation_remains_consumed",
+      "N1ProcessTests.test_falsely_complete_receipt_cannot_release_lock",
+      "N1ProcessTests.test_fsync_failure_before_launch_cannot_start_child",
+      "N1ProcessTests.test_incomplete_drain_is_explicit_and_stops",
+      "N1ProcessTests.test_index_persistence_failure_keeps_fsynced_original_tail",
+      "N1ProcessTests.test_interruption_between_consumption_and_spawn_never_launches",
+      "N1ProcessTests.test_invalid_unknown_and_missing_terminal_preserved_exactly",
+      "N1ProcessTests.test_io_trigger_keeps_crossing_chunk_and_marks_any_cutoff",
+      "N1ProcessTests.test_journal_suffix_rollback_cannot_silently_pass",
+      "N1ProcessTests.test_keyboard_interruption_never_seals_or_reopens_reservation",
+      "N1ProcessTests.test_nonzero_exit_is_independent_of_capture_integrity",
+      "N1ProcessTests.test_real_process_crash_after_raw_fsync_preserves_unindexed_tail",
+      "N1ProcessTests.test_split_utf8_and_malformed_partial_line_are_not_decoded",
+      "N1ProcessTests.test_stale_lock_is_not_removed_even_for_different_reservation",
+      "N1ProcessTests.test_stop_receipt_cannot_unlock_a_different_reservation",
+      "N1ProcessTests.test_timeout_cancels_attributed_local_process_and_preserves_prefix",
+      "N1ProcessTests.test_trailing_data_after_terminal_looking_text_is_retained",
+      "N1ProcessTests.test_two_processes_racing_sole_reservation_launch_only_once",
+      "N1ProcessTests.test_unknown_eof_channel_is_not_a_completion_fact"
+    ]
+  },
+  "tests/test_scout_v004_process_assurance.py": {
+    "baseline_ci": true,
+    "runner": "process",
+    "reason": "Existing CI: real fixed local Python children, fictional temporary journals; lock races, kill, stale locks. Portable.",
+    "declared_tests": [
+      "CrossProcessAssuranceTests.test_competing_processes_cannot_consume_two_slots",
+      "CrossProcessAssuranceTests.test_killed_holder_leaves_stale_lock_and_no_auto_recovery",
+      "CrossProcessAssuranceTests.test_other_process_cannot_enter_held_lock_then_release_allows_one_slot"
+    ]
+  },
+  "tests/test_scout_v004_r3_process_assurance.py": {
+    "baseline_ci": true,
+    "runner": "process",
+    "reason": "Existing CI: real fixed local Python children, fictional temporary journals; lock races, kill, stale locks. Portable.",
+    "declared_tests": []
+  },
+  "tests/test_sec_certification.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Synthetic timestamps, units, semantic facts and proposed-policy inputs.",
+    "declared_tests": [
+      "ClassTests.test_classes_rename_reuse_delisting_merger_overlap_and_missing",
+      "PolicyTests.test_all_contributors_future_and_pinned_approvals",
+      "PolicyTests.test_no_unapproved_policy_admits_facts_and_unknown_stays_unknown",
+      "SemanticTests.test_annual_zero_and_identical_duplicates_retained",
+      "SemanticTests.test_segments_comparatives_units_missing_and_conflicts_fail",
+      "SemanticTests.test_unit_default_qname_and_wrong_currency_namespace",
+      "TimestampTests.test_est_edt_after_hours_and_unresolved_are_separate",
+      "TimestampTests.test_invalid_nonexistent_and_ambiguous_wall_times_rejected",
+      "TimestampTests.test_weekend_holiday_buffer_and_calendar_failure"
+    ]
+  },
+  "tests/test_sec_certification_reporting.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Read-only tracked evidence render ordering; no private source audit.",
+    "declared_tests": [
+      "CertificationReportingTests.test_reports_ignore_json_object_insertion_order"
+    ]
+  },
+  "tests/test_sec_inline_certification.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Literal inline HTML fixtures; no external parser/runtime.",
+    "declared_tests": [
+      "InlineTests.test_explicit_scale_original_position_and_determinism",
+      "InlineTests.test_wrong_context_wrong_scale_and_nested_rendering_not_certified"
+    ]
+  },
+  "tests/test_sec_phase3b_planning.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Read-only tracked public clock candidates plus local calendars.",
+    "declared_tests": [
+      "Phase3BPlanningTests.test_archived_timestamp_candidates_preserve_unknowns_and_policy",
+      "Phase3BPlanningTests.test_holiday_dst_and_invalid_calendar_fail_closed",
+      "Phase3BPlanningTests.test_midnight_counterexample_and_filing_date_mask"
+    ]
+  },
+  "tests/test_sec_pilot_acquisition.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "All transports injected fakes; temp archives, threads and refusal/error receipts.",
+    "declared_tests": [
+      "ArchiveTests.test_concurrent_idempotence_and_changed_versions",
+      "ArchiveTests.test_path_escape",
+      "TransportTests.test_bounded_restriction_receipts_and_redaction",
+      "TransportTests.test_exact_allowlist_before_transport_and_redirects",
+      "TransportTests.test_short_body_and_interrupted_requests_never_succeed"
+    ]
+  },
+  "tests/test_sec_pilot_parsing.py": {
+    "baseline_ci": false,
+    "runner": "excluded",
+    "reason": "Developer-local .research/sec-pilot-venv/Scripts/python.exe with pinned EdgarTools 5.62.0; subprocess not covered by runner guards. SEC test self-skips if absent; Phase3C does not. No source acquisition needed by literals, but portable isolated environment not yet provisioned.",
+    "declared_tests": [
+      "OfflineParserTests.test_conflicting_facts_retained",
+      "OfflineParserTests.test_determinism_clocks_contexts_and_zero",
+      "OfflineParserTests.test_fiscal_period_nil_and_missing_are_not_calendar_or_zero",
+      "OfflineParserTests.test_malformed_future_and_external_entity_rejected"
+    ]
+  },
+  "tests/test_sec_pilot_provenance.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Pure fictional clock/version/security binding records.",
+    "declared_tests": [
+      "ProvenanceTests.test_class_ambiguity_rename_reuse_end_and_missing",
+      "ProvenanceTests.test_dst_after_hours_and_naive_timestamp",
+      "ProvenanceTests.test_later_amendment_and_metadata_cannot_mutate_pinned_snapshot",
+      "ProvenanceTests.test_unknown_missing_ambiguous_and_future_fail_closed"
+    ]
+  },
+  "tests/test_sec_pilot_reconciliation.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Temporary synthetic Parquet/DuckDB facts and literal index HTML.",
+    "declared_tests": [
+      "ReconciliationTests.test_exact_cross_store_and_count_preserving_substitution",
+      "ReconciliationTests.test_index_selects_only_primary_and_instance_and_rejects_escape"
+    ]
+  },
+  "tests/test_source_first.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
+    "declared_tests": [
+      "SourceFirstTests.test_exact_surface_cap_and_no_expansion",
+      "SourceFirstTests.test_freeze_route_before_probe",
+      "SourceFirstTests.test_global_ceiling_across_per_surface_ledgers",
+      "SourceFirstTests.test_neutral_sample_preserves_source_order_and_missingness",
+      "SourceFirstTests.test_no_mechanism_before_access_and_hard_gate_evidence",
+      "SourceFirstTests.test_no_performance_or_old_pilot_dispatch",
+      "SourceFirstTests.test_outcome_and_current_state_blocks_are_distinct",
+      "SourceFirstTests.test_predictive_is_not_a_causal_certificate",
+      "SourceFirstTests.test_surface_failure_does_not_reset_global_budget_or_retry_denial",
+      "SourceFirstTests.test_timing_never_approves_or_activates_policy"
+    ]
+  },
+  "tests/test_support_case.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Temporary synthetic EXP004-shaped receipts, redaction and tampering checks.",
+    "declared_tests": [
+      "SupportCaseTests.test_complete_population_failure_and_allowlist",
+      "SupportCaseTests.test_hash_tampering_and_incomplete_pages_fail"
+    ]
+  }
+}
