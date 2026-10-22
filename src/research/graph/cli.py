@@ -209,6 +209,8 @@ def main(argv=None):
     g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     c = sub.add_parser('adversarial', help='Graph v1.1 adversarial synthetic evaluation (reused citations, trivial identifiers, periods, tags)')
     g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
+    c = sub.add_parser('holdout', help='GRAPH_CLASSIFICATION_V1_2 holdout written after the rule was registered (v1.1 vs v1.2 vs structured search)')
+    g_ = c.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     c = sub.add_parser('evaluate', help='offline ordinary-search versus graph comparison on synthetic fixtures')
     c.add_argument('--timing', action='store_true', help='also report (non-deterministic) build runtime')
     c = add('suggestions', 'export suggestions for a target with baseline-discoverability flags (pilot hook)'); c.add_argument('node')
@@ -235,6 +237,12 @@ def main(argv=None):
             if a.check:print(json.dumps(AD.check()))
             elif a.write:AD.RECORD.write_text(AD.generate(), encoding='utf-8', newline='\n'); print(f'written {AD.RECORD.relative_to(demo.ROOT).as_posix()}')
             else:print(AD.generate(), end='')
+            return
+        if a.command == 'holdout':
+            from src.research.graph import holdout_v1_2 as HO
+            if a.check:print(json.dumps(HO.check()))
+            elif a.write:HO.RECORD.write_bytes(HO.generate().encode('utf-8')); print(f'written {HO.RECORD.relative_to(demo.ROOT).as_posix()}')
+            else:print(HO.generate(), end='')
             return
         if a.command == 'evaluate':
             import tempfile

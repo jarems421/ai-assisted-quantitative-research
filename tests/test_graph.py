@@ -1126,4 +1126,22 @@ class GraphPilotR4HardeningTests(unittest.TestCase):
         reg_=K.load_register();self.assertEqual(reg_['identifiers'],[])
 
 
+
+class GraphV12HoldoutTests(unittest.TestCase):
+    """The v1.2 holdout, written after the rule was registered (commit 426c211); results pinned as found, not tuned."""
+
+    def test_holdout_record_is_current_and_results_are_as_registered(self):
+        import subprocess
+        from src.research.graph import holdout_v1_2 as HO
+        self.assertEqual(HO.check()['holdout'],'PASS')
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);rep=HO.run(Path(tmp.name))
+        v11,v12=rep['totals']['graph_v1_1'],rep['totals']['graph_v1_2']
+        self.assertEqual((v12['true_positives'],v12['false_negatives'],v11['false_negatives']),(5,0,0))
+        self.assertEqual((v11['false_positives_by_case'],v12['false_positives_by_case']),(['H1','H2','H3','H7','H10'],['H7']))  # H7: declared expected miss
+        self.assertEqual(v11['review_load'],v12['review_load'])  # labelling never hides items
+        ordered=subprocess.run(['git','merge-base','--is-ancestor',HO.RULE_COMMIT,'HEAD'],cwd=ROOT,capture_output=True)
+        if ordered.returncode not in (0,1):self.skipTest('git history unavailable')
+        self.assertEqual(ordered.returncode,0)  # the rule commit precedes the holdout
+
+
 if __name__=='__main__':unittest.main()

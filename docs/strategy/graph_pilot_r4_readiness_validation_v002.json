@@ -1,0 +1,127 @@
+{
+ "version": "GRAPH_PILOT_R4_READINESS_VALIDATION_V002",
+ "recorded_at_utc": "2026-10-22T10:35:37+00:00",
+ "status": "PASS",
+ "branch": "graph-pilot-r4-readiness",
+ "base_main": "adc1584ca0926d7ddea17e0ee711a8945f62e0c1",
+ "main_untouched": true,
+ "report": {
+  "path": "docs/strategy/graph_pilot_r4_readiness_v002.md",
+  "sha256": "67ef9fe79e779a8b7adf1a5991347981ef82c37cac219fa96a337f45685168f0"
+ },
+ "records": {
+  "docs/strategy/graph_pilot_r4_dry_run.md": "97dbed34a2e8702230fe1ca629850f405734fda75dd429b993836bb809d349da",
+  "docs/strategy/graph_v1_1_adversarial.md": "ebb4bdc896ab1fb72fb779e46650386ab5e49eaba4bcde9ef76799af44b82135",
+  "docs/strategy/graph_v1_1_quality.md": "e96e8cce6a7918dcc3e1c0d54a6e33c19b73d2172efafb9775674fe29425364d",
+  "docs/strategy/graph_v1_2_holdout.md": "9516c98db0951f6b4c2d58d03db18b1bb08d48cf415c1cc82243b1832a42baf1",
+  "docs/strategy/graph_pilot_dry_run.md": "0d3224ee3ddc14b7489431ceb151e272bcdfa229aabace02eff4e529ceab35e6",
+  "docs/strategy/graph_v1_walkthrough.md": "cee4645ff4d9e71bcc72c3c9c33eaf2c7c341630ff120ed605dac6f9551ab926"
+ },
+ "protected_paths_changed_vs_main": {
+  "r3": "NONE",
+  "opportunity_scout": "NONE"
+ },
+ "r4": "NOT_RUN",
+ "network": "none",
+ "acquisition": 0,
+ "scope": "SYNTHETIC_FIXTURES_ONLY; not an independent or real-world benchmark",
+ "checks": [
+  {
+   "name": "local_suite",
+   "command": "python -m unittest discover -s tests",
+   "returncode": 0,
+   "test_count": 698,
+   "log_sha256": "5ea74fc81c25da91f2792ba264185453b3b665976fce6e016d34632b5cafd5f7"
+  },
+  {
+   "name": "graph_tests",
+   "command": "python -m unittest tests.test_graph",
+   "returncode": 0,
+   "test_count": 83
+  },
+  {
+   "name": "public_checks",
+   "command": "python -m src.research.public_checks",
+   "returncode": 0,
+   "test_count": 372
+  },
+  {
+   "name": "r4_dry_run",
+   "command": "python -m src.research.graph pilot r4-dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "adversarial",
+   "command": "python -m src.research.graph adversarial --check",
+   "returncode": 0
+  },
+  {
+   "name": "holdout_v1_2",
+   "command": "python -m src.research.graph holdout --check",
+   "returncode": 0
+  },
+  {
+   "name": "quality",
+   "command": "python -m src.research.graph quality --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_demo",
+   "command": "python -m src.research.graph demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "pilot_dry_run_r2",
+   "command": "python -m src.research.graph pilot dry-run --check",
+   "returncode": 0
+  },
+  {
+   "name": "graph_build",
+   "command": "python -m src.research.graph build --check",
+   "returncode": 0,
+   "digest": "8c9167e93b9bb9729b7511933b7e0ae7ceed78becf9fc7a9b3bcd4705426b4e6",
+   "rebuild_identical": true
+  },
+  {
+   "name": "discovery_demo",
+   "command": "python -m src.research.discovery demo --check",
+   "returncode": 0
+  },
+  {
+   "name": "phase4a",
+   "command": "python -m src.research.phase4a --check",
+   "returncode": 0
+  },
+  {
+   "name": "presentation",
+   "command": "python -m src.presentation.exp001 --check",
+   "returncode": 0
+  }
+ ],
+ "flaky_observations": [
+  {
+   "test": "tests.test_sec_pilot_acquisition.ArchiveTests.test_concurrent_idempotence_and_changed_versions",
+   "observed": "one ERROR (ValueError: Archive path escape, raised under thread concurrency) in the first of two full local runs; passed 5/5 in isolation and in the second full run",
+   "branch_changes_to_it": "NONE (src/research/sec_pilot and the test are unchanged against main)",
+   "status": "UNRESOLVED_PRE_EXISTING_FLAKE; not fixed here"
+  }
+ ],
+ "mutation_checks": {
+  "script": "scratchpad mutation harness (not tracked)",
+  "caught": 11,
+  "total": 11,
+  "safeguards": [
+   "material threshold uses the greater of 5 minutes or 10%",
+   "declined rows over logged rows",
+   "outcomes joined per row, not origin",
+   "pin checked when any snapshot loads",
+   "effort evidence downgrades unsupported definitive results",
+   "assistant names refused as attesters",
+   "attestations rechecked at unblinding",
+   "runtime compared",
+   "v1.2 rule applied",
+   "effort gate not applied to legacy packets",
+   "closure follows imports inside functions"
+  ]
+ }
+}

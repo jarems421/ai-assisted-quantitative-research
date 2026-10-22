@@ -24,7 +24,7 @@ No prices, returns, backtests or investment claims. M passes and H judgments are
 | The openFDA `limit=1000` response exceeded the size stop | **Size-safe routes only.** Each route must document a page-size or record limit. The request uses a limit whose worst-case documented record size fits under the per-start byte stop, with half the stop as margin. An over-size response is a NOT_FORMED stop, never retried |
 | `SUG-` ids were lost; the suggestion-rejection metric read 0/0 | **V2 connection logs are mandatory.** Each packet is frozen with `pilot snapshot --connection-log GRAPH_PILOT_CONNECTION_V2`, so V1 rows are refused and the operator version is pinned. The graph arm saves every suggesting query's snapshot-mode JSON under `<packet>/suggestions-G/` at query time. Every graph-originated row keeps `origin_suggestion_id`, `origin_operator`, `origin_bases` and `connection_class`. These must match a suggestion that replays from the snapshot, with the same endpoints, issued before the row. `pilot blind` seals the export hashes in the key; `unblind` and `report` recheck them |
 | Requirement-tag analogies were counted as connections | Graph operators run at `GRAPH_OPERATORS_V1_1`. A warning can only be logged as `METHODOLOGICAL_WARNING`; the validator refuses it as `CONNECTION`. Warnings are a separate dimension |
-| Self-logged minutes over-stated some arms by about 9 minutes | **Timestamp-derived effort.** Each effort's minutes are checked against ledger append times and the session start and end. Both self-logged and derived minutes are reported. A difference above 10% or 5 minutes per campaign is a flagged deviation |
+| Self-logged minutes over-stated some arms by about 9 minutes | **Timestamp-derived effort.** The primary measure remains self-reported analyst minutes, which are checked against ledger, connection-log and graph-query times and against the operator's attested session. The human arm operator personally writes separate, immutable START and STOP attestations (`pilot session-attest`) as each event occurs; assistants never attest. A difference is material above the greater of 5 minutes or 10% of the derived comparator, and smaller differences are still reported. Gaps are descriptive and never subtracted. A definitive classification needs supporting effort evidence (see Outcomes) |
 | Two arms wrote connection logs at the end | Logs are written as connections are considered. Each row's `recorded_at_utc` must fall inside the campaign window and precede the arm's final freeze |
 | V001 exports leaked arm ids; the owner saw them | Only aliased V2 exports (`pilot realias`) are produced. `pilot leak-scan` must show 0 findings before an export is shown to anyone. No V001-style export exists for R4 |
 | The same owner operated, adjudicated with AI assistance, and was exposed | **Independent human adjudication.** At least one adjudicator who did not operate either arm and saw no arm ledger, log, session or key. Two adjudicators are preferred; disagreements are reported, not resolved by an AI. No AI assessment is produced or read before every human adjudication is committed. Every item carries `EXPOSURE: SAW_ARM_INFO=YES\|NO`; any YES marks the comparison potentially unblinded |
@@ -43,6 +43,12 @@ No prices, returns, backtests or investment claims. M passes and H judgments are
 - **Pilot ceilings.** Set by the owner at activation, counted separately from R1–R3 and including packet freeze. No standing allowance follows from this draft.
 
 ## Outcomes
+
+**Primary measure and gate (Phase A hardening, [readiness v002](graph_pilot_r4_readiness_v002.md)).** All per-hour dimensions use self-reported analyst minutes. Attested session minutes give a sensitivity, valid only where every arm's START and STOP are attested; the observed record span is descriptive only. Elapsed time is not active research effort: it includes idle time, interruptions and waiting, and misses unrecorded work.
+
+A definitive classification requires either every arm's effort evidence to be CONSISTENT, or no arm CONTRADICTORY and the same classification under the session sensitivity. Otherwise the result is INCONCLUSIVE (`EFFORT_EVIDENCE_UNRESOLVED`), shown beside the primary result.
+
+**Classification ruleset.** It is recorded in each V2 snapshot (`--classification`). `GRAPH_CLASSIFICATION_V1_2`, under which generic shared identifiers do not ground, was registered before its holdout and is supported on it; adopting it for R4 is an owner decision.
 
 All per-hour outcomes use all analyst minutes, including graph query and suggestion-review time, and report self-logged and derived minutes side by side.
 
@@ -73,10 +79,10 @@ Analysis is descriptive only: per-packet paired differences and pooled totals, e
 
 Phase A ([readiness report](graph_pilot_r4_readiness_v001.md), branch `graph-pilot-r4-readiness`) implemented and tested items 1, 4 and 6 on synthetic fixtures only:
 
-1. **IMPLEMENTED.** Timestamp-derived effort from append, connection-log, graph-query and operator session timestamps (`pilot effort`; `session-<arm>.json`).
+1. **IMPLEMENTED.** Timestamp-derived effort from append, connection-log, graph-query and operator-attested session timestamps (`pilot effort`; `pilot session-attest`).
 2. **NOT_IMPLEMENTED (Phase B).** Per-item `SAW_ARM_INFO` exposure for adjudicators other than the owner, generalising the R3 `SAW_V001` note.
 3. **NOT_IMPLEMENTED (Phase B).** A two-adjudicator log with agreement reporting.
-4. **IMPLEMENTED.** The graph git commit and implementation content digest are pinned in V2 snapshots (`graph_implementation`), beside `connection_log` and `graph_operator_version`.
+4. **IMPLEMENTED.** V2 snapshots pin the git commit, the content of the computed implementation boundary (graph, discovery, `spec.py`, the R4 fetch tool and their static import closure) and the Python and dependency versions (`graph_implementation`), beside `connection_log`, `graph_operator_version` and the classification ruleset. Receipts record the actual running commit.
 5. **NOT_IMPLEMENTED (Phase B).** An adjudication vocabulary for warnings ("useful lesson" or "not useful"). Today a warning is adjudicated with the connection outcomes.
 6. **IMPLEMENTED.** Full suggestion accounting: exported, logged, declined and exported-but-unlogged suggestions by class (`pilot suggestion-accounting`; `pilot report`).
 
