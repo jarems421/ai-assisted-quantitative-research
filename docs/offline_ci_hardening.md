@@ -58,7 +58,10 @@ From a full Git checkout with CPython 3.13:
 ```sh
 python -m pip install -r requirements-offline-ci.txt
 python -m src.research.offline_checks --inventory
-python -m unittest tests.test_offline_checks -v
+python -m unittest tests.test_offline_checks.GuardTests -v
+# Choose the native guard class for the actual OS:
+# Windows: python -m unittest tests.test_offline_checks.WindowsGuardTests -v
+# Linux:   python -m unittest tests.test_offline_checks.LinuxGuardTests -v
 python -m src.research.offline_checks
 python -m src.research.public_checks
 python -m src.research.opportunity_scout.v004_checks
@@ -97,6 +100,14 @@ unsupported platforms fail closed. Symlink creation is refused.
 The first native Linux run demonstrated a blocked `/usr/share/zoneinfo` read:
 the additional runner now selects the pinned `tzdata` wheel on both systems using
 `zoneinfo.reset_tzpath(())`. Production calendar/metric code is unchanged.
+The first hosted Windows run also exposed an extended-path prefix from
+`Path.resolve()` during concurrent fixture directory creation. The guard now
+normalises equivalent drive/UNC extended prefixes before boundary comparison;
+a native Windows regression checks scratch writes and forbidden repository writes
+through extended paths. The original concurrent archive test stays unchanged.
+Guard counts are seven portable tests plus one native test per OS. The other OS's
+native class is excluded by workflow selection and would explicitly skip if invoked
+directly; it never counts as simulated native assurance.
 
 These are guards for reviewed Python tests, **not an OS security sandbox for
 hostile tests or native extensions**. SQLite/PyArrow/DuckDB perform some native IO

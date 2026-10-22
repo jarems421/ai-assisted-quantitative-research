@@ -28,7 +28,13 @@ jobs:
       - name: Print complete reviewed inventory and exclusions
         run: python -m src.research.offline_checks --inventory
       - name: Verify fail-closed runner guards
-        run: python -m unittest tests.test_offline_checks -v
+        run: python -m unittest tests.test_offline_checks.GuardTests -v
+      - name: Verify native Windows guard path boundaries
+        if: runner.os == 'Windows'
+        run: python -m unittest tests.test_offline_checks.WindowsGuardTests -v
+      - name: Verify native Linux guard descriptor boundaries
+        if: runner.os == 'Linux'
+        run: python -m unittest tests.test_offline_checks.LinuxGuardTests -v
       - name: Run additional reviewed tests with restricted IO
         run: python -m src.research.offline_checks
       - name: Run existing guarded public suite on both platforms

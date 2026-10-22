@@ -1069,10 +1069,11 @@
       "GuardTests.test_credentials_even_when_accidentally_allowlisted",
       "GuardTests.test_dns_tcp_loopback_and_udp_denied",
       "GuardTests.test_inventory_covers_every_module_and_rejects_new_tests",
-      "GuardTests.test_native_fd_relative_cleanup_where_supported",
       "GuardTests.test_open_os_open_and_write_guards",
       "GuardTests.test_shell_and_hosted_process_denied_before_launch",
-      "GuardTests.test_swallowed_violation_still_latched"
+      "GuardTests.test_swallowed_violation_still_latched",
+      "LinuxGuardTests.test_native_fd_relative_cleanup_where_supported",
+      "WindowsGuardTests.test_native_windows_extended_paths_use_same_boundary"
     ]
   },
   "tests/test_phase3_final.py": {

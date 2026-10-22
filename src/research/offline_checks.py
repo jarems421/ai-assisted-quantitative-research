@@ -26,12 +26,25 @@ class ForbiddenOperation(BaseException):
     """Avoid being mistaken for an expected application ValueError/OSError."""
 
 
+def resolved_path(value):
+    p = Path(value).resolve()
+    if os.name == 'nt':
+        # GetFinalPathNameByHandle can preserve the extended prefix while a
+        # concurrent fixture mkdir races resolution of a not-yet-existing path.
+        name = str(p)
+        if name.startswith('\\\\?\\UNC\\'):
+            p = Path('\\\\' + name[8:])
+        elif name.startswith('\\\\?\\') and name[5:7] == ':\\':
+            p = Path(name[4:])
+    return p
+
+
 class Guard:
     def __init__(self, root, scratch, readable):
-        self.root = Path(root).resolve()
-        self.scratch = Path(scratch).resolve()
-        self.readable = {Path(p).resolve() for p in readable}
-        self.runtime = {Path(sys.prefix).resolve(), Path(sys.base_prefix).resolve()}
+        self.root = resolved_path(root)
+        self.scratch = resolved_path(scratch)
+        self.readable = {resolved_path(p) for p in readable}
+        self.runtime = {resolved_path(sys.prefix), resolved_path(sys.base_prefix)}
         self.active = False
         self.violations = []
 
@@ -42,7 +55,7 @@ class Guard:
     def path(self, value, *, write=False):
         if isinstance(value, int):
             return  # Existing descriptors (stdout/stderr and temporary files).
-        p = Path(os.fsdecode(value)).resolve()
+        p = resolved_path(os.fsdecode(value))
         if p.is_relative_to(self.scratch):
             return
         if write:
