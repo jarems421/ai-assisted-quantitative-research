@@ -1,0 +1,49 @@
+{
+  "schema": "SCOUT_V004_FINAL_ASSURANCE_BLOCKERS_R1",
+  "status": "HOSTED_READINESS_BLOCKED",
+  "reviewed_base_commit": "111a4fd8866abf1a11b68784cf9d6402a48a1c11",
+  "journal_revision": "SCOUT_V004_OFFLINE_JOURNAL_R2",
+  "classification_meanings": {
+    "PASSED_OFFLINE": "Proven only within the named fictional/cooperating-local-process scope; not live/provider prevention.",
+    "REQUIRES_CLI_OBSERVATION": "Actual facts absent; proposed finite hosted acceptance tests require separate authority and a reviewed collector first.",
+    "REQUIRES_OWNER_CONSENT": "A decision or authority is missing; consent alone does not implement absent engineering or prove an observation.",
+    "INTRINSIC_DISCLOSURE": "Residual limitation remains in interpretation even if all empirical tests pass."
+  },
+  "PASSED_OFFLINE": [
+    {"id": "LOCAL_SINGLE_USE", "scope": "Within one fixed R2 fictional journal, sequential reserved slots and unique contexts; consumed/pending/stopped slots cannot be relaunched through the interface.", "evidence": "Full Scout regressions; start/finish/reopen and stopped-run tests", "limit": "No global cross-journal or live-provider claim."},
+    {"id": "ROLLBACK_WITNESSES", "scope": "Complete-line log suffix removal, changed witness and interrupted write-ahead witness reject loading/dispatch.", "evidence": "Seven new journal assurance regressions; pre-fix failures retained privately", "limit": "Local log plus witness are not an independently authenticated latest head."},
+    {"id": "FINISH_EXCEPTION", "scope": "One finish submission opportunity; exceptions cannot leave the original handle retryable. Raw bytes precede evaluation.", "evidence": "Same-handle interruption, invalid-tag and raw-preservation regressions", "limit": "Cannot recover input never received or bytes lost before durable archival; no live collector exists."},
+    {"id": "CROSS_PROCESS_LOCK", "scope": "Actual cooperating local Python processes: held-lock exclusion, two-process race gives one consumption, killed holder leaves an unreclaimed stale lock.", "evidence": "tests.test_scout_v004_process_assurance (3 tests)", "limit": "No protection from a noncooperating actor deleting/replacing every audit artifact; no automatic stale-lock recovery."},
+    {"id": "RAW_JSON_AND_GENERATIONS", "scope": "Fictional stream profile rejects replacements, repairs, third generations, changed session/model/IDs, invalid assembly and malformed continuation.", "evidence": "Recorded-stream end-to-end regressions", "limit": "Profile is not certified as native CLI output."},
+    {"id": "COMBINED_ACCOUNTING", "scope": "Inclusive 60000 reported tokens; ordinary/cache-create/cache-read/output once; missing/conflicting usage rejects compliance; thinking not double-counted.", "evidence": "Budget and end-to-end regressions", "limit": "Post-hoc reported arithmetic, not independent provider completeness or prevention."},
+    {"id": "SCIENTIFIC_FREEZE", "scope": "12/24 denominators, original four-condition allocation/order, exact scientific projection/full schema and lane/citation checks, invalid/surplus/missing output retained; no fictional scientific comparison.", "evidence": "Package, all-twelve-slot and schema/semantic regressions", "limit": "No economic/M/H, novelty, investment or independent human-review finding."},
+    {"id": "OFFLINE_BOUNDARY", "scope": "No real dispatcher; only synthetic packages/recordings enter rehearsal. Environment mapping is pure; monitoring consumes supplied fictional observations.", "evidence": "Mode refusal, account/content/process guards and source-boundary regressions", "limit": "No actual account selection or non-interference established."}
+  ],
+  "REQUIRES_CLI_OBSERVATION": [
+    {"id": "NATIVE_EVENT_PROFILE", "required": "Exact init/terminal positions, UTF-8 framing, session/model/message/request IDs, disjoint fragment ordering and terminal text equality", "acceptance": "H1-H3; any incompatible/missing required fact fails or leaves coverage INCONCLUSIVE"},
+    {"id": "REAL_CONTINUATION", "required": "Actual max_tokens stop, authoritative native notice, unfinished first response and append-only second response at diagnostic and production settings", "acceptance": "H2 diagnostic Q=4096 and H3 production Q=32768; no retries or invented notices; smaller-Q success is not production certification"},
+    {"id": "REAL_USAGE", "required": "Consistent ordinary/cache-create/cache-read/output and per-model reports for completed/continued activity; all failed work represented", "acceptance": "H1-H3; missing/conflicting/omitted work or observed excess stops validation; thinking detail remains optional subdetail, never an added charge"},
+    {"id": "ACCOUNT_WINDOW", "required": "Actual safe research-config/subscription-source evidence, managed-policy absence, per-file/PID lifetime coverage and clean pre/active/cooldown windows", "acceptance": "Separately authorised checklist; drift/concurrency/unknown/default fallback stops all later tests; historical writer remains UNKNOWN"},
+    {"id": "RUNTIME_IDENTITY", "required": "Pinned actual binary/version/model and requested runtime settings, actual exit/wall evidence, no formatter/tools/skills/MCP/persistence or context reuse", "acceptance": "No unsupported settings promoted to enforcement; collect actual evidence or keep UNKNOWN/BLOCKED"}
+  ],
+  "REQUIRES_OWNER_CONSENT": [
+    {"id": "PATH_B_RISK", "decision": "Approve Path B formally, or remain blocked: 60000 is post-hoc, continuation may substantially overrun, visible generations do not enumerate provider work, privacy/model limitations remain."},
+    {"id": "COMMON_RUNTIME_RULES", "decision": "Freeze common Q=32768 candidate or an explicit prospective alternative, generation/continuation/no-repair and run-stop/ordinary-format-failure rules, exact projection/order; ~20000 output remains guidance."},
+    {"id": "BOUNDED_VALIDATION", "decision": "Separately authorise exact safe inspections, quiet window and at most H1-H3 once each, fixed fictional inputs/runtime/thresholds/stops, especially H3 overrun risk; no fourth probe or adaptive retry."},
+    {"id": "LIVE_COLLECTOR_BINDING", "decision": "Commission and independently review a future gated collector binding the single approved journal/path/reservation namespace, exact package/runtime and consent, with durable raw spooling before evaluation.", "engineering_missing": true, "consent_is_not_implementation": true},
+    {"id": "ROLLBACK_THREAT_MODEL", "decision": "Choose independently retained audit heads/checkpoints or explicitly accept trusted-local-filesystem limitations; no global tamper/rollback prevention claim without independent anchoring."},
+    {"id": "REAL_PACKAGE_AND_REVIEW", "decision": "After gates, freeze all 12 new requests and obtain owner identity/date/hash-specific hosted-input consent. Independent human assessment and recorded actual effort remain mandatory; no AI attestation or successful-card-only comparison."}
+  ],
+  "INTRINSIC_DISCLOSURE": [
+    {"id": "NO_HARD_RESOURCE_BOUND", "limitation": "No supported aggregate upper bound over unseen scaffolding/requests/output; best-effort cancellation and post-hoc stops cannot undo consumption."},
+    {"id": "PROVIDER_VISIBILITY", "limitation": "Underlying provider request count/context, independent usage completeness, immutable weights/build and actual effort are not certified by finite visible-event tests."},
+    {"id": "BILLING", "limitation": "Tokens and CLI list-price estimates are not actual subscription charges; unattributable charges remain UNKNOWN."},
+    {"id": "LOCAL_AUDIT_LIMIT", "limitation": "Local log/witness copies cannot independently authenticate coordinated deletion/rollback, cloned directories, all power-loss durability or malicious filesystem writers; trusted external checkpoints would change that assurance scope, not provider visibility."},
+    {"id": "ACCOUNT_ATTRIBUTION", "limitation": "Sampled stat/process stability does not establish content equality, every transient process or writer causation; historical writer UNKNOWN and leakage NOT_ESTABLISHED."},
+    {"id": "SCIENTIFIC_SCOPE", "limitation": "Three attempts per condition, partial blinding, residual time/order and HYBRID lane-round confounding, lane-dependent input/output headroom and consumption differences restrict conclusions to descriptive workflows. Fictional success supplies no scientific result."}
+  ],
+  "integration": "Original SHA had substantive assurance gaps. R2 fixes require green CI and focused independent re-review before recommending engineering integration; no merge or execution approval here.",
+  "hosted_authorised": false,
+  "Path_B_approved": false,
+  "authorises": []
+}

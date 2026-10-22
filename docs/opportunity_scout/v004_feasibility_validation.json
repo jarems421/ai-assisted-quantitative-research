@@ -1,0 +1,69 @@
+{
+  "schema": "SCOUT_V004_FEASIBILITY_R2_VALIDATION",
+  "recorded_at": "2026-10-22T10:09:33.716781+00:00",
+  "base_commit": "52890097f860f16dea2236280a2718742659def7",
+  "branch": "codex/opportunity-scout-v004-investigation",
+  "status": "OFFLINE_REVIEW_COMPLETE / R2_UNAPPROVED / STRICT_PATH_BLOCKED / NO_HOSTED_CALLS",
+  "owner_feedback": "Propose common combined 60000-token allowance and nonbinding approximately 20000-output planning guide; do not infer execution approval.",
+  "protocol_version": "SCOUT_EVALUATION_PROTOCOL_V004_PROPOSAL_R2",
+  "proposal_sha256": "1dd4fcf96e6abe6f207efad53fc582212b77000208342e419cf423890c51977f",
+  "tests": [
+    {
+      "command": "python -m unittest discover -s tests/opportunity_scout -v",
+      "tests": 139,
+      "result": "PASS",
+      "log_sha256": "f98e00db315a17f528d3f85d849e8595260e84c918a102d3526d6b8172c3d987"
+    }
+  ],
+  "new_targeted_tests": {
+    "combined_budget": 11,
+    "metadata_monitoring": 10
+  },
+  "preservation": {
+    "prior_private_artifacts": 41,
+    "complete_file_set_and_bytes_unchanged": true,
+    "inventory_sha256": "d2ea6e129cb146359da868cfb0fa7bc24b0724818d20c02f3023fbebae010ab5",
+    "V003_bound_implementation_unchanged": true,
+    "V003_authorisation_still_valid": true,
+    "V003_dispatches": 1,
+    "V003_recorded_results": 1,
+    "V003_cards": 0,
+    "V003_undispatched": 11,
+    "accepted_failure_report_unchanged": true
+  },
+  "budget_definition": {
+    "combined_allowance": 60000,
+    "output_planning_guide": 20000,
+    "separate_scientific_input_or_output_ceiling": false,
+    "thinking_added_twice": false,
+    "prevention_guarantee": false
+  },
+  "continuation_recommendation": {
+    "max_visible_generations": 2,
+    "max_append_only_output_limit_continuations": 1,
+    "parent_invocations_per_attempt": 1,
+    "schema_or_semantic_repairs_permitted": false,
+    "new_runtime_validated": false
+  },
+  "account_isolation": "SEPARATE_UNRESOLVED_GATE: historical attribution UNKNOWN; new monitoring uses metadata only and cannot authorise probes.",
+  "new_hosted_probes": 0,
+  "new_real_generation_calls": 0,
+  "Claude_executable_invocations_this_review": 0,
+  "actual_subscription_billing": "UNKNOWN unless independently observable and attributable; token totals/list-price estimates are separate.",
+  "documentation_review": {
+    "first_party_pages": [
+      "https://code.claude.com/docs/en/cli-reference",
+      "https://code.claude.com/docs/en/env-vars",
+      "https://code.claude.com/docs/en/agent-sdk/structured-outputs",
+      "https://code.claude.com/docs/en/agent-sdk/cost-tracking",
+      "https://code.claude.com/docs/en/hooks",
+      "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+    ],
+    "scope": "Read-only documentation, not hosted model probes; no research text was submitted. Failed markdown fetches retained privately; HTML documentation inspected through web tools.",
+    "installed_binary_read_only_hash": "3ab075f78998efef8b87f491c2e4a39c309dddf44e51d0103eba4f3713d2a0ae",
+    "binary_control_name_presence_is_not_guarantee": true
+  },
+  "fresh_complete_package_approval_required": true,
+  "execution_approval_created": false,
+  "authorises": []
+}

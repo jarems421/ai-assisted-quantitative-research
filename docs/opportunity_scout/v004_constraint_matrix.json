@@ -1,0 +1,194 @@
+{
+  "schema": "SCOUT_V004_CONSTRAINT_REVIEW_V002",
+  "status": "OFFLINE_REVIEW_ONLY_NO_EXECUTION_AUTHORITY",
+  "reviewed_cli_version": "2.1.302",
+  "executable_sha256": "3ab075f78998efef8b87f491c2e4a39c309dddf44e51d0103eba4f3713d2a0ae",
+  "classifications": {
+    "ENFORCEABLE": "An independently supported mechanism prevents the specified action within the explicitly stated scope; not a claim about unobserved provider internals.",
+    "OBSERVABLE_ONLY": "Available telemetry can expose a violation or report a count, without reliable prevention. Detection may itself be incomplete on errors.",
+    "UNKNOWN": "Evidence is insufficient for either a prevention guarantee or complete observation."
+  },
+  "evidence_kinds": {
+    "D": "Current first-party documentation, scoped to its actual promise; not a version-specific runtime proof.",
+    "I": "Read-only installed binary/retained arguments or local implementation inspection.",
+    "E": "Existing immutable V003 or previously authorised fictional observations; no new hosted probe.",
+    "A": "Assumption or unresolved condition; never sufficient for ENFORCEABLE."
+  },
+  "constraints": [
+    {
+      "id": "ONE_PARENT_DISPATCH",
+      "scope": "Prevent a second parent-controlled dispatch of an already consumed slot",
+      "classification": "ENFORCEABLE",
+      "evidence": [
+        "I",
+        "E"
+      ],
+      "mechanism": "Exclusive lock and durable single-use dispatch marker in frozen V003; tested refusal before client construction. A future V004 dispatcher would need the same audited mechanism.",
+      "limitation": "One process invocation is not one model generation. No V004 real dispatcher exists."
+    },
+    {
+      "id": "ONE_VISIBLE_GENERATION",
+      "scope": "At most one visible assistant message generation per scientific attempt",
+      "classification": "OBSERVABLE_ONLY",
+      "evidence": [
+        "D",
+        "I",
+        "E"
+      ],
+      "controls": "max-turns=1, retries=0, no tool formatter; count distinct message IDs and reprompt events",
+      "finding": "V003 produced two distinct IDs despite the configured controls. Stream chunks sharing an ID are not new generations.",
+      "limitation": "A stream observer can reject/stop after detection, not prove the next request was prevented."
+    },
+    {
+      "id": "BOUNDED_VISIBLE_CONTINUATION",
+      "scope": "Proposed Path B: at most two visible generations, initial plus one append-only output-limit continuation",
+      "classification": "OBSERVABLE_ONLY",
+      "evidence": [
+        "I",
+        "E",
+        "A"
+      ],
+      "finding": "Count all distinct visible IDs and retain ordered original text. A second generation is eligible only with evidenced same-attempt output-limit continuation; third/unexplained generations and schema/semantic repair are deviations.",
+      "limitation": "This is a proposed post-hoc compliance rule, not a claim that the CLI prevents a third or invisible request; no new probe validates it."
+    },
+    {
+      "id": "ALL_PROVIDER_REQUESTS",
+      "scope": "Count/prevent every underlying provider request, including invisible helpers or retries",
+      "classification": "UNKNOWN",
+      "evidence": [
+        "D",
+        "I",
+        "E",
+        "A"
+      ],
+      "finding": "Stream request IDs are a visible lower bound; no complete wire log or universal pre-request interception guarantee was established."
+    },
+    {
+      "id": "OUTPUT_RECOVERY_PREVENTION",
+      "scope": "Prevent automatic output-limit continuation or model regeneration within the CLI",
+      "classification": "OBSERVABLE_ONLY",
+      "evidence": [
+        "I",
+        "E"
+      ],
+      "finding": "V003 exposes an output-limit notice followed by a second model response. No documented independently supported universal off switch was established.",
+      "limitation": "Undocumented variable names in a binary do not establish supported semantics."
+    },
+    {
+      "id": "APPLICATION_REPAIR",
+      "scope": "Prevent the parent application from calling a model to repair/replace/retry a response",
+      "classification": "ENFORCEABLE",
+      "evidence": [
+        "I",
+        "E"
+      ],
+      "mechanism": "One parent call per durable slot, local-only validation and no repair/fallback call path; mocked call-count tests.",
+      "limitation": "Does not prevent the CLI's internal generation loops."
+    },
+    {
+      "id": "CLI_SCHEMA_REPAIR",
+      "scope": "Prevent the StructuredOutput validation/reprompt loop while using raw JSON",
+      "classification": "OBSERVABLE_ONLY",
+      "evidence": [
+        "D",
+        "I",
+        "E"
+      ],
+      "controls": "Omit --json-schema, pass empty tools, verify initialization and zero tool calls",
+      "finding": "This removes the selected formatter interface and prior raw probe had zero formatting calls. It does not certify absence of other internal regeneration.",
+      "limitation": "If --json-schema is used, documented validation reprompting is incompatible with claiming every repair is local formatting."
+    },
+    {
+      "id": "AGGREGATE_COMBINED_60000",
+      "scope": "Prevent combined ordinary input + cache creation + cache reads + output exceeding 60000 per attempt",
+      "classification": "OBSERVABLE_ONLY",
+      "evidence": [
+        "D",
+        "I",
+        "E"
+      ],
+      "finding": "No independently certified complete-input/scaffolding/request-count/output bound was established. Combined reported excess can be detected after dispatch; increasing the allowance does not itself create prevention.",
+      "limitation": "No separate scientific input/output cap. Approximately 20000 output tokens is only a planning guide; thinking is not added to output again."
+    },
+    {
+      "id": "REPORTED_CACHE_ACCOUNTING",
+      "scope": "Observe and reconcile ordinary, cache-write and cache-read input counts",
+      "classification": "OBSERVABLE_ONLY",
+      "evidence": [
+        "D",
+        "E"
+      ],
+      "finding": "Sum the three terminal components once, reconcile against per-model totals and deduplicated assistant input counts when available. Do not add cache subdetails again.",
+      "limitation": "Some error results can omit/zero usage. A consistent report is not independent proof of all provider work."
+    },
+    {
+      "id": "REPORTED_THINKING_OUTPUT",
+      "scope": "Observe output and available thinking subcounts",
+      "classification": "OBSERVABLE_ONLY",
+      "evidence": [
+        "D",
+        "E"
+      ],
+      "finding": "Use final result/model usage for output; assistant-event output is a placeholder. Preserve thinking detail separately without adding it twice.",
+      "limitation": "Missing/conflicting fields and crashes leave completeness UNKNOWN; list-price estimates are not subscription charges."
+    },
+    {
+      "id": "COMPLETE_USAGE_ACCURACY",
+      "scope": "Independently verify token totals for all provider activity",
+      "classification": "UNKNOWN",
+      "evidence": [
+        "D",
+        "A"
+      ],
+      "finding": "Neither a subscription invoice nor complete provider-request telemetry is available. Local arithmetic cannot certify unobserved activity."
+    },
+    {
+      "id": "LOCAL_ACCEPTANCE",
+      "scope": "Prevent malformed, missing-usage or observed-deviating output being labelled compliant",
+      "classification": "ENFORCEABLE",
+      "evidence": [
+        "I",
+        "E"
+      ],
+      "mechanism": "Strict local JSON/schema/semantic checks, multiple-fault accounting and explicit UNKNOWN rejection; preserve originals and fixed denominators.",
+      "limitation": "Acceptance control cannot undo consumption, prevent a CLI request or certify economic merit."
+    },
+    {
+      "id": "ACCOUNT_METADATA_CHANGE",
+      "scope": "Observe per-file/default-state metadata changes in a monitored window",
+      "classification": "OBSERVABLE_ONLY",
+      "evidence": [
+        "I",
+        "E"
+      ],
+      "finding": "Metadata-only per-file snapshots and process-lifetime samples can reject contaminated windows. A separate development Claude process was present in the prior investigation.",
+      "limitation": "No prior per-file baseline was retained for that window; writer attribution remains UNKNOWN. Stat equality cannot prove content equality or exclude between-sample changes."
+    },
+    {
+      "id": "ACCOUNT_WRITER_ATTRIBUTION",
+      "scope": "Prove which process changed historical .claude.json metadata or prove credential leakage",
+      "classification": "UNKNOWN",
+      "evidence": [
+        "E",
+        "A"
+      ],
+      "finding": "Existing end-of-window boolean plus later stat/process observations cannot establish causation or leakage. No credential contents are inspected."
+    },
+    {
+      "id": "ACTUAL_SUBSCRIPTION_CHARGES",
+      "scope": "Attribute actual subscription charges to one attempt",
+      "classification": "UNKNOWN",
+      "evidence": [
+        "D",
+        "A"
+      ],
+      "finding": "Reported token counts and CLI list-price estimates do not establish actual incremental subscription charges. Record charges only if independently observable and attributable; otherwise UNKNOWN, never zero or fee proration."
+    }
+  ],
+  "strict_path_A": "BLOCKED: strict prevention of one generation and the revised combined 60000-token allowance is not established.",
+  "exploratory_path_B": "PROPOSED_ONLY: whole-workflow comparison, common combined 60000-token allowance with post-hoc compliance, nonbinding approximately 20000-output planning guide and proposed maximum two visible generations with one evidenced append-only continuation. No schema repair or complete-answer regeneration; not equivalent to Path A.",
+  "new_hosted_probes": 0,
+  "real_generation_authorised": false,
+  "revision_reason": "Owner requested one combined 60000-token allowance and a nonbinding output planning guide; prevention findings remain unchanged. Path B now proposes bounded visible output-limit continuation.",
+  "fictional_hosted_probes_authorised": false
+}
