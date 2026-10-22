@@ -1,6 +1,8 @@
 {
-  "version": "SCOUT_EVALUATION_PROTOCOL_V004_PROPOSAL",
-  "status": "DESIGN_AND_FICTIONAL_VALIDATION_ONLY_NOT_AUTHORISED",
+  "version": "SCOUT_EVALUATION_PROTOCOL_V004_PROPOSAL_R2",
+  "revises": "SCOUT_EVALUATION_PROTOCOL_V004_PROPOSAL",
+  "revision_reason": "Owner feedback on 2026-10-22: propose one combined 60000-token allowance per attempt, remove separate input/output ceilings, preserve detailed reasoning, and consider bounded visible continuation under an explicitly exploratory protocol. This is design feedback, not execution or hosted-input approval.",
+  "status": "UNAPPROVED_DESIGN_AND_OFFLINE_REVIEW_ONLY",
   "predecessor": "SCOUT_EVALUATION_PROTOCOL_V003",
   "predecessor_disposition": "V003 stopped after consumed PLAIN/ATT-0001: ERROR, zero saved cards, eleven undispatched reservations. Preserve its implementation, authority, original error labels, ledgers, receipts and hashes. Never resume, reset, retry or migrate the failed attempt into a success.",
   "conditions": ["PLAIN", "EVIDENCE_ONLY", "MECHANISM_ONLY", "HYBRID"],
@@ -11,34 +13,43 @@
     "HYBRID": ["FORGE", "RADAR", "GAP"]
   },
   "intended_design": {"conditions": 4, "attempts_per_condition": 3, "cards_per_attempt": 2, "total_attempts": 12, "total_intended_cards": 24},
-  "candidate_transport": "Research Claude Code subscription, explicit pinned canonical Opus ID, Medium requested, raw JSON text, no --json-schema/StructuredOutput tool, no model-assisted repair; validate exact original response locally against the unchanged full card schema.",
+  "candidate_transport": "Research Claude Code subscription, explicit pinned canonical Opus ID, Medium requested, raw JSON text, no --json-schema/StructuredOutput tool, no model-assisted repair; validate exact original response locally against the unchanged full card schema. Allow detailed economic reasoning without a per-field brevity restriction.",
   "transport_status": "CANDIDATE_ONLY: fictional success does not certify aggregate hard caps or prevention of internal provider requests. No V004 real dispatcher is implemented or authorised.",
+  "implementation_gate": "R2 needs newly versioned runtime/continuation validation and complete-package tests before approval. Frozen V003 and the prior V004 diagnostic runner retain their historical settings and must not be used as an R2 dispatcher or proof of R2 preflight. The new combined-budget helper is offline arithmetic only.",
   "turn_and_generation_accounting": {
-    "one_visible_generation": "One distinct assistant message ID. Thinking/output chunks with that same ID are stream fragments. A distinct second ID is another visible model generation, even if called formatting or continuation.",
-    "formatting": "A local tool result can add a CLI turn without another model generation. A new model call to format, fix schema or continue output consumes another generation and is forbidden by the unchanged candidate one-generation rule.",
+    "one_visible_generation": "One distinct assistant message ID. Thinking/output chunks with that same ID are stream fragments. A distinct second ID is another visible model generation, even if called formatting or continuation. Strict Path A still requires prevention; proposed Path B permits only the bounded continuation described below.",
+    "formatting": "A local tool result can add a CLI turn without another model generation. A new model call to format or fix schema is an additional generation and is forbidden. Output-limit continuation is a separate, explicitly bounded Path B proposal, never free local formatting.",
     "internal_retries": "Separate HTTP/network retries, output-limit recovery and schema reprompting. MAX_RETRIES=0 controls failed API request retries; it does not certify absence of the other loops.",
-    "observability": "Record CLI invocations, distinct assistant IDs, distinct visible request IDs, synthetic continuation notices, formatting calls, failed tool results, terminal subtype, reported agentic turns and UNKNOWN total underlying provider request count separately. Never publish private IDs or transcript content in the public report."
+    "observability": "Record CLI invocations, distinct assistant IDs, distinct visible request IDs, synthetic continuation notices, formatting calls, failed tool results, terminal subtype, reported agentic turns and UNKNOWN total underlying provider request count separately. Never publish private IDs or transcript content in the public report.",
+    "recommended_exploratory_bound": "At most two visible model generations within one parent CLI invocation: initial generation plus at most one clearly evidenced, append-only output-limit continuation. No separate parent continuation call, complete-answer replacement, schema/semantic repair, best-of or optional refinement. Unknown continuation provenance, a third generation or extra unexplained request IDs are deviations and stop further dispatch. This is a post-hoc compliance rule, not a provider-request prevention guarantee."
   },
   "budget_proposal": {
-    "aggregate_input_tokens_per_attempt": 30000,
-    "aggregate_output_tokens_per_attempt": 6000,
+    "aggregate_combined_tokens_per_attempt": 60000,
+    "aggregate_formula": "ordinary input + cache-creation input + cache-read input + output, across all activity reported for the attempt, including continuation and failed work; count each reported total once",
+    "boundary": "Propose an inclusive 60000-token accounting threshold for every condition, without a hidden tolerance. No separate scientific input or output ceiling, and no transfers between attempts.",
+    "output_planning_guideline_tokens": 20000,
+    "output_planning_role": "Nonbinding planning guidance for total output across the attempt, not a generation target, minimum, separate output cap or reserved split. Output above this guide can comply when combined reported consumption is at most 60000.",
+    "runtime_output_setting": "The complete package must freeze one common supported per-response output setting and continuation configuration. Do not inherit the V003 setting or turn the planning guide into a scientific output cap. No new runtime setting is activated by this proposal.",
     "thinking_tokens": "Preserve available detail; do not add a thinking subcount to output_tokens again.",
     "cached_inputs": "Count ordinary + cache-creation + cache-read from terminal totals, once. No per-chunk summation or cache discount.",
     "unchanged_other_caps": "Retain V003's common generation wall/human/review limits unless separately amended prospectively.",
-    "caps_not_certified": "CLI per-request max output and max agentic turns are not proved to enforce per-invocation aggregate caps. Input must be rejected before dispatch unless a defensible full-payload bound includes schema/system/CLI overhead. Measured fictional overhead is an estimate, not a token certificate.",
-    "cap_or_usage_failure": "Retain every simultaneous deviation rather than collapsing all into a primary error. Reject excess or UNKNOWN usage; do not truncate usage accounting or normalise away failed work."
+    "caps_not_certified": "CLI per-request max output and max agentic turns do not certify the combined invocation allowance. Strict Path A must reject dispatch without a defensible complete-input/output/request-count prevention proof. Proposed Path B explicitly treats the combined allowance as post-hoc compliance and discloses possible excess; estimates are never certificates.",
+    "cap_or_usage_failure": "Retain every simultaneous deviation. Combined usage above 60000 or missing/conflicting required usage stops later dispatch under Path B. Preserve all actual consumption; never repair accounting or reclassify a V003 failure using this later allowance.",
+    "billing": "Token consumption and subscription billing are separate. Preserve reported usage and CLI list-price estimates with their labels. Actual per-attempt subscription charges/currency remain UNKNOWN unless independently observable and attributable; do not infer zero charges, prorate subscription fees, or enable billable APIs/overage."
   },
   "prospective_payload_changes": [
     "Send the response schema once as prompt data; remove the additional CLI tool-schema transport.",
     "Consider a minimal payload projection retaining exact condition instructions, eligible evidence/memory content and cutoff while removing transport/audit duplication. Document and hash the projection; do not edit or reuse V003 requests as V004 requests.",
-    "A compact-output instruction, if needed, must be identical across conditions and frozen before generation. It changes the reasoning/formatting task and needs owner approval. Do not reduce fields or repair output silently.",
+    "Do not impose the fictional under-18-word directive or compress substantive reasoning to meet an obsolete output cap. Preserve detailed mechanisms, qualifications, evidence, joins and falsifiers. No reduction of the full response schema.",
     "Any evidence/memory reduction to establish an input bound changes the scientific inputs, requires a new prospective package and consent, and cannot be reported as an unchanged V003 replication."
   ],
   "failure_classification": "Structured terminal subtype first. Auth/rate classification uses designated API status or structured error type, with a narrowly anchored stderr-only fallback before an envelope. Never search full stdout for auth/login/401/429. Preserve independent model, environment, generation, schema and budget faults.",
   "environment": "Retain separate research configuration, child-only allowlisted environment, explicit binary/hash/version, safe/restricted modes, empty settings/MCP/tools, disabled skills/Chrome/persistence, fresh UUID and sterile directory. Separate environment isolation from generation independence; neither is an OS sandbox.",
-  "scientific_controls": "Freeze all 12 new requests/runtime/implementation before dispatch; preserve identical eligible pools/allocation unless a documented amendment is essential. No previous generated cards in any context, no retries/replacements/best-of/repairs. Every invalid/missing/surplus output remains represented in human review. Partial procedural blinding, independent human attestation, descriptive dimensions only; no invented M/H, novelty or investment judgments.",
+  "scientific_controls": "Freeze all 12 new requests/runtime/implementation before dispatch; preserve identical eligible pools/allocation unless a documented amendment is essential. Same 60000 combined allowance, output planning guide and visible-generation/continuation rules for all four conditions. No previous-attempt generated cards in any context; an approved append-only continuation can see only its own unfinished attempt. No application retries, replacements, best-of or schema/semantic repairs. Every invalid/missing/surplus output remains represented in human review. Report actual input components, output/thinking details, combined totals, visible generations, deviations, unknowns and effort by attempt and condition; equal allowances do not establish equal actual consumption. Partial procedural blinding and independent human judgment remain required.",
+  "combined_budget_fairness_tradeoff": "The existing lane-specific access to a common eligible pool intentionally produces different input sizes. Under a combined allowance, a smaller input leaves more potential output/continuation headroom. Disclose this as a workflow-design tradeoff, retain common limits/rules and report actual consumption; do not add condition-specific top-ups, change pools or equalise output afterwards.",
   "authority": {
     "real_generation_authorised": false,
+    "fictional_hosted_probes_authorised": false,
     "v003_authorisation_reusable": false,
     "fresh_owner_consent_required": true,
     "consent_scope": "Exact new protocol, request/files/content hashes, runtime/implementation, provider/model/effort, explicit owner identity/date, hosted privacy limitations and model-pinning limits; any accepted constraint relaxation must be separately explicit.",
@@ -46,10 +57,10 @@
     "other_hosted_providers_authorised": false
   },
   "blocking_gates": [
-    "Attribute the development-account metadata guard change and demonstrate non-interference in a controlled quiet window; an unattributed guard failure is not a passed account-isolation preflight.",
-    "Demonstrate or explicitly resolve prevention of internal model regeneration and aggregate token overrun; post-hoc detection is not proof of prevention.",
-    "Freeze a defensibly bounded complete payload, preserving or prospectively documenting changes to scientific inputs/output constraints.",
-    "Complete independent fictional regression validation without selecting the best output or consuming V003 slots.",
+    "Resolve account isolation separately through a prospective controlled quiet-window procedure with independent authority. The historical writer remains UNKNOWN; do not treat an unattributed metadata change as credential leakage or a passed preflight.",
+    "Choose strict Path A, which remains BLOCKED without prevention guarantees, or explicitly adopt the distinct exploratory Path B with combined post-hoc accounting and bounded visible continuation; no claim of equivalence.",
+    "Freeze exact complete payloads, common runtime output/continuation settings, accounting, and stopping rules. Separate known content from unknown scaffolding; no bytes-to-token guarantee. Preserve detailed scientific inputs/schema.",
+    "No new hosted probes, including fictional ones, are authorised by the current feedback. Any future quiet-window/probe procedure needs separate explicit authority. Preserve prior evidence and unknown account-writer attribution.",
     "Receive new explicit owner approval and hosted-input consent only after a concrete V004 package is reviewable."
   ]
 }

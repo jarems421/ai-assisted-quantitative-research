@@ -1,0 +1,45 @@
+{
+  "version": "SCOUT_V004_PATH_B_AMENDMENT_PROPOSAL_V002",
+  "revises": "SCOUT_V004_PATH_B_AMENDMENT_PROPOSAL_V001",
+  "status": "UNAPPROVED_DESIGN_ONLY_NO_DISPATCHER_OR_HOSTED_AUTHORITY",
+  "amends": "SCOUT_EVALUATION_PROTOCOL_V004_PROPOSAL_R2",
+  "owner_feedback": "Use a shared combined 60000-token allowance and approximately 20000 output tokens as nonbinding planning guidance. Detailed economic reasoning takes priority over artificial field brevity. No hosted-call or complete-package approval is supplied.",
+  "retains_path_A": "Strict Path A requires independently supported prevention of the combined allowance and one-generation limit, and remains BLOCKED. Path B explicitly changes both compliance semantics and permitted visible continuation; it is not equivalent to Path A.",
+  "estimand": "Descriptive quality and failure/measurement burden of four complete subscription-CLI-assisted hypothesis-generation workflows with a shared declared transport and input pool, not a controlled comparison at guaranteed equal model-call or token budgets.",
+  "design": {"conditions":["PLAIN","EVIDENCE_ONLY","MECHANISM_ONLY","HYBRID"],"attempts_per_condition":3,"intended_cards_per_attempt":2,"total_attempt_slots":12,"total_intended_card_slots":24},
+  "transport": "Same pinned research-account CLI/model and requested Medium effort for every slot; raw JSON text with the original full response schema supplied once; no --json-schema, no tools/MCP/skills/repository/session persistence. Validate exact original output locally, including existing lane/citation/semantic rules. No application repair, fallback, replacement or second parent invocation.",
+  "prompt_policy": "Preserve condition instructions, all eligible evidence/memory and cutoff unless a separately documented input amendment is adopted. Remove only demonstrably nonsemantic transport/audit duplication in a hashed projection. Do not adopt the fictional under-18-word instruction or predetermined-family hints. No output/schema field reduction.",
+  "constraints_changed": {
+    "generation": "At most two visible model generations per consumed attempt: initial response plus one clearly evidenced append-only output-limit continuation inside the same parent CLI invocation. This is a visible compliance bound, not prevention of hidden provider requests. No schema/semantic repair, complete-answer regeneration, second independent candidate, refinement or third visible generation.",
+    "combined_allowance_tokens": 60000,
+    "combined_formula": "ordinary input + cache creation + cache reads + output, including all reported continuation and failed work; do not add thinking or nested cache subcounts again",
+    "boundary": "Inclusive 60000-token post-hoc threshold, identical across all conditions; no separate scientific input/output ceilings or borrowing between attempts.",
+    "output_planning_guideline_tokens": 20000,
+    "output_guide_is_cap_or_target": false,
+    "runtime": "Freeze one common supported per-response output setting and continuation configuration in the complete future package; do not inherit V003 settings or mistake CLI settings for aggregate prevention. No runtime is activated here.",
+    "risk": "Owner must expressly accept possible consumption beyond the combined allowance and incomplete provider observability. A timeout/process stop is a best-effort abort, not a guaranteed provider-consumption bound. No paid API or subscription overage enablement follows."
+  },
+  "pre_dispatch_review": "Freeze every exact payload/system/schema/implementation/runtime hash and inventory, tagged token estimates versus verified bounds, and a common risk policy. Missing complete-input bounds preclude a Path A claim; they must be explicitly disclosed in Path B consent, not replaced by bytes-to-token arithmetic.",
+  "accounting": "Report input components, output and their combined total per attempt/condition. Reconcile available terminal/model totals and deduplicated main-loop input records. Read output from terminal/model totals, never assistant placeholder outputs; preserve thinking separately without double counting. Account for all continuation/failed work. Crashes or missing/conflicting usage remain UNKNOWN. CLI list-price estimates and independently observable attributable subscription charges are separate fields; no inferred zero cost or fee proration.",
+  "continuation_evidence": "A second distinct message must follow a visible output-limit signal, retain the same model/attempt/context, and append to that attempt's unfinished response. Retain original chunks in order; exact assembly is local serialization only, with no deletion, rewrite or choice among candidates. The terminal raw text must match that assembly and the full original schema. A complete earlier candidate, changed task, unexplained extra request ID or unverified continuation is a run-stop deviation. Never launch a second parent call to finish an attempt.",
+  "stop_rules": {
+    "run_stop": "Combined reported usage above 60000, missing/conflicting required usage, more than two visible generations, unauthorised/unverifiable continuation, any schema/semantic repair or replacement, model/account/environment deviation, auth/rate/timeout interruption or metadata/process guard failure stops further dispatch. Preserve consumed/undispatched slots and all consumption; no automatic resume or replacement.",
+    "format_only_failure": "A terminal malformed JSON/schema/semantic response with otherwise intact identity/environment/generation/usage may count as an ordinary failed slot and proceed once to the next frozen slot. This prospective exception to stopping on every invalid card must be explicitly approved; it never permits repair or retry.",
+    "comparison": "A stopped/incomplete run is not a complete four-condition comparison. Continuing after any run-stop trigger requires a new owner decision and prospective design; never repair this run's history."
+  },
+  "analysis": "Use all 12 intended attempts and 24 intended card slots as denominators. Preserve/review valid, malformed, weak, repetitive, surplus and missing outputs. Report by attempt and condition all token components/combined totals, thinking details, visible generation/continuation counts, deviations, unknowns, compliant yield, formatting failures, actual effort, separately observable charges and human quality dimensions. Same allowance and continuation rules do not mean equal consumption; never equalise afterwards or rank only successful cards. Three attempts per condition support narrow descriptive conclusions, not significance, novelty, M/H or investment claims.",
+  "blinding": "Same independent human attestations and partial procedural blinding; keep generator/condition/log/key metadata private until judgments finish. AI assistance is not an independent human assessment.",
+  "account_gate": "A future separately authorised quiet-window validation must retain per-file metadata and PID/creation-time observations before/during/after each probe, stop on drift or concurrency, and document observational limits. No credential contents, account modifications, process termination or implied hosted permission.",
+  "V003": "Retain consumed PLAIN/ATT-0001 ERROR, zero saved cards and eleven undispatched reservations, original labels/authority/implementation/receipts/hashes. Reuse no generated output and transfer no authorisation or remaining slots. Disclose the failed run in later research history.",
+  "owner_decisions_required": [
+    "Retain strict Path A blocked, or explicitly choose Path B's whole-workflow estimand, combined post-hoc allowance, possible excess and incomplete provider observability; no equivalent-to-A claim.",
+    "Accept or amend the proposed maximum of two visible generations with one append-only output-limit continuation and no regeneration/schema/semantic repairs. Accept the run-stop and format-only-failure rules, full schema and no field brevity restriction.",
+    "If further validation is desired, separately authorise an exact quiet-window procedure and a bounded number/content of fictional probes. This review authorises zero.",
+    "Only after a new complete package/runtime and gates are reviewable, grant fresh hash-specific hosted-input consent with actual owner identity/date, model/privacy limitations and resource risk. This document is not such a record."
+  ],
+  "hosted_generation_authorised": false,
+  "fictional_hosted_probes_authorised": false,
+  "scientific_source_acquisition_authorised": false,
+  "other_provider_or_billable_API_authorised": false,
+  "V003_authorisation_reusable": false
+}
