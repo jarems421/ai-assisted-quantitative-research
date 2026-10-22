@@ -48,19 +48,27 @@ The order is the proposed probe order. Selection follows the fixed rules in sect
 | | O-3 | ERCOT public reports (`ercot.com`) | Dated operational quantities | Whether access needs registration or keys; identifier stability |
 | Relationship-first | R-1 | GLEIF LEI Level 2 relationship records (`api.gleif.org`) | Documented accounting-consolidation parent relationships between LEIs, dated | Whether the relationship originals are the GLEIF records themselves (E8); page-size controls; listed-parent coverage |
 | | R-2 | UK Companies House bulk data downloads (`download.companieshouse.gov.uk`) | Company identifiers and control relationships | **Likely fails size-safety** (large bulk files); the API needs a key (not allowed) |
-| | R-3 | A **new, non-overlapping** SEC filing route | The largest free source of documented listed-company relationships | **Excluded by a strict freshness reading**; allowed only by owner decision F1 (section 6) |
+| | R-3 | A **new, non-overlapping** SEC filing route | The largest free source of documented listed-company relationships | **Excluded under F1(a), the default**; possible only if the owner adopts F1(b) (section 6). Never SEC full-text search (stopped), nor the R2–R3 `index.json`, daily form index or 8-K routes |
 | Event-first | E-1 | CPSC recalls data (`www.saferproducts.gov` / `cpsc.gov`) | Dated product recalls with firm names and recall identifiers | Whether firms carry stable identifiers (names alone cannot join); page limits; overlap with recall-themed historical memory (allowed, but no record reuse) |
 | | E-2 | NTSB investigation data (`ntsb.gov`) | Dated events with identified operators, aircraft or vessels | Download format and size; identifier stability |
 | | E-3 | USDA FSIS recalls (`fsis.usda.gov`) | Dated recalls with establishment numbers | **Referenced in tracked history: overlap audit**; API form |
 | Hypothesis-first | H | The owner's new mechanism statement | No source environment; spends no packet-freeze starts | Must be new: not R3 P4's recall and supplier-liability mechanism, and not any catalogued investigation's mechanism |
 
-**Excluded outright:**
+**Exclusions, in order of precedence:**
 
-- every host and route in section 2's heavily used list;
-- every persisted stop (NRC 403, Ofwat 403, EPA 404, PHMSA, ECHO, SEC full-text search, FERC eLibrary, OSHA, openFDA `limit=1000`, and the rest);
-- any route needing a key, account or payment.
+1. **Persisted stops are never reopened, under any freshness rule.** These include NRC 403, Ofwat 403, EPA 404, PHMSA, ECHO, SEC full-text search, FERC eLibrary, OSHA, openFDA `limit=1000` and every other persisted Research OS stop.
+   - **A host-level stop** excludes the whole host.
+   - **A route-level stop** excludes that route and any equivalent route returning the same records, for example the same endpoint with different parameters, a mirror or a variant URL.
+   - **A stop whose recorded scope is unclear** is treated as host-level.
+2. **Any route needing a key, account or payment.** `regulations.gov`, `sam.gov` and FMCSA web services are excluded on the key requirement as well as being unverified.
+3. **Previously used hosts** (section 2), as set by owner decision F1 (section 6):
+   - **F1(a), strict, and the default.** Until the owner adopts F1(b) in the activation document, every host in section 2 is excluded. This includes the "referenced" hosts once the overlap audit confirms their use. Candidates O-2, E-3 and R-3 then fall away.
+   - **F1(b)**, only if the owner adopts it prospectively in the activation document, before any probe. A previously used host may supply a *new* route, but only if all of these hold:
+     - the route has no stop of its own;
+     - the host has no host-level stop;
+     - no selected record, filing set or route overlaps R1–R3, earlier receipts or the catalogue (section 5).
 
-`regulations.gov`, `sam.gov` and FMCSA web services are excluded on the key requirement as well as being unverified.
+     F1(b) is never a remedy for a route that has failed. A route that failed in this pilot or any earlier campaign stays stopped.
 
 ## 4. Mechanical, outcome-blind packet formation
 
@@ -98,9 +106,9 @@ The order is the proposed probe order. Selection follows the fixed rules in sect
 **F1. The freshness rule may make relationship-first packets impractical.** Read strictly, "no host route used in earlier campaigns", excludes the SEC: the largest free, keyless source of documented relationships between listed companies and contracts or counterparties. The remaining relationship candidates are untested, and may fail E2, E3 or E6. Options:
 
 - **(a) Keep strict freshness.** Accept a material risk that the relationship packet is NOT_FORMED.
-- **(b) Define freshness at the level of record, filing set and exact route.** A previously used host is then allowed with a new route and no overlapping records, verified by the section 5 overlap check.
+- **(b) Define freshness at the level of record, filing set and exact route.** A previously used host is then allowed with a new route and no overlapping records, verified by the section 5 overlap check. Every persisted host-level and route-level stop still applies (section 3).
 
-I recommend (b). It keeps the scientific aim, no reused records, and is auditable. But it is the owner's decision, and it must be registered before any probe.
+I recommend (b). It keeps the scientific aim, no reused records, and is auditable. But it is the owner's decision, and it takes effect only when adopted prospectively in the activation document, before any probe. Until then (a) applies. F1 cannot be invoked after a route fails, to reach that route or an equivalent one.
 
 **F2. Reserve depth.** Revision 2 allows two environments per method ("the third packet-freeze start may not be spent on a third environment"). R3 lost two of four packets at formation. With three methods needing sources and a minimum of three comparable pairs, two environments per method may be too few. Options:
 

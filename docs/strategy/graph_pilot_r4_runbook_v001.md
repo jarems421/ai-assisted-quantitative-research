@@ -18,19 +18,52 @@ Every command below exists in the merged code at `9ac56d3`; this runbook adds no
 | Role | Duties | May access | Must never |
 |---|---|---|---|
 | **Research owner** | Registers the activation (all owner fields); confirms open access and terms (E2); writes the hypothesis-first mechanism statement; decides stops, deviations, M/H reviews and dispositions after unsealing | Everything, but see the restriction to the right | Adjudicate, operate an arm, or read `key.json`, alias keys, arm ledgers or reviewer logs before both seals are committed. This is procedural: the owner *can* read every file |
-| **Arm operator** (one per session, or the same person throughout) | Freezes the environment; runs source preflight and packet formation; starts and stops each arm session and writes its START and STOP attestations personally; supervises the arm analyst; commits each arm's ledger, logs and exports to its own branch | Packet bundle, the arm's own worktree, the fetch tool | Review any item of a packet they operated; show arm records to reviewers; attest a session they did not personally start or stop |
+| **Arm operator** (one per session, or the same person throughout) | Prepares and verifies the environment; runs source preflight and packet formation; starts and stops each arm session and writes its START and STOP attestations personally; supervises the arm analyst for procedure and safety only (section 1.1) | Packet bundle, the fetch tool, and during a session only the procedural and safety information in section 1.1 | Read a packet's substantive arm outputs before both arms of that packet have finished (section 1.1); review any item of a packet they operated; show arm records to reviewers; attest a session they did not personally start or stop |
 | **Arm analyst** (see decision D1) | Runs one campaign under the fixed arm instructions (appendix) | Only its own worktree, the frozen packet and the catalogue | See the other arm, another packet or any earlier pilot ledger |
-| **Blinding preparer** (the owner, or a technical assistant who never reviews) | Runs `blind`, `realias`, `leak-scan` and `sheet`; builds the evidence pack and the reviewer bundles; keeps `key.json` private | All arm outputs, the key | Review, or tell a reviewer anything about arms |
+| **Blinding preparer** (the owner, or a technical assistant who never reviews) | Runs `blind`, `realias`, `leak-scan` and `sheet`; builds the evidence pack and the reviewer bundles; keeps `key.json` private | A packet's arm outputs and key, only after both of its arms have finished | Review; tell a reviewer anything about arms; operate or supervise any campaign that has not yet finished (as in revision 2, the preparer is neither arm) |
 | **Reviewer R1** and **reviewer R2** (two different humans) | Judge every item independently from the reviewer bundle only; write both logs; seal personally; hand over the seal first, the logs later | Reviewer bundle, evidence pack, reviewer guide | See arm records, keys or exports other than `blind_v2.json`; see or discuss the other reviewer's work; use AI assessments; fetch sources (unless authorised) |
 | **Technical assistant** (for example an AI coding assistant) | Run validators and checks on request; prepare drafts of records for a human to approve | Only as the owner directs, logged | Write, edit or seal any judgment, exposure declaration, attestation, M/H review, disposition or deviation; act under a human's name. The code refuses assistant names, but cannot detect an assistant using a human's name |
 
+### 1.1 Cross-arm isolation (from revision 2, restored)
+
+As the [pre-registration](graph_pilot_preregistration.md) requires, **the operator does not read a packet's arm ledgers, connection logs, suggestion exports, session transcripts or other session output until both arms of that packet have finished.** This applies when the same human operates both arms, and it applies to the owner.
+
+- **What the operator may see during a session:** elapsed time against the ceilings; the arm's account totals (starts, searches, bytes); validator pass or fail; tool refusals; and critical-stop signals.
+- **What the operator may answer:** procedural and safety questions only. Both arms of a packet get the same procedural answers.
+- **What the operator never does:** relay, summarise or hint at any record, source, connection, suggestion or finding from one arm to another arm or packet.
+- **If substantive content is seen anyway** (for example a permission prompt quoting a record), the operator records a deviation at once, naming the arm, what was seen and when. The operator does not use it, and the pilot continues only if the owner judges it was not a critical stop.
+
 ## 2. Operational sequence
 
-### Stage 0: registration (owner)
+### Stage 0: offline environment preparation, then registration
 
-1. **Activation.** Fill every owner field of the [activation template](graph_pilot_r4_activation_template_v001.md). Commit it as `docs/strategy/owner_graph_pilot_r4_<date>.md` to `main` before any request. Record its commit SHA.
-2. **What it fixes:**
-   - the code pin;
+**0a. Prepare the environment (operator, before registration; offline, no source request).**
+
+1. **Checkout.** A dedicated full-history clone, checked out at the code commit to be pinned. No shallow clones, rebases or squash merges for the whole pilot.
+2. **Python.** One Python environment. No installs, upgrades or removals from now until the final report. The pin records Python and dependency versions; any change refuses every pinned operation.
+3. **Record** the pinned content digest and runtime with the existing code:
+
+   ```
+   python -c "import json; from src.research.graph import implementation as I; c=I.content(); print(json.dumps({'tree_digest': c['tree_digest'], 'runtime': c['runtime']}, sort_keys=True))"
+   ```
+
+   Also record the full package list (`python -m pip freeze`) and the checkout's commit.
+4. **Offline self-tests:**
+   - `python -m src.research.graph build --check`
+   - `python -m src.research.graph pilot r4-dry-run --check`
+   - `python -m src.research.graph pilot r4-phase-b-dry-run --check`
+5. **Configuration.** Use the registered graph configuration, [V002](graph_pilot_r4_graph_configuration_v002.json): `GRAPH_OPERATORS_V1_1`, `GRAPH_CLASSIFICATION_V1_2` and generic register V001. V2 snapshots default to it. Never pass `--classification` unless the owner has registered a deviation.
+
+**0b. Register (owner).**
+
+1. **Activation.** Fill every owner field of the [activation template](graph_pilot_r4_activation_template_v001.md), copying the digest, runtime and code commit from 0a. Commit it as `docs/strategy/owner_graph_pilot_r4_<date>.md` to `main` before any request.
+2. **The document does not contain its own commit SHA.** The activation commit is identified afterwards from Git history and recorded in the Stage 1 receipt:
+
+   ```
+   git log --diff-filter=A --format=%H -- docs/strategy/owner_graph_pilot_r4_<date>.md
+   ```
+3. **What it fixes:**
+   - the code pin and the prepared runtime;
    - the source routes and reserves (from the [source plan](graph_pilot_r4_source_plan_v001.md));
    - the people;
    - the schedule;
@@ -38,15 +71,17 @@ Every command below exists in the merged code at `9ac56d3`; this runbook adds no
    - the consensus and blinding rules;
    - the hypothesis-first mechanism statement.
 
-### Stage 1: frozen environment (operator)
+### Stage 1: frozen environment verification (operator, before any source request)
 
-1. **Checkout.** A dedicated full-history clone, checked out at the pinned commit. No shallow clones, rebases or squash merges for the whole pilot.
-2. **Python.** One Python environment, recorded at activation with its full package list. No installs, upgrades or removals until the final report. The pin records Python and dependency versions; any change refuses every pinned operation.
-3. **Offline self-tests, recorded in the activation log:**
-   - `python -m src.research.graph build --check`
-   - `python -m src.research.graph pilot r4-dry-run --check`
-   - `python -m src.research.graph pilot r4-phase-b-dry-run --check`
-4. **Configuration.** Use the registered graph configuration, [V002](graph_pilot_r4_graph_configuration_v002.json): `GRAPH_OPERATORS_V1_1`, `GRAPH_CLASSIFICATION_V1_2` and generic register V001. V2 snapshots default to it. Never pass `--classification` unless the owner has registered a deviation.
+1. **Advance.** Move the prepared checkout forward to the activation commit, or to a later `main` commit, with no change to the Python environment. The activation document lies outside the pinned implementation boundary, so the digest is unaffected.
+2. **Verify.** Re-run the 0a record command. The digest and runtime must equal the registered values exactly. Then re-run the three self-tests.
+3. **Mismatch.** Any mismatch or failure means no source request. A changed environment needs a new owner registration; never re-pin silently.
+4. **Receipt.** Write and commit a short activation receipt, `docs/strategy/graph_pilot_r4/activation_receipt.md`. It records:
+   - the activation commit (from 0b.2);
+   - the running commit;
+   - the digest and runtime match;
+   - the self-test results;
+   - the time.
 
 ### Stage 2: source preflight and packet formation (operator)
 
@@ -86,14 +121,17 @@ Every command below exists in the merged code at `9ac56d3`; this runbook adds no
 4. **Arm G captures every suggestion.** It saves the snapshot-mode `--json` output of every suggesting query (`suggestions`, `revisit`, `complements`, `shared`, `same-gap`, `next`) to `docs/strategy/graph_pilot_r4/<P>/suggestions-G/NNN-<command>.json` at query time.
 5. **Logging.** Rows are V2 connection rows, written as each item is considered. A graph-originated row keeps its exact `SUG-` origin, operator, bases and class.
 6. **Stop.** After the arm's last record, the operator personally runs `session-attest ... --event STOP`.
-7. **Close checks:**
+7. **Close checks.** The arm runs them; the operator sees only pass or fail and the account totals (section 1.1):
    - `python -m src.research.discovery validate <ledger>`
    - `python -m src.research.graph pilot account <snapshot> --arm <A>`
    - `python -m src.research.graph pilot effort docs/strategy/graph_pilot_r4/<P> --arm <A>`
    - `python -m src.research.graph pilot connections <log> --arm <A> --suggestions <exports...> --packet-snapshot <snapshot>`
 8. **Commit** to the arm branch; do not merge. Candidates are frozen before any outcome is inspected; any post-outcome change is a new version.
+9. **Cross-packet isolation.** Arm branches stay off `main` and out of every campaign's view until Stage 7. No later campaign, packet or reviewer may be given an arm branch, ledger, log or export. Branches in a shared repository can be read with git, so this is procedural, as the arm instructions state.
 
 ### Stage 4: blinding (blinding preparer)
+
+Blinding of a packet starts only after both of its arms have finished.
 
 1. **Blind:**
 
@@ -122,19 +160,30 @@ Every command below exists in the merged code at `9ac56d3`; this runbook adds no
 
 ### Stage 7: unblinding, sensitivity and report (owner)
 
-1. **Unblind.** After every packet's reveal, place `key.json` in the packet directory, commit it, and merge the arm branches with merge commits.
-2. **Report.** Run `pilot report docs/strategy/graph_pilot_r4/P1 ... P4 --export blind_v2.json`. The report applies:
+1. **Wait for the whole pilot.** Stage 7 begins only after both of these are true:
+   - every campaign of every formed packet has finished, or stopped and been preserved;
+   - every formed packet has completed Stage 6: both seals, then both logs, committed.
+
+   Until then:
+   - no `key.json` is committed;
+   - no arm branch is merged into `main` or exposed as research memory;
+   - no arm ledger enters any campaign, packet or review.
+
+   This preserves revision 2's rule that pilot records become research memory only after all campaigns and adjudications finish.
+2. **Unblind.** Place each packet's `key.json` in its packet directory and commit it. Then merge every arm branch into `main` with a merge commit. Never squash, rebase, delete or rewrite an arm branch or any commit named in a receipt or seal, so full Git ancestry is preserved.
+3. **Re-check reveal order.** Re-run `pilot adjudication-agreement` for every packet on the merged `main`. Reveal order must still be VERIFIED before the report runs; a change is a critical stop.
+4. **Report.** Run `pilot report docs/strategy/graph_pilot_r4/P1 ... P4 --export blind_v2.json`. The report applies:
    - **the cohort boundary:** only R4-conforming packets are primary;
    - **the consensus rule:** both reviewers must agree;
    - **the effort-evidence gate:** self-reported minutes are primary; attested-session minutes are a sensitivity;
    - **the blinding sensitivity:** potentially unblinded packets are included and labelled, an exclusion sensitivity is run, and if the two disagree the result is INCONCLUSIVE;
    - **the minimum:** at least three comparable conforming pairs, or INCONCLUSIVE.
-3. **Reported separately:**
+5. **Reported separately:**
    - review burden: every item reviewed, including discarded suggestions;
    - unknown-time counts;
    - excluded packets with their reasons and deviation records;
    - warning usefulness, kept apart from economic connections.
-4. **Owner decisions after unsealing.** M/H reviews and dispositions under Measurement Gate M follow; they are never recorded for the owner.
+6. **Owner decisions after unsealing.** M/H reviews and dispositions under Measurement Gate M follow; they are never recorded for the owner.
 
 ## 3. Stops, incomplete packets and preserved failures
 
@@ -144,7 +193,7 @@ Every command below exists in the merged code at `9ac56d3`; this runbook adds no
 | All registered environments of a method fail | The packet is NOT_FORMED and preserved. The pilot continues with fewer pairs. No substitute is chosen after seeing content |
 | An arm hits a ceiling or 120 minutes | The campaign ends where it is; it is preserved and reported |
 | A non-conforming snapshot, missing or invalid seals, CONFLICTED or NOT_INDEPENDENT judgments, or a reveal-order violation | The packet is excluded from the primary comparison and listed with its reasons; owner deviation records are preserved and never re-admit it |
-| A critical stop: cross-arm access, an unverified record presented as verified, a ledger mutation, a paid, authenticated or stopped route, a budget breach, market-data access, or an export shown before the leak scan passes | Halt the pilot and report to the owner. Nothing is deleted |
+| A critical stop: cross-arm or cross-packet access (including operator exposure to substantive arm output that the owner judges material), an arm branch merged or a key committed before Stage 7, an unverified record presented as verified, a ledger mutation, a paid, authenticated or stopped route, a budget breach, market-data access, or an export shown before the leak scan passes | Halt the pilot and report to the owner. Nothing is deleted |
 
 ## 4. Procedural risks code cannot remove
 
@@ -160,7 +209,7 @@ Every command below exists in the merged code at `9ac56d3`; this runbook adds no
 
 You are the **{ARM}** arm analyst for R4 packet **{PACKET}** ({METHOD}). Your authority is `{ACTIVATION_DOC}`. Read it, `docs/strategy/graph_pilot_r4_protocol_proposed.md`, `docs/strategy/discovery_lab_guide.md` and `docs/strategy/measurement_gate_m.md` first.
 
-- **Isolation.** Work only in your worktree on branch `graph-pilot-r4/{PACKET}-{ARM}`. Do not open any other arm's, packet's or earlier pilot's files. Never name a tool or arm in a record's text.
+- **Isolation.** Work only in your worktree on branch `graph-pilot-r4/{PACKET}-{ARM}`. Do not open any other arm's, packet's or earlier pilot's files. Do not list, check out, diff, log or read any other branch. Never name a tool or arm in a record's text. The operator answers procedural and safety questions only.
 - **Start.** The operator has attested your session START. Verify the bundle: `python -m src.research.graph pilot verify docs/strategy/graph_pilot_r4/{PACKET}/snapshot.json --bundle {BUNDLE}`. Create campaign `DLC-GR4-{PACKET}-{ARM}` (fixture `LIVE`, the activation as authority, budget from the activation).
 - **Budget** (hard; stop before any breach): {MINUTES} wall-clock minutes; {STARTS} source starts with `fetch_one.py` only; {SEARCHES} searches; {BYTES} response bytes. Unused budget does not carry over.
 - **Sources.** Free, public, unauthenticated original-publisher records only. No keys, accounts, paid sources, mirrors, CAPTCHAs, prices, returns or trading data. Any denial stops that route; no retries. Every route listed as stopped in the activation stays stopped.

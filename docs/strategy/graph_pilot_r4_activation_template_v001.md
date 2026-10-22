@@ -5,7 +5,7 @@
 
 ## 1. Authority and scope
 
-- **Authority.** This document, when completed and committed: `⟨OWNER: commit SHA once committed⟩`.
+- **Authority.** This document, from the commit that adds it to `main`. The document does not contain that commit's SHA. It is identified from Git history (`git log --diff-filter=A --format=%H -- <this path>`) and recorded in the operator's activation receipt (runbook Stage 1) before any source request.
 - **Question.** The R4 Q2 paired descriptive comparison ([protocol](graph_pilot_r4_protocol_proposed.md)): within the same fresh packet, does adding Graph to Discovery Lab plus competent structured-ledger search improve research, counting all the analyst time the graph costs?
 - **Two separate benefits.**
   - **(a) Economic discovery:** connections confirmed and meaningful under the consensus rule.
@@ -18,10 +18,10 @@
 
 | Item | Pin |
 |---|---|
-| Code (merged `main`) | `9ac56d33e6b3a7e97dfc3c56faf0e91ef0edeb92`, or ⟨OWNER: a later commit with identical pinned content⟩ |
+| Code commit of the prepared environment | ⟨OWNER: from the operator's offline preparation record (runbook Stage 0a); for example `9ac56d33e6b3a7e97dfc3c56faf0e91ef0edeb92` or a later `main` commit with identical pinned content⟩ |
 | Implementation pin version | `GRAPH_IMPLEMENTATION_PIN_V002` (boundary: the static import closure of graph, discovery, `spec.py` and `fetch_one.py`; 38 files at `9ac56d3`) |
-| Implementation content digest at `9ac56d3` | `e33093b5809b1a6ea3a1e8cd5eeda03146eec3b874b0f00be525dc85bf78e8da`, informative. Each snapshot records the actual pin |
-| Runtime | ⟨OWNER: Python version, implementation and the package list of the frozen R4 environment, captured at Stage 1⟩. Do not copy a developer machine's runtime |
+| Implementation content digest | ⟨OWNER: `tree_digest` from the preparation record⟩. Reference value at `9ac56d3`: `e33093b5809b1a6ea3a1e8cd5eeda03146eec3b874b0f00be525dc85bf78e8da` |
+| Runtime | ⟨OWNER: the `runtime` object (Python version, implementation, dependencies) and the package list from the preparation record of the prepared R4 environment⟩. Do not copy a developer machine's runtime. Stage 1 verifies these exact values before any source request |
 | Graph configuration | [`graph_pilot_r4_graph_configuration_v002.json`](graph_pilot_r4_graph_configuration_v002.json), sha256 `fc2d7d9c5a7670a731c814f44386f0dc474345b79ba9766b84c6f4b633013a50`: `GRAPH_OPERATORS_V1_1` + `GRAPH_CLASSIFICATION_V1_2` + generic register V001 |
 | Generic register | [`generic_identifiers_v001.json`](graph/generic_identifiers_v001.json), sha256 `39dd7026b03d5db83c191e1ae56b55c2eab27eb7e3322c6082422b7923915b04`. Its `recorded_at_utc` is known to be unreliable ([corrections](graph_timestamp_corrections_2026-10-22.json)) |
 | Historical catalogue | `research_memory_catalogue_v002.json`, sha256 `afd91e54697f7e47e8844f4076267bae95814cbd12e29e4ec9f97ba9f9a589a9` |
@@ -35,7 +35,8 @@
 |---|---|---|
 | Research owner | ⟨OWNER⟩ | — |
 | Arm operator(s) | ⟨OWNER: name(s)⟩ | Operators never review a packet they operated |
-| Arm analyst type | ⟨OWNER: decision D1, below⟩ | The same type for both arms of every packet |
+| Arm analyst type | ⟨OWNER: decision D1: human analysts, or hosted AI sessions⟩ | The same type for both arms of every packet |
+| Hosted AI sessions (only if D1 chooses them) | ⟨OWNER, registered separately:<br>(1) the exact model identifier and client/runtime version;<br>(2) the account context: whose account and plan, and who controls it;<br>(3) resource exposure: file-system scope, network and tool permissions, permission mode, and expected and maximum cost;<br>(4) stopping arrangements: who can halt a session, how, and at which ceilings.⟩ | Hosted-model use for arms is authorised only by this registration |
 | Blinding preparer | ⟨OWNER: name; never a reviewer⟩ | — |
 | Reviewer R1 | ⟨OWNER: name⟩ | ⟨OWNER: confirmed no arm operation or attestation, no prior contact about R4 items⟩ |
 | Reviewer R2 | ⟨OWNER: name, a different person from R1⟩ | ⟨OWNER: as above⟩ |
@@ -44,7 +45,7 @@
 ## 4. Sources and packets
 
 - **Packet window:** ⟨OWNER: the most recent complete calendar quarter ending at least 12 months before activation⟩.
-- **Freshness rule:** ⟨OWNER: decision F1: strict host-level, or record, filing-set and exact-route level with an overlap audit⟩.
+- **Freshness rule:** ⟨OWNER: decision F1: (a) strict host-level, or (b) record, filing-set and exact-route level with an overlap audit⟩. Until the owner adopts (b) here, the protocol's existing freshness wording applies, read strictly. Under either option every persisted host-level and route-level stop stays in force. F1 can never re-enter a failed or stopped route, or an equivalent route returning the same records (source plan section 3).
 - **Reserve depth:** ⟨OWNER: decision F2: two or three environments per method; the packet-freeze start ceiling to match⟩.
 - **Overlap audit:** ⟨OWNER: confirmation that the operator completed the private-receipt overlap audit (source plan F4)⟩.
 
@@ -97,15 +98,21 @@
 
   Non-conforming packets are listed with their reasons. Owner deviation records are preserved and never re-admit a packet.
 - **Minimum:** at least three comparable conforming pairs for a definitive descriptive classification; otherwise INCONCLUSIVE.
+- **Reviewer source retrieval:** ⟨OWNER: decision R1: (a) reviewers judge from the evidence pack only, so missing evidence is `PLAUSIBLE_UNVERIFIED` or `CANNOT_ASSESS`; or (b) reviewers may fetch originals, receipted, within a reviewer ceiling of ⟨…⟩, and the fetches are declared⟩.
+- **Isolation:**
+  - The operator reads no substantive arm output until both arms of the packet finish (runbook section 1.1).
+  - Arm branches and keys stay off `main` until every campaign and every independent adjudication has finished; they are then merged with merge commits, with full ancestry kept (runbook Stage 7).
 - **After unsealing:** M/H reviews and dispositions under the original [Measurement Gate M](measurement_gate_m.md).
 - **Separately reported:** review burden (all items reviewed, including discarded suggestions) and warning usefulness.
 - **Open item:** ⟨OWNER: decision U1. Can a plain `METHODOLOGICAL_WARNING` item ever be scored `USEFUL_LESSON_REUSED`? The blinded item records no arm action, so the reviewer guide limits this to items that themselves document the avoided action.⟩
 
 ## 9. Activation checklist (all must be true before the first request)
 
+- [ ] The environment prepared offline, its digest, runtime and package list recorded and the self-tests passed, **before** registration (runbook Stage 0a). These values are copied into section 2.
 - [ ] Every ⟨OWNER⟩ field above completed; the banner removed; committed to `main` as `owner_graph_pilot_r4_<date>.md`.
-- [ ] Decisions D1, F1, F2 and U1 recorded.
+- [ ] Decisions D1, F1, F2, U1 and R1 recorded.
+- [ ] If D1 chooses hosted AI sessions: the model and runtime, account context, resource exposure and stopping arrangements registered (section 3).
 - [ ] Two named reviewers confirmed independent and briefed with the reviewer guide.
-- [ ] The frozen environment created; its runtime recorded; the offline self-tests passed (runbook Stage 1).
+- [ ] After registration: the activation receipt committed, recording the activation commit from Git history and an exact digest and runtime match (runbook Stage 1).
 - [ ] The private-receipt overlap audit completed.
 - [ ] Publisher terms confirmed for every registered environment (E2).
