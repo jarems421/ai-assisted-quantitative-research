@@ -1170,9 +1170,16 @@ class GraphPilotProvenanceAndConfigurationTests(unittest.TestCase):
     def test_modified_execution_provenance_is_refused_before_sealing(self):
         saved=json.loads(self.original)['visibility']['implementation_check']
         self.assertEqual(saved['status'],'UNRELATED_COMMIT_CHANGE')  # synthetic pin commit differs from the running HEAD
-        main=subprocess.run(['git','rev-parse','origin/main'],cwd=ROOT,capture_output=True,text=True).stdout.strip() or saved['running_commit']
+        # A moving main can have identical pinned content on an unrelated PR.
+        incompatible='426c21119a25e9786f2fc4fd405bf4de914d6ab6'
+        pinned=json.loads(self.case.snap.read_text(encoding='utf-8'))['graph_implementation']['files']
+        historical=I.files_at_commit(ROOT,incompatible,list(pinned))
+        self.assertIsNotNone(historical,'the existing-commit regression requires full git history')
+        path='src/research/graph/pilot.py'
+        self.assertIsNotNone(historical[path])
+        self.assertNotEqual(historical[path],pinned[path])
         cases=((lambda c:c.update(running_commit='f'*40),'not in this repository'),
-               (lambda c:c.update(running_commit=main) if main!=saved['running_commit'] else c.update(running_commit='e'*40),'differs from the pin at|not in this repository'),
+               (lambda c:c.update(running_commit=incompatible),'differs from the pin at'),
                (lambda c:c.update(status='EXACT_COMMIT'),'inconsistent'),
                (lambda c:c.update(dirty_pinned_paths=sorted(set(c['dirty_pinned_paths'])|{'src/research/spec.py'}) if 'src/research/spec.py' not in c['dirty_pinned_paths'] else c['dirty_pinned_paths'].remove('src/research/spec.py')),'declares uncommitted pinned paths'),
                (lambda c:c.update(running_commit='HEAD'),'40-hex'),(lambda c:c.update(status='VERIFIED'),'is not one of'),
