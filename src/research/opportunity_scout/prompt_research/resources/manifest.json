@@ -1,0 +1,17 @@
+{
+  "baseline_prompts_sha256_lf": "7a9e380c47a3ad175ab1390a5f85805c7c2bea6ccb618f582a70b2639183e479",
+  "files": {
+    "abstract_divergence.txt": "33b85c93908855b34b21c41b2fdfcdd526e95471a962b110f814b980c12b5576",
+    "common.txt": "8b203483ba027985a53be11353f6b77a34265204784fc4441b4fa1644bdda27a",
+    "lanes.json": "61138b7b0ac9fc8f57a2338bcc0cbeff7d222bfc242603918555cf6a924957b7",
+    "structured_recombination.txt": "979ccb2f0013f71fbec2b575dc2f8c5beaa9b5533d9c1459a225090a17bcb8de"
+  },
+  "hosted_authorised": false,
+  "schema": "SCOUT_PROMPT_RESEARCH_RESOURCES_V002",
+  "scientific_dispatch_authorised": false,
+  "unchanged_generation_schema_sha256": "5e9f473d13196e23b666f4d837c4d17f155f42dff23ba037c94d5bd11fe64d3d",
+  "versions": [
+    "SCOUT_PROMPTS_V002A_ABSTRACT_DIVERGENCE",
+    "SCOUT_PROMPTS_V002B_STRUCTURED_RECOMBINATION"
+  ]
+}
