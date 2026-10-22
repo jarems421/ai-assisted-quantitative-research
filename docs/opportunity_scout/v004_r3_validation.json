@@ -1,0 +1,145 @@
+{
+  "schema": "SCOUT_V004_R3_OFFLINE_VALIDATION_V001",
+  "status": "OFFLINE_CHECKS_PASSED_HOSTED_READINESS_BLOCKED",
+  "base_commit": "66b541e29d97e3ad98f101a3d03cd522a67b62e7",
+  "branch": "codex/opportunity-scout-v004-r3-resource-governance",
+  "test_results": [
+    {
+      "command": "python -m src.research.opportunity_scout.v004_checks",
+      "tests": 229,
+      "passed": true,
+      "scope": "network, hosted process launch, private scientific and account reads blocked"
+    },
+    {
+      "command": "python -m src.research.public_checks",
+      "tests": 341,
+      "passed": true,
+      "scope": "public synthetic regressions with network/private access blocked"
+    },
+    {
+      "command": "python -m unittest tests.test_scout_v004_process_assurance tests.test_scout_v004_r3_process_assurance -v",
+      "tests": 6,
+      "passed": true,
+      "scope": "local Python process locking only; no Claude/account/provider IO"
+    }
+  ],
+  "targeted_r3_tests": 30,
+  "independent_verification_scope": "Explicit boundary table, component arithmetic and end-to-end reporting oracle; clean-environment GitHub CI requested separately. Not an independent human/security review.",
+  "fictional_boundary_receipts": [
+    {
+      "fictional": true,
+      "tokens": 60001,
+      "classification": "ORDINARY_USAGE_VARIATION",
+      "outcome": "VALID",
+      "content_status": "VALID",
+      "visible_generations": 1,
+      "undispatched": 11,
+      "intended_attempt_denominator": 12,
+      "intended_card_denominator": 24
+    },
+    {
+      "fictional": true,
+      "tokens": 120000,
+      "classification": "ELEVATED_USAGE_RECORDED",
+      "outcome": "VALID",
+      "content_status": "VALID",
+      "visible_generations": 1,
+      "undispatched": 11,
+      "intended_attempt_denominator": 12,
+      "intended_card_denominator": 24
+    },
+    {
+      "fictional": true,
+      "tokens": 199999,
+      "classification": "ELEVATED_USAGE_RECORDED",
+      "outcome": "VALID",
+      "content_status": "VALID",
+      "visible_generations": 1,
+      "undispatched": 11,
+      "intended_attempt_denominator": 12,
+      "intended_card_denominator": 24
+    },
+    {
+      "fictional": true,
+      "tokens": 200000,
+      "classification": "RESOURCE_EMERGENCY_STOP",
+      "outcome": "RUN_STOP",
+      "content_status": "VALID",
+      "visible_generations": 1,
+      "undispatched": 11,
+      "intended_attempt_denominator": 12,
+      "intended_card_denominator": 24
+    },
+    {
+      "fictional": true,
+      "tokens": 122304,
+      "classification": "ELEVATED_USAGE_RECORDED",
+      "outcome": "VALID",
+      "content_status": "VALID",
+      "visible_generations": 2,
+      "undispatched": 11,
+      "intended_attempt_denominator": 12,
+      "intended_card_denominator": 24
+    }
+  ],
+  "fictional_manifest_sha256": "b357e851a1f36cc154937f95ab6c6964a5969a1927aa9ad41642626b9296d660",
+  "frozen_package_file_count": 23,
+  "frozen_implementation_file_count": 45,
+  "preservation": {
+    "prior-private-files.json": {
+      "checked": 188,
+      "unchanged": true,
+      "changed_count": 0
+    },
+    "legacy-implementation.json": {
+      "checked": 28,
+      "unchanged": true,
+      "changed_count": 0
+    },
+    "v003": {
+      "frozen_load_valid": true,
+      "authorisation_valid": true,
+      "durable_dispatches": 1,
+      "recorded_results": 1,
+      "reserved_slots": 12,
+      "undispatched": 11,
+      "authorises": [],
+      "saved_cards": 0,
+      "original_result_statuses": [
+        "ERROR"
+      ]
+    }
+  },
+  "remaining_gates": "v004_r3_blocker_matrix.json",
+  "historical_account_writer": "UNKNOWN",
+  "native_cli_live_telemetry": "UNKNOWN",
+  "actual_cancellation_performed": false,
+  "underlying_provider_requests": "UNKNOWN",
+  "hosted_calls_this_task": 0,
+  "scientific_generations_this_task": 0,
+  "credential_contents_accessed": false,
+  "Path_B_approved": false,
+  "protocol_activated": false,
+  "guaranteed_token_or_financial_limit": false,
+  "authorises": [],
+  "private_evidence": ".research/opportunity_scout/v004-offline-r3-final-verification (ignored; regenerated with final code)",
+  "superseded_private_rehearsal": {
+    "path": ".research/opportunity_scout/v004-offline-r3-implementation",
+    "manifest_sha256": "bebe3be33da857d1335d566fdc17caceff7895886e81ec971dce75ea0daf2e5e",
+    "reason": "Frozen before the final replay.py edit; no longer loads under final code. Retained unchanged, not reused."
+  },
+  "github_ci": {
+    "pull_request": 7,
+    "run_id": 39776694868,
+    "tested_commit": "PR merge of 9aaf42d with main ca9f4ce",
+    "conclusion": "FAILURE_UNRELATED_PRE_EXISTING",
+    "failing_test": "tests.test_graph.GraphPilotProvenanceAndConfigurationTests.test_modified_execution_provenance_is_refused_before_sealing",
+    "cause": "Graph-pilot test assumes origin/main has different pinned graph content from HEAD; false for any branch that leaves graph files untouched. Passes on main itself. Not modified here (separate graph workstream).",
+    "scout_steps_run_in_ci": false,
+    "local_merge_tree_equivalent": {
+      "public_checks": "376/377 passed; same single graph failure",
+      "v004_checks": "229/229 passed",
+      "process_assurance": "6/6 passed"
+    }
+  }
+}
