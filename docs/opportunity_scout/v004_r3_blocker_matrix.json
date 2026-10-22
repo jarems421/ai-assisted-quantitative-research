@@ -1,0 +1,43 @@
+{
+  "schema": "SCOUT_V004_R3_OFFLINE_BLOCKER_MATRIX_V001",
+  "status": "HOSTED_READINESS_BLOCKED",
+  "scope": "Offline fictional engineering only; neither Path B adoption nor hosting/scientific authority",
+  "passed_offline_guarantees": [
+    {"id": "R3-O1", "control": "60001 ordinary; 120000/199999 elevated only; >=200000 stops later reserved slots", "scope": "Fictional recordings and one bound offline journal"},
+    {"id": "R3-O2", "control": "Four inclusive usage components once; thinking/model/cache subcounts not added; missing/conflicting usage UNKNOWN plus measurement stop", "scope": "Consistency of supplied final/cumulative evidence, not provider completeness"},
+    {"id": "R3-O3", "control": "One consumed marker, one finish opportunity, max two visible generations, only evidenced append-only continuation, no repair/replacement", "scope": "Offline journal and fictional wire profile; no parent process is actually launched"},
+    {"id": "R3-O4", "control": "Exclusive locks, write-ahead witnesses, raw-original preservation and replay; no reset/retry after stop/interruption", "scope": "Cooperative local filesystem; cross-process tests use only local Python"},
+    {"id": "R3-O5", "control": "Policy/runtime/request/schema/eligible-input/projection/order/implementation freeze and exact load validation", "scope": "New R3 package only; old packages rejected rather than reclassified"},
+    {"id": "R3-O6", "control": "All 12/24 intended slots, unknown consumption after interruption, per-condition and block cumulative reporting, separate content/resource status", "scope": "Fictional reports never certify scientific comparison or independent human review"},
+    {"id": "R3-O7", "control": "200000 fictional cumulative lower bound emits cancellation decision without summing snapshots", "scope": "No native collector or cancellation implementation; no claim of actual cancellation"},
+    {"id": "R3-O8", "control": "Original V003, R2 and prior private evidence preservation", "scope": "Local byte/hash verification and legacy regression behavior; no historical rewrite"}
+  ],
+  "requires_actual_cli_observations": [
+    {"id": "R3-C1", "blocker": "Exact native init/assistant/request/message/session IDs, fragment order, output-limit notice and exact terminal assembly"},
+    {"id": "R3-C2", "blocker": "Native terminal/cache/thinking/model usage semantics, failed-work coverage, output setting behavior and presence/provenance of usable live counters"},
+    {"id": "R3-C3", "blocker": "Reviewed live collector with durable byte spooling, observed timing/exit and single-approved-journal binding before launch"},
+    {"id": "R3-C4", "blocker": "Controlled quiet-window research account/config evidence and complete per-file/per-probe monitoring, excluding other development Claude processes"}
+  ],
+  "requires_owner_consent": [
+    {"id": "R3-A1", "decision": "Independent review and threat model: external audit-head retention versus explicitly trusted local filesystem; no silent clone/rollback guarantee"},
+    {"id": "R3-A2", "decision": "Exact newly frozen bounded fictional hosted validation and quiet window, including native-profile acceptance, stopping and privacy/resource risks"},
+    {"id": "R3-A3", "decision": "Full fresh scientific package approval: Path B, R3 resource policy, candidate runtime, generation/format rules, order, exact inputs/schema and hosted-input consent"}
+  ],
+  "intrinsic_disclosed_limitations": [
+    "Underlying provider request count, internal work prevention and independent provider usage completeness remain UNKNOWN.",
+    "200000 is a proposed best-effort governance trigger, not a guaranteed token, financial or provider-consumption bound; cancellation can be late or unsupported.",
+    "120000 is a transparent annotation, not evidence of a statistically anomalous or uncontrolled attempt.",
+    "Equal frozen settings do not imply equal actual consumption or comparative quality; nonlinear order/provider effects remain possible.",
+    "Local hashes/witnesses cannot prevent coordinated whole-store rollback, cloning or every storage-loss scenario.",
+    "Metadata sampling does not establish credential contents or historical causation; historical writer remains UNKNOWN.",
+    "Tokens and CLI list-price estimates do not establish actual subscription charges, which remain UNKNOWN absent attributable evidence.",
+    "Fictional success and CI cannot establish economic findings, independent human judgments, native wire compatibility or complete scientific readiness."
+  ],
+  "strict_path_A": "BLOCKED",
+  "Path_B_approved": false,
+  "hosted_probes_authorised": false,
+  "scientific_dispatch_authorised": false,
+  "protocol_activated": false,
+  "historical_account_writer": "UNKNOWN",
+  "authorises": []
+}
