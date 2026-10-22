@@ -184,7 +184,11 @@ python -m src.presentation.exp001 --check
 
 Public checks block external network and private data reads. EXP999 uses temporary directories and fake transports. Presentation regeneration (`python -m src.presentation.exp001`) uses published EXP001 processed records; it creates no remote job. These checks demonstrate software behavior, not certified market execution or alpha.
 
-Latest milestone validation: **485 local tests, 257 public tests, 0 skipped**. See [validation receipt](docs/acceleration/exp004_execution_gap_validation.json).
+The [offline CI inventory and safety review](docs/offline_ci_hardening.md) documents
+the Windows/Linux verification matrix, exact exclusions and reproducible commands.
+Run `python -m src.research.offline_checks` after installing
+`requirements-offline-ci.txt` for the additional restricted suite. Earlier milestone
+counts are historical: see the [EXP004 validation receipt](docs/acceleration/exp004_execution_gap_validation.json).
 
 The complete local suite additionally needs ignored original archives:
 
