@@ -1,0 +1,61 @@
+{
+  "account_review_performed": false,
+  "collector_implementation": {
+    "src/research/opportunity_scout/n1_collector/__init__.py": "b80503185d751d0245f427dacd0ee6f61fcf4b22c4e47d1ae639671dc9885967",
+    "src/research/opportunity_scout/n1_collector/binding.py": "76a600788734907c2134d77009cb5f90ddf32e49c85e58c68036027d29af4225",
+    "src/research/opportunity_scout/n1_collector/collector.py": "3caa228e2e4af09a5005cfcbfd1370437d6f33f8969ca785d1f96672fd0ecfde",
+    "src/research/opportunity_scout/n1_collector/evidence.py": "a46346e4168e36e24ee66858bb358971a92bd6bfe8b38aee4e2499d99c8f290c"
+  },
+  "native_compatibility": "NOT_TESTED",
+  "native_launch_enabled": false,
+  "no_token_or_financial_guarantee": true,
+  "owner_consent_registered": false,
+  "preservation": {
+    "account_inspections_by_this_task": 0,
+    "baseline_files": 1008,
+    "hosted_calls_by_this_task": 0,
+    "intentional_existing_file_changes": [
+      ".github/workflows/public-synthetic.yml"
+    ],
+    "prior_R3_implementation_inventory_entries": 45,
+    "proposal_check": "PASS",
+    "proposal_manifest_sha256": "230e4060976af36e924d43a6b181d31cc33a24c8b869d56aea8200c9d2024d05",
+    "proposal_stdin_sha256": "3555156d91c032c0156c947560b4ea2c3dc0931628737a5d8096218b73ee1643",
+    "scientific_attempts_by_this_task": 0,
+    "unchanged_baseline_files": 1007,
+    "v003_files_unchanged": 28
+  },
+  "sample_capture": {
+    "audit_status": "SEALED_BYTES_VERIFIED",
+    "both_eof": true,
+    "drain_complete": true,
+    "journal_head": "b0cf84b1f6f67d8a7e5b6c4363218205ef0eee5acf6e7c671de3bfdda94ab4da",
+    "mode": "LOCAL_FIXTURE_NOT_NATIVE",
+    "native_terminal": "UNKNOWN_NOT_PARSED",
+    "provider_usage": "UNKNOWN",
+    "raw_sha256": {
+      "stderr": "5597e60d09c5bd5d653eff129acc2121e895116310a23c8f4860ff162b863940",
+      "stdout": "d898a6ce7a09b45ef694dafa8904879a6da51e5cfa151a7f0281a86d1e943775"
+    },
+    "recorded_bytes": {
+      "stderr": 16,
+      "stdout": 115
+    },
+    "reservation_consumed": true,
+    "resource_compliance": "UNKNOWN",
+    "stdin_complete": true,
+    "unindexed_tail_bytes": {
+      "stderr": 0,
+      "stdout": 0
+    }
+  },
+  "schema": "SCOUT_N1_COLLECTOR_OFFLINE_ASSURANCE_V001",
+  "status": "HOSTED_READINESS_BLOCKED",
+  "test_origin": "LOCAL_PYTHON_FIXTURES_ONLY_NOT_SCIENTIFIC_RESULTS",
+  "tests": {
+    "existing_process_assurance": 6,
+    "guarded_scout": 242,
+    "new_N1_process_assurance": 22,
+    "public": 390
+  }
+}
