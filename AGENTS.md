@@ -1,5 +1,10 @@
 # Repository instructions
 
+## Graph Pilot R4 operational preparation: branch `graph-pilot-r4-operational-prep`, draft PR, not merged (2026-10-22)
+
+- Offline documents only: `graph_pilot_r4_reviewer_guide_v001.md`, `graph_pilot_r4_runbook_v001.md`, `graph_pilot_r4_source_plan_v001.md`, `graph_pilot_r4_activation_template_v001.md` (DRAFT, NOT ACTIVE), `graph_pilot_r4_operational_readiness_v001.md`. No source was fetched or preflighted; every source claim is `CANDIDATE_UNVERIFIED`. Never commit the template as `owner_graph_pilot_r4_<date>.md` or fill owner fields for the owner.
+- Owner decisions pending: D1 (arm analyst type), F1 (freshness level), F2 (reserve depth), U1 (warning reuse scoring), R1 (reviewer retrieval), ceilings, consensus and blinding registration, mechanism statement. Never recruit, impersonate or act as a reviewer, operator or attester.
+
 ## Graph Pilot R4 Phase B: dual human adjudication, branch `graph-pilot-r4-phase-b`, draft PR, not merged (2026-10-22)
 
 - `docs/strategy/graph_pilot_r4_phase_b_v003.md` (zero-item packets, content-verified reveal order; v001/v002 kept); code `src/research/graph/adjudication.py`. Synthetic only; R4 NOT_RUN and unauthorised. Never record, draft or substitute a reviewer's judgment, seal, exposure declaration or deviation: these are human acts (assistant names are refused). Never resolve a disagreement; it stays `UNRESOLVED_DISAGREEMENT`.
