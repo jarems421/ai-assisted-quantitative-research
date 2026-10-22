@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Graph pilot R3 closed: five owner REJECTs, AI-assisted adjudication (2026-10-22)
+
+- `owner_graph_pilot_r3_dispositions_2026-10-22.md`: five owner-approved, AI-assisted REJECT dispositions are appended to the arm ledgers (append-only; each names a verbatim `[DECISIVE:ID]`). There is no M_PASSED and no H approval. Their reason types were mapped by the coordinator.
+- `graph_pilot_r3/adjudication_provenance_amendment.json` corrects the original adjudication notes without rewriting them: the owner did see and approve the ChatGPT assessment, and personal checking of every source is not documented. Describe all 36 adjudications as human-owner approved, AI-assisted, potentially unblinded and not independent.
+- Final classification is INCONCLUSIVE (two pairs). Falsification times are mixed and within the minute error. No claim of graph improvement or investment edge. No further pilot activity follows automatically.
+
 ## Graph pilot revision 3 results: INCONCLUSIVE, potentially unblinded (2026-10-22)
 
 - `graph_pilot_r3_results.md`: the owner adjudicated all 36 V2 items with SAW_V001=YES. Keys were unsealed only after the logs were committed, and the arm branches are merged. All 10 graph-operator connections (`same-gap`/`revisit`/`next` requirement-tag analogies) were judged trivial; all 10 confirmations came from analyst reading (8 S, 2 G). Pooled verified connections per hour: S 4.16, G 3.15. Two pairs give no graph-increment classification, and this is not evidence of investment value or a graph null.

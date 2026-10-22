@@ -2,9 +2,9 @@
 
 > DERIVED RESEARCH VIEW - NOT INDEPENDENT EVIDENCE - NO RESEARCH AUTHORITY
 
-**2026-10-22. Result: INCONCLUSIVE.** By rule, two pairs receive no graph-increment classification. The comparison is also **potentially unblinded**: the owner adjudicated after seeing the compromised V001 sheets. Within those limits, one pattern is clear. **All 10 connections produced by graph operators were adjudicated trivial. All 10 confirmed connections came from analyst reading:** 8 in the structured arms and 2 by reading in the graph arms. This is a description of two small, exploratory packets, not evidence about Graph v1 in general. It is not a scientific null on the graph either, and it says nothing about investment value.
+**2026-10-22. Final result: INCONCLUSIVE. Graph pilot R3 is closed.** By rule, two pairs receive no graph-increment classification. The comparison is also **potentially unblinded and AI-assisted**. The owner approved a ChatGPT assessment of all 36 items after seeing the compromised V001 sheets. These are human-owner approved, AI-assisted judgements, not independent human adjudications, and no personal check of every original source is documented ([provenance amendment](graph_pilot_r3/adjudication_provenance_amendment.json)). Within those limits, one pattern is clear. **All 10 connections produced by graph operators were adjudicated trivial. All 10 confirmed connections came from analyst reading:** 8 in the structured arms and 2 by reading in the graph arms. This is a description of two small, exploratory packets, not evidence about Graph v1 in general. It is not a scientific null on the graph either, and it says nothing about investment value.
 
-Final dispositions are pending with the owner (see the [M/H packet](graph_pilot_r3/mh_decision_packet.md)). Until they are recorded, time to decisive falsification is not computable.
+**Dispositions (owner, AI-assisted; [instruction](owner_graph_pilot_r3_dispositions_2026-10-22.md)):** all five frozen candidates are **REJECT**, each naming its decisive record. None qualifies for `M_PASSED`, and no H approval is granted. Each concerns the specific frozen claim, not the underlying mechanism generally. The [M/H packet](graph_pilot_r3/mh_decision_packet.md) is the pre-disposition snapshot the owner reviewed.
 
 ## 1. Original stopped revision 2
 
@@ -42,6 +42,16 @@ Unchanged: 4 starts and 5,537,804 bytes. P1, P2 and P3 did not form, and no camp
 
 **Original frozen M passes: 0 in every arm.** Every candidate keeps 16–20 mechanical blockers, so `M_PASSED` is refused whatever the review.
 
+| Candidate | Disposition | Decisive record | Minutes logged before it |
+|---|---|---|---:|
+| P3-S `CAND-1` v2 | REJECT (observation) | `OBS-8` | 19.0 |
+| P3-G `CAND-G-1` v3 | REJECT (observation) | `OBS-G-7` | 11 |
+| P4-S `CAND-RECALL-REMEDY-CAMERA` v4 | REJECT (economic) | `OBS-25E054-EQUIPMENT-RECALL` | 17 |
+| P4-G `CAND-1` v3 | REJECT (observation) | `OBS-4` | 16.14 |
+| P4-G `CAND-2` v2 | REJECT (observation; outcome-before-freeze contamination) | `OBS-7` | 21.28 |
+
+The reason types were mapped by the coordinator from the owner's reason text; the reasons and decisive ids are verbatim.
+
 **Selection status:** 4 of the 5 candidates carry post-outcome status; the sealed flags are now in `mh_review_flags.json`.
 
 **Decisive missing variables** recur across all arms:
@@ -78,19 +88,20 @@ Unchanged: 4 starts and 5,537,804 bytes. P1, P2 and P3 did not form, and no camp
 | P4 | Review burden (items) | 7 | 12 |
 | Both | Duplicate research avoided | 0 | 0 |
 | Both | Original frozen M passes per hour | 0 | 0 |
-| Both | Time to decisive falsification | pending dispositions | pending dispositions |
+| P3 | Median minutes to decisive falsification | 19.0 | 11 |
+| P4 | Median minutes to decisive falsification | 17 | 18.71 |
 
 **Reading the numbers:**
 - **Pooled verified connections per analyst-hour:** S 4.16, G 3.15. No benefit dimension favours G; the verified rate favours S in both packets.
 - **Classification:** `INCONCLUSIVE` (fewer than three pairs).
 - **Graph-only rediscoveries:** none of the graph arms' connections attributed `GRAPH_ONLY` was confirmed, so there are no graph-only discoveries in this sample.
-- **Benefits that did not appear:** avoided errors and faster falsification could also count as graph benefits under the protocol. Neither appeared: no avoided repeats were logged, and falsification timing awaits dispositions.
+- **Benefits that did not appear:** avoided errors and faster falsification could also count as graph benefits under the protocol. No avoided repeats were logged. Falsification was faster for G in P3 (11 against 19 minutes) and for S in P4 (17 against 18.71). The P3 gap is about the size of P3-S's known minute over-logging (about 8.7 minutes), so this dimension shows no usable signal.
 
 **What the graph operators produced.** They produced analogies to historical investigations through shared requirement tags, for example capacity, allocation and supplier exposure linked to the salmon, Chevron, BASF or insurance memory. The adjudicator judged every one trivial: a generic research warning, not an economic connection. This agrees with the AI assessment's design observation. The useful connections were record-level: the product-identifier joins, the recall supersession links, and the issuer disclosure showing that a supplier may bear recall costs, which challenges the mechanism. All of these came from reading the originals.
 
 ## 6. Limitations and deviations
 
-- **Potentially unblinded.** The V001 sheets leaked arm ids, and the owner saw them before adjudicating ([blinding correction](graph_pilot_r3_blinding_correction.md)). The owner judged first and then reported an exact match with the AI assessment; that assessment was also made with V001 exposure. No independent adjudication exists.
+- **Potentially unblinded and AI-assisted.** The V001 sheets leaked arm ids, and the owner saw them ([blinding correction](graph_pilot_r3_blinding_correction.md)). The 36 adjudications and 5 dispositions are owner-approved, AI-assisted (ChatGPT) decisions. An earlier log note said the owner judged before reading the AI assessment and checked all cited sources; that note was wrong. It is corrected by an [auditable amendment](graph_pilot_r3/adjudication_provenance_amendment.json); the original records are preserved. No independent adjudication exists.
 - **Two pairs, two methods.** The pairs cover the event-first and hypothesis-first methods only. Each arm was a single session, so session variance is confounded with arm. No statistical claim is possible.
 - **`SUG-` ids not used.** The graph arms logged graph-operator connections under `CON-` ids instead of their `SUG-` ids, a protocol deviation. The registered "share of graph suggestions false or trivial" therefore reads 0/0. The equivalent by operator is 10/10 trivial.
 - **Unreliable minutes.** Self-logged minutes over-state some arms by up to about 9 minutes. All per-hour figures inherit that error, and campaigns used only 14–24 of their 120 minutes.

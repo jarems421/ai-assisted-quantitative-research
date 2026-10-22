@@ -95,6 +95,8 @@ Freeze times and candidate records are not altered, and this contamination is no
 
 ## AI assessment received (2026-10-21): preserved, not used as adjudication
 
+> **Superseded in part (2026-10-22, owner):** the owner reviewed and approved this ChatGPT assessment. The 36 adjudications are therefore owner-approved and AI-assisted, not the independent blind-first review described below. That review did not take place. See the [provenance amendment](graph_pilot_r3/adjudication_provenance_amendment.json).
+
 The owner supplied an [AI assessment](graph_pilot_r3/ai_assessment_2026-10-21.md) of all 36 items. Its machine-readable form is [`ai_assessment.jsonl`](graph_pilot_r3/ai_assessment.jsonl), in a separate schema that the adjudication validator refuses.
 
 **What it says:** 10 `CONFIRMED` (P3 5, three of them "narrowly"; P4 5), 10 `UNVERIFIED` and 16 `TRIVIAL`. Item `25785c7b12` is "Unverified" but marked economically meaningful.

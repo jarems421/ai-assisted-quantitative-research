@@ -1,5 +1,7 @@
 # AI assessment of the revision 3 blinded items (verbatim; NOT an adjudication)
 
+> **Update (2026-10-22, owner):** the assessment was produced by ChatGPT. The owner has reviewed and approved it, and its labels are the owner-approved, AI-assisted adjudications. See the [provenance amendment](adjudication_provenance_amendment.json); the text below is unchanged.
+
 > **Status: AI ASSESSMENT, NOT AN OFFICIAL ADJUDICATION.** The owner supplied this on 2026-10-21. It describes itself as an AI assessment, produced after exposure to the compromised V001 sheets, and it recommends that it not be copied into the official adjudication logs. Its connection ids are the last ten characters of the blind ids; all 36 match the V2 items exactly, in V2 order. The coordinator has not independently verified any external claim in it (for example the FDA posting date). A machine-readable mapping is in [`ai_assessment.jsonl`](ai_assessment.jsonl).
 
 ---

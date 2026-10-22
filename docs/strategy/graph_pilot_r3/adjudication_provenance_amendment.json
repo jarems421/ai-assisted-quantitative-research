@@ -1,0 +1,50 @@
+{
+ "version": "GRAPH_PILOT_R3_ADJUDICATION_PROVENANCE_AMENDMENT_V001",
+ "recorded_at_utc": "2026-10-22T07:14:59+00:00",
+ "authority": "docs/strategy/owner_graph_pilot_r3_dispositions_2026-10-22.md",
+ "authority_sha256": "7d77becd6e0f04c84fe5ed74cbd78f21890a9ecacf77681dbd78b462120d1bf5",
+ "amends": {
+  "P3": {
+   "path": "docs/strategy/graph_pilot_r3/P3/adjudications.jsonl",
+   "sha256": "8d201ab3c8069748045b083ded5013242db1bfddfbffc67b236049c1111412da",
+   "records": 17,
+   "committed_in": "878fdfa"
+  },
+  "P4": {
+   "path": "docs/strategy/graph_pilot_r3/P4/adjudications.jsonl",
+   "sha256": "8eb9b3ba7800908bf62a8fe5c11d8ac4d489250047c472c68478a4347f07f4dd",
+   "records": 19,
+   "committed_in": "878fdfa"
+  }
+ },
+ "original_records_preserved": true,
+ "outcomes_and_meanings_unchanged": true,
+ "corrections": [
+  {
+   "field": "notes: SAW_AI_ASSESSMENT=NO (owner judged first, then reported an exact match)",
+   "corrected_to": "SAW_AI_ASSESSMENT=YES. The owner reviewed and approved the ChatGPT 36-connection assessment; these are human-owner approved, AI-assisted assessments, not independent human judgments made before reading the AI assessment.",
+   "origin_of_error": "The coordinator recorded the owner answer \"No, judged first\" to a clarification question; the owner has now corrected it. That answer is superseded."
+  },
+  {
+   "field": "checked_evidence and notes: \"checked: all cited evidence (owner statement)\"",
+   "corrected_to": "For the 10 CONFIRMED items, checked_evidence lists the evidence cited in each item. Personal, independent checking of every original source by the owner is NOT documented. The confirmations rest on the approved AI-assisted assessment of the cited originals.",
+   "origin_of_error": "The coordinator recorded the owner answer \"All evidence cited\" to a clarification question; the owner has now restricted it."
+  },
+  {
+   "field": "exposure",
+   "corrected_to": "SAW_V001=YES (unchanged and confirmed): the owner was exposed to the compromised V001 sheets."
+  },
+  {
+   "field": "ai_assessment provenance",
+   "corrected_to": "The owner-supplied AI assessment (graph_pilot_r3/ai_assessment_2026-10-21.md) was produced by ChatGPT and approved by the owner."
+  }
+ ],
+ "effective_status_of_all_36_adjudications": "HUMAN_OWNER_APPROVED_AI_ASSISTED; POTENTIALLY_UNBLINDED (V001 exposure); NOT_INDEPENDENT",
+ "dispositions_recorded": {
+  "decided_by": "James Thomson (owner); AI-assisted: reviewed and approved a ChatGPT assessment",
+  "decision": "REJECT x5",
+  "m_passed": 0,
+  "h_approved": 0,
+  "reason_type_mapping": "Coordinator-mapped from the owner reason text (OBSERVATION x4, ECONOMIC for P4-S); the reason text and decisive ids are verbatim."
+ }
+}
