@@ -119,6 +119,18 @@ def pilot_parser(sub):
     x.add_argument('--operated-or-attested-arm', choices=['YES', 'NO'], required=True); x.add_argument('--note', default='')
     x = ps.add_parser('adjudication-agreement', help='Phase B: validate both sealed reviewers; consensus, agreement, exposure and conformance')
     x.add_argument('packet'); x.add_argument('--export', default='blind_v2.json')
+    x = ps.add_parser('ai-package', help='PROPOSED AI-review variant: build the neutral, leak-scanned model review package from blind_v2.json')
+    x.add_argument('blind'); x.add_argument('--evidence-dir', required=True, help='content-addressed evidence pack (files named by sha256)')
+    x.add_argument('--out', required=True); x.add_argument('--own-from', help='the V001 export, so own-arm record ids also count as leaks')
+    x = ps.add_parser('ai-review-check', help='PROPOSED AI-review variant: validate a stored model answer (primary or cross) without sealing')
+    x.add_argument('package'); x.add_argument('answer'); x.add_argument('--stage', choices=['primary', 'cross'], default='primary')
+    x = ps.add_parser('ai-review-seal', help='PROPOSED AI-review variant: the human operator seals a validated model answer by hash (immutable)')
+    x.add_argument('package'); x.add_argument('--stage', choices=['primary', 'cross'], required=True); x.add_argument('--slot', choices=['A', 'B'], required=True)
+    x.add_argument('--by', required=True, help='your own name: the human who ran the model and stored its answer')
+    x = ps.add_parser('ai-cross-inputs', help='PROPOSED AI-review variant: after both primary seals, write the two frozen answers for the auditors')
+    x.add_argument('package'); x.add_argument('--out', required=True)
+    x = ps.add_parser('ai-reconcile', help='PROPOSED AI-review variant: deterministic item-level reconciliation of the sealed model answers')
+    x.add_argument('package'); x.add_argument('--markdown', help='also write the readable table here')
     x = ps.add_parser('r4-phase-b-dry-run', help='R4 Phase B synthetic rehearsal of dual human adjudication (not an R4 run)')
     g_ = x.add_mutually_exclusive_group(); g_.add_argument('--write', action='store_true'); g_.add_argument('--check', action='store_true')
     x = ps.add_parser('r4-dry-run', help='R4 readiness Phase A synthetic rehearsal with mutation checks (not an R4 run)')
@@ -158,6 +170,21 @@ def run_pilot(a):
         from src.research.graph import adjudication as AD
         res = AD.dual(a.packet, a.export); snap = P.load_snapshot(Path(a.packet) / 'snapshot.json')['snapshot']
         out({**{k: v for k, v in res.items() if k != 'adjudications'}, 'conformance': AD.conformance(a.packet, snap, res)})
+    elif a.pilot_command.startswith('ai-'):
+        from src.research.graph import ai_review as AI
+        if a.pilot_command == 'ai-package':
+            pkg = AI.build_package(a.blind, a.evidence_dir, a.out, own_from=a.own_from)
+            out({'written': a.out, 'items': len(pkg['items']), 'evidence': len(pkg['evidence']), 'integrity_flags': pkg['integrity_flags'],
+                 'missing_evidence': sorted(h for h, e in pkg['evidence'].items() if e['file'] == 'MISSING_FROM_PACKAGE')})
+        elif a.pilot_command == 'ai-review-check':
+            v = AI.validate_primary(a.package, a.answer) if a.stage == 'primary' else AI.validate_cross(a.package, a.answer)
+            out({'valid': True, 'stage': a.stage, 'slot': v['slot'], 'items': len(v['items']), 'external_access': v['external_access']})
+        elif a.pilot_command == 'ai-review-seal':out(AI.seal(a.package, a.stage, a.slot, a.by))
+        elif a.pilot_command == 'ai-cross-inputs':out({'written': AI.write_cross_inputs(a.package, a.out)})
+        elif a.pilot_command == 'ai-reconcile':
+            rec = AI.reconcile(a.package)
+            if a.markdown:Path(a.markdown).write_text(AI.markdown(rec), encoding='utf-8', newline='\n')
+            out(rec)
     elif a.pilot_command == 'r4-phase-b-dry-run':
         from src.research.graph import pilot_r4_phase_b_dryrun as PB
         if a.check:out(PB.check())
