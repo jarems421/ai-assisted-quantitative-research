@@ -116,7 +116,7 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
                     break
                 if not data:
                     break
-        except OSError as error:
+        except (OSError, ValueError) as error:
             enqueue(('READ_ERROR', channel, type(error).__name__, time.monotonic_ns()))
         finally:
             pipe.close()
@@ -132,9 +132,12 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
                 view = view[n:]
             process.stdin.close()  # Exactly one payload, then EOF.
             stdin['completed'] = True
-        except OSError as error:
+        except (OSError, ValueError) as error:
             stdin['error'] = type(error).__name__
-            process.stdin.close()
+            try:
+                process.stdin.close()
+            except (OSError, ValueError):
+                pass
 
     def trigger(reason, now):
         nonlocal triggered
@@ -230,6 +233,8 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
             reasons.append('WATCHDOG')
         if alive and 'CLEANUP_INCOMPLETE' not in reasons:
             reasons.append('CLEANUP_INCOMPLETE')
+        if process is not None and (not stdin['completed'] or stdin['bytes_written'] != len(payload)):
+            reasons.append('STDIN_INCOMPLETE')
         raw = {c: (capture.root / (c + '.bin')).read_bytes() for c in eof}
         receipt = {'version': binding['version'], 'mode': 'LOCAL_FIXTURE_NOT_NATIVE',
                    'outcome': 'LOCAL_CAPTURE_COMPLETE' if not reasons and all(eof.values()) else 'STOP_EVIDENCE_RETAINED',
@@ -270,12 +275,13 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
         for t in threads:
             t.join(timeout=.1)
         try:
-            capture.event('INTERRUPTED', {'launch': 'ATTEMPTED' if process else 'UNKNOWN',
+            if not capture.closed and not capture.ended and not capture.poisoned:
+                capture.event('INTERRUPTED', {'launch': 'ATTEMPTED' if process else 'UNKNOWN',
                                         'error_type': type(error).__name__, 'local_cancel': cleanup_cancel,
                                         'local_returncode_after_cleanup': process.poll() if process else None,
                                         'threads_still_alive': any(t.is_alive() for t in threads),
                                         'observed_wall_seconds': time.monotonic() - start,
-                                        'remote_cancellation': 'UNKNOWN', 'no_retry': True})
+                                            'remote_cancellation': 'UNKNOWN', 'no_retry': True})
         finally:
             capture.abandon()
         raise

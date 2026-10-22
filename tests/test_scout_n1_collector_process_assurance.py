@@ -270,3 +270,40 @@ class N1ProcessTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             collect_fixture(b2, a2, data2)
         self.assertFalse(Path(b2['capture_path']).exists())
+
+    def test_closed_stdin_cannot_be_reported_as_complete(self):
+        b, a, data = plan(self.root)
+        def close_stdin(*args, **kwargs):
+            p = subprocess.Popen(*args, **kwargs)
+            p.stdin.close()  # Real harmless producer receives EOF before its input.
+            return p
+        result = _collect_fixture(b, a, data, popen=close_stdin)
+        self.assertEqual(result['receipt']['outcome'], 'STOP_EVIDENCE_RETAINED')
+        self.assertIn('STDIN_INCOMPLETE', result['receipt']['stop_reasons'])
+        self.assertFalse(result['receipt']['stdin']['completed'])
+        self.assertTrue(result['registry_lock_present'])
+
+    def test_falsely_complete_receipt_cannot_release_lock(self):
+        import copy
+        _, _, _, normal = self.run_case()
+        b, a, _ = plan(self.root)
+        c = Capture(b, a)
+        c.event('LAUNCH_INTENT', {'parent_invocations_maximum': 1})
+        c.event('SPAWN_FAILED', {'error_type': 'FICTIONAL_FAILURE'})
+        wrong = copy.deepcopy(normal)
+        wrong.update(process=None, returncode=None, eof={'stdout': False, 'stderr': False},
+                     raw_sha256={x: B.sha(b'') for x in ('stdout', 'stderr')},
+                     recorded_bytes={'stdout': 0, 'stderr': 0})
+        with self.assertRaisesRegex(B.Refused, 'false complete'):
+            c.seal(wrong)
+        self.assertTrue((Path(b['audit_root']) / '.lock').exists())
+
+    def test_unknown_eof_channel_is_not_a_completion_fact(self):
+        b, a, _ = plan(self.root)
+        c = Capture(b, a)
+        c.event('LAUNCH_INTENT', {})
+        c.event('SPAWNED', {'pid': 999999})
+        c.event('EOF', {'channel': 'invented'})
+        c.abandon()
+        with self.assertRaisesRegex(B.Refused, 'invalid/duplicate EOF'):
+            audit(b['capture_path'])

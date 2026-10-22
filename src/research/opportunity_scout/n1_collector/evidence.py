@@ -10,7 +10,7 @@ import time
 
 from src.research.spec import canonical
 from .. import v004_package as P
-from .binding import VERSION, require, sha
+from .binding import VERSION, require, sha, prepare
 
 
 def sync_directory(path):
@@ -39,6 +39,7 @@ class Capture:
         # Never remove another process's lock, even if its PID appears dead.
         exclusive(self.lock, canonical({'pid': os.getpid(), 'created_ns': time.time_ns()}))
         self.files = {}
+        self.closed, self.ended, self.poisoned = False, False, False
         self.seq, self.head = 0, '0' * 64
         try:
             claim = {'version': VERSION, 'type': 'CONSUMED_BEFORE_LAUNCH',
@@ -67,6 +68,8 @@ class Capture:
             raise
 
     def event(self, kind, record):
+        require(not self.closed and not self.ended and not self.poisoned, 'closed/ended/interrupted journal cannot append')
+        self.poisoned = True
         core = {'seq': self.seq + 1, 'previous': self.head, 'type': kind,
                 'monotonic_ns': time.monotonic_ns(), 'utc_ns': time.time_ns(), 'record': record}
         row = {**core, 'sha256': sha(canonical(core))}
@@ -76,6 +79,8 @@ class Capture:
         self.log.flush()
         os.fsync(self.log.fileno())
         self.seq, self.head = row['seq'], row['sha256']
+        self.ended = kind == 'CAPTURE_END'
+        self.poisoned = False
 
     def chunk(self, channel, data, received_ns, after_raw=None):
         stream = self.files[channel]
@@ -93,6 +98,7 @@ class Capture:
         # A crash between the witnessed end and receipt remains incomplete.
         exclusive(self.root / 'receipt.json', canonical({'head': self.head, 'receipt': receipt}))
         self.abandon()
+        require(audit(self.root)['status'] == 'SEALED_BYTES_VERIFIED', 'unreconciled capture cannot release registry')
         # A STOP never releases the registry for another command. Incomplete
         # cleanup requires operator review, not merely an archived receipt.
         if receipt['outcome'] == 'LOCAL_CAPTURE_COMPLETE' and receipt['drain_complete']:
@@ -102,6 +108,7 @@ class Capture:
     def abandon(self):
         for stream in list(self.files.values()) + ([self.log] if hasattr(self, 'log') else []):
             stream.close()
+        self.closed = True
 
 
 def audit(directory):
@@ -133,6 +140,11 @@ def audit(directory):
             require(counts[row['type']] == 1, 'duplicate launch/consumption/exit')
         if not rows:
             require(row['type'] == 'CONSUMED' and row['record'] == claim, 'consumed intent missing')
+        kind = row['type']
+        if kind in ('SPAWNED', 'SPAWN_FAILED'):
+            require(counts.get('LAUNCH_INTENT') == 1 and not (counts.get('SPAWNED') and counts.get('SPAWN_FAILED')), 'spawn has no unique launch intent')
+        if kind in ('CHUNK', 'EOF', 'OS_EXIT', 'READ_ERROR', 'STOP_TRIGGER', 'CANCEL'):
+            require(counts.get('SPAWNED') == 1, 'process evidence before spawn')
         if row['type'] == 'CHUNK':
             r = row['record']; c = r['channel']
             require(c in offsets and c not in eof and r['offset'] == offsets[c] and r['length'] > 0, 'chunk sequence/offset invalid')
@@ -141,7 +153,7 @@ def audit(directory):
             require(len(data) == r['length'] and sha(data) == r['sha256'], 'original bytes changed/truncated')
             offsets[c] += len(data)
         if row['type'] == 'EOF':
-            require(row['record']['channel'] not in eof, 'duplicate EOF')
+            require(row['record']['channel'] in offsets and row['record']['channel'] not in eof, 'invalid/duplicate EOF')
             eof.add(row['record']['channel'])
         head = row['sha256']; rows.append(row)
     require(rows, 'no durable consumed journal; reservation still cannot be retried')
@@ -156,6 +168,25 @@ def audit(directory):
         receipt = envelope['receipt']
         require(receipt['raw_sha256'] == {c: sha(raw[c]) for c in raw} and receipt['recorded_bytes'] == {c: len(raw[c]) for c in raw}, 'receipt/raw mismatch')
         require(receipt['eof'] == {c: c in eof for c in raw}, 'receipt EOF mismatch')
+        require(counts.get('LAUNCH_INTENT') == 1 and receipt['spawn_attempts'] == 1, 'receipt missing unique launch intent')
+        spawned = next((r['record'] for r in rows if r['type'] == 'SPAWNED'), None)
+        exit_record = next((r['record'] for r in rows if r['type'] == 'OS_EXIT'), None)
+        require(receipt['process'] == spawned, 'receipt process identity mismatch')
+        if exit_record:
+            require(receipt['returncode'] == exit_record['returncode'], 'receipt exit mismatch')
+        if receipt['outcome'] == 'LOCAL_CAPTURE_COMPLETE':
+            require(spawned is not None and exit_record is not None and eof == set(offsets), 'false complete process/EOF state')
+            expected_stdin = (prepare.HERE / 'request.json').read_bytes()
+            require(binding['stdin_sha256'] == sha(expected_stdin) and receipt['stdin'] == {
+                'completed': True, 'bytes_written': len(expected_stdin), 'error': None}, 'false complete stdin state')
+            require(receipt['drain_complete'] is True and receipt['truncated'] is False and
+                    not receipt['stop_reasons'] and not counts.get('STOP_TRIGGER') and not counts.get('INTERRUPTED') and
+                    not receipt['read_errors'] and not any(receipt['discarded_after_io_trigger_bytes'].values()), 'false complete cleanup state')
+            require(not counts.get('CANCEL') and not receipt['cancellations'] and
+                    0 <= receipt['observed_wall_seconds_through_receipt'] <= binding['limits']['watchdog_seconds'] and
+                    sum(len(v) for v in raw.values()) < binding['limits']['combined_recording_io_trigger_bytes'], 'false complete resource state')
+        else:
+            require(receipt['outcome'] == 'STOP_EVIDENCE_RETAINED' and receipt['stop_reasons'], 'unknown/unsupported capture outcome')
     return {'status': 'INTERRUPTED_EVIDENCE_RETAINED' if incomplete else 'SEALED_BYTES_VERIFIED',
             'head': head, 'unindexed_tail_bytes': tails, 'receipt': receipt,
             'registry_lock_present': (Path(binding['audit_root']) / '.lock').exists(),

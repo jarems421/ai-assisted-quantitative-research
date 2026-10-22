@@ -90,6 +90,8 @@ def validate(binding, approval, payload):
     require(not audit.is_relative_to(capture) and not capture.is_relative_to(audit), 'independent reservation registry required')
     require(cwd.is_dir() and not any(cwd.iterdir()), 'sterile directory required')
     require(not cwd.is_relative_to(capture) and not capture.is_relative_to(cwd), 'capture/cwd overlap')
+    require(not cwd.is_relative_to(audit) and not audit.is_relative_to(cwd), 'registry/cwd overlap')
+    require(not system.is_relative_to(capture) and not system.is_relative_to(audit), 'system file overlaps mutable evidence')
     binary = P.destination(exact_path(binding['binary']))
     require(binary.is_file() and sha(binary.read_bytes()) == binding.get('binary_sha256'), 'executable identity mismatch')
     require(isinstance(binding.get('environment'), dict), 'explicit child-only environment required')

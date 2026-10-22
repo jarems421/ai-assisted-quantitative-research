@@ -1,0 +1,37 @@
+{
+  "V003_preserved_files": 28,
+  "account_inspections": 0,
+  "authorises": [],
+  "collector_source_hashes": {
+    "src/research/opportunity_scout/n1_collector/__init__.py": "b80503185d751d0245f427dacd0ee6f61fcf4b22c4e47d1ae639671dc9885967",
+    "src/research/opportunity_scout/n1_collector/binding.py": "6ac008a53834f553d442a59e8f95000e1523c0911e53862c33e3765bff0db393",
+    "src/research/opportunity_scout/n1_collector/collector.py": "2abc451b9c9a82daf705e4d045ea27769d92eddda0fd5f6d5289e70d64b8adfa",
+    "src/research/opportunity_scout/n1_collector/evidence.py": "9aaa17e526a69a1c98e28da554350a96ab644a460ae93d6bf35a15966e0474a6",
+    "src/research/opportunity_scout/n1_collector/readiness.py": "7626bd880009bac543f12260eab27f9226c190c54aa70e9848cfba90541a0f2b"
+  },
+  "engineering_assessment_by_implementer": true,
+  "existing_files_changed": [
+    "src/research/opportunity_scout/n1_collector/binding.py",
+    "src/research/opportunity_scout/n1_collector/collector.py",
+    "src/research/opportunity_scout/n1_collector/evidence.py",
+    "tests/test_scout_n1_collector_process_assurance.py"
+  ],
+  "historical_account_writer": "UNKNOWN",
+  "hosted_calls": 0,
+  "independent_certification": false,
+  "main_base": "4ace618c6a68d525407417dc45b93f0ae400090f",
+  "native_launch_enabled": false,
+  "native_semantics": "UNKNOWN",
+  "original_N1_check": "PASS",
+  "owner_approval_created": false,
+  "review_baseline": "367ee833f7a8b361b6519e578b964e6d979d1ee5",
+  "schema": "SCOUT_N1_FOLLOWUP_OFFLINE_VALIDATION_V002",
+  "scientific_attempts": 0,
+  "status": "HOSTED_READINESS_BLOCKED",
+  "tests": {
+    "all_passed_locally": true,
+    "guarded_scout": 247,
+    "process_assurance": 31,
+    "public": 390
+  }
+}
