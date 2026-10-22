@@ -28,6 +28,7 @@ from src.research.discovery.ledger import Ledger, totals
 from src.research.discovery.review import covered
 from src.research.graph import catalogue as C
 from src.research.graph import connections as K
+from src.research.graph import implementation as I
 from src.research.graph import model as M
 from src.research.graph.baseline import content_hashes, unjoinable
 from src.research.graph.project import build, cut_state, parse_time
@@ -46,6 +47,12 @@ GRAPH_CATEGORIES = ('GRAPH_QUERY', 'SUGGESTION_REVIEW')
 CATEGORY_TAG = re.compile(r'\[PILOT:([A-Z_]+)\]')
 DECISIVE_TAG = re.compile(r'\[DECISIVE:([A-Z]+-[A-Za-z0-9_.-]+)\]')
 CEILINGS = {'analyst_minutes': 120, 'source_starts': 6, 'searches': 10, 'bytes': 8 * 2 ** 20}
+# R4 draft: self-logged and timestamp-derived minutes differing by more than 10% or 5 minutes per campaign is a flagged deviation.
+EFFORT_DISCREPANCY = {'minutes': 5, 'share': 0.10}
+SESSION_VERSION = 'GRAPH_PILOT_SESSION_V001'
+SESSION_KEYS = ('version', 'arm', 'started_at_utc', 'ended_at_utc', 'recorded_by', 'notes')
+# Reporting convention only (not registered): gaps between recorded actions longer than this are listed, never subtracted.
+LONG_GAP_MINUTES = 30
 
 CONNECTION_KEYS = ('connection_id', 'arm', 'kind', 'operator', 'found_via', 'source_record', 'target_record', 'basis', 'arm_decision',
                    'analyst_minutes', 'discovery_lab_record', 'recorded_at_utc', 'notes')
@@ -100,11 +107,14 @@ def connection_id(source, target, basis):
 
 # -- frozen packet snapshot -------------------------------------------------------------------------
 
-def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CATALOGUE_PATH, frozen_at=None, now=None, connection_log=None):
+def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CATALOGUE_PATH, frozen_at=None, now=None, connection_log=None,
+                  implementation=None):
     """Freeze one packet's prior knowledge. ``arms`` maps S and G to (ledger path, campaign id); neither ledger may exist yet.
 
     ``connection_log=CONNECTION_LOG_V2`` (prospective pilots) freezes the packet for V2 logs: every arm row must then be V2,
-    with graph rows checked against the frozen suggestion export, and the graph operators are pinned to this version."""
+    with graph rows checked against the frozen suggestion export, and the graph operators are pinned to this version and to the
+    exact implementation (``implementation.pin()``: commit and content digest; ``implementation`` overrides it, for a pin
+    taken from another checkout)."""
     if connection_log not in (None, CONNECTION_LOG_V2):raise PilotError(f'connection_log is {CONNECTION_LOG_V2} or omitted')
     out, now = Path(out), utc(now)
     frozen = utc(frozen_at) if frozen_at else now
@@ -130,7 +140,10 @@ def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CAT
                       'bundle': [{'path': f.relative_to(bundle).as_posix(), 'sha256': sha256(f), 'bytes': f.stat().st_size} for f in files]},
             'arms': {a: {'ledger': rel(paths[a]), 'campaign': arms[a][1]} for a in ARMS},
             'not_visible_to_either_arm': list(NOT_VISIBLE)}
-    if connection_log:snap.update({'connection_log': connection_log, 'graph_operator_version': K.OPERATOR_VERSION})
+    if connection_log:
+        try:pinned = implementation if implementation is not None else I.pin()
+        except I.PinError as error:raise PilotError(str(error)) from error
+        snap.update({'connection_log': connection_log, 'graph_operator_version': K.OPERATOR_VERSION, 'graph_implementation': pinned})
     return snap, write_new(out, snap)
 
 
@@ -143,6 +156,8 @@ def load_snapshot(path, bundle=None):
     full = Ledger(packet).load()
     if len(full.events) != prior['packet_ledger']['events'] or full.events[-1]['hash'] != prior['packet_ledger']['head_hash']:
         raise PilotError('the packet ledger changed after the snapshot was frozen')
+    if snap.get('connection_log') == CONNECTION_LOG_V2 and not snap.get('graph_implementation'):
+        raise PilotError('a V2 packet snapshot must pin the Graph implementation (commit and content digest)')
     catalogue = C.ROOT / prior['catalogue']['path']
     if sha256(catalogue) != prior['catalogue']['sha256']:raise PilotError('the historical catalogue differs from the frozen snapshot')
     if bundle is not None:
@@ -159,7 +174,14 @@ def verify_summary(path, bundle=None):
     return {'snapshot_sha256': v['sha256'], 'packet': v['snapshot']['packet'], 'frozen_at_utc': v['snapshot']['frozen_at_utc'],
             'packet_ledger': {k: p['packet_ledger'][k] for k in ('campaign', 'events', 'head_hash')},
             'catalogue_sha256': p['catalogue']['sha256'], 'bundle_digest': digest(p['bundle']), 'bundle_files': len(p['bundle']),
-            'bundle_verified': v['bundle_verified']}
+            'bundle_verified': v['bundle_verified'], 'implementation': implementation_check(v['snapshot'])}
+
+
+def implementation_check(snap, with_git=True):
+    """Legacy snapshots carry no pin (NOT_PINNED_LEGACY); a pinned snapshot refuses any other implementation."""
+    if not snap.get('graph_implementation'):return {'status': 'NOT_PINNED_LEGACY'}
+    try:return I.verify(snap['graph_implementation'], with_git=with_git)
+    except I.PinError as error:raise PilotError(str(error)) from error
 
 
 # -- arm-scoped visibility --------------------------------------------------------------------------
@@ -189,6 +211,8 @@ def arm_view(snapshot, arm, query_at=None, now=None):
                'own_ledger': {'campaign': full.campaign['id'], 'events_visible': len(state.events), 'events_total': len(full.events),
                               'head_hash_visible': state.events[-1]['hash']},
                'not_visible': list(NOT_VISIBLE)}
+    if snap.get('graph_implementation'):
+        receipt['graph_implementation'] = {k: snap['graph_implementation'][k] for k in ('commit', 'tree_digest')}
     return {'ledgers': ledgers, 'cuts': cuts, 'catalogue': v['catalogue'], 'mode': 'memory' if snap['fixture'] == 'LIVE' else 'synthetic',
             'receipt': receipt, 'snapshot': snap}
 
@@ -198,6 +222,7 @@ def arm_graph(snapshot, arm, query_at=None, now=None):
     view = arm_view(snapshot, arm, query_at, now)
     pinned = view['snapshot'].get('graph_operator_version')
     if pinned not in (None, K.OPERATOR_VERSION):raise PilotError(f'the snapshot pins {pinned}; these operators are {K.OPERATOR_VERSION}')
+    implementation_check(view['snapshot'], with_git=False)  # content only on the query path: no subprocess per query
     g = build(view['ledgers'], catalogue_path=view['catalogue'], mode=view['mode'], with_memory=True, cuts=view['cuts'])
     if g.excluded or len(g.inputs) != 2 or not g.catalogue:raise PilotError(f'arm inputs incomplete: {g.excluded}')
     view['receipt']['graph_digest'] = g.digest()
@@ -785,13 +810,186 @@ def classify(packets, critical_stops=()):
     return 'INCONCLUSIVE', notes + ['Mixed dimensions: the owner decides whether a larger pilot is worth its cost.']
 
 
+# -- R4 readiness: timestamp-derived effort ------------------------------------------------------------
+
+def minutes_between(a, b):
+    return round((b - a).total_seconds() / 60, 2)
+
+
+def compare_minutes(reported, derived):
+    """The R4 draft: 'a difference above 10% or 5 minutes per campaign is a flagged deviation'. Read literally (either
+    condition flags); both conditions are reported, because a whichever-is-larger reading is an open owner decision."""
+    diff = round(reported - derived, 2)
+    over_minutes, over_share = abs(diff) > EFFORT_DISCREPANCY['minutes'], abs(diff) > EFFORT_DISCREPANCY['share'] * derived
+    return {'derived_minutes': derived, 'self_reported_minutes': reported, 'difference': diff, 'exceeds_5_minutes': over_minutes,
+            'exceeds_10_percent': over_share, 'flagged': over_minutes or over_share, 'rule': 'EITHER_CONDITION'}
+
+
+def load_session(path, arm, frozen, fixture):
+    """Operator-recorded session bounds (start and stop of the arm session), written by the operator, never by the arm."""
+    s = json.loads(Path(path).read_text(encoding='utf-8'))
+    if tuple(sorted(s)) != tuple(sorted(SESSION_KEYS)) or s['version'] != SESSION_VERSION:raise PilotError(f'{Path(path).name}: fields must be exactly {SESSION_KEYS}')
+    if s['arm'] != arm:raise PilotError(f'{Path(path).name}: session is for arm {s["arm"]}, expected {arm}')
+    allowed = ('HUMAN', 'SYNTHETIC_FIXTURE') if fixture == 'SYNTHETIC' else ('HUMAN',)
+    if s['recorded_by'].get('kind') not in allowed or not s['recorded_by'].get('name'):raise PilotError(f'{Path(path).name}: session bounds are recorded by the human operator')
+    start, end = parse_time(s['started_at_utc']), parse_time(s['ended_at_utc'])
+    if start < frozen or end <= start:raise PilotError(f'{Path(path).name}: a session starts after the packet freeze and ends after it starts')
+    return start, end
+
+
+def derived_effort(packet_dir, arm):
+    """Elapsed-time evidence for one arm campaign from recorded timestamps, beside its self-reported minutes.
+
+    Timestamps used: every arm ledger append, every connection-log row, every graph query in the frozen suggestion
+    export (arm G), and operator-recorded session bounds (``session-<arm>.json``) when present. These bound elapsed
+    time; they do not measure effort. Idle time between records cannot be separated, and work before the first or after
+    the last record is not observed, so nothing is inferred there: missing evidence is reported as UNKNOWN."""
+    d = Path(packet_dir); v = load_snapshot(d / 'snapshot.json'); snap = v['snapshot']
+    s = Ledger(d / snap['arms'][arm]['ledger']).load(); acc = account(s, arm)
+    # Human decisions recorded in the arm ledger (dispositions; M/H reviews by a human) come after the campaign by protocol: not arm activity.
+    human = lambda e: e['type'] == 'disposition' or (e['type'] == 'review' and R.human_equivalent(e['record']['reviewer']['kind'], s.fixture))
+    excluded = [e for e in s.events if human(e)]
+    times = [(parse_time(e['recorded_at_utc']), f"ledger:{e['type']}") for e in s.events if not human(e)]
+    log = d / f'connections-{arm}.jsonl'
+    if log.is_file():times += [(parse_time(r['recorded_at_utc']), 'connection_log') for r in read_jsonl(log)]
+    queries = []
+    if arm == 'G':
+        for f in default_exports(d / 'snapshot.json'):
+            vis = json.loads(f.read_text(encoding='utf-8')).get('visibility') or {}
+            if vis.get('query_at_utc'):queries.append(parse_time(vis['query_at_utc']))
+        times += [(q, 'graph_query') for q in queries]
+    times.sort(key=lambda x: x[0]); flags = []
+    first, last = times[0][0], times[-1][0]
+    span = minutes_between(first, last)
+    gaps = [{'after': a[1], 'at_utc': a[0].isoformat(), 'minutes': minutes_between(a[0], b[0])} for a, b in zip(times, times[1:])
+            if minutes_between(a[0], b[0]) > LONG_GAP_MINUTES]
+    reported, unknown = acc['used']['analyst_minutes'], acc['unknown_entries']['analyst_minutes']
+    if unknown:flags.append({'code': 'SELF_REPORTED_MINUTES_UNKNOWN', 'entries': unknown})
+    session = {'status': 'NOT_RECORDED', 'minutes': R.UNKNOWN}
+    path = d / f'session-{arm}.json'
+    if path.is_file():
+        start, end = load_session(path, arm, parse_time(snap['frozen_at_utc']), snap['fixture'])
+        session = {'status': 'RECORDED', 'started_at_utc': start.isoformat(), 'ended_at_utc': end.isoformat(), 'minutes': minutes_between(start, end)}
+        outside = [label for t_, label in times if t_ < start or t_ > end]
+        if outside:flags.append({'code': 'ACTIVITY_OUTSIDE_SESSION', 'records': len(outside)})
+        if reported > session['minutes'] + EFFORT_DISCREPANCY['minutes']:flags.append({'code': 'SELF_REPORTED_EXCEEDS_SESSION', 'self_reported': reported, 'session': session['minutes']})
+    else:
+        flags.append({'code': 'SESSION_BOUNDS_NOT_RECORDED'})
+    comparisons = {'observed_span': {**compare_minutes(reported, span), 'complete': not unknown}}
+    if session['status'] == 'RECORDED':comparisons['session'] = {**compare_minutes(reported, session['minutes']), 'complete': not unknown}
+    for name, c in comparisons.items():
+        if c['flagged']:flags.append({'code': 'EFFORT_DISCREPANCY', 'against': name, 'difference': c['difference']})
+    # Per effort: an effort covers the work since the previous effort (or the campaign start), so its claimed minutes cannot exceed
+    # that interval by more than a minute when efforts are logged as the work completes (the R4 rule).
+    over, previous = [], parse_time(s.events[0]['recorded_at_utc'])
+    for e in s.events[1:]:
+        if e['type'] != 'effort':continue
+        at = parse_time(e['recorded_at_utc'])
+        if e['record']['analyst_minutes'] != R.UNKNOWN:
+            interval = minutes_between(previous, at)
+            if e['record']['analyst_minutes'] > interval + 1:over.append({'effort': e['record']['id'], 'claimed': e['record']['analyst_minutes'], 'interval': interval})
+        previous = at
+    if over:flags.append({'code': 'EFFORT_EXCEEDS_APPEND_INTERVAL', 'efforts': len(over)})
+    graph = {'self_reported_minutes': acc['graph_minutes'], 'by_category': {c: acc['minutes_by_category'][c] for c in GRAPH_CATEGORIES}}
+    if arm == 'G':
+        later = [t_ for t_, _ in times]
+        windows = [minutes_between(q, next((t_ for t_ in later if t_ > q), q)) for q in sorted(queries)]
+        graph.update({'queries_recorded': len(queries), 'review_window_minutes_upper_bound': round(sum(windows), 2)})
+        if queries and not acc['graph_minutes']:flags.append({'code': 'GRAPH_QUERIES_WITHOUT_GRAPH_TIME', 'queries': len(queries)})
+        if snap.get('connection_log') == CONNECTION_LOG_V2 and acc['graph_minutes'] and not queries:flags.append({'code': 'GRAPH_TIME_WITHOUT_RECORDED_QUERIES'})
+        if queries and acc['graph_minutes'] > sum(windows) + EFFORT_DISCREPANCY['minutes']:
+            flags.append({'code': 'GRAPH_MINUTES_EXCEED_OBSERVED_WINDOWS', 'self_reported': acc['graph_minutes'], 'windows': round(sum(windows), 2)})
+    else:
+        graph.update({'queries_recorded': 'NOT_APPLICABLE'})
+    return {'campaign': s.campaign['id'], 'arm': arm, 'first_record_utc': first.isoformat(), 'last_record_utc': last.isoformat(),
+            'timestamps': len(times), 'excluded_human_decision_records': {k: sum(e['type'] == k for e in excluded) for k in ('review', 'disposition')},
+            'observed_span_minutes': span, 'long_gaps': gaps, 'session': session,
+            'self_reported': {'analyst_minutes': reported, 'unknown_entries': unknown, 'by_category': acc['minutes_by_category']},
+            'comparisons': comparisons, 'graph_time': graph, 'efforts_exceeding_append_interval': over, 'flags': flags,
+            'threshold': f"flag when |self-reported - derived| > {EFFORT_DISCREPANCY['minutes']} minutes or > {int(EFFORT_DISCREPANCY['share'] * 100)}% of derived "
+                         '(either condition; the whichever-is-larger reading is an owner decision)',
+            'interpretation': 'Derived values bound elapsed time between recorded actions; they are not measured effort. Idle time inside the span '
+                              'is not separable, and work before the first or after the last record is unobserved.'}
+
+
+# -- R4 readiness: full suggestion accounting -------------------------------------------------------------
+
+def ratio(numerator, denominator):
+    if numerator == R.UNKNOWN or denominator == R.UNKNOWN:return {'numerator': numerator, 'denominator': denominator, 'value': R.UNKNOWN}
+    return {'numerator': numerator, 'denominator': denominator,
+            'value': round(numerator / denominator, 4) if denominator else 'UNDEFINED_ZERO_DENOMINATOR'}
+
+
+ADJUDICATED = ('CONFIRMED_AGAINST_ORIGINALS', 'PLAUSIBLE_UNVERIFIED', 'REJECTED_FALSE', 'REJECTED_TRIVIAL')
+
+
+def suggestion_accounting(packet_dir, adjudicated_rows=None):
+    """Every graph suggestion of arm G, by class: exported, logged (accepted / declined / unresolved), exported but
+    unlogged, and adjudicated outcomes, each with its denominator. Warnings are never counted as discoveries.
+
+    ``adjudicated_rows`` (from ``unblind``) adds outcomes; without it they are NOT_ADJUDICATED. Legacy V1 packets cannot
+    trace suggestions (NOT_TRACEABLE_V1); a V2 packet without its export is V2_EXPORT_MISSING and its exported counts
+    are UNKNOWN, never zero."""
+    d = Path(packet_dir); snap = load_snapshot(d / 'snapshot.json')['snapshot']
+    v2 = snap.get('connection_log') == CONNECTION_LOG_V2
+    log = d / 'connections-G.jsonl'
+    rows = read_jsonl(log) if log.is_file() else []
+    key = json.loads((d / 'key.json').read_text(encoding='utf-8')) if (d / 'key.json').is_file() else {}
+    files = [d / m['path'] for m in key['suggestion_exports']] if key.get('suggestion_exports') else default_exports(d / 'snapshot.json')
+    if not v2:
+        traceability, index = 'NOT_TRACEABLE_V1', None
+    elif not files:
+        traceability, index = 'V2_EXPORT_MISSING', None
+    else:
+        traceability, index = 'V2_FROZEN_EXPORT', load_suggestion_exports(files, d / 'snapshot.json')[0]
+    if index is not None and log.is_file():validate_connections(log, 'G', index, True)
+    traced = [r for r in rows if r.get('origin_suggestion_id')]
+    outcomes = {r['origin_suggestion_id']: r for r in (adjudicated_rows or []) if r.get('arm') == 'G' and r.get('origin_suggestion_id')}
+    out, totals_ = {}, {}
+    for c in K.CLASSES:
+        exported = R.UNKNOWN if index is None else sum(e['connection_class'] == c for e in index.values())
+        mine = [r for r in traced if r['connection_class'] == c]
+        logged_ids = {r['origin_suggestion_id'] for r in mine}
+        decisions = {k: sum(r['arm_decision'] == k for r in mine) for k in ARM_DECISIONS}
+        unlogged = R.UNKNOWN if index is None else sum(1 for e in index.values() if e['connection_class'] == c and e['suggestion_id'] not in logged_ids)
+        entry = {'exported': exported, 'logged_suggestions': len(logged_ids), 'logged_rows': len(mine),
+                 'logged_by_kind': {k: sum(r['kind'] == k for r in mine) for k in CONNECTION_KINDS_V2},
+                 'logged_by_decision': decisions, 'exported_unlogged': unlogged,
+                 'rates': {'logged_share_of_exported': ratio(len(logged_ids), exported), 'unlogged_share_of_exported': ratio(unlogged, exported),
+                           'declined_share_of_logged': ratio(decisions['DECLINED'], len(logged_ids))}}
+        if adjudicated_rows is None:entry['adjudicated'] = 'NOT_ADJUDICATED'
+        else:
+            judged = [outcomes[i] for i in logged_ids if i in outcomes]
+            entry['adjudicated'] = {o: sum(r['outcome'] == o for r in judged) for o in ADJUDICATED}
+            entry['rates']['false_or_trivial_share_of_adjudicated'] = ratio(sum(r['outcome'] in ('REJECTED_FALSE', 'REJECTED_TRIVIAL') for r in judged), len(judged))
+        out[c] = entry
+    for k in ('exported', 'logged_suggestions', 'logged_rows', 'exported_unlogged'):
+        vals = [out[c][k] for c in K.CLASSES]
+        totals_[k] = R.UNKNOWN if R.UNKNOWN in vals else sum(vals)
+    confirmed = lambda r: r['outcome'] == 'CONFIRMED_AGAINST_ORIGINALS'
+    discoveries = [r for r in outcomes.values() if r['connection_class'] == K.ECONOMIC and r['kind'] == 'CONNECTION'
+                   and r['arm_decision'] == 'ACCEPTED' and confirmed(r) and r['economic_meaning'] == 'MEANINGFUL']
+    warnings_ = [r for r in outcomes.values() if r['connection_class'] == K.WARNING and confirmed(r)]
+    legacy_graph_rows = [r for r in rows if not r.get('origin_suggestion_id') and r['operator'] in GRAPH_OPERATORS]
+    seen = [r['origin_suggestion_id'] for r in traced]
+    return {'packet': snap['packet'], 'arm': 'G', 'traceability': traceability, 'by_class': out, 'totals': totals_,
+            'confirmed_economic_discoveries': {'count': len(discoveries) if adjudicated_rows is not None else 'NOT_ADJUDICATED',
+                                               'rule': 'ECONOMIC_CONNECTION_CANDIDATE + CONNECTION + ACCEPTED + CONFIRMED_AGAINST_ORIGINALS + MEANINGFUL'},
+            'methodological_warnings_confirmed': {'count': len(warnings_) if adjudicated_rows is not None else 'NOT_ADJUDICATED',
+                                                  'note': 'reusable research memory; never counted as an economic discovery'},
+            'duplicate_origin_rows': len(seen) - len(set(seen)),
+            'untraced_graph_operator_rows': len(legacy_graph_rows),
+            'structured_arm': 'NOT_APPLICABLE: arm S has no graph suggestions'}
+
+
 def report(packet_dirs, critical_stops=(), export_name='blind.json'):
     """Paired per-packet outcomes for every dimension, the cost of the increment, and the proposed classification."""
     packets = []
     for d in map(Path, packet_dirs):
         snap = load_snapshot(d / 'snapshot.json')['snapshot']; rows = unblind(d, export_name)
         packets.append({'packet': snap['packet'], 'method': snap['prior']['packet_ledger']['method'],
-                        **{arm: arm_metrics(Ledger(d / snap['arms'][arm]['ledger']).load(), arm, rows) for arm in ARMS}})
+                        **{arm: arm_metrics(Ledger(d / snap['arms'][arm]['ledger']).load(), arm, rows) for arm in ARMS},
+                        'effort_check': {arm: derived_effort(d, arm) for arm in ARMS}, 'suggestion_accounting': suggestion_accounting(d, rows)})
     for p in packets:
         p['directions'] = {name: direction(p['G'][name], p['S'][name], better) for name, better in DIMENSIONS + COSTS}
     verdict, notes = classify(packets, critical_stops)

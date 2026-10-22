@@ -4,7 +4,8 @@ from unittest.mock import patch
 from src.research.discovery import records as R
 from src.research.discovery.demo import Clock,clk,entity,passport,rec,syn,observation_first
 from src.research.discovery.ledger import Ledger
-from src.research.graph import catalogue as C,cli as GCLI,demo as D,evaluate as E,model as M,operators as O,pilot as P,pilot_dryrun as DR,render as RN
+from src.research.graph import catalogue as C,cli as GCLI,demo as D,evaluate as E,implementation as I,model as M,operators as O,pilot as P,pilot_dryrun as DR,render as RN
+from src.research.graph import pilot_r4_dryrun as R4
 from src.research.graph.fixtures import AUTHORITY,ECHO,T7,build_all,campaign,obs
 from src.research.graph.project import GraphError,build
 from src.research.graph.rules import View,find_paths,verified_assertion
@@ -823,7 +824,7 @@ class GraphPilotV2ProvenanceTests(unittest.TestCase):
         GraphPilotProtocolTests.setUp(self)
         frozen=json.loads(self.snap.read_text(encoding='utf-8'))['frozen_at_utc'];self.snap.unlink()  # refreeze the same packet for V2 logs
         P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',{'S':(self.d/'S.jsonl','DLC-GP1-S'),'G':(self.d/'G.jsonl','DLC-GP1-G')},self.bundle,
-                        frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2)
+                        frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2,implementation=R4.synthetic_pin())
         self.arm('S');_,self.t=self.arm('G')
         g,view=P.arm_graph(self.snap,'G',self.t)
         receipt=json.loads(json.dumps(view['receipt']))
@@ -960,6 +961,87 @@ class GraphPilotV2ProvenanceTests(unittest.TestCase):
         with self.assertRaisesRegex(P.PilotError,'pins GRAPH_OPERATORS_V1_0'):P.arm_graph(self.d/'old.json','G',self.t)
         with self.assertRaisesRegex(P.PilotError,'connection_log'):P.make_snapshot(self.dir/'x.json','P9',self.d/'packet.jsonl',{},connection_log='V9')
         for packet in ('P3','P4'):self.assertNotIn('connection_log',json.loads((ROOT/f'docs/strategy/graph_pilot_r3/{packet}/snapshot.json').read_text(encoding='utf-8')))
+
+
+class GraphPilotR4ReadinessTests(unittest.TestCase):
+    """R4 readiness Phase A: implementation pinning, timestamp-derived effort, full suggestion accounting, adversarial checks."""
+
+    def setUp(self):
+        self.tmp=Path(tempfile.mkdtemp(prefix='graph-r4-test-'));self.addCleanup(R4.remove_tree,self.tmp)
+
+    def test_pin_binds_commit_and_content_and_defines_dirty_unrelated_and_missing_git(self):
+        impl=R4.pinned_copy(self.tmp/'impl');pin=I.pin(impl)
+        self.assertEqual((I.verify(pin,impl)['status'],len(pin['commit']),pin['normalisation']),('EXACT_COMMIT',40,'CRLF_TO_LF'))
+        self.assertIn('src/research/graph/pilot.py',pin['files']);self.assertIn('src/research/spec.py',pin['files'])
+        self.assertNotIn('src/research/sec_pilot/parsing.py',pin['files'])
+        f=impl/'src/research/discovery/ledger.py';original=f.read_bytes()
+        f.write_bytes(original+b'# local edit\n')
+        with self.assertRaisesRegex(I.PinError,'uncommitted changes'):I.pin(impl)
+        with self.assertRaisesRegex(I.PinError,"'changed': \\['src/research/discovery/ledger.py'\\]"):I.verify(pin,impl)
+        f.write_bytes(original.replace(b'\n',b'\r\n'));self.assertEqual(I.verify(pin,impl)['status'],'EXACT_COMMIT')  # line endings normalised
+        f.write_bytes(original);(impl/'README.md').write_text('unrelated\n',encoding='utf-8')
+        R4.git(impl,'add','-A');R4.git(impl,'commit','-q','-m','unrelated')
+        self.assertEqual(I.verify(pin,impl)['status'],'UNRELATED_COMMIT_CHANGE')
+        (impl/'src/research/graph/new_module.py').write_text('X = 1\n',encoding='utf-8')
+        with self.assertRaisesRegex(I.PinError,"'added'"):I.verify(pin,impl)
+        bare=self.tmp/'bare';shutil.copytree(impl/'src',bare/'src')
+        (bare/'src/research/graph/new_module.py').unlink()
+        with self.assertRaisesRegex(I.PinError,'git metadata is unavailable'):I.pin(bare)
+        self.assertEqual(I.verify(pin,bare)['status'],'GIT_UNAVAILABLE_CONTENT_VERIFIED')
+        with self.assertRaisesRegex(I.PinError,'unknown implementation pin version'):I.verify(dict(pin,version='X'),impl)
+
+    def test_v2_snapshots_require_and_enforce_the_pin_and_legacy_snapshots_are_unpinned(self):
+        GraphPilotProtocolTests.setUp(self)
+        frozen=json.loads(self.snap.read_text(encoding='utf-8'))['frozen_at_utc'];self.snap.unlink()
+        arms={'S':(self.d/'S.jsonl','DLC-GP1-S'),'G':(self.d/'G.jsonl','DLC-GP1-G')}
+        with patch.object(I,'git_state',return_value={'status':'DIRTY','commit':'a'*40,'dirty':['src/research/graph/pilot.py']}):
+            with self.assertRaisesRegex(P.PilotError,'uncommitted changes'):P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',arms,frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2)
+        with patch.object(I,'git_state',return_value={'status':'GIT_UNAVAILABLE','commit':None,'dirty':None}):
+            with self.assertRaisesRegex(P.PilotError,'git metadata is unavailable'):P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',arms,frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2)
+        P.make_snapshot(self.snap,'P1',self.d/'packet.jsonl',arms,frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2,implementation=R4.synthetic_pin())
+        _,t=GraphPilotProtocolTests.arm(self,'G')
+        g,view=P.arm_graph(self.snap,'G',t)
+        self.assertEqual(view['receipt']['graph_implementation']['commit'],R4.synthetic_pin()['commit'])
+        snap=json.loads(self.snap.read_text(encoding='utf-8'))
+        wrong=dict(snap,graph_implementation=dict(snap['graph_implementation'],tree_digest='0'*64));(self.d/'wrong.json').write_text(json.dumps(wrong),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'differs from the snapshot pin'):P.arm_graph(self.d/'wrong.json','G',t)
+        (self.d/'none.json').write_text(json.dumps({k:v for k,v in snap.items() if k!='graph_implementation'}),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'must pin'):P.load_snapshot(self.d/'none.json')
+        self.assertEqual(P.verify_summary(self.snap)['implementation']['status'],'UNRELATED_COMMIT_CHANGE')  # synthetic commit, same content
+        for packet in ('P3','P4'):
+            self.assertEqual(P.verify_summary(ROOT/f'docs/strategy/graph_pilot_r3/{packet}/snapshot.json')['implementation'],{'status':'NOT_PINNED_LEGACY'})
+
+    def test_effort_threshold_reads_the_r4_rule_literally_and_reports_both_conditions(self):
+        self.assertEqual(P.compare_minutes(20,15)['exceeds_5_minutes'],False);self.assertTrue(P.compare_minutes(20,15)['flagged'])  # 10% of 15
+        self.assertTrue(P.compare_minutes(126,120)['exceeds_5_minutes']);self.assertFalse(P.compare_minutes(126,120)['exceeds_10_percent'])
+        self.assertFalse(P.compare_minutes(16,15.5)['flagged'])
+        self.assertEqual(P.ratio(0,0)['value'],'UNDEFINED_ZERO_DENOMINATOR');self.assertEqual(P.ratio('UNKNOWN',3)['value'],'UNKNOWN')
+
+    def test_r3_effort_and_accounting_are_diagnostic_and_its_results_are_unchanged(self):
+        base=ROOT/'docs/strategy/graph_pilot_r3';before={f:sha(f) for f in sorted(base.rglob('*')) if f.is_file()}
+        rep=P.report([base/'P3',base/'P4'],export_name='blind_v2.json')
+        self.assertEqual(rep['classification'],'INCONCLUSIVE');self.assertIn('G 3.151, S 4.162',[n for n in rep['notes'] if n.startswith('pooled')][0])
+        accounts=[p['suggestion_accounting'] for p in rep['packets']]
+        self.assertEqual({a['traceability'] for a in accounts},{'NOT_TRACEABLE_V1'})
+        self.assertEqual(sum(a['untraced_graph_operator_rows'] for a in accounts),10)  # R3's ten untraced graph-operator connections
+        self.assertTrue(all(a['totals']['exported']=='UNKNOWN' for a in accounts))
+        for p in rep['packets']:
+            for arm in P.ARMS:
+                e=p['effort_check'][arm]
+                self.assertGreaterEqual(e['excluded_human_decision_records']['disposition'],1)  # the owner's later dispositions are not arm effort
+                self.assertLess(e['observed_span_minutes'],120);self.assertEqual(e['session']['status'],'NOT_RECORDED')
+        self.assertEqual({f:sha(f) for f in sorted(base.rglob('*')) if f.is_file()},before)
+
+    def test_r4_dry_run_record_is_current(self):
+        self.assertEqual(R4.check()['r4_dry_run'],'PASS')
+
+    def test_adversarial_evaluation_is_current_and_reports_the_trivial_identifier_weakness(self):
+        from src.research.graph import adversarial as AD
+        self.assertEqual(AD.check()['adversarial'],'PASS')
+        rep=AD.run(self.tmp/'adv');v11,st=rep['totals']['graph_v1_1'],rep['totals']['structured_search']
+        self.assertEqual((v11['true_positives'],v11['false_negatives'],v11['identity_or_timing_errors']),(4,0,0))
+        self.assertEqual(v11['false_positives_by_challenge'],{'trivial shared identifier':2})  # reported as found, not tuned away
+        self.assertEqual(st['false_positives'],4);self.assertEqual(v11['warnings_correct'],1)
 
 
 if __name__=='__main__':unittest.main()

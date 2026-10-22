@@ -69,18 +69,18 @@ Analysis is descriptive only: per-packet paired differences and pooled totals, e
   - any export shown before `leak-scan` passes;
   - any AI assessment read before human adjudication is committed.
 
-## Tooling needed before activation (not yet implemented)
+## Tooling status before activation
 
-These are not implemented on this branch.
+Phase A ([readiness report](graph_pilot_r4_readiness_v001.md), branch `graph-pilot-r4-readiness`) implemented and tested items 1, 4 and 6 on synthetic fixtures only:
 
-1. A derived-effort report from append and session timestamps.
-2. Per-item `SAW_ARM_INFO` exposure for adjudicators other than the owner, generalising the R3 `SAW_V001` note.
-3. A two-adjudicator log with agreement reporting.
-4. Pinning the graph git commit in the snapshot. `connection_log` and `graph_operator_version` are already implemented.
-5. An adjudication vocabulary for warnings ("useful lesson" or "not useful"). Today a warning is adjudicated with the connection outcomes.
-6. A count of exported-but-unlogged suggestions in `pilot report`, read from the sealed manifest.
+1. **IMPLEMENTED.** Timestamp-derived effort from append, connection-log, graph-query and operator session timestamps (`pilot effort`; `session-<arm>.json`).
+2. **NOT_IMPLEMENTED (Phase B).** Per-item `SAW_ARM_INFO` exposure for adjudicators other than the owner, generalising the R3 `SAW_V001` note.
+3. **NOT_IMPLEMENTED (Phase B).** A two-adjudicator log with agreement reporting.
+4. **IMPLEMENTED.** The graph git commit and implementation content digest are pinned in V2 snapshots (`graph_implementation`), beside `connection_log` and `graph_operator_version`.
+5. **NOT_IMPLEMENTED (Phase B).** An adjudication vocabulary for warnings ("useful lesson" or "not useful"). Today a warning is adjudicated with the connection outcomes.
+6. **IMPLEMENTED.** Full suggestion accounting: exported, logged, declined and exported-but-unlogged suggestions by class (`pilot suggestion-accounting`; `pilot report`).
 
-Each needs tests and a synthetic dry run (`pilot dry-run`) before any activation.
+Each remaining item needs tests and a synthetic dry run before any activation. The Phase A rehearsal is `pilot r4-dry-run`.
 
 ## Not authorised
 
