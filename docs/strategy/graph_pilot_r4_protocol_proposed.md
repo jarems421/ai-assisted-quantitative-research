@@ -48,7 +48,9 @@ No prices, returns, backtests or investment claims. M passes and H judgments are
 
 A definitive classification requires either every arm's effort evidence to be CONSISTENT, or no arm CONTRADICTORY and the same classification under the session sensitivity. Otherwise the result is INCONCLUSIVE (`EFFORT_EVIDENCE_UNRESOLVED`), shown beside the primary result.
 
-**Classification ruleset.** It is recorded in each V2 snapshot (`--classification`). `GRAPH_CLASSIFICATION_V1_2`, under which generic shared identifiers do not ground, was registered before its holdout and is supported on it; adopting it for R4 is an owner decision.
+**Graph configuration (owner decision, frozen prospectively).** R4 uses `GRAPH_OPERATORS_V1_1` with `GRAPH_CLASSIFICATION_V1_2`, under which generic shared identifiers do not ground, and generic register V001, as frozen in [graph_pilot_r4_graph_configuration_v001.json](graph_pilot_r4_graph_configuration_v001.json). V2 snapshots default to it and record any deviation. The rule was registered before its holdout and is supported on it.
+
+**Execution provenance and environment ([readiness v003](graph_pilot_r4_readiness_v003.md)).** Each saved query records its running commit and uncommitted pinned paths. These are validated against the repository's history before blinding; that is consistency, not proof. R4 runs from one frozen checkout and one Python environment, with full git history kept and no package changes.
 
 All per-hour outcomes use all analyst minutes, including graph query and suggestion-review time, and report self-logged and derived minutes side by side.
 

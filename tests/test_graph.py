@@ -1,4 +1,4 @@
-import builtins,contextlib,copy,hashlib,io,json,shutil,socket,tempfile,unittest
+import builtins,contextlib,copy,hashlib,io,json,os,shutil,socket,subprocess,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 from src.research.discovery import records as R
@@ -1139,9 +1139,90 @@ class GraphV12HoldoutTests(unittest.TestCase):
         self.assertEqual((v12['true_positives'],v12['false_negatives'],v11['false_negatives']),(5,0,0))
         self.assertEqual((v11['false_positives_by_case'],v12['false_positives_by_case']),(['H1','H2','H3','H7','H10'],['H7']))  # H7: declared expected miss
         self.assertEqual(v11['review_load'],v12['review_load'])  # labelling never hides items
-        ordered=subprocess.run(['git','merge-base','--is-ancestor',HO.RULE_COMMIT,'HEAD'],cwd=ROOT,capture_output=True)
-        if ordered.returncode not in (0,1):self.skipTest('git history unavailable')
-        self.assertEqual(ordered.returncode,0)  # the rule commit precedes the holdout
+        rule_commit=HO.RULE_COMMIT
+        def git(*a):return subprocess.run(['git',*a],cwd=ROOT,capture_output=True,text=True)
+        if git('cat-file','-t',rule_commit).returncode!=0:
+            if os.environ.get('GITHUB_ACTIONS'):self.fail('CI must check out full history (fetch-depth: 0) so the registration order is verified')
+            self.skipTest('git history unavailable outside CI')
+        self.assertEqual(git('merge-base','--is-ancestor',rule_commit,'HEAD').returncode,0)  # the rule commit precedes the holdout
+        self.assertEqual(git('cat-file','-e',f'{rule_commit}:docs/strategy/graph_v1_2_rule_registration.md').returncode,0)
+        self.assertEqual(git('cat-file','-e',f'{rule_commit}:docs/strategy/graph/generic_identifiers_v001.json').returncode,0)
+        for absent in ('src/research/graph/holdout_v1_2.py','docs/strategy/graph_v1_2_holdout.md'):
+            self.assertNotEqual(git('cat-file','-e',f'{rule_commit}:{absent}').returncode,0)  # the holdout did not exist when the rule was frozen
+        self.assertEqual(git('diff','--quiet',rule_commit,'HEAD','--','docs/strategy/graph/generic_identifiers_v001.json').returncode,0)  # register unchanged since
 
+
+class GraphPilotProvenanceAndConfigurationTests(unittest.TestCase):
+    """Saved execution provenance is validated separately from replay; the registered R4 graph configuration is frozen."""
+
+    def setUp(self):
+        V2=GraphPilotV2ProvenanceTests;self.case=V2('test_exact_origins_are_accepted_and_every_mismatch_is_refused');V2.setUp(self.case)
+        self.addCleanup(self.case.doCleanups)
+        self.export=self.case.d/P.SUGGESTION_EXPORT_DIR/'001-suggestions.json';self.original=self.export.read_bytes()
+
+    def tamper(self,change,whole_receipt=False):
+        # Change only the saved execution-provenance record (or, for removal, the receipt holding it); every other field stays intact.
+        doc=json.loads(self.original);change(doc['visibility'] if whole_receipt else doc['visibility']['implementation_check'])
+        self.export.write_text(json.dumps(doc),encoding='utf-8')
+
+    def load(self):return P.load_suggestion_exports(P.default_exports(self.case.snap),self.case.snap)
+
+    def test_modified_execution_provenance_is_refused_before_sealing(self):
+        saved=json.loads(self.original)['visibility']['implementation_check']
+        self.assertEqual(saved['status'],'UNRELATED_COMMIT_CHANGE')  # synthetic pin commit differs from the running HEAD
+        main=subprocess.run(['git','rev-parse','origin/main'],cwd=ROOT,capture_output=True,text=True).stdout.strip() or saved['running_commit']
+        cases=((lambda c:c.update(running_commit='f'*40),'not in this repository'),
+               (lambda c:c.update(running_commit=main) if main!=saved['running_commit'] else c.update(running_commit='e'*40),'differs from the pin at|not in this repository'),
+               (lambda c:c.update(status='EXACT_COMMIT'),'inconsistent'),
+               (lambda c:c.update(dirty_pinned_paths=sorted(set(c['dirty_pinned_paths'])|{'src/research/spec.py'}) if 'src/research/spec.py' not in c['dirty_pinned_paths'] else c['dirty_pinned_paths'].remove('src/research/spec.py')),'declares uncommitted pinned paths'),
+               (lambda c:c.update(running_commit='HEAD'),'40-hex'),(lambda c:c.update(status='VERIFIED'),'is not one of'),
+               (lambda c:c.update(extra='x'),'exactly the fields'),(lambda c:c.pop('dirty_pinned_paths'),'exactly the fields'),
+               (lambda c:c.update(status='GIT_UNAVAILABLE_CONTENT_VERIFIED'),'names no running commit'))
+        for change,why in cases:
+            self.tamper(change)
+            with self.assertRaisesRegex(P.PilotError,why):self.load()
+        self.tamper(lambda v:v.pop('implementation_check'),whole_receipt=True)
+        with self.assertRaisesRegex(P.PilotError,'record \\(implementation_check\\) is missing'):self.load()
+        logs={'S':self.case.write_log('connections-S.jsonl',[self.case.reading('S')]),'G':self.case.write_log('connections-G.jsonl',[self.case.row(self.case.econ)])}
+        self.tamper(lambda c:c.update(running_commit='f'*40))
+        with self.assertRaisesRegex(P.PilotError,'not in this repository'):P.blind(self.case.snap,logs,'test-salt-0123456789',self.case.d/'b.json',self.case.d/'k.json')
+        self.export.write_bytes(self.original)
+        P.blind(self.case.snap,logs,'test-salt-0123456789',self.case.d/'blind.json',self.case.d/'key.json')
+        sealed=json.loads((self.case.d/'key.json').read_text(encoding='utf-8'))['suggestion_exports'][0]['execution_provenance']
+        self.assertEqual((sealed['level'],sealed['running_commit']),('COMMIT_CONSISTENT_WITH_PIN',saved['running_commit']))
+
+    def test_legitimate_replay_at_an_unrelated_commit_is_accepted(self):
+        moved=lambda root=I.ROOT,paths=None:{'status':'CLEAN','commit':'1'*40,'dirty':[]}  # HEAD has moved on; pinned content unchanged
+        with patch.object(I,'git_state',moved):
+            index,manifest=self.load()
+            self.assertTrue(index)
+            self.assertEqual(P.arm_view(self.case.snap,'G',self.case.t)['receipt']['implementation_check']['running_commit'],'1'*40)
+        self.assertEqual(manifest[0]['execution_provenance']['level'],'COMMIT_CONSISTENT_WITH_PIN')
+
+    def test_validator_scope_is_consistency_not_proof(self):
+        snap=json.loads(self.case.snap.read_text(encoding='utf-8'));files=list(snap['graph_implementation']['files'])
+        older=subprocess.run(['git','rev-list','--max-count=1','HEAD~1'],cwd=ROOT,capture_output=True,text=True).stdout.strip()
+        if not older:self.skipTest('no earlier commit available')
+        at=I.files_at_commit(I.ROOT,older,files);differing=sorted(p for p in files if at.get(p)!=snap['graph_implementation']['files'][p])
+        claim={'status':'UNRELATED_COMMIT_CHANGE','running_commit':older,'dirty_pinned_paths':differing}
+        ok=P.validate_execution_provenance(claim,snap,self.case.t,'probe')  # consistent, so accepted: consistency is all it can show
+        self.assertEqual(ok['level'],'COMMIT_CONSISTENT_WITH_PIN');self.assertIn('not a cryptographic',ok['does_not_establish'])
+        with self.assertRaisesRegex(P.PilotError,'dated after the query'):
+            P.validate_execution_provenance(claim,dict(snap,fixture='LIVE'),'2000-01-01T00:00:00+00:00','probe')
+
+    def test_registered_r4_configuration_is_frozen_and_is_the_v2_default(self):
+        from src.research.graph import connections as K
+        cfg=P.load_r4_configuration()
+        self.assertEqual((cfg['graph_operator_version'],cfg['classification']),('GRAPH_OPERATORS_V1_1','GRAPH_CLASSIFICATION_V1_2'))
+        self.assertEqual(cfg['generic_register']['sha256'],sha(ROOT/cfg['generic_register']['path']))
+        snap=json.loads(self.case.snap.read_text(encoding='utf-8'))
+        self.assertEqual((snap['classification']['rules'],snap['r4_configuration']['conforms']),(K.CLASSIFICATION_V1_2,True))
+        bad=self.case.dir/'cfg.json';bad.write_text(json.dumps(dict(cfg,generic_register=dict(cfg['generic_register'],sha256='0'*64))),encoding='utf-8')
+        with self.assertRaisesRegex(P.PilotError,'differs from the registered R4 configuration'):P.load_r4_configuration(bad)
+        GraphPilotProtocolTests.setUp(self.case)  # a fresh packet frozen with an explicit deviation
+        frozen=json.loads(self.case.snap.read_text(encoding='utf-8'))['frozen_at_utc'];self.case.snap.unlink()
+        P.make_snapshot(self.case.snap,'P1',self.case.d/'packet.jsonl',{'S':(self.case.d/'S.jsonl','DLC-GP1-S'),'G':(self.case.d/'G.jsonl','DLC-GP1-G')},
+                        frozen_at=frozen,connection_log=P.CONNECTION_LOG_V2,implementation=R4.synthetic_pin(),classification=K.CLASSIFICATION_V1_1)
+        self.assertFalse(json.loads(self.case.snap.read_text(encoding='utf-8'))['r4_configuration']['conforms'])  # a deviation is recorded
 
 if __name__=='__main__':unittest.main()

@@ -47,6 +47,17 @@ GRAPH_CATEGORIES = ('GRAPH_QUERY', 'SUGGESTION_REVIEW')
 CATEGORY_TAG = re.compile(r'\[PILOT:([A-Z_]+)\]')
 DECISIVE_TAG = re.compile(r'\[DECISIVE:([A-Z]+-[A-Za-z0-9_.-]+)\]')
 CEILINGS = {'analyst_minutes': 120, 'source_starts': 6, 'searches': 10, 'bytes': 8 * 2 ** 20}
+# Owner decision (2026-10-22): the proposed R4 graph configuration, frozen prospectively. V2 snapshots default to it.
+R4_CONFIGURATION = C.ROOT / 'docs/strategy/graph_pilot_r4_graph_configuration_v001.json'
+R4_CONFIGURATION_VERSION = 'GRAPH_PILOT_R4_GRAPH_CONFIGURATION_V001'
+# Saved execution provenance (the implementation_check of every visibility receipt).
+PROVENANCE_KEYS = ('status', 'running_commit', 'dirty_pinned_paths')
+PROVENANCE_STATUSES = ('EXACT_COMMIT', 'UNRELATED_COMMIT_CHANGE', 'GIT_UNAVAILABLE_CONTENT_VERIFIED')
+PROVENANCE_ESTABLISHES = ('the saved record is well formed and consistent with the snapshot pin; the named commit exists in this repository, is dated '
+                          'no later than the query (by its self-declared committer date), and its pinned files differ from the pinned content '
+                          'exactly at the declared uncommitted paths, so it could have run the pinned code')
+PROVENANCE_PROCEDURAL = ('that the query actually ran at that commit: a git commit, its date and local history are self-reported and not a '
+                         'cryptographic or external attestation; a fabricated record naming another consistent commit cannot be distinguished')
 # Owner policy (2026-10-22): a self-reported vs derived difference is material above the greater of 5 minutes or 10%.
 EFFORT_DISCREPANCY = {'minutes': 5, 'share': 0.10}
 # Owner policy: the human arm operator personally writes separate, immutable START and STOP attestations as they occur.
@@ -111,8 +122,19 @@ def connection_id(source, target, basis):
 
 # -- frozen packet snapshot -------------------------------------------------------------------------
 
+def load_r4_configuration(path=R4_CONFIGURATION):
+    """The registered R4 graph configuration; refuses if its register no longer matches the frozen hash."""
+    cfg = json.loads(Path(path).read_text(encoding='utf-8'))
+    if cfg.get('version') != R4_CONFIGURATION_VERSION:raise PilotError(f'not a {R4_CONFIGURATION_VERSION} configuration')
+    if cfg['graph_operator_version'] != K.OPERATOR_VERSION or cfg['classification'] not in K.CLASSIFICATIONS:
+        raise PilotError('the registered R4 configuration names operators or rules this implementation does not provide')
+    if sha256(C.ROOT / cfg['generic_register']['path']) != cfg['generic_register']['sha256']:
+        raise PilotError('the generic-identifier register differs from the registered R4 configuration')
+    return cfg
+
+
 def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CATALOGUE_PATH, frozen_at=None, now=None, connection_log=None,
-                  implementation=None, classification=K.CLASSIFICATION_V1_1):
+                  implementation=None, classification=None):
     """Freeze one packet's prior knowledge. ``arms`` maps S and G to (ledger path, campaign id); neither ledger may exist yet.
 
     ``connection_log=CONNECTION_LOG_V2`` (prospective pilots) freezes the packet for V2 logs: every arm row must then be V2,
@@ -121,6 +143,8 @@ def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CAT
     taken from another checkout). A V2 packet also records its classification ruleset (``classification``; V1_2 pins the
     generic-identifier register by hash)."""
     if connection_log not in (None, CONNECTION_LOG_V2):raise PilotError(f'connection_log is {CONNECTION_LOG_V2} or omitted')
+    cfg = load_r4_configuration() if connection_log else None
+    classification = classification or (cfg['classification'] if cfg else K.CLASSIFICATION_V1_1)
     if classification not in K.CLASSIFICATIONS:raise PilotError(f'classification is one of {K.CLASSIFICATIONS}')
     out, now = Path(out), utc(now)
     frozen = utc(frozen_at) if frozen_at else now
@@ -154,7 +178,9 @@ def make_snapshot(out, packet, packet_ledger, arms, bundle=None, catalogue=C.CAT
             K.load_register()
             register = {'path': K.GENERIC_REGISTER.relative_to(C.ROOT).as_posix(), 'sha256': sha256(K.GENERIC_REGISTER)}
         snap.update({'connection_log': connection_log, 'graph_operator_version': K.OPERATOR_VERSION, 'graph_implementation': pinned,
-                     'classification': {'rules': classification, 'generic_register': register}})
+                     'classification': {'rules': classification, 'generic_register': register},
+                     'r4_configuration': {'path': R4_CONFIGURATION.relative_to(C.ROOT).as_posix(), 'sha256': sha256(R4_CONFIGURATION),
+                                          'conforms': classification == cfg['classification'] and (register or {}).get('sha256') == cfg['generic_register']['sha256']}})
     return snap, write_new(out, snap)
 
 
@@ -230,7 +256,8 @@ def arm_view(snapshot, arm, query_at=None, now=None):
     if snap.get('graph_implementation'):
         receipt['graph_implementation'] = {k: snap['graph_implementation'][k] for k in ('commit', 'tree_digest')}
         check = implementation_check(snap)  # the actual running commit, recorded with every query
-        receipt['implementation_check'] = {'status': check['status'], 'running_commit': check['running_commit']}
+        receipt['implementation_check'] = {'status': check['status'], 'running_commit': check['running_commit'],
+                                           'dirty_pinned_paths': check.get('dirty_pinned_paths', [])}
         receipt['classification_rules'] = (snap.get('classification') or {}).get('rules', K.CLASSIFICATION_V1_1)
     return {'ledgers': ledgers, 'cuts': cuts, 'catalogue': v['catalogue'], 'mode': 'memory' if snap['fixture'] == 'LIVE' else 'synthetic',
             'receipt': receipt, 'snapshot': snap}
@@ -280,9 +307,45 @@ def replay(g, view, doc):
     return json.loads(json.dumps(res, default=str))
 
 
+def validate_execution_provenance(saved, snap, query_at, where, root=None):
+    """Check the execution-provenance record saved with a query (its receipt's ``implementation_check``).
+
+    Replay deliberately ignores this record, because a replay may run later at a content-identical unrelated commit; it is
+    validated here instead. Malformed, removed, internally inconsistent or modified records are refused. What a passing
+    record establishes, and what stays procedural, is returned with it (``PROVENANCE_ESTABLISHES`` / ``PROVENANCE_PROCEDURAL``)."""
+    root = root or I.ROOT; pinned = snap.get('graph_implementation')
+    if not pinned:return {'level': 'NOT_PINNED_LEGACY'}
+    if saved is None:raise PilotError(f'{where}: the saved execution-provenance record (implementation_check) is missing')
+    if not isinstance(saved, dict) or tuple(sorted(saved)) != tuple(sorted(PROVENANCE_KEYS)):
+        raise PilotError(f'{where}: execution provenance must have exactly the fields {PROVENANCE_KEYS}')
+    status, commit, dirty = saved['status'], saved['running_commit'], saved['dirty_pinned_paths']
+    if status not in PROVENANCE_STATUSES:raise PilotError(f'{where}: execution provenance status {status!r} is not one of {PROVENANCE_STATUSES}')
+    if not isinstance(dirty, list) or dirty != sorted(set(dirty)) or not set(dirty) <= set(pinned['files']):
+        raise PilotError(f'{where}: dirty_pinned_paths must be a sorted list of pinned files')
+    if status == 'GIT_UNAVAILABLE_CONTENT_VERIFIED':
+        if commit != 'UNKNOWN' or dirty:raise PilotError(f'{where}: a query without git metadata names no running commit and no dirty paths')
+        return {'level': 'NO_COMMIT_CLAIMED', 'status': status, 'running_commit': commit}
+    if not re.fullmatch(r'[0-9a-f]{40}', str(commit)):raise PilotError(f'{where}: the saved running commit is not a 40-hex commit id')
+    if (status == 'EXACT_COMMIT') != (commit == pinned['commit']):
+        raise PilotError(f'{where}: status {status} is inconsistent with the running commit and the pinned commit')
+    at = I.files_at_commit(root, commit, list(pinned['files']))
+    if at is None:raise PilotError(f'{where}: the saved running commit {commit[:12]} is not in this repository (or git is unavailable here)')
+    differing = sorted(p for p, d in pinned['files'].items() if at.get(p) != d)
+    if differing != dirty:
+        raise PilotError(f'{where}: the saved record declares uncommitted pinned paths {dirty}, but commit {commit[:12]} differs from the pin at {differing}')
+    dated = I.commit_time(root, commit)
+    if snap.get('fixture') == 'SYNTHETIC':date_check = 'NOT_APPLICABLE_SYNTHETIC_CLOCK'  # fixture query times are a fixed synthetic clock
+    elif dated is None or parse_time(dated) > parse_time(query_at) + timedelta(minutes=ATTESTATION_LAG_MINUTES):
+        raise PilotError(f'{where}: the saved running commit {commit[:12]} is dated after the query')
+    else:date_check = 'COMMIT_DATED_BEFORE_QUERY'
+    return {'level': 'COMMIT_CONSISTENT_WITH_PIN', 'status': status, 'running_commit': commit, 'dirty_pinned_paths': dirty, 'date_check': date_check,
+            'establishes': PROVENANCE_ESTABLISHES, 'does_not_establish': PROVENANCE_PROCEDURAL}
+
+
 def receipt_core(receipt):
     """A visibility receipt without its volatile fields: the arm ledger's total length and the running commit when saved
-    (a replay may run later, at a content-identical unrelated commit)."""
+    (a replay may run later, at a content-identical unrelated commit). The saved running-commit record is validated
+    separately by ``validate_execution_provenance``."""
     core = json.loads(json.dumps(receipt, default=str))
     core.get('own_ledger', {}).pop('events_total', None)
     core.pop('implementation_check', None)
@@ -306,6 +369,7 @@ def load_suggestion_exports(files, snapshot):
         doc = json.loads(f.read_text(encoding='utf-8')); vis = doc.get('visibility') or {}
         if vis.get('arm') != 'G' or vis.get('snapshot_sha256') != v['sha256']:raise PilotError(f'{f.name}: not a graph-arm output for this packet snapshot')
         entries = export_entries(doc)
+        provenance = validate_execution_provenance(vis.get('implementation_check'), v['snapshot'], vis['query_at_utc'], f.name)
         g, view = arm_graph(snapshot, 'G', vis['query_at_utc'])
         if receipt_core(vis) != receipt_core(view['receipt']):raise PilotError(f'{f.name}: visibility receipt differs from its snapshot replay')
         body, expected = {k: x for k, x in doc.items() if k != 'visibility'}, replayed_output(g, view, doc)
@@ -323,7 +387,8 @@ def load_suggestion_exports(files, snapshot):
             if prev and parse_time(prev['query_at_utc']) <= parse_time(e['query_at_utc']):e = dict(prev, commands=e['commands'])  # earliest issue stands
             index[e['suggestion_id']] = e
         manifest.append({'path': Path(os.path.relpath(f.resolve(), Path(snapshot).resolve().parent)).as_posix(), 'sha256': sha256(f),
-                         'query_at_utc': vis['query_at_utc'], 'suggestions': len(entries)})
+                         'query_at_utc': vis['query_at_utc'], 'suggestions': len(entries),
+                         'execution_provenance': {k: provenance.get(k) for k in ('level', 'status', 'running_commit')}})
     return index, manifest
 
 

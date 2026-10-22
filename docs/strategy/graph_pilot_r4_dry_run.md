@@ -22,6 +22,8 @@
 | legacy | a legacy (non-V2) snapshot carries no pin and is not checked | NOT_PINNED_LEGACY | PASS |
 | pin | a snapshot pinned to another implementation refuses every arm query | refused: 'changed': ['src/research/graph/operators.py'] | PASS |
 | pin | a V2 snapshot without a pin is refused | refused: must pin the Graph implementation | PASS |
+| provenance | a modified saved running commit (all else intact) is refused before sealing | refused: not in this repository | PASS |
+| provenance | replay after HEAD moves to an unrelated commit with identical pinned code is accepted | COMMIT_CONSISTENT_WITH_PIN | PASS |
 | effort | contemporaneous G logging: no material discrepancy; the difference is still reported; evidence CONSISTENT | session 16.0 vs self 16 (0.0 min, 0.0%); CONSISTENT | PASS |
 | effort | material threshold is the greater of 5 minutes or 10% of the comparator; smaller differences are reported | 54 vs 50: 4 min / 8.0%, threshold 5; 133 vs 120 material | PASS |
 | effort | graph query and suggestion-review time are reported where measurable | 2 recorded queries; 9 self-reported graph minutes; review windows <= 7.0 min | PASS |
@@ -73,4 +75,4 @@
 
 - Confirmed economic discoveries: 1 row(s), 1 suggestion(s) (rule: ECONOMIC_CONNECTION_CANDIDATE + CONNECTION + ACCEPTED + CONFIRMED_AGAINST_ORIGINALS + MEANINGFUL).
 - Methodological warnings confirmed: 0; never counted as discoveries.
-- 49/49 checks passed.
+- 51/51 checks passed.

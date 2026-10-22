@@ -175,12 +175,55 @@ def git_state_uncached(root, paths):
     try:
         head = run('rev-parse', '--verify', 'HEAD')
         if head.returncode != 0 or not (Path(root) / '.git').exists():return {'status': 'GIT_UNAVAILABLE', 'commit': None, 'dirty': None}
-        status = run('status', '--porcelain', '--untracked-files=all', '--', *ROOT_DIRS, *paths)
+        status = run('status', '--porcelain', '--untracked-files=all', '-z', '--', *ROOT_DIRS, *paths)
         if status.returncode != 0:return {'status': 'GIT_UNAVAILABLE', 'commit': None, 'dirty': None}
     except (OSError, subprocess.SubprocessError):
         return {'status': 'GIT_UNAVAILABLE', 'commit': None, 'dirty': None}
-    dirty = sorted({line[3:].strip().strip('"') for line in status.stdout.splitlines() if line.strip() and '__pycache__' not in line})
+    # NUL-separated entries: 'XY path'; a rename or copy is followed by its original path as a separate entry.
+    entries, dirty, i = status.stdout.split('\0'), set(), 0
+    while i < len(entries):
+        e = entries[i]
+        if len(e) > 3:
+            dirty.add(e[3:])
+            if e[0] in 'RC' and i + 1 < len(entries):dirty.add(entries[i + 1]); i += 1
+        i += 1
+    dirty = sorted(x for x in dirty if '__pycache__' not in x)
     return {'status': 'DIRTY' if dirty else 'CLEAN', 'commit': head.stdout.strip(), 'dirty': dirty}
+
+
+_AT_COMMIT = {}
+
+
+def files_at_commit(root, commit, paths):
+    """Normalised sha256 of each path's committed content at ``commit`` (None where absent), or None when the commit is
+    not in this repository or git is unavailable. One ``git cat-file --batch`` process; cached, since commits are immutable."""
+    key = (str(Path(root).resolve()), commit, tuple(sorted(paths)))
+    if key in _AT_COMMIT:return dict(_AT_COMMIT[key]) if _AT_COMMIT[key] is not None else None
+    try:
+        kind = subprocess.run(['git', '-C', str(root), 'cat-file', '-t', commit], capture_output=True, text=True, timeout=60)
+        if kind.returncode != 0 or kind.stdout.strip() != 'commit':_AT_COMMIT[key] = None; return None
+        ordered = sorted(paths)
+        out = subprocess.run(['git', '-C', str(root), 'cat-file', '--batch'], input=''.join(f'{commit}:{p}\n' for p in ordered).encode(),
+                             capture_output=True, timeout=120).stdout
+    except (OSError, subprocess.SubprocessError):
+        return None
+    found, pos = {}, 0
+    for rel in ordered:
+        end = out.index(b'\n', pos); header = out[pos:end].split(); pos = end + 1
+        if header[-1] == b'missing':found[rel] = None; continue
+        size = int(header[2]); body = out[pos:pos + size]; pos += size + 1
+        found[rel] = hashlib.sha256(body.replace(b'\r\n', b'\n')).hexdigest()
+    _AT_COMMIT[key] = found
+    return dict(found)
+
+
+def commit_time(root, commit):
+    """The commit's committer date (self-declared by whoever made the commit), or None."""
+    try:
+        r = subprocess.run(['git', '-C', str(root), 'show', '-s', '--format=%cI', commit], capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return r.stdout.strip() if r.returncode == 0 and r.stdout.strip() else None
 
 
 def pin(root=ROOT):
@@ -208,4 +251,5 @@ def verify(pinned, root=ROOT, with_git=True):
     if state['status'] == 'GIT_UNAVAILABLE':status = 'GIT_UNAVAILABLE_CONTENT_VERIFIED'
     elif state['commit'] == pinned['commit']:status = 'EXACT_COMMIT'
     else:status = 'UNRELATED_COMMIT_CHANGE'
-    return {'status': status, 'pinned_commit': pinned['commit'], 'running_commit': state['commit'] or 'UNKNOWN', 'dirty_pinned_paths': state['dirty'] or []}
+    dirty = sorted(set(state['dirty'] or ()) & set(pinned['files']))  # uncommitted pinned files whose content nonetheless equals the pin
+    return {'status': status, 'pinned_commit': pinned['commit'], 'running_commit': state['commit'] or 'UNKNOWN', 'dirty_pinned_paths': dirty}

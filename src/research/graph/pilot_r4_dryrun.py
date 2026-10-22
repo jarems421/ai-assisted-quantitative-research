@@ -346,6 +346,21 @@ def blind_and_report(c, pk, index):
     return a, rep
 
 
+def provenance_checks(c, pk):
+    """The saved execution-provenance record is validated separately from replay: tampering refuses, an unrelated HEAD does not."""
+    snap = pk / 'snapshot.json'; f = P.default_exports(snap)[0]; original = f.read_bytes()
+    doc = json.loads(original); doc['visibility']['implementation_check']['running_commit'] = 'f' * 40
+    f.write_text(json.dumps(doc), encoding='utf-8')
+    c.refused('provenance', 'a modified saved running commit (all else intact) is refused before sealing',
+              lambda: P.load_suggestion_exports(P.default_exports(snap), snap), 'not in this repository')
+    f.write_bytes(original)
+    moved = lambda root=I.ROOT, paths=None: {'status': 'CLEAN', 'commit': '1' * 40, 'dirty': []}
+    with patch.object(I, 'git_state', moved):
+        manifest = P.load_suggestion_exports(P.default_exports(snap), snap)[1]
+    c.ok('provenance', 'replay after HEAD moves to an unrelated commit with identical pinned code is accepted',
+         all(m['execution_provenance']['level'] == 'COMMIT_CONSISTENT_WITH_PIN' for m in manifest), 'COMMIT_CONSISTENT_WITH_PIN')
+
+
 def uniform_pin_checks(c, pk):
     """Simulate a changed implementation: every snapshot-bound entry point, for both arms, must refuse."""
     real = I.content
@@ -378,6 +393,7 @@ def run(directory):
     bounds = arms(pk, clock)
     tamper_checks(c, pk)
     index = logs(pk, bounds)
+    provenance_checks(c, pk)
     effort_checks(c, pk, bounds, d / 'legacy')
     before = accounting_checks(c, pk, index)
     after, rep = blind_and_report(c, pk, index)

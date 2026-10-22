@@ -90,7 +90,8 @@ def pilot_parser(sub):
     x.add_argument('--bundle'); x.add_argument('--frozen-at'); x.add_argument('--catalogue', default=str(CATALOGUE_PATH))
     x.add_argument('--connection-log', choices=[P.CONNECTION_LOG_V2],
                    help='freeze the packet for V2 suggestion-traceable logs (prospective pilots); also pins the exact Graph implementation (needs a clean git checkout)')
-    x.add_argument('--classification', choices=list(K.CLASSIFICATIONS), default=K.CLASSIFICATION_V1_1, help='connection-classification ruleset recorded in a V2 snapshot')
+    x.add_argument('--classification', choices=list(K.CLASSIFICATIONS),
+                   help='connection-classification ruleset for a V2 snapshot (default: the registered R4 configuration; any other choice is recorded as a deviation)')
     x = ps.add_parser('verify', help='verify a snapshot (and a bundle copy); both arms must print the same summary')
     x.add_argument('snapshot'); x.add_argument('--bundle')
     x = ps.add_parser('connections', help='validate an arm connection log (V1, or prospective V2 with suggestion origins)'); x.add_argument('log'); x.add_argument('--arm', choices=P.ARMS, required=True)
