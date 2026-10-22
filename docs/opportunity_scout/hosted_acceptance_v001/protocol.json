@@ -15,6 +15,23 @@
   "administrative_preflight_scope": "Separate owner-run command and quiet window, not a model-generation reservation. Owner shares only consented config-directory/auth-method categories, never raw auth output. No extra help/version/login/configuration commands inherit authority.",
   "reserved_scientific_attempts_consumed": 0,
   "real_research_inputs_permitted": false,
+  "fictional_seed_consent": {
+    "status": "UNAPPROVED_PROPOSED_N1_ONLY_EXTERNAL_CONSENT_EXCEPTION",
+    "retained_approved_for_hosted_use": false,
+    "existing_seed_schema_constraint": "approved_for_hosted_use is const false; the schema and both exact seed snapshots remain unchanged",
+    "registered_owner_consent": null,
+    "exception_adopted": false,
+    "execution_decision_now": "BLOCK",
+    "future_consent_requirements": [
+      "Separately registered explicit owner identity/date and approval of the complete bound N1 package; no generic approval or preparation-only merge suffices",
+      "Explicitly adopt the N1-only exception permitting transmission of both named fictional seeds despite their retained approved_for_hosted_use:false metadata",
+      "Bind the exact request/stdin SHA256, both seed IDs and text SHA256 values, full package manifest, model/provider/runtime/collector and sole capture reservation",
+      "Acknowledge the hosted-input/privacy/resource scope; permit only the single N1 invocation, with no reuse for scientific work or other requests"
+    ],
+    "future_collector_rule": "STOP unless the separately reviewed native collector verifies every explicit exception and exact-content binding before launch. Never treat false as true, accept generic consent as an override, or bypass an existing generic seed gate.",
+    "generic_seed_gate_unchanged": true,
+    "replacement_fixture_policy": "If this explicit exception is not adopted or the collector cannot enforce it, N1 stays blocked. Any replacement fixture, removal of seeds or changed payload requires a new prospective version, new request/manifest hashes, separate review and fresh owner consent; never edit this fixture in place or loosen the existing seed schema."
+  },
   "resource_policy": "SCOUT_V004_RESOURCE_POLICY_R3_EXACT_COPY_IN_RUNTIME_TEMPLATE",
   "combined_planning_reference_tokens": 60000,
   "planning_reference_is_ceiling": false,

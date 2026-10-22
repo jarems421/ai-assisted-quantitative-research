@@ -1,8 +1,8 @@
-"""Reproducible fictional approval-review documents, never a CLI/model runner.
+"""Read-only fictional approval-review validator, never a CLI/model runner.
 
 Run from repository root:
   python -m docs.opportunity_scout.hosted_acceptance_v001.prepare --check
---write exclusively creates missing proposal artifacts; it never replaces files.
+--check is the only action; there is no generation or write interface.
 Actual runtime, account, capture binding and approval deliberately remain UNBOUND.
 """
 import argparse
@@ -74,6 +74,7 @@ def sha(data): return hashlib.sha256(data).hexdigest()
 
 
 def documents():
+    """Reconstruct expected artifacts in memory for read-only comparison."""
     protocol = S.json_loads((HERE / 'protocol.json').read_text(encoding='utf-8'))
     files = {'request.json': canonical(request()),
              'system-prompt.txt': runtime.SYSTEM_PROMPT.encode('utf-8'),
@@ -107,15 +108,8 @@ def check():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    actions = parser.add_mutually_exclusive_group(required=True)
-    actions.add_argument('--check', action='store_true'); actions.add_argument('--write', action='store_true')
-    args = parser.parse_args()
-    if args.write:
-        files = documents()
-        if any((HERE / name).exists() for name in files):
-            raise S.ScoutError('existing proposal files cannot be replaced')
-        for name, value in files.items():
-            with (HERE / name).open('xb') as stream: stream.write(value)
+    parser.add_argument('--check', action='store_true', required=True)
+    parser.parse_args()
     print(json.dumps(check()))
 
 

@@ -1,5 +1,7 @@
 """Approval-review artifacts and mocked interface boundaries; no native CLI IO."""
 import copy
+import contextlib
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -112,10 +114,42 @@ class HostedReadinessProposalTests(unittest.TestCase):
         self.assertIn('RESEARCH_CONFIGURATION_NOT_ESTABLISHED', result['faults'])
         self.assertEqual(result['historical_writer'], S.UNKNOWN)
 
-    def test_preparer_cannot_overwrite_the_existing_review_package(self):
+    def test_check_cli_is_read_only_and_preserves_exact_artifacts(self):
         before = {p.name: p.read_bytes() for p in B.HERE.glob('*') if p.is_file()}
-        with patch('sys.argv', ['prepare', '--write']), self.assertRaises(S.ScoutError): B.main()
+        original = Path.open
+        def read_only(path, mode='r', *args, **kwargs):
+            self.assertFalse(any(flag in mode for flag in 'wax+'), 'validation attempted a file write')
+            return original(path, mode, *args, **kwargs)
+        output = io.StringIO()
+        with patch('sys.argv', ['prepare', '--check']), patch.object(Path, 'open', read_only), contextlib.redirect_stdout(output):
+            B.main()
+        self.assertFalse(S.json_loads(output.getvalue())['hosted_authorised'])
         self.assertEqual(before, {p.name: p.read_bytes() for p in B.HERE.glob('*') if p.is_file()})
+
+    def test_removed_write_action_is_rejected_before_validation_without_mutation(self):
+        before = {p.name: p.read_bytes() for p in B.HERE.glob('*') if p.is_file()}
+        for arguments in (['--write'], ['--check', '--write']):
+            with self.subTest(arguments=arguments), patch('sys.argv', ['prepare', *arguments]), \
+                 patch.object(B, 'check', side_effect=AssertionError('removed action reached validation')), \
+                 contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as error:
+                B.main()
+            self.assertEqual(error.exception.code, 2)
+        self.assertEqual(before, {p.name: p.read_bytes() for p in B.HERE.glob('*') if p.is_file()})
+
+    def test_fictional_seed_consent_is_explicit_unadopted_and_cannot_flip_schema_flags(self):
+        proposal = S.json_loads((B.HERE / 'protocol.json').read_text())
+        consent = proposal['fictional_seed_consent']
+        self.assertIsNone(consent['registered_owner_consent'])
+        self.assertFalse(consent['exception_adopted'])
+        self.assertEqual(consent['execution_decision_now'], 'BLOCK')
+        self.assertTrue(consent['generic_seed_gate_unchanged'])
+        self.assertFalse(proposal['hosted_calls_authorised'])
+        self.assertEqual(S.SEED['properties']['approved_for_hosted_use'], {'const': False})
+        for seed in B.request()['context']['seeds'].values():
+            self.assertFalse(seed['approved_for_hosted_use'])
+            changed = {k:v for k,v in seed.items() if k != 'text_is_prefix'}
+            changed['approved_for_hosted_use'] = True
+            with self.assertRaises(S.ScoutError): S.validate_seed(changed)
 
 
 if __name__ == '__main__': unittest.main()
