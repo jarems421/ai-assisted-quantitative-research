@@ -317,7 +317,7 @@ def blind_and_report(c, pk, index):
     c.ok('blinding', 'the aliased export passes the leak scan', not leaks, f'{len(v2["items"])} items, {len(leaks)} findings')
     rows = [DR.stand_in_adjudication(i) for i in v2['items']]
     (pk / 'adjudications.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in rows), encoding='utf-8')
-    unblinded = P.unblind(pk, 'blind_v2.json')
+    unblinded = P.unblind(pk, 'blind_v2.json', rehearsal_single_log=True)  # Phase A uses one log; Phase B requires two sealed
     a = P.suggestion_accounting(pk, unblinded)
     disc, warn = a['confirmed_economic_discoveries']['rows'], a['methodological_warnings_confirmed']['rows']
     ea = a['by_class']['ECONOMIC_CONNECTION_CANDIDATE']['adjudicated']
@@ -336,7 +336,7 @@ def blind_and_report(c, pk, index):
          f"discoveries {disc} -> {f['confirmed_economic_discoveries']['rows']}; warnings confirmed {warn} -> {f['methodological_warnings_confirmed']['rows']}")
     stop = P.session_path(pk, 'G', 'STOP'); original = stop.read_bytes()
     stop.write_bytes(original.replace(b'stopped', b'ended'))
-    c.refused('effort', 'an attestation edited after blinding refuses unblinding', lambda: P.unblind(pk, 'blind_v2.json'), 'changed after blinding')
+    c.refused('effort', 'an attestation edited after blinding refuses unblinding', lambda: P.unblind(pk, 'blind_v2.json', rehearsal_single_log=True), 'changed after blinding')
     stop.write_bytes(original)
     rep = P.report([pk], export_name='blind_v2.json')
     c.ok('report', 'the report states the primary measure, both sensitivities and the effort evidence; one pair stays INCONCLUSIVE',

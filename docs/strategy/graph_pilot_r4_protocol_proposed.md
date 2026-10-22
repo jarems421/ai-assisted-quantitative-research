@@ -82,10 +82,10 @@ Analysis is descriptive only: per-packet paired differences and pooled totals, e
 Phase A ([readiness report](graph_pilot_r4_readiness_v001.md), branch `graph-pilot-r4-readiness`) implemented and tested items 1, 4 and 6 on synthetic fixtures only:
 
 1. **IMPLEMENTED.** Timestamp-derived effort from append, connection-log, graph-query and operator-attested session timestamps (`pilot effort`; `pilot session-attest`).
-2. **NOT_IMPLEMENTED (Phase B).** Per-item `SAW_ARM_INFO` exposure for adjudicators other than the owner, generalising the R3 `SAW_V001` note.
-3. **NOT_IMPLEMENTED (Phase B).** A two-adjudicator log with agreement reporting.
+2. **IMPLEMENTED (Phase B, [report](graph_pilot_r4_phase_b_v001.md)).** Per-item exposure declarations (`exposure`: saw_arm_info, seen, operated_or_attested_arm), with CONFLICTED and NOT_INDEPENDENT detection.
+3. **IMPLEMENTED (Phase B).** Two independently sealed human logs (`pilot adjudication-seal`), a git reveal-order check, and agreement reporting (raw agreement, kappa, disagreements; `pilot adjudication-agreement`). The consensus rule is proposed: an outcome counts only where both reviewers agree.
 4. **IMPLEMENTED.** V2 snapshots pin the git commit, the content of the computed implementation boundary (graph, discovery, `spec.py`, the R4 fetch tool and their static import closure) and the Python and dependency versions (`graph_implementation`), beside `connection_log`, `graph_operator_version` and the classification ruleset. Receipts record the actual running commit.
-5. **NOT_IMPLEMENTED (Phase B).** An adjudication vocabulary for warnings ("useful lesson" or "not useful"). Today a warning is adjudicated with the connection outcomes.
+5. **IMPLEMENTED (Phase B).** A separate warning-usefulness log and categories (`USEFUL_LESSON_REUSED`, `USEFUL_NOT_USED`, `NOT_USEFUL`, `CANNOT_ASSESS`), with its own denominators. Conformance-gated primary comparison: non-conforming packets are listed, never compared. Reveal order needs strict ancestry over the commits holding the sealed bytes; zero-row packets are sealed and reported explicitly ([Phase B v003](graph_pilot_r4_phase_b_v003.md)); legacy packets never join an R4 primary cohort; prospective outcomes are unblinded only after both valid seals; POTENTIALLY_UNBLINDED items are included (labelled) with a packet-exclusion sensitivity that must agree (proposed, [Phase B v002](graph_pilot_r4_phase_b_v002.md)).
 6. **IMPLEMENTED.** Full suggestion accounting: exported, logged, declined and exported-but-unlogged suggestions by class (`pilot suggestion-accounting`; `pilot report`).
 
 Each remaining item needs tests and a synthetic dry run before any activation. The Phase A rehearsal is `pilot r4-dry-run`.

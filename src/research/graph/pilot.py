@@ -627,20 +627,37 @@ def validate_adjudications(blind_path, adjudication_path):
     return seen
 
 
-def unblind(packet_dir, export_name='blind.json'):
+def unblind(packet_dir, export_name='blind.json', adjudications=None, rehearsal_single_log=False):
     """Join adjudications to arm logs through the sealed key, after adjudication is complete and committed.
 
     ``export_name`` selects the presentation the adjudicator used (``blind_v2.json`` for an aliased export); its
-    blind ids and key seal are those of the original export."""
+    blind ids and key seal are those of the original export.
+
+    Legacy (V1) packets use the single ``adjudications.jsonl``. A prospective (V2) packet is unblinded only from the
+    consensus of BOTH valid sealed reviewers (``adjudication.dual``), computed here; this tool offers no path to its
+    outcomes before both seals exist. ``adjudications`` (a caller-supplied consensus) is accepted only for synthetic
+    packets, in tests; ``rehearsal_single_log`` lets the Phase A synthetic rehearsal use one legacy log and is refused for
+    live packets. These are software controls on this tool only: anyone with the files can read ``key.json``; keeping it
+    unread until both seals are committed is procedural."""
     d = Path(packet_dir)
     export = json.loads((d / export_name).read_text(encoding='utf-8'))
     if sha256(d / 'key.json') != export['key_sha256']:raise PilotError('the key does not match the hash sealed in the blinded export')
     key = json.loads((d / 'key.json').read_text(encoding='utf-8'))
-    adjudications = validate_adjudications(d / export_name, d / 'adjudications.jsonl')
     # The sealed snapshot decides the log rules (V2-frozen or legacy V1); a missing or different snapshot is refused, never assumed V1.
     if not (d / 'snapshot.json').is_file() or sha256(d / 'snapshot.json') != key['snapshot_sha256']:
         raise PilotError('the packet snapshot is missing or differs from the one sealed in the key')
-    load_snapshot(d / 'snapshot.json')  # the same packet-ledger, catalogue and implementation checks as every other entry point
+    snap = load_snapshot(d / 'snapshot.json')['snapshot']  # the same packet-ledger, catalogue and implementation checks as every other entry point
+    if snap.get('connection_log') != CONNECTION_LOG_V2:
+        if adjudications is None:adjudications = validate_adjudications(d / export_name, d / 'adjudications.jsonl')
+    elif adjudications is not None:
+        if snap['fixture'] != 'SYNTHETIC':raise PilotError('a live prospective packet is unblinded only from its sealed dual logs, never from supplied adjudications')
+    else:
+        from src.research.graph import adjudication as AD
+        dual = AD.dual(d, export_name)
+        if dual['status'] == 'DUAL_SEALED':adjudications = dual['adjudications']
+        elif rehearsal_single_log and snap['fixture'] == 'SYNTHETIC':adjudications = validate_adjudications(d / export_name, d / 'adjudications.jsonl')
+        else:raise PilotError('a prospective packet is unblinded only after both reviewers have sealed valid logs (pilot adjudication-agreement)')
+    if set(adjudications) != set(key['items']):raise PilotError('the adjudications must cover exactly the blinded items')
     for m in key.get('session_attestations', []):
         if not (d / m['path']).is_file() or sha256(d / m['path']) != m['sha256']:raise PilotError(f"session attestation {m['path']} changed after blinding")
     index = None
@@ -655,7 +672,8 @@ def unblind(packet_dir, export_name='blind.json'):
         r, a = logs[ref['arm']][ref['connection_id']], adjudications[bid]
         rows.append({'blind_id': bid, **{k: r[k] for k in ('arm', 'connection_id', 'kind', 'operator', 'found_via', 'arm_decision', 'analyst_minutes')},
                      **{k: r.get(k) for k in ('log_version', 'origin_suggestion_id', 'connection_class')},
-                     **{k: a[k] for k in ('outcome', 'economic_meaning', 'adjudicator_minutes')}})
+                     **{k: a[k] for k in ('outcome', 'economic_meaning', 'adjudicator_minutes')},
+                     **({'usefulness': a['usefulness']} if 'usefulness' in a else {})})
     if len(rows) != sum(len(x) for x in logs.values()):raise PilotError('every logged connection must appear in the blinded export')
     return rows
 
@@ -787,12 +805,13 @@ def sheet(export):
 def account(ledger, arm):
     """Effort by pilot category against the per-campaign ceilings. Unknown minutes stay UNKNOWN, never zero."""
     s = ledger if not isinstance(ledger, (str, Path)) else Ledger(ledger).load()
-    by, violations = {c: 0 for c in CATEGORIES}, []
+    by, unknown_by, violations = {c: 0 for c in CATEGORIES}, {c: 0 for c in CATEGORIES}, []
     for e in s.efforts:
         found = CATEGORY_TAG.findall(e['description'])
         cat = found[0] if len(found) == 1 and found[0] in CATEGORIES else None
         if cat is None:violations.append({'effort': e['id'], 'code': 'UNCATEGORISED_EFFORT'})
         elif e['analyst_minutes'] != R.UNKNOWN:by[cat] += e['analyst_minutes']
+        else:unknown_by[cat] += 1
         if arm == 'S' and cat in GRAPH_CATEGORIES:violations.append({'effort': e['id'], 'code': 'GRAPH_TIME_IN_STRUCTURED_ARM'})
         if e['kind'] == 'SEARCH' and cat != 'SOURCE_SEARCH':violations.append({'effort': e['id'], 'code': 'SEARCH_NOT_CATEGORISED_SOURCE_SEARCH'})
     t = totals(s.efforts)
@@ -801,7 +820,8 @@ def account(ledger, arm):
     for k, limit in CEILINGS.items():
         if used[k] > limit:violations.append({'code': 'OVER_CAMPAIGN_CEILING', 'field': k, 'used': used[k], 'ceiling': limit})
     unknown = {k: t[k]['unknown_entries'] for k in ('analyst_minutes', 'source_starts', 'bytes')}
-    return {'campaign': s.campaign['id'], 'arm': arm, 'minutes_by_category': by, 'graph_minutes': sum(by[c] for c in GRAPH_CATEGORIES),
+    return {'campaign': s.campaign['id'], 'arm': arm, 'minutes_by_category': by, 'unknown_entries_by_category': unknown_by,
+            'graph_minutes': sum(by[c] for c in GRAPH_CATEGORIES), 'graph_minutes_unknown_entries': sum(unknown_by[c] for c in GRAPH_CATEGORIES),
             'used': used, 'ceilings': dict(CEILINGS), 'unknown_entries': unknown, 'violations': violations}
 
 
@@ -846,25 +866,52 @@ def arm_metrics(s, arm, rows):
     by_class = {c: [sum(r['outcome'] in ('REJECTED_FALSE', 'REJECTED_TRIVIAL') for r in traced if r['connection_class'] == c),
                     sum(r['connection_class'] == c for r in traced)] for c in K.CLASSES if any(r['connection_class'] == c for r in traced)}
     m = original_m_passes(s); falsify = decisive_minutes(s)
-    return {'campaign': s.campaign['id'], 'analyst_minutes_all': minutes, 'graph_minutes': acc['graph_minutes'],
+    adj = [r['adjudicator_minutes'] for r in mine]; adj_unknown = sum(x == R.UNKNOWN for x in adj)
+    review_unknown = acc['unknown_entries_by_category']['SUGGESTION_REVIEW']
+    total = lambda known, unknown: R.UNKNOWN if unknown else known  # an incomplete total is UNKNOWN, never a partial sum
+    return {'campaign': s.campaign['id'], 'analyst_minutes_all': minutes,
+            'graph_minutes': total(acc['graph_minutes'], acc['graph_minutes_unknown_entries']), 'graph_minutes_known': acc['graph_minutes'],
+            'graph_minutes_unknown_entries': acc['graph_minutes_unknown_entries'],
             'verified_connections': len(verified), 'verified_connections_per_hour': per_hour(len(verified), minutes),
             'graph_only_verified': sum(r['found_via'] == 'GRAPH_ONLY' for r in verified),
             'false_or_premature_joins_made': sum(r['arm_decision'] == 'ACCEPTED' and r['outcome'] in ('REJECTED_FALSE', 'PLAUSIBLE_UNVERIFIED') for r in conn),
             'false_joins_declined': sum(r['arm_decision'] == 'DECLINED' and r['outcome'] == 'REJECTED_FALSE' for r in conn),
             'true_connections_declined': sum(r['arm_decision'] != 'ACCEPTED' and confirmed(r) for r in conn),
             'median_minutes_per_connection': median([r['analyst_minutes'] for r in conn]),
+            'median_minutes_per_connection_excluded_unknown': sum(r['analyst_minutes'] == R.UNKNOWN for r in conn),
             'median_minutes_to_decisive_falsification': median(falsify.values()), 'decisive_falsification': falsify,
+            'median_minutes_to_decisive_falsification_excluded': sum(v in (R.UNKNOWN, 'NOT_NAMED') for v in falsify.values()),
             'duplicate_research_avoided': sum(r['kind'] == 'AVOIDED_REPEAT' and r['outcome'] == 'CONFIRMED_AGAINST_ORIGINALS' for r in mine),
             'methodological_warnings_logged': len(warnings),
             'methodological_warnings_confirmed_useful': sum(r['outcome'] == 'CONFIRMED_AGAINST_ORIGINALS' for r in warnings),
-            'review_burden_items': len(mine), 'adjudicator_minutes': sum(r['adjudicator_minutes'] for r in mine if r['adjudicator_minutes'] != R.UNKNOWN),
-            'suggestion_review_minutes': acc['minutes_by_category']['SUGGESTION_REVIEW'],
+            'review_burden_items': len(mine),
+            'adjudicator_minutes': total(sum(x for x in adj if x != R.UNKNOWN), adj_unknown),
+            'adjudicator_minutes_known': sum(x for x in adj if x != R.UNKNOWN), 'adjudicator_minutes_unknown_entries': adj_unknown,
+            'suggestion_review_minutes': total(acc['minutes_by_category']['SUGGESTION_REVIEW'], review_unknown),
+            'suggestion_review_minutes_known': acc['minutes_by_category']['SUGGESTION_REVIEW'], 'suggestion_review_minutes_unknown_entries': review_unknown,
             'graph_suggestions_false_or_trivial': [sum(r['outcome'] in ('REJECTED_FALSE', 'REJECTED_TRIVIAL') for r in graph_items), len(graph_items)],
             'graph_rows_false_or_trivial_by_class': by_class,
             'original_frozen_m_passes': m, 'original_frozen_m_passes_per_hour': per_hour(m, minutes),
             'h_plausible_human': sum(1 for r in s.reviews if r['kind'] == 'H' and r['judgments']['judgment'] == 'PLAUSIBLE'
                                      and R.human_equivalent(r['reviewer']['kind'], s.fixture)),
-            'budget_violations': acc['violations']}
+            'budget_violations': acc['violations'], **dual_metrics(mine, conn, warnings)}
+
+
+USEFULNESS_CATEGORIES = ('USEFUL_LESSON_REUSED', 'USEFUL_NOT_USED', 'NOT_USEFUL', 'CANNOT_ASSESS', 'UNRESOLVED_DISAGREEMENT')
+
+
+def dual_metrics(mine, conn, warnings):
+    """Phase B (dual-reviewer consensus rows only): avoided-repetition usefulness, kept apart from economic confirmation."""
+    if not any('usefulness' in r for r in mine):return {}
+    assessed = [r for r in mine if r.get('usefulness') is not None]
+    reused = lambda rows: sum(r['usefulness'] == 'USEFUL_LESSON_REUSED' for r in rows)
+    avoided = [r for r in assessed if r['kind'] == 'AVOIDED_REPEAT']
+    return {'duplicate_research_avoided': reused(avoided),  # both reviewers: the lesson changed or avoided a stated action
+            'methodological_warnings_confirmed_useful': reused([r for r in warnings if r.get('usefulness') is not None]),
+            'warning_usefulness': {'assessed': len(assessed), **{c: sum(r['usefulness'] == c for r in assessed) for c in USEFULNESS_CATEGORIES},
+                                   'reused_share': ratio(reused(assessed), len(assessed)),
+                                   'note': 'avoided-repetition usefulness; never an economic discovery'},
+            'unresolved_disagreements': sum(r['outcome'] == 'UNRESOLVED_DISAGREEMENT' or r['economic_meaning'] == 'UNRESOLVED_DISAGREEMENT' for r in conn)}
 
 
 # Benefit dimensions (direction of improvement); review burden is reported as a cost, never as a benefit.
@@ -875,7 +922,7 @@ COSTS = (('review_burden_items', 'lower'), ('adjudicator_minutes', 'lower'))
 
 
 def direction(g, s, better):
-    if g is None or s is None:return 'NOT_COMPARABLE'
+    if g in (None, R.UNKNOWN) or s in (None, R.UNKNOWN):return 'NOT_COMPARABLE'
     if g == s:return 'EQUAL'
     return 'G' if (g > s) == (better == 'higher') else 'S'
 
@@ -1158,7 +1205,7 @@ def suggestion_accounting(packet_dir, adjudicated_rows=None):
     confirmed = lambda r: r['outcome'] == 'CONFIRMED_AGAINST_ORIGINALS'
     discoveries = [r for r in judged.values() if r['connection_class'] == K.ECONOMIC and r['kind'] == 'CONNECTION'
                    and r['arm_decision'] == 'ACCEPTED' and confirmed(r) and r['economic_meaning'] == 'MEANINGFUL']
-    warnings_ = [r for r in judged.values() if r['connection_class'] == K.WARNING and confirmed(r)]
+    warnings_ = [r for r in judged.values() if r['connection_class'] == K.WARNING and (r.get('usefulness') == 'USEFUL_LESSON_REUSED' if 'usefulness' in r else confirmed(r))]
     legacy_graph_rows = [r for r in rows if not r.get('origin_suggestion_id') and r['operator'] in GRAPH_OPERATORS]
     pending = 'NOT_ADJUDICATED'
     return {'packet': snap['packet'], 'arm': 'G', 'traceability': traceability, 'by_class': out, 'totals': totals_,
@@ -1201,22 +1248,61 @@ def report(packet_dirs, critical_stops=(), export_name='blind.json'):
     classification is unchanged under the attested-session sensitivity denominator. Otherwise it is reported as
     INCONCLUSIVE (EFFORT_EVIDENCE_UNRESOLVED), with the primary result shown beside it. The observed-span sensitivity is
     descriptive only and never supports a classification."""
+    from src.research.graph import adjudication as AD
     packets, prospective = [], False
     for d in map(Path, packet_dirs):
-        snap = load_snapshot(d / 'snapshot.json')['snapshot']; rows = unblind(d, export_name)
-        prospective = prospective or snap.get('connection_log') == CONNECTION_LOG_V2
+        snap = load_snapshot(d / 'snapshot.json')['snapshot']
+        v2 = snap.get('connection_log') == CONNECTION_LOG_V2
+        prospective = prospective or v2
+        dual = AD.dual(d, export_name) if v2 else None
+        sealed = (not v2) or dual['status'] == 'DUAL_SEALED'
+        rows = unblind(d, export_name) if sealed else None  # a prospective packet is never unblinded before both seals
         effort = {arm: derived_effort(d, arm) for arm in ARMS}
-        packets.append({'packet': snap['packet'], 'method': snap['prior']['packet_ledger']['method'],
-                        **{arm: arm_metrics(Ledger(d / snap['arms'][arm]['ledger']).load(), arm, rows) for arm in ARMS},
-                        'effort_check': effort, 'effort_evidence': {arm: effort[arm]['effort_evidence'] for arm in ARMS},
-                        'suggestion_accounting': suggestion_accounting(d, rows)})
+        packet = {'packet': snap['packet'], 'method': snap['prior']['packet_ledger']['method'],
+                  **({arm: arm_metrics(Ledger(d / snap['arms'][arm]['ledger']).load(), arm, rows) for arm in ARMS} if sealed else
+                     {'outcomes': 'NOT_UNBLINDED: both reviewers must seal valid logs first'}),
+                  'effort_check': effort, 'effort_evidence': {arm: effort[arm]['effort_evidence'] for arm in ARMS},
+                  'suggestion_accounting': suggestion_accounting(d, rows)}
+        if v2:
+            packet['conformance'] = AD.conformance(d, snap, dual)
+            packet['adjudication'] = {k: dual[k] for k in dual if k != 'adjudications'}
+        packets.append(packet)
     for p in packets:
-        p['directions'] = {name: direction(p['G'][name], p['S'][name], better) for name, better in DIMENSIONS + COSTS}
-    final, primary, sensitivity, notes = final_classification(packets, critical_stops, prospective)
+        if 'G' in p:p['directions'] = {name: direction(p['G'][name], p['S'][name], better) for name, better in DIMENSIONS + COSTS}
+    # Explicit cohort boundary. A report with no prospective packet is a pure legacy report and behaves exactly as before.
+    # Once any prospective (R4) packet is present, the primary cohort is R4-conforming packets only: a legacy packet has no
+    # R4 conformance and never enters it (or counts towards its minimum of three pairs); it stays listed, with its metrics.
+    if prospective:
+        primary_packets = [p for p in packets if 'conformance' in p and p['conformance']['status'] == 'CONFORMING']
+        excluded = [{'packet': p['packet'], 'problems': p['conformance']['problems'], 'deviations': p['conformance']['deviations']} if 'conformance' in p
+                    else {'packet': p['packet'], 'problems': ['LEGACY_PACKET_OUTSIDE_R4_PRIMARY_COHORT'], 'deviations': []}
+                    for p in packets if p not in primary_packets]
+    else:
+        primary_packets, excluded = packets, []
+    final, primary, sensitivity, notes = final_classification(primary_packets, critical_stops, prospective)
+    blinding = blinding_sensitivity(primary_packets, critical_stops) if prospective else None
+    if blinding and blinding['gate'] == 'UNRESOLVED' and final in DEFINITIVE:
+        notes = notes + [f"BLINDING_SENSITIVITY_UNRESOLVED: excluding potentially unblinded packets gives {blinding['classification']}"]; final = 'INCONCLUSIVE'
+    if prospective:
+        notes = notes + [f'{len(primary_packets)} conforming packet pair(s) in the primary comparison; {len(excluded)} excluded and listed.']
+        if any(p['conformance']['potentially_unblinded'] for p in primary_packets):notes.append('POTENTIALLY_UNBLINDED: a reviewer declared arm-identifying exposure.')
     return {'banner': M.BANNER, 'scope': 'PILOT_PAIRED_REPORT', 'prospective': prospective, 'packets': packets, 'classification': final,
-            'classification_primary': primary,
+            'excluded_from_primary': excluded, 'classification_primary': primary, 'blinding_sensitivity': blinding,
             'classification_sensitivity': sensitivity, 'effort_evidence_summary': sorted({v for p in packets for v in p['effort_evidence'].values()}),
             'notes': notes}
+
+
+def blinding_sensitivity(primary_packets, critical_stops=()):
+    """Proposed policy (to register before any R4 outcome): POTENTIALLY_UNBLINDED packets stay in the primary analysis,
+    labelled; a sensitivity excludes every packet with any such item. If the two classifications differ, no definitive
+    classification is reported (INCONCLUSIVE). The treatment is fixed here, before outcomes, never chosen afterwards."""
+    flagged = [p['packet'] for p in primary_packets if p['conformance']['potentially_unblinded']]
+    if not flagged:return {'potentially_unblinded_packets': [], 'classification': 'NOT_APPLICABLE', 'gate': 'NOT_APPLICABLE'}
+    kept = [p for p in primary_packets if not p['conformance']['potentially_unblinded']]
+    alt = classify(kept, critical_stops)[0]
+    primary = classify(primary_packets, critical_stops)[0]
+    return {'potentially_unblinded_packets': flagged, 'packets_after_exclusion': len(kept), 'classification': alt,
+            'gate': 'CONSISTENT' if alt == primary else 'UNRESOLVED'}
 
 
 def final_classification(packets, critical_stops=(), prospective=True):
@@ -1253,6 +1339,8 @@ def markdown(rep):
             f"{rep['classification_sensitivity']['observed_span']}.", ''] if rep.get('prospective') else []
     lines = ['| Packet | Dimension | S | G | Better |', '|---|---|---:|---:|---|']
     for p in rep['packets']:
+        if 'G' not in p:
+            lines.append(f"| {p['packet']} ({p['method']}) | outcomes | {p['outcomes']} | | |"); continue
         for n in names:lines.append(f"| {p['packet']} ({p['method']}) | {n} | {p['S'][n]} | {p['G'][n]} | {p['directions'][n]} |")
         lines.append(f"| {p['packet']} | analyst minutes (all; graph) | {p['S']['analyst_minutes_all']} | {p['G']['analyst_minutes_all']} "
                      f"({p['G']['graph_minutes']} graph) | |")
