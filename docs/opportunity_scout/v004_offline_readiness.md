@@ -4,6 +4,8 @@
 
 Final offline assurance found and corrected complete-line rollback detection and same-handle resubmission after a finish exception. The [assurance report](v004_final_offline_assurance.md) describes journal R2, the resource scenarios, bounded future acceptance design, quiet-window stops and integration conditions. R1 records remain immutable and replayable at `111a4fd`; they are not migrated. HOSTED_READINESS_BLOCKED remains in effect.
 
+Later owner clarification treats 60,000 as an approximate preference. The [resource-governance amendment R3](v004_resource_governance_r3_proposed.md) proposes ordinary variation, a nonblocking usage flag and a separately unapproved emergency trigger. It is design-only: existing code and the earlier numerical stop rules below are unchanged historical implementation, not an activated R3 policy. All hosting/approval gates remain.
+
 ## Implemented boundaries
 
 The separately versioned modules `v004_transport.py`, `v004_package.py`, `v004_runtime.py`, `v004_isolation.py` and `v004_replay.py` provide an offline transport contract, exact package freeze, proposed runtime description, monitoring review and durable rehearsal journal. There is no runner callback, model SDK, process-launch method, credential reader or switch to enable hosting. `PROSPECTIVE_LOCAL_ONLY` packages can be frozen and inspected; only `SYNTHETIC` packages and explicitly fictional `Recording` values can enter a rehearsal. This mode separation is an engineering guard, not proof that someone has correctly labelled arbitrary data as fictional.

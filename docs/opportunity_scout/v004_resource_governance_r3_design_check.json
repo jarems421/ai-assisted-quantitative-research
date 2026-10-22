@@ -1,0 +1,67 @@
+{
+  "schema": "SCOUT_V004_RESOURCE_GOVERNANCE_R3_DESIGN_CHECK",
+  "recorded_at": "2026-10-22T11:21:32.100205+00:00",
+  "implementation_base_commit": "19dd248b679289bb24916e6573d4103998c33af3",
+  "status": "PROPOSAL_ONLY / UNIMPLEMENTED / HOSTED_READINESS_BLOCKED",
+  "proposal_sha256": "d5f0b72a405dad71a4729475ae3db56ae56e9a501b674eb029bb6146f1d51682",
+  "checks": [
+    "Strict JSON parsed; no duplicate keys",
+    "Planning reference, proposed tier values and authority flags verified",
+    "Candidate output setting matches reviewed runtime",
+    "Allocation/order and 12/24 denominators unchanged",
+    "Five conditional arithmetic examples checked",
+    "Current source/tests/CI files unchanged",
+    "R2 proposals and historical validation/accepted failure report unchanged",
+    "187 prior private artifacts and complete file set unchanged",
+    "V003 frozen implementation and original authority verify"
+  ],
+  "conditional_examples_not_bounds": [
+    {
+      "base_input_each": 12000,
+      "history_input": 0,
+      "combined": 89536,
+      "proposed_tier": "ORDINARY_USAGE_VARIATION"
+    },
+    {
+      "base_input_each": 12000,
+      "history_input": 32768,
+      "combined": 122304,
+      "proposed_tier": "ELEVATED_USAGE_RECORDED"
+    },
+    {
+      "base_input_each": 30000,
+      "history_input": 32768,
+      "combined": 158304,
+      "proposed_tier": "ELEVATED_USAGE_RECORDED"
+    },
+    {
+      "base_input_each": 50000,
+      "history_input": 32768,
+      "combined": 198304,
+      "proposed_tier": "ELEVATED_USAGE_RECORDED"
+    },
+    {
+      "base_input_each": 60000,
+      "history_input": 32768,
+      "combined": 218304,
+      "proposed_tier": "RESOURCE_EMERGENCY_STOP"
+    }
+  ],
+  "existing_legacy_budget_regressions": {
+    "command": "python -m unittest tests.opportunity_scout.test_v004_budget_review -v",
+    "tests": 11,
+    "result": "PASS",
+    "scope": "Confirms unchanged R2 helper only; no R3 implementation test or hosted compatibility claim"
+  },
+  "proposed_flag_tokens": 120000,
+  "proposed_emergency_tokens": 200000,
+  "owner_adopted": false,
+  "runtime_changed": false,
+  "V003_changed": false,
+  "hosted_calls": 0,
+  "real_dispatches": 0,
+  "accounts_modified": false,
+  "Graph_changed": false,
+  "protocol_activated": false,
+  "authorises": []
+}

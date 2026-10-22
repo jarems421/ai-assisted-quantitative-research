@@ -2,6 +2,8 @@
 
 **HOSTED_READINESS_BLOCKED.** This pass reviews PR #4 at `111a4fd8866abf1a11b68784cf9d6402a48a1c11` and adds journal revision R2. It performs no Claude invocation, credential-content access, account mutation, real generation, Graph change, merge or protocol approval. The historical writer remains UNKNOWN. Existing R1 evidence and validations retain their original bytes; replay them at their pinned implementation commit rather than migrating them.
 
+Subsequent owner clarification makes 60,000 an approximate planning preference. The [R3 resource-governance proposal](v004_resource_governance_r3_proposed.md) would replace that automatic stop prospectively. The arithmetic and earlier thresholds in this assurance report describe the then-proposed R2 policy; they do not establish a current owner-approved ceiling. Implementation and all original evidence remain unchanged by R3's design-only proposal.
+
 ## Findings and integration recommendation
 
 Two substantive R1 assurance gaps were reproduced with fictional inputs before correction:
