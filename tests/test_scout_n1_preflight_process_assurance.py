@@ -17,7 +17,7 @@ class QueueAssuranceTests(unittest.TestCase):
     def run_case(self, case):
         env = {k: v for k, v in os.environ.items() if k.upper() in OS_ENV}
         result = subprocess.run([sys.executable, '-I', str(FIXTURE), case],
-                                capture_output=True, timeout=35, env=env, shell=False)
+                                capture_output=True, timeout=75, env=env, shell=False)
         self.assertEqual(result.returncode, 0, result.stdout.decode(errors='replace') + result.stderr.decode(errors='replace'))
         report = json.loads(result.stdout)
         self.assertTrue(report['fixture'])

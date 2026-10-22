@@ -14,6 +14,7 @@ if len(sys.argv) != 2 or sys.argv[1] not in CASES or os.name != 'nt':
 case = sys.argv[1]
 
 SCRIPT = r'''
+$scoutFixtureWall = [Diagnostics.Stopwatch]::StartNew()
 [Console]::Error.WriteLine('SCOUT_FIXTURE_ENTERED')
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -28,7 +29,7 @@ foreach ($scoutSource in @('queue.ps1', 'watch.ps1')) {
         . ([scriptblock]::Create($scoutFunction.Extent.Text))
     }
 }
-[Console]::Error.WriteLine('SCOUT_FIXTURE_FUNCTIONS_READY')
+[Console]::Error.WriteLine('SCOUT_FIXTURE_FUNCTIONS_READY:' + $scoutFixtureWall.ElapsedMilliseconds)
 $scoutFirst = 'FIXTURE-A-' + [guid]::NewGuid()
 $scoutSecond = 'FIXTURE-B-' + [guid]::NewGuid()
 $scoutOther = 'FIXTURE-OTHER-' + [guid]::NewGuid()
@@ -39,12 +40,12 @@ $scoutSeq = 0; $scoutPrevious = '0' * 64
 $scoutClock = [Diagnostics.Stopwatch]::StartNew()
 $scoutSummary = [ordered]@{fixture = $true; case = $env:SCOUT_FIXTURE_CASE; claude_invocations = 0; wmi_subscriptions = 0}
 $scoutTimerA = $null; $scoutTimerB = $null
-[Console]::Error.WriteLine('SCOUT_FIXTURE_WRITER_READY')
+[Console]::Error.WriteLine('SCOUT_FIXTURE_WRITER_READY:' + $scoutFixtureWall.ElapsedMilliseconds)
 try {
     Write-ScoutRecord 'HEADER' ([ordered]@{schema = 'SCOUT_N1_PROCESS_OBSERVER_V002'; pid = 10; session = 'FICTIONAL_NOT_REGISTERED'; claude_invocations = 0})
     Write-ScoutRecord 'SNAPSHOT' ([ordered]@{processes = @()})
     Write-ScoutRecord 'HEARTBEAT' ([ordered]@{subscriptions_present = $true})
-    [Console]::Error.WriteLine('SCOUT_FIXTURE_CASE_STARTED')
+    [Console]::Error.WriteLine('SCOUT_FIXTURE_CASE_STARTED:' + $scoutFixtureWall.ElapsedMilliseconds)
     if ($env:SCOUT_FIXTURE_CASE -eq 'concurrent') {
         $scoutTimerA = New-Object Timers.Timer 1
         $scoutTimerB = New-Object Timers.Timer 1
@@ -118,7 +119,7 @@ try {
     if ($env:SCOUT_FIXTURE_CASE -in @('collision', 'concurrent')) {
         Write-ScoutRecord 'END' ([ordered]@{reason = 'STOP_REQUEST'; coverage_certified = $false})
     }
-    [Console]::Error.WriteLine('SCOUT_FIXTURE_CASE_DONE')
+    [Console]::Error.WriteLine('SCOUT_FIXTURE_CASE_DONE:' + $scoutFixtureWall.ElapsedMilliseconds)
 } finally {
     if ($null -ne $scoutTimerA) { $scoutTimerA.Stop(); $scoutTimerA.Dispose() }
     if ($null -ne $scoutTimerB) { $scoutTimerB.Stop(); $scoutTimerB.Dispose() }
@@ -126,7 +127,8 @@ try {
     foreach ($scoutPending in @(Get-ScoutQueuedEvents -SourceIdentifiers $scoutSources)) { Acknowledge-ScoutQueuedEvent -QueuedEvent $scoutPending }
     $scoutWriter.Dispose(); $scoutFile.Dispose()
 }
-[Console]::Error.WriteLine('SCOUT_FIXTURE_CLEANED')
+[Console]::Error.WriteLine('SCOUT_FIXTURE_CLEANED:' + $scoutFixtureWall.ElapsedMilliseconds)
+$scoutSummary.fixture_elapsed_ms = $scoutFixtureWall.ElapsedMilliseconds
 $scoutSummary | ConvertTo-Json -Compress
 '''
 
@@ -141,7 +143,7 @@ with tempfile.TemporaryDirectory(prefix='scout-queue-fictional-') as directory:
     shell = Path(os.environ['SystemRoot']) / 'System32/WindowsPowerShell/v1.0/powershell.exe'
     try:
         result = subprocess.run([str(shell), '-NoLogo', '-NoProfile', '-NonInteractive', '-Command', SCRIPT],
-                                stdin=subprocess.DEVNULL, capture_output=True, timeout=25, env=env, shell=False)
+                                stdin=subprocess.DEVNULL, capture_output=True, timeout=60, env=env, shell=False)
     except subprocess.TimeoutExpired as error:
         stages = [line for line in (error.stderr or b'').decode(errors='replace').splitlines() if line.startswith('SCOUT_FIXTURE_')]
         print(json.dumps({'fixture': True, 'case': case, 'failure': 'POWERSHELL_FIXTURE_TIMEOUT', 'stages': stages}))

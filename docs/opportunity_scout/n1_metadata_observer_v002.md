@@ -70,6 +70,17 @@ remote/account identity and full N1 admission remain unproved.
 - The existing GitHub N1 process step now includes these four tests. Their success
   is queue-regression evidence, not a native WMI or Claude compatibility claim.
 
+The first CI run (`39865637025`) passed the existing suites but timed out all four
+new fixture children at the original 25-second test deadline. A subsequent run
+(`39866999456`) with an OS-only environment, system-only module path and closed
+stdin passed two cases; stage diagnostics placed the other timeouts in function
+loading or the first serializer calls, before case execution. The exact slow
+Windows startup component is not established. The fixture-only deadline is now
+60 seconds (75 seconds for its outer Python harness), with stage timings retained.
+This changes no producer/reader bound or N1 watchdog, resource or approval rule;
+the two-second synthetic concurrency exercise and every assertion remain intact.
+Both failed CI runs remain visible; neither is reported as a pass.
+
 No N1 package, V003/R2/R3, card schema, previous collector or Graph source changed.
 Exact proposal checking and the full relevant suites remain required before
 delivery; a CI result is only claimed when actually observed.
