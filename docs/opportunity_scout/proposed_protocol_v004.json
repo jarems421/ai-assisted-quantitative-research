@@ -1,0 +1,55 @@
+{
+  "version": "SCOUT_EVALUATION_PROTOCOL_V004_PROPOSAL",
+  "status": "DESIGN_AND_FICTIONAL_VALIDATION_ONLY_NOT_AUTHORISED",
+  "predecessor": "SCOUT_EVALUATION_PROTOCOL_V003",
+  "predecessor_disposition": "V003 stopped after consumed PLAIN/ATT-0001: ERROR, zero saved cards, eleven undispatched reservations. Preserve its implementation, authority, original error labels, ledgers, receipts and hashes. Never resume, reset, retry or migrate the failed attempt into a success.",
+  "conditions": ["PLAIN", "EVIDENCE_ONLY", "MECHANISM_ONLY", "HYBRID"],
+  "allocation": {
+    "PLAIN": ["PLAIN", "PLAIN", "PLAIN"],
+    "EVIDENCE_ONLY": ["RADAR", "RADAR", "RADAR"],
+    "MECHANISM_ONLY": ["FORGE", "FORGE", "FORGE"],
+    "HYBRID": ["FORGE", "RADAR", "GAP"]
+  },
+  "intended_design": {"conditions": 4, "attempts_per_condition": 3, "cards_per_attempt": 2, "total_attempts": 12, "total_intended_cards": 24},
+  "candidate_transport": "Research Claude Code subscription, explicit pinned canonical Opus ID, Medium requested, raw JSON text, no --json-schema/StructuredOutput tool, no model-assisted repair; validate exact original response locally against the unchanged full card schema.",
+  "transport_status": "CANDIDATE_ONLY: fictional success does not certify aggregate hard caps or prevention of internal provider requests. No V004 real dispatcher is implemented or authorised.",
+  "turn_and_generation_accounting": {
+    "one_visible_generation": "One distinct assistant message ID. Thinking/output chunks with that same ID are stream fragments. A distinct second ID is another visible model generation, even if called formatting or continuation.",
+    "formatting": "A local tool result can add a CLI turn without another model generation. A new model call to format, fix schema or continue output consumes another generation and is forbidden by the unchanged candidate one-generation rule.",
+    "internal_retries": "Separate HTTP/network retries, output-limit recovery and schema reprompting. MAX_RETRIES=0 controls failed API request retries; it does not certify absence of the other loops.",
+    "observability": "Record CLI invocations, distinct assistant IDs, distinct visible request IDs, synthetic continuation notices, formatting calls, failed tool results, terminal subtype, reported agentic turns and UNKNOWN total underlying provider request count separately. Never publish private IDs or transcript content in the public report."
+  },
+  "budget_proposal": {
+    "aggregate_input_tokens_per_attempt": 30000,
+    "aggregate_output_tokens_per_attempt": 6000,
+    "thinking_tokens": "Preserve available detail; do not add a thinking subcount to output_tokens again.",
+    "cached_inputs": "Count ordinary + cache-creation + cache-read from terminal totals, once. No per-chunk summation or cache discount.",
+    "unchanged_other_caps": "Retain V003's common generation wall/human/review limits unless separately amended prospectively.",
+    "caps_not_certified": "CLI per-request max output and max agentic turns are not proved to enforce per-invocation aggregate caps. Input must be rejected before dispatch unless a defensible full-payload bound includes schema/system/CLI overhead. Measured fictional overhead is an estimate, not a token certificate.",
+    "cap_or_usage_failure": "Retain every simultaneous deviation rather than collapsing all into a primary error. Reject excess or UNKNOWN usage; do not truncate usage accounting or normalise away failed work."
+  },
+  "prospective_payload_changes": [
+    "Send the response schema once as prompt data; remove the additional CLI tool-schema transport.",
+    "Consider a minimal payload projection retaining exact condition instructions, eligible evidence/memory content and cutoff while removing transport/audit duplication. Document and hash the projection; do not edit or reuse V003 requests as V004 requests.",
+    "A compact-output instruction, if needed, must be identical across conditions and frozen before generation. It changes the reasoning/formatting task and needs owner approval. Do not reduce fields or repair output silently.",
+    "Any evidence/memory reduction to establish an input bound changes the scientific inputs, requires a new prospective package and consent, and cannot be reported as an unchanged V003 replication."
+  ],
+  "failure_classification": "Structured terminal subtype first. Auth/rate classification uses designated API status or structured error type, with a narrowly anchored stderr-only fallback before an envelope. Never search full stdout for auth/login/401/429. Preserve independent model, environment, generation, schema and budget faults.",
+  "environment": "Retain separate research configuration, child-only allowlisted environment, explicit binary/hash/version, safe/restricted modes, empty settings/MCP/tools, disabled skills/Chrome/persistence, fresh UUID and sterile directory. Separate environment isolation from generation independence; neither is an OS sandbox.",
+  "scientific_controls": "Freeze all 12 new requests/runtime/implementation before dispatch; preserve identical eligible pools/allocation unless a documented amendment is essential. No previous generated cards in any context, no retries/replacements/best-of/repairs. Every invalid/missing/surplus output remains represented in human review. Partial procedural blinding, independent human attestation, descriptive dimensions only; no invented M/H, novelty or investment judgments.",
+  "authority": {
+    "real_generation_authorised": false,
+    "v003_authorisation_reusable": false,
+    "fresh_owner_consent_required": true,
+    "consent_scope": "Exact new protocol, request/files/content hashes, runtime/implementation, provider/model/effort, explicit owner identity/date, hosted privacy limitations and model-pinning limits; any accepted constraint relaxation must be separately explicit.",
+    "scientific_source_acquisition_authorised": false,
+    "other_hosted_providers_authorised": false
+  },
+  "blocking_gates": [
+    "Attribute the development-account metadata guard change and demonstrate non-interference in a controlled quiet window; an unattributed guard failure is not a passed account-isolation preflight.",
+    "Demonstrate or explicitly resolve prevention of internal model regeneration and aggregate token overrun; post-hoc detection is not proof of prevention.",
+    "Freeze a defensibly bounded complete payload, preserving or prospectively documenting changes to scientific inputs/output constraints.",
+    "Complete independent fictional regression validation without selecting the best output or consuming V003 slots.",
+    "Receive new explicit owner approval and hosted-input consent only after a concrete V004 package is reviewable."
+  ]
+}

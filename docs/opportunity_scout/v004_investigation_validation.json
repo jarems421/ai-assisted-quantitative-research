@@ -1,0 +1,265 @@
+{
+  "schema": "SCOUT_V004_INVESTIGATION_VALIDATION",
+  "recorded_at": "2026-10-22T09:39:19.318236+00:00",
+  "status": "V003_STOP_PRESERVED / V004_DESIGN_ONLY / FICTIONAL_CHECKS_WITH_UNRESOLVED_ACCOUNT_GUARD / REAL_GENERATION_NOT_AUTHORISED",
+  "branch": "codex/opportunity-scout-v004-investigation",
+  "base_commit": "31325c4b76670136b9709adfb61f3783b02144c9",
+  "tests": [
+    {
+      "command": "python -m unittest discover -s tests/opportunity_scout -v",
+      "tests": 118,
+      "result": "PASS",
+      "log_sha256": "24c37ed5803207aea1e8e8656b5fa5f59665af8af5f06486f1eead1ad7941206"
+    },
+    {
+      "command": "python -m unittest tests.test_discovery_lab tests.test_graph -v",
+      "tests": 84,
+      "result": "PASS",
+      "log_sha256": "907d3745b49d89bed300428b3b51dde3a0399f599d2d02a81e7c7b2e162812ab"
+    }
+  ],
+  "new_v004_mocked_regression_tests": 20,
+  "v003_preservation": {
+    "file_count": 28,
+    "all_files_identical": true,
+    "files_sha256": {
+      "EVIDENCE_ONLY/scout.jsonl": "31d5faff44b9e8a681593c6beeb58dd403ba5ab79a172c7140dc811c0b84da76",
+      "HYBRID/scout.jsonl": "18097bcef40cc60689375e96ebd5f9541f12e66f0c0a3d315064e9a8856852da",
+      "MECHANISM_ONLY/scout.jsonl": "8c1f661d4ba912a748a6db54c5c6211ef4696304da13cfceafd351b58032305a",
+      "PLAIN/scout.jsonl": "b1149c96b112617d0bb6afaecb26f8da58c0234a26228bf5cc8cc76c19e83dc3",
+      "exports/EVIDENCE_ONLY-ATT-0001-request-v003.json": "fcfb32e9561cac0329ba15373b85259b5da1fc4e0203475c1a59abe1a2c31ff0",
+      "exports/EVIDENCE_ONLY-ATT-0002-request-v003.json": "a895c2de7eb6503d848428b67aecad12c2b2e0797167176765475bfa54aec61a",
+      "exports/EVIDENCE_ONLY-ATT-0003-request-v003.json": "25ba81172dfa371ff272d877a9ddd9ec146b19d1e8f9ff5730afa3125b69a119",
+      "exports/EVIDENCE_ONLY-blueprint.json": "32c834e99e8bc3af5032e2c39d7046827423d6f29630c829555f01346236e01b",
+      "exports/HYBRID-ATT-0001-request-v003.json": "c081edec4272d615298e05510a944734e696ef5f432b333ed0883408a072b6ca",
+      "exports/HYBRID-ATT-0002-request-v003.json": "931dfb8a31e15f454c14ea32ccfb16eb81c80e8f375bed3dd84e4f7c031ad2e0",
+      "exports/HYBRID-ATT-0003-request-v003.json": "544465e45b2e4967f3c71e7f20cf0d4c3246dab2b168d1a50be8475d6ec26322",
+      "exports/HYBRID-blueprint.json": "10a3f8e0b6e33d379a6b17db48f08a83d83cc736953aa00584843eff15bc876e",
+      "exports/MECHANISM_ONLY-ATT-0001-request-v003.json": "47344878f4f0e7c7c480074df7cdcf53cd942c4c40853fccfa9443e85647b411",
+      "exports/MECHANISM_ONLY-ATT-0002-request-v003.json": "61033105161110f83333a7a5c0131094e98862d80486f1476075cace0862389b",
+      "exports/MECHANISM_ONLY-ATT-0003-request-v003.json": "2fb06bc2d85bbbc1f4b5173022e7c2b9e256b66f8547f7ab0c9c9b67b6910e7b",
+      "exports/MECHANISM_ONLY-blueprint.json": "1accddcef35bd7d5bf594f7223a81244efd7fbca9b22b6f8389dc219131a958b",
+      "exports/PLAIN-ATT-0001-invocation-v003.json": "66ebf2d16e51f6ed8cc906829354ab426ec2750d72b795912bee0ebdc0c6363b",
+      "exports/PLAIN-ATT-0001-request-v003.json": "856367a09dd4f3f7870c2b7b07a3a71f32c35a839e406696b48017a512198b03",
+      "exports/PLAIN-ATT-0002-request-v003.json": "2deb34801acaa70dfc5e5d167c97594dff85f20aa0c1d71b6093989a699f848f",
+      "exports/PLAIN-ATT-0003-request-v003.json": "8dfd638027cf7fca8c3b33df1942a39794d29b78f37c45262a66f2ae8374a43c",
+      "exports/PLAIN-blueprint.json": "ba6c8c047d1d6969703e3893834fe6ceaec99e9e68271c1cbfa0127641e7d47f",
+      "exports/UNAPPROVED-owner-template-v003.json": "a139842d1effd8a1c71e287f3430fb8ec1fb3408804c591103380d977cc391de",
+      "exports/comparison-manifest-v003.json": "06b0043f205a0523927136628a7fb5e2377240e3a6dc6eac260269d9f81ba998",
+      "exports/comparison-runtime-v003.json": "c26c7d5691bba4d3fcb7bc9b3bccbe2765176ac3fdb0aa238c5152767a13b9eb",
+      "exports/evaluation-protocol-v003.json": "8b73648ffd0d1f426e2e6ec32f46dd968efa817e787cb53709558d6777f86cb4",
+      "exports/owner-authorisation-v003.json": "d70aa55552783abc0dd82453af62dc959fdca99415b66614ba091e73abb5d121",
+      "exports/synthetic-preflight-v003.json": "bb91efef755b50becb9cd78deb5b7414967a0581eeda54472b4ce0239fefb186",
+      "owner-reviewed-authorisation-v003.json": "2bc0f6ee951148060542c2ee3ee17a40e9bab7f9ccaca157c89acfcc189519bb"
+    },
+    "bound_implementation_files_unchanged": true,
+    "authority_valid": true,
+    "dispatches": 1,
+    "recorded_results": 1,
+    "cards_saved": 0,
+    "undispatched_reservations": 11,
+    "original_adapter_error": "AUTHENTICATION_FAILED_NO_RETRY",
+    "stored_ledger_status": "ERROR",
+    "stored_ledger_error_is_output_budget_stop": true,
+    "receipt_file_sha256": "66ebf2d16e51f6ed8cc906829354ab426ec2750d72b795912bee0ebdc0c6363b"
+  },
+  "read_only_reinterpretation_not_a_ledger_correction": {
+    "schema": "SCOUT_CLI_DIAGNOSTICS_V004",
+    "termination": "CLI_MAX_TURNS",
+    "terminal_subtype": "error_max_turns",
+    "returncode": 1,
+    "reported_agentic_turns": 2,
+    "assistant_stream_events": 3,
+    "distinct_visible_assistant_messages": 2,
+    "distinct_visible_request_ids": 2,
+    "underlying_provider_requests": "UNKNOWN",
+    "formatting_tool_calls": 1,
+    "failed_tool_results": 1,
+    "formatting_schema_errors": [
+      {
+        "validator": "type",
+        "path": [
+          "ideas"
+        ]
+      }
+    ],
+    "synthetic_output_limit_notifications": 1,
+    "environment_isolation_verified": true,
+    "single_visible_generation_verified": false,
+    "usage": {
+      "input_components": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 33158,
+        "cache_read_input_tokens": 3924
+      },
+      "input_total": 37086,
+      "output_total": 10742,
+      "thinking_tokens": 1759,
+      "input_cap": 30000,
+      "output_cap": 6000,
+      "input_excess": 7086,
+      "output_excess": 4742
+    },
+    "terminal_schema_valid": false,
+    "deviations": [
+      "ONE_VISIBLE_GENERATION_NOT_ESTABLISHED",
+      "MULTIPLE_VISIBLE_REQUEST_IDS",
+      "CLI_SYNTHETIC_REPROMPT_OBSERVED",
+      "CLI_OUTPUT_LIMIT_CONTINUATION_OBSERVED",
+      "STRUCTURED_OUTPUT_VALIDATION_FAILED",
+      "INPUT_TOKEN_CEILING_EXCEEDED",
+      "OUTPUT_TOKEN_CEILING_EXCEEDED",
+      "TERMINAL_OUTPUT_DIFFERS_FROM_FORMATTING_INPUT",
+      "TERMINAL_SCHEMA_NOT_SATISFIED"
+    ],
+    "candidate_one_generation_pass": false,
+    "real_generation_authorised": false
+  },
+  "fictional_validation": {
+    "cli_generation_invocations": 3,
+    "retry_invocations": 0,
+    "real_inputs_transmitted": false,
+    "plan_sha256": "3e9d779ccc59a424989fd94c46a80189d14edd94a3ecee96803c17eaa373faa3",
+    "planned_payload_bytes": 25477,
+    "original_summary_sha256": "37e344c2665debfa1be63aceff8e58755c464123d04584bea48e5516e699ec9a",
+    "probes": [
+      {
+        "id": "STRUCTURED_ONE_TURN",
+        "receipt_sha256": "9d233782242b6e608212e6abed027b28e9cc6f41e9465445ba5e5e8afb548ae9",
+        "diagnostics": {
+          "schema": "SCOUT_CLI_DIAGNOSTICS_V004",
+          "termination": "SUCCESS",
+          "terminal_subtype": "success",
+          "returncode": 0,
+          "reported_agentic_turns": 2,
+          "assistant_stream_events": 1,
+          "distinct_visible_assistant_messages": 1,
+          "distinct_visible_request_ids": 1,
+          "underlying_provider_requests": "UNKNOWN",
+          "formatting_tool_calls": 1,
+          "failed_tool_results": 0,
+          "formatting_schema_errors": [],
+          "synthetic_output_limit_notifications": 0,
+          "environment_isolation_verified": true,
+          "single_visible_generation_verified": true,
+          "usage": {
+            "input_components": {
+              "input_tokens": 2,
+              "cache_creation_input_tokens": 11563,
+              "cache_read_input_tokens": 3924
+            },
+            "input_total": 15489,
+            "output_total": 2354,
+            "thinking_tokens": 0,
+            "input_cap": 30000,
+            "output_cap": 6000,
+            "input_excess": 0,
+            "output_excess": 0
+          },
+          "terminal_schema_valid": true,
+          "deviations": [],
+          "candidate_one_generation_pass": true,
+          "real_generation_authorised": false
+        }
+      },
+      {
+        "id": "STRUCTURED_TWO_TURNS_DIAGNOSTIC",
+        "receipt_sha256": "67a5b19edf6bbb6c3441fbf676c93329f680098b2ae101142aedac30a9b5d6a7",
+        "diagnostics": {
+          "schema": "SCOUT_CLI_DIAGNOSTICS_V004",
+          "termination": "SUCCESS",
+          "terminal_subtype": "success",
+          "returncode": 0,
+          "reported_agentic_turns": 2,
+          "assistant_stream_events": 1,
+          "distinct_visible_assistant_messages": 1,
+          "distinct_visible_request_ids": 1,
+          "underlying_provider_requests": "UNKNOWN",
+          "formatting_tool_calls": 1,
+          "failed_tool_results": 0,
+          "formatting_schema_errors": [],
+          "synthetic_output_limit_notifications": 0,
+          "environment_isolation_verified": true,
+          "single_visible_generation_verified": true,
+          "usage": {
+            "input_components": {
+              "input_tokens": 2,
+              "cache_creation_input_tokens": 350,
+              "cache_read_input_tokens": 15136
+            },
+            "input_total": 15488,
+            "output_total": 2352,
+            "thinking_tokens": 0,
+            "input_cap": 30000,
+            "output_cap": 6000,
+            "input_excess": 0,
+            "output_excess": 0
+          },
+          "terminal_schema_valid": true,
+          "deviations": [],
+          "candidate_one_generation_pass": true,
+          "real_generation_authorised": false
+        }
+      },
+      {
+        "id": "RAW_JSON_ONE_TURN",
+        "receipt_sha256": "9e1a2dd126e14a8ae27f02b9a754dc36799cc4a43bafd217f13b6fa13001896b",
+        "diagnostics": {
+          "schema": "SCOUT_CLI_DIAGNOSTICS_V004",
+          "termination": "SUCCESS",
+          "terminal_subtype": "success",
+          "returncode": 0,
+          "reported_agentic_turns": 1,
+          "assistant_stream_events": 1,
+          "distinct_visible_assistant_messages": 1,
+          "distinct_visible_request_ids": 1,
+          "underlying_provider_requests": "UNKNOWN",
+          "formatting_tool_calls": 0,
+          "failed_tool_results": 0,
+          "formatting_schema_errors": [],
+          "synthetic_output_limit_notifications": 0,
+          "environment_isolation_verified": true,
+          "single_visible_generation_verified": true,
+          "usage": {
+            "input_components": {
+              "input_tokens": 2,
+              "cache_creation_input_tokens": 11580,
+              "cache_read_input_tokens": 0
+            },
+            "input_total": 11582,
+            "output_total": 2576,
+            "thinking_tokens": 0,
+            "input_cap": 30000,
+            "output_cap": 6000,
+            "input_excess": 0,
+            "output_excess": 0
+          },
+          "terminal_schema_valid": true,
+          "deviations": [],
+          "candidate_one_generation_pass": true,
+          "real_generation_authorised": false
+        }
+      }
+    ],
+    "original_development_account_metadata_guard": false,
+    "guard_attribution": "UNKNOWN: only end-of-window boolean retained; concurrent Claude process observed; no causation claimed",
+    "validation_complete": false,
+    "post_probe_hardening": "Per-probe development metadata snapshots, stop on change, exact raw text check, reprompt/request-ID checks; offline tests/replay only; original receipts unchanged.",
+    "hard_provider_request_cap_verified": false
+  },
+  "new_real_generation_invocations": 0,
+  "v003_reexecutions": 0,
+  "new_scientific_source_requests": 0,
+  "v004_real_dispatcher_present": false,
+  "v004_real_generation_ready": false,
+  "fresh_owner_consent_required": true,
+  "blocking_gates": [
+    "Unattributed development-account metadata change",
+    "Aggregate token prevention and internal regeneration prevention not certified",
+    "No newly frozen complete V004 requests/consent"
+  ],
+  "private_material_published": false,
+  "raw_outputs": "Retained only in ignored local .research paths",
+  "diagnostic_source_sha256": "feb28f097661531c050cd9742b932dabf5697a956279ca15e7611c202c0b2147",
+  "authorises": []
+}
