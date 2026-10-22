@@ -1,0 +1,69 @@
+{
+  "version": "SCOUT_V004_RESOURCE_GOVERNANCE_AMENDMENT_R3_PROPOSAL",
+  "status": "UNAPPROVED_PROSPECTIVE_DESIGN_ONLY_HOSTED_READINESS_BLOCKED",
+  "owner_clarification": "60000 combined tokens was an approximate preference, not a strict financial or scientific ceiling. Prioritise detailed high-quality economic reasoning while keeping consumption reasonable. This clarification supplies no hosted, dispatch or activation authority.",
+  "amends": ["SCOUT_EVALUATION_PROTOCOL_V004_PROPOSAL_R2", "SCOUT_V004_PATH_B_AMENDMENT_PROPOSAL_V002"],
+  "supersession_scope": "Prospectively replaces only rigid 60000-token compliance/run-stop semantics and associated resource language. Earlier protocols, implementation, receipts, classifications and validation records remain historical and unchanged. This document does not activate itself or change existing code.",
+  "replaces_prospectively": [
+    "R2 budget_proposal.aggregate_combined_tokens_per_attempt: replace ceiling semantics with nonbinding combined planning reference",
+    "R2 budget_proposal.boundary, caps_not_certified, cap_or_usage_failure: replace automatic stop above 60000 with the governance tiers and separate integrity/emergency stops below",
+    "R2 output_planning_role and scientific_controls resource language: no separate scientific input/output ceiling and no rigid 60000 compliance label",
+    "Path B V002 constraints_changed.combined_allowance_tokens/boundary and stop_rules.run_stop: resource reference is approximate; raw usage above 60000 alone is neither a deviation nor a stop",
+    "Earlier H1-H3 validation-plan 60000/180000 compliance thresholds: require a newly frozen resource-policy-specific validation package; the old plan cannot silently inherit new authority"
+  ],
+  "unchanged_science": {
+    "conditions": ["PLAIN", "EVIDENCE_ONLY", "MECHANISM_ONLY", "HYBRID"],
+    "allocation": {"PLAIN": ["PLAIN", "PLAIN", "PLAIN"], "EVIDENCE_ONLY": ["RADAR", "RADAR", "RADAR"], "MECHANISM_ONLY": ["FORGE", "FORGE", "FORGE"], "HYBRID": ["FORGE", "RADAR", "GAP"]},
+    "attempts": 12,
+    "intended_card_slots": 24,
+    "order": ["PLAIN-ATT-0001", "EVIDENCE_ONLY-ATT-0001", "MECHANISM_ONLY-ATT-0001", "HYBRID-ATT-0001", "EVIDENCE_ONLY-ATT-0002", "HYBRID-ATT-0002", "MECHANISM_ONLY-ATT-0002", "PLAIN-ATT-0002", "MECHANISM_ONLY-ATT-0003", "HYBRID-ATT-0003", "PLAIN-ATT-0003", "EVIDENCE_ONLY-ATT-0003"],
+    "preserve": "Full original two-card schema, exact scientific instructions/projection, eligible evidence/memory/cutoff and existing prefix limits, lane/citation/semantic checks, failure preservation and independent human review. No field brevity restriction, scientific input reduction, output repair or retrospective reclassification."
+  },
+  "resource_governance": {
+    "combined_planning_reference_tokens": 60000,
+    "reference_is_ceiling_or_target": false,
+    "candidate_per_response_output_setting_tokens": 32768,
+    "output_planning_guideline_tokens": 20000,
+    "output_guide_is_ceiling_or_target": false,
+    "aggregate_formula": "ordinary input + cache-creation input + cache-read input + output, once across all reported activity including continuation and failed work; never add thinking or nested cache subcounts again",
+    "nonblocking_elevated_usage_flag_at_tokens": 120000,
+    "candidate_emergency_trigger_at_tokens": 200000,
+    "emergency_comparator": ">=",
+    "thresholds_owner_adopted": false,
+    "thresholds_implemented": false,
+    "guaranteed_consumption_bound": false,
+    "tiers": [
+      {"reported_total": "0 <= T < 120000", "classification": "ORDINARY_USAGE_VARIATION", "action": "Record exact totals and difference from the 60000 planning reference. Passing 60000 alone is not a scientific/protocol failure and does not stop or shorten work. Continue to the next frozen slot only if every independent integrity/format rule permits."},
+      {"reported_total": "120000 <= T < 200000", "classification": "ELEVATED_USAGE_RECORDED", "action": "Retain a nonblocking usage flag and component/continuation explanation from existing telemetry. Do not use a model to justify the usage, change settings, repair output, retry, pause selectively or seek an extra allowance. Otherwise valid work remains eligible for independent human review; next-slot eligibility follows the same frozen rules."},
+      {"reported_total": "T >= 200000", "classification": "RESOURCE_EMERGENCY_STOP", "action": "If adopted, best-effort abort an active parent when a reliable deduplicated reported aggregate/lower bound reaches the trigger; stop all later dispatch. If only terminal totals reveal it, retain all consumption and stop later dispatch. Preserve content/schema status independently; this interruption does not prove a bad hypothesis, runaway loop, credential leakage or financial overcharge. No replacement or automatic resume."},
+      {"reported_total": "UNKNOWN or conflicting required terminal usage", "classification": "MEASUREMENT_INTEGRITY_STOP", "action": "Retain every observed component and unknown/conflict; do not substitute zero or claim compliant resources. Stop later dispatch. Lack of live counts before the CLI emits them is an observability limit, not zero usage or by itself a startup failure."}
+    ],
+    "rationale": "120000 is a transparent two-times-reference annotation, not a statistical anomaly test. 200000 is a round proposed operational backstop, not an owner-approved financial/scientific ceiling or calibrated probability bound. It allows the previously illustrated 122304-token continuation and a 158304-token trace with 30000 base input per request, two full candidate outputs and one output-sized history replay; larger lawful traces can still trip it. Lower triggers reduce exposure but may stop useful long-context reasoning; higher triggers postpone detection of excessive work. Lowering the per-response setting can itself force extra context replay. Neither trigger establishes actual provider-work prevention.",
+    "billing": "Token consumption, CLI list-price estimates and actual subscription charges are separate records. Attributable charges/currency remain UNKNOWN unless independently observable. No assumed zero charge, subscription-fee proration, API switch, overage enablement or monetary authorisation follows.",
+    "run_totals": "Record cumulative actual component/combined totals and unknown-entry counts after every attempt, with fixed summaries after blocks 1, 2 and 3. 12 x 60000 = 720000 is only a planning reference, not a run cap. No new run-wide token ceiling is proposed. Approaching 12 x 200000 would indicate a very resource-intensive workflow, not an authorised spend or guaranteed maximum. No condition-specific top-ups or adaptive baseline/median rules."
+  },
+  "strict_integrity_rules": {
+    "max_parent_invocations_per_consumed_attempt": 1,
+    "max_visible_generations": 2,
+    "second_generation": "Only an evidenced append-only output-limit continuation of the same unfinished response, within the same parent invocation, same task/model/context, preserving original fragments and exact terminal assembly.",
+    "always_stop_independent_of_usage": "Third generation, unexplained request IDs, missing/changing identity, unverified continuation, any schema/semantic repair, replacement, best-of/refinement, extra parent call, model/account/environment deviation, auth/rate/timeout, journal integrity/ownership/lock failure or contaminated monitoring. Retain simultaneous faults even if a numeric emergency is also reached.",
+    "ordinary_format_failure": "Retain the earlier proposed distinction: a malformed JSON/schema/lane-semantic response with otherwise intact identity/generation/account/usage controls consumes its slot and may advance once to the next frozen slot; no repair or replacement. This rule still needs final protocol approval.",
+    "unchanged_runtime_safeguards": "Medium requested, retries=0, max agentic turns=2, no tools/formatter/MCP/skills, fresh contexts/sterile directories, proposed 600-second attempt and 1800-second condition wall limits, 30/180-minute generation/review human limits, existing bounded IO and durable originals. None is a token certificate or new execution authority."
+  },
+  "observability_and_future_implementation": "No reliable live aggregate usage stream has been established. Use deduplicated native totals/lower bounds where independently supported; never sum repeated snapshots or terminal plus their own component/model totals. Assistant output placeholders, byte sizes and fictional averages are not a token meter. Best-effort cancellation cannot prevent already-started/provider work. A newly versioned collector/accounting/package policy and offline regressions must be reviewed before adopting R3; current code still applies the old rigid R2 rule and must not be presented as R3-ready.",
+  "fairness_and_analysis": "Freeze identical references, flags, emergency comparator, timing/IO safeguards and stopping rules for all four conditions before any generation. Report every attempt/condition's actual input components, output/thinking details, combined/cumulative usage, visible generations, unknowns, flags, interruptions, wall/human effort and separately observable charges. Usage is an experimental outcome, not a quality score or equal-resources claim. Do not select only inexpensive/successful cards. A stop before every scheduled slot finishes leaves an incomplete run; preserve all 12/24 intended denominators and undispatched slots. If an emergency is discovered only after the final slot, report all recorded slots plus the emergency separately; do not invent missing data or claim an event-free run. Independent human review/interpretation remains required.",
+  "approval_gates_retained": [
+    "Focused independent review of journal R2 corrections; engineering integration is not execution approval.",
+    "Review and test a newly versioned R3 resource-policy integration, package hashes and single-approved-journal binding before hosting; no real dispatcher created here.",
+    "Owner decision on the proposed 120000 flag/200000 emergency trigger and resource-risk semantics, plus unchanged continuation/format/order rules; clarification of a planning preference is not adoption of these candidate numbers.",
+    "Separate approval of a newly frozen bounded fictional hosted validation/quiet-window package; historical writer remains UNKNOWN and no credential contents are accessed.",
+    "Actual CLI/account observability validation, reviewed collector and explicit rollback threat model remain outstanding.",
+    "Only after those gates, fresh hash-specific owner identity/date, protocol approval and hosted-input/privacy/model consent for the full new real package. Preserve V003 and every historical failure unchanged."
+  ],
+  "hosted_probes_authorised": false,
+  "scientific_dispatch_authorised": false,
+  "Path_B_approved": false,
+  "protocol_activated": false,
+  "V003_authorisation_reusable": false,
+  "authorises": []
+}
