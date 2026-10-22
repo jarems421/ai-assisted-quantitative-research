@@ -1,0 +1,26 @@
+{
+ "version": "GRAPH_TIMESTAMP_CORRECTIONS_V001",
+ "recorded_at_utc": "2026-10-22T11:11:04+00:00",
+ "recorded_at_basis": "Clock time when this file was written, immediately before the commit that adds it.",
+ "scope": "Hand-entered recorded_at_utc values in files the assistant wrote on branch graph-pilot-r4-readiness. Clock-generated validation receipts were checked and precede their commits.",
+ "corrections": [
+  {
+   "file": "docs/strategy/graph_pilot_r4_graph_configuration_v001.json",
+   "sha256": "f2c6fd183fe99c9cb485cf362f1f8b8e181423ea947c828a0b5bcb191bd01092",
+   "recorded_at_utc_as_written": "2026-10-22T12:00:00+00:00",
+   "introduced_in_commit": "3bf047474b686c95f468415c68822dc675a8c505",
+   "commit_committer_date_utc": "2026-10-22T11:03:15+00:00",
+   "finding": "Assistant-entered rounded value, later than the introducing commit; not an observed time and not an intended effective time.",
+   "action": "File preserved unchanged and superseded by graph_pilot_r4_graph_configuration_v002.json (identical configuration, corrected time fields)."
+  },
+  {
+   "file": "docs/strategy/graph/generic_identifiers_v001.json",
+   "sha256": "39dd7026b03d5db83c191e1ae56b55c2eab27eb7e3322c6082422b7923915b04",
+   "recorded_at_utc_as_written": "2026-10-22T10:30:00+00:00",
+   "introduced_in_commit": "426c21119a25e9786f2fc4fd405bf4de914d6ab6",
+   "commit_committer_date_utc": "2026-10-22T10:23:16+00:00",
+   "finding": "Same defect: an assistant-entered rounded value, 6 minutes 44 seconds later than the introducing commit; not an observed time.",
+   "action": "File NOT changed: the register is frozen by hash in the v1.2 registration, holdout and R4 configuration, and the owner directed that it stay unchanged. Read its recorded_at_utc as unreliable; the time evidence is the introducing commit, whose position before the holdout commit is what the registration order relies on."
+  }
+ ]
+}

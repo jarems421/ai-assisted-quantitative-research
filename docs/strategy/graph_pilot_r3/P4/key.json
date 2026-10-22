@@ -1,0 +1,83 @@
+{
+ "version": "GRAPH_PILOT_BLIND_V001",
+ "snapshot_sha256": "80a583a790b6e43637ce3da87f4db3f238a630a2c24483b071e2c17e15c1a363",
+ "salt": "2a4e7ec43ebe88c069d4abfc8014265f",
+ "items": {
+  "ADJ-01a434479d": {
+   "arm": "S",
+   "connection_id": "CON-48d082a8ce47"
+  },
+  "ADJ-0f55586e44": {
+   "arm": "G",
+   "connection_id": "CON-10b28443505f"
+  },
+  "ADJ-25785c7b12": {
+   "arm": "G",
+   "connection_id": "CON-130b554f24b5"
+  },
+  "ADJ-3268b1a342": {
+   "arm": "S",
+   "connection_id": "CON-b5dfc81c73a4"
+  },
+  "ADJ-34b9b927a9": {
+   "arm": "G",
+   "connection_id": "CON-01d10e2d8c2d"
+  },
+  "ADJ-44c50ee6ea": {
+   "arm": "G",
+   "connection_id": "CON-100a5b6419f4"
+  },
+  "ADJ-5f5830a476": {
+   "arm": "G",
+   "connection_id": "CON-abc5c97684e9"
+  },
+  "ADJ-6f8ec8a40c": {
+   "arm": "S",
+   "connection_id": "CON-27305cf6041d"
+  },
+  "ADJ-6fec14bb2b": {
+   "arm": "G",
+   "connection_id": "CON-40b21395480d"
+  },
+  "ADJ-73cda6d4f7": {
+   "arm": "G",
+   "connection_id": "CON-448e2ac15e30"
+  },
+  "ADJ-7f15c91948": {
+   "arm": "S",
+   "connection_id": "CON-d305efe9c4b2"
+  },
+  "ADJ-8e30e145a7": {
+   "arm": "G",
+   "connection_id": "CON-acd5ce0c77bd"
+  },
+  "ADJ-939e76e791": {
+   "arm": "S",
+   "connection_id": "CON-8dd8b6808acb"
+  },
+  "ADJ-ac9a4b8b08": {
+   "arm": "G",
+   "connection_id": "CON-3ed1da45ade3"
+  },
+  "ADJ-b0599d4fbf": {
+   "arm": "G",
+   "connection_id": "CON-8ba936d6da25"
+  },
+  "ADJ-d57044feb7": {
+   "arm": "G",
+   "connection_id": "CON-808de49b1a3c"
+  },
+  "ADJ-d847304f89": {
+   "arm": "G",
+   "connection_id": "CON-55d7da6e28ae"
+  },
+  "ADJ-e0917a47b3": {
+   "arm": "S",
+   "connection_id": "CON-2bdaed4722a6"
+  },
+  "ADJ-f22ae9b504": {
+   "arm": "S",
+   "connection_id": "CON-95f666224cf1"
+  }
+ }
+}

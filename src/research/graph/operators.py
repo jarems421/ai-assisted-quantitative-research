@@ -8,6 +8,7 @@ from __future__ import annotations
 from collections import defaultdict, deque
 
 from src.research.discovery import records as R
+from src.research.graph import connections as K
 from src.research.graph import model as M
 from src.research.graph import rules as G
 from src.research.spec import digest
@@ -25,6 +26,17 @@ NON_CONTENT_ROLES = ('history', 'revision_policy', 'publication_clock', 'access'
 def content_citation(edge):
     role = edge['attrs'].get('role', '')
     return edge['kind'] == 'CITES' and not role.startswith('clocks.') and role not in NON_CONTENT_ROLES
+
+
+def reused_record_citation(*edges):
+    """Evidence copied from another ledger record (reused_from names a record, e.g. FROZEN_PACKET/OBS-P-1), as opposed to a
+    repository receipt path. Two citations of the same copied evidence are one record restated, not a document match."""
+    return any((e['attrs'].get('reused_from') or '') and not str(e['attrs'].get('reused_from')).startswith('docs/') for e in edges)
+
+
+def doc_basis(identity, *edges):
+    if reused_record_citation(*edges):return 'REUSED_CITATION'
+    return 'EXACT_DOCUMENT_HASH' if identity == 'CONTENT_HASH' else 'SAME_LOCATOR_ONLY'
 
 
 class NotFound(ValueError):
@@ -106,9 +118,18 @@ def records_of(g, nid):
     return [nid]
 
 
+def order_bases(bases):
+    return sorted(set(bases), key=lambda b: (STRENGTH.get(b, 99), b))  # name tie-break: never set-iteration order
+
+
+def suggestion_id(operator, target, match, bases):
+    """Content-derived id: anyone holding an exported suggestion can recompute it from operator, target, match and bases."""
+    return 'SUG-' + digest({'operator': operator, 'target': target, 'match': match, 'bases': order_bases(bases)})[:12]
+
+
 def suggestion(operator, target, match, bases, **details):
-    bases = sorted(set(bases), key=lambda b: STRENGTH.get(b, 99))
-    sid = 'SUG-' + digest({'operator': operator, 'target': target, 'match': match, 'bases': bases})[:12]
+    bases = order_bases(bases)
+    sid = suggestion_id(operator, target, match, bases)
     out = {'suggestion_id': sid, 'status': M.SUGGESTION_ONLY, 'target': target, 'match': match, 'match_bases': bases,
            'strength': bases[0] if bases else 'NONE'}
     out.update(details); out['authority'] = AUTHORITY
@@ -247,8 +268,7 @@ def shared(g, token, view):
             for e2, other in linked(g, doc, ('CITES',), 'in'):
                 o = owner(g, other)
                 if o in scope or not content_citation(e2) or not G.visible(g, other, view)[0]:continue
-                groups[o]['matches'].append({'basis': 'EXACT_DOCUMENT_HASH' if identity == 'CONTENT_HASH' else 'SAME_LOCATOR_ONLY',
-                                             'via': doc, 'here': x, 'there': other})
+                groups[o]['matches'].append({'basis': doc_basis(identity, e, e2), 'via': doc, 'here': x, 'there': other})
         for e, ent in linked(g, x, ('DESCRIBES', 'SUBJECT', 'OBJECT', 'EXPOSES', 'CONCERNS'), 'out'):
             if g.nodes[ent]['attrs']['identity_status'] not in JOINABLE:continue
             for e2, other in linked(g, ent, ('DESCRIBES', 'SUBJECT', 'OBJECT', 'EXPOSES', 'CONCERNS'), 'in'):
@@ -268,17 +288,19 @@ def shared(g, token, view):
         else:classification = 'SHARED_ENTITY_ONLY'
         others = sorted({x['there'] for x in m['matches']})
         claims = sorted({c for x in others for c in claims_using(g, x)} | ({c for c in others if g.nodes[c]['kind'] in ('claim', 'history_claim')}))
-        out['results'].append(suggestion('shared', nid, o, bases, classification=classification,
+        best = sorted(m['matches'], key=lambda x: (STRENGTH.get(x['basis'], 99), x['there']))[0]
+        out['results'].append(K.annotate(g, suggestion('shared', nid, o, bases, classification=classification,
                                          matches=sorted(m['matches'], key=lambda x: (STRENGTH.get(x['basis'], 99), x['there'])),
                                          scope_and_period={x: g.nodes[x]['attrs'].get('period') or g.nodes[x]['attrs'].get('clocks', {}).get('economic_occurrence')
                                                            for x in others if g.nodes[x]['kind'] in ('relationship', 'observation')},
                                          dispositions={c: claim_status(g, c) for c in claims},
-                                         independence='SOURCE_INDEPENDENCE_UNKNOWN: shared or different hashes are not certified independent'))
-    out['results'].sort(key=lambda r: (STRENGTH.get(r['strength'], 99), r['match']))
+                                         independence='SOURCE_INDEPENDENCE_UNKNOWN: shared or different hashes are not certified independent'),
+                                          best['here'], best['there'], bases, [best['via']]))
+    out['results'].sort(key=lambda r: K.order_key(r, STRENGTH))
     out['results'] = out['results'][:M.MAX_SUGGESTIONS]
     out['notes'].append('A shared company alone is not a novel economic discovery; reuse of one source is not corroboration.')
     if not out['results']:out['abstentions'].append(abstain('NO_USEFUL_SUGGESTION', 'no other campaign or investigation shares a document hash or identified entity'))
-    return out
+    return K.summarise(out)
 
 
 def similar_entities(g, ent):
@@ -304,7 +326,7 @@ def complements(g, token, view):
                 for x in similar_entities(g, ent)]
     if g.nodes[ent]['attrs']['identity_status'] != 'IDENTIFIED':
         out['abstentions'].append(abstain('NO_VERIFIED_IDENTITY', f"{ent} is {g.nodes[ent]['attrs']['identity_status']}; no cross-campaign join is made"))
-        out['rejected'] = rejected; return out
+        out['rejected'] = rejected; return K.summarise(out, rejected)
     used = {ent}
     for e, rel in linked(g, ent, ('SUBJECT', 'OBJECT'), 'in'):
         r = g.nodes[rel]; used.add(rel)
@@ -316,7 +338,7 @@ def complements(g, token, view):
         if inside is False:rejected.append({'node': rel, 'code': 'PERIOD_INCOMPATIBLE', 'reason': f"period {r['attrs']['period']} excludes observation date {occurred}"}); continue
         far = [o for _, o in linked(g, rel, ('SUBJECT', 'OBJECT'), 'out') if o != ent]
         claims = claims_using(g, rel)
-        out['results'].append(suggestion('complements', obs, rel, ['EXACT_ENTITY_ID', 'DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD'],
+        out['results'].append(K.annotate(g, suggestion('complements', obs, rel, ['EXACT_ENTITY_ID', 'DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD'],
             connection=f"{g.nodes[obs]['label']} concerns {ent}, which {r['label']} documents ({r['attrs']['direction']})",
             relationship={'status': r['status'], 'period': r['attrs']['period'], 'allocation': r['attrs']['allocation_status'],
                           'evidence': G.evidence_refs(g, rel)},
@@ -326,27 +348,30 @@ def complements(g, token, view):
                 'documented allocation of the quantity to the counterparty' if r['attrs']['allocation_status'] == 'ALLOCATION_UNVERIFIED' else None,
                 'quantified listed-company exposure and materiality', 'check whether the issuer or a specialist already explained it',
                 None if g.nodes[obs]['attrs']['first_public_certified'] else 'first-public time of the observation (UNKNOWN)',
-                'a frozen Discovery Lab claim and human M/H review'] if x]))
+                'a frozen Discovery Lab claim and human M/H review'] if x]),
+            obs, rel, ['EXACT_ENTITY_ID', 'DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD'], [ent, rel]))
     for e, other in linked(g, ent, ('DESCRIBES',), 'in'):
         used.add(other)
         if other == obs or owner(g, other) == here or not G.visible(g, other, view)[0]:continue
-        out['results'].append(suggestion('complements', obs, other, ['EXACT_ENTITY_ID'],
+        out['results'].append(K.annotate(g, suggestion('complements', obs, other, ['EXACT_ENTITY_ID'],
             connection='another recorded observation of the same identified object',
             other_observation={'status': g.display_status(other), 'occurred': G.occurrence(g.nodes[other]), 'value': g.nodes[other]['attrs']['value'],
                                'units': g.nodes[other]['attrs']['units']},
             note='Different periods or populations are not contradictions; compare units before combining.',
-            still_required=['confirm same quantity definition and units', 'a frozen Discovery Lab claim and human review']))
+            still_required=['confirm same quantity definition and units', 'a frozen Discovery Lab claim and human review']),
+            obs, other, ['EXACT_ENTITY_ID'], [ent]))
     for e, hist in linked(g, ent, ('CONCERNS',), 'in'):
         used.add(hist)
         caveat = [ARCHIVE_CAVEAT] if e['attrs'].get('identity_basis') == 'SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR' else []
-        out['results'].append(suggestion('complements', obs, hist, ['EXACT_ENTITY_ID'], connection='historical investigation concerned the same identifier',
+        out['results'].append(K.annotate(g, suggestion('complements', obs, hist, ['EXACT_ENTITY_ID'], connection='historical investigation concerned the same identifier',
                                          verdict=g.nodes[hist]['attrs']['verdict']['text'],
-                                         still_required=caveat + ['read the cited report; the historical verdict stands']))
+                                         still_required=caveat + ['read the cited report; the historical verdict stands']),
+                                         obs, hist, ['EXACT_ENTITY_ID'], [ent]))
     others = [k for k, n in g.nodes.items() if n['kind'] in ('observation', 'relationship') and not n['superseded']]
     out['rejected'] = rejected + keyword_only(g, obs, others, used, view)
-    out['results'] = sorted(out['results'], key=lambda r: (STRENGTH.get(r['strength'], 99), r['match']))[:M.MAX_SUGGESTIONS]
+    out['results'] = sorted(out['results'], key=lambda r: K.order_key(r, STRENGTH))[:M.MAX_SUGGESTIONS]
     if not out['results']:out['abstentions'].append(abstain('NO_USEFUL_SUGGESTION', 'no identified, period-compatible complementary record'))
-    return out
+    return K.summarise(out, out['rejected'])
 
 
 def same_gap(g, token, view):
@@ -362,17 +387,21 @@ def same_gap(g, token, view):
         rows[claim].append({'basis': e['attrs'].get('basis', 'MECHANICAL_BLOCKER'), 'detail': e['attrs'].get('detail')})
     for claim in sorted(rows):
         bases = sorted({r['basis'] for r in rows[claim]})
-        out['results'].append({'claim': claim, 'origin': owner(g, claim), 'fixture': g.nodes[claim]['fixture'], 'status': claim_status(g, claim),
+        out['results'].append({'suggestion_id': suggestion_id('same-gap', nid, claim, bases), 'target': nid, 'match': claim, 'match_bases': order_bases(bases),
+                               'claim': claim, 'origin': owner(g, claim), 'fixture': g.nodes[claim]['fixture'], 'status': claim_status(g, claim),
                                'link_bases': bases, 'candidate_only': bases == ['AUTHOR_TAG_CANDIDATE'],
                                'why_blocked': [r['detail'] for r in rows[claim]],
                                'evidence': [g.nodes[f]['attrs']['citation'] for _, f in linked(g, claim, ('HAS_FINDING',), 'out')
-                                            if g.nodes[f]['attrs']['requirement'] == nid.split(':', 1)[1]]})
+                                            if g.nodes[f]['attrs']['requirement'] == nid.split(':', 1)[1]],
+                               # Same-gap is methodological reuse by construction: the shared item is the missing measurement.
+                               'connection_class': K.WARNING, 'warning': K.warn(g, nid, claim, bases, [nid] if nid.startswith('requirement:') else [])})
     out['leads'] = [{'observation': o, 'basis': 'AUTHOR_TAG_CANDIDATE', 'status': g.display_status(o),
                      'note': 'Author tag says it may measure this requirement; not shown to measure it.'}
                     for e, o in linked(g, nid, ('MAY_MEASURE',), 'in') if G.visible(g, o, view)[0]]
     out['notes'].append('A shared blocker is an opportunity to reuse investigative knowledge, not proof of an economic relationship.')
+    out['notes'].append('Every same-gap result is a METHODOLOGICAL_WARNING: claims blocked by the same requirement share no established economic exposure.')
     if not out['results']:out['abstentions'].append(abstain('NO_USEFUL_SUGGESTION', 'no visible claim is blocked by this requirement'))
-    return out
+    return K.summarise(out)
 
 
 def explain(g, a, b, view, semantic=M.DEFAULT_SEMANTIC_HOPS):
@@ -425,7 +454,7 @@ def revisit(g, token, view):
             for e2, other in linked(g, doc, ('CITES',), 'in'):
                 if owner(g, other) == here or not content_citation(e2):continue
                 for c in ([other] if g.nodes[other]['kind'] == 'claim' else claims_using(g, other)):
-                    bases[c].add('EXACT_DOCUMENT_HASH'); via[c].append(doc)
+                    bases[c].add(doc_basis('CONTENT_HASH', e, e2)); via[c].append(doc)
         identified = g.nodes[ent]['attrs']['identity_status'] == 'IDENTIFIED'
         if identified:
             for e, other in linked(g, ent, ('SUBJECT', 'OBJECT', 'DESCRIBES', 'EXPOSES', 'CONCERNS'), 'in'):
@@ -435,7 +464,8 @@ def revisit(g, token, view):
                     if e['attrs'].get('identity_basis') == 'SEC_ARCHIVE_PATH_IN_RECORDED_LOCATOR':caveats[c].add(ARCHIVE_CAVEAT)
                     if g.nodes[other]['kind'] == 'relationship':
                         inside = G.period_check(g.nodes[other], G.occurrence(o))
-                        if g.nodes[other]['status'] == M.DOCUMENTED_RELATIONSHIP and inside:bases[c].add('DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD')
+                        if g.nodes[other]['status'] == M.DOCUMENTED_RELATIONSHIP and inside:
+                            bases[c].add('DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD'); via[c].append(other)
         rejected += [{'node': x, 'code': 'ONLY_NAME_SIMILARITY', 'observation': obs,
                       'reason': 'similar name, different identifier: never treated as the same object'} for x in similar_entities(g, ent)]
         for req in o['attrs']['measures_tags']:
@@ -446,14 +476,15 @@ def revisit(g, token, view):
         for t in o['attrs']['unknown_tags']:rejected.append({'node': obs, 'code': 'UNKNOWN_TAG', 'tag': t, 'reason': 'tag not in the requirement vocabulary'})
         for c in sorted(bases):
             if not G.visible(g, c, view)[0] or g.nodes[c]['superseded']:continue
-            out['results'].append(evaluate_lead(g, obs, c, bases[c], via[c], caveats[c]))
+            out['results'].append(K.annotate(g, evaluate_lead(g, obs, c, bases[c], via[c], caveats[c]), obs, c, bases[c], via[c]))
         claims = [k for k, x in g.nodes.items() if x['kind'] in ('claim', 'history_claim') and not x['superseded']]
         rejected += keyword_only(g, obs, claims, set(bases), view)
-    out['results'].sort(key=lambda r: (STRENGTH.get(r['strength'], 99), r['match'], r['target']))
+    # Grounded candidates always rank above warnings: a requirement-tag match can never outrank a grounded connection.
+    out['results'].sort(key=lambda r: K.order_key(r, STRENGTH))
     out['results'] = out['results'][:M.MAX_SUGGESTIONS]
     out['rejected'] = rejected
     if not out['results']:out['abstentions'].append(abstain('NO_USEFUL_SUGGESTION', 'no earlier claim shares a document hash, identified object or requirement'))
-    return out
+    return K.summarise(out, rejected)
 
 
 def evaluate_lead(g, obs, claim, bases, via, caveats=()):
@@ -535,16 +566,19 @@ def next_questions(g, view):
     for req in sorted(set(by_req) | set(history)):
         claims = sorted(by_req.get(req, ()))
         proposals = [d['verify'] for c in claims for d in g.nodes[c]['attrs']['dispositions'] if d['verify']]
-        rows.append({'requirement': req, 'open_claims': claims, 'open_claim_count': len(claims),
+        rows.append({'suggestion_id': suggestion_id('next', req, req, ['REQUIREMENT_MATCH']), 'target': req, 'match': req, 'match_bases': ['REQUIREMENT_MATCH'],
+                     'requirement': req, 'open_claims': claims, 'open_claim_count': len(claims),
                      'historical_investigations': sorted(history.get(req, ())), 'decisive_checks': [g.nodes[c]['attrs']['falsification'] for c in claims],
                      'recorded_verify_proposals': proposals, 'has_specific_route': bool(proposals),
+                     'connection_class': K.WARNING,
+                     'meaning': 'A recurring research requirement; the claims and investigations listed are not thereby economically related.',
                      'authority': 'PROPOSAL_ONLY: a recommended check is not authorisation to perform it.'})
     rows.sort(key=lambda r: (-r['open_claim_count'], not r['has_specific_route'], -len(r['historical_investigations']), r['requirement']))
     out['results'] = rows[:M.MAX_SUGGESTIONS]
     out['notes'].append('Ordering is categorical (open claims sharing the requirement, then a recorded route, then historical recurrence); '
                         'no probability or expected value is computed.')
     if not open_claims:out['abstentions'].append(abstain('NO_OPEN_CLAIMS', 'no open Discovery Lab claim; historical recurrence is shown as reusable knowledge only'))
-    return out
+    return K.summarise(out)
 
 
 def failures(g, view):

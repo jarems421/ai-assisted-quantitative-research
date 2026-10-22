@@ -45,6 +45,10 @@ def text(res):
     active = {k: v for k, v in view.items() if v}
     if active:lines.append(f'view filters: {active}')
     if res.get('visibility'):lines.append('visibility:'); lines += pretty(res['visibility'], 2)
+    if res.get('connection_summary'):
+        s = res['connection_summary']
+        lines.append(f"connections ({res.get('operator_version')}): {s['economic_connection_candidates']} economic connection candidate(s), "
+                     f"{s['methodological_warnings']} methodological warning(s), {s['unsupported_matches']} unsupported, {s['rejected']} rejected")
     for key in ('definition', 'does_not_mean', 'bounds'):
         if res.get(key):lines.append(f'{key}: {short(res[key]) if not isinstance(res[key], dict) else res[key]}')
     for i, r in enumerate(res['results'], 1):

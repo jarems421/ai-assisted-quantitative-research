@@ -1,0 +1,20 @@
+{
+ "version": "GRAPH_GENERIC_IDENTIFIERS_V001",
+ "recorded_at_utc": "2026-10-22T10:30:00+00:00",
+ "status": "PROSPECTIVE RULE INPUT for GRAPH_CLASSIFICATION_V1_2. Registered before any holdout fixture for the rule was written. Non-authoritative: it decides only which shared identifiers are insufficient by themselves to ground an economic connection candidate.",
+ "policy": "Owner policy 2026-10-22: generic shared identifiers (regulators, exchanges, generic institutional roles) are insufficient by themselves to establish an economic connection candidate.",
+ "entity_types": [
+  {"type": "REGULATOR", "category": "REGULATOR", "rationale": "A regulator touches every regulated firm and product; sharing one says nothing about a specific economic link."},
+  {"type": "GEOGRAPHY", "category": "GEOGRAPHY", "rationale": "A shared country, region or market area is a background condition, not a link between two economic objects."}
+ ],
+ "identifier_prefixes": [
+  {"prefix": "MIC:", "category": "EXCHANGE", "rationale": "ISO 10383 market identifier codes name trading venues, which every listed security on them shares."},
+  {"prefix": "ISO3166:", "category": "GEOGRAPHY", "rationale": "ISO 3166 country and subdivision codes are geographies."}
+ ],
+ "identifiers": [],
+ "does_not_cover": [
+  "Generic institutions recorded with an ordinary entity type and identifier (for example a central bank, court, tax authority or standard setter recorded as LEGAL_ENTITY with an LEI) are NOT recognised unless typed REGULATOR or listed here by exact identifier after owner review.",
+  "Names never decide genericness, and no entity is treated as generic from its label.",
+  "A documented relationship involving a generic institution, or the same document cited by both records, still grounds a candidate."
+ ]
+}

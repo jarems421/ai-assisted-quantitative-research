@@ -85,6 +85,7 @@ Campaign A (relationship-first) records a documented take-or-pay dependency betw
 ```text
 DERIVED RESEARCH VIEW - NOT INDEPENDENT EVIDENCE - NO RESEARCH AUTHORITY
 revisit: campaign:DLC-GSYN-B  (mode=synthetic)
+connections (GRAPH_OPERATORS_V1_1): 1 economic connection candidate(s), 0 methodological warning(s), 0 unsupported, 1 rejected
 [1]
   suggestion_id: SUG-2aad86e0cc98
   status: SUGGESTION_ONLY
@@ -92,7 +93,7 @@ revisit: campaign:DLC-GSYN-B  (mode=synthetic)
   match: claim:DLC-GSYN-A/CAND-GA-1@1
   match_bases: EXACT_ENTITY_ID, DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD, AUTHOR_TAG_CANDIDATE
   strength: EXACT_ENTITY_ID
-  via: entity:SYN_FACILITY:T-7, requirement:REQ_REALISED_ACTIVITY
+  via: entity:SYN_FACILITY:T-7, relationship:DLC-GSYN-A/REL-GA-1@1, requirement:REQ_REALISED_ACTIVITY
   why_matched: EXACT_ENTITY_ID, DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD, AUTHOR_TAG_CANDIDATE
   field_visible: True
   observation_depth: VERIFIED_ORIGINAL_FIELD
@@ -111,6 +112,72 @@ revisit: campaign:DLC-GSYN-B  (mode=synthetic)
   previous_status_stands: True
   candidate_only: False
   authority: NONE: suggestion only. Earlier dispositions, historical verdicts and source stops stand; any work needs separate authority.
+  connection_class: ECONOMIC_CONNECTION_CANDIDATE
+  grounding:
+    source_record: observation:DLC-GSYN-B/OBS-GB-1@1
+    target_record: claim:DLC-GSYN-A/CAND-GA-1@1
+    documented_basis:
+      - basis: EXACT_ENTITY_ID
+        meaning: both records concern the same identified economic object (exact identifier, never a name or ticker)
+      - basis: DOCUMENTED_RELATIONSHIP_COMPATIBLE_PERIOD
+        meaning: a documented relationship involving that object covers the observed date
+    joining_objects:
+      - object: entity:SYN_FACILITY:T-7
+        kind: entity
+        identifier: SYN_FACILITY:T-7
+        identity_status: IDENTIFIED
+        names: Synthetic Terminal Seven
+      - object: relationship:DLC-GSYN-A/REL-GA-1@1
+        kind: relationship
+        type: CONTRACT_COUNTERPARTY
+        direction: Echo holds a take-or-pay throughput contract at Terminal Seven with a 2.0 Mt/year minimum.
+        period:
+          end: 2005-12-31
+          start: 1998-01-01
+        status: DOCUMENTED_RELATIONSHIP
+        allocation: VERIFIED_ALLOCATION
+      - object: requirement:REQ_REALISED_ACTIVITY
+        kind: requirement
+        note: methodological only; not part of the economic grounding
+    economic_objects:
+      - record: observation:DLC-GSYN-B/OBS-GB-1@1
+        role: DESCRIBES
+        entity: entity:SYN_FACILITY:T-7
+        identifier: SYN_FACILITY:T-7
+        identity_status: IDENTIFIED
+        names: Synthetic Terminal Seven
+      - record: claim:DLC-GSYN-A/CAND-GA-1@1
+        role: EXPOSES
+        entity: entity:SYN_LISTED:ECHO
+        identifier: SYN_LISTED:ECHO
+        identity_status: IDENTIFIED
+        names: Echo Synthetic Logistics (fictional)
+    temporal:
+      source:
+        record: observation:DLC-GSYN-B/OBS-GB-1@1
+        occurred: 2000-06-30
+        first_public: 2000-07-10
+      target:
+        record: claim:DLC-GSYN-A/CAND-GA-1@1
+        kind: claim
+        first_public: UNKNOWN
+      relationship_period_covers_source: YES
+    establishes:
+      - both records concern the same identified economic object (exact identifier, never a name or ticker)
+      - a documented relationship involving that object covers the observed date
+      - Hypothesis record, not an economic assertion
+    not_established:
+      - financial exposure of any listed company
+      - causation or transmission of a quantity
+      - materiality
+      - allocation of any quantity to a counterparty
+      - that the records describe the same quantity definition and units
+      - first-public time of claim:DLC-GSYN-A/CAND-GA-1@1 (UNKNOWN)
+    first_unsupported_inference:
+      node: claim:DLC-GSYN-A/CAND-GA-1@1
+      code: FINANCIAL_TRANSMISSION_UNVERIFIED
+      detail: every step is supported, but no step shows quantity transmission, materiality or exposure
+    worth_investigating_because: the target claim records unresolved variables ([REQ:REQ_REALISED_ACTIVITY] Terminal Seven throughput in the current period (2000)) that the source record may bear on
 rejected:
   - node: entity:SYN_FACILITY:T-7B
     code: ONLY_NAME_SIMILARITY

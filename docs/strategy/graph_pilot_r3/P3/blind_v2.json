@@ -1,0 +1,1315 @@
+{
+ "version": "GRAPH_PILOT_BLIND_V2_ALIASED",
+ "packet": "P3",
+ "fixture": "LIVE",
+ "snapshot_sha256": "156acba20778a9fe47c5f2d520061849c58ce06b832416ce8ac6f80f643b3bad",
+ "key_sha256": "e9ab04ff2522e9ff10077793765fcec91e15cc303d63c25a5311fa96112063f4",
+ "derived_from": {
+  "path": "blind.json",
+  "sha256": "6d28c55cc1cb9940fff72371c883ecaf65e195df07510c4de4b1c8de16e8b6ba",
+  "version": "GRAPH_PILOT_BLIND_V001",
+  "presentation_status": "COMPROMISED: arm-identifying record ids and id styles were visible"
+ },
+ "alias_key_sha256": "f143656da9486d6380e02d902dece1d30b338245a858ecfda93d46e1677ce33b",
+ "aliasing": [
+  "every record id of the current arm campaign, in any field or text, is an opaque per-item alias (kind prefix kept)",
+  "frozen-packet (SRC/OBS/REL-P-n) and historical (HIST-) references are unchanged",
+  "campaign ids, archive paths and branch names are neutral placeholders",
+  "blind ids, item order, evidence hashes, dates, values, periods and texts are otherwise unchanged"
+ ],
+ "hidden_from_adjudicator": [
+  "arm",
+  "connection_id",
+  "operator",
+  "found_via",
+  "basis",
+  "arm_decision",
+  "analyst_minutes",
+  "discovery_lab_record",
+  "recorded_at_utc",
+  "notes",
+  "arm campaign ids",
+  "graph explanations and match strengths"
+ ],
+ "instructions": [
+  "Adjudicate every item once, against the cited originals, without consulting arm ledgers, logs or sessions.",
+  "CONFIRMED_AGAINST_ORIGINALS must list the evidence identifiers (sha256 or locator) you checked.",
+  "Economic meaning: does the connection link an observed quantity or documented relationship to a listed company's documented exposure, or to a claim's required measurement?",
+  "Aliases are per item: the same alias in two items is not implied to be the same record."
+ ],
+ "items": [
+  {
+   "blind_id": "ADJ-793909d493",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-SH09/claim-v1",
+    "entities": [
+     {
+      "id": "CIK:0000093410",
+      "name": "Chevron Corporation"
+     },
+     {
+      "id": "NAME:W&T Offshore",
+      "name": "W&T Offshore"
+     },
+     {
+      "id": "NAME:Cox estate leases",
+      "name": "Cox-estate leases with outstanding obligations"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.wtoffshore.com/investors/sec-filings/all-sec-filings/content/0001104659-23-126389/0001104659-23-126389.pdf",
+      "sha256": "1d468393d22cfafe99b67b1432a38bcfc0630b85e4e76620a8e9ff5285451651",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/93410/000009341024000002/cvx-20240102.htm",
+      "sha256": "4c5d6244c33ac20637cfd6b4e6ce4f939bb0ce6f13281f963d8005ba80195766",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://chevroncorp.gcs-web.com/static-files/51fe92ca-3680-42a4-b804-2c9433cfe667",
+      "sha256": "f70acef4d8bb6b5b9c67c042676f0cd5217face3fc2630b0ff877665e86dd36f",
+      "depth": "RECEIPT_HTTP_403"
+     },
+     {
+      "locator": "https://www.courtlistener.com/?q=%22MLCJR%22&type=r&order_by=dateFiled%20asc",
+      "sha256": "dc6f503969324d8da3b8204988ce06ab0be870d8fad8c777fc731daa71fd37c0",
+      "depth": "RECEIPT_HTTP_403"
+     }
+    ],
+    "text": "Change in Chevron recoverable-net predecessor cleanup exposure before 2024-01-02",
+    "tags": [
+     "REQ_DOCUMENTED_ALLOCATION",
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_HISTORICAL_SCHEDULE_OR_VERSION",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ]
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A31ac7246",
+    "text": "Outcome check for CAND-A6e8d73de: the quarterly reports for the periods ended 2025-06-30 and 2025-09-30 contain no text on the Extended Tip or MicroMyst applicators, endotoxin, sterility or the 2025 recall events (text searched for \"recall\", \"applicator\", \"MicroMyst\", \"endotoxin\", \"steril\"). Their only recall-named special charge is \"Boston recall / Braintree transition\" (an earlier recall of Boston-facility products): $13,630 thousand and $13,957 thousand for the two quarters. CSS revenue was $304.0 million (Q2, change attributed to combined \"quality and operational issues\") and $292.6 million (Q3). No amount is attributed to the 2025 applicator recalls. Decides the frozen outcome: the registrant reports no recall-specific amount for these applicators, only combined quality and operational effects. Product revenue of the recalled applicators Any recall cost recorded within combined quality charges",
+    "entities": [
+     {
+      "id": "CIK:0000917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000096/iart-20250930.htm",
+      "sha256": "859cb91bb8b06a22e5a08649a2f4cdb4fe889e136700fa2eafa89201a16e7751",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000096/iart-20250930.htm",
+      "sha256": "859cb91bb8b06a22e5a08649a2f4cdb4fe889e136700fa2eafa89201a16e7751",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "NO_AMOUNT_ATTRIBUTED_TO_THE_APPLICATOR_RECALLS",
+    "units": "USD thousands (no attributed amount)",
+    "occurred": "2025-09-30",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Cox estate leases",
+     "NAME:W&T Offshore"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-e977207739",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-F01/claim-v1",
+    "entities": [
+     {
+      "id": "BW_LOCALITY:10029",
+      "name": "Tuholmane Ø"
+     },
+     {
+      "id": "BW_LOCALITY:10212",
+      "name": "Bogen"
+     },
+     {
+      "id": "BW_LOCALITY:10041",
+      "name": "Kviksholmen"
+     },
+     {
+      "id": "BW_LOCALITY:10213",
+      "name": "Naustneset"
+     },
+     {
+      "id": "MMSI:257210000",
+      "name": "ROSTEIN (wellboat)"
+     },
+     {
+      "id": "MMSI:257262000",
+      "name": "RONJA SUND (wellboat)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10029/vessel/2021/10",
+      "sha256": "fce8a379fa8dd198407483bb512df417dc95b5d236c4ba62012559f596a40d4b",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/10213/vessel/2024/10",
+      "sha256": "253a49d06ceeb3b5e7a8984d16d18e70699c24f2bbfe98efe0c4716598ee25f1",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/vesseltrack/257210000/2021/10",
+      "sha256": "d01c12155bfe1fd903110e81067307cc85259d82e400775ee921d17d41ab3660",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.barentswatch.no/bwapi/openapi/fishhealth/openapi.json",
+      "sha256": "4b95578a944443798f2afcb8214d10069b6b931cc733c85646716afdac1cf675",
+      "depth": "RECEIPT_HTTP_200"
+     }
+    ],
+    "text": "Cross-owner treatment-resource dependence and available treatment capacity",
+    "tags": [
+     "REQ_AVAILABLE_CAPACITY",
+     "REQ_ENTITY_COHORT_JOIN",
+     "REQ_REALISED_ACTIVITY"
+    ]
+   },
+   "to": {
+    "kind": "relationship",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "REL-A76e5d8c6",
+    "text": "possible identity: the recalling firm named in the FDA records may be the listed subsidiary",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences), Princeton NJ"
+     },
+     {
+      "id": "NAME:Integra LifeSciences Corporation",
+      "name": "Integra LifeSciences Corporation (Delaware)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000017/iart-20241231xexx211.htm",
+      "sha256": "2ab0313fd6d420f3e3aec900880500304d1635c119bcde666b526f85badc3d97",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "type": "OTHER",
+    "period": {
+     "end": "2025-07-02",
+     "start": "2025-05-22"
+    },
+    "basis": "NAME_MATCH_ONLY",
+    "status": "UNVERIFIED"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+     "NAME:Integra LifeSciences Corporation"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-e14ea60127",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Acdd1c21d",
+    "text": "Quarterly report for the period ended 2025-03-31 (filed before the recalls' initiation dates): Neurosurgery revenue $190,912 thousand (prior-year quarter $202,268 thousand); Codman Specialty Surgical segment $280,664 thousand; total revenue $382,653 thousand. Neurosurgery excluding the acquisition declined low single digits, driven by Dural Access and Repair, Advanced Energy and Neuro Monitoring. Special charges include \"Boston recall / Braintree transition\" $14,810 thousand. Pre-event scale of the revenue line the recalled applicators may belong to; shows the registrant itemises recall-related special charges. Which revenue line includes the Extended Tip and MicroMyst applicators Product-level revenue of the recalled items EDGAR acceptance time",
+    "entities": [
+     {
+      "id": "CIK:0000917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 190912,
+    "units": "USD thousands (net revenue, Neurosurgery revenue line)",
+    "occurred": "2025-03-31",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A482566d4",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-d4a210e351",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A46ebbed8",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "relationship",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "REL-A25b86b20",
+    "text": "source owns target (subsidiary listed in the parent's Exhibit 21.1)",
+    "entities": [
+     {
+      "id": "CIK:0000917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     },
+     {
+      "id": "NAME:Integra LifeSciences Corporation",
+      "name": "Integra LifeSciences Corporation (Delaware)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000017/iart-20241231xexx211.htm",
+      "sha256": "2ab0313fd6d420f3e3aec900880500304d1635c119bcde666b526f85badc3d97",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "type": "OWNERSHIP",
+    "period": {
+     "end": "2024-12-31",
+     "start": "UNKNOWN"
+    },
+    "basis": "DOCUMENTED",
+    "status": "UNVERIFIED"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+     "NAME:Integra LifeSciences Corporation"
+    ],
+    "relationship_period_covers_observation": "UNRESOLVED"
+   }
+  },
+  {
+   "blind_id": "ADJ-84e34126a1",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A9307dc0f",
+    "text": "Pre-event disclosure (period ended 2025-03-31): on December 19, 2024 a subsidiary of the registrant received an FDA warning letter on quality system issues at facilities in Mansfield MA, Plainsboro NJ and Princeton NJ; the company had initiated shipping holds for several products and a voluntary recall of disposable patties and strips. Revenue declines were attributed to quality and operational issues. Quality-system problems at a Princeton facility were disclosed before the 2025 applicator recalls; a later recall may restate known risk rather than add information. Manufacturing site of the recalled applicators Name of the subsidiary that received the warning letter",
+    "entities": [
+     {
+      "id": "CIK:0000917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "FDA warning letter received 2024-12-19 (quality system issues, three facilities including Princeton NJ)",
+    "units": "regulatory action (category)",
+    "occurred": "2024-12-19",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Aaca04313",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-6fcb2b50a4",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A93430d37",
+    "text": "FDA device enforcement record Z-1961-2025 (event 96965): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: MicroMyst Applicator, Box of 5. Consisting of a multilumen applicator and filtered line for use with the Integra Flow Source for the controlled application of two liquids. Reason: Lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-23",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A1663e332",
+    "text": "The Form 10-Q for the quarter ended 2025-06-30 (accession 0000917520-25-000074) contains no mention of the recalled applicators, the MicroMyst applicator, endotoxins or sterility assurance, and no recall-specific amount for them. Its recall references concern the 2024 patties-and-strips recall and the 2023 Boston-facility recall; the special-charge line \"Boston recall / Braintree transition\" was $13.630 million for the quarter. Total revenue was $415.605 million and Codman Specialty Surgical revenue $303.958 million; revenue changes are attributed to unquantified \"quality and operational issues\". Dural sealant products are stated to be sourced mostly from third-party vendors. The frozen outcome route for CAND-Afee388f7: the issuer report for the quarter containing recall initiation. EDGAR acceptance record (first-public time) not retrieved Product-line revenue for the recalled applicators",
+    "entities": [
+     {
+      "id": "SEC_CIK:917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "no recall-specific amount or mention for these applicators",
+    "units": "USD thousands (revenue and charges); presence or absence of disclosure",
+    "occurred": "2025-06-30",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-db8b15dde2",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "relationship",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "REL-Ad636d8a4",
+    "text": "source owns target (subsidiary listed in the parent's Exhibit 21.1)",
+    "entities": [
+     {
+      "id": "CIK:0000917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     },
+     {
+      "id": "NAME:Integra LifeSciences Corporation",
+      "name": "Integra LifeSciences Corporation (Delaware)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000017/iart-20241231xexx211.htm",
+      "sha256": "2ab0313fd6d420f3e3aec900880500304d1635c119bcde666b526f85badc3d97",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "type": "OWNERSHIP",
+    "period": {
+     "end": "2024-12-31",
+     "start": "UNKNOWN"
+    },
+    "basis": "DOCUMENTED",
+    "status": "UNVERIFIED"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A15b26376",
+    "text": "Quarterly report for the period ended 2025-03-31 (filed before the recalls' initiation dates): Neurosurgery revenue $190,912 thousand (prior-year quarter $202,268 thousand); Codman Specialty Surgical segment $280,664 thousand; total revenue $382,653 thousand. Neurosurgery excluding the acquisition declined low single digits, driven by Dural Access and Repair, Advanced Energy and Neuro Monitoring. Special charges include \"Boston recall / Braintree transition\" $14,810 thousand. Pre-event scale of the revenue line the recalled applicators may belong to; shows the registrant itemises recall-related special charges. Which revenue line includes the Extended Tip and MicroMyst applicators Product-level revenue of the recalled items EDGAR acceptance time",
+    "entities": [
+     {
+      "id": "CIK:0000917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": 190912,
+    "units": "USD thousands (net revenue, Neurosurgery revenue line)",
+    "occurred": "2025-03-31",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [
+     "CIK:0000917520"
+    ],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corporation"
+    ],
+    "relationship_period_covers_observation": "UNRESOLVED"
+   }
+  },
+  {
+   "blind_id": "ADJ-6b5b79c2d6",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A0309968f",
+    "text": "The GUDID record for primary device identifier 10381780000143 (Extended Tip Applicator, catalog 205108, the identifier printed in recall Z-1958-2025) names labeler \"Integra Lifesciences Corporation\", DUNS 083171244; package identifier 30381780000147 is a BOX containing 5 of that device. Joins the recalled product to a labeler legal entity through an exact device identifier and supplies a DUNS identifier; shows the recalled SKU is a box of 5 devices, so the recall unit count is ambiguous between boxes and devices. GUDID records for the other recalled identifiers (10381780000150, 10381780000167, 10381780000112) were not retrieved Whether recall product_quantity counts boxes or devices Any identifier joining DUNS 083171244 to an SEC filer",
+    "entities": [
+     {
+      "id": "DUNS:083171244",
+      "name": "Integra Lifesciences Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://accessgudid.nlm.nih.gov/api/v3/devices/lookup.json?di=10381780000143",
+      "sha256": "d6ad2dde4a3e98ee9d760174dc390fad39376312e101f2c61106cc3d6681004a",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "labeler DUNS 083171244; 5 devices per box",
+    "units": "identifier; devices per package",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A0a0af697",
+    "text": "Exhibit 21.1 to the FY2024 Form 10-K of Integra LifeSciences Holdings Corporation (accession 0000917520-25-000017) lists \"Integra LifeSciences Corporation\" (Delaware) among its subsidiaries. The exhibit gives no ownership share, address or identifier. Documents that a subsidiary bearing the labeler name belongs to the listed parent. Ownership share and date coverage of the subsidiary relationship in May 2025 Identifier shared between the subsidiary and the GUDID DUNS or FDA recalling firm",
+    "entities": [
+     {
+      "id": "SEC_CIK:917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000017/iart-20241231xexx211.htm",
+      "sha256": "2ab0313fd6d420f3e3aec900880500304d1635c119bcde666b526f85badc3d97",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "listed as subsidiary",
+    "units": "category",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": []
+   }
+  },
+  {
+   "blind_id": "ADJ-dc62481aff",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A10ffdce7",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Adce6cd3e",
+    "text": "The Form 10-Q for the quarter ended 2025-06-30 (accession 0000917520-25-000074) contains no mention of the recalled applicators, the MicroMyst applicator, endotoxins or sterility assurance, and no recall-specific amount for them. Its recall references concern the 2024 patties-and-strips recall and the 2023 Boston-facility recall; the special-charge line \"Boston recall / Braintree transition\" was $13.630 million for the quarter. Total revenue was $415.605 million and Codman Specialty Surgical revenue $303.958 million; revenue changes are attributed to unquantified \"quality and operational issues\". Dural sealant products are stated to be sourced mostly from third-party vendors. The frozen outcome route for CAND-Ab3d29651: the issuer report for the quarter containing recall initiation. EDGAR acceptance record (first-public time) not retrieved Product-line revenue for the recalled applicators",
+    "entities": [
+     {
+      "id": "SEC_CIK:917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "no recall-specific amount or mention for these applicators",
+    "units": "USD thousands (revenue and charges); presence or absence of disclosure",
+    "occurred": "2025-06-30",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-87143e90ad",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A08cc6827",
+    "text": "The GUDID record for primary device identifier 10381780000143 (Extended Tip Applicator, catalog 205108, the identifier printed in recall Z-1958-2025) names labeler \"Integra Lifesciences Corporation\", DUNS 083171244; package identifier 30381780000147 is a BOX containing 5 of that device. Joins the recalled product to a labeler legal entity through an exact device identifier and supplies a DUNS identifier; shows the recalled SKU is a box of 5 devices, so the recall unit count is ambiguous between boxes and devices. GUDID records for the other recalled identifiers (10381780000150, 10381780000167, 10381780000112) were not retrieved Whether recall product_quantity counts boxes or devices Any identifier joining DUNS 083171244 to an SEC filer",
+    "entities": [
+     {
+      "id": "DUNS:083171244",
+      "name": "Integra Lifesciences Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://accessgudid.nlm.nih.gov/api/v3/devices/lookup.json?di=10381780000143",
+      "sha256": "d6ad2dde4a3e98ee9d760174dc390fad39376312e101f2c61106cc3d6681004a",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "labeler DUNS 083171244; 5 devices per box",
+    "units": "identifier; devices per package",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "FROZEN_PACKET",
+    "record": "OBS-P-1",
+    "text": "FDA device enforcement record Z-1904-2025 (event 96891): Class I recall by SunMed Holdings, LLC, status Ongoing. Product: Broselow Pediatric Emergency Rainbow Tape (distribution by AirLife); REF 7700REA AirLife brand, 2025 Edition, and 36-23446 Rev 2 Print Version The Broselow Tape is a length- and weight-based reference tool specifically designed for pediatric emergency care. Reason: The impacted tape was manufactured with incorrect information on the tape. Incorrect values are printed in the Red zone, Orange zone, and Grey zone. Using the incorrect values in the Red zone could lead to shocking a patient with an excessive dose of joules, causing significant harm including burns, heart damage, and cardiac arrest. Incorrect values in the Orange zone could lead to overdosing the  A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:SunMed Holdings, LLC",
+      "name": "SunMed Holdings, LLC"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-15",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [
+     "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0"
+    ],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:SunMed Holdings, LLC"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-ea7badfe21",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A0a88b94c",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A878d892a",
+    "text": "The GUDID record for primary device identifier 10381780000143 (Extended Tip Applicator, catalog 205108, the identifier printed in recall Z-1958-2025) names labeler \"Integra Lifesciences Corporation\", DUNS 083171244; package identifier 30381780000147 is a BOX containing 5 of that device. Joins the recalled product to a labeler legal entity through an exact device identifier and supplies a DUNS identifier; shows the recalled SKU is a box of 5 devices, so the recall unit count is ambiguous between boxes and devices. GUDID records for the other recalled identifiers (10381780000150, 10381780000167, 10381780000112) were not retrieved Whether recall product_quantity counts boxes or devices Any identifier joining DUNS 083171244 to an SEC filer",
+    "entities": [
+     {
+      "id": "DUNS:083171244",
+      "name": "Integra Lifesciences Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://accessgudid.nlm.nih.gov/api/v3/devices/lookup.json?di=10381780000143",
+      "sha256": "d6ad2dde4a3e98ee9d760174dc390fad39376312e101f2c61106cc3d6681004a",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "labeler DUNS 083171244; 5 devices per box",
+    "units": "identifier; devices per package",
+    "occurred": "UNKNOWN",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [
+     "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0"
+    ],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-ef9beef356",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A6210d639",
+    "text": "FDA device enforcement record Z-1961-2025 (event 96965): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: MicroMyst Applicator, Box of 5. Consisting of a multilumen applicator and filtered line for use with the Integra Flow Source for the controlled application of two liquids. Reason: Lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-23",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A23cc7793",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [
+     "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0"
+    ],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-7b96650ced",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "historical_claim",
+    "campaign": "HISTORICAL_MEMORY",
+    "record": "HIST-EF06/claim-v1",
+    "entities": [
+     {
+      "id": "CIK:0001400810",
+      "name": "HCI Group"
+     },
+     {
+      "id": "NAME:Homeowners Choice",
+      "name": "Homeowners Choice (carrier)"
+     },
+     {
+      "id": "NAME:TypTap",
+      "name": "TypTap (carrier)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028021/hci-ex99_1.htm",
+      "sha256": "f68089cd7e28c90911213dc2a9d8de071fa0555d268273bf7c91508dc9c36748",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.citizensfla.com/documents/20702/29465645/2023+Stats.pdf/29ae7065-eb6e-28b8-5841-21e1dbba3049?t=1704899022388",
+      "sha256": "fc39950acee670d29b0e246d19c4a1b5f7ca1347c6a9c4703b946a1103375c51",
+      "depth": "RECEIPT_HTTP_200"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1400810/000095017024028620/hci-20231231.htm",
+      "sha256": "0310d3f0cab53c34b16ae83aa065c78ba91bcb551bc003865ebd0d08653a5840",
+      "depth": "RECEIPT_HTTP_200"
+     }
+    ],
+    "text": "Per-carrier/cohort accepted and retained premium after cancellations and reinsurance",
+    "tags": [
+     "REQ_DOCUMENTED_ALLOCATION",
+     "REQ_RETAINED_NET_ECONOMICS"
+    ]
+   },
+   "to": {
+    "kind": "candidate",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "CAND-A63b95f2d",
+    "text": "A Class I recall for endotoxin and sterility-assurance failures removes the applicators from sale and incurs replacement, write-off and remediation costs. If material, the registrant attributes a revenue reduction or an itemised charge to this recall in its quarterly report covering the initiation dates (period ended 2025-06-30) or the following quarter (period ended 2025-09-30). Class I recall classification of Extended Tip and MicroMyst applicators, with reported product_quantity 6,216 units, 2,524 units, 212 units and 4,882 units (as reported; not summed, unit meaning per box or per device unverified) [REQ:REQ_ENTITY_COHORT_JOIN] identifier-level identity of the recalling firm and the revenue line containing the applicators [REQ:REQ_DOCUMENTED_ALLOCATION] a recall-specific amount rather than a combined quality or remediation charge First-public time of the 2025-07-02 enforcement report Product revenue of the recalled applicators",
+    "entities": [
+     {
+      "id": "CIK:0000917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000096/iart-20250930.htm",
+      "sha256": "859cb91bb8b06a22e5a08649a2f4cdb4fe889e136700fa2eafa89201a16e7751",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000096/iart-20250930.htm",
+      "sha256": "859cb91bb8b06a22e5a08649a2f4cdb4fe889e136700fa2eafa89201a16e7751",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000041/iart-20250331.htm",
+      "sha256": "50ac4fe375df7ad26f8806f71ff78dd6f3d19c833583e35dba0dd50e5fe31ae7",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [
+     "REQ_DOCUMENTED_ALLOCATION",
+     "REQ_ENTITY_COHORT_JOIN"
+    ],
+    "outcome": "Revenue reduction or charge that the registrant explicitly attributes to the recall of these applicators (Extended Tip, MicroMyst, or the recall event they belong to) in its quarterly reports for periods ended 2025-06-30 and 2025-09-30"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [
+     "REQ_DOCUMENTED_ALLOCATION"
+    ],
+    "name_or_ticker_only_entities": [
+     "NAME:Homeowners Choice",
+     "NAME:TypTap"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-dffcf49273",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A5cc18af6",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Ae6e1befc",
+    "text": "The Form 10-Q for the quarter ended 2025-09-30 (accession 0000917520-25-000096) contains no mention of the recalled applicators, MicroMyst, endotoxins or sterility assurance, and no recall-specific amount for them. Its recall references concern the earlier patties-and-strips and Boston recalls; the \"Boston recall / Braintree transition\" special charge was $13.957 million for the quarter. Total revenue was $402.1 million and Codman Specialty Surgical revenue $292.6 million. The second frozen outcome route for CAND-A693c5cda: the issuer report for the quarter containing the FDA report date. EDGAR acceptance record (first-public time) not retrieved",
+    "entities": [
+     {
+      "id": "SEC_CIK:917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000096/iart-20250930.htm",
+      "sha256": "859cb91bb8b06a22e5a08649a2f4cdb4fe889e136700fa2eafa89201a16e7751",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000096/iart-20250930.htm",
+      "sha256": "859cb91bb8b06a22e5a08649a2f4cdb4fe889e136700fa2eafa89201a16e7751",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "no recall-specific amount or mention for these applicators",
+    "units": "USD (revenue and charges); presence or absence of disclosure",
+    "occurred": "2025-09-30",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-ab3ea60347",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Aafc6e24b",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A4c38dd2d",
+    "text": "FDA device enforcement record Z-1959-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 15 CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [
+     "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0"
+    ],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-c487a29a99",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Abddaf20b",
+    "text": "FDA device enforcement record Z-1958-2025 (event 96934): Class I recall by Integra LifeSciences Corp. (NeuroSciences), status Ongoing. Product: Extended Tip Applicator, 8CM, Box of 5. Reason: Devices contain potentially out-of-specification levels of endotoxins and lack of sterility assurance. A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:Integra LifeSciences Corp. (NeuroSciences)",
+      "name": "Integra LifeSciences Corp. (NeuroSciences)"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-22",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-Ab5359929",
+    "text": "Outcome check for CAND-A6b25b72b: the quarterly reports for the periods ended 2025-06-30 and 2025-09-30 contain no text on the Extended Tip or MicroMyst applicators, endotoxin, sterility or the 2025 recall events (text searched for \"recall\", \"applicator\", \"MicroMyst\", \"endotoxin\", \"steril\"). Their only recall-named special charge is \"Boston recall / Braintree transition\" (an earlier recall of Boston-facility products): $13,630 thousand and $13,957 thousand for the two quarters. CSS revenue was $304.0 million (Q2, change attributed to combined \"quality and operational issues\") and $292.6 million (Q3). No amount is attributed to the 2025 applicator recalls. Decides the frozen outcome: the registrant reports no recall-specific amount for these applicators, only combined quality and operational effects. Product revenue of the recalled applicators Any recall cost recorded within combined quality charges",
+    "entities": [
+     {
+      "id": "CIK:0000917520",
+      "name": "Integra LifeSciences Holdings Corporation"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000074/iart-20250630.htm",
+      "sha256": "f272c710f040d62eff9e2bec3fce050ac9ba295863f34687d96ad6a3a0b5992f",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000096/iart-20250930.htm",
+      "sha256": "859cb91bb8b06a22e5a08649a2f4cdb4fe889e136700fa2eafa89201a16e7751",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     },
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/917520/000091752025000096/iart-20250930.htm",
+      "sha256": "859cb91bb8b06a22e5a08649a2f4cdb4fe889e136700fa2eafa89201a16e7751",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "NO_AMOUNT_ATTRIBUTED_TO_THE_APPLICATOR_RECALLS",
+    "units": "USD thousands (no attributed amount)",
+    "occurred": "2025-09-30",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:Integra LifeSciences Corp. (NeuroSciences)"
+    ]
+   }
+  },
+  {
+   "blind_id": "ADJ-b30a491381",
+   "kind": "CONNECTION",
+   "from": {
+    "kind": "observation",
+    "campaign": "FROZEN_PACKET",
+    "record": "OBS-P-1",
+    "text": "FDA device enforcement record Z-1904-2025 (event 96891): Class I recall by SunMed Holdings, LLC, status Ongoing. Product: Broselow Pediatric Emergency Rainbow Tape (distribution by AirLife); REF 7700REA AirLife brand, 2025 Edition, and 36-23446 Rev 2 Print Version The Broselow Tape is a length- and weight-based reference tool specifically designed for pediatric emergency care. Reason: The impacted tape was manufactured with incorrect information on the tape. Incorrect values are printed in the Red zone, Orange zone, and Grey zone. Using the incorrect values in the Red zone could lead to shocking a patient with an excessive dose of joules, causing significant harm including burns, heart damage, and cardiac arrest. Incorrect values in the Orange zone could lead to overdosing the  A dated FDA recall classification (report date 2025-07-02) for an identified product; the recalling firm is named only. First-public time of the enforcement report (only the current API version was retrieved) Registry identity of the recalling firm, its parent and any listed-company link Quantities affected and any financial consequence",
+    "entities": [
+     {
+      "id": "NAME:SunMed Holdings, LLC",
+      "name": "SunMed Holdings, LLC"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://api.fda.gov/device/enforcement.json?search=report_date:[2025-07-01+TO+2025-09-30]&sort=report_date:asc&limit=50",
+      "sha256": "99e8d37983e6d2de368aa6fc75d970d499da2f4ae726e3f3f2678f4b9d9853d0",
+      "depth": "VERIFIED_ORIGINAL_FIELD"
+     }
+    ],
+    "tags": [],
+    "value": "Class I",
+    "units": "FDA recall class",
+    "occurred": "2025-05-15",
+    "depth": "VERIFIED_ORIGINAL_FIELD"
+   },
+   "to": {
+    "kind": "observation",
+    "campaign": "CURRENT_ARM_CAMPAIGN",
+    "record": "OBS-A1e8c3de3",
+    "text": "A search index lists a quarterly report (period ended 2025-06-30) of SLR Investment Corp. (archive-path CIK 1418076) as describing a first-lien loan to a borrower named \"SunMed Group Holdings, LLC\". The original was not retrieved. The index summary also displayed post-event fair values for the loan, so any loan-value outcome for this borrower was seen before any claim could be frozen. Possible route from the packet's SunMed recall record (OBS-P-1) to listed lenders; retained to avoid repeating a contaminated outcome check. Original schedule of investments row Identity between the borrower and the recalling firm A pre-event, outcome-blind formation of any claim",
+    "entities": [
+     {
+      "id": "NAME:SunMed Group Holdings, LLC",
+      "name": "SunMed Group Holdings, LLC"
+     }
+    ],
+    "evidence": [
+     {
+      "locator": "https://www.sec.gov/Archives/edgar/data/1418076/000095017025103004/ck0001418076-20250630.htm",
+      "sha256": null,
+      "depth": "INDEXED_DESCRIPTION_ONLY"
+     }
+    ],
+    "tags": [],
+    "value": "UNKNOWN",
+    "units": "UNKNOWN",
+    "occurred": "UNKNOWN",
+    "depth": "INDEXED_DESCRIPTION_ONLY"
+   },
+   "shared_structure": {
+    "same_identified_entity": [],
+    "shared_document_hashes": [],
+    "shared_requirement_tags": [],
+    "name_or_ticker_only_entities": [
+     "NAME:SunMed Group Holdings, LLC",
+     "NAME:SunMed Holdings, LLC"
+    ]
+   }
+  }
+ ],
+ "leak_scan": {
+  "patterns": [
+   "ARM_LETTER_RECORD_ID",
+   "ARM_CAMPAIGN_ID",
+   "ARM_PATH",
+   "ARM_BRANCH",
+   "ARM_LABEL",
+   "PILOT_CONNECTION_ID",
+   "ATTRIBUTION_OR_DECISION",
+   "TOOL_WORD",
+   "OWN_ARM_RECORD_ID"
+  ],
+  "findings": 0
+ }
+}
