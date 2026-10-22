@@ -2,6 +2,8 @@
 
 **Implemented for fictional recorded-stream rehearsal only. No hosted validation, real dispatcher, execution approval or account mutation exists.** Branch: `codex/opportunity-scout-v004-offline-readiness`, based on `44d95c2`. The reviewed R2 proposal and Path B amendment remain unapproved. V003 remains ERROR after one consumed attempt, zero saved cards and eleven undispatched reservations; its implementation and all retained evidence are protected.
 
+Final offline assurance found and corrected complete-line rollback detection and same-handle resubmission after a finish exception. The [assurance report](v004_final_offline_assurance.md) describes journal R2, the resource scenarios, bounded future acceptance design, quiet-window stops and integration conditions. R1 records remain immutable and replayable at `111a4fd`; they are not migrated. HOSTED_READINESS_BLOCKED remains in effect.
+
 ## Implemented boundaries
 
 The separately versioned modules `v004_transport.py`, `v004_package.py`, `v004_runtime.py`, `v004_isolation.py` and `v004_replay.py` provide an offline transport contract, exact package freeze, proposed runtime description, monitoring review and durable rehearsal journal. There is no runner callback, model SDK, process-launch method, credential reader or switch to enable hosting. `PROSPECTIVE_LOCAL_ONLY` packages can be frozen and inspected; only `SYNTHETIC` packages and explicitly fictional `Recording` values can enter a rehearsal. This mode separation is an engineering guard, not proof that someone has correctly labelled arbitrary data as fictional.

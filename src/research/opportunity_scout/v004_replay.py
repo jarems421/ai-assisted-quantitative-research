@@ -13,7 +13,7 @@ from src.research.spec import canonical, digest
 from . import schema as S, v004_package as P, v004_transport as T, v004_isolation as I
 from .storage import unlinked
 
-VERSION = 'SCOUT_V004_OFFLINE_JOURNAL_R1'
+VERSION = 'SCOUT_V004_OFFLINE_JOURNAL_R2'
 GENESIS = '0' * 64
 
 
@@ -48,6 +48,12 @@ class OfflineRun:
         core = {'seq': len(events) + 1, 'previous': events[-1]['hash'] if events else GENESIS,
                 'recorded_at': S.utc_now(), 'type': kind, 'record': record}
         event = {**core, 'hash': digest(core)}
+        # Independent exclusive-create witness precedes the log append. A
+        # complete-line suffix rollback or interrupted append cannot silently
+        # reuse an event number/consumed slot. Coordinated deletion of both
+        # copies still needs an external trusted head; this is not a signature.
+        witnesses = unlinked(self.root / 'witnesses'); witnesses.mkdir(exist_ok=True)
+        P.write_bytes(witnesses / f'{event["seq"]:08d}.json', canonical(event) + b'\n')
         p = unlinked(self.root / 'journal.jsonl')
         with p.open('ab') as stream:
             stream.write(canonical(event) + b'\n'); stream.flush(); os.fsync(stream.fileno())
@@ -70,6 +76,9 @@ class OfflineRun:
             core = {k: v for k, v in event.items() if k != 'hash'}
             if event['seq'] != len(events) + 1 or event['previous'] != (events[-1]['hash'] if events else GENESIS) or digest(core) != event['hash']:
                 raise S.ScoutError('journal hash chain mismatch')
+            try: witness = P.read_bytes(self.root / 'witnesses' / f'{event["seq"]:08d}.json')
+            except OSError as error: raise S.ScoutError('journal witness missing; no resume/reset') from error
+            if witness != canonical(event) + b'\n': raise S.ScoutError('journal witness differs')
             if events and S.timestamp(event['recorded_at']) < S.timestamp(events[-1]['recorded_at']): raise S.ScoutError('journal time reversed')
             kind, r = event['type'], event['record']
             if not events:
@@ -93,6 +102,11 @@ class OfflineRun:
                 if receipt['outcome'] == 'RUN_STOP': stopped = True
             else: raise S.ScoutError('unsupported/duplicate journal event')
             events.append(event)
+        expected_witnesses = {f'{i:08d}.json' for i in range(1, len(events) + 1)}
+        actual_witnesses = {p.relative_to(self.root / 'witnesses').as_posix()
+                            for p in (self.root / 'witnesses').rglob('*') if p.is_file()}
+        if actual_witnesses != expected_witnesses:
+            raise S.ScoutError('orphan/extra journal witness; possible truncation/interruption; no resume/reset')
         return binding, manifest, requests, events, consumed, results, pending, stopped
 
     def _read_receipt(self, result, request, consumed, previous_window_end):
@@ -106,6 +120,8 @@ class OfflineRun:
         if (P.byte_hash(stdout) != receipt['stdout_sha256'] or P.byte_hash(stderr) != receipt['stderr_sha256']
                 or digest(monitoring) != receipt['monitoring_sha256']): raise S.ScoutError('original evidence changed')
         recording = T.Recording(stdout, stderr, **receipt['recording_metadata'])
+        if P.read_bytes(folder / 'recording.json') != canonical(receipt['recording_metadata']) + b'\n':
+            raise S.ScoutError('original recording metadata changed')
         expected = evaluate(recording, request, consumed['session_id'], monitoring, previous_window_end)
         expected.update({'stdout_sha256': P.byte_hash(stdout), 'stderr_sha256': P.byte_hash(stderr),
                          'monitoring_sha256': digest(monitoring), 'recording_metadata': receipt['recording_metadata']})
@@ -129,22 +145,33 @@ class OfflineRun:
     def finish(self, recording, monitoring):
         """At most one immutable result, no callbacks or further parent calls."""
         if not self._pending: raise S.ScoutError('no locally owned pending marker')
+        owned = self._pending
+        # One submission opportunity even if validation, archival or locking
+        # raises. The durable CONSUMED marker remains terminal; never leave a
+        # handle able to select a replacement recording after an exception.
+        self._pending = None
         with locked(self.root):
             _, _, requests, events, _, results, pending, stopped = self._load()
-            if stopped or pending != self._pending: raise S.ScoutError('pending ownership changed')
+            if stopped or pending != owned: raise S.ScoutError('pending ownership changed')
+            if (not isinstance(recording, T.Recording) or recording.fictional is not True
+                    or not isinstance(recording.stdout, bytes) or not isinstance(recording.stderr, bytes)):
+                raise S.ScoutError('fictional original recorded bytes required; slot remains consumed')
             slot = pending['slot']; request = requests[slot]
             previous_end = list(results.values())[-1]['account_monitoring']['window_end'] if results else None
-            receipt = evaluate(recording, request, pending['session_id'], monitoring, previous_end)
             # Three reserved attempts * at most 600 reported seconds implies
             # the unchanged 1800-second condition ceiling. UNKNOWN/excess wall
             # time already stops; no inferred human-time compliance is granted.
             folder = self.root / 'attempts' / slot; folder.mkdir(parents=True, exist_ok=False)
             metadata = {k: getattr(recording, k) for k in ('returncode', 'timed_out', 'wall_seconds', 'fictional')}
+            # Preserve the first submitted originals before evaluation can fail.
+            for name, data in (('stdout.bin', recording.stdout), ('stderr.bin', recording.stderr),
+                               ('monitoring.json', canonical(monitoring) + b'\n'),
+                               ('recording.json', canonical(metadata) + b'\n')):
+                P.write_bytes(folder / name, data)
+            receipt = evaluate(recording, request, pending['session_id'], monitoring, previous_end)
             receipt.update({'stdout_sha256': P.byte_hash(recording.stdout), 'stderr_sha256': P.byte_hash(recording.stderr),
                             'monitoring_sha256': digest(monitoring), 'recording_metadata': metadata})
-            for name, data in (('stdout.bin', recording.stdout), ('stderr.bin', recording.stderr),
-                               ('output.bin', receipt['exact_output'].encode('utf-8')),
-                               ('monitoring.json', canonical(monitoring) + b'\n'),
+            for name, data in (('output.bin', receipt['exact_output'].encode('utf-8')),
                                ('receipt.json', canonical(receipt) + b'\n')):
                 P.write_bytes(folder / name, data)
             self._append(events, 'RESULT', {'slot': slot, 'receipt_sha256': digest(receipt),

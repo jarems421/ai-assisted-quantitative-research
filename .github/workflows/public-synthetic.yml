@@ -22,3 +22,5 @@ jobs:
         run: python -m src.research.public_checks
       - name: Run Scout regressions with hosted processes and private reads blocked
         run: python -m src.research.opportunity_scout.v004_checks
+      - name: Verify Scout locks between local Python processes using fictional journals
+        run: python -m unittest tests.test_scout_v004_process_assurance -v
