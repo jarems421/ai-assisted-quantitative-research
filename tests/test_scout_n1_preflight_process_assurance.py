@@ -6,6 +6,8 @@ import subprocess
 import sys
 import unittest
 
+from src.research.opportunity_scout.v004_runtime import OS_ENV
+
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / 'tests/fixtures/scout_n1_queue_fixture.py'
 
@@ -13,7 +15,7 @@ FIXTURE = ROOT / 'tests/fixtures/scout_n1_queue_fixture.py'
 @unittest.skipUnless(os.name == 'nt', 'Windows PowerShell queue implementation')
 class QueueAssuranceTests(unittest.TestCase):
     def run_case(self, case):
-        env = {k: os.environ[k] for k in ('SystemRoot', 'WINDIR', 'TEMP', 'TMP') if k in os.environ}
+        env = {k: v for k, v in os.environ.items() if k.upper() in OS_ENV}
         result = subprocess.run([sys.executable, '-I', str(FIXTURE), case],
                                 capture_output=True, timeout=35, env=env, shell=False)
         self.assertEqual(result.returncode, 0, result.stdout.decode(errors='replace') + result.stderr.decode(errors='replace'))
