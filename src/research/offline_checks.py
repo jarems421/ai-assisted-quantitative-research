@@ -14,6 +14,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 from zoneinfo import reset_tzpath
@@ -47,6 +48,7 @@ class Guard:
         self.runtime = {resolved_path(sys.prefix), resolved_path(sys.base_prefix)}
         self.active = False
         self.violations = []
+        self.open_fd = threading.local()
 
     def deny(self, reason):
         self.violations.append(reason)
@@ -77,7 +79,7 @@ class Guard:
         if event == 'open':
             _, mode, flags = args
             write = bool(flags & (os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC | os.O_APPEND))
-            self.path(args[0], write=write)
+            self.path(self.relative_fd(args[0], getattr(self.open_fd, 'value', None)), write=write)
         elif event.startswith('socket.') and event in {
             'socket.connect', 'socket.bind', 'socket.getaddrinfo', 'socket.gethostbyname',
             'socket.gethostbyaddr', 'socket.sendto', 'socket.sendmsg'}:
@@ -113,9 +115,20 @@ def guarded(guard):
     # Audit hooks cannot be removed. Disable this instance on exit; every CLI
     # invocation runs in a fresh interpreter. Mock replacements cannot bypass it.
     sys.addaudithook(guard.audit)
+    original_open = os.open
+    def fd_open(path, flags, mode=0o777, *, dir_fd=None):
+        # The Python 'open' audit event omits dir_fd. Retain its thread-local
+        # context without changing the native fd-relative syscall or cleanup.
+        previous = getattr(guard.open_fd, 'value', None)
+        guard.open_fd.value = dir_fd
+        try:
+            return original_open(path, flags, mode, dir_fd=dir_fd)
+        finally:
+            guard.open_fd.value = previous
     guard.active = True
     try:
-        yield guard
+        with patch.object(os, 'open', fd_open):
+            yield guard
     finally:
         guard.active = False
 

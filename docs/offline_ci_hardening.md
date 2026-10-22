@@ -108,6 +108,11 @@ through extended paths. The original concurrent archive test stays unchanged.
 Guard counts are seven portable tests plus one native test per OS. The other OS's
 native class is excluded by workflow selection and would explicitly skip if invoked
 directly; it never counts as simulated native assurance.
+Linux's `open` audit event omits `dir_fd`: the guard records that argument in a
+thread-local wrapper while preserving the original native syscall. Its Linux
+regression exercises nested temporary-tree cleanup and descriptor-relative reads,
+alongside denied writes/reads outside scratch. No fd-based cleanup is replaced
+with a simulated path deletion.
 
 These are guards for reviewed Python tests, **not an OS security sandbox for
 hostile tests or native extensions**. SQLite/PyArrow/DuckDB perform some native IO
