@@ -1,0 +1,40 @@
+{
+ "template_version": "GRAPH_AI_CROSS_ANSWER_V1",
+ "auditor_declaration": {
+  "used_only_package_files": "<YES | NO>",
+  "sources_outside_package": [],
+  "integrity_notes": ""
+ },
+ "items": [
+  {
+   "blind_id": "ADJ-0000000001",
+   "review_A": {
+    "support_check": "<one of SUPPORTED | PARTLY_SUPPORTED | UNSUPPORTED | CANNOT_CHECK>",
+    "issues": []
+   },
+   "review_B": {
+    "support_check": "<one of SUPPORTED | PARTLY_SUPPORTED | UNSUPPORTED | CANNOT_CHECK>",
+    "issues": []
+   },
+   "disagreement_nature": "<one of NO_DISAGREEMENT | GENUINE_EVIDENTIAL | METHODOLOGICAL | ONE_SIDE_UNSUPPORTED | BOTH_UNSUPPORTED | CANNOT_DETERMINE>",
+   "missed_evidence": [],
+   "notes": ""
+  },
+  {
+   "blind_id": "ADJ-0000000002",
+   "review_A": {
+    "support_check": "<one of SUPPORTED | PARTLY_SUPPORTED | UNSUPPORTED | CANNOT_CHECK>",
+    "issues": []
+   },
+   "review_B": {
+    "support_check": "<one of SUPPORTED | PARTLY_SUPPORTED | UNSUPPORTED | CANNOT_CHECK>",
+    "issues": []
+   },
+   "disagreement_nature": "<one of NO_DISAGREEMENT | GENUINE_EVIDENTIAL | METHODOLOGICAL | ONE_SIDE_UNSUPPORTED | BOTH_UNSUPPORTED | CANNOT_DETERMINE>",
+   "missed_evidence": [],
+   "notes": ""
+  }
+ ],
+ "systematic_differences": "",
+ "limitations": ""
+}

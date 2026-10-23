@@ -1,0 +1,51 @@
+{
+ "template_version": "GRAPH_AI_REVIEW_ANSWER_V1",
+ "reviewer_declaration": {
+  "used_only_package_files": "<YES | NO>",
+  "sources_outside_package": [],
+  "integrity_notes": "",
+  "general_limitations": ""
+ },
+ "items": [
+  {
+   "blind_id": "ADJ-0000000001",
+   "kind": "CONNECTION",
+   "outcome": "<one of CONFIRMED | FALSE | TRIVIAL | PLAUSIBLE_UNVERIFIED | UNKNOWN>",
+   "economic_meaning": "<one of MEANINGFUL | NOT_MEANINGFUL | UNCLEAR>",
+   "usefulness": null,
+   "avoided_action": null,
+   "support": [
+    {
+     "evidence_sha256": "<a sha256 cited by this item>",
+     "location": "",
+     "quote": ""
+    }
+   ],
+   "rationale": "",
+   "missing_or_contradicting_evidence": "",
+   "confidence": "<HIGH | MEDIUM | LOW>",
+   "uncertainty": "",
+   "sources_outside_package": []
+  },
+  {
+   "blind_id": "ADJ-0000000002",
+   "kind": "METHODOLOGICAL_WARNING",
+   "outcome": null,
+   "economic_meaning": null,
+   "usefulness": "<one of USEFUL_LESSON_REUSED | USEFUL_NOT_USED | NOT_USEFUL | CANNOT_ASSESS>",
+   "avoided_action": null,
+   "support": [
+    {
+     "evidence_sha256": "<a sha256 cited by this item>",
+     "location": "",
+     "quote": ""
+    }
+   ],
+   "rationale": "",
+   "missing_or_contradicting_evidence": "",
+   "confidence": "<HIGH | MEDIUM | LOW>",
+   "uncertainty": "",
+   "sources_outside_package": []
+  }
+ ]
+}
