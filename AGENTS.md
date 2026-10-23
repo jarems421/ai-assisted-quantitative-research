@@ -1,5 +1,9 @@
 # Repository instructions
 
+## Opportunity Scout Jev post-generation readiness (2026-10-23)
+
+- `docs/opportunity_scout/jev_post_generation_readiness_v001.md` and `src/research/opportunity_scout/post_generation/` (`python -m src.research.opportunity_scout.post_generation import-response|label-packet|compare`): offline only; no Jev call, credential or activation. Jev is a shadow reviewer: it never routes, rejects, shortlists, certifies or authorises. The label packet is non-comparative (never a condition/method comparison); the frozen four-condition V001–V004 evaluation is unchanged. Labels must be independent human records collected before any Jev output is viewed; never fabricate, draft or substitute them. Sending unpublished cards to TypeSafe needs a per-payload owner authorisation; cost stays UNKNOWN unless evidenced. Do not touch Codex-owned N1 work. Never add or edit top-level `src/research/opportunity_scout/*.py` for this: the frozen V004 implementation closure hashes every such file, so a change breaks the approved V004/N1 package checks.
+
 ## Graph Pilot R4 two-model AI adjudication variant: PROPOSED, not registered (2026-10-22)
 
 - `docs/strategy/graph_pilot_r4_ai_adjudication_proposal_v001.md`, frozen texts in `docs/strategy/graph_pilot_r4_ai_review/` (checklist, Stage A and Stage B prompts, templates) and `src/research/graph/ai_review.py` (`pilot ai-package|ai-injection-flags|ai-injection-dispose|ai-bundle|ai-raw-record|ai-review-check|ai-review-seal|ai-cross-inputs|ai-reconcile`). Offline design only: no model call, hosted-model use, source retrieval or activation is authorised, and R4 stays NOT_RUN and paused.

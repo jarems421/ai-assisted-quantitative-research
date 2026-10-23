@@ -171,6 +171,23 @@
       "ScoutTests.test_unsafe_paths_output_overwrites_and_unterminated_event_fail_closed"
     ]
   },
+  "tests/opportunity_scout/test_shadow_review.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Jev shadow review after generation: synthetic fixture archives, Jev answers and labels in temporary directories; no provider call, network or credential.",
+    "declared_tests": [
+      "ShadowReviewTests.test_cli_imports_a_saved_response_unchanged_and_never_repairs_it",
+      "ShadowReviewTests.test_cli_label_packet_and_compare_round_trip",
+      "ShadowReviewTests.test_earliest_shadow_is_used_and_revisions_are_reported",
+      "ShadowReviewTests.test_jev_never_changes_routing_or_grants_authority",
+      "ShadowReviewTests.test_labels_need_honest_independent_provenance",
+      "ShadowReviewTests.test_metrics_separate_agreement_abstention_disagreement_and_brier",
+      "ShadowReviewTests.test_mixed_fixtures_short_salt_and_tampering_are_refused",
+      "ShadowReviewTests.test_packet_covers_incomplete_generation_and_hides_jev_and_generator",
+      "ShadowReviewTests.test_trace_from_generation_to_handoff_with_jev_in_shadow",
+      "ShadowReviewTests.test_without_labels_only_missing_records_are_reported"
+    ]
+  },
   "tests/opportunity_scout/test_v003.py": {
     "baseline_ci": true,
     "runner": "scout",
