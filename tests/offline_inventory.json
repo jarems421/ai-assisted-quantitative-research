@@ -80,13 +80,15 @@
       "ObserverTests.test_duplicate_json_keys_and_exit_before_snapshot_refused",
       "ObserverTests.test_elevated_reader_refuses_before_claim_or_launch",
       "ObserverTests.test_existing_and_transient_claude_both_stop",
+      "ObserverTests.test_historical_directories_refused_before_claim_or_launch",
+      "ObserverTests.test_historical_v001_v002_streams_are_refused_without_rewriting",
       "ObserverTests.test_missing_end_partial_tail_and_trailing_bytes_preserved",
       "ObserverTests.test_missing_wrong_or_duplicate_ack_stops_without_ignoring_error",
       "ObserverTests.test_oversize_and_unsafe_process_fields_stop",
       "ObserverTests.test_proof_requires_start_exit_parent_name_and_time",
       "ObserverTests.test_split_records_and_exact_audit_without_rewriting",
       "ObserverTests.test_stale_missing_unknown_or_extra_events_stop",
-      "ObserverTests.test_v001_header_cannot_be_migrated_to_v002",
+      "ObserverTests.test_v003_producer_reader_receipt_and_fixed_path_agree",
       "ObserverTests.test_virtual_end_to_end_normal_window_and_adversarial_failures"
     ]
   },

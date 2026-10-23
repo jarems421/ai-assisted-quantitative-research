@@ -164,9 +164,40 @@ class ObserverTests(unittest.TestCase):
                     if fault == 'wrong_id': ack['queue_event_identifier'] = 8
                     state.feed(r.one('QUEUE_ACK', ack))
 
-    def test_v001_header_cannot_be_migrated_to_v002(self):
-        with self.assertRaises(M.Refused):
-            M.Stream().feed(Records().row('HEADER', {'schema': 'SCOUT_N1_PROCESS_OBSERVER_V001', 'claude_invocations': 0}))
+    def test_historical_v001_v002_streams_are_refused_without_rewriting(self):
+        for version in ('V001', 'V002'):
+            r = Records()
+            raw = (r.row('HEADER', {'schema': 'SCOUT_N1_PROCESS_OBSERVER_' + version, 'claude_invocations': 0})
+                   + r.row('SNAPSHOT', {'processes': []})
+                   + r.row('HEARTBEAT', {'subscriptions_present': True})
+                   + r.row('END', {'reason': 'STOP_REQUEST', 'coverage_certified': False}))
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as d:
+                path = Path(d) / 'events.jsonl'
+                path.write_bytes(raw)
+                with self.assertRaisesRegex(M.Refused, 'observer header required'):
+                    M.audit(path)
+                self.assertEqual(path.read_bytes(), raw)
+
+    def test_v003_producer_reader_receipt_and_fixed_path_agree(self):
+        self.assertEqual(M.VERSION, 'SCOUT_N1_PROCESS_OBSERVER_V003')
+        self.assertEqual(M.DIRECTORY, M.ROOT / '.research/opportunity_scout/n1-admin-observer-v003')
+        self.assertEqual(M.reader_receipt()['schema'], M.VERSION)
+        producer = (M.ROOT / 'src/research/opportunity_scout/n1_preflight/watch.ps1').read_text(encoding='utf-8')
+        self.assertIn("schema = '" + M.VERSION + "'", producer)
+        self.assertIn("'.research/opportunity_scout/n1-admin-observer-v003'", producer)
+        for old in ('V001', 'V002', 'v001', 'v002'):
+            self.assertNotIn(old, producer)
+
+    def test_historical_directories_refused_before_claim_or_launch(self):
+        for version in ('v001', 'v002'):
+            directory = M.ROOT / '.research/opportunity_scout' / ('n1-admin-observer-' + version)
+            with self.subTest(version=version), patch.object(M, 'IS_WINDOWS', True), \
+                    patch.object(M, 'require_normal_user'), patch.object(M, 'exclusive') as create, \
+                    patch.object(M.subprocess, 'Popen') as popen:
+                with self.assertRaisesRegex(M.Refused, 'sole fixed observer directory'):
+                    M.observe(directory)
+            create.assert_not_called()
+            popen.assert_not_called()
 
     def test_cli_cannot_accept_auth_executable_or_argv(self):
         for args in [[], ['--auth'], ['--observe-only', '--binary', 'claude.exe']]:

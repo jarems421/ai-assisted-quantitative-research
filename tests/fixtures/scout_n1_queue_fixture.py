@@ -43,7 +43,7 @@ $scoutSummary = [ordered]@{fixture = $true; case = $env:SCOUT_FIXTURE_CASE; clau
 $scoutTimerA = $null; $scoutTimerB = $null
 [Console]::Error.WriteLine('SCOUT_FIXTURE_WRITER_READY:' + $scoutFixtureWall.ElapsedMilliseconds)
 try {
-    Write-ScoutRecord 'HEADER' ([ordered]@{schema = 'SCOUT_N1_PROCESS_OBSERVER_V002'; pid = 10; session = 'FICTIONAL_NOT_REGISTERED'; claude_invocations = 0})
+    Write-ScoutRecord 'HEADER' ([ordered]@{schema = 'SCOUT_N1_PROCESS_OBSERVER_V003'; pid = 10; session = 'FICTIONAL_NOT_REGISTERED'; claude_invocations = 0})
     Write-ScoutRecord 'SNAPSHOT' ([ordered]@{processes = @()})
     Write-ScoutRecord 'HEARTBEAT' ([ordered]@{subscriptions_present = $true})
     [Console]::Error.WriteLine('SCOUT_FIXTURE_CASE_STARTED:' + $scoutFixtureWall.ElapsedMilliseconds)
