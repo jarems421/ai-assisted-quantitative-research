@@ -8,7 +8,8 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
-CASES = ('collision', 'concurrent', 'disk_failure', 'missing_object')
+CASES = ('collision', 'concurrent', 'disk_failure', 'missing_object',
+         'shutdown', 'shutdown_claude', 'shutdown_disk_failure', 'shutdown_unsubscribe_failure')
 if len(sys.argv) != 2 or sys.argv[1] not in CASES or os.name != 'nt':
     raise SystemExit('fixed Windows fixture case required')
 case = sys.argv[1]
@@ -77,9 +78,18 @@ try {
         $scoutSummary.processed = $scoutProcessed
         $scoutSummary.duplicate_numeric_ids_observed = $scoutDuplicateIds
     } else {
+        if ($env:SCOUT_FIXTURE_CASE.StartsWith('shutdown')) {
+            # Inert local subscriptions permit testing production shutdown;
+            # neither timer is started and no WMI subscription is registered.
+            $scoutTimerA = New-Object Timers.Timer 1000
+            $scoutTimerB = New-Object Timers.Timer 1000
+            $null = Register-ObjectEvent -InputObject $scoutTimerA -EventName Elapsed -SourceIdentifier $scoutFirst
+            $null = Register-ObjectEvent -InputObject $scoutTimerB -EventName Elapsed -SourceIdentifier $scoutSecond
+        }
         Add-Type -TypeDefinition 'public class ScoutSyntheticEventArgs : System.EventArgs { public object NewEvent { get; set; } }'
         $scoutArgs = New-Object ScoutSyntheticEventArgs
         $scoutArgs.NewEvent = [pscustomobject]@{ProcessID = 50; ParentProcessID = 10; ProcessName = 'python.exe'; TIME_CREATED = [uint64]101}
+        if ($env:SCOUT_FIXTURE_CASE -eq 'shutdown_claude') { $scoutArgs.NewEvent.ProcessName = 'claude.exe' }
         $scoutA = New-Event -SourceIdentifier $scoutFirst -EventArguments $scoutArgs
         $scoutArgsB = New-Object ScoutSyntheticEventArgs
         $scoutArgsB.NewEvent = [pscustomobject]@{ProcessID = 50; ProcessName = 'python.exe'; TIME_CREATED = [uint64]102}
@@ -88,7 +98,33 @@ try {
         $scoutEventIdProperty = [System.Management.Automation.PSEventArgs].GetProperty('EventIdentifier')
         $scoutEventIdProperty.SetValue($scoutA, 73, $null)
         $scoutEventIdProperty.SetValue($scoutB, 73, $null)
-        if ($env:SCOUT_FIXTURE_CASE -eq 'collision') {
+        if ($env:SCOUT_FIXTURE_CASE.StartsWith('shutdown')) {
+            $scoutUnrelated = New-Event -SourceIdentifier $scoutOther
+            $scoutEventIdProperty.SetValue($scoutUnrelated, 73, $null)
+            if ($env:SCOUT_FIXTURE_CASE -eq 'shutdown_disk_failure') {
+                function Write-ScoutRecord { throw 'SYNTHETIC_DISK_FAILURE' }
+            }
+            if ($env:SCOUT_FIXTURE_CASE -eq 'shutdown_unsubscribe_failure') {
+                Unregister-Event -SourceIdentifier $scoutSecond -ErrorAction Stop
+            }
+            $scoutFailed = $false
+            try { Complete-ScoutObservation -StartSource $scoutFirst -StopSource $scoutSecond -Reason 'STOP_REQUEST' } catch { $scoutFailed = $true }
+            if ($env:SCOUT_FIXTURE_CASE -in @('shutdown_disk_failure', 'shutdown_unsubscribe_failure')) {
+                Assert-Fixture $scoutFailed 'shutdown failure ignored'
+                $scoutPending = @(Get-ScoutQueuedEvents -SourceIdentifiers @($scoutFirst, $scoutSecond))
+                Assert-Fixture ($scoutPending.Count -eq 2) 'failed shutdown removed pending evidence'
+                Assert-Fixture ([object]::ReferenceEquals($scoutPending[0], $scoutA)) 'failed shutdown changed first object'
+                Assert-Fixture ([object]::ReferenceEquals($scoutPending[1], $scoutB)) 'failed shutdown changed second object'
+                $scoutSummary.shutdown_failed_without_removal = $true
+            } else {
+                Assert-Fixture (-not $scoutFailed) 'shutdown failed'
+                Assert-Fixture (@(Get-ScoutQueuedEvents -SourceIdentifiers @($scoutFirst, $scoutSecond)).Count -eq 0) 'shutdown left owned events'
+                Assert-Fixture (@(Get-EventSubscriber | Where-Object { $_.SourceIdentifier -in @($scoutFirst, $scoutSecond) }).Count -eq 0) 'shutdown left subscriptions'
+                $scoutSummary.shutdown_events_persisted = 2
+            }
+            Assert-Fixture (@(Get-ScoutQueuedEvents -SourceIdentifiers @($scoutOther)).Count -eq 1) 'shutdown removed unrelated event'
+            $scoutSummary.unrelated_event_retained = $true
+        } elseif ($env:SCOUT_FIXTURE_CASE -eq 'collision') {
             $scoutUnrelated = New-Event -SourceIdentifier $scoutOther
             $scoutEventIdProperty.SetValue($scoutUnrelated, 73, $null)
             Write-ScoutQueuedProcessEvent -QueuedEvent $scoutA -StartSource $scoutFirst -StopSource $scoutSecond
@@ -163,11 +199,20 @@ with tempfile.TemporaryDirectory(prefix='scout-queue-fictional-') as directory:
         previous = digest
         records.append(record)
     from src.research.opportunity_scout.n1_preflight.monitor import audit, Refused
-    if case == 'collision':
-        audit(Path(directory) / 'events.jsonl')
+    if case in ('collision', 'shutdown', 'shutdown_claude'):
+        if case == 'shutdown_claude':
+            try:
+                audit(Path(directory) / 'events.jsonl')
+            except Refused as error:
+                assert 'Claude process contaminates' in str(error)
+            else:
+                raise AssertionError('queued fictional Claude start hidden at shutdown')
+        else:
+            audit(Path(directory) / 'events.jsonl')
         assert [r['data']['queue_event_identifier'] for r in records if r['kind'] in ('START', 'EXIT')] == [73, 73]
         assert len([r for r in records if r['kind'] == 'QUEUE_ACK']) == 2
-    elif case in ('disk_failure', 'missing_object'):
+        assert [r['kind'] for r in records[-5:]] == ['START', 'QUEUE_ACK', 'EXIT', 'QUEUE_ACK', 'END']
+    elif case in ('disk_failure', 'missing_object', 'shutdown_disk_failure', 'shutdown_unsubscribe_failure'):
         try:
             audit(Path(directory) / 'events.jsonl')
         except Refused:
@@ -175,5 +220,6 @@ with tempfile.TemporaryDirectory(prefix='scout-queue-fictional-') as directory:
         else:
             raise AssertionError('incomplete fixture falsely accepted')
         assert not any(r['kind'] == 'QUEUE_ACK' for r in records)
+        assert not any(r['kind'] == 'END' for r in records)
     report.update(frame_chain_verified=True, records=len(records), raw_sha256=hashlib.sha256(raw).hexdigest())
     print(json.dumps(report))

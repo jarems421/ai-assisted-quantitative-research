@@ -52,6 +52,21 @@ function Write-ScoutQueuedProcessEvent(
     Write-ScoutRecord 'QUEUE_ACK' ([ordered]@{record_seq = $scoutPersistedSeq; queue_event_identifier = [int]$QueuedEvent.EventIdentifier})
 }
 
+function Complete-ScoutObservation([string]$StartSource, [string]$StopSource, [string]$Reason) {
+    # Stop delivery before draining. A failed unsubscribe/drain cannot emit END.
+    foreach ($scoutSource in @($StartSource, $StopSource)) {
+        Unregister-Event -SourceIdentifier $scoutSource -ErrorAction Stop
+    }
+    foreach ($scoutPending in @(Get-ScoutQueuedEvents -SourceIdentifiers @($StartSource, $StopSource))) {
+        Write-ScoutQueuedProcessEvent -QueuedEvent $scoutPending -StartSource $StartSource -StopSource $StopSource
+    }
+    # Refuse visible late arrivals; this does not certify WMI losslessness.
+    if (@(Get-ScoutQueuedEvents -SourceIdentifiers @($StartSource, $StopSource)).Count -ne 0) {
+        throw 'OBSERVER_PENDING_EVENTS_AT_END'
+    }
+    Write-ScoutRecord 'END' ([ordered]@{reason = $Reason; coverage_certified = $false})
+}
+
 try {
     $scoutIdentity = [Security.Principal.WindowsIdentity]::GetCurrent()
     $scoutPrincipal = New-Object Security.Principal.WindowsPrincipal($scoutIdentity)
@@ -107,7 +122,7 @@ try {
         }
         Start-Sleep -Milliseconds 100
     }
-    Write-ScoutRecord 'END' ([ordered]@{reason = $(if (Test-Path -LiteralPath (Join-Path $scoutDirectory 'stop.request')) { 'STOP_REQUEST' } else { 'TIME_LIMIT' }); coverage_certified = $false})
+    Complete-ScoutObservation -StartSource $scoutStartId -StopSource $scoutStopId -Reason $(if (Test-Path -LiteralPath (Join-Path $scoutDirectory 'stop.request')) { 'STOP_REQUEST' } else { 'TIME_LIMIT' })
     Write-Output 'OBSERVER_ENDED. This is not an authentication or N1 approval result.'
 } catch {
     if ($null -ne $scoutWriter) {
@@ -117,9 +132,7 @@ try {
     exit 1
 } finally {
     foreach ($scoutSubscription in $scoutSubscriptions) { Unregister-Event -SourceIdentifier $scoutSubscription -ErrorAction SilentlyContinue }
-    foreach ($scoutPending in @(Get-ScoutQueuedEvents -SourceIdentifiers $scoutSubscriptions)) {
-        Acknowledge-ScoutQueuedEvent -QueuedEvent $scoutPending
-    }
+    # Never remove unpersisted queue objects in failure cleanup.
     if ($null -ne $scoutWriter) { $scoutWriter.Dispose() }
     if ($null -ne $scoutFile) { $scoutFile.Dispose() }
 }

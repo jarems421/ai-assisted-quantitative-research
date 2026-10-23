@@ -40,6 +40,20 @@ class QueueAssuranceTests(unittest.TestCase):
     def test_missing_exact_object_fails_without_consuming_collision_peer(self):
         self.assertTrue(self.run_case('missing_object')['missing_object_failed_closed'])
 
+    def test_shutdown_persists_pending_collision_peers_before_end(self):
+        report = self.run_case('shutdown')
+        self.assertEqual(report['shutdown_events_persisted'], 2)
+        self.assertTrue(report['unrelated_event_retained'])
+
+    def test_queued_fictional_claude_start_at_shutdown_is_rejected(self):
+        self.assertEqual(self.run_case('shutdown_claude')['shutdown_events_persisted'], 2)
+
+    def test_shutdown_write_failure_retains_events_and_cannot_end(self):
+        self.assertTrue(self.run_case('shutdown_disk_failure')['shutdown_failed_without_removal'])
+
+    def test_shutdown_unsubscribe_failure_retains_events_and_cannot_end(self):
+        self.assertTrue(self.run_case('shutdown_unsubscribe_failure')['shutdown_failed_without_removal'])
+
 
 if __name__ == '__main__':
     unittest.main()
