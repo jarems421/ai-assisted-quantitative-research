@@ -5,6 +5,7 @@ human judgment or a performance result."""
 from __future__ import annotations
 
 import copy
+import hashlib
 from contextlib import redirect_stderr, redirect_stdout
 import io
 import json
@@ -56,8 +57,9 @@ class ShadowReviewTests(unittest.TestCase):
         return {n: a.load() for n, a in self.archives.items()}
 
     def shadow(self, name, iid, resp):
-        archive = self.archives[name]
-        archive.append('shadow', SR.import_response(archive.load(), iid, resp, transport='SYNTHETIC_FIXTURE', now=MOMENT))
+        archive = self.archives[name]; state = archive.load()
+        archive.append('shadow', SR.shadow_record(state, iid, state.latest(iid)['version'], digest(shadow_request(state, iid)), resp,
+                                                  transport='SYNTHETIC_FIXTURE', now=MOMENT))
 
     def bid(self, sealed, name, iid):
         return next(b for b, m in sealed['assignments'].items() if m['archive'] == name and m['idea_id'] == iid)
@@ -163,7 +165,8 @@ class ShadowReviewTests(unittest.TestCase):
     def test_cli_imports_a_saved_response_unchanged_and_never_repairs_it(self):
         store, iid = str(self.archives['A'].path), self.ids['A'][0]; f = Path(self.temp.name) / 'jev-response.json'
         f.write_text(json.dumps(response()), encoding='utf-8')
-        out = self.run_cli(['import-response', store, iid, str(f), '--synthetic-fixture'])
+        req = self.frozen(store, iid)
+        out = self.run_cli(['import-response', store, iid, str(f), *req, '--synthetic-fixture'])
         self.assertEqual((out['routing_changed'], out['authorises']), (False, []))
         recorded = self.archives['A'].load().shadows[-1]
         self.assertEqual(recorded['response'], json.loads(f.read_text(encoding='utf-8')))
@@ -172,10 +175,15 @@ class ShadowReviewTests(unittest.TestCase):
         for mutate in (lambda r:r.update(id='resp-1'), lambda r:r['answers'].pop('falsifiable'),
                        lambda r:r['answers']['falsifiable'].update(choice='no')):  # extra field, missing question, choice not the argmax
             bad = response(); mutate(bad); f.write_text(json.dumps(bad), encoding='utf-8')
-            self.run_cli(['import-response', store, iid, str(f), '--synthetic-fixture'], code=2)
+            self.run_cli(['import-response', store, iid, str(f), *req, '--synthetic-fixture'], code=2)
         self.assertEqual(len(self.archives['A'].load().shadows), 1)  # refused responses leave the archive unchanged
         f.write_text(json.dumps(response()), encoding='utf-8'); store, iid = self.exploratory()
-        self.assertIn('synthetic shadow response in real batch', self.run_cli(['import-response', store, iid, str(f), '--synthetic-fixture'], code=2))
+        self.assertIn('synthetic shadow response in real batch',
+                      self.run_cli(['import-response', store, iid, str(f), *self.frozen(store, iid), '--synthetic-fixture'], code=2))
+
+    def frozen(self, store, iid):
+        state = Archive(store).load()
+        return ['--version', str(state.latest(iid)['version']), '--request-sha256', digest(shadow_request(state, iid)), '--by', 'Synthetic operator (fixture)']
 
     def exploratory(self):
         archive = Archive(Path(self.temp.name) / 'exploratory')
@@ -199,6 +207,77 @@ class ShadowReviewTests(unittest.TestCase):
         rep = self.run_cli(['compare', *stores, '--packet', res['packet'], '--key', res['private_key'], '--labels', str(labels)])
         self.assertEqual((rep['schema'], rep['labels'], rep['items']), (SR.COMPARISON_V1, 1, 4))
         self.run_cli(['compare', '--store', f'A={self.archives["A"].path}', '--packet', res['packet'], '--key', res['private_key']], code=2)
+
+    def test_packet_seals_every_reviewer_facing_field(self):
+        """Questions, choices, instructions, template and flags are sealed; a consistent re-seal of altered wording still fails."""
+        packet, sealed = SR.label_packet(self.states(), SALT); SR.validate_labels(packet, sealed, [])
+        q = next(iter(QUESTIONS))
+        cases = {'question wording': lambda p:p['questions'][q].update(text='Is this obviously a good idea?'),
+                 'answer choices': lambda p:p['questions'][q].update(choices=['yes', 'no']),
+                 'instructions': lambda p:p.update(instructions='Look at the Jev answers first.'),
+                 'template exposure flag': lambda p:p['label_template'].update(saw_jev_output=True),
+                 'template reviewer kind': lambda p:p['label_template']['reviewer'].update(kind='ASSISTANT'),
+                 'template answers': lambda p:p['label_template']['atomic_answers'].pop(q),
+                 'comparative flag': lambda p:p.update(comparative_eligible=True),
+                 'jev flag': lambda p:p.update(jev_output_included=True),
+                 'added field': lambda p:p.update(jev_preview={'choice': 'yes'}),
+                 'removed field': lambda p:p.pop('blinding'),
+                 'removed question': lambda p:p['questions'].pop(q)}
+        for name, mutate in cases.items():
+            p = copy.deepcopy(packet); mutate(p)
+            with self.assertRaisesRegex(S.ScoutError, 'reviewer-facing|frozen wording', msg=name):SR.validate_labels(p, sealed, [])
+            k = copy.deepcopy(sealed); k['reviewer_facing_sha256'] = digest({x: v for x, v in p.items() if x != 'key_sha256'})
+            p['key_sha256'] = digest(k)  # re-sealed consistently: only the frozen derivation catches it
+            with self.assertRaisesRegex(S.ScoutError, 'frozen wording', msg=name + ' (re-sealed)'):SR.validate_labels(p, k, [])
+        old = {**copy.deepcopy(packet), 'schema': 'SCOUT_SHADOW_LABEL_PACKET_V001'}
+        with self.assertRaisesRegex(S.ScoutError, 'V001 packets did not seal'):SR.validate_labels(old, sealed, [])
+
+    def test_import_binds_the_frozen_request_and_the_response_file_bytes(self):
+        archive = self.archives['A']; a1, a2 = self.ids['A'][:2]; state = archive.load()
+        store = str(archive.path); frozen = digest(shadow_request(state, a1)); op = 'Synthetic operator (fixture)'
+        resp = Path(self.temp.name) / 'saved-response.json'; resp.write_bytes(json.dumps(response(), indent=4).encode('utf-8'))
+        original = resp.read_bytes()
+        req = Path(self.temp.name) / 'sent-request.json'; req.write_bytes(canonical(shadow_request(state, a1)))
+        args = lambda h=frozen, v=1, by=op, idea=a1, *extra:['import-response', store, idea, str(resp), '--version', str(v), '--request-sha256', h,
+                                                             '--by', by, '--synthetic-fixture', *extra]
+        refusals = {'fabricated hash': args('f' * 64), 'another card\'s request': args(digest(shadow_request(state, a2))),
+                    'wrong version': args(frozen, 2), 'assistant attester': args(frozen, 1, 'Claude'), 'model attester': args(frozen, 1, 'Jev operator')}
+        other = Path(self.temp.name) / 'other-request.json'; other.write_bytes(canonical(shadow_request(state, a2)))
+        refusals['request file for another card'] = args(frozen, 1, op, a1, '--request-file', str(other))
+        expected = {'fabricated hash': 'not the frozen request', "another card's request": 'not the frozen request', 'wrong version': 'frozen for v2',
+                    'assistant attester': 'named human operator', 'model attester': 'named human operator',
+                    'request file for another card': 'request file is not the request'}
+        for name, argv in refusals.items():self.assertIn(expected[name], self.run_cli(argv, code=2), name)
+        self.assertEqual(archive.load().shadows, [])  # every refusal left the archive unchanged
+        out = self.run_cli(args(frozen, 1, op, a1, '--request-file', str(req)))
+        self.assertEqual(resp.read_bytes(), original)  # the response file is never rewritten
+        prov = json.loads(Path(out['provenance_record']).read_text(encoding='utf-8'))
+        self.assertEqual(prov['response_file'], {'sha256': hashlib.sha256(original).hexdigest(), 'bytes': len(original)})
+        self.assertEqual(prov['request_file']['sha256'], hashlib.sha256(req.read_bytes()).hexdigest())
+        self.assertEqual((prov['basis'], prov['provider_verified'], prov['attested_by'], prov['request_sha256']), ('OPERATOR_ATTESTATION', False, op, frozen))
+        self.assertEqual(prov['shadow_event']['hash'], archive.load().events[-1]['hash'])
+        self.assertEqual(archive.load().shadows[-1]['response'], json.loads(original))
+        # a superseded version's frozen request can no longer be imported
+        new = copy.deepcopy(state.latest(a2)['idea']); new['title'] = 'SYNTHETIC clarified title'
+        archive.append('revision', {'idea_id': a2, 'from_version': 1, 'idea': new, 'reason': 'Synthetic clarification of the card title.',
+                                    'actor': {'kind': 'SYNTHETIC_FIXTURE', 'id': 'SYNTHETIC_EDITOR'}, 'after_outcome_known': False})
+        self.assertIn('is now v2', self.run_cli(args(digest(shadow_request(state, a2)), 1, op, a2), code=2))
+
+    def test_compare_reports_operator_attestation_never_provider_verification(self):
+        archive = self.archives['A']; a1, a2, a3 = self.ids['A']; store = str(archive.path)
+        resp = Path(self.temp.name) / 'r.json'; resp.write_text(json.dumps(response()), encoding='utf-8')
+        self.run_cli(['import-response', store, a1, str(resp), *self.frozen(store, a1), '--synthetic-fixture'])
+        self.run_cli(['import-response', store, a2, str(resp), *self.frozen(store, a2), '--synthetic-fixture'])
+        self.shadow('A', a3, response())  # imported without a provenance record
+        tampered = sorted((archive.path / 'exports').glob('jev-provenance-e*.json'))[1]
+        record = json.loads(tampered.read_text(encoding='utf-8')); record['response_json_sha256'] = '0' * 64
+        tampered.write_text(json.dumps(record), encoding='utf-8')
+        salt = Path(self.temp.name) / 'salt.json'; salt.write_text(json.dumps({'salt': SALT}), encoding='utf-8')
+        res = self.run_cli(['label-packet', '--store', f'A={store}', '--salt-file', str(salt), '--out', str(Path(self.temp.name) / 'lp')])
+        rep = self.run_cli(['compare', '--store', f'A={store}', '--packet', res['packet'], '--key', res['private_key']])
+        p = rep['usage_and_cost']['response_provenance']
+        self.assertEqual((p['operator_attested'], p['mismatched'], p['missing'], p['provider_verified']), (1, 1, 1, 0))
+        self.assertEqual(len(p['items_without_attested_provenance']), 2)
 
     def test_trace_from_generation_to_handoff_with_jev_in_shadow(self):
         """Generation, validation, duplicate check, feasibility, READY, shortlist, handoff: Jev alongside, never in the path."""

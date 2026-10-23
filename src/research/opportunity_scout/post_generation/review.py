@@ -5,7 +5,11 @@ refuses incomplete or unequal conditions and is unchanged. Here every current ca
 whatever was generated, and nothing is ever comparative between conditions or methods.
 
 * ``label_packet``: cards with generator metadata removed and the frozen atomic questions, never Jev output, plus a
-  hash-sealed private key mapping blind ids to archive, idea and version.
+  private key mapping blind ids to archive, idea and version. The key seals the hash of the whole reviewer-facing packet
+  (everything except ``key_sha256`` itself), and the non-card text must equal its frozen derivation.
+* ``import_response``: a saved System One response file, unchanged, against the request hash frozen at export. A
+  separate write-once provenance record keeps the response file's byte hash and the operator's attestation; the
+  provider verifies nothing.
 * ``validate_labels``: independent labels, one per reviewer and item, declaring that the reviewer saw no Jev output and
   is independent of generation. Real batches accept HUMAN reviewers only; synthetic packets only SYNTHETIC_FIXTURE.
 * ``compare``: Jev against those labels. Agreement, abstention, confusion, disagreement types, binary Brier where the
@@ -23,7 +27,10 @@ from src.research.spec import canonical, digest
 from .. import schema as S
 from ..providers import JEV_MODEL, QUESTIONS, shadow_request
 
-PACKET_V1, LABELS_V1, COMPARISON_V1 = 'SCOUT_SHADOW_LABEL_PACKET_V001', 'SCOUT_SHADOW_LABEL_V001', 'SCOUT_JEV_SHADOW_COMPARISON_V001'
+PACKET_V1, LABELS_V1, COMPARISON_V1 = 'SCOUT_SHADOW_LABEL_PACKET_V002', 'SCOUT_SHADOW_LABEL_V001', 'SCOUT_JEV_SHADOW_COMPARISON_V001'
+PROVENANCE_V1 = 'SCOUT_JEV_RESPONSE_PROVENANCE_V001'
+PROVENANCE_STATEMENT = ('The named operator attests that this response file is unchanged and answers the request with this hash. '
+                        'The provider has not signed, returned or verified this binding.')
 CHOICES = ('yes', 'no', 'unsure')
 # The answer that indicates a problem with the card, per frozen question.
 PROBLEM = {'explicit_mechanism': 'no', 'evidence_supported': 'no', 'falsifiable': 'no', 'next_check_addresses_gap': 'no',
@@ -61,23 +68,34 @@ def label_packet(states, salt):
         assignments[bid] = {'archive': name, 'idea_id': card['id'], 'version': card['version'], 'card_sha256': digest(card)}
     rows.sort(key=lambda r: r['blind_id'])
     fixture = fixtures.pop()
+    body = {'schema': PACKET_V1, 'fixture': fixture, 'cards': rows, **reviewer_text()}
     sealed = {'schema': PACKET_V1 + '_KEY', 'fixture': fixture, 'assignments': assignments, 'salt_sha256': S.hash_text(salt), 'public_cards_sha256': digest(rows),
-              'archive_heads': {n: (s.events[-1]['hash'] if s.events else None) for n, s in sorted(states.items())}}
-    packet = {'schema': PACKET_V1, 'fixture': fixture, 'cards': rows, 'key_sha256': digest(sealed),
-              'questions': {q: {'text': t, 'choices': list(CHOICES)} for q, t in QUESTIONS.items()},
-              'label_template': {'schema': LABELS_V1, 'blind_id': '<blind_id>', 'reviewer': {'kind': 'HUMAN', 'id': '<your name>'},
-                                 'saw_jev_output': False, 'independent_of_generation': True,
-                                 'atomic_answers': {q: '<yes | no | unsure>' for q in QUESTIONS}, 'minutes': '<number or UNKNOWN>',
-                                 'labelled_at': '<ISO time with zone>', 'notes': '<short reason>'},
-              'instructions': 'Answer each question from the card and passages only. Do not look at any Jev output, other reviewers or '
-                              'the private key. Unsure is a legitimate answer. Record your real minutes or UNKNOWN.',
-              'blinding': 'PARTIAL_PROCEDURAL', 'comparative_eligible': False, 'jev_output_included': False, 'authorises': []}
-    return packet, sealed
+              'reviewer_facing_sha256': digest(body), 'archive_heads': {n: (s.events[-1]['hash'] if s.events else None) for n, s in sorted(states.items())}}
+    return {**body, 'key_sha256': digest(sealed)}, sealed
+
+
+def reviewer_text():
+    """Every non-card reviewer-facing field, derived only from the frozen questions: the same for every packet."""
+    return {'questions': {q: {'text': t, 'choices': list(CHOICES)} for q, t in QUESTIONS.items()},
+            'label_template': {'schema': LABELS_V1, 'blind_id': '<blind_id>', 'reviewer': {'kind': 'HUMAN', 'id': '<your name>'},
+                               'saw_jev_output': False, 'independent_of_generation': True,
+                               'atomic_answers': {q: '<yes | no | unsure>' for q in QUESTIONS}, 'minutes': '<number or UNKNOWN>',
+                               'labelled_at': '<ISO time with zone>', 'notes': '<short reason>'},
+            'instructions': 'Answer each question from the card and passages only. Do not look at any Jev output, other reviewers or '
+                            'the private key. Unsure is a legitimate answer. Record your real minutes or UNKNOWN.',
+            'blinding': 'PARTIAL_PROCEDURAL', 'comparative_eligible': False, 'jev_output_included': False, 'authorises': []}
 
 
 def check_packet(packet, sealed):
-    if packet.get('schema') != PACKET_V1 or packet.get('key_sha256') != digest(sealed) or packet.get('fixture') != sealed.get('fixture'):
-        raise S.ScoutError('label packet and key do not match')
+    """The key seals the whole reviewer-facing packet (not recursive: ``key_sha256`` is the only field left out), and its
+    non-card text must be the frozen derivation, so a consistently re-sealed pair with altered wording still fails."""
+    if not isinstance(packet, dict) or packet.get('schema') != PACKET_V1:
+        raise S.ScoutError(f'not a {PACKET_V1} packet (V001 packets did not seal their questions, instructions or template)')
+    body = {k: v for k, v in packet.items() if k != 'key_sha256'}
+    if packet.get('key_sha256') != digest(sealed) or packet.get('fixture') != sealed.get('fixture'):raise S.ScoutError('label packet and key do not match')
+    if digest(body) != sealed.get('reviewer_facing_sha256'):raise S.ScoutError('reviewer-facing packet content changed after freeze')
+    if {k: v for k, v in body.items() if k not in ('schema', 'fixture', 'cards')} != reviewer_text():
+        raise S.ScoutError('packet questions, choices, instructions or template differ from the frozen wording')
     if digest(packet['cards']) != sealed.get('public_cards_sha256') or {r['blind_id'] for r in packet['cards']} != set(sealed['assignments']):
         raise S.ScoutError('label packet cards or assignments changed after freeze')
 
@@ -104,8 +122,9 @@ def mechanical_problem(question, card):
     return any('FALSIF' in x for x in S.structural_checks(card['idea'])['checks'])
 
 
-def compare(states, packet, sealed, labels):
-    """Descriptive Jev-versus-independent-label report for the labelled cards. Missing records stay in the denominators."""
+def compare(states, packet, sealed, labels, provenance=None):
+    """Descriptive Jev-versus-independent-label report for the labelled cards. Missing records stay in the denominators.
+    ``provenance``: {archive name: [provenance records]} from that archive's exports; absent records are reported as MISSING."""
     labels = validate_labels(packet, sealed, labels)
     if {s.batch['fixture'] for s in states.values()} != {sealed['fixture']}:raise S.ScoutError('archives are not the fixture class the packet was frozen from')
     items, missing_shadow, other_version_only, repeated, stale = {}, [], [], [], []
@@ -122,7 +141,8 @@ def compare(states, packet, sealed, labels):
             missing_shadow.append(bid)
             if any(r['idea_id'] == card['id'] for r in state.shadows):other_version_only.append(bid)
         # The earliest record is used, so a later re-run cannot replace an inconvenient answer.
-        items[bid] = {'card': card, 'shadow': exact[0] if exact else None}
+        items[bid] = {'card': card, 'shadow': exact[0] if exact else None,
+                      'provenance': provenance_status(state, exact[0], (provenance or {}).get(m['archive'], [])) if exact else None}
     by_item = {}
     for r in labels:by_item.setdefault(r['blind_id'], []).append(r)
     questions = {}
@@ -172,6 +192,10 @@ def compare(states, packet, sealed, labels):
              'unknown_cost_records': sum(r['cost'] == S.UNKNOWN for r in used),
              'currencies': sorted({r['currency'] for r in used}), 'transports': dict(Counter(r['transport'] for r in used)),
              'note': 'System One documents token usage but no price or currency; cost stays UNKNOWN unless separately evidenced.'}
+    prov = Counter(it['provenance'] for it in items.values() if it['shadow'])
+    usage['response_provenance'] = {'operator_attested': prov['OPERATOR_ATTESTED'], 'missing': prov['MISSING'], 'mismatched': prov['MISMATCHED'],
+        'provider_verified': 0, 'items_without_attested_provenance': sorted(b for b, it in items.items() if it['shadow'] and it['provenance'] != 'OPERATOR_ATTESTED'),
+        'basis': 'Operator attestation binds a saved response file to a frozen request hash. The provider verifies nothing.'}
     minutes = [r['minutes'] for r in labels]
     return {'schema': COMPARISON_V1, 'fixture': packet['fixture'], 'packet_key_sha256': packet['key_sha256'],
             'items': len(items), 'labelled_items': len(by_item), 'labels': len(labels),
@@ -195,9 +219,50 @@ def human_agreement(by_item, q):
     return {'pairs': pairs, 'agreement': agreed / pairs if pairs else None}
 
 
-def import_response(state, idea_id, response, *, cost=S.UNKNOWN, currency=S.UNKNOWN, transport='IMPORTED_NOT_CALLED', now=None):
-    """The shadow record for a saved System One response, used exactly as received (never edited to fit)."""
+def shadow_record(state, idea_id, version, request_sha256, response, *, cost=S.UNKNOWN, currency=S.UNKNOWN, transport='IMPORTED_NOT_CALLED', now=None):
+    """The shadow record for a response to the frozen request ``request_sha256`` for exactly ``idea_id`` v``version``.
+
+    The hash is the operator's, from the request actually sent (``shadow-request`` prints it as ``payload_sha256``). It must
+    equal the request for that exact version, which must still be current: a response to an older version is refused."""
     card = state.latest(idea_id)
-    return {'idea_id': idea_id, 'version': card['version'], 'request_sha256': digest(shadow_request(state, idea_id)),
-            'response': response, 'imported_at': now or S.utc_now(), 'cost': cost, 'currency': currency,
-            'shadow_only': True, 'transport': transport}
+    if version != card['version']:raise S.ScoutError(f'the request was frozen for v{version}; {idea_id} is now v{card["version"]}, so it cannot be imported')
+    if not isinstance(request_sha256, str) or request_sha256 != digest(shadow_request(state, idea_id)):
+        raise S.ScoutError('the supplied request hash is not the frozen request for this exact card version')
+    return {'idea_id': idea_id, 'version': version, 'request_sha256': request_sha256, 'response': response,
+            'imported_at': now or S.utc_now(), 'cost': cost, 'currency': currency, 'shadow_only': True, 'transport': transport}
+
+
+def import_response(archive, idea_id, version, request_sha256, response_path, by, *, request_path=None, cost=S.UNKNOWN,
+                    currency=S.UNKNOWN, transport='IMPORTED_NOT_CALLED', now=None):
+    """Import a saved response file unchanged and write its provenance record (write-once, operator attestation)."""
+    from ..storage import input_json, unlinked
+    if not isinstance(by, str) or not by.strip() or ASSISTANT.search(by):raise S.ScoutError('the attestation is a named human operator, not an assistant or model')
+    response = input_json(response_path); raw = unlinked(response_path).read_bytes()  # bytes hashed as stored; the file is never written
+    if digest(S.json_loads(raw.decode('utf-8'))) != digest(response):raise S.ScoutError('the response file changed while it was being read')
+    request_file = None
+    if request_path is not None:
+        request_raw = unlinked(request_path).read_bytes()
+        if digest(input_json(request_path)) != request_sha256:raise S.ScoutError('the request file is not the request with the supplied hash')
+        request_file = {'sha256': hashlib.sha256(request_raw).hexdigest(), 'bytes': len(request_raw)}
+    record = shadow_record(archive.load(), idea_id, version, request_sha256, response, cost=cost, currency=currency, transport=transport, now=now)
+    event = archive.append('shadow', record).events[-1]
+    provenance = {'schema': PROVENANCE_V1, 'idea_id': idea_id, 'version': version, 'request_sha256': request_sha256, 'request_file': request_file,
+                  'response_file': {'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)}, 'response_json_sha256': digest(response),
+                  'shadow_event': {'seq': event['seq'], 'hash': event['hash']}, 'imported_at': record['imported_at'],
+                  'attested_by': by, 'basis': 'OPERATOR_ATTESTATION', 'provider_verified': False, 'statement': PROVENANCE_STATEMENT}
+    path = archive.export(f'jev-provenance-e{event["seq"]:04d}.json', provenance)
+    return record, provenance, path
+
+
+def provenance_status(state, shadow, records):
+    """``OPERATOR_ATTESTED`` when a provenance record names this shadow's exact event and response; else MISSING or MISMATCHED.
+    Never ``PROVIDER_VERIFIED``: System One returns nothing that binds a response to a request."""
+    events = [e for e in state.events if e['type'] == 'shadow']
+    event = next((e for e in events if e['record'] is shadow or e['record'] == shadow), None)
+    matches = [r for r in records if event and r.get('shadow_event', {}).get('hash') == event['hash']]
+    if not matches:return 'MISSING'
+    r = matches[0]
+    ok = (len(matches) == 1 and r.get('schema') == PROVENANCE_V1 and r.get('basis') == 'OPERATOR_ATTESTATION' and r.get('provider_verified') is False
+          and r.get('statement') == PROVENANCE_STATEMENT and (r['idea_id'], r['version'], r['request_sha256']) ==
+          (shadow['idea_id'], shadow['version'], shadow['request_sha256']) and r['response_json_sha256'] == digest(shadow['response']))
+    return 'OPERATOR_ATTESTED' if ok else 'MISMATCHED'

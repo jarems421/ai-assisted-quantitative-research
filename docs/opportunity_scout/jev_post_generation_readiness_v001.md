@@ -26,8 +26,8 @@
 | Strictness | Deliberate | The docs do not say whether extra fields can appear. An undocumented field is **refused, never stripped**: the response stays unimported and is kept as received |
 | Cost | Correctly `UNKNOWN` | System One documents no price or currency field ("output tokens are currently free"). Cost stays `UNKNOWN` unless separately evidenced |
 | `JevShadowClient` | Built, never used live | Refuses without a payload-specific owner approval and a `PUBLIC_APPROVED`/`SYNTHETIC_APPROVED` classification; reads the key only after that |
-| Transport label for a client-made call | Inconsistent | The importer refuses `OWNER_AUTHORISED_HTTP`, so a response fetched by `JevShadowClient` cannot be recorded under that label. For the first run, use the operator path (section 3) and import as `IMPORTED_NOT_CALLED`. Not changed here |
-| `python -m src.research.opportunity_scout.post_generation import-response STORE IDEA RESPONSE.json` | **New**, fixture-tested | Wraps a saved response file unchanged; computes the request hash; cost and currency default to `UNKNOWN`. Removes hand-editing of judgments into records |
+| Transport label for a client-made call | **Remaining live-integration limitation** | The frozen top-level importer refuses `OWNER_AUTHORISED_HTTP`, so a response fetched by `JevShadowClient` cannot be recorded under that label. Fixing it means editing a top-level Scout module inside the frozen V004 closure, so it stays unchanged. For the first run, use the operator path (section 3) and import as `IMPORTED_NOT_CALLED` |
+| `python -m src.research.opportunity_scout.post_generation import-response STORE IDEA RESPONSE.json --version V --request-sha256 H [--request-file F] --by NAME` | **New**, fixture-tested | Section 2a. Cost and currency default to `UNKNOWN`. Removes hand-editing of judgments into records |
 | Four-condition Jev metrics (`evaluate-blind --states`) | Built, fixture-tested | Agreement and binary Brier only, and only via the frozen comparison |
 | Non-comparative label packet, labels and comparison (`post_generation label-packet`, `post_generation compare`) | **New**, fixture-tested | Section 2 |
 | Real Jev responses, API key, per-payload owner approval, independent labellers | **External** | — |
@@ -52,16 +52,22 @@
 2. **Jev metrics too thin.** The existing metrics report agreement and binary Brier only.
    - **Fix:** the new report adds abstention, a three-way confusion matrix, disagreement types, a 0.25 reference Brier and human–human agreement. It adds problem flags beyond the one existing mechanical check, the returned model against the requested one, tokens, unknown cost and every missing record.
 3. **Importing required hand-copying the response into a record.** **Fix:** `post_generation import-response` reads the saved file unchanged.
+4. **Packet sealing (review of PR #21).** The first version sealed the cards and assignments but not the questions, instructions or template.
+   - **Fix:** packet `V002`. The key seals the hash of every reviewer-facing field (the whole packet except `key_sha256`, so the hash is not recursive), and the non-card text must equal its frozen derivation.
+   - A consistent re-seal with altered wording therefore still fails. V001 packets are refused.
+5. **Response provenance (review of PR #21).** The first importer computed the request hash from the card's current state, which does not show which request the response answered.
+   - **Fix:** the operator must supply the request hash frozen at export and the card version. Both are verified against that exact version, which must still be current.
+   - The response file's byte hash goes into a separate write-once provenance record (section 2a).
 
 ## 2. The offline shadow-evaluation workflow
 
 | # | Step | Command | Guarantees |
 |---|---|---|---|
 | 1 | Receive frozen ideas | (generation import; N1/V004 is Codex's) | Cards are immutable versions; invalid attempts retained |
-| 2 | Label packet | `python -m src.research.opportunity_scout.post_generation label-packet --store NAME=PATH … --salt-file salt.json --out <new dir>` | Every current card, labelled or not, with or without Jev. Generator metadata, lanes, ids and **all Jev output removed**. Private key hash-seals the mapping and the fixture class. `comparative_eligible: false` |
+| 2 | Label packet | `python -m src.research.opportunity_scout.post_generation label-packet --store NAME=PATH … --salt-file salt.json --out <new dir>` | Every current card, labelled or not, with or without Jev. Generator metadata, lanes, ids and **all Jev output removed**. Private key seals the mapping, the fixture class and the hash of the whole reviewer-facing packet; the questions, choices, instructions and template must equal their frozen wording. `comparative_eligible: false` |
 | 3 | Independent labels | Labellers fill `label_template` per card | One record per reviewer and card. `saw_jev_output: false` and `independent_of_generation: true` are required. HUMAN only in real batches (SYNTHETIC_FIXTURE only in synthetic ones); assistant or model names refused. `unsure` allowed; real minutes or `UNKNOWN` |
 | 4 | Jev requests | `shadow-request STORE IDEA` per card | Exact payload and `payload_sha256` for the owner's approval |
-| 5 | Jev responses | `python -m src.research.opportunity_scout.post_generation import-response STORE IDEA response.json` | Stored unchanged and bound to the request hash. Refused responses are left unimported, never repaired. Repeated imports are kept; the comparison uses the **earliest** |
+| 5 | Jev responses | `python -m src.research.opportunity_scout.post_generation import-response STORE IDEA response.json --version V --request-sha256 H [--request-file request.json] --by NAME` | Section 2a. Refused responses are left unimported, never repaired. Repeated imports are kept; the comparison uses the **earliest** |
 | 6 | Compare | `python -m src.research.opportunity_scout.post_generation compare --store NAME=PATH … --packet P --key K --labels L` | Descriptive report (below) |
 | 7 | Report | — | Include `missing`, `usage_and_cost` and `interpretation` verbatim. No calibration, significance or routing claim |
 
@@ -87,6 +93,40 @@
 
 **Always reported:** cards without a Jev answer, cards without labels, repeated Jev records, cards revised since the packet, label minutes known or unknown, returned model names, tokens, and the number of records with unknown cost.
 
+### 2a. Response provenance: what is attested and what is verified
+
+`import-response` checks four things, and refuses the import if any fails:
+
+- The supplied `--request-sha256` must be the `payload_sha256` that `shadow-request` produced for exactly that card and `--version`, and that version must still be current. A response to a superseded version cannot be imported.
+- With `--request-file`, the request file sent must be the request with that hash.
+- The response must pass the unchanged frozen validation, and the file is never rewritten.
+- `--by` must be a named human, not an assistant or model.
+
+It then appends the shadow record and writes `exports/jev-provenance-e<NNNN>.json` once. That record holds:
+
+- the card and version, and the request hash;
+- the request file's byte hash and size;
+- the **response file's byte hash and size**, plus the hash of the parsed JSON;
+- the exact archive event (sequence and hash), the importer and time;
+- `basis: OPERATOR_ATTESTATION` and `provider_verified: false`.
+
+`compare` reports each Jev answer it uses as one of:
+
+| Status | Meaning |
+|---|---|
+| `OPERATOR_ATTESTED` | Exactly one provenance record names this event, request and response |
+| `MISSING` | No provenance record names it (for example, a record imported without this command) |
+| `MISMATCHED` | A record names it but disagrees, or more than one does |
+
+`provider_verified` is always 0.
+
+| What is established | How |
+|---|---|
+| The response file's bytes at import, and the stored judgments, are those bytes parsed | Software (hash at import; stored response compared with the file) |
+| The request hash belongs to this exact card version | Software (recomputed from the immutable version) |
+| That this response came back from TypeSafe for that request | **Operator attestation only.** System One returns no request id, signature or echo of the request, so nothing binds a response to a request |
+| Model identity | The `model` field the response reports; not independently verified |
+
 ## 3. Operator checklist: first separately authorised Jev shadow comparison
 
 **Before any request.**
@@ -102,12 +142,12 @@
 
 **Running Jev (outside Scout).**
 
-5. Send each frozen payload unchanged, once. Save the response body exactly as received in a private location. Note the usage shown; leave cost `UNKNOWN` unless an invoice line exists.
+5. Send each frozen payload unchanged, once. Save the response body exactly as received in a private location Scout may read, for example the git-ignored `.research/` folder. Scout never opens files under `data/raw/`. Note the usage shown; leave cost `UNKNOWN` unless an invoice line exists.
 6. On an HTTP error, timeout or truncated body, stop and record it. Do not resend without the owner's decision.
 
 **Afterwards.**
 
-7. Run `post_generation import-response` for each response. Keep any refused response file as it is, and report it.
+7. Run `post_generation import-response` for each response, with the card version and the `payload_sha256` of the request actually sent (and that request file, with `--request-file`). Attest with your own name. Keep any refused response file as it is, and report it.
 8. Run `post_generation compare`, and publish the report with its `missing` and `interpretation` sections.
 9. Jev answers are never used to route, reject, shortlist or approve. The human review records stay the only routing.
 
