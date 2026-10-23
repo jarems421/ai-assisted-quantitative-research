@@ -49,11 +49,18 @@ def attempt(critic, out, family='SYNTHETIC_FAMILY_A'):
     return {'attempt': 'ATT-X-' + critic, 'output': out, 'provenance': {'model': 'SYNTHETIC_' + critic, 'model_family': family}}
 
 
-def decide(specs, layer_a=None, families=None):
-    """Policy over scripted answers: ``specs`` {critic: dimension spec}; missing critics are simply absent."""
+def decide(specs, layer_a=None, families=None, edit=None, offer=True):
+    """Policy over scripted answers: ``specs`` {critic: dimension spec}; missing critics are simply absent. As in a
+    workspace, the adversarial critic is offered the challenges built from the first-pass answers (none if not ``offer``);
+    ``edit`` may change its answer, which must still validate."""
     families = families or {}
-    req = {c: request(c, challenges=[] if c == 'ADVERSARIAL' else None) for c in specs}
-    chosen = {c: attempt(c, output(c, req[c], s), families.get(c, B.FAMILIES[c])) for c, s in specs.items()}
+    chosen = {c: attempt(c, output(c, request(c), specs[c]), families.get(c, B.FAMILIES[c])) for c in K.FIRST_PASS if c in specs}
+    if 'ADVERSARIAL' in specs:
+        req = request('ADVERSARIAL', challenges=K.clean(Q.challenges(chosen, 'UNCERTAIN_FATAL_DEFECT')) if offer else [])
+        out = output('ADVERSARIAL', req, specs['ADVERSARIAL'])
+        if edit:edit(out)
+        if K.problems(out, req):raise AssertionError(K.problems(out, req))
+        chosen['ADVERSARIAL'] = {**attempt('ADVERSARIAL', out, families.get('ADVERSARIAL', B.FAMILIES['ADVERSARIAL'])), 'challenges': req['input']['challenges']}
     return Q.decide(layer_a or D.check(subject()), chosen, {c: 'VALID' for c in chosen})
 
 
@@ -93,7 +100,8 @@ class ContractTests(unittest.TestCase):
         self.assertEqual((manifest['model_calls_authorised'], manifest['hosted_transmission_authorised']), (False, False))
         self.assertEqual(set(manifest['files']), set(K.TEXTS.values()))
         original = K.lf
-        for target in ('common_v001.md', 'adversarial_v001.md', 'manifest.json'):
+        self.assertEqual(set(manifest['superseded']), set(K.SUPERSEDED))  # draft V001 texts kept byte-identical, never rendered
+        for target in ('common_v002.md', 'adversarial_v002.md', 'common_v001.md', 'adversarial_v001.md', 'manifest.json'):
             with patch.object(K, 'lf', lambda p, t=target: original(p) + (' edited' if Path(p).name == t else '')), self.assertRaises(S.ScoutError):
                 K.resource_manifest()
         with patch.object(K, 'OUTPUT', {**K.OUTPUT, 'required': []}), self.assertRaises(S.ScoutError):K.resource_manifest()
@@ -131,6 +139,36 @@ class ContractTests(unittest.TestCase):
         a['assessments'][1].update(judgment='FAIL', failure_type='WEAK_FALSIFIER', severity='MAJOR', proposition='x', next_check='y',
                                    anchors=[{'field': '/challenges/0/claim', 'kind': 'QUOTE', 'quote': 'The falsifier is weak.'}])
         self.assertTrue(any('earlier review' in p for p in K.problems(a, adversarial)))
+
+    def test_absence_anchors_name_only_existing_empty_fields(self):
+        blank = idea(); blank['main_uncertainty'] = ' \u200b '  # empty once normalised
+        req = request(card=blank)
+        def check(field, kind='ABSENCE', quote=''):
+            o = output('SCIENTIFIC', req, {'falsifiability': B.fail('WEAK_FALSIFIER', '/card/falsifier/observation')})
+            next(a for a in o['assessments'] if a['dimension'] == 'falsifiability')['anchors'] = [{'field': field, 'kind': kind, 'quote': quote}]
+            return K.problems(o, req)
+        for empty in ('/card/mechanism/links/0/evidence', '/source_passages', '/card/entity_ids', '/card/next_step/analyst_minutes_estimate',
+                      '/card/main_uncertainty', '/reference_set/items'):
+            self.assertEqual(check(empty), [], empty)
+        for populated in ('/card/falsifier/observation', '/card/mechanism/links/0', '/card/predictor', '/card/source_routes', '/card/title'):
+            self.assertTrue(any('populated field' in x for x in check(populated)), populated)
+        self.assertTrue(any('does not exist' in x for x in check('/card/control_group')))  # a missing key is not evidence of absence
+        self.assertTrue(any('empty quote' in x for x in check('/source_passages', quote='anything')))
+        self.assertEqual(check('/card/falsifier/observation', 'QUOTE', 'Named customer records show no change'), [])
+        self.assertEqual([K.empty(v) for v in ('', 'UNKNOWN', [], {}, None, 0, ' x', ['']) ], [True, True, True, True, True, False, False, False])
+
+    def test_v001_contracts_are_refused_never_reinterpreted(self):
+        req = request()
+        old = output('SCIENTIFIC', req); old['schema'] = 'SCOUT_CRITIC_OUTPUT_V001'
+        self.assertTrue(K.problems(old, req))
+        self.assertEqual((K.OUTPUT_V, K.REQUEST_V, Q.POLICY, P.WORKSPACE_V),
+                         ('SCOUT_CRITIC_OUTPUT_V002', 'SCOUT_CRITIC_REQUEST_V002', 'SCOUT_AI_CRITIC_POLICY_V002', 'SCOUT_CRITIC_WORKSPACE_V002'))
+        stale = {**req, 'schema': 'SCOUT_CRITIC_REQUEST_V001'}; stale['request_id'] = 'CRQ-' + digest({k: v for k, v in stale.items() if k != 'request_id'})[:16]
+        with self.assertRaises(S.ScoutError):P.check_request(stale)
+        with tempfile.TemporaryDirectory() as temp:
+            (Path(temp) / 'manifest.json').write_bytes(canonical({'schema': 'SCOUT_CRITIC_WORKSPACE_V001'}))
+            with self.assertRaisesRegex(S.ScoutError, 'V001'):P.Workspace(temp).manifest()
+        with self.assertRaises(S.ScoutError):V.queue({'schema': 'SCOUT_CRITIC_RECOMMENDATIONS_V001', 'subjects': {}}, 1)
 
     def test_soft_dimensions_and_missing_evidence_can_never_be_fatal(self):
         req = request('ECONOMIC')
@@ -276,6 +314,41 @@ class PackagingTests(Workbench):
         with self.assertRaises(S.ScoutError):
             P.import_response(ws, ws.requests()[1]['request_id'], b'x', P.provenance('m', 'f', 'OPERATOR_ASSISTED', 'SYNTHETIC_OPERATOR'))
 
+    def test_requests_must_be_the_manifest_frozen_or_legitimately_selected_ones(self):
+        ws = self.workspace(); self.answer_all(ws, economic={'internal_novelty': 'PASS', 'economic_significance': 'PASS'})
+        key = next(k for k, r in Q.evaluate_workspace(ws).items() if r['adversarial_recommended'] == 'UNUSUALLY_PROMISING')
+        entry = ws.manifest()['subjects'][key]; base = ws.request(entry['requests']['SCIENTIFIC'])['input']
+        first = {c: a['attempt'] for c, a in P.usable(ws)[0][key].items()}
+        def planted(request, refused=True):
+            path = ws.write(f'requests/{request["request_id"]}.json', request)
+            try:
+                if refused:
+                    with self.assertRaises(S.ScoutError):ws.requests()
+                    with self.assertRaises(S.ScoutError):P.import_response(ws, request['request_id'], B.answer(request['critic'], request, {}), self.prov(request['critic']), now=MOMENT)
+                return ws.request(request['request_id']) if not refused else None
+            finally:
+                if refused:path.unlink()
+        # Grade shopping: a second, self-consistent first-pass request for the same input; an altered input; an unknown subject.
+        planted(P.make_request('SCIENTIFIC', key, base, selection={'retry': 'a better grade'}))
+        planted(P.make_request('ECONOMIC', key, {**base, 'card': {**base['card'], 'title': 'SYNTHETIC altered title'}}))
+        planted(P.make_request('SCIENTIFIC', 'SUBJ-0000000000000000', base))
+        # Forged adversarial requests: altered challenges, a reason the policy did not give, another subject's attempt.
+        legit = K.clean(Q.challenges({c: P.usable(ws)[0][key][c] for c in first}, 'UNUSUALLY_PROMISING'))
+        selection = {'reason': 'UNUSUALLY_PROMISING', 'note': '', 'first_pass_attempts': sorted(first.values())}
+        planted(P.make_request('ADVERSARIAL', key, {**base, 'challenges': []}, selection=selection))
+        planted(P.make_request('ADVERSARIAL', key, {**base, 'challenges': legit}, selection={**selection, 'reason': 'NOVEL_HIGH_UPSIDE'}))
+        other = next(a['attempt'] for a in ws.attempts() if a['subject_key'] != key)
+        planted(P.make_request('ADVERSARIAL', key, {**base, 'challenges': legit}, selection={**selection, 'first_pass_attempts': [other]}))
+        # The legitimate path works once; a second adversarial request for the subject is refused, however it is built.
+        request = Q.request_adversarial(ws, key, 'UNUSUALLY_PROMISING')
+        self.assertEqual(request['input']['challenges'], legit)
+        planted(P.make_request('ADVERSARIAL', key, {**base, 'challenges': []}, selection={'reason': 'HIGH_CONSEQUENCE', 'first_pass_attempts': [],
+                                                                                         'note': 'owner flagged a large planned spend here'}))
+        self.assertEqual(P.import_response(ws, request['request_id'], B.answer('ADVERSARIAL', request, {}), self.prov('ADVERSARIAL'), now=MOMENT)['status'], 'VALID')
+        with self.assertRaises(S.ScoutError):
+            P.import_response(ws, request['request_id'], B.answer('ADVERSARIAL', request, {}), self.prov('ADVERSARIAL'), now=MOMENT)
+        self.assertEqual(Q.evaluate_workspace(ws)[key]['adversarial'], 'RUN')
+
     def test_tampered_attempts_raw_bytes_or_requests_are_detected(self):
         ws = self.workspace(); self.answer_all(ws)
         attempt_file = ws.path / 'attempts/ATT-0001.json'
@@ -308,12 +381,37 @@ class PolicyTests(Workbench):
         self.assertEqual(decide({'SCIENTIFIC': fatal, 'ECONOMIC': {}, 'ADVERSARIAL': timing})['classification'], 'ESCALATE')
         confirmed = decide({'SCIENTIFIC': fatal, 'ECONOMIC': {}, 'ADVERSARIAL': fatal})
         self.assertEqual((confirmed['classification'], confirmed['fatal']['established'], confirmed['fatal']['correlated_support']),
-                         ('REJECT_RECOMMENDED', ['mechanism_coherence'], False))
+                         ('REJECT_RECOMMENDED', [{'dimension': 'mechanism_coherence', 'failure_type': 'INCOHERENT_MECHANISM',
+                                                  'fields': ['/card/mechanism/transmission']}], False))
         contested = decide({'SCIENTIFIC': fatal, 'ECONOMIC': {'mechanism_coherence': 'PASS'}, 'ADVERSARIAL': fatal})
-        self.assertEqual((contested['classification'], contested['reasons']), ('ESCALATE', ['FATAL_CONTESTED_BY_FIRST_PASS_PASS']))
+        self.assertEqual((contested['classification'], contested['reasons']), ('ESCALATE', ['CONTESTED_BY_FIRST_PASS_PASS']))
         same = decide({'SCIENTIFIC': fatal, 'ECONOMIC': {}, 'ADVERSARIAL': fatal}, families={'ADVERSARIAL': 'SYNTHETIC_FAMILY_A'})
         self.assertTrue(same['fatal']['correlated_support'])
         self.assertEqual(same['first_pass_independence'], 'SAME_MODEL_FAMILY')
+
+    def test_confirmation_requires_the_same_failure_type_location_and_upheld_challenge(self):
+        circular = {'falsifiability': B.fail('CIRCULAR_PREDICTION', '/card/outcome/quantity', True)}
+        unfalsifiable_here = {'falsifiability': B.fail('UNFALSIFIABLE', '/card/outcome/quantity', True)}
+        unfalsifiable = {'falsifiability': B.fail('UNFALSIFIABLE', '/card/falsifier/observation', True)}
+        circular_elsewhere = {'falsifiability': B.fail('CIRCULAR_PREDICTION', '/card/predictor/quantity', True)}
+        exact = decide({'SCIENTIFIC': circular, 'ECONOMIC': {}, 'ADVERSARIAL': circular})
+        self.assertEqual((exact['classification'], exact['reasons'], exact['fatal']['first_pass'][0]['confirmation']),
+                         ('REJECT_RECOMMENDED', ['FATAL_FALSIFIABILITY_CIRCULAR_PREDICTION'], 'CONFIRMED'))
+        # The same dimension is not the same defect: another failure type, even upheld and at the same field, never confirms.
+        for adversarial in (unfalsifiable_here, unfalsifiable):
+            d = decide({'SCIENTIFIC': circular, 'ECONOMIC': {}, 'ADVERSARIAL': adversarial})
+            self.assertEqual((d['classification'], d['reasons']), ('ESCALATE', ['FATAL_RAISED_ONLY_BY_ADVERSARIAL', 'TYPE_OR_LOCATION_MISMATCH']))
+        located = decide({'SCIENTIFIC': circular, 'ECONOMIC': {}, 'ADVERSARIAL': circular_elsewhere})
+        self.assertEqual((located['classification'], located['reasons']), ('ESCALATE', ['FATAL_RAISED_ONLY_BY_ADVERSARIAL', 'TYPE_OR_LOCATION_MISMATCH']))
+        refuse = lambda o: [c.update(outcome='NOT_UPHELD') for c in o['adversarial']['examined_challenges']]
+        self.assertEqual(decide({'SCIENTIFIC': circular, 'ECONOMIC': {}, 'ADVERSARIAL': circular}, edit=refuse)['reasons'], ['CHALLENGE_NOT_UPHELD'])
+        self.assertEqual(decide({'SCIENTIFIC': circular, 'ECONOMIC': {}, 'ADVERSARIAL': circular}, offer=False)['reasons'], ['CLAIM_NOT_OFFERED_AS_CHALLENGE'])
+        # Two first-pass claims of different types: only the exactly matched one is established; the other stays unconfirmed.
+        both = decide({'SCIENTIFIC': circular, 'ECONOMIC': unfalsifiable, 'ADVERSARIAL': circular})
+        self.assertEqual(both['fatal']['established'], [{'dimension': 'falsifiability', 'failure_type': 'CIRCULAR_PREDICTION', 'fields': ['/card/outcome/quantity']}])
+        self.assertEqual(sorted(x['confirmation'] for x in both['fatal']['first_pass']), ['CONFIRMED', 'TYPE_OR_LOCATION_MISMATCH'])
+        challenge = Q.challenges({'SCIENTIFIC': attempt('SCIENTIFIC', output('SCIENTIFIC', request(), circular))}, 'UNCERTAIN_FATAL_DEFECT')[0]
+        self.assertEqual((challenge['claim_type'], challenge['failure_type']), ('ADVERSE', 'CIRCULAR_PREDICTION'))
 
     def test_a_soft_pass_never_overrides_a_hard_failure(self):
         bad = idea(); bad['mechanism']['links'][0]['evidence'] = [{'seed': 'SEED-NOT-SUPPLIED', 'quote': 'invented'}]

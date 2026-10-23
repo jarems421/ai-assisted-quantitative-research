@@ -129,7 +129,7 @@ After generation, use the [post-generation readiness workflow](jev_post_generati
 - **Deterministic checks.** Layer A reuses the checks above and separates `INVALID_INPUT`, `STRUCTURAL_DEFECT`, `DOCUMENTED_CONTRADICTION`, `MISSING_EVIDENCE` and `UNKNOWN`.
 - **Blinded critics.** A scientific and an economic critic answer ten dimensions each, with every adverse finding anchored to verbatim input.
 - **Adversarial critic.** It is used only for uncertain fatal claims, disagreements and unusually promising cards.
-- **Deterministic policy.** It recommends `READY_CANDIDATE`, `INCUBATE`, `REVISION_REQUIRED`, `REJECT_RECOMMENDED` or `ESCALATE`. Rejection needs a first-pass critic and the adversarial critic to agree on the same fatal requirement.
+- **Deterministic policy.** It recommends `READY_CANDIDATE`, `INCUBATE`, `REVISION_REQUIRED`, `REJECT_RECOMMENDED` or `ESCALATE`. Rejection needs the adversarial critic to confirm a first-pass fatal claim exactly: same failure type, same anchored field and its challenge upheld.
 
 Recommendations change no route and delete nothing. Human READY, handoff and owner gates stay authoritative, and Jev stays shadow-only.
 

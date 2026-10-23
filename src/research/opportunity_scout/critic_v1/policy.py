@@ -5,9 +5,13 @@ Rules, first match wins (every reason is still recorded):
 * R0 Layer A INVALID_INPUT -> REVISION_REQUIRED (no critic reviews an invalid card).
 * R1 instruction-like text in the card or passages, or a critic suspecting injection -> ESCALATE.
 * R2 a first-pass answer (SCIENTIFIC, ECONOMIC) missing, invalid or refused -> ESCALATE. Unknown never becomes pass or fail.
-* R3 any potentially fatal finding: without the adversarial review -> ESCALATE; the adversarial critic confirms the same
-  dimension a first-pass critic raised and no first-pass critic PASSes it -> REJECT_RECOMMENDED; otherwise -> ESCALATE.
-  No single critic, and no adversarial objection alone, can produce REJECT_RECOMMENDED.
+* R3 any potentially fatal finding: without the adversarial review -> ESCALATE. A first-pass fatal claim is CONFIRMED only
+  when the adversarial critic's own fatal assessment has the same dimension and the same failure type, its anchors share
+  an exact field with the claim's, it UPHELD the challenge carrying exactly that claim, and no first-pass critic PASSes
+  that dimension. Any confirmed claim -> REJECT_RECOMMENDED; otherwise -> ESCALATE. Matching is exact and deterministic:
+  a different failure type (CIRCULAR_PREDICTION versus UNFALSIFIABLE), another location, or a missing or unupheld
+  challenge is never read as confirmation. No single critic, and no adversarial objection alone, can produce
+  REJECT_RECOMMENDED.
 * R4 a definitive Layer A defect, a non-fatal FAIL on a hard dimension or uncertainty, or a duplicate -> REVISION_REQUIRED.
   A soft PASS never overrides it.
 * R5 every READY dimension PASSed by its owning critic and no blocking soft FAIL -> READY_CANDIDATE (research-worthy, not
@@ -23,7 +27,8 @@ from src.research.spec import digest
 from .. import schema as S
 from . import packages as P, rubric as K
 
-POLICY, RECOMMENDATIONS_V = 'SCOUT_AI_CRITIC_POLICY_V001', 'SCOUT_CRITIC_RECOMMENDATIONS_V001'
+# V002: R3 matches the exact fatal claim. V001 (draft head 410edce) matched the dimension only and is never reused.
+POLICY, RECOMMENDATIONS_V = 'SCOUT_AI_CRITIC_POLICY_V002', 'SCOUT_CRITIC_RECOMMENDATIONS_V002'
 ROUTING_MODE = 'RECOMMENDATION_ONLY_V001'
 CLASSES = ('READY_CANDIDATE', 'INCUBATE', 'REVISION_REQUIRED', 'REJECT_RECOMMENDED', 'ESCALATE')
 OWNERS = {'mechanism_coherence': 'SCIENTIFIC', 'falsifiability': 'SCIENTIFIC', 'evidence_integrity': 'SCIENTIFIC',
@@ -53,6 +58,27 @@ def families(chosen):
     return names, ('SAME_MODEL_FAMILY' if len(first) == 2 and first[0] == first[1] else 'DIFFERENT_MODEL_FAMILIES' if len(first) == 2 else 'UNKNOWN')
 
 
+def fatal_claim(critic, a):
+    return {'critic': critic, 'dimension': a['dimension'], 'failure_type': a['failure_type'], 'fields': sorted({x['field'] for x in a['anchors']}),
+            'violated_requirement': a['fatal']['violated_requirement'],
+            'challenge': {'dimension': a['dimension'], 'claim_type': 'ADVERSE', 'failure_type': a['failure_type'],
+                          'claim': K.clean(a['proposition'].strip() or a['justification']), 'anchors': K.clean(a['anchors'])}}
+
+
+def same_claim(a, b):
+    return a['dimension'] == b['dimension'] and a['failure_type'] == b['failure_type'] and bool(set(a['fields']) & set(b['fields']))
+
+
+def confirmation(claim, adverse, offered, upheld, views):
+    """Why one first-pass fatal claim is, or is not, confirmed. Exact comparisons only; no interpretation of free text."""
+    if any(views[c][claim['dimension']]['judgment'] == 'PASS' for c in K.FIRST_PASS):return 'CONTESTED_BY_FIRST_PASS_PASS'
+    if not any(same_claim(a, claim) for a in adverse):
+        return 'TYPE_OR_LOCATION_MISMATCH' if any(a['dimension'] == claim['dimension'] for a in adverse) else 'NOT_CONFIRMED_BY_ADVERSARIAL'
+    challenge = next((ch for ch in offered if {k: v for k, v in ch.items() if k != 'challenge_id'} == claim['challenge']), None)
+    if challenge is None:return 'CLAIM_NOT_OFFERED_AS_CHALLENGE'
+    return 'CONFIRMED' if challenge['challenge_id'] in upheld else 'CHALLENGE_NOT_UPHELD'
+
+
 def decide(layer_a, chosen, statuses):
     """One recommendation from a Layer A report, the usable attempt per critic and each critic's attempt status."""
     views = {c: K.assessments(a['output']) for c, a in chosen.items()}
@@ -78,26 +104,26 @@ def decide(layer_a, chosen, statuses):
         return done('ESCALATE', 'R1_INSTRUCTION_LIKE_TEXT', 'HUMAN_DISPOSITION_OF_INSTRUCTION_LIKE_TEXT_REQUIRED')
     missing = [c for c in K.FIRST_PASS if c not in views]
     if missing:return done('ESCALATE', 'R2_INCOMPLETE_REVIEW', *(f'{c}_{statuses.get(c, "MISSING")}' for c in missing))
-    for c in K.CRITICS:
-        for d, a in views.get(c, {}).items():
-            if a['potentially_fatal']:
-                r['fatal']['first_pass' if c in K.FIRST_PASS else 'adversarial'].append(
-                    {'critic': c, 'dimension': d, 'failure_type': a['failure_type'], 'violated_requirement': a['fatal']['violated_requirement']})
-    first = {x['dimension'] for x in r['fatal']['first_pass']}
-    adverse = {x['dimension'] for x in r['fatal']['adversarial']}
+    claims = {c: [fatal_claim(c, a) for a in views.get(c, {}).values() if a['potentially_fatal']] for c in K.CRITICS}
+    first, adverse = [x for c in K.FIRST_PASS for x in claims[c]], claims['ADVERSARIAL']
+    public = lambda rows: [{k: v for k, v in x.items() if k != 'challenge'} for x in rows]
     if first or adverse:
         if 'ADVERSARIAL' not in views:
+            r['fatal']['first_pass'] = public(first)
             r['adversarial_recommended'] = 'UNCERTAIN_FATAL_DEFECT'
             return done('ESCALATE', 'R3_UNCERTAIN_FATAL_DEFECT', 'FATAL_CLAIM_AWAITS_ADVERSARIAL_REVIEW')
-        contested = {d for d in first & adverse if any(views[c][d]['judgment'] == 'PASS' for c in K.FIRST_PASS)}
-        established = sorted((first & adverse) - contested)
+        upheld = {ch['challenge_id'] for ch in chosen['ADVERSARIAL']['output']['adversarial']['examined_challenges'] if ch['outcome'] == 'UPHELD'}
+        for x in first:x['confirmation'] = confirmation(x, adverse, chosen['ADVERSARIAL'].get('challenges', []), upheld, views)
+        only_adversarial = [a for a in adverse if not any(same_claim(a, x) for x in first)]
+        r['fatal'].update(first_pass=public(first), adversarial=public(adverse))
+        established = [x for x in r['fatal']['first_pass'] if x['confirmation'] == 'CONFIRMED']
         if established:
-            raisers = {names[x['critic']] for x in r['fatal']['first_pass'] if x['dimension'] in established}
-            r['fatal'].update(established=established, correlated_support=names['ADVERSARIAL'] in raisers)
-            r['repairs'] = sorted({views['ADVERSARIAL'][d]['fatal']['overturning_observation'] for d in established})
-            return done('REJECT_RECOMMENDED', 'R3_FATAL_DEFECT_CONFIRMED', *(f'FATAL_{d.upper()}' for d in established))
-        return done('ESCALATE', 'R3_FATAL_DEFECT_DISPUTED', *(['ADVERSARIAL_DID_NOT_CONFIRM'] if first - adverse else []),
-                    *(['FATAL_RAISED_ONLY_BY_ADVERSARIAL'] if adverse - first else []), *(['FATAL_CONTESTED_BY_FIRST_PASS_PASS'] if contested else []))
+            r['fatal'].update(established=[{k: x[k] for k in ('dimension', 'failure_type', 'fields')} for x in established],
+                              correlated_support=names['ADVERSARIAL'] in {names[x['critic']] for x in established})
+            r['repairs'] = sorted({views['ADVERSARIAL'][x['dimension']]['fatal']['overturning_observation'] for x in established})
+            return done('REJECT_RECOMMENDED', 'R3_FATAL_DEFECT_CONFIRMED', *sorted({f'FATAL_{x["dimension"].upper()}_{x["failure_type"]}' for x in established}))
+        return done('ESCALATE', 'R3_FATAL_DEFECT_DISPUTED', *sorted({x['confirmation'] for x in first}
+                    | ({'FATAL_RAISED_ONLY_BY_ADVERSARIAL'} if only_adversarial else set())))
     defects = [f for f in layer_a['findings'] if f['definitive']]
     fails = [a for v in views.values() for a in v.values() if a['judgment'] == 'FAIL'
              and (a['dimension'] in REVISION_DIMENSIONS or a['failure_type'] == 'DUPLICATE_OF_REFERENCE')]
@@ -158,17 +184,18 @@ def recommend(ws, now=None):
 
 
 def challenges(chosen, reason):
-    """First-pass propositions for the adversarial critic, stripped of critic identity, judgment, severity and model."""
+    """First-pass propositions for the adversarial critic, with their claimed failure type, stripped of critic identity,
+    judgment, severity and model."""
     rows, seen = [], set()
     for c in K.FIRST_PASS:
         for a in chosen[c]['output']['assessments'] if c in chosen else []:
             favourable = (reason in ('UNUSUALLY_PROMISING', 'NOVEL_HIGH_UPSIDE') and a['judgment'] == 'PASS'
                           and a['dimension'] in ('internal_novelty', 'economic_significance'))
             if a['judgment'] != 'FAIL' and not favourable:continue
-            claim = a['proposition'].strip() or a['justification']
-            if (a['dimension'], claim) in seen:continue
-            seen.add((a['dimension'], claim))
-            rows.append({'dimension': a['dimension'], 'claim_type': 'FAVOURABLE' if favourable else 'ADVERSE', 'claim': claim, 'anchors': a['anchors']})
+            row = {'dimension': a['dimension'], 'claim_type': 'FAVOURABLE' if favourable else 'ADVERSE',
+                   'failure_type': None if favourable else a['failure_type'], 'claim': a['proposition'].strip() or a['justification'], 'anchors': a['anchors']}
+            if digest(row) in seen:continue
+            seen.add(digest(row)); rows.append(row)
     return [{'challenge_id': f'CH-{n:02d}', **row} for n, row in enumerate(rows[:20], 1)]
 
 

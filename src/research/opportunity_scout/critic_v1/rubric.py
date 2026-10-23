@@ -2,7 +2,12 @@
 
 Nothing here calls a model. A critic answer is data: it must answer the exact request (same critic, same input hash),
 every adverse finding must anchor to the exact input it was given, and an invalid answer is recorded as invalid, never
-repaired. A soft dimension can never be fatal, and a missing-evidence argument has no failure type: it is UNKNOWN."""
+repaired. A soft dimension can never be fatal, and a missing-evidence argument has no failure type: it is UNKNOWN.
+
+Contract versions. V002 superseded the draft V001 contracts of PR #22 head 410edce before any real use: an ABSENCE anchor
+must name an existing empty field (V001 accepted any existing field), adversarial challenges carry the claimed failure
+type, and requests are bound to the frozen manifest. V001 requests, answers and texts are refused, never reinterpreted;
+the V001 texts are kept unchanged as superseded history."""
 from __future__ import annotations
 
 import json
@@ -13,8 +18,8 @@ from src.research.spec import canonical, digest
 from .. import schema as S
 
 VERSION = 'SCOUT_AI_CRITIC_V001'
-REQUEST_V, INPUT_V, OUTPUT_V = 'SCOUT_CRITIC_REQUEST_V001', 'SCOUT_CRITIC_INPUT_V001', 'SCOUT_CRITIC_OUTPUT_V001'
-RESOURCES_V = 'SCOUT_AI_CRITIC_RESOURCES_V001'
+REQUEST_V, INPUT_V, OUTPUT_V = 'SCOUT_CRITIC_REQUEST_V002', 'SCOUT_CRITIC_INPUT_V001', 'SCOUT_CRITIC_OUTPUT_V002'
+RESOURCES_V = 'SCOUT_AI_CRITIC_RESOURCES_V002'
 EXTRACTION = 'SINGLE_FENCED_JSON_BLOCK_AT_END_V1'  # the Graph R4 rule, mirrored so Scout never imports the paused study
 CRITICS = ('SCIENTIFIC', 'ECONOMIC', 'ADVERSARIAL')
 FIRST_PASS = CRITICS[:2]
@@ -51,8 +56,9 @@ FATAL_TYPES = tuple(k for k, (_, fatal) in FAILURES.items() if fatal)
 PRIMARY = {'SCIENTIFIC': HARD + ('uncertainty',), 'ECONOMIC': SOFT + ('uncertainty',),
            'ADVERSARIAL': HARD + ('uncertainty',)}
 VERDICTS = ('FATAL_DEFECT_ESTABLISHED', 'NO_FATAL_DEFECT_ESTABLISHED', 'INSUFFICIENT_INFORMATION')
-TEXTS = {'common': 'common_v001.md', 'SCIENTIFIC': 'scientific_v001.md', 'ECONOMIC': 'economic_v001.md',
-         'ADVERSARIAL': 'adversarial_v001.md'}
+TEXTS = {'common': 'common_v002.md', 'SCIENTIFIC': 'scientific_v001.md', 'ECONOMIC': 'economic_v001.md',
+         'ADVERSARIAL': 'adversarial_v002.md'}
+SUPERSEDED = ('adversarial_v001.md', 'common_v001.md')  # kept byte-identical; never rendered
 RESOURCES = Path(__file__).resolve().parent / 'resources'
 MIN_QUOTE = 8
 ZERO_WIDTH = dict.fromkeys(map(ord, '\u00ad\u200b\u200c\u200d\u2060\ufeff'), None)
@@ -87,6 +93,7 @@ def resource_manifest():
     """The frozen critic texts. A changed text is a new version, never a silent refresh."""
     value = S.json_loads(lf(RESOURCES / 'manifest.json'))
     expected = {'schema': RESOURCES_V, 'version': VERSION, 'files': {n: S.hash_text(lf(RESOURCES / n)) for n in sorted(set(TEXTS.values()))},
+                'superseded': {n: S.hash_text(lf(RESOURCES / n)) for n in SUPERSEDED},
                 'output_schema_sha256': digest(OUTPUT), 'extraction_rule': EXTRACTION,
                 'model_calls_authorised': False, 'hosted_transmission_authorised': False}
     if value != expected:raise S.ScoutError('critic texts, output schema or extraction rule changed; publish a new version instead')
@@ -158,12 +165,18 @@ def resolve(document, pointer):
     return node
 
 
+def empty(value):
+    """What an ABSENCE anchor may name: an existing field holding nothing. A missing key is not evidence of anything."""
+    return value is None or value in ('', S.UNKNOWN) or (isinstance(value, (list, dict)) and not value)
+
+
 def anchor_problem(document, anchor):
     if anchor['field'].startswith('/challenges'):return 'anchors cite the card, passages or references, never an earlier review\'s challenge text'
     try:value = resolve(document, anchor['field'])
     except KeyError:return f'anchor field {anchor["field"]} does not exist in the input'
     if anchor['kind'] == 'ABSENCE':
-        return None if anchor['quote'] == '' else 'an ABSENCE anchor carries an empty quote'
+        if anchor['quote'] != '':return 'an ABSENCE anchor carries an empty quote'
+        return None if empty(value) else f'ABSENCE anchor {anchor["field"]} names a populated field: quote it, or judge UNKNOWN'
     quote = ' '.join(anchor['quote'].split())
     if not isinstance(value, str):return f'QUOTE anchor {anchor["field"]} is not a text field'
     if not quote or (len(quote) < MIN_QUOTE and quote != value):return f'quote at {anchor["field"]} is too short to be checkable'

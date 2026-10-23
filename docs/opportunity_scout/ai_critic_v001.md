@@ -112,12 +112,13 @@ There is no overall score.
 
 **What makes an answer usable.** Every rule below is enforced in code, and an answer failing any of them is `INVALID`. It is kept, never repaired.
 
-- **Anchors.** Every FAIL anchors to the exact input. A QUOTE must occur verbatim, with at least 8 characters, in the named field. An ABSENCE must name an existing field. Anchors may not cite another review's challenge text.
+- **Anchors.** Every FAIL anchors to the exact input. A QUOTE must occur verbatim, with at least 8 characters, in the named field. Anchors may not cite another review's challenge text.
+- **Absence.** An ABSENCE anchor is valid only for a field that exists and is empty: an empty string (after normalisation), an empty list or object, null, or exactly `UNKNOWN`. Examples are `/card/mechanism/links/1/evidence` when it is `[]` and `/source_passages` for a card without passages. A populated field is never absent, and a missing key is not evidence of absence. If a finding cannot be anchored truthfully, the judgment must be UNKNOWN.
 - **Fatal findings.** Only five failure types on hard dimensions can be potentially fatal, and each needs the violated requirement, why it is fatal rather than unresolved, and the overturning observation.
 - **Missing evidence.** There is deliberately no "missing evidence" failure type. That argument can only be `UNKNOWN`.
 - **Confidence.** `subjective_confidence` is coarse (LOW/MEDIUM/HIGH/UNSTATED) and is recorded as a model estimate, never as a probability.
 
-### Deterministic policy (`policy.py`, `SCOUT_AI_CRITIC_POLICY_V001`)
+### Deterministic policy (`policy.py`, `SCOUT_AI_CRITIC_POLICY_V002`)
 
 The first matching rule wins. Every reason, disagreement, unknown and repair is recorded.
 
@@ -126,7 +127,7 @@ The first matching rule wins. Every reason, disagreement, unknown and repair is 
 | R0 | Layer A `INVALID_INPUT` | `REVISION_REQUIRED` (not reviewed) |
 | R1 | Instruction-like text in card or passages, or a critic suspects injection | `ESCALATE` |
 | R2 | A first-pass answer missing, invalid or refused | `ESCALATE` |
-| R3 | Any potentially fatal finding | Without adversarial review: `ESCALATE`. The adversarial critic confirms the same requirement a first-pass critic raised, and no first-pass critic PASSes it: `REJECT_RECOMMENDED`. Otherwise: `ESCALATE` |
+| R3 | Any potentially fatal finding | Without adversarial review: `ESCALATE`. A first-pass fatal claim is confirmed only by an exact match (below), with no first-pass critic PASSing that dimension: `REJECT_RECOMMENDED`. Otherwise: `ESCALATE` |
 | R4 | Definitive Layer A defect, non-fatal hard or uncertainty FAIL, or duplicate | `REVISION_REQUIRED` |
 | R5 | Owning critic PASSes coherence, falsifiability, evidence integrity, timing, measurement and research route; no blocking soft FAIL | `READY_CANDIDATE` |
 | R6 | Economic critic finds it distinct and material, but a hard dimension is UNKNOWN | `ESCALATE` |
@@ -134,7 +135,12 @@ The first matching rule wins. Every reason, disagreement, unknown and repair is 
 
 Consequences:
 
-- **Rejection needs two critic roles.** No single critic and no adversarial objection alone can produce `REJECT_RECOMMENDED`.
+- **Rejection needs two critic roles agreeing on the same defect.** No single critic and no adversarial objection alone can produce `REJECT_RECOMMENDED`. A first-pass fatal claim is `CONFIRMED` only when all of these hold:
+  - the adversarial critic's own potentially fatal assessment has the same dimension and the **same failure type**;
+  - at least one of its anchors names the **same input field** as the claim's;
+  - the adversarial critic **UPHELD** the challenge that carried exactly that claim.
+
+  Every comparison is exact. A different fatal type in the same dimension (`CIRCULAR_PREDICTION` versus `UNFALSIFIABLE`), the same type at another field, a claim not offered as a challenge, or a challenge not upheld gives `ESCALATE`. Each first-pass claim's confirmation status is recorded, and no free text is interpreted.
 - **Correlated support is flagged.** When the adversarial critic shares a model family with the first-pass critic that raised the defect, `correlated_support` is set and the selective queue audits the rejection.
 - **Jev never enters the policy.**
 - **Nothing is deleted.** Recommendation files are write-once and the archive is untouched.
@@ -146,7 +152,7 @@ Consequences:
 | Risk | Safeguard (tested) |
 |---|---|
 | Sycophancy, generous grading | No composite score; READY needs explicit PASS by the owning critic on six dimensions; LENIENT profile fails the benchmark by false acceptance |
-| Reflexive rejection, unfamiliar = implausible | Fatal needs typed eligible failure + fatal block + adversarial confirmation of the same requirement; HARSH profile fails by false rejection; soft dimensions can never be fatal |
+| Reflexive rejection, unfamiliar = implausible | Fatal needs typed eligible failure + fatal block + exact adversarial confirmation (same failure type, same anchored field, challenge upheld); HARSH profile fails by false rejection; soft dimensions can never be fatal |
 | Missing evidence treated as falsity | No failure type for it; speculative cards pass Layer A; benchmark `NO_EVIDENCE_VALID_MECHANISM` and `BIZARRE_BUT_VALID` must not be rejected |
 | Long or confident prose, anchoring on self-assessed quality | Rubric rules 4 and 6; `CONFIDENT_FRAMING` variant must not improve any classification |
 | Shared-model confirmation | Model family recorded per answer; `first_pass_independence` and `correlated_support` reported; generator model refused as its own critic |
@@ -232,7 +238,13 @@ python -m src.research.opportunity_scout.critic_v1 schema output
 - raw replies, content-addressed;
 - attempt, recommendation, queue, evaluation and Jev files.
 
-Every attempt record is re-derived from its raw bytes on load; any edit to an attempt, raw reply or request is refused.
+Every attempt record is re-derived from its raw bytes and provenance on load; any edit to an attempt, raw reply or request is refused.
+
+**Request membership.**
+
+- **First pass.** The manifest freezes each subject's two first-pass request ids and its input hash. Any other SCIENTIFIC or ECONOMIC request is refused on load and on import, however self-consistent its own hashes, so a fresh request cannot be used to shop for a better answer.
+- **Adversarial.** A subject has at most one adversarial request. It must re-derive from its recorded selection: the frozen input plus exactly the challenges built from the cited VALID first-pass attempts of that subject, for a reason the policy gives (or a written `HIGH_CONSEQUENCE` note).
+- **Manifest.** The manifest is the workspace's identity, and recommendation files record its hash. Like every local file, it is tamper-evident through those records, not cryptographically sealed.
 
 **`status` lists what is missing.** Never commit raw model replies or session links.
 
@@ -259,7 +271,30 @@ Every attempt record is re-derived from its raw bytes on load; any edit to an at
 - **Proposed:** every target and rate in V001. These are: 95% one-sided lower bounds for research-worthy retention and fatal-defect detection; a 10% false-acceptance upper bound; 30 human-human pairs; 20 neutral-variant groups at 95% stability; a 5% invalid-answer rate; audit rates of 20% for incubated and revised cards and 100% for rejections; 240 minutes for "significant resources".
 - **Validated:** none, empirically. The sample sizes (59, 93 and 124 labelled cases for zero, one and two misses) are exact binomial arithmetic, not evidence.
 
-## 8. GO/NO-GO
+## 8. Contract versions and compatibility
+
+The independent review of draft head `410edce` found three integrity gaps, closed before any real use:
+
+1. Fatal confirmation matched the dimension only.
+2. Unlisted first-pass requests could be loaded.
+3. ABSENCE anchors could name populated fields.
+
+Contracts whose meaning changed were re-versioned rather than edited:
+
+| Contract | Now | Draft at `410edce` |
+|---|---|---|
+| Policy and recommendation files | `SCOUT_AI_CRITIC_POLICY_V002`, `SCOUT_CRITIC_RECOMMENDATIONS_V002` | V001 matched on dimension only |
+| Critic answers | `SCOUT_CRITIC_OUTPUT_V002` (schema unchanged except its version; ABSENCE validity tightened) | V001 accepted ABSENCE on any existing field |
+| Requests and workspaces | `SCOUT_CRITIC_REQUEST_V002`, `SCOUT_CRITIC_WORKSPACE_V002` (challenges carry their failure type; manifest membership) | V001 |
+| Critic texts | `common_v002.md`, `adversarial_v002.md`; scientific and economic texts unchanged | `common_v001.md`, `adversarial_v001.md`, kept byte-identical and pinned as superseded |
+
+**Compatibility.**
+
+- V001 workspaces, requests, answers and recommendation files are refused, never reinterpreted.
+- No V001 artifact was ever made from a real card or a real model, so nothing real is lost.
+- The benchmark record changed only in its policy identifier and resource hash: every classification and metric is unchanged.
+
+## 9. GO/NO-GO
 
 - **GO for offline readiness.** The path from archived cards to blinded critic requests, imported answers, deterministic recommendations, human anchors, calibration metrics, Jev comparison and a reproducible review queue is complete and tested on synthetic fixtures.
 - **AI-controlled routing stays blocked.** No code path routes, rejects, deletes or approves. Admission needs holdout human evidence, an unchanged passing benchmark, a new version and an explicit owner decision.
@@ -284,7 +319,9 @@ Every attempt record is re-derived from its raw bytes on load; any edit to an at
 
 That first run measures consistency only. Conclusions need the per-context sample sizes in the protocol.
 
-## 9. Reading of the supplied report
+**No further discretionary Scout infrastructure is recommended.** The next priority is N1 operational readiness and genuine generation and evaluation experiments.
+
+## 10. Reading of the supplied report
 
 The owner supplied a ChatGPT report, "Robust AI Critics for Opportunity Scout" (34 pages, 2026-10-23). It was read critically; its recommendations are leads, not authority. Its original is not stored in the repository. V001 handles it as follows:
 

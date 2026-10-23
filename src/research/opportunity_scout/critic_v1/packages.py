@@ -4,7 +4,13 @@ A critic input contains the card (whitespace-normalised, seed identifiers replac
 passages, and a frozen reference set of other cards and historical memory for internal novelty. It never contains the
 lane, the generator, provenance, Layer A findings, routing, or another critic's output. The operator-side manifest keeps
 those for the policy and the evaluation. Each request is answered at most once validly (at most two attempts, the second
-only after an unusable first), so a different answer cannot be shopped for."""
+only after an unusable first), so a different answer cannot be shopped for.
+
+Request membership (V002). The manifest freezes each subject's two first-pass request ids and input hash: any other
+SCIENTIFIC or ECONOMIC request is refused on load and on import, however self-consistent its own hashes. A subject has at
+most one adversarial request, and it must re-derive from its recorded selection: the frozen input plus exactly the
+challenges built from the cited VALID first-pass attempts, for a reason the policy gives (or a written HIGH_CONSEQUENCE
+note). V001 workspaces (draft head 410edce) are refused, never reinterpreted."""
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -19,11 +25,13 @@ from ..post_generation.review import ASSISTANT
 from ..storage import ROOT, unlinked
 from . import deterministic as D, rubric as K
 
-WORKSPACE_V, ATTEMPT_V = 'SCOUT_CRITIC_WORKSPACE_V001', 'SCOUT_CRITIC_ATTEMPT_V001'
+WORKSPACE_V, ATTEMPT_V = 'SCOUT_CRITIC_WORKSPACE_V002', 'SCOUT_CRITIC_ATTEMPT_V001'
 PROVIDERS = ('OPERATOR_ASSISTED', 'LOCAL_MODEL', 'SYNTHETIC_FIXTURE')
 SPLITS = ('TUNING', 'HOLDOUT')
 MAX_ATTEMPTS, MAX_REFERENCES, MAX_PASSAGE, MAX_RAW, MAX_JSON = 2, 30, 8000, 1024 * 1024, 16 * 1024 * 1024
 REFERENCE_SCOPE = 'Internal Research OS cards and historical memory supplied here only; not a literature, market or private-use search.'
+
+
 def neutral_padding(idea):
     """Irrelevant context only: a substantive judgment should not change."""
     return {**idea, 'main_uncertainty': idea['main_uncertainty'][:3900] + ' This card uses the standard review format.'}
@@ -150,35 +158,70 @@ class Workspace:
     def manifest(self):
         if self._manifest is None:  # write-once, so one read per instance
             m = self.read('manifest.json')
-            if m.get('schema') != WORKSPACE_V:raise S.ScoutError('not a critic V001 workspace')
+            if m.get('schema') == 'SCOUT_CRITIC_WORKSPACE_V001':
+                raise S.ScoutError('a V001 critic workspace is refused, never reinterpreted; prepare a new workspace')
+            if m.get('schema') != WORKSPACE_V:raise S.ScoutError('not a critic workspace')
             self._manifest = m
         return self._manifest  # callers never mutate it
 
     def request(self, request_id):
+        """A frozen request, only if it belongs to the workspace: the manifest's own first-pass ids, or the subject's one
+        legitimately selected adversarial request."""
         if not isinstance(request_id, str) or not request_id.startswith('CRQ-') or not request_id[4:].isalnum():raise S.ScoutError('unknown request id')
         r = check_request(self.read(f'requests/{request_id}.json'))
-        if r['subject_key'] not in self.manifest()['subjects']:raise S.ScoutError('request names an unknown subject')
+        entry = self.manifest()['subjects'].get(r['subject_key'])
+        if r['request_id'] != request_id or entry is None:raise S.ScoutError('request names an unknown subject or another request id')
+        if r['critic'] in K.FIRST_PASS:
+            if entry['requests'].get(r['critic']) != request_id or r['input_sha256'] != entry['input_sha256'] or r['selection'] is not None:
+                raise S.ScoutError('not the first-pass request frozen in the workspace manifest: unlisted, duplicate or altered requests are refused')
+        else:
+            self.check_adversarial(r, entry)
         return r
 
     def requests(self):
         return [self.request(f.split('/')[-1][:-5]) for f in self.files('requests')]
+
+    def check_adversarial(self, r, entry):
+        from .policy import SELECTION, challenges, decide  # the policy imports this module
+        if entry['input_sha256'] is None:raise S.ScoutError('an unreviewable subject has no adversarial request')
+        same = [f for f in self.files('requests') if f != f'requests/{r["request_id"]}.json'
+                and (lambda x: x.get('critic') == 'ADVERSARIAL' and x.get('subject_key') == r['subject_key'])(self.read(f))]
+        if same:raise S.ScoutError('a subject has at most one adversarial request; a second is refused')
+        if 'challenges' not in r['input'] or digest({k: v for k, v in r['input'].items() if k != 'challenges'}) != entry['input_sha256']:
+            raise S.ScoutError('an adversarial input is the frozen subject input plus challenges, nothing else')
+        selection = r['selection']
+        S.validate(S.obj({'reason': S.enum(SELECTION), 'note': {'type': 'string', 'maxLength': 2000},
+                          'first_pass_attempts': S.array({'type': 'string', 'pattern': '^ATT-[0-9]{4}$'}, 2)}), selection, 'adversarial selection')
+        first = {}
+        for name in selection['first_pass_attempts']:
+            if self.read(f'attempts/{name}.json').get('critic') not in K.FIRST_PASS:raise S.ScoutError('an adversarial selection cites first-pass attempts only')
+            a = self.attempt(name)
+            if a['status'] != 'VALID' or a['subject_key'] != r['subject_key'] or a['critic'] in first:
+                raise S.ScoutError('an adversarial selection cites one VALID first-pass attempt per critic for this subject')
+            first[a['critic']] = a
+        if K.clean(challenges(first, selection['reason'])) != r['input']['challenges']:
+            raise S.ScoutError('adversarial challenges differ from those built from the cited first-pass answers')
+        if selection['reason'] == 'HIGH_CONSEQUENCE':
+            if len(selection['note'].split()) < 5:raise S.ScoutError('a HIGH_CONSEQUENCE selection records a concrete reason')
+        elif decide(entry['layer_a'], first, dict.fromkeys(first, 'VALID'))['adversarial_recommended'] != selection['reason']:
+            raise S.ScoutError('the recorded selection reason does not follow from the policy')
 
     def raw(self, sha):
         p = unlinked(self.path / 'raw' / f'{sha}.bin'); data = p.read_bytes()
         if hashlib.sha256(data).hexdigest() != sha:raise S.ScoutError('stored raw answer no longer matches its hash')
         return data
 
+    def attempt(self, name):
+        """One attempt record, re-derived from its raw bytes, provenance and member request; refused if it no longer follows."""
+        a = self.read(f'attempts/{name}.json'); req = self.request(a['request_id'])
+        refused = refusals(self.manifest()['subjects'][req['subject_key']], req, a['provenance'])
+        if (a['attempt'], a['request_id'], a['critic'], a['subject_key']) != (name, req['request_id'], req['critic'], req['subject_key']) \
+                or a['refusals'] != refused or (a['status'], a['problems'], a['output']) != judge(req, self.raw(a['raw_sha256']), refused):
+            raise S.ScoutError(f'attempts/{name}.json does not follow from its stored raw answer and provenance')
+        return a
+
     def attempts(self):
-        """Every attempt record, re-derived from its raw bytes and provenance: a record that no longer follows is refused."""
-        out = []
-        for f in self.files('attempts'):
-            a = self.read(f); req = self.request(a['request_id'])
-            refused = refusals(self.manifest()['subjects'][req['subject_key']], req, a['provenance'])
-            if (a['request_id'], a['critic'], a['subject_key']) != (req['request_id'], req['critic'], req['subject_key']) or a['refusals'] != refused \
-                    or (a['status'], a['problems'], a['output']) != judge(req, self.raw(a['raw_sha256']), refused):
-                raise S.ScoutError(f'{f} does not follow from its stored raw answer and provenance')
-            out.append(a)
-        return out
+        return [self.attempt(f.split('/')[-1][:-5]) for f in self.files('attempts')]
 
 
 def prepare(states, out, *, split, variants=(), now=None):
@@ -274,5 +317,5 @@ def usable(ws):
     chosen = {}
     for r in ws.requests():
         valid = [a for a in by_request.get(r['request_id'], []) if a['status'] == 'VALID']
-        if valid:chosen.setdefault(r['subject_key'], {})[r['critic']] = valid[0]
+        if valid:chosen.setdefault(r['subject_key'], {})[r['critic']] = {**valid[0], 'challenges': r['input'].get('challenges', [])}
     return chosen, by_request

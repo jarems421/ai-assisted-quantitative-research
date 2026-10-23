@@ -1,6 +1,6 @@
 # Owner instruction: Opportunity Scout AI Critic V1 (2026-10-23)
 
-Archived verbatim below the rule. The owner also supplied a 34-page ChatGPT report, "Robust AI Critics for Opportunity Scout". It is read critically in [ai_critic_v001.md section 9](ai_critic_v001.md#9-reading-of-the-supplied-report); its original is not stored in the repository. This instruction authorises an offline implementation and a draft PR only: no model call, source acquisition, activation, credential access or merge.
+Archived verbatim below the rule. The owner also supplied a 34-page ChatGPT report, "Robust AI Critics for Opportunity Scout". It is read critically in [ai_critic_v001.md section 10](ai_critic_v001.md#10-reading-of-the-supplied-report); its original is not stored in the repository. This instruction authorises an offline implementation and a draft PR only: no model call, source acquisition, activation, credential access or merge.
 
 ---
 

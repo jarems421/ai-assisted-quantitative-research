@@ -82,7 +82,7 @@ def cases():
          chain(base, [base['mechanism'][k] for k in ('trigger', 'operational_effect', 'transmission', 'affected_party', 'consequence')],
                **{'mechanism.links': [{**l, 'evidence': [{'seed': 'SEED-NOT-SUPPLIED', 'quote': 'invented'}] if i == 0 else []}
                                       for i, l in enumerate(base['mechanism']['links'])]}), [], [],
-         {'SCIENTIFIC': {'evidence_integrity': fail('OVERCLAIMED_EVIDENCE', '/card/mechanism/links/0/evidence')}},
+         {'SCIENTIFIC': {'evidence_integrity': fail('OVERCLAIMED_EVIDENCE', '/card/mechanism/links/0/evidence/0/quote')}},
          label('unsure', 'no', ('REVISION_REQUIRED',), ready), ['FABRICATED_OR_INEXACT_CITATION']),
         ('NO_EVIDENCE_VALID_MECHANISM', 'valid mechanism with no supplied evidence', 'FORGE', base, [], [],
          {'ECONOMIC': {'research_feasibility': 'UNKNOWN'}},
@@ -188,7 +188,9 @@ def assessment(payload, dimension, spec, fabricate=False):
     if isinstance(spec, tuple):
         _, failure, field, fatal = spec
         value = K.resolve(payload, field)
-        anchor = {'field': field, 'kind': 'QUOTE', 'quote': value[:60]} if isinstance(value, str) else {'field': field, 'kind': 'ABSENCE', 'quote': ''}
+        if K.empty(value):anchor = {'field': field, 'kind': 'ABSENCE', 'quote': ''}
+        elif isinstance(value, str):anchor = {'field': field, 'kind': 'QUOTE', 'quote': value[:60]}
+        else:raise ValueError(f'benchmark script anchors a populated non-text field: {field}')  # never a false ABSENCE
         if fabricate:anchor = {'field': field, 'kind': 'QUOTE', 'quote': 'SYNTHETIC invented passage that is absent from the card'}
         row.update(failure_type=failure, severity='CRITICAL' if fatal else 'MAJOR', potentially_fatal=fatal, anchors=[anchor],
                    proposition=f'SYNTHETIC FIXTURE: {failure} at {field}.', next_check='SYNTHETIC FIXTURE: revise or test the named field.',
@@ -246,7 +248,7 @@ def run(case, profile, variant=None):
         if raw is None:return
         status, problems, output = P.judge(request, raw, [])
         statuses[critic] = status; invalid += status != 'VALID'
-        if status == 'VALID':chosen[critic] = {'attempt': f'BENCH-{critic}', 'output': output,
+        if status == 'VALID':chosen[critic] = {'attempt': f'BENCH-{critic}', 'output': output, 'challenges': request['input'].get('challenges', []),
                                                 'provenance': {'model': f'SYNTHETIC_{profile}_{critic}', 'model_family': FAMILIES[critic]}}
     for critic in K.FIRST_PASS:ask(critic, P.make_request(critic, 'BENCH-' + case['id'], payload))
     decision = Q.decide(layer_a, chosen, statuses)

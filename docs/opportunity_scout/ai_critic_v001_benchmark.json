@@ -447,7 +447,7 @@
   "The DEVELOPMENT/HOLDOUT split is public and author-written; it is a regression check, not a sealed test."
  ],
  "label_source": "SYNTHETIC_DESIGNER_NOT_HUMAN",
- "policy": "SCOUT_AI_CRITIC_POLICY_V001",
+ "policy": "SCOUT_AI_CRITIC_POLICY_V002",
  "profiles": {
   "FABRICATING": {
    "cases": {
@@ -1620,7 +1620,7 @@
    }
   }
  },
- "resources_sha256": "c5479e6a1266e5e66338fc3dd5a02bfb8b32a008841a5e740ab9499a2c76cfb4",
+ "resources_sha256": "702d83589555b046424d51ed45814856c647a9c74ffde7429602b1b845ed2908",
  "scenario_families": 19,
  "schema": "SCOUT_CRITIC_BENCHMARK_V001",
  "version": "SCOUT_AI_CRITIC_V001"
