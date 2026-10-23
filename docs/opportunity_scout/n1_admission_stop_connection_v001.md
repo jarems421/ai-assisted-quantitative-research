@@ -5,8 +5,11 @@ cancellation connection from `n1_admission_stop_audit_v001.md`. It supplies **no
 live observation source**, owner registration or native launcher. No live observer,
 account/credential inspection, Claude command, model call or research slot occurs.
 AI Critic, Jev, Graph R4, Discovery Lab and frozen scientific packages are unchanged.
-The branch subsequently integrates owner-merged main `682ce25` (PR #22) without
-editing any AI Critic file; the combined inventory is retained.
+The branch subsequently integrates owner-merged main `682ce25` (PR #22). Its
+collector boundary test now pins the unchanged historical validation record itself,
+so separately authorised N1 changes do not violate that historical pin. This is the
+single expressly permitted test-only exception; critic implementation/resources
+are unchanged and the combined inventory is retained.
 
 ## What is implemented
 
