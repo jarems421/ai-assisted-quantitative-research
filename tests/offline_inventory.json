@@ -156,6 +156,18 @@
       "ObserverTests.test_virtual_end_to_end_normal_window_and_adversarial_failures"
     ]
   },
+  "tests/opportunity_scout/test_n1_preflight_v004.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Prospective metadata observer V004: fictional streams, mocked virtual reader and immutable historical-source pins; no real observation, account sampling or process launch.",
+    "declared_tests": [
+      "ProspectiveObserverTests.test_native_launch_remains_disabled",
+      "ProspectiveObserverTests.test_new_contract_rejects_all_historical_headers_and_paths",
+      "ProspectiveObserverTests.test_new_reader_retains_existing_virtual_safety_and_cooldown_regressions",
+      "ProspectiveObserverTests.test_reader_is_exact_versioned_copy_and_historical_sources_are_pinned",
+      "ProspectiveObserverTests.test_registered_v003_gap_remains_invalid_in_fictional_timing_replay"
+    ]
+  },
   "tests/opportunity_scout/test_n1_readiness.py": {
     "baseline_ci": true,
     "runner": "scout",
@@ -1506,7 +1518,8 @@
       "QueueAssuranceTests.test_queued_fictional_claude_start_at_shutdown_is_rejected",
       "QueueAssuranceTests.test_shutdown_persists_pending_collision_peers_before_end",
       "QueueAssuranceTests.test_shutdown_unsubscribe_failure_retains_events_and_cannot_end",
-      "QueueAssuranceTests.test_shutdown_write_failure_retains_events_and_cannot_end"
+      "QueueAssuranceTests.test_shutdown_write_failure_retains_events_and_cannot_end",
+      "QueueAssuranceTests.test_v004_virtual_heartbeat_deadlines_and_exact_ack_burst"
     ]
   },
   "tests/test_scout_v004_process_assurance.py": {
