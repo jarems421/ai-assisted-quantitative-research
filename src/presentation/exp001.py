@@ -131,7 +131,13 @@ def readme(manifest: dict, result: dict, registry=None) -> str:
     gap_validation = root / "docs/acceleration/exp004_execution_gap_validation.json"
     if gap_validation.exists():
         validation = gap_validation
-    if validation.exists():
+    if (root / "docs/offline_ci_hardening.md").exists():  # offline CI matrix supersedes single milestone counts
+        checks = ("The [offline CI inventory and safety review](docs/offline_ci_hardening.md) documents\n"
+                  "the Windows/Linux verification matrix, exact exclusions and reproducible commands.\n"
+                  "Run `python -m src.research.offline_checks` after installing\n"
+                  "`requirements-offline-ci.txt` for the additional restricted suite. Earlier milestone\n"
+                  f"counts are historical: see the [EXP004 validation receipt](docs/acceleration/{validation.name}).")
+    elif validation.exists():
         receipt = json.loads(validation.read_bytes())
         checks = (f"Latest milestone validation: **{receipt['local_tests_passed']} local tests, "
                   f"{receipt['public_tests_passed']} public tests, {receipt['tests_skipped']} skipped**. "
