@@ -210,13 +210,21 @@ class ObserverTests(unittest.TestCase):
         # Every OS observation and subprocess is fictional. Real IO is confined
         # to a temporary test directory. No Windows/account sampler is called.
         from src.research.opportunity_scout.v004_monitoring import ACCOUNT_PATHS
-        for fault in (None, 'drift', 'stall', 'sample_gap', 'missing_start', 'missing_exit', 'child_timeout', 'rewrite'):
+        for fault in (None, 'slow_spawn', 'slow_child', 'drift', 'stall', 'sample_gap', 'missing_start', 'missing_exit', 'child_timeout', 'rewrite'):
             with self.subTest(fault=fault), tempfile.TemporaryDirectory() as d:
                 directory = Path(d)
                 source = directory / 'events.jsonl'
                 rows = Records(); source.write_bytes(rows.prefix())
-                clock = SimpleNamespace(now=0.0, ended=False, rewritten=False)
+                clock = SimpleNamespace(now=0.0, ended=False, rewritten=False,
+                                        child_finished=None, stop_requested=None)
                 metadata = {'sampled_at': '2000-01-01T00:00:00+00:00', 'files': {p: {'state': 'ABSENT'} for p in ACCOUNT_PATHS}}
+
+                original_exclusive = M.exclusive
+
+                def exclusive(path, data):
+                    if path.name == 'stop.request':
+                        clock.stop_requested = clock.now
+                    original_exclusive(path, data)
 
                 def sample():
                     if fault == 'drift' and clock.now > 3:
@@ -241,6 +249,9 @@ class ObserverTests(unittest.TestCase):
                         append('HEARTBEAT', {'subscriptions_present': True})
 
                 def launch(argv, **kwargs):
+                    self.assertGreaterEqual(clock.now, 60)
+                    if fault == 'slow_spawn':
+                        clock.now += 1.75
                     self.assertEqual(argv, [M.sys.executable, '-I', str(M.CHILD)])
                     self.assertFalse(kwargs['shell'])
                     self.assertEqual(kwargs['stdin'], M.subprocess.DEVNULL)
@@ -255,6 +266,9 @@ class ObserverTests(unittest.TestCase):
                     def wait(timeout):
                         if fault == 'child_timeout':
                             raise M.subprocess.TimeoutExpired('LOCAL_FIXTURE', timeout)
+                        if fault == 'slow_child':
+                            clock.now += 1.75
+                        clock.child_finished = clock.now
                         return 0
                     return SimpleNamespace(pid=555, wait=wait, poll=lambda: 0)
 
@@ -262,6 +276,7 @@ class ObserverTests(unittest.TestCase):
                         patch.object(M, 'require_normal_user'), patch.object(M, 'account_metadata', side_effect=sample), \
                         patch.object(M.time, 'monotonic', side_effect=lambda: clock.now), \
                         patch.object(M.time, 'time', return_value=10000), patch.object(M.time, 'sleep', side_effect=sleep), \
+                        patch.object(M, 'exclusive', side_effect=exclusive), \
                         patch.object(M.subprocess, 'Popen', side_effect=launch) as popen:
                     result = M.observe(directory)
                 self.assertEqual(result['claude_invocations'], 0)
@@ -272,9 +287,10 @@ class ObserverTests(unittest.TestCase):
                 self.assertEqual(json.loads((directory / 'receipt.json').read_bytes()), result)
                 self.assertEqual(result['metadata_log_sha256'], M.sha((directory / 'metadata-samples.jsonl').read_bytes()))
                 self.assertEqual(result['metadata_samples'], len((directory / 'metadata-samples.jsonl').read_bytes().splitlines()))
-                if fault is None:
+                if fault in (None, 'slow_spawn', 'slow_child'):
                     self.assertEqual(result['status'], 'LOCAL_OBSERVER_PREPARATION_COMPLETE_NOT_AUTH_OR_N1')
                     self.assertGreaterEqual(result['observed_wall_seconds'], 120)
+                    self.assertGreaterEqual(clock.stop_requested - clock.child_finished, 60)
                     self.assertTrue(result['sentinel_start_exit_parent_observed'])
                     self.assertEqual(popen.call_count, 1)
                 else:
