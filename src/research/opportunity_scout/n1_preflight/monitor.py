@@ -254,7 +254,8 @@ def observe(directory=DIRECTORY):
                                              creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0), shell=False)
                     proof_pid = child.pid
                     child.wait(timeout=2)
-                    proof_started = tick
+                    # Launch/wait latency cannot count toward the post-exit cooldown.
+                    proof_started = time.monotonic()
                 if proof_pid is not None and tick - proof_started >= 5:
                     stream.proof(proof_pid, os.getpid(), Path(sys.executable).name, proof_at)
                     if tick - proof_started >= 60:
