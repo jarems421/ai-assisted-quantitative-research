@@ -68,6 +68,28 @@
       "N1BindingTests.test_unchanged_review_proposal_and_unknown_native_semantics"
     ]
   },
+  "tests/opportunity_scout/test_n1_preflight_monitor.py": {
+    "baseline_ci": false,
+    "runner": "scout",
+    "reason": "PR #15 reviewed fictional OS-event records, virtual clocks and mocked metadata/process APIs under v004_checks guards. Windows and Linux portable fixtures only; no native watcher, account sampling or live-validation claim.",
+    "declared_tests": [
+      "ObserverTests.test_changed_bytes_chain_sequence_and_timestamp_rejected",
+      "ObserverTests.test_cli_cannot_accept_auth_executable_or_argv",
+      "ObserverTests.test_colliding_queue_ids_are_preserved_with_one_ack_per_event",
+      "ObserverTests.test_duplicate_claim_refuses_without_overwriting",
+      "ObserverTests.test_duplicate_json_keys_and_exit_before_snapshot_refused",
+      "ObserverTests.test_elevated_reader_refuses_before_claim_or_launch",
+      "ObserverTests.test_existing_and_transient_claude_both_stop",
+      "ObserverTests.test_missing_end_partial_tail_and_trailing_bytes_preserved",
+      "ObserverTests.test_missing_wrong_or_duplicate_ack_stops_without_ignoring_error",
+      "ObserverTests.test_oversize_and_unsafe_process_fields_stop",
+      "ObserverTests.test_proof_requires_start_exit_parent_name_and_time",
+      "ObserverTests.test_split_records_and_exact_audit_without_rewriting",
+      "ObserverTests.test_stale_missing_unknown_or_extra_events_stop",
+      "ObserverTests.test_v001_header_cannot_be_migrated_to_v002",
+      "ObserverTests.test_virtual_end_to_end_normal_window_and_adversarial_failures"
+    ]
+  },
   "tests/opportunity_scout/test_n1_readiness.py": {
     "baseline_ci": true,
     "runner": "scout",
@@ -1378,6 +1400,21 @@
       "N1ProcessTests.test_trailing_data_after_terminal_looking_text_is_retained",
       "N1ProcessTests.test_two_processes_racing_sole_reservation_launch_only_once",
       "N1ProcessTests.test_unknown_eof_channel_is_not_a_completion_fact"
+    ]
+  },
+  "tests/test_scout_n1_preflight_process_assurance.py": {
+    "baseline_ci": false,
+    "runner": "process",
+    "reason": "PR #15 Windows-only native PowerShell queue assurance using fixed unprivileged synthetic events/inert or local timer subscriptions; never executes watcher body, WMI, account sampling or Claude. Explicit Windows workflow conditions and skipUnless(os.name == nt); deliberately excluded on Linux, never counted there.",
+    "declared_tests": [
+      "QueueAssuranceTests.test_concurrent_sources_acknowledge_each_visible_object_once",
+      "QueueAssuranceTests.test_duplicate_identifiers_preserve_both_objects_and_unrelated_event",
+      "QueueAssuranceTests.test_failed_persistence_cannot_acknowledge_event",
+      "QueueAssuranceTests.test_missing_exact_object_fails_without_consuming_collision_peer",
+      "QueueAssuranceTests.test_queued_fictional_claude_start_at_shutdown_is_rejected",
+      "QueueAssuranceTests.test_shutdown_persists_pending_collision_peers_before_end",
+      "QueueAssuranceTests.test_shutdown_unsubscribe_failure_retains_events_and_cannot_end",
+      "QueueAssuranceTests.test_shutdown_write_failure_retains_events_and_cannot_end"
     ]
   },
   "tests/test_scout_v004_process_assurance.py": {
