@@ -123,9 +123,12 @@ def audit(directory):
     raw = {c: P.read_bytes(root / (c + '.bin')) for c in ('stdout', 'stderr')}
     journal = P.read_bytes(root / 'journal.jsonl')
     offsets = {'stdout': 0, 'stderr': 0}
+    from .admission import Window, VERSION as MONITOR_VERSION
+    monitor = Window(binding) if 'admission_contract' in binding else None
+    monitor_failed = False
     eof, head, rows = set(), '0' * 64, []
     kinds = set(('CONSUMED', 'LAUNCH_INTENT', 'SPAWN_FAILED', 'SPAWNED', 'CHUNK',
-                 'EOF', 'OS_EXIT', 'READ_ERROR', 'STOP_TRIGGER', 'CANCEL', 'CAPTURE_END', 'INTERRUPTED'))
+                 'EOF', 'OS_EXIT', 'READ_ERROR', 'STOP_TRIGGER', 'CANCEL', 'CAPTURE_END', 'INTERRUPTED', 'MONITOR'))
     counts = {}
     lines = journal.splitlines(keepends=True)
     partial = bool(journal and not journal.endswith(b'\n'))
@@ -141,6 +144,23 @@ def audit(directory):
         if not rows:
             require(row['type'] == 'CONSUMED' and row['record'] == claim, 'consumed intent missing')
         kind = row['type']
+        if kind == 'MONITOR':
+            require(monitor is not None, 'unbound monitoring evidence')
+            r = row['record']
+            require(set(r) == {'schema', 'kind', 'now', 'data'} and r['schema'] == MONITOR_VERSION, 'monitor journal scope')
+            if r['kind'] == 'ATTACH':
+                spawned = next((x['record'] for x in rows if x['type'] == 'SPAWNED'), None)
+                require(spawned is not None and r['data'] == spawned, 'monitor process differs from collector')
+            if r['kind'] == 'ADMIT':
+                require(counts.get('LAUNCH_INTENT') == 1 and not counts.get('SPAWNED'), 'monitor admission order')
+            if r['kind'] == 'DRAINED':
+                require(counts.get('OS_EXIT') == 1 and eof == set(offsets), 'monitor cooldown before exit/EOF')
+            if r['kind'] == 'SAMPLE':
+                require(r['data'].get('local_exit_observed') is bool(counts.get('OS_EXIT')), 'monitor exit contradicts OS evidence')
+            try:
+                monitor.step(r['kind'], r['now'], r['data'])
+            except Exception:
+                monitor_failed = True  # Invalid observations are retained, and can seal only a STOP.
         if kind in ('SPAWNED', 'SPAWN_FAILED'):
             require(counts.get('LAUNCH_INTENT') == 1 and not (counts.get('SPAWNED') and counts.get('SPAWN_FAILED')), 'spawn has no unique launch intent')
         if kind in ('CHUNK', 'EOF', 'OS_EXIT', 'READ_ERROR', 'STOP_TRIGGER', 'CANCEL'):
@@ -166,6 +186,13 @@ def audit(directory):
         envelope = json.loads(P.read_bytes(root / 'receipt.json'))
         require(rows[-1]['type'] == 'CAPTURE_END' and envelope == {'head': head, 'receipt': rows[-1]['record']}, 'receipt/journal mismatch')
         receipt = envelope['receipt']
+        if monitor is not None:
+            require(receipt.get('monitor') == {'schema': MONITOR_VERSION, 'fixture': True,
+                    'window_id': binding['admission_contract']['window_id'],
+                    'complete': receipt['outcome'] == 'LOCAL_CAPTURE_COMPLETE', 'native_launch_enabled': False},
+                    'monitor receipt differs')
+            if receipt['outcome'] == 'LOCAL_CAPTURE_COMPLETE':
+                require(not monitor_failed and monitor.phase == 'COMPLETE', 'false complete observation window')
         require(receipt['raw_sha256'] == {c: sha(raw[c]) for c in raw} and receipt['recorded_bytes'] == {c: len(raw[c]) for c in raw}, 'receipt/raw mismatch')
         require(receipt['eof'] == {c: c in eof for c in raw}, 'receipt EOF mismatch')
         require(counts.get('LAUNCH_INTENT') == 1 and receipt['spawn_attempts'] == 1, 'receipt missing unique launch intent')

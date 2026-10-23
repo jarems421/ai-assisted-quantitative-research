@@ -57,6 +57,25 @@
       "HostedReadinessProposalTests.test_removed_write_action_is_rejected_before_validation_without_mutation"
     ]
   },
+  "tests/opportunity_scout/test_n1_admission.py": {
+    "baseline_ci": false,
+    "runner": "scout",
+    "reason": "Reviewed N1 V001 receiving contract: fictional V003 bytes/reviews, virtual observation windows, temporary bindings and fail-closed native refusal under existing Scout guards; no live observer/account/runtime claim.",
+    "declared_tests": [
+      "AdmissionTests.test_changed_originals_reviews_sources_and_missing_evidence_are_refused",
+      "AdmissionTests.test_complete_baseline_owned_start_and_post_drain_cooldown",
+      "AdmissionTests.test_exact_evidence_contract_is_read_only_and_never_admits",
+      "AdmissionTests.test_exact_process_only_and_transient_or_reused_pid_stops",
+      "AdmissionTests.test_gate_cannot_rebind_or_enable_native_even_with_complete_fixtures",
+      "AdmissionTests.test_metadata_coverage_and_policy_unknowns_or_drift_stop",
+      "AdmissionTests.test_preparation_success_without_fresh_baseline_cannot_launch",
+      "AdmissionTests.test_resealed_failed_or_historical_preparation_still_refused",
+      "AdmissionTests.test_resealed_metadata_gaps_drift_and_content_boundary_still_refused",
+      "AdmissionTests.test_runtime_policy_plan_consent_and_reservation_gates",
+      "AdmissionTests.test_short_baseline_stale_missing_sequence_future_and_nonfinite_stop",
+      "AdmissionTests.test_unknown_start_identity_cleanup_and_no_restart"
+    ]
+  },
   "tests/opportunity_scout/test_n1_collector_bindings.py": {
     "baseline_ci": true,
     "runner": "scout",
@@ -1403,7 +1422,9 @@
       "N1ProcessTests.test_consumed_before_spawn_and_storage_failure_fail_closed",
       "N1ProcessTests.test_consumed_claim_blocks_rebinding_to_another_capture_path",
       "N1ProcessTests.test_delayed_descendant_eof_is_drained_after_parent_exit",
+      "N1ProcessTests.test_failed_monitor_cleanup_retains_stop_even_with_exit_and_eof",
       "N1ProcessTests.test_failed_process_creation_remains_consumed",
+      "N1ProcessTests.test_false_monitor_completion_cannot_release_registry",
       "N1ProcessTests.test_falsely_complete_receipt_cannot_release_lock",
       "N1ProcessTests.test_fsync_failure_before_launch_cannot_start_child",
       "N1ProcessTests.test_incomplete_drain_is_explicit_and_stops",
@@ -1413,7 +1434,10 @@
       "N1ProcessTests.test_io_trigger_keeps_crossing_chunk_and_marks_any_cutoff",
       "N1ProcessTests.test_journal_suffix_rollback_cannot_silently_pass",
       "N1ProcessTests.test_keyboard_interruption_never_seals_or_reopens_reservation",
+      "N1ProcessTests.test_monitored_capture_requires_complete_cooldown_and_keeps_bytes",
       "N1ProcessTests.test_nonzero_exit_is_independent_of_capture_integrity",
+      "N1ProcessTests.test_observation_failure_after_claim_before_spawn_stays_consumed",
+      "N1ProcessTests.test_observation_failures_cancel_existing_collector_and_never_retry",
       "N1ProcessTests.test_real_process_crash_after_raw_fsync_preserves_unindexed_tail",
       "N1ProcessTests.test_split_utf8_and_malformed_partial_line_are_not_decoded",
       "N1ProcessTests.test_stale_lock_is_not_removed_even_for_different_reservation",
