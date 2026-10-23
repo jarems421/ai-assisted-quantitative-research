@@ -6,7 +6,7 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 . (Join-Path $PSScriptRoot 'queue.ps1')
 $scoutRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../../..'))
-$scoutDirectory = Join-Path $scoutRoot '.research/opportunity_scout/n1-admin-observer-v002'
+$scoutDirectory = Join-Path $scoutRoot '.research/opportunity_scout/n1-admin-observer-v003'
 $scoutFile = $null
 $scoutWriter = $null
 $scoutSeq = 0
@@ -94,7 +94,7 @@ try {
     } finally { $scoutClaim.Dispose() }
     $scoutFile = [IO.File]::Open((Join-Path $scoutDirectory 'events.jsonl'), [IO.FileMode]::CreateNew, [IO.FileAccess]::Write, [IO.FileShare]::Read)
     $scoutWriter = New-Object IO.StreamWriter($scoutFile, (New-Object Text.UTF8Encoding($false)))
-    Write-ScoutRecord 'HEADER' ([ordered]@{schema = 'SCOUT_N1_PROCESS_OBSERVER_V002'; pid = $PID; session = [guid]::NewGuid().ToString(); claude_invocations = 0})
+    Write-ScoutRecord 'HEADER' ([ordered]@{schema = 'SCOUT_N1_PROCESS_OBSERVER_V003'; pid = $PID; session = [guid]::NewGuid().ToString(); claude_invocations = 0})
     # Subscribe before snapshot so short-lived starts aren't reduced to polling.
     $null = Register-WmiEvent -Namespace 'root\cimv2' -Class Win32_ProcessStartTrace -SourceIdentifier $scoutStartId
     $scoutSubscriptions += $scoutStartId
