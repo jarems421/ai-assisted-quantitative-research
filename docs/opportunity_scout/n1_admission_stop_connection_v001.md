@@ -119,6 +119,8 @@ Portable guarded tests use fictional V003 streams, metadata, reviews and virtual
 time. Windows process tests launch only the existing harmless Python producers.
 They prove the receiving checks and actual connection to local termination,
 consumed retention, byte preservation, cleanup refusal and completion replay.
+The incomplete-drain fixture withholds EOF until cancellation instead of racing
+a short child sleep against exit polling/fsync; production deadlines are unchanged.
 Their observation callbacks deliberately construct fictional reports from supplied
 fixture identities; they are **not independent OS identity/coverage evidence**.
 Virtual cooldown time is labelled fixture-only and is not live timing assurance.

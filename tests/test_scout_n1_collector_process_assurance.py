@@ -11,6 +11,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -257,7 +258,28 @@ class N1ProcessTests(unittest.TestCase):
         self.assertTrue((Path(b['audit_root']) / '.lock').exists())
 
     def test_incomplete_drain_is_explicit_and_stops(self):
-        b, _, _, r = self.run_case('delayed', drain_grace_maximum_seconds=.05)
+        # Hold EOF until cancellation, rather than racing a 250-ms child against
+        # exit polling/fsync on a loaded runner. Real child bytes still drain.
+        from src.research.opportunity_scout.n1_collector import collector as C
+        release, held = threading.Event(), threading.Event()
+        original_queue, original_cancel = C.queue.Queue, C.Containment.cancel
+        class HeldEofQueue(original_queue):
+            def put(self, row, *args, **kwargs):
+                if row[0] == 'EOF':
+                    held.set()
+                    release.wait(timeout=10)
+                return super().put(row, *args, **kwargs)
+        def cancel(containment, force=False):
+            try:
+                return original_cancel(containment, force=force)
+            finally:
+                release.set()
+        try:
+            with patch.object(C.queue, 'Queue', HeldEofQueue), patch.object(C.Containment, 'cancel', cancel):
+                b, _, _, r = self.run_case('bytes', drain_grace_maximum_seconds=.05)
+        finally:
+            release.set()
+        self.assertTrue(held.is_set())
         self.assertIn('DRAIN_INCOMPLETE', r['stop_reasons'])
         self.assertEqual(r['outcome'], 'STOP_EVIDENCE_RETAINED')
         self.assertFalse(r['drain_complete'])
