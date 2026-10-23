@@ -89,6 +89,10 @@ class QueueAssuranceTests(unittest.TestCase):
                         if name in ('slow_event', 'persistence_failure', 'late_queue', 'malformed'):
                             self.assertEqual(report['pending'], 34)
                             self.assertEqual(len(acks), 0)
+                        if name == 'overflow':
+                            self.assertEqual(report['pending'], 10001)
+                            self.assertEqual(len(events), 0)
+                            self.assertEqual(len(acks), 0)
                         if name == 'late_heartbeat':
                             self.assertEqual(report['last_heartbeat'], 0)
                             self.assertIn('HEARTBEAT_DEADLINE_EXPIRED', report['error'])

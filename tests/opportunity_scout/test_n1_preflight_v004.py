@@ -71,4 +71,3 @@ class ProspectiveObserverTests(unittest.TestCase):
         from src.research.opportunity_scout.n1_collector import readiness
         with self.assertRaises(Exception):
             readiness.launch_native()
-
