@@ -1434,6 +1434,7 @@
       "N1ProcessTests.test_io_trigger_keeps_crossing_chunk_and_marks_any_cutoff",
       "N1ProcessTests.test_journal_suffix_rollback_cannot_silently_pass",
       "N1ProcessTests.test_keyboard_interruption_never_seals_or_reopens_reservation",
+      "N1ProcessTests.test_late_observation_return_cannot_claim_complete_cooldown",
       "N1ProcessTests.test_monitored_capture_requires_complete_cooldown_and_keeps_bytes",
       "N1ProcessTests.test_nonzero_exit_is_independent_of_capture_integrity",
       "N1ProcessTests.test_observation_failure_after_claim_before_spawn_stays_consumed",

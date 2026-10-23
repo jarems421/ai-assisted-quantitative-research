@@ -107,6 +107,8 @@ def monitored(root, case='sleep', fault=None):
                 if fault == 'source_error': raise OSError('fictional observation transport failure')
         if phase == 'COOLDOWN':
             if fault == 'cleanup': row['descendants_absent'] = False
+            if fault == 'late_return' and now - gate.window.cooldown_at >= 60:
+                offset.value += 6  # A late final callback must not yield a successful receipt.
             offset.value += 4  # Virtual time advances only in the fictional cooldown.
         return row
 

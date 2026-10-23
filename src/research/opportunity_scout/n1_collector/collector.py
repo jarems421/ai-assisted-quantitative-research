@@ -89,6 +89,7 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, 
     if monitor is not None:
         require(type(monitor) is FixtureGate, 'only the fixture observation receiver is supported')
         monitor.prelaunch(binding, approval, time.monotonic())
+        monitor.window.check(time.monotonic())  # Include time spent inside the source callback.
     capture = Capture(binding, approval)  # CONSUMED durable before any spawn.
     process, containment = None, None
     threads = []
@@ -154,6 +155,10 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, 
             cancellations.append(containment.cancel())
             capture.event('CANCEL', cancellations[-1])
 
+    def observe(exited=False):
+        monitor.poll(time.monotonic(), exited=exited)
+        monitor.window.check(time.monotonic())  # A late return cannot hide behind its earlier timestamp.
+
     try:
         if monitor is not None:
             monitor.attach_journal(capture.event)
@@ -166,7 +171,7 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, 
                 implementation() == binding['implementation'] and proposal() == binding['proposal'] and
                 sha(Path(binding['system_file']).read_bytes()) == binding['system_sha256'], 'prelaunch executable/source/package changed')
         if monitor is not None:
-            monitor.poll(time.monotonic())
+            observe()
             monitor.emit('ADMIT', time.monotonic(), None)
         try:
             process = popen(binding['argv'], executable=binding['binary'], cwd=binding['cwd'],
@@ -187,7 +192,7 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, 
             capture.event('SPAWNED', identity)
             if monitor is not None:
                 monitor.emit('ATTACH', time.monotonic(), identity)
-                monitor.poll(time.monotonic())  # Verified fictional start/identity before stdin.
+                observe()  # Verified fictional start/identity before stdin.
             for channel in eof:
                 t = threading.Thread(target=reader, args=(channel, getattr(process, channel)), daemon=True)
                 t.start(); threads.append(t)
@@ -201,7 +206,7 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, 
                     capture.event('OS_EXIT', {'returncode': code})
                 if monitor is not None and monitor.window.phase != 'STOP':
                     try:
-                        monitor.poll(now, exited=code is not None)
+                        observe(exited=code is not None)
                     except Exception as error:
                         trigger('MONITOR_STOP', time.monotonic(), type(error).__name__)
                 if now - start >= limits['watchdog_seconds']:
@@ -260,7 +265,7 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, 
                 try:
                     monitor.emit('DRAINED', time.monotonic(), all(eof.values()) and not alive)
                     while monitor.window.phase != 'COMPLETE':
-                        monitor.poll(time.monotonic(), exited=True)
+                        observe(exited=True)
                         if time.monotonic() - start >= limits['watchdog_seconds']:
                             trigger('WATCHDOG', time.monotonic())
                             break

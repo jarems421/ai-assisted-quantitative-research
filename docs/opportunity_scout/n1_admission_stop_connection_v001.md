@@ -81,6 +81,8 @@ baseline. The fixture receiving protocol requires:
    exception calls `trigger('MONITOR_STOP', ...)`, which records the stop and
    invokes existing local cancellation/escalation/drain. A journal/storage failure
    still reaches existing exception cleanup and leaves interruption/claims intact.
+   Receiver freshness is checked again after every callback returns; a late final
+   callback cannot hide behind its earlier timestamp and claim completion.
 6. Local exit, both EOFs and completed cleanup before a >=60-second cooldown with
    independently reported descendant absence. Missing/unknown/failed cleanup,
    drift or lost coverage cannot yield completion or release the registry.

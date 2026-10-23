@@ -371,6 +371,13 @@ class N1ProcessTests(unittest.TestCase):
         self.assertFalse(r['monitor']['complete'])
         self.assertTrue(result['registry_lock_present'])
 
+    def test_late_observation_return_cannot_claim_complete_cooldown(self):
+        _, _, _, result = self.monitored_case('split', 'late_return')
+        if result is None: return
+        self.assertIn('MONITOR_STOP', result['receipt']['stop_reasons'])
+        self.assertFalse(result['receipt']['monitor']['complete'])
+        self.assertTrue(result['registry_lock_present'])
+
     def test_observation_failure_after_claim_before_spawn_stays_consumed(self):
         from tests.scout_n1_admission_fixtures import monitored, frame
         from src.research.opportunity_scout.n1_collector import collector as C

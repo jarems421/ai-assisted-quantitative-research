@@ -159,8 +159,12 @@ class Window:
         self.start_verified, self.bytes = False, 0
 
     def check(self, now):
-        B.require(self.phase != 'STOP', 'monitor already stopped; no recovery')
-        B.require(number(now) and (self.last is None or 0 <= now - self.last <= 5), 'monitor gap/stale evidence')
+        try:
+            B.require(self.phase != 'STOP', 'monitor already stopped; no recovery')
+            B.require(number(now) and (self.last is None or 0 <= now - self.last <= 5), 'monitor gap/stale evidence')
+        except BaseException:
+            self.phase = 'STOP'
+            raise
 
     def step(self, kind, now, data):
         try:
