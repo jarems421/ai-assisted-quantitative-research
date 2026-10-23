@@ -1,0 +1,14 @@
+{
+  "extraction_rule": "SINGLE_FENCED_JSON_BLOCK_AT_END_V1",
+  "files": {
+    "adversarial_v001.md": "68ddd4931389efd0b385788500db3b3bab82f10617844545cbe56aa1459cbe51",
+    "common_v001.md": "ef7c319672627efd323db214d9cedb5619b0199ab4215a9fa90d47020f648c2a",
+    "economic_v001.md": "49393788355a20d7cd073897702139bfd04d9f32c83c8015f3a2d764ed08b00d",
+    "scientific_v001.md": "61ee97130017eb0817463fd989634a667fb39a6c93c4325f4e28c17ff84739fe"
+  },
+  "hosted_transmission_authorised": false,
+  "model_calls_authorised": false,
+  "output_schema_sha256": "7a1a6b7e347aafca04cd35746786c26bb686a56632a94d03165b925db68719da",
+  "schema": "SCOUT_AI_CRITIC_RESOURCES_V001",
+  "version": "SCOUT_AI_CRITIC_V001"
+}

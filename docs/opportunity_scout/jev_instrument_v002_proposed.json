@@ -1,0 +1,45 @@
+{
+  "schema": "SCOUT_JEV_INSTRUMENT_V002_PROPOSED",
+  "status": "PROPOSED_NOT_ACTIVE",
+  "frozen_v001_instrument_unchanged": true,
+  "v001_reference": "src/research/opportunity_scout/providers.py QUESTIONS (five choice questions) and shadow_request; neither is edited by this proposal.",
+  "purpose": "Atomic questions that map one-to-one onto AI Critic V001 hard dimensions, so Jev can be tested as an inexpensive screener and disagreement detector against independent human anchors.",
+  "request_format": "System One request: model, state, questions; each question type choice with criteria yes, no and unsure, as in V001.",
+  "model": "UNRESOLVED: V001 pins jev-1.13.0. Account availability and live response compatibility remain unverified until an owner-authorised call.",
+  "state_fields": ["card (blinded critic input card)", "source_passages", "reference_set (required for duplicate_of_reference only)"],
+  "questions": {
+    "predictor_observable_before_outcome": {
+      "maps_to": "temporal_validity",
+      "instructions": "Using only the card's own timing definitions, could the predictor be observed or recorded before the outcome is realised? If the timing is not stated, choose unsure.",
+      "criteria": {"yes": "The stated predictor timing precedes the stated outcome timing.", "no": "By its own definitions the predictor is only observable after the outcome, or is built from outcome-period data.", "unsure": "Timing is missing or ambiguous."}
+    },
+    "outcome_independent_of_predictor": {
+      "maps_to": "falsifiability (CIRCULAR_PREDICTION)",
+      "instructions": "Is the outcome defined and measured independently of the predictor, rather than being the predictor itself, a transformation of it, or definitionally implied by it?",
+      "criteria": {"yes": "Separate quantity, separately measured.", "no": "The outcome restates or mechanically follows from the predictor.", "unsure": "The definitions are too vague to tell."}
+    },
+    "falsifier_discriminates_alternative": {
+      "maps_to": "falsifiability (WEAK_FALSIFIER)",
+      "instructions": "Would the stated falsifying observation count against this mechanism but not equally against the card's own stated main uncertainty or competing explanation?",
+      "criteria": {"yes": "The falsifier separates the mechanism from the alternative.", "no": "The falsifier would occur under the alternative too, or absorbs every outcome.", "unsure": "No alternative is stated, or the falsifier is ambiguous."}
+    },
+    "causal_chain_complete": {
+      "maps_to": "mechanism_coherence (BROKEN_CHAIN, INCOHERENT_MECHANISM)",
+      "instructions": "Does each of the four causal links state how its earlier stage produces its later stage, without a missing or contradictory step?",
+      "criteria": {"yes": "Every link states a channel and no step contradicts another.", "no": "A step is missing, unexplained or contradicts another.", "unsure": "A link depends on an institutional fact not supplied."}
+    },
+    "duplicate_of_reference": {
+      "maps_to": "internal_novelty (DUPLICATE_OF_REFERENCE)",
+      "instructions": "Given only the supplied reference mechanisms, does the card restate one of them (same trigger, transmission, affected party and consequence) in different words?",
+      "criteria": {"yes": "It restates a reference item.", "no": "Its mechanism differs materially from every reference item.", "unsure": "The reference set is empty or too ambiguous."}
+    }
+  },
+  "not_asked": "Jev is never asked whether an idea is novel without the frozen reference set, or whether it is profitable.",
+  "evaluation_design": "See docs/opportunity_scout/ai_critic_v001_calibration_protocol.md section 'Choosing a Jev role'. Run V001 and V002 on the same blinded cards only after the owner authorises both instruments; compare each against independent human anchors, never against the AI critics alone.",
+  "activation_requires": [
+    "an owner decision adopting this instrument as a new frozen version, with its exact request bytes and hash",
+    "the separately documented per-payload Jev authorisation (disclosure consent, cost ceiling, model pin, one request per payload, no retry on content)",
+    "independent human anchors frozen before any Jev answer is viewed"
+  ],
+  "authorises": []
+}
