@@ -4,12 +4,14 @@ All producers are fixed checked-in harmless Python fixtures. No network/account
 inspection or native CLI is involved. Temporary bindings are simulated consent.
 """
 import hashlib
+import copy
 import json
 import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -256,7 +258,28 @@ class N1ProcessTests(unittest.TestCase):
         self.assertTrue((Path(b['audit_root']) / '.lock').exists())
 
     def test_incomplete_drain_is_explicit_and_stops(self):
-        b, _, _, r = self.run_case('delayed', drain_grace_maximum_seconds=.05)
+        # Hold EOF until cancellation, rather than racing a 250-ms child against
+        # exit polling/fsync on a loaded runner. Real child bytes still drain.
+        from src.research.opportunity_scout.n1_collector import collector as C
+        release, held = threading.Event(), threading.Event()
+        original_queue, original_cancel = C.queue.Queue, C.Containment.cancel
+        class HeldEofQueue(original_queue):
+            def put(self, row, *args, **kwargs):
+                if row[0] == 'EOF':
+                    held.set()
+                    release.wait(timeout=10)
+                return super().put(row, *args, **kwargs)
+        def cancel(containment, force=False):
+            try:
+                return original_cancel(containment, force=force)
+            finally:
+                release.set()
+        try:
+            with patch.object(C.queue, 'Queue', HeldEofQueue), patch.object(C.Containment, 'cancel', cancel):
+                b, _, _, r = self.run_case('bytes', drain_grace_maximum_seconds=.05)
+        finally:
+            release.set()
+        self.assertTrue(held.is_set())
         self.assertIn('DRAIN_INCOMPLETE', r['stop_reasons'])
         self.assertEqual(r['outcome'], 'STOP_EVIDENCE_RETAINED')
         self.assertFalse(r['drain_complete'])
@@ -307,3 +330,115 @@ class N1ProcessTests(unittest.TestCase):
         c.abandon()
         with self.assertRaisesRegex(B.Refused, 'invalid/duplicate EOF'):
             audit(b['capture_path'])
+
+    def monitored_case(self, case='sleep', fault=None):
+        from tests.scout_n1_admission_fixtures import monitored
+        from src.research.opportunity_scout.n1_collector import collector as C
+        b, a, data, gate, clock = monitored(self.root, case, fault)
+        if os.name != 'nt':
+            # This receiver requires queried Windows creation identity. No
+            # POSIX placeholder is substituted. CI selects this suite on Windows.
+            with patch.object(C, 'time', clock), self.assertRaisesRegex(B.Refused, 'identity/start/parent'):
+                collect_fixture(b, a, data, monitor=gate)
+            self.assertTrue((Path(b['audit_root']) / (b['reservation_id'] + '.json')).exists())
+            return b, a, data, None
+        with patch.object(C, 'time', clock):
+            result = collect_fixture(b, a, data, monitor=gate)
+        return b, a, data, result
+
+    def test_monitored_capture_requires_complete_cooldown_and_keeps_bytes(self):
+        b, a, data, result = self.monitored_case('split')
+        if result is None: return
+        r = result['receipt']
+        self.assertEqual(r['outcome'], 'LOCAL_CAPTURE_COMPLETE', r['stop_reasons'])
+        self.assertTrue(r['monitor']['complete'])
+        self.assertFalse(r['monitor']['native_launch_enabled'])
+        self.assertEqual(self.raw(b), b'\xe2\x82\xac\xf0\x9f\x8c\x8d\xff\r\n{"a":')
+        self.assertGreaterEqual(r['observed_wall_seconds_through_receipt'], 60)
+        self.assertEqual(r['remote_cancellation'], 'UNKNOWN')
+        self.assertTrue(result['reservation_consumed'])
+        self.assertFalse(result['registry_lock_present'])
+
+    def test_observation_failures_cancel_existing_collector_and_never_retry(self):
+        for fault in ('coverage', 'identity', 'stale', 'drift', 'source_error'):
+            with self.subTest(fault=fault):
+                # Each fictional attempt has its own registry, never a reset.
+                case_root = self.root / fault; case_root.mkdir()
+                original = self.root; self.root = case_root
+                try:
+                    b, a, data, result = self.monitored_case(fault=fault)
+                finally:
+                    self.root = original
+                if result is None: continue
+                r = result['receipt']
+                self.assertEqual(r['outcome'], 'STOP_EVIDENCE_RETAINED')
+                self.assertIn('MONITOR_STOP', r['stop_reasons'])
+                self.assertEqual(self.raw(b), b'before-watchdog')
+                self.assertTrue(r['cancellations'])
+                self.assertTrue(all(x['target_pid'] == r['process']['pid'] for x in r['cancellations']))
+                self.assertEqual(r['remote_cancellation'], 'UNKNOWN')
+                self.assertFalse(r['monitor']['complete'])
+                self.assertTrue(result['registry_lock_present'])
+                with patch('subprocess.Popen') as launch, self.assertRaises(B.Refused):
+                    collect_fixture(b, a, data)
+                launch.assert_not_called()
+
+    def test_failed_monitor_cleanup_retains_stop_even_with_exit_and_eof(self):
+        b, _, _, result = self.monitored_case('split', 'cleanup')
+        if result is None: return
+        r = result['receipt']
+        self.assertEqual(r['returncode'], 0)
+        self.assertTrue(all(r['eof'].values()))
+        self.assertIn('MONITOR_STOP', r['stop_reasons'])
+        self.assertFalse(r['monitor']['complete'])
+        self.assertTrue(result['registry_lock_present'])
+
+    def test_late_observation_return_cannot_claim_complete_cooldown(self):
+        b, _, _, result = self.monitored_case('split', 'late_return')
+        if result is None: return
+        self.assertIn('MONITOR_STOP', result['receipt']['stop_reasons'])
+        self.assertFalse(result['receipt']['monitor']['complete'])
+        self.assertTrue(result['registry_lock_present'])
+        samples = [row['record'] for row in
+                   (json.loads(line) for line in (Path(b['capture_path']) / 'journal.jsonl').read_bytes().splitlines())
+                   if row['type'] == 'MONITOR' and row['record']['kind'] == 'SAMPLE']
+        # The failed original and its actual receiver delay survive journal replay.
+        self.assertGreater(samples[-1]['now'] - samples[-1]['data']['frame']['monotonic_seconds'], 5)
+
+    def test_observation_failure_after_claim_before_spawn_stays_consumed(self):
+        from tests.scout_n1_admission_fixtures import monitored, frame
+        from src.research.opportunity_scout.n1_collector import collector as C
+        b, a, data, gate, clock = monitored(self.root)
+        original = Capture.event
+        def lose_coverage(capture, kind, record):
+            if kind == 'LAUNCH_INTENT':
+                def source(phase, expected, now, exited):
+                    row = frame(b, gate.window.seq + 1, now)
+                    row['coverage']['starts'] = False
+                    return row
+                gate.source = source
+            return original(capture, kind, record)
+        with patch.object(C, 'time', clock), patch.object(Capture, 'event', lose_coverage), \
+                patch('subprocess.Popen') as launch, self.assertRaisesRegex(B.Refused, 'coverage'):
+            collect_fixture(b, a, data, monitor=gate)
+        launch.assert_not_called()
+        self.assertTrue((Path(b['audit_root']) / (b['reservation_id'] + '.json')).exists())
+        self.assertTrue((Path(b['audit_root']) / '.lock').exists())
+        self.assertEqual(audit(b['capture_path'])['status'], 'INTERRUPTED_EVIDENCE_RETAINED')
+
+    def test_false_monitor_completion_cannot_release_registry(self):
+        from tests.scout_n1_admission_fixtures import package, process_identity
+        from src.research.opportunity_scout.n1_collector.admission import VERSION
+        _, _, _, normal = self.run_case()
+        b, a, _ , _ = package(self.root)
+        c = Capture(b, a); identity = process_identity()
+        c.event('LAUNCH_INTENT', {}); c.event('SPAWNED', identity)
+        c.event('OS_EXIT', {'returncode': 0})
+        for channel in ('stdout', 'stderr'): c.event('EOF', {'channel': channel})
+        wrong = copy.deepcopy(normal)
+        wrong.update(process=identity, returncode=0, raw_sha256={x: B.sha(b'') for x in ('stdout', 'stderr')},
+                     recorded_bytes={'stdout': 0, 'stderr': 0}, monitor={'schema': VERSION, 'fixture': True,
+                     'window_id': b['admission_contract']['window_id'], 'complete': True, 'native_launch_enabled': False})
+        with self.assertRaisesRegex(B.Refused, 'false complete observation'):
+            c.seal(wrong)
+        self.assertTrue((Path(b['audit_root']) / '.lock').exists())

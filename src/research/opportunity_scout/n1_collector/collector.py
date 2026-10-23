@@ -70,20 +70,26 @@ class Containment:
             self.job = None
 
 
-def collect_fixture(binding, approval, payload):
+def collect_fixture(binding, approval, payload, *, monitor=None):
     """Only the checked-in harmless fixture is executable through this interface.
 
     Simulated fixture consent is not owner consent. No real native entry point or
     command-line runner exists. A future native launcher needs independent review.
     """
-    return _collect_fixture(binding, approval, payload)
+    return _collect_fixture(binding, approval, payload, monitor=monitor)
 
 
-def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
+def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, monitor=None):
     binding, approval = copy.deepcopy(binding), copy.deepcopy(approval)
     popen = subprocess.Popen if popen is None else popen
     require(binding.get('mode') == 'LOCAL_FIXTURE', 'native launch disabled pending separate review')
     validate(binding, approval, payload)
+    from .admission import FixtureGate, VERSION as MONITOR_VERSION
+    require(('admission_contract' in binding) == (monitor is not None), 'bound observation gate required')
+    if monitor is not None:
+        require(type(monitor) is FixtureGate, 'only the fixture observation receiver is supported')
+        monitor.prelaunch(binding, approval, time.monotonic(), received_clock=time.monotonic)
+        monitor.window.check(time.monotonic())  # Include time spent inside the source callback.
     capture = Capture(binding, approval)  # CONSUMED durable before any spawn.
     process, containment = None, None
     threads = []
@@ -139,17 +145,23 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
             except (OSError, ValueError):
                 pass
 
-    def trigger(reason, now):
+    def trigger(reason, now, error_type=None):
         nonlocal triggered
         if reason not in reasons:
             reasons.append(reason)
-            capture.event('STOP_TRIGGER', {'reason': reason})
+            capture.event('STOP_TRIGGER', {'reason': reason, **({'error_type': error_type} if error_type else {})})
         if triggered is None:
             triggered = now
             cancellations.append(containment.cancel())
             capture.event('CANCEL', cancellations[-1])
 
+    def observe(exited=False):
+        monitor.poll(time.monotonic(), exited=exited, received_clock=time.monotonic)
+        monitor.window.check(time.monotonic())  # A late return cannot hide behind its earlier timestamp.
+
     try:
+        if monitor is not None:
+            monitor.attach_journal(capture.event)
         capture.event('LAUNCH_INTENT', {'parent_invocations_maximum': 1, 'stdin_sha256': binding['stdin_sha256']})
         # Recheck mutable executable/source/runtime bindings after durable intent.
         # Existing capture is now expected, so common validation is not rerun.
@@ -158,6 +170,9 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
                 sha(FIXTURE.read_bytes()) == binding['fixture_sha256'] and
                 implementation() == binding['implementation'] and proposal() == binding['proposal'] and
                 sha(Path(binding['system_file']).read_bytes()) == binding['system_sha256'], 'prelaunch executable/source/package changed')
+        if monitor is not None:
+            observe()
+            monitor.emit('ADMIT', time.monotonic(), None)
         try:
             process = popen(binding['argv'], executable=binding['binary'], cwd=binding['cwd'],
                             env=binding['environment'], stdin=subprocess.PIPE,
@@ -175,6 +190,9 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
                                          'POSIX_NEW_SESSION' if os.name != 'nt' else 'PARENT_ONLY_TREE_UNKNOWN'),
                         'pre_assignment_descendants': 'UNKNOWN'}
             capture.event('SPAWNED', identity)
+            if monitor is not None:
+                monitor.emit('ATTACH', time.monotonic(), identity)
+                observe()  # Verified fictional start/identity before stdin.
             for channel in eof:
                 t = threading.Thread(target=reader, args=(channel, getattr(process, channel)), daemon=True)
                 t.start(); threads.append(t)
@@ -186,6 +204,11 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
                 if code is not None and exit_seen is None:
                     exit_seen = now
                     capture.event('OS_EXIT', {'returncode': code})
+                if monitor is not None and monitor.window.phase != 'STOP':
+                    try:
+                        observe(exited=code is not None)
+                    except Exception as error:
+                        trigger('MONITOR_STOP', time.monotonic(), type(error).__name__)
                 if now - start >= limits['watchdog_seconds']:
                     trigger('WATCHDOG', now)
                 if stdin['error'] or read_errors:
@@ -235,6 +258,23 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
             reasons.append('CLEANUP_INCOMPLETE')
         if process is not None and (not stdin['completed'] or stdin['bytes_written'] != len(payload)):
             reasons.append('STDIN_INCOMPLETE')
+        if monitor is not None and process is not None and not reasons:
+            if process.poll() != 0:
+                reasons.append('PROCESS_EXIT_FAILURE')
+            else:
+                try:
+                    monitor.emit('DRAINED', time.monotonic(), all(eof.values()) and not alive)
+                    while monitor.window.phase != 'COMPLETE':
+                        observe(exited=True)
+                        if time.monotonic() - start >= limits['watchdog_seconds']:
+                            trigger('WATCHDOG', time.monotonic())
+                            break
+                        time.sleep(.05)
+                except Exception as error:
+                    trigger('MONITOR_STOP', time.monotonic(), type(error).__name__)
+        wall = time.monotonic() - start
+        if wall > limits['watchdog_seconds'] and 'WATCHDOG' not in reasons:
+            reasons.append('WATCHDOG')
         raw = {c: (capture.root / (c + '.bin')).read_bytes() for c in eof}
         receipt = {'version': binding['version'], 'mode': 'LOCAL_FIXTURE_NOT_NATIVE',
                    'outcome': 'LOCAL_CAPTURE_COMPLETE' if not reasons and all(eof.values()) else 'STOP_EVIDENCE_RETAINED',
@@ -251,6 +291,11 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None):
                    'remote_cancellation': 'UNKNOWN', 'historical_account_writer': 'UNKNOWN',
                    'native_compatibility': 'NOT_TESTED', 'scientific_slots_consumed': 0,
                    'directory_power_loss_durability': 'UNKNOWN' if os.name == 'nt' else 'DIRECTORY_FSYNC_REQUESTED'}
+        if monitor is not None:
+            receipt['monitor'] = {'schema': MONITOR_VERSION, 'fixture': True,
+                                  'window_id': binding['admission_contract']['window_id'],
+                                  'complete': not reasons and monitor.window.phase == 'COMPLETE',
+                                  'native_launch_enabled': False}
         capture.seal(receipt)
         return audit(capture.root)
     except BaseException as error:

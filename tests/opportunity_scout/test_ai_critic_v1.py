@@ -625,8 +625,9 @@ class BoundaryTests(unittest.TestCase):
         self.assertEqual(prepare.check()['hosted_authorised'], False)  # pins every V004 top-level and v004_r3 source by hash
         for closure in (v004_package.implementation(), r3.implementation(), binding.implementation()):
             self.assertFalse([k for k in closure if 'critic_v1' in k or 'post_generation' in k])
-        pinned = json.loads((ROOT / 'docs/opportunity_scout/n1_followup_validation_v002.json').read_text(encoding='utf-8'))['collector_source_hashes']
-        self.assertEqual(binding.implementation(), pinned)
+        # Preserve the historical validation; separately authorised N1 work can evolve the collector.
+        pinned = (ROOT / 'docs/opportunity_scout/n1_followup_validation_v002.json').read_bytes().replace(b'\r\n', b'\n')
+        self.assertEqual(binding.sha(pinned), '2bbcb8659faaabb0f013605400d28fd8382a4ceffb861f90536c6c4aab4c736f')
         with self.assertRaises(Exception):readiness.launch_native()
         self.assertEqual((monitor.VERSION, monitor.DIRECTORY.name), ('SCOUT_N1_PROCESS_OBSERVER_V003', 'n1-admin-observer-v003'))
         with self.assertRaises(S.ScoutError):P.Workspace(monitor.DIRECTORY)
