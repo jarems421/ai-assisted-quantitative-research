@@ -88,6 +88,13 @@ workflows. Linux excludes that native module rather than counting skips or
 claiming Windows coverage. Existing Graph inventory, scientific logic, collector,
 N1 package and V003/R2/R3 inputs are unchanged relative to repaired main.
 
+The original public workflow now has the same 20-minute job ceiling as the
+offline matrix. Its integration run spent 3m35 on the eight queue fixtures;
+repaired main's public/Scout suites alone took approximately nine minutes on
+Windows. The former ten-minute job ceiling lacked headroom for their combined
+selection. Individual fixture deadlines, assertions and all production limits
+are unchanged; this is a job scheduling bound, not an observer timeout change.
+
 Final acceptance requires the complete guarded public, Scout and additional
 suites, selected OS guard tests, six cross-process lock tests, all 25 native
 collector tests and eight native queue tests. Expected workflow totals are 950
