@@ -16,8 +16,8 @@ from ..storage import ROOT, unlinked
 from ..v004_monitoring import account_metadata, compare_metadata
 from ..schema import json_loads
 
-VERSION = 'SCOUT_N1_PROCESS_OBSERVER_V002'
-DIRECTORY = ROOT / '.research/opportunity_scout/n1-admin-observer-v002'
+VERSION = 'SCOUT_N1_PROCESS_OBSERVER_V003'
+DIRECTORY = ROOT / '.research/opportunity_scout/n1-admin-observer-v003'
 CHILD = ROOT / 'tests/fixtures/scout_n1_observer_child.py'
 MAX_BYTES = 2 * 1024 * 1024
 IS_WINDOWS = os.name == 'nt'
