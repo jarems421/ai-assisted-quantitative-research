@@ -122,6 +122,19 @@ Review records contain their own effort. Use separate `effort` records for **add
 
 After generation, use the [post-generation readiness workflow](jev_post_generation_readiness_v001.md). `python -m src.research.opportunity_scout.post_generation import-response STORE IDEA response.json --version V --request-sha256 H --by NAME` imports a saved System One response file unchanged, against the request hash frozen at export, and writes a provenance record of its byte hash (operator attestation; the provider verifies nothing). `label-packet` builds a non-comparative blinded packet of every current card (no Jev output) for independent labels, even when generation is incomplete. `compare` reports agreement, abstention, disagreement types, binary Brier, human–human agreement, problem flags, model identity, usage and unknown cost. It is descriptive and shadow-only, and never a condition comparison.
 
+## AI Critic V001: offline recommendations, no routing authority
+
+[AI Critic V001](ai_critic_v001.md) (`python -m src.research.opportunity_scout.critic_v1 ...`) reviews every valid card in four layers:
+
+- **Deterministic checks.** Layer A reuses the checks above and separates `INVALID_INPUT`, `STRUCTURAL_DEFECT`, `DOCUMENTED_CONTRADICTION`, `MISSING_EVIDENCE` and `UNKNOWN`.
+- **Blinded critics.** A scientific and an economic critic answer ten dimensions each, with every adverse finding anchored to verbatim input.
+- **Adversarial critic.** It is used only for uncertain fatal claims, disagreements and unusually promising cards.
+- **Deterministic policy.** It recommends `READY_CANDIDATE`, `INCUBATE`, `REVISION_REQUIRED`, `REJECT_RECOMMENDED` or `ESCALATE`. Rejection needs the adversarial critic to confirm a first-pass fatal claim exactly: same failure type, same anchored field and its challenge upheld.
+
+Recommendations change no route and delete nothing. Human READY, handoff and owner gates stay authoritative, and Jev stays shadow-only.
+
+[The calibration protocol](ai_critic_v001_calibration_protocol.md) defines human anchors, per-context sample sizes and the proposed (inactive) admission test for selective human review. The [synthetic benchmark](ai_critic_v001_benchmark.json) shows lenient, harsh, fabricating and style-sensitive critics are caught. No model was called.
+
 ## Frozen evaluation and future learning
 
 V001 was committed as **`a13d2e3` before implementation/results** and remains unchanged. It compares PLAIN, EVIDENCE_ONLY, MECHANISM_ONLY and HYBRID using a common eligible pool and equal ceilings. The first real comparison uses prospective **V002**, frozen in `a5bba7f`, with explicit actual-attempt, invocation, effort, token and context accounting. Use the [frozen package and commands](first_comparison_v002/README.md); archived operator cards are excluded. Equal configured ceilings alone never establish equal actual effort.
