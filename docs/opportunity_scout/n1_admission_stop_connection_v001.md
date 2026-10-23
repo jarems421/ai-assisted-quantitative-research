@@ -5,6 +5,8 @@ cancellation connection from `n1_admission_stop_audit_v001.md`. It supplies **no
 live observation source**, owner registration or native launcher. No live observer,
 account/credential inspection, Claude command, model call or research slot occurs.
 AI Critic, Jev, Graph R4, Discovery Lab and frozen scientific packages are unchanged.
+The branch subsequently integrates owner-merged main `682ce25` (PR #22) without
+editing any AI Critic file; the combined inventory is retained.
 
 ## What is implemented
 
@@ -82,7 +84,8 @@ baseline. The fixture receiving protocol requires:
    invokes existing local cancellation/escalation/drain. A journal/storage failure
    still reaches existing exception cleanup and leaves interruption/claims intact.
    Receiver freshness is checked again after every callback returns; a late final
-   callback cannot hide behind its earlier timestamp and claim completion.
+   callback cannot hide behind its earlier timestamp and claim completion. The
+   journal records receiver time after return so replay can check the same delay.
 6. Local exit, both EOFs and completed cleanup before a >=60-second cooldown with
    independently reported descendant absence. Missing/unknown/failed cleanup,
    drift or lost coverage cannot yield completion or release the registry.

@@ -109,7 +109,6 @@ def monitored(root, case='sleep', fault=None):
             if fault == 'cleanup': row['descendants_absent'] = False
             if fault == 'late_return' and now - gate.window.cooldown_at >= 60:
                 offset.value += 6  # A late final callback must not yield a successful receipt.
-            offset.value += 4  # Virtual time advances only in the fictional cooldown.
         return row
 
     gate = A.FixtureGate(b, a, data, artifacts, source)
@@ -118,4 +117,8 @@ def monitored(root, case='sleep', fault=None):
         when = end - 60 + i * 5
         state.seq += 1
         gate.emit('SAMPLE', when, {'frame': frame(b, state.seq, when), 'local_exit_observed': False})
-    return b, a, data, gate, SimpleNamespace(monotonic=clock, monotonic_ns=time.monotonic_ns, sleep=time.sleep)
+    def sleep(seconds):
+        if gate.window.phase == 'COOLDOWN':
+            offset.value += 4  # Advance BETWEEN samples; callback latency stays separately measurable.
+        time.sleep(seconds)
+    return b, a, data, gate, SimpleNamespace(monotonic=clock, monotonic_ns=time.monotonic_ns, sleep=sleep)

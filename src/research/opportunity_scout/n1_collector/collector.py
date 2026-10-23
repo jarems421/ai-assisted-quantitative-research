@@ -88,7 +88,7 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, 
     require(('admission_contract' in binding) == (monitor is not None), 'bound observation gate required')
     if monitor is not None:
         require(type(monitor) is FixtureGate, 'only the fixture observation receiver is supported')
-        monitor.prelaunch(binding, approval, time.monotonic())
+        monitor.prelaunch(binding, approval, time.monotonic(), received_clock=time.monotonic)
         monitor.window.check(time.monotonic())  # Include time spent inside the source callback.
     capture = Capture(binding, approval)  # CONSUMED durable before any spawn.
     process, containment = None, None
@@ -156,7 +156,7 @@ def _collect_fixture(binding, approval, payload, *, after_raw=None, popen=None, 
             capture.event('CANCEL', cancellations[-1])
 
     def observe(exited=False):
-        monitor.poll(time.monotonic(), exited=exited)
+        monitor.poll(time.monotonic(), exited=exited, received_clock=time.monotonic)
         monitor.window.check(time.monotonic())  # A late return cannot hide behind its earlier timestamp.
 
     try:

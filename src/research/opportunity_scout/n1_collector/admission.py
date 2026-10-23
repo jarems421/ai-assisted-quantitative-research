@@ -264,22 +264,23 @@ class FixtureGate:
             self.sink('MONITOR', row)
         self.window.step(kind, now, data)
 
-    def poll(self, now, exited=False):
+    def poll(self, now, exited=False, received_clock=None):
         try:
             self.window.check(now)
             frame = self.source(self.window.phase, copy.deepcopy(self.window.expected), now, exited)
+            received = now if received_clock is None else received_clock()
             if frame is not None:
-                self.emit('SAMPLE', now, {'frame': frame, 'local_exit_observed': exited})
-            self.window.check(now)
+                self.emit('SAMPLE', received, {'frame': frame, 'local_exit_observed': exited})
+            self.window.check(received)
         except BaseException:
             self.window.phase = 'STOP'
             raise
 
-    def prelaunch(self, binding, approval, now):
+    def prelaunch(self, binding, approval, now, received_clock=None):
         try:
             B.require(self.review['binding_sha256'] == B.sha(canonical(binding)) and
                       self.review['owner_registration_sha256'] == B.sha(canonical(approval)), 'monitor rebound to another reservation/consent')
-            self.poll(now)
+            self.poll(now, received_clock=received_clock)
             B.require(self.window.phase == 'BASELINE' and self.window.first is not None and now - self.window.first >= 60,
                       'preparation alone is not a fresh baseline')
         except BaseException:

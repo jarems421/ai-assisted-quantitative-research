@@ -372,11 +372,16 @@ class N1ProcessTests(unittest.TestCase):
         self.assertTrue(result['registry_lock_present'])
 
     def test_late_observation_return_cannot_claim_complete_cooldown(self):
-        _, _, _, result = self.monitored_case('split', 'late_return')
+        b, _, _, result = self.monitored_case('split', 'late_return')
         if result is None: return
         self.assertIn('MONITOR_STOP', result['receipt']['stop_reasons'])
         self.assertFalse(result['receipt']['monitor']['complete'])
         self.assertTrue(result['registry_lock_present'])
+        samples = [row['record'] for row in
+                   (json.loads(line) for line in (Path(b['capture_path']) / 'journal.jsonl').read_bytes().splitlines())
+                   if row['type'] == 'MONITOR' and row['record']['kind'] == 'SAMPLE']
+        # The failed original and its actual receiver delay survive journal replay.
+        self.assertGreater(samples[-1]['now'] - samples[-1]['data']['frame']['monotonic_seconds'], 5)
 
     def test_observation_failure_after_claim_before_spawn_stays_consumed(self):
         from tests.scout_n1_admission_fixtures import monitored, frame
