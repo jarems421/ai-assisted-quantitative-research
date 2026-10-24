@@ -10,7 +10,7 @@ is never imported. Nothing here runs on import, and offline tests inject every p
   MCP, web-search or plan item is a fault. The ``--json`` event profile is the documented one and has not been
   observed live here: unknown events fail closed, and a model identity the stream does not report is a fault unless
   the owner explicitly accepted requested-only identity.
-* GEMINI_API (Gemini API ``generateContent``): one HTTPS request, no tools, one candidate. Paid billing only, under
+* GEMINI_API (Gemini API ``generateContent``): one HTTPS request, never redirected, no tools, one candidate. Paid billing only, under
   an owner spend cap checked before dispatch against documented prices; the key is read from the named environment
   variable at dispatch and never stored.
 * ANTIGRAVITY_CONSUMER: Google's consumer FAQ does not support wrapping ``agy`` in third-party applications, so this
@@ -114,7 +114,7 @@ def codex_review(stdout, stderr, returncode, timed_out, model, *, accept_request
     if kinds.count('thread.started') != 1 or kinds.count('turn.started') != 1 or kinds.count('turn.completed') != 1:
         fault('NOT_EXACTLY_ONE_TURN')
     if not events or kinds[-1] != 'turn.completed':fault('TERMINAL_NOT_ESTABLISHED')
-    messages, models = {}, set()
+    messages, completed, models = [], set(), set()  # every completion event counts: a repeated ID never collapses into one
     for e in events:
         kind = e.get('type')
         if kind in ('turn.failed', 'error'):fault('PROVIDER_ERROR_EVENT')
@@ -125,9 +125,12 @@ def codex_review(stdout, stderr, returncode, timed_out, model, *, accept_request
             item = e.get('item')
             if not isinstance(item, dict) or not isinstance(item.get('id'), str) or item.get('type') not in CODEX_ITEMS:
                 fault('PROHIBITED_OR_UNKNOWN_ITEM:' + str(item.get('type') if isinstance(item, dict) else None)[:40]); continue
+            if kind == 'item.completed':
+                if item['id'] in completed:fault('DUPLICATE_ITEM_COMPLETION')
+                completed.add(item['id'])
             if item['type'] == 'agent_message':
                 if not isinstance(item.get('text'), str):fault('AGENT_MESSAGE_WITHOUT_TEXT'); continue
-                if kind == 'item.completed':messages[item['id']] = item['text']
+                if kind == 'item.completed':messages.append(item['text'])
     if len(messages) != 1:fault('NOT_EXACTLY_ONE_AGENT_MESSAGE')
     usage = events[-1].get('usage') if events and kinds[-1] == 'turn.completed' else None
     keys = ('input_tokens', 'cached_input_tokens', 'output_tokens', 'reasoning_output_tokens')
@@ -137,7 +140,7 @@ def codex_review(stdout, stderr, returncode, timed_out, model, *, accept_request
     if basis == 'REQUESTED_ONLY' and not accept_requested_identity:fault('MODEL_IDENTITY_NOT_OBSERVED')
     if timed_out:fault('TIMEOUT')
     elif returncode != 0:fault('NONZERO_EXIT')
-    text = next(iter(messages.values())) if len(messages) == 1 else ''
+    text = messages[0] if len(messages) == 1 else ''
     reply = text.encode('utf-8')
     if len(reply) > MAX_REPLY_BYTES:fault('REPLY_TOO_LARGE')
     facts = {'provider': CODEX, 'faults': faults, 'model_requested': model, 'model_identity_basis': basis,
@@ -219,14 +222,30 @@ def gemini_review(status, body, model, prices):
     return (reply if not faults else None), facts
 
 
-def https_transport(url, headers, body, timeout, limit=MAX_RESPONSE_BYTES):
-    """Default Gemini transport: one POST, no retries, bounded read. Returns (status, bytes). Never logs headers."""
-    import urllib.error, urllib.request
+GEMINI_HOST = 'generativelanguage.googleapis.com'
+
+
+def https_transport(url, headers, body, timeout, limit=MAX_RESPONSE_BYTES, *, handlers=()):
+    """Default Gemini transport: one POST to the documented host, no retries, no redirects, bounded read. Returns
+    (status, bytes). Never logs headers. urllib's default redirect handler copies every non-content header, the API
+    key included, onto a follow-up request to any origin; here every redirect is refused before a follow-up request
+    exists. ``handlers`` is an offline test seam only (a fake HTTPS handler)."""
+    import urllib.error, urllib.parse, urllib.request
+    target = urllib.parse.urlsplit(url)
+    if target.scheme != 'https' or target.hostname != GEMINI_HOST or target.port not in (None, 443) or target.username or target.password:
+        raise S.ScoutError('GEMINI_ENDPOINT_NOT_DOCUMENTED_HOST')
+
+    class RefuseRedirects(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, hdrs, newurl):
+            fp.close()
+            raise S.ScoutError(f'GEMINI_REDIRECT_REFUSED:HTTP_{code}')
+
+    opener = urllib.request.build_opener(RefuseRedirects, *handlers)
     request = urllib.request.Request(url, data=body, headers=headers, method='POST')
     try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
+        with opener.open(request, timeout=timeout) as response:
             data = response.read(limit + 1); status = response.status
-    except urllib.error.HTTPError as error:
+    except urllib.error.HTTPError as error:  # includes a 3xx without a Location header: reviewed as HTTP_3xx, never followed
         data, status = error.read(limit + 1), error.code
     if len(data) > limit:raise S.ScoutError('GEMINI_RESPONSE_TOO_LARGE')
     return status, data
