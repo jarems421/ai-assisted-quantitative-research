@@ -12,3 +12,5 @@ lake-results/
 .ruff_cache/
 .matplotlib/
 .research/
+# Discovery Lab writer claims; reconcile a stale one by hand, never commit it
+*.writer.lock

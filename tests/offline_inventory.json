@@ -646,7 +646,14 @@
       "DiscoveryLabTests.test_source_passport_next_evidence_is_qualitative",
       "DiscoveryLabTests.test_synthetic_and_live_evidence_are_segregated",
       "DiscoveryLabTests.test_unknown_costs_remain_unknown",
-      "DiscoveryLabTests.test_unsupported_novelty_and_return_inspection_are_refused"
+      "DiscoveryLabTests.test_unsupported_novelty_and_return_inspection_are_refused",
+      "ReviewCorrectionTests.test_committed_append_with_unremovable_lock_reports_the_committed_event",
+      "ReviewCorrectionTests.test_interrupted_writer_leaves_lock_and_partial_bytes_for_reconciliation",
+      "ReviewCorrectionTests.test_invalid_append_with_unremovable_lock_keeps_the_validation_error",
+      "ReviewCorrectionTests.test_new_ledgers_record_v002_and_rules_never_move_backwards",
+      "ReviewCorrectionTests.test_v001_gross_claim_with_evidenced_review_replays_but_cannot_support_a_new_pass",
+      "ReviewCorrectionTests.test_v001_m_approval_is_never_promoted_to_a_v002_pass",
+      "ReviewCorrectionTests.test_v001_source_revision_with_not_evidenced_review_replays_but_new_review_is_blocked"
     ]
   },
   "tests/test_exp001.py": {

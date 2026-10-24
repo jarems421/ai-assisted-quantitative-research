@@ -1,10 +1,11 @@
 import copy,hashlib,io,json,re,socket,tempfile,threading,unittest
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr,redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 from src.research.discovery import records as R
 from src.research.discovery import demo as D
 from src.research.discovery.cli import main,prompt
+from src.research.discovery import ledger as L
 from src.research.discovery.ledger import Ledger,LedgerError,core
 from src.research.discovery.report import compare,summary,metrics
 from src.research.discovery.review import checklist,source_next
@@ -620,7 +621,7 @@ class AnvilCrucibleBoundaryTests(unittest.TestCase):
         from src.research.discovery.ledger import State, check
         record = campaign(fixture='LIVE', authority='README.md')
         result = check('campaign', record, State())  # Pure admission call; no LIVE campaign is created.
-        self.assertEqual(result['rules'], 'DISCOVERY_LAB_RULES_V001')
+        self.assertEqual(result['rules'], 'DISCOVERY_LAB_RULES_V002')
 
     def test_current_untyped_review_reference_is_not_resolved(self):
         self.card()
@@ -804,5 +805,149 @@ class AnvilCrucibleWalkthroughTests(unittest.TestCase):
                 main(['investigate-level-a', str(ledger.path)])
             self.assertEqual(error.exception.code, 2)  # There is no such Discovery Lab execution command.
 
+
+class ReviewCorrectionTests(unittest.TestCase):
+    """PR #30 review corrections: versioned replay of V001 history and writer-lock outcomes.
+
+    The two V001 fixtures were written by the unmodified pre-audit Discovery code (origin/main
+    5395b9e, whose src/research/discovery equals this branch's merge base). They are SYNTHETIC.
+    """
+    FIXTURES = ROOT / 'tests/fixtures/discovery_v001'
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+
+    def historical(self, name):
+        path = Path(self.tmp.name) / name
+        path.write_bytes((self.FIXTURES / name).read_bytes())
+        return Ledger(path)
+
+    def assert_refused_without_change(self, ledger, kind, record, pattern):
+        before = ledger.path.read_bytes()
+        with self.assertRaisesRegex(LedgerError, pattern):
+            ledger.append(kind, record)
+        self.assertEqual(ledger.path.read_bytes(), before)
+
+    def test_v001_gross_claim_with_evidenced_review_replays_but_cannot_support_a_new_pass(self):
+        ledger = self.historical('gross_net_only_evidenced_review.jsonl')
+        before = ledger.path.read_bytes()
+        s = ledger.load()
+        self.assertEqual((s.rules, len(s.events), ledger.path.read_bytes()), (L.V.RULES_V001, 8, before))
+        self.assertEqual(s.events[-1]['derived']['blockers']['financial_bridge'], 0)  # historical derived kept
+        self.assertIn('GROSS_EXPOSURE_UNVERIFIED', checklist(s, 'CAND-T-1')['requirements']['financial_bridge']['blockers'])
+        self.assert_refused_without_change(ledger, 'review', m_review('REV-T-M2'), 'financial_bridge cannot be EVIDENCED')
+        self.assert_refused_without_change(ledger, 'disposition', disposition(decision='M_PASSED', reason_type='EVIDENCE_COMPLETE'),
+                                           'GROSS_EXPOSURE_UNVERIFIED')
+
+    def test_v001_source_revision_with_not_evidenced_review_replays_but_new_review_is_blocked(self):
+        ledger = self.historical('source_revised_not_evidenced_review.jsonl')
+        before = ledger.path.read_bytes()
+        s = ledger.load()
+        self.assertEqual((s.rules, len(s.events), ledger.path.read_bytes()), (L.V.RULES_V001, 9, before))
+        self.assertIn('SOURCE_REVISED_AFTER_FREEZE:SRC-T v1->v2',
+                      checklist(s, 'CAND-T-1')['requirements']['distinctive_predictor']['blockers'])
+        self.assert_refused_without_change(ledger, 'review', m_review('REV-T-M2'), 'distinctive_predictor cannot be EVIDENCED')
+        event = ledger.append('review', m_review('REV-T-M3', judgment='NOT_EVIDENCED'))
+        self.assertEqual(event['derived']['rules'], L.V.RULES_V002)
+        self.assertEqual(event['derived']['blockers']['distinctive_predictor'], 1)
+        self.assertTrue(ledger.path.read_bytes().startswith(before))
+        self.assertEqual(ledger.load().admitted[('review', 'REV-T-M3', None)], L.V.RULES_V002)
+
+    def test_v001_m_approval_is_never_promoted_to_a_v002_pass(self):
+        with patch.object(L, 'RULES', L.V.RULES_V001):
+            ledger = world(self.tmp.name)
+            ledger.append('candidate', candidate())
+            ledger.freeze('CAND-T-1')
+            ledger.append('review', m_review())
+            ledger.append('disposition', disposition(decision='M_PASSED', reason_type='EVIDENCE_COMPLETE'))
+        self.assertFalse(any('rules' in e['derived'] for e in ledger.load().events[1:]))
+        self.assertFalse(any(v['blockers'] for v in checklist(ledger.load(), 'CAND-T-1')['requirements'].values()))
+        level_a = disposition('DSP-T-A', decision='LEVEL_A_DESIGN_CANDIDATE', reason_type='EVIDENCE_COMPLETE')
+        self.assert_refused_without_change(ledger, 'disposition', level_a, 'REV-T-M was admitted under DISCOVERY_LAB_RULES_V001')
+        self.assert_refused_without_change(ledger, 'disposition', disposition('DSP-T-2', decision='M_PASSED', reason_type='EVIDENCE_COMPLETE'),
+                                           'admitted under DISCOVERY_LAB_RULES_V001; record a new human M review')
+        ledger.append('review', m_review('REV-T-M2'))
+        self.assert_refused_without_change(ledger, 'disposition', level_a, 'M_PASSED for this version first under DISCOVERY_LAB_RULES_V002')
+        self.assertEqual(ledger.append('disposition', disposition('DSP-T-2', decision='M_PASSED', reason_type='EVIDENCE_COMPLETE'))['derived']['rules'],
+                         L.V.RULES_V002)
+
+    def test_new_ledgers_record_v002_and_rules_never_move_backwards(self):
+        ledger = world(self.tmp.name)
+        s = ledger.load()
+        self.assertEqual(s.events[0]['derived'], {'rules': L.V.RULES_V002})
+        self.assertFalse(any('rules' in e['derived'] for e in s.events[1:]))
+        old = self.historical('gross_net_only_evidenced_review.jsonl')
+        old.append('effort', D.rec('effort', id='EFF-V2', description='Synthetic V002 append.', analyst_minutes=1))
+        head = old.load().events[-1]
+        forged = {'seq': head['seq'] + 1, 'type': 'effort', 'recorded_at_utc': head['recorded_at_utc'], 'derived': {},
+                  'record': D.rec('effort', id='EFF-V1', description='Untagged after V002.', analyst_minutes=1), 'prev': head['hash']}
+        forged['hash'] = digest(forged)
+        with old.path.open('ab') as f:
+            f.write(canonical(forged) + b'\n')
+        with self.assertRaisesRegex(LedgerError, 'older than rules already applied'):
+            old.load()
+
+    def test_committed_append_with_unremovable_lock_reports_the_committed_event(self):
+        ledger = world(self.tmp.name)
+        lock = ledger.path.with_name(ledger.path.name + '.writer.lock')
+        before = len(ledger.load().events)
+        original = Path.unlink
+
+        def held(path, *args, **kwargs):
+            if path.name.endswith('.writer.lock'):
+                raise PermissionError('synthetic scanner handle')
+            return original(path, *args, **kwargs)
+
+        with patch.object(Path, 'unlink', held), self.assertRaises(L.WriterLockNotReleased) as caught:
+            ledger.append('candidate', candidate())
+        events = ledger.load().events
+        self.assertEqual((len(events), caught.exception.seq, caught.exception.hash), (before + 1, before, events[-1]['hash']))
+        self.assertIn('WAS appended', str(caught.exception))
+        self.assertTrue(lock.exists())
+        with self.assertRaisesRegex(LedgerError, 'writer lock exists'):
+            ledger.append('effort', D.rec('effort', id='EFF-AFTER', description='Must not steal.', analyst_minutes=1))
+        self.assertEqual(len(ledger.load().events), before + 1)
+        lock.unlink()  # explicit reconciliation after confirming the head
+        record = Path(self.tmp.name) / 'effort.json'
+        record.write_text(json.dumps(D.rec('effort', id='EFF-CLI', description='CLI append.', analyst_minutes=1)), encoding='utf-8')
+        out = io.StringIO()
+        with patch.object(Path, 'unlink', held), redirect_stdout(out), redirect_stderr(io.StringIO()) as err,                 self.assertRaises(SystemExit) as code:
+            main(['add', str(ledger.path), 'effort', str(record)])
+        self.assertEqual((code.exception.code, json.loads(out.getvalue())['hash']), (3, ledger.load().events[-1]['hash']))
+        self.assertIn('committed but not released', err.getvalue())
+
+    def test_invalid_append_with_unremovable_lock_keeps_the_validation_error(self):
+        ledger = world(self.tmp.name)
+        before = ledger.path.read_bytes()
+        original = Path.unlink
+
+        def held(path, *args, **kwargs):
+            if path.name.endswith('.writer.lock'):
+                raise PermissionError('synthetic scanner handle')
+            return original(path, *args, **kwargs)
+
+        with patch.object(Path, 'unlink', held), self.assertRaises(R.RecordError) as caught:
+            ledger.append('candidate', {'id': 'CAND-BAD'})
+        self.assertNotIsInstance(caught.exception, L.WriterLockNotReleased)
+        self.assertTrue(any('left in place' in note for note in caught.exception.__notes__))
+        self.assertEqual(ledger.path.read_bytes(), before)
+
+    def test_interrupted_writer_leaves_lock_and_partial_bytes_for_reconciliation(self):
+        ledger = world(self.tmp.name)
+        lock = ledger.path.with_name(ledger.path.name + '.writer.lock')
+        stalled = ledger._writer()  # a writer that claimed the lock and then stopped (e.g. killed mid-append)
+        stalled.__enter__()
+        self.addCleanup(stalled.__exit__, None, None, None)
+        with ledger.path.open('ab') as f:
+            f.write(b'{"seq":5,"type":"effort"')
+        partial = ledger.path.read_bytes()
+        self.assertTrue(lock.exists())
+        with self.assertRaisesRegex(LedgerError, 'writer lock exists'):
+            ledger.append('candidate', candidate())
+        with self.assertRaisesRegex(LedgerError, 'final newline'):
+            ledger.load()
+        self.assertEqual(ledger.path.read_bytes(), partial)
+        self.assertTrue(lock.exists())
 
 if __name__=='__main__':unittest.main()
