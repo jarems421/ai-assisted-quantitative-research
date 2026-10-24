@@ -81,14 +81,21 @@ def stop_tree(proc):
     return killed
 
 
-def capture(args, *, stdout, stderr, limit, timeout, input=None, cwd=None, env=None, shell=False):
+def capture(args, *, stdout, stderr, limit, timeout, input=None, cwd=None, env=None, shell=False, on_start=None):
     """``subprocess.run`` with bounded capture. Both pipes are copied in CHUNK reads into the given binary sinks while
     counting; once the combined count passes ``limit`` nothing more is kept (later bytes are drained and discarded)
     and the process tree is stopped, as it is at the timeout. The stop is confirmed only when the kill succeeded, the
-    process exited and both pipes reached end of file (no descendant still holds them) within STOP_GRACE."""
+    process exited and both pipes reached end of file (no descendant still holds them) within STOP_GRACE.
+
+    ``on_start(pid)`` runs only once ``Popen`` has returned, so it is the evidence that a process exists; an
+    ``OSError`` raised before it means the OS refused to create one. If it fails, the new process tree is stopped."""
     if shell:raise ValueError('shell is never used')
     proc = subprocess.Popen(args, stdin=subprocess.DEVNULL if input is None else subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE, cwd=cwd, env=env, shell=False, start_new_session=os.name != 'nt')
+    if on_start:
+        try:on_start(proc.pid)
+        except BaseException:
+            stop_tree(proc); raise
     lock, over, kept = threading.Lock(), threading.Event(), {'bytes': 0, 'open': True}
     def pump(pipe, sink):
         while chunk := pipe.read1(CHUNK):
@@ -97,7 +104,9 @@ def capture(args, *, stdout, stderr, limit, timeout, input=None, cwd=None, env=N
                 sink.write(chunk); kept['bytes'] += len(chunk)
                 if kept['bytes'] > limit:over.set()
     def feed():
-        try:proc.stdin.write(input); proc.stdin.close()
+        try:proc.stdin.write(input)
+        except OSError:pass  # the child stopped reading or was stopped
+        try:proc.stdin.close()
         except OSError:pass
     readers = [threading.Thread(target=pump, args=(proc.stdout, stdout), daemon=True),
                threading.Thread(target=pump, args=(proc.stderr, stderr), daemon=True)]
@@ -416,6 +425,21 @@ def provenance(p, auth_value, facts, *, invoked, completed, model, error=None):
 CLOSE = (S.ScoutError, OSError, subprocess.SubprocessError, ValueError, TypeError, KeyError, AttributeError, IndexError, RecursionError)
 
 
+# Process start: NOT_STARTED (no launch), START_ATTEMPTED (Popen raised OSError, so no process exists), STARTED
+# (Popen returned) or UNKNOWN (launch in flight when it failed or was interrupted). A started process is not
+# evidence that a request reached the provider; only a request ID in the reviewed stream is.
+INVOCATION = {'NOT_SENT': 'NOT_INVOKED', 'VISIBLE_REQUEST_ID': 'INVOKED', S.UNKNOWN: S.UNKNOWN}
+MARKER_STARTS = {'NONE': ('NOT_STARTED',), 'DISPATCHED': ('START_ATTEMPTED', S.UNKNOWN, 'STARTED'), 'STARTED': ('STARTED',)}
+START_INVOCATIONS = {'NOT_STARTED': ('NOT_INVOKED',), 'START_ATTEMPTED': ('NOT_INVOKED',), S.UNKNOWN: (S.UNKNOWN,),
+                     'STARTED': ('INVOKED', S.UNKNOWN)}
+
+
+def provider_request(process, review_facts):
+    if process in ('NOT_STARTED', 'START_ATTEMPTED'):return 'NOT_SENT'
+    seen = review_facts.get('visible_request_ids', 0)
+    return 'VISIBLE_REQUEST_ID' if process == 'STARTED' and type(seen) is int and seen >= 1 else S.UNKNOWN
+
+
 def seal(handles):
     """Flush, fsync and close every raw handle. Each step is attempted exactly once, a failure never skips the
     remaining steps or handles, and every failure is named: this runs in a ``finally`` and must never raise."""
@@ -442,9 +466,11 @@ def run(store, authorisation, *, host=None):
     aid, exe = p['attempt_id'], CS.discover(p['executable'])
     env = environment(host, p['effort'], p['max_output_tokens_per_request'])
     # Consumed before ANY CLI command: a crash after this point can never be re-run.
+    if (archive.path / 'exports' / f'exploratory-claim-{aid}.json').exists():
+        raise S.ScoutError('attempt already claimed (interrupted run); never resumed or re-dispatched')
     archive.export(f'exploratory-claim-{aid}.json', {'schema': VERSION, 'attempt_id': aid, 'plan_sha256': p['plan_sha256'],
                    'authorisation_sha256': facts['authorisation_sha256'], 'session_id': facts['session_id'], 'claimed_at': host.now()})
-    invoked = completed = host.now(); stopped, review_facts, invocations = None, {}, 0
+    invoked = completed = host.now(); stopped, review_facts, start = None, {}, {'process': 'NOT_STARTED'}
     before = account_files(host)
     try:
         facts.update(preflight(host, p, auth_value, exe, env))
@@ -457,27 +483,36 @@ def run(store, authorisation, *, host=None):
         # The size bound is enforced during capture: past it the process tree is stopped and nothing more is kept.
         targets = {c: unlinked(archive.path / 'exports' / f'exploratory-{aid}-{c}.bin') for c in ('stdout', 'stderr')}
         handles = {}
-        invoked, start = host.now(), host.monotonic()
+        def started(pid):  # Popen returned: a process exists, whether or not its marker can be written
+            start['process'] = 'STARTED'
+            archive.export(f'exploratory-started-{aid}.json', {'schema': VERSION, 'attempt_id': aid, 'pid': pid, 'started_at': host.now()})
+        invoked, clock = host.now(), host.monotonic()
         try:
             for c, t in targets.items():handles[c] = t.open('xb')
             with tempfile.TemporaryDirectory(prefix='scout-explore-') as cwd:
                 if Path(cwd).resolve().is_relative_to(ROOT):raise S.ScoutError('CLI working directory must be outside the repository')
-                invocations = 1
+                # Durable before the launch: an interruption from here on is never read as "not started".
+                archive.export(f'exploratory-dispatch-{aid}.json', {'schema': VERSION, 'attempt_id': aid, 'dispatched_at': host.now()})
+                start['process'] = S.UNKNOWN  # until Popen's own outcome is known
                 proc = host.runner(args, input=payload(prompt), cwd=cwd, env=env.copy(), stdout=handles['stdout'],
-                                   stderr=handles['stderr'], limit=MAX_STREAM_BYTES, timeout=p['timeout_seconds'], shell=False)
+                                   stderr=handles['stderr'], limit=MAX_STREAM_BYTES, timeout=p['timeout_seconds'], shell=False,
+                                   on_start=started)
                 code = proc.returncode
         except subprocess.TimeoutExpired as error:
             timed_out, tree = True, getattr(error, 'tree', None)
         except OutputLimitExceeded as error:  # kept bytes are hashed below and never loaded or parsed
             stopped = 'RUN_STOP:RECORDING_SIZE_LIMIT:' + error.tree
         except CLOSE as error:
-            stopped = ('RAW_CAPTURE_SETUP_FAILED' if len(handles) != len(targets) else  # no process was started
-                       'PROCESS_START_FAILED' if isinstance(error, OSError) else 'INVOCATION_SETUP_FAILED:' + type(error).__name__)
+            if start['process'] == S.UNKNOWN and isinstance(error, OSError):
+                start['process'] = 'START_ATTEMPTED'  # Popen raised before returning: the OS created no process
+            stopped = {'NOT_STARTED': 'RAW_CAPTURE_SETUP_FAILED' if len(handles) != len(targets) else 'INVOCATION_SETUP_FAILED:' + type(error).__name__,
+                       'START_ATTEMPTED': 'PROCESS_START_FAILED', S.UNKNOWN: 'PROCESS_START_UNKNOWN:' + type(error).__name__,
+                       'STARTED': 'DISPATCH_FAILED_AFTER_START:' + type(error).__name__}[start['process']]
         finally:
             sealed = seal(handles)
         if sealed:  # bytes may be partial or not durable: never parsed, whatever the process reported
             stopped = ';'.join(x for x in (stopped, 'TIMEOUT' if timed_out else None, 'RAW_CAPTURE_FINALISE_FAILED:' + ','.join(sealed)) if x)
-        completed, facts['wall_seconds'] = host.now(), round(host.monotonic() - start, 3)
+        completed, facts['wall_seconds'] = host.now(), round(host.monotonic() - clock, 3)
         sizes = {c: t.stat().st_size for c, t in targets.items() if t.is_file()}
         for c, t in targets.items():
             if c not in sizes:continue
@@ -506,13 +541,18 @@ def run(store, authorisation, *, host=None):
     prov = provenance(p, auth_value, facts, invoked=invoked, completed=completed, model=model, error=error)
     state = W.finish(archive, aid, '' if error else review_facts['text'], prov, error=error)
     status = state.attempts[aid]['result']['status']
+    process = start['process']; request = provider_request(process, review_facts)
     archive.append('generation_effort', {'attempt_id': aid, 'actor': {'kind': 'HUMAN', 'id': f'{auth_value["owner"].strip()} (authorised runner)'},
         'human_minutes': S.UNKNOWN, 'wall_seconds': facts.get('wall_seconds', S.UNKNOWN), 'context_id': facts['session_id'],
-        'fresh_context': 'YES' if invocations else 'UNKNOWN', 'invocation_status': 'INVOKED' if invocations else 'NOT_INVOKED',
-        'no_prior_generated_cards': 'YES', 'description': f'{VERSION}: {status}. ' + (error or 'One visible generation imported.')[:3000]})
+        'fresh_context': 'YES' if process == 'STARTED' else 'UNKNOWN', 'invocation_status': INVOCATION[request],
+        'no_prior_generated_cards': 'YES', 'description': f'{VERSION}: {status}. Process start {process}; provider request {request}. '
+        + (error or 'One visible generation imported.')[:3000]})
     if status == 'VALID':W.triage(archive)
     archive.export(f'exploratory-report-{aid}.json', report(archive.load()))
-    receipt = {'schema': RECEIPT_V, 'attempt_id': aid, 'status': status, 'error': error, 'model_invocations': log.count('MODEL'),
+    # model_invocations counts CLI processes started (UNKNOWN when the launch outcome is); it never counts provider requests.
+    receipt = {'schema': RECEIPT_V, 'attempt_id': aid, 'status': status, 'error': error,
+               'model_invocations': {'STARTED': 1, S.UNKNOWN: S.UNKNOWN}.get(process, 0), 'process_start': process,
+               'process_start_attempts': log.count('MODEL'), 'provider_request': request, 'invocation_status': INVOCATION[request],
                'administrative_commands_run': log.count('ADMIN'),
                'cards': [c for c in state.cards], 'review': {k: v for k, v in review_facts.items() if k != 'text'},
                'preflight': {k: facts[k] for k in ('cli_version', 'help_sha256', 'account') if k in facts},
@@ -534,6 +574,19 @@ def status(store):
     attempts = {a['id']: a.get('result', {}).get('status', 'PENDING') for a in state.attempts.values()}
     claimed = any(n.startswith('exploratory-claim-') for n in exports)
     finished = any(n.startswith('exploratory-receipt-') for n in exports)
+    markers = ('STARTED' if any(n.startswith('exploratory-started-') for n in exports) else
+               'DISPATCHED' if any(n.startswith('exploratory-dispatch-') for n in exports) else 'NONE')
+    receipt = next((input_json(archive.path / 'exports' / n) for n in exports if n.startswith('exploratory-receipt-')), None)
+    effort = next((r['invocation_status'] for r in reversed(state.efforts) if r.get('attempt_id') in state.attempts), None)
+    # Without a receipt only the markers speak: a dispatch without a start marker is UNKNOWN, never "not started".
+    process = receipt['process_start'] if receipt else {'NONE': 'NOT_STARTED', 'DISPATCHED': S.UNKNOWN, 'STARTED': 'STARTED'}[markers]
+    invocation = effort or (receipt or {}).get('invocation_status') or ('NOT_INVOKED' if process == 'NOT_STARTED' else S.UNKNOWN)
+    disagreements = [m for m, bad in (
+        ('process start contradicts dispatch markers', process not in MARKER_STARTS[markers]),
+        ('invocation status contradicts process start', invocation not in START_INVOCATIONS.get(process, ())),
+        ('receipt and generation-effort invocation status differ', bool(receipt and effort and receipt.get('invocation_status') != effort)))
+        if claimed and bad]
     return {'attempts': attempts, 'cards': list(state.cards), 'claimed': claimed, 'receipt': finished,
-            'interrupted': claimed and not finished, 'exports': exports,
+            'interrupted': claimed and not finished, 'process_start': process if claimed else 'NOT_STARTED',
+            'invocation_status': invocation, 'accounting_agrees': not disagreements, 'disagreements': disagreements, 'exports': exports,
             'note': 'An interrupted run (claim without receipt) is never resumed; review its raw bytes manually.'}

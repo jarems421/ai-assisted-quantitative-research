@@ -63,6 +63,7 @@ class FakeCLI:
         self.calls.append((list(args), kwargs))
         if '--print' in args:  # the runner hands the CLI exclusive raw files; nothing is captured in memory
             session = args[args.index('--session-id') + 1]
+            kwargs['on_start'](4242)  # as capture() does once Popen has returned
             if self.on_model:self.on_model()
             if self.timeout:
                 kwargs['stdout'].write(b'{"type":"system"'); raise subprocess.TimeoutExpired(args, 1)
@@ -381,7 +382,8 @@ class RawCaptureFinaliseTests(Base):
         self.assertEqual(receipt['error'], 'RAW_CAPTURE_FINALISE_FAILED:' + expected)
         state = self.state()
         self.assertEqual((state.attempts['ATT-0001']['result']['status'], len(state.cards)), ('ERROR', 0))
-        self.assertEqual(state.efforts[-1]['invocation_status'], 'INVOKED')
+        # Started, but the unparsed stream is no evidence that a request reached the provider.
+        self.assertEqual((state.efforts[-1]['invocation_status'], receipt['process_start'], receipt['provider_request']), ('UNKNOWN', 'STARTED', 'UNKNOWN'))
         self.assertEqual(receipt['stdout_bytes'], (self.store / 'exports/exploratory-ATT-0001-stdout.bin').stat().st_size)
         st = X.status(self.store); self.assertEqual((st['claimed'], st['receipt'], st['interrupted']), (True, True, False))
 
@@ -406,6 +408,123 @@ class RawCaptureFinaliseTests(Base):
         auth = sorted(self.base.glob('authorisation-*.json'))[-1]
         with self.assertRaises(S.ScoutError):X.run(self.store, auth, host=self.host)  # an interrupted claim is never resumed
         self.assertEqual(cli.kinds().count('MODEL'), 1)
+
+
+class OutputLimitTests(Base):
+    """The real bounded capture runs against local children in tests/test_scout_exploratory_capture_process_assurance.py."""
+    def test_unconfirmed_tree_stop_is_recorded_as_such(self):
+        def runner(args, **kwargs):
+            if '--print' not in args:return fake(args, **kwargs)
+            kwargs['stdout'].write(b'x' * 10); raise X.OutputLimitExceeded(args, 10, 'PROCESS_TREE_STOP_UNCONFIRMED')
+        fake = FakeCLI(self); result = self.planned(); self.host.runner = runner
+        receipt = X.run(self.store, self.authorise(result), host=self.host)
+        self.assertEqual((receipt['status'], receipt['error'], receipt['stdout_bytes']),
+                         ('ERROR', 'RUN_STOP:RECORDING_SIZE_LIMIT:PROCESS_TREE_STOP_UNCONFIRMED', 10))
+
+
+class ProcessStartAccountingTests(Base):
+    """A launch attempt is not a model invocation: receipt, effort record and status agree on what is evidenced."""
+    def launch(self, behave):
+        """Run with a model call replaced by ``behave(args, kwargs)``; returns (receipt or exception, cli)."""
+        cli = FakeCLI(self)
+        def runner(args, **kwargs):
+            if '--print' not in args:return cli(args, **kwargs)
+            cli.calls.append((list(args), kwargs)); return behave(args, kwargs)
+        result = self.planned(); self.host.runner = runner
+        try:return X.run(self.store, self.authorise(result), host=self.host), cli
+        except BaseException as error:return error, cli
+
+    def agree(self, receipt, process, request, invocation, models):
+        self.assertEqual((receipt['process_start'], receipt['provider_request'], receipt['invocation_status'], receipt['model_invocations'],
+                          receipt['process_start_attempts']), (process, request, invocation, models, 1))
+        effort = self.state().efforts[-1]
+        self.assertEqual(effort['invocation_status'], invocation); self.assertIn(f'Process start {process}', effort['description'])
+        st = X.status(self.store)
+        self.assertEqual((st['process_start'], st['invocation_status'], st['accounting_agrees'], st['interrupted']), (process, invocation, True, False))
+
+    def assert_consumed(self, cli):
+        auth = sorted(self.base.glob('authorisation-*.json'))[-1]
+        with self.assertRaises(S.ScoutError):X.run(self.store, auth, host=self.host)
+        self.assertEqual(cli.kinds().count('MODEL'), 1)
+
+    def test_failed_process_creation_is_not_an_invocation(self):
+        receipt, cli = self.launch(lambda a, k: (_ for _ in ()).throw(FileNotFoundError(2, 'fictional: no such executable')))
+        self.assertEqual((receipt['status'], receipt['error']), ('ERROR', 'PROCESS_START_FAILED'))
+        self.agree(receipt, 'START_ATTEMPTED', 'NOT_SENT', 'NOT_INVOKED', 0)
+        self.assertTrue((self.store / 'exports/exploratory-dispatch-ATT-0001.json').is_file())
+        self.assertFalse((self.store / 'exports/exploratory-started-ATT-0001.json').exists())
+        self.assert_consumed(cli)
+
+    def test_successful_launch_with_request_evidence_is_invoked(self):
+        receipt = self.execute(FakeCLI(self))
+        self.assertEqual(receipt['status'], 'VALID')
+        self.agree(receipt, 'STARTED', 'VISIBLE_REQUEST_ID', 'INVOKED', 1)
+        marker = json.loads((self.store / 'exports/exploratory-started-ATT-0001.json').read_text(encoding='utf-8'))
+        self.assertEqual(marker['pid'], 4242)
+
+    def test_started_process_without_request_evidence_stays_unknown(self):
+        receipt = self.execute(FakeCLI(self, model_stream=lambda s: b'not json\n'))
+        self.assertEqual(receipt['status'], 'ERROR')
+        self.agree(receipt, 'STARTED', 'UNKNOWN', 'UNKNOWN', 1)
+
+    def test_timeout_after_start_is_final_and_provider_reach_unknown(self):
+        def hang(args, kwargs):
+            kwargs['on_start'](4242); kwargs['stdout'].write(b'{"type":"system"'); raise subprocess.TimeoutExpired(args, 1)
+        receipt, cli = self.launch(hang)
+        self.assertEqual(receipt['status'], 'ERROR'); self.assertIn('TIMEOUT', receipt['error'])
+        self.agree(receipt, 'STARTED', 'UNKNOWN', 'UNKNOWN', 1)
+        self.assert_consumed(cli)
+
+    def test_ambiguous_launch_failure_is_unknown_and_consumed(self):
+        receipt, cli = self.launch(lambda a, k: (_ for _ in ()).throw(subprocess.SubprocessError('fictional: child setup')))
+        self.assertEqual((receipt['status'], receipt['error']), ('ERROR', 'PROCESS_START_UNKNOWN:SubprocessError'))
+        self.agree(receipt, 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN')
+        self.assert_consumed(cli)
+
+    def test_interruption_during_launch_reports_unknown_without_a_receipt(self):
+        error, cli = self.launch(lambda a, k: (_ for _ in ()).throw(KeyboardInterrupt()))
+        self.assertIsInstance(error, KeyboardInterrupt)
+        st = X.status(self.store)
+        self.assertEqual((st['claimed'], st['receipt'], st['interrupted'], st['process_start'], st['invocation_status'], st['accounting_agrees']),
+                         (True, False, True, 'UNKNOWN', 'UNKNOWN', True))
+        self.assert_consumed(cli)
+
+    def test_interruption_after_start_reports_started_without_a_receipt(self):
+        def interrupted(args, kwargs):kwargs['on_start'](4242); raise KeyboardInterrupt()
+        error, cli = self.launch(interrupted)
+        self.assertIsInstance(error, KeyboardInterrupt)
+        st = X.status(self.store)
+        self.assertEqual((st['interrupted'], st['process_start'], st['invocation_status'], st['accounting_agrees']), (True, 'STARTED', 'UNKNOWN', True))
+        self.assert_consumed(cli)
+
+    def test_unwritable_start_marker_stops_the_new_process_tree(self):
+        from unittest.mock import patch
+        killed, real_export = [], Archive.export
+        class Proc:
+            pid = 4242
+            def kill(self):pass
+        def export(archive, name, value):
+            if name.startswith('exploratory-started-'):raise OSError(28, 'fictional: no space left on device')
+            return real_export(archive, name, value)
+        with patch.object(X.subprocess, 'Popen', lambda *a, **k: Proc()), patch.object(X, 'stop_tree', killed.append), \
+                patch.object(Archive, 'export', export):
+            receipt, cli = self.launch(lambda args, kwargs: X.capture(args, **kwargs))
+        self.assertEqual(len(killed), 1)
+        self.assertEqual(receipt['error'], 'DISPATCH_FAILED_AFTER_START:OSError')
+        self.assertEqual((receipt['process_start'], receipt['invocation_status']), ('STARTED', 'UNKNOWN'))
+        st = X.status(self.store); self.assertEqual((st['process_start'], st['accounting_agrees']), ('STARTED', True))  # dispatch marker only
+
+    def test_status_flags_records_that_disagree(self):
+        self.execute(FakeCLI(self))
+        (self.store / 'exports/exploratory-started-ATT-0001.json').unlink()
+        (self.store / 'exports/exploratory-dispatch-ATT-0001.json').unlink()
+        st = X.status(self.store)
+        self.assertFalse(st['accounting_agrees']); self.assertIn('process start contradicts dispatch markers', st['disagreements'])
+
+    def test_unclaimed_archive_reports_not_started(self):
+        self.planned()
+        st = X.status(self.store)
+        self.assertEqual((st['process_start'], st['invocation_status'], st['accounting_agrees']), ('NOT_STARTED', 'NOT_INVOKED', True))
 
 
 class BoundaryTests(unittest.TestCase):

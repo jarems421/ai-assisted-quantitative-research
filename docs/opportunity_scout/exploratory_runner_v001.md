@@ -48,7 +48,7 @@ stops the run.
 
    A refusal here consumes nothing.
 2. **Consumes the attempt** with an exclusive claim file *before any CLI command*. A crash after this can never be
-   re-run. `status` reports a claim without a receipt as interrupted.
+   re-run. `status` reports a claim without a receipt as interrupted, and `run` refuses an existing claim.
 3. **Preflight**, all without a model call:
    - research configuration and credential store exist (existence only; contents never read);
    - no server-managed settings cache;
@@ -65,10 +65,35 @@ stops the run.
    denied, `--max-turns 1`, a fresh session ID, and a temporary working directory outside the repository. The
    payload is the archived prompt plus the frozen format-only addendum (SHA256 `360f9354…`, the bytes used in the
    pilot).
+
+   **Start accounting.** Launching a process is not counted as a model request. A `dispatch` marker is written
+   just before the launch, and a `started` marker (with the PID) as soon as `Popen` returns. If that marker cannot
+   be written, the new process tree is stopped.
+
+   | `process_start` | Evidence | `provider_request` | `invocation_status` | `model_invocations` |
+   |---|---|---|---|---|
+   | `NOT_STARTED` | no launch (preflight or setup stop) | `NOT_SENT` | `NOT_INVOKED` | 0 |
+   | `START_ATTEMPTED` | `Popen` raised `OSError`: the OS created no process | `NOT_SENT` | `NOT_INVOKED` | 0 |
+   | `UNKNOWN` | the launch failed any other way, or was interrupted | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+   | `STARTED` | `Popen` returned | `VISIBLE_REQUEST_ID` only if the reviewed stream shows a request ID, else `UNKNOWN` | `INVOKED` / `UNKNOWN` | 1 |
+
+   `model_invocations` counts CLI processes started, never provider requests. `process_start_attempts` counts
+   launch calls. The generation-effort record uses the frozen enum (`invocation_status`) and names the start state
+   in its description. A timeout, size stop or capture failure after the start is `STARTED`, with provider reach
+   `UNKNOWN`. Every case consumes the attempt.
+
+   Without a receipt, `status` reads only the markers: a claim alone is `NOT_STARTED`, a dispatch alone is
+   `UNKNOWN` and a start marker is `STARTED`. With a receipt, it reports `accounting_agrees` and lists any
+   contradiction between the receipt, the markers and the effort record.
 5. **Raw capture straight to disk.** The CLI's stdout and stderr go directly into exclusive files in the archive, so
-   nothing is buffered in memory and the bytes exist before any parsing. Above 8 MiB combined, the stream is kept on
-   disk but never loaded or parsed (`RECORDING_SIZE_LIMIT`). That is an IO bound, not a token certificate.
-   Administrative command output is bounded at 1 MiB.
+   nothing is buffered in memory and the bytes exist before any parsing. Limits are enforced **during** capture: the
+   runner reads both pipes in 64 KiB chunks and, once stdout plus stderr pass 8 MiB, keeps nothing more and stops the
+   CLI's process tree (`taskkill /F /T` from System32 on Windows; the CLI's own session on POSIX), as it also does at
+   the timeout. At most one chunk per channel beyond the limit is kept; those bytes are hashed in the receipt and
+   never loaded or parsed (`RUN_STOP:RECORDING_SIZE_LIMIT:PROCESS_TREE_STOPPED`, or `…_STOP_UNCONFIRMED` unless the
+   kill succeeded, the process exited and both pipes reached end of file within 5 s). This is an IO bound, not a
+   token certificate. Administrative output is bounded the same way at 1 MiB in memory and never stored
+   (`ADMIN_OUTPUT_TOO_LARGE:<command>:<tree status>`). The stop helper is not a CLI command and is not counted.
    After the process ends, each raw file is flushed, fsynced and closed; every step is attempted once on every
    file. Any failure makes the attempt ERROR (`RAW_CAPTURE_FINALISE_FAILED:<channel>:<step>:<exception>`), and the
    possibly partial bytes are hashed but never parsed. The model is never invoked again. If the receipt itself cannot
