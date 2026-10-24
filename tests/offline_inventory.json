@@ -86,6 +86,26 @@
       "EvaluationTests.test_wrong_seal_or_changed_card_content_is_refused"
     ]
   },
+  "tests/opportunity_scout/test_exploratory_runner_v001.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Exploratory FORGE runner V001: fake CLI replaying the real 2.1.302 stream vocabulary, temporary archives and a temporary fictional home; no process, network, credential or real account directory.",
+    "declared_tests": [
+      "AuthorisationTests.test_refuses_incomplete_or_altered_authorisation_and_consumes_nothing",
+      "BoundaryTests.test_cli_status_and_bad_plan_start_no_process",
+      "BoundaryTests.test_runner_is_outside_the_frozen_v004_and_r3_closures",
+      "PlanTests.test_frozen_addendum_matches_the_pilot_bytes",
+      "PlanTests.test_plan_refuses_aliases_and_unbounded_limits",
+      "PlanTests.test_plan_starts_no_process_and_binds_exact_payload",
+      "RunTests.test_policy_remote_settings_and_executable_change_stop_before_the_model",
+      "RunTests.test_preflight_failures_close_the_attempt_without_a_model_call",
+      "RunTests.test_second_run_is_refused_without_any_process",
+      "RunTests.test_valid_run_invokes_once_imports_triages_and_reports",
+      "StreamTests.test_deviations_stop_without_cards_or_retry",
+      "StreamTests.test_timeout_and_post_run_drift_are_final",
+      "StreamTests.test_unusable_answer_is_kept_invalid_and_budget_overrun_is_honest"
+    ]
+  },
   "tests/opportunity_scout/test_hosted_readiness_v001.py": {
     "baseline_ci": true,
     "runner": "scout",

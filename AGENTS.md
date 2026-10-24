@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Opportunity Scout exploratory FORGE runner V001: offline-tested, draft PR, not merged (2026-10-24)
+
+- `docs/opportunity_scout/exploratory_runner_v001.md`; code `src/research/opportunity_scout/exploratory_v001/` (`python -m src.research.opportunity_scout.exploratory_v001 plan|run|status`). One owner-authorised, seedless, memory-free FORGE generation per new exploratory archive through the Claude Code CLI. Separate from N1, frozen V004 and every scientific slot; no top-level Scout, `v004_r3`, N1, observer, `critic_v1` or `post_generation` file changes.
+- `plan` starts no process. `run` refuses unless a completed owner authorisation binds the exact plan (payload, binary, model, effort, caps, research config, controls) with a named human owner and timezone date. It claims the attempt before any CLI command, keeps raw bytes before parsing, and allows exactly four administrative commands and one invocation. Any deviation (second generation, continuation, tool use, API-key source, overage, model/provider/account drift, unknown event) is ERROR with no cards. Never retry, repair, continue, resume an interrupted claim or loosen the fail-closed stream vocabulary in place; a new form needs a new version.
+- Recorded as `OPERATOR_ASSISTED` with `parameters.transport` because the frozen provider enum has no automated-Claude label; do not reuse the V003 comparison binding. Never store raw `auth status` output, credentials or the account email. No live run is authorised by this code, its tests or a merge.
+
 ## Opportunity Scout AI Critic V001: offline foundation, draft PR, not merged (2026-10-23)
 
 - `docs/opportunity_scout/ai_critic_v001.md`, `ai_critic_v001_calibration_protocol.md` (PROPOSED), owner instruction `owner_ai_critic_v001_2026-10-23.md`; code `src/research/opportunity_scout/critic_v1/` (`python -m src.research.opportunity_scout.critic_v1 ...`). Offline only: no model, Jev or hosted call, credential or activation. Critic outputs are recommendations; human READY/handoff and owner gates stay authoritative; nothing routes, deletes or rejects a card. Jev stays shadow-only and never enters the policy or queue.

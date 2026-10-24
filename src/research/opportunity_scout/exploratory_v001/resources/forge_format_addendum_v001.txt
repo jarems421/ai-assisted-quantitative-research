@@ -1,0 +1,5 @@
+Operator note (format constraints enforced by the importer but not visible in the schema above; they add no content, evidence or examples):
+1. "requirement.id" and every entry of "reconsider_when.requirements" must be exactly one of: REQ_AVAILABLE_CAPACITY, REQ_REALISED_ACTIVITY, REQ_DOCUMENTED_ALLOCATION, REQ_ENTITY_COHORT_JOIN, REQ_HISTORICAL_SCHEDULE_OR_VERSION, REQ_RETAINED_NET_ECONOMICS, REQ_QUALIFIED_COMMERCIAL_EXPOSURE, REQ_UNREDACTED_CONTRACT_AMOUNT, REQ_OTHER.
+2. No source passages are supplied, so every "evidence" array must be empty and no "source_routes" entry may have state "DOCUMENTED_ROUTE".
+3. The four "mechanism.links" must run TRIGGER->OPERATIONS, OPERATIONS->TRANSMISSION, TRANSMISSION->PARTY, PARTY->CONSEQUENCE, in that order.
+4. Reply with the JSON object only: no Markdown code fences, no artifact, no text before or after it.
