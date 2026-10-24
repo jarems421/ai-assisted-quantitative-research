@@ -13,7 +13,7 @@ python -m src.research.discovery init pilot/P1/packet.jsonl records/P1-campaign.
 python -m src.research.graph pilot snapshot pilot/P1/snapshot.json --packet P1 --packet-ledger pilot/P1/packet.jsonl --arm-ledger S pilot/P1/S.jsonl DLC-GP1-S --arm-ledger G pilot/P1/G.jsonl DLC-GP1-G --bundle private/P1/bundle --frozen-at 2026-10-21T12:34:30+00:00
 ```
 
-Snapshot `5882ecf932063097...` frozen at 2026-10-21T12:34:30+00:00: packet ledger DLC-GPKT-1 pinned at 4 events (head `bdb9cb0f06f7...`), catalogue V002 by SHA-256, 2 bundle files by SHA-256.
+Snapshot `6dfda73c6aed22bf...` frozen at 2026-10-21T12:34:30+00:00: packet ledger DLC-GPKT-1 pinned at 4 events (head `ded6565b8c6b...`), catalogue V002 by SHA-256, 2 bundle files by SHA-256.
 
 ## 2. Both arm inputs
 
@@ -27,8 +27,8 @@ python -m src.research.graph pilot verify pilot/P1/snapshot.json --bundle worktr
 
 | Starting input | Arm S | Arm G |
 |---|---|---|
-| snapshot_sha256 | 5882ecf932063097... | 5882ecf932063097... |
-| packet_ledger | DLC-GPKT-1, 4 events, head bdb9cb0f06f7... | DLC-GPKT-1, 4 events, head bdb9cb0f06f7... |
+| snapshot_sha256 | 6dfda73c6aed22bf... | 6dfda73c6aed22bf... |
+| packet_ledger | DLC-GPKT-1, 4 events, head ded6565b8c6b... | DLC-GPKT-1, 4 events, head ded6565b8c6b... |
 | catalogue_sha256 | afd91e54697f7e47... | afd91e54697f7e47... |
 | bundle_digest | cdeb2ea52aa68a99... | cdeb2ea52aa68a99... |
 | bundle_verified | True | True |
@@ -93,15 +93,15 @@ python -m src.research.graph same-gap REQ_REALISED_ACTIVITY --snapshot pilot/P1/
 python -m src.research.graph explain OBS-1 SYN_LISTED:HARBOUR --snapshot pilot/P1/snapshot.json --arm G --query-at 2026-10-21T13:04:30+00:00
 ```
 
-revisit: history:HIST-F01/claim-v1, history:HIST-F19/claim-v1. complements: observation:DLC-GPKT-1/OBS-P-1@1, relationship:DLC-GPKT-1/REL-P-1@1. suggestions exported: 4, of which 4 structured search also finds. Graph digest `18a433b81cb7a138...`.
+revisit: history:HIST-F01/claim-v1, history:HIST-F19/claim-v1. complements: observation:DLC-GPKT-1/OBS-P-1@1, relationship:DLC-GPKT-1/REL-P-1@1. suggestions exported: 4, of which 4 structured search also finds. Graph digest `2fccf1876f4ae553...`.
 
 Visibility receipts at each arm's query time:
 
 | Input | Arm S | Arm G |
 |---|---|---|
-| snapshot | 5882ecf932063097... | 5882ecf932063097... |
+| snapshot | 6dfda73c6aed22bf... | 6dfda73c6aed22bf... |
 | query time | 2026-10-21T12:43:30+00:00 | 2026-10-21T13:04:30+00:00 |
-| frozen packet | DLC-GPKT-1, 4 events, head bdb9cb0f06f7... | DLC-GPKT-1, 4 events, head bdb9cb0f06f7... |
+| frozen packet | DLC-GPKT-1, 4 events, head ded6565b8c6b... | DLC-GPKT-1, 4 events, head ded6565b8c6b... |
 | catalogue | afd91e54697f7e47... | afd91e54697f7e47... |
 | own ledger | DLC-GP1-S: 5 of 5 events | DLC-GP1-G: 5 of 5 events |
 | never visible | the other arm's ledger, notes and connection log; every other packet and every earlier pilot ledger, of either arm; records appended after the query time; ledger discovery under docs/strategy (inputs are listed, never discovered) | the other arm's ledger, notes and connection log; every other packet and every earlier pilot ledger, of either arm; records appended after the query time; ledger discovery under docs/strategy (inputs are listed, never discovered) |
@@ -156,7 +156,7 @@ Dispositions were recorded for both arms only after both campaigns had ended. A 
 python -m src.research.graph pilot blind pilot/P1/snapshot.json --log S pilot/P1/connections-S.jsonl --log G pilot/P1/connections-G.jsonl --salt dry-run-blinding-salt-0001 --out pilot/P1/blind.json --key private/P1/key.json
 ```
 
-9 items, shuffled; the key is sealed by hash `86349177e22ed7e6...` and held privately. Each endpoint is rendered by one function whichever arm logged it (fields: basis, campaign, depth, entities, evidence, kind, occurred, period, record, status, tags, text, type, units, value), with one mechanical `shared_structure` per item.
+9 items, shuffled; the key is sealed by hash `76b3c61b63b60f23...` and held privately. Each endpoint is rendered by one function whichever arm logged it (fields: basis, campaign, depth, entities, evidence, kind, occurred, period, record, status, tags, text, type, units, value), with one mechanical `shared_structure` per item.
 ```sh
 python -m src.research.graph pilot adjudications pilot/P1/blind.json pilot/P1/adjudications.jsonl
 ```

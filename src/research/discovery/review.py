@@ -9,6 +9,10 @@ from __future__ import annotations
 
 from src.research.discovery import records as R
 
+RULES_V001 = 'DISCOVERY_LAB_RULES_V001'
+# V002 adds SOURCE_REVISED_AFTER_FREEZE and GROSS_EXPOSURE_UNVERIFIED. V001 events replay without them.
+RULES_V002 = 'DISCOVERY_LAB_RULES_V002'
+
 U = R.UNKNOWN
 ORDER = ('distinctive_predictor', 'meaning_and_units', 'separate_outcome', 'valid_join', 'financial_bridge', 'public_time_route')
 
@@ -61,7 +65,7 @@ def revised_sources(s, c):
             if sources[sid] != s.latest('source', sid)['version']]
 
 
-def checklist(s, cid, version=None):
+def checklist(s, cid, version=None, rules=RULES_V002):
     c = s.version('candidate', cid, version)
     if c is None:raise ValueError(f'unknown candidate {cid} v{version}')
     b = {k: [] for k in R.M_REQUIREMENTS}; gaps, h = [], []
@@ -109,7 +113,7 @@ def checklist(s, cid, version=None):
             if current != v:
                 req = 'distinctive_predictor' if rid.startswith('OBS-') else 'valid_join'
                 b[req].append(f'REFERENCE_REVISED_AFTER_FREEZE:{rid} v{v}->v{current}')
-        for sid, previous, current, requirements in revised_sources(s, c):
+        for sid, previous, current, requirements in (revised_sources(s, c) if rules != RULES_V001 else []):
             for req in requirements:
                 b[req].append(f'SOURCE_REVISED_AFTER_FREEZE:{sid} v{previous}->v{current}')
 
@@ -119,7 +123,7 @@ def checklist(s, cid, version=None):
     if not any(r['status'] == 'VERIFIED' and company['id'] in (r['source_entity']['id'], r['target_entity']['id']) for r in rels):
         b['financial_bridge'].append('EXPOSURE_NOT_LINKED_BY_VERIFIED_RELATIONSHIP')
     if x['claim_basis'] != 'NOT_MONETARY' and x['gross'] == U and x['net'] == U:b['financial_bridge'].append('EXPOSURE_UNQUANTIFIED')
-    elif x['claim_basis'] == 'GROSS' and x['gross'] == U:b['financial_bridge'].append('GROSS_EXPOSURE_UNVERIFIED')
+    elif x['claim_basis'] == 'GROSS' and x['gross'] == U and rules != RULES_V001:b['financial_bridge'].append('GROSS_EXPOSURE_UNVERIFIED')
     if x['claim_basis'] == 'NET' and x['net'] == U:b['financial_bridge'].append('NET_EXPOSURE_UNVERIFIED')
     if x['materiality'] == U:b['financial_bridge'].append('MATERIALITY_UNSTATED')
     if c['public_time_route'] == U:b['public_time_route'].append('NO_PUBLIC_TIME_ROUTE')
