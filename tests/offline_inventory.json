@@ -265,6 +265,27 @@
       "PromptResearchTests.test_valid_fictional_outputs_use_original_semantic_validator"
     ]
   },
+  "tests/opportunity_scout/test_research_pipeline_v001.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Research OS pipeline V001: offline end-to-end with fake Claude CLI, fake Codex JSONL, fake Gemini transport and SYNTHETIC FIXTURE critic answers in temporary directories; socket and process creation denied; no credential or account directory.",
+    "declared_tests": [
+      "BoundaryTests.test_api_key_login_and_unattested_billing_stop_before_dispatch",
+      "BoundaryTests.test_authorisation_must_bind_the_exact_plan_and_one_owner",
+      "BoundaryTests.test_crash_leaves_a_truthful_partial_report_and_is_never_redispatched",
+      "BoundaryTests.test_full_offline_run_uses_no_socket_process_or_written_secret",
+      "BoundaryTests.test_generator_family_self_review_and_unsupported_routes_are_refused_at_plan",
+      "BoundaryTests.test_plan_status_and_report_start_nothing_and_frozen_boundaries_hold",
+      "BoundaryTests.test_timeout_and_transport_failure_are_final",
+      "BoundaryTests.test_unavailable_provider_and_authentication_failure_are_reported_never_substituted",
+      "EndToEndTests.test_disagreement_is_recommended_for_revision_and_adversarial_stays_pending",
+      "EndToEndTests.test_each_critic_receives_only_its_own_frozen_blinded_request",
+      "EndToEndTests.test_invalid_reply_is_kept_and_provider_fault_is_never_imported",
+      "EndToEndTests.test_model_fallback_is_a_fault_for_both_providers",
+      "EndToEndTests.test_one_authorised_run_generates_critiques_recommends_and_reports",
+      "EndToEndTests.test_unobserved_identity_and_unknown_usage_are_not_promoted"
+    ]
+  },
   "tests/opportunity_scout/test_scout.py": {
     "baseline_ci": true,
     "runner": "scout",
