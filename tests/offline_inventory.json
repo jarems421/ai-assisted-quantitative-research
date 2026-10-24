@@ -1750,6 +1750,7 @@
       "ReadinessTests.test_assumed_allocation_is_blocked",
       "ReadinessTests.test_binary_original_can_be_recorded_but_needs_signed_human_mapping",
       "ReadinessTests.test_changed_forge_hypothesis_is_blocked",
+      "ReadinessTests.test_changed_forge_mechanism_cannot_hide_behind_mapping_prose",
       "ReadinessTests.test_changed_origin_card_hash_is_blocked",
       "ReadinessTests.test_changed_outcome_value_and_original_retain_revision_history",
       "ReadinessTests.test_correct_conversion_is_reproduced",

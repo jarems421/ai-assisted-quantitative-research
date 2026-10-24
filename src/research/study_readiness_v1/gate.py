@@ -282,7 +282,7 @@ class Packet:
         # Exact mappings are preserved; scientific changes must be explicitly crosswalked.
         targets = {'/predictor/quantity': c['predictor']['quantity'], '/predictor/units': c['predictor']['units'],
                    '/outcome/quantity': c['outcome']['quantity'], '/outcome/units': c['outcome']['units'],
-                   '/falsifier/observation': c['falsification']}
+                   '/falsifier/observation': c['falsification'], '/mechanism': c['mechanism']}
         require(set(origin['mapping']) == set(targets), 'FORGE_MAPPING_INCOMPLETE')
         for path, target in targets.items():
             row = origin['mapping'][path]

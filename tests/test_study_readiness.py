@@ -85,9 +85,10 @@ def make_packet(folder, edit_records=None):
             'denominator': ob['denominator'], 'entity': ob['entity']['id'], 'scope': dict(scope), 'nature': 'REPORTED',
             'period': {'start': '2000-03-01', 'end': '2000-03-31'}, 'public_time': {'status': 'RETROSPECTIVE_ONLY'}})
     mapping = {}
-    for path in ('/predictor/quantity', '/predictor/units', '/outcome/quantity', '/outcome/units', '/falsifier/observation'):
+    for path in ('/predictor/quantity', '/predictor/units', '/outcome/quantity', '/outcome/units', '/falsifier/observation', '/mechanism'):
         original = G.pointer(card['idea'], path)
-        mapping[path] = {'original': original, 'mapped': original, 'change_reason': ''}
+        mapping[path] = {'original': original, 'mapped': c['mechanism'] if path == '/mechanism' else original,
+                         'change_reason': 'SYNTHETIC mechanism shortened; independent economic verification remains required.' if path == '/mechanism' else ''}
     design = {'question': 'Does this fictional documented ceiling reduction coincide with lower separately reported terminal shipments?',
               'falsifier': 'Shipments are unchanged or higher after the reduction; a missing same-facility measurement stops the check.',
               'eligible_population': 'One purposively chosen fictional terminal F-001; not a population-wide estimate.',
@@ -327,6 +328,10 @@ class ReadinessTests(unittest.TestCase):
 
     def test_changed_forge_hypothesis_is_blocked(self):
         self.p['origin']['mapping']['/predictor/quantity']['mapped'] = 'Silently substituted forecast'
+        self.refused('FORGE_HANDOFF_CHANGED')
+
+    def test_changed_forge_mechanism_cannot_hide_behind_mapping_prose(self):
+        self.p['origin']['mapping']['/mechanism']['mapped'] = 'An unrelated financial mechanism.'
         self.refused('FORGE_HANDOFF_CHANGED')
 
     def test_changed_origin_card_hash_is_blocked(self):
