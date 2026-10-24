@@ -100,3 +100,188 @@ rejection is a fail-closed HTTP 400).
 `ANTIGRAVITY_CONSUMER` validates as a role only so a plan can name it and be refused. The pipeline records
 `PROVIDER_UNAVAILABLE_OR_NOT_AUTHORISED` and never launches `agy`. No OAuth extraction, endpoint proxying, client
 spoofing or browser automation exists anywhere in this package.
+
+# Research OS pipeline V001: one plan → one authorisation → one run → one report
+
+> **Offline-tested only.** No live run has been made.
+> - The software integration works end to end with fake providers.
+> - That proves no provider compatibility, research accuracy or permission to use any hosted account.
+
+Code: `src/research/opportunity_scout/automation_v001/pipeline.py` and `__main__.py`.
+Tests: `tests/opportunity_scout/test_research_pipeline_v001.py`, plus real local Python children in
+`tests/test_scout_automation_admin_process_assurance.py` (CI on both platforms).
+
+The pipeline coordinates existing components. It adds no generation, rubric, archive or policy logic:
+
+| Stage | Existing component (unchanged) |
+|---|---|
+| Generation | `exploratory_v001.runner.plan` / `run`, with its own owner authorisation nested in the pipeline one |
+| Critic inputs | `critic_v1.packages.prepare` (Layer A, blinded frozen requests, TUNING split) |
+| Critic replies | `automation_v001.providers`, then `critic_v1.packages.import_response` |
+| Recommendation | `critic_v1.policy.recommend` (advisory, write-once) |
+| Report | `evaluation.report`, plus one consolidated JSON and Markdown report |
+
+## Usage
+
+```powershell
+# Plan: archive, reserved generation attempt, pipeline plan and authorisation template. Starts no process.
+python -m src.research.opportunity_scout.automation_v001 plan .research/opportunity_scout/<new-run> --title "<title>" --model claude-opus-5-5 --count 2 --effort low --executable "<claude.exe>" --scientific scientific-role.json --economic economic-role.json --spend-cap-usd 2 --codex-home "<CODEX_HOME>"
+# The owner completes exports/pipeline-authorisation-TEMPLATE.json (and its nested generation block) OUTSIDE the archive.
+python -m src.research.opportunity_scout.automation_v001 run .research/opportunity_scout/<run> --authorisation <completed.json>
+python -m src.research.opportunity_scout.automation_v001 status .research/opportunity_scout/<run>
+python -m src.research.opportunity_scout.automation_v001 report .research/opportunity_scout/<run>
+```
+
+Add `--json` to `report` for the full record.
+
+Example role files:
+- Scientific: `{"provider": "CODEX_CLI", "family": "openai", "model": "<gpt-6-* slug>", "effort": "xhigh", "accept_requested_identity": false, "executable": "<codex.exe>"}`
+- Economic: `{"provider": "GEMINI_API", "family": "google", "model": "gemini-4-argon", "api_key_env": "GEMINI_API_KEY", "max_output_tokens": 8192, "thinking_level": "high", "prices": {"input_usd_per_million": 2.0, "output_usd_per_million": 10.0, "source": "ai.google.dev pricing", "as_of": "2026-10-24"}}`
+
+## What the authorisation binds
+
+The pipeline authorisation must bind all of the following:
+- the plan hash;
+- both critic roles exactly (provider, family, model, effort, executable hash, identity acceptance, prices, key variable name, output cap);
+- the spend cap and the maximum number of critic requests (two per card);
+- one attempt per request, and the stage list;
+- `adversarial_permitted: false`;
+- the raw-retention policy;
+- `hosted_transmission_approved: true`;
+- a named human owner with a timezone date.
+
+For Gemini it also needs a positive cap and the owner's attestation that prepaid auto-reload is disabled. The nested
+generation authorisation must bind the planned generation and name the same owner; the merged runner validates the rest.
+
+Per-request hashes cannot exist before the cards are generated. The authorisation therefore binds the frozen critic
+texts by hash and the deterministic request construction. Each actual request and prompt hash is recorded when it
+is built, and every prompt is re-checked against its frozen `rendered_prompt_sha256` before dispatch.
+
+## Safety behaviour
+
+- **One attempt.** Each request is claimed exclusively before dispatch and is never dispatched twice. This is
+  stricter than the critic contract's allowance of two attempts. Critics run in separate processes or HTTP requests,
+  and each sees only its own frozen blinded request.
+- **No resume.** The whole run is claimed before any process. A second `run` is refused. A crash leaves a partial
+  record: `status` shows `INTERRUPTED`, and `report` marks a claimed request whose outcome was never recorded as
+  `CLAIMED_OUTCOME_UNKNOWN`. That request is never re-dispatched.
+- **Faults are never imported.** A provider fault means the reply is not imported. Its raw bytes are kept beside the
+  ledger record, and the request stays unanswered, so the policy gives ESCALATE. Invalid replies are imported unchanged
+  and stay INVALID.
+- **Spend reservations are never released.** Each Gemini request reserves its full worst-case cost (exact whole
+  micro-USD, rounded up; the cap is rounded down) before its dispatch record exists. The cumulative reservation never
+  goes down: not for a lower usage estimate, missing usage, a transport failure, a refused redirect or a crash.
+  Estimates are recorded beside it, never subtracted. The cap therefore bounds the sum of worst cases.
+- **Bounded Codex administrative commands.** `--version`, `login status` and `exec --help` run only through the
+  merged runner's `admin` and `capture`:
+  - stdout and stderr together are capped at 1 MiB **while capturing**, with a 30-second timeout;
+  - past the cap, at the timeout or on a capture failure the process tree is stopped, and each is a named
+    `PREFLIGHT_STOP` before any critic process;
+  - each distinct executable identity (resolved path, pinned SHA-256 and `CODEX_HOME`) gets its own preflight before
+    its first critic process. `pipeline-codex-preflight-claim-<id>.json` is written before the first launch, and
+    `pipeline-codex-preflight-record-<id>.json` records the launches and the confirmed starts;
+  - one executable passing never authorises another. Only roles with an identical identity reuse a result, and an
+    unrecorded or failed preflight is a stop for that executable;
+  - the pinned hash is rechecked before every critic launch, so a cached preflight never covers a changed binary
+    (`EXECUTABLE_CHANGED_BEFORE_DISPATCH`).
+- **HTTP protocol errors are faults.** `http.client` errors such as `IncompleteRead` or `BadStatusLine` are not
+  `OSError`s, and they become `TRANSPORT_FAILED:<type>` like any other failed send:
+  - no partial body is kept or imported, the reservation stays, and the request count is UNKNOWN;
+  - only the exception type, or one of the transport's own fixed `GEMINI_*` codes, is recorded. Exception text can
+    carry partial response bytes.
+- **Adversarial review is never dispatched.** A policy recommendation for it is recorded `PENDING_APPROVAL`.
+- **Unavailable roles stop honestly.** An unavailable role (`ANTIGRAVITY_CONSUMER`) is recorded
+  `PROVIDER_UNAVAILABLE_OR_NOT_AUTHORISED` and the run ends `INCOMPLETE_CRITICS`. Nothing is substituted.
+- **No authority.** Recommendations never change Scout routing and carry no READY, investment, causal or trading
+  authority.
+
+## Report
+
+`pipeline-report.json` and `pipeline-report.md` contain:
+- every card with its Scout ID, route, falsifier and next step;
+- the generation status, model and error;
+- per-dimension Scientific and Economic judgments;
+- disagreements, fatal claims and repairs, and the reconsider-when checks;
+- unknown dimensions and unresolved assumptions;
+- the deterministic recommendation and adversarial status;
+- each critic's provider, model, identity basis, faults, usage and cost estimate;
+- the accounting below, and the Gemini reservations and estimate total;
+- missing or interrupted stages.
+
+There is no composite score. Actual charges are UNKNOWN.
+
+## Status and accounting
+
+`status` and the report count from recorded files only. Each count is `{at_least, exact}`. Every marker is written
+before the launch or request it names, so a missing marker establishes zero. Nothing else does.
+
+| Measure | Evidence |
+|---|---|
+| Model CLI processes started | Generation `process_start`; `pipeline-started-<request>`, written by `on_start` once `Popen` returns. A dispatch without that marker is UNKNOWN |
+| Administrative CLI launches (send no prompt) | Generation receipt `administrative_commands_run`; each Codex preflight record. A claim without its record is UNKNOWN |
+| Dispatches attempted | `exploratory-dispatch-*` and `pipeline-dispatch-<request>` |
+| Provider requests | Generation: a visible request ID means at least 1. Codex: a model-authored message means at least 1. Gemini: a recorded response is exactly 1 (no redirects or retries) |
+
+**Unknowns:**
+- A started CLI process is never counted as one provider request, so Claude and Codex request counts stay `exact:
+  UNKNOWN`.
+- A dispatched Gemini request with no recorded response (transport failure, refused redirect or crash) is UNKNOWN.
+
+## Offline demonstration (what the tests prove)
+
+The tests run with a fake Claude CLI in the real 2.1.302 vocabulary, a fake Codex JSONL stream, a fake Gemini
+transport and `SYNTHETIC FIXTURE` critic answers, with socket and process creation denied.
+
+1. One run generates two cards. Each gets two independently dispatched critic requests, byte-identical to its frozen
+   blinded request, so four imports are VALID, both cards are READY_CANDIDATE, a report is written and the routes stay
+   INCUBATE.
+2. A scripted scientific CONFOUNDED versus economic PASS disagreement gives REVISION_REQUIRED, with adversarial
+   review `PENDING_APPROVAL` and no fifth call.
+3. An invalid Gemini reply is kept as INVALID, and a two-message Codex stream is a provider fault and is not
+   imported. Both lead to ESCALATE, with no second attempt.
+4. Model fallback on either provider, unobserved Codex identity without acceptance, and unknown usage are all faults.
+5. A Codex API-key login stops before dispatch. A Gemini authorisation without the auto-reload attestation is refused,
+   and a spend cap below the worst case means no request is sent.
+6. An unavailable Antigravity role, HTTP 401 and an absent key are each reported, with nothing substituted.
+7. A timeout or transport failure is final, and a failed send counts as UNKNOWN, never zero.
+8. A crash after a process starts leaves a truthful partial report, and the duplicate run is refused, with no second
+   dispatch.
+9. Altered authorisations (assistant owner, other generation owner, adversarial, two attempts, other model) are
+   refused before any process. Plan, status and report start nothing. The new package is outside the frozen V004 and
+   R3 closures.
+10. The API key reaches only the transport header. It never appears in any written file.
+11. Through the real transport and an offline origin simulator, a redirect from the documented host is refused, with
+    no follow-up request, so `attacker.invalid` never receives the key.
+12. Reservations are never released. With one reservation held, a second request that no longer fits is refused,
+    whether the first had a low estimate, missing usage or a transport failure.
+13. Codex administrative commands get the 1 MiB combined limit, the 30-second timeout and no stdin. Each of these
+    stops the preflight by name before any critic process: overflow, timeout, capture failure, non-zero exit, a
+    runner returning oversized output, and a refused launch. With real children, a combined stdout/stderr flood (each
+    channel under 1 MiB) and a hang are stopped together with their process trees.
+14. Accounting is exactly zero before a run. After the run there are three model CLI processes, five dispatches, and
+    provider requests at least five with exact UNKNOWN. A crash keeps the started process counted and leaves its
+    requests UNKNOWN.
+15. `IncompleteRead` (through the real transport, with a truncated body), `HTTPException`, `BadStatusLine` and an
+    untrusted `ScoutError` message each give a recorded `TRANSPORT_FAILED:<type>` fault:
+    - the run finishes, with one dispatch per request and none resent;
+    - the reservation stays, and the request count and estimate are UNKNOWN;
+    - neither the key nor the partial body appears in any written file.
+16. With both critics on Codex, the identity decides the preflight:
+    - an identical executable runs one preflight;
+    - two different executables each run their own three commands before their first critic process;
+    - a second executable with an API-key login or a failed command is stopped while the first's critics stay VALID;
+    - a binary changed after planning gets no command at all, and one changed during a run is never launched again.
+
+## Blockers to one fully automated live run
+
+1. **Economic critic.** No compliant automated route is set up. The consumer Antigravity route is not authorised, and
+   the Gemini API needs the owner to create an AI Studio key with prepaid credit (minimum $5) and auto-reload off. At
+   documented prices one economic request is a few cents: a 24 KB prompt and up to 8,192 output tokens is at most about
+   $0.13 worst case at $2/$10. That is an estimate, not a quote.
+2. **Scientific critic model choice.** The owner must pick an exact Codex slug (there is no plain "GPT-6") and decide
+   whether to accept requested-only identity. The Codex `--json` profile has not been observed live, and the binary is
+   an extension-bundled alpha. An official Codex CLI install is recommended.
+3. **Generator.** The merged runner has never run live. Its own preflight (`--version`, `--help`, `auth status`) and the
+   strict stream profile will first meet a real CLI on the first authorised run.
+4. **Owner approvals.** Hosted transmission of unpublished cards to OpenAI and Google, the spend cap, and the
+   authorisation file itself.
