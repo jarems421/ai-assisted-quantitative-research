@@ -4,11 +4,17 @@ Records are never rewritten. A changed source, observation, relationship or cand
 version that names what it supersedes and why. Every event stores the hash of its predecessor, and
 ``load`` replays the whole file through the same rules used at append time, so a hand-edited line,
 a silently changed frozen claim or a rule bypass is detected rather than trusted.
+
+Each event replays under the rules version that admitted it. A campaign records its creation
+rules; a later event admitted under newer rules carries ``derived.rules``. Untagged events of a
+V001 ledger therefore keep V001 semantics, while every new append uses the current rules.
 """
 from __future__ import annotations
 
 import copy
 import json
+import os
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -16,13 +22,24 @@ from src.research.spec import canonical, digest
 from src.research.discovery import records as R
 from src.research.discovery import review as V
 
-RULES = 'DISCOVERY_LAB_RULES_V001'
+RULES = V.RULES_V002
+KNOWN_RULES = (V.RULES_V001, V.RULES_V002)  # oldest first; replay never moves backwards
 GENESIS = '0' * 64
 ROOT = Path(__file__).resolve().parents[3]
 
 
 class LedgerError(ValueError):
     """An append or replay that would violate Discovery Lab rules."""
+
+
+class WriterLockNotReleased(LedgerError):
+    """The event IS committed, but its writer lock could not be removed. Never retry the append."""
+
+    def __init__(self, path, lock, event, cause):
+        self.path, self.lock, self.seq, self.hash = str(path), str(lock), event['seq'], event['hash']
+        super().__init__(f"{Path(path).name}: event {event['seq']} ({event['type']}, hash {event['hash']}) WAS appended, "
+                         f'but the writer lock {Path(lock).name} could not be removed ({type(cause).__name__}). '
+                         'Do not retry: confirm the ledger head is this hash, then reconcile and remove the lock.')
 
 
 def utc_now():
@@ -39,6 +56,7 @@ class State:
         self.freezes = {}
         self.reviews, self.dispositions, self.efforts, self.events = [], [], [], []
         self.entities, self.name_variants = {}, {}
+        self.rules, self.admitted = None, {}  # campaign rules; rules that admitted each later event
 
     @property
     def fixture(self):
@@ -55,6 +73,9 @@ class State:
 
     def frozen(self, cid, version):
         return self.freezes.get((cid, version))
+
+    def latest_rules(self):
+        return max([self.rules, *self.admitted.values()], key=KNOWN_RULES.index)
 
     def ids(self, kind):
         if kind in R.VERSIONED:return set(self.versions[kind])
@@ -167,7 +188,12 @@ def candidate_for(r, s, w):
     return c
 
 
-def check_review(r, s):
+def admitted_key(kind, record):
+    if kind == 'freeze':return ('freeze', record['candidate_id'], record['version'])
+    return (kind, record['id'], record['version'] if kind in R.VERSIONED else None)
+
+
+def check_review(r, s, rules=RULES):
     w = f"review {r['id']}"; c = candidate_for(r, s, w); frozen = bool(s.frozen(c['id'], c['version']))
     refs = [ref for j in (r['judgments'].values() if r['kind'] == 'M' else []) for ref in j['evidence_refs']]
     refs += [ref for item in r['checked'] for ref in item['evidence_refs']]
@@ -178,7 +204,7 @@ def check_review(r, s):
     acknowledged = {n['category'] for n in r['not_checked']}
     missing = sorted(V.required_acknowledgements(s, c) - acknowledged)
     if missing:raise LedgerError(f'{w}: acknowledge what was not checked: {missing}')
-    found = V.checklist(s, c['id'], c['version'])
+    found = V.checklist(s, c['id'], c['version'], rules)
     if r['kind'] == 'M':
         for req, j in r['judgments'].items():
             if j['judgment'] == 'EVIDENCED' and found['requirements'][req]['blockers']:
@@ -194,18 +220,23 @@ def latest_review(s, cid, version, kind, human=True):
     return found[-1] if found else None
 
 
-def check_disposition(r, s):
+def check_disposition(r, s, rules=RULES):
     w = f"disposition {r['id']}"; c = candidate_for(r, s, w); d = s.derived[('candidate', c['id'], c['version'])]
     if r['decision'] in ('M_PASSED', 'LEVEL_A_DESIGN_CANDIDATE'):
         if not s.frozen(c['id'], c['version']):raise LedgerError(f"{w}: {r['decision']} requires a frozen claim")
-        blockers = {k: v['blockers'] for k, v in V.checklist(s, c['id'], c['version'])['requirements'].items() if v['blockers']}
+        blockers = {k: v['blockers'] for k, v in V.checklist(s, c['id'], c['version'], rules)['requirements'].items() if v['blockers']}
         if blockers:raise LedgerError(f'{w}: mechanical blockers remain {blockers}')
         m = latest_review(s, c['id'], c['version'], 'M')
         if m is None or not all(j['judgment'] == 'EVIDENCED' for j in m['judgments'].values()):
             raise LedgerError(f'{w}: M PASSED needs a human Measurement Gate M review evidencing all six requirements')
+        admitted = s.admitted[admitted_key('review', m)]
+        if rules != V.RULES_V001 and admitted != rules:
+            # A review admitted under older rules never saw the newer blockers; it is not re-certified here.
+            raise LedgerError(f"{w}: M review {m['id']} was admitted under {admitted}; record a new human M review under {rules}")
     if r['decision'] == 'LEVEL_A_DESIGN_CANDIDATE':
-        if not any(x['candidate_id'] == c['id'] and x['version'] == c['version'] and x['decision'] == 'M_PASSED' for x in s.dispositions):
-            raise LedgerError(f'{w}: record M_PASSED for this version first')
+        if not any(x['candidate_id'] == c['id'] and x['version'] == c['version'] and x['decision'] == 'M_PASSED'
+                   and (rules == V.RULES_V001 or s.admitted[admitted_key('disposition', x)] == rules) for x in s.dispositions):
+            raise LedgerError(f'{w}: record M_PASSED for this version first' + ('' if rules == V.RULES_V001 else f' under {rules}'))
         if latest_review(s, c['id'], c['version'], 'H') is None:raise LedgerError(f'{w}: a separate human H assessment is required')
         if any(c['propositions'][p]['statement'] == R.UNKNOWN for p in R.PROPOSITIONS):
             raise LedgerError(f'{w}: state the economic, informational and residual-investment propositions separately')
@@ -242,24 +273,34 @@ CHECKS = {'observation': check_observation, 'relationship': check_relationship, 
           'source': lambda r, s: {}, 'review': check_review, 'disposition': check_disposition, 'effort': check_effort}
 
 
-def check(kind, record, s):
-    """Validate one event against the replayed state and return its derived fields."""
+def check(kind, record, s, rules=None):
+    """Validate one event under ``rules`` (default: current) and return its stored derived fields."""
+    rules = RULES if rules is None else rules
+    if rules not in KNOWN_RULES:raise LedgerError(f'unknown Discovery Lab rules {rules}')
     if kind == 'campaign':
         if s.campaign is not None:raise LedgerError('one campaign per ledger')
         R.validate(kind, record, record.get('fixture') if isinstance(record, dict) else None)
         if record['fixture'] == 'LIVE' and not (ROOT / record['authority'].split()[0]).is_file():
             raise LedgerError('a live campaign must cite an existing repository authority document as the first word of authority')
-        return {'rules': RULES}
+        return {'rules': rules}
     if s.campaign is None:raise LedgerError('a ledger begins with its campaign record')
-    if kind == 'freeze':return check_freeze(record, s)
-    R.validate(kind, record, s.fixture)
-    if kind in R.VERSIONED:check_versioned(kind, record, s)
-    elif record['id'] in s.ids(kind):raise LedgerError(f"duplicate {kind} id {record['id']}")
-    return CHECKS[kind](record, s)
+    if KNOWN_RULES.index(rules) < KNOWN_RULES.index(s.latest_rules()):
+        raise LedgerError(f'{kind}: rules {rules} are older than rules already applied in this ledger')
+    if kind == 'freeze':derived = check_freeze(record, s)
+    else:
+        R.validate(kind, record, s.fixture)
+        if kind in R.VERSIONED:check_versioned(kind, record, s)
+        elif record['id'] in s.ids(kind):raise LedgerError(f"duplicate {kind} id {record['id']}")
+        derived = CHECKS[kind](record, s, rules) if kind in ('review', 'disposition') else CHECKS[kind](record, s)
+    # Tag only events admitted under rules newer than the campaign's, so V001 history replays unchanged.
+    return derived if rules == s.rules else {**derived, 'rules': rules}
 
 
 def fold(kind, record, derived, s):
-    if kind == 'campaign':s.campaign = record
+    if kind != 'campaign':
+        s.admitted[admitted_key(kind, record)] = derived.get('rules', s.rules)
+        derived = {k: v for k, v in derived.items() if k != 'rules'}
+    if kind == 'campaign':s.campaign, s.rules = record, derived['rules']
     elif kind == 'freeze':s.freezes[(record['candidate_id'], record['version'])] = derived
     elif kind in R.VERSIONED:
         s.versions[kind].setdefault(record['id'], []).append(record); s.derived[(kind, record['id'], record['version'])] = derived
@@ -277,40 +318,77 @@ class Ledger:
     @classmethod
     def create(cls, path, campaign, clock=utc_now):
         ledger = cls(path, clock)
-        if ledger.path.exists():raise LedgerError(f'{ledger.path} already exists; ledgers are never overwritten')
         derived = check('campaign', campaign, State())
-        ledger._write(State(), 'campaign', campaign, derived, mode='xb')
+        with ledger._writer() as claim:
+            if ledger.path.exists():raise LedgerError(f'{ledger.path} already exists; ledgers are never overwritten')
+            claim['event'] = ledger._write(State(), 'campaign', campaign, derived, mode='xb')
         return ledger
 
     def load(self):
         """Verify the hash chain and replay every event through the append-time rules."""
         s, prev = State(), GENESIS
-        for n, line in enumerate(self.path.read_bytes().splitlines()):
+        raw = self.path.read_bytes()
+        if raw and not raw.endswith(b'\n'):
+            raise LedgerError(f'{self.path.name}: missing final newline; retain the incomplete ledger, do not append or repair it')
+        for n, line in enumerate(raw.splitlines()):
             event = json.loads(line); stored = event.pop('hash', None)
             if event.get('seq') != n or event.get('prev') != prev or digest(event) != stored:
                 raise LedgerError(f'{self.path.name}: hash chain broken at event {n}; the ledger was edited or truncated')
-            try:derived = check(event['type'], event['record'], s)
-            except ValueError as error:raise LedgerError(f'replay of event {n} fails current rules: {error}') from error
-            if derived != event['derived']:raise LedgerError(f'event {n}: stored derived fields differ from replay ({RULES})')
+            rules = event['derived'].get('rules', s.rules) if isinstance(event.get('derived'), dict) else s.rules
+            try:derived = check(event['type'], event['record'], s, rules)
+            except ValueError as error:raise LedgerError(f'replay of event {n} fails current rules for its admitting version {rules}: {error}') from error
+            if derived != event['derived']:raise LedgerError(f'event {n}: stored derived fields differ from replay ({rules})')
             event['hash'] = stored; fold(event['type'], event['record'], derived, s); s.events.append(event); prev = stored
         if s.campaign is None:raise LedgerError('empty ledger')
         return s
 
     def append(self, kind, record):
-        s = self.load(); record = copy.deepcopy(record)
-        derived = check(kind, record, s)
-        return self._write(s, kind, record, derived)
+        with self._writer() as claim:
+            s = self.load(); record = copy.deepcopy(record)
+            derived = check(kind, record, s)
+            claim['event'] = self._write(s, kind, record, derived)
+            return claim['event']
 
     def freeze(self, cid, version=None):
-        s = self.load(); latest = s.latest('candidate', cid)
-        if latest is None:raise LedgerError(f'unknown candidate {cid}')
-        record = {'candidate_id': cid, 'version': latest['version'] if version is None else version}
-        return self._write(s, 'freeze', record, check('freeze', record, s))
+        with self._writer() as claim:
+            s = self.load(); latest = s.latest('candidate', cid)
+            if latest is None:raise LedgerError(f'unknown candidate {cid}')
+            record = {'candidate_id': cid, 'version': latest['version'] if version is None else version}
+            claim['event'] = self._write(s, 'freeze', record, check('freeze', record, s))
+            return claim['event']
+
+    @contextmanager
+    def _writer(self):
+        """Exclude cooperating writers; an interrupted claim needs explicit operator reconciliation.
+
+        A lock that cannot be removed never masks the outcome: an earlier error propagates unchanged
+        (with a note), and a committed event raises WriterLockNotReleased naming its seq and hash.
+        """
+        target = self.path.resolve()
+        lock = target.with_name(target.name + '.writer.lock')
+        lock.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            handle = lock.open('xb')
+        except FileExistsError as error:
+            raise LedgerError(f'{self.path.name}: writer lock exists; another writer or an interrupted claim must be reconciled') from error
+        claim = {}
+        try:
+            with handle:
+                yield claim
+        except BaseException as error:
+            try:lock.unlink()
+            except OSError as cleanup:error.add_note(f'writer lock {lock.name} was also left in place: {cleanup!r}')
+            raise
+        try:lock.unlink()
+        except OSError as cleanup:
+            if 'event' not in claim:raise
+            raise WriterLockNotReleased(self.path, lock, claim['event'], cleanup) from cleanup
 
     def _write(self, s, kind, record, derived, mode='ab'):
         event = {'seq': len(s.events), 'type': kind, 'recorded_at_utc': self.clock(), 'record': record, 'derived': derived,
                  'prev': s.events[-1]['hash'] if s.events else GENESIS}
         event['hash'] = digest(event)
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        with self.path.open(mode) as f:f.write(canonical(event) + b'\n')
+        with self.path.open(mode) as f:
+            f.write(canonical(event) + b'\n'); f.flush(); os.fsync(f.fileno())
         return event

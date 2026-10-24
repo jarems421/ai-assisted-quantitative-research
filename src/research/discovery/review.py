@@ -9,6 +9,10 @@ from __future__ import annotations
 
 from src.research.discovery import records as R
 
+RULES_V001 = 'DISCOVERY_LAB_RULES_V001'
+# V002 adds SOURCE_REVISED_AFTER_FREEZE and GROSS_EXPOSURE_UNVERIFIED. V001 events replay without them.
+RULES_V002 = 'DISCOVERY_LAB_RULES_V002'
+
 U = R.UNKNOWN
 ORDER = ('distinctive_predictor', 'meaning_and_units', 'separate_outcome', 'valid_join', 'financial_bridge', 'public_time_route')
 
@@ -37,7 +41,31 @@ def covered(period, moment):
     return R.before(start, moment) and (end is None or R.before(moment, end))
 
 
-def checklist(s, cid, version=None):
+def revised_sources(s, c):
+    """Derive source versions at freeze from history without changing stored V001 freeze records."""
+    sources = {}
+    freeze = s.frozen(c['id'], c['version'])
+    if not freeze:
+        return []
+    for event in s.events:
+        record = event['record']
+        if event['type'] == 'source':
+            sources[record['id']] = record['version']
+        if event['type'] == 'freeze' and record == {'candidate_id': c['id'], 'version': c['version']}:
+            break
+    used = {}
+    for oid in c['predictor']['observation_ids'] + c['outcome']['derived_from_observations']:
+        ob = s.version('observation', oid, freeze['references'][oid])
+        requirement = 'distinctive_predictor' if oid in c['predictor']['observation_ids'] else 'separate_outcome'
+        used.setdefault(ob['source_id'], set()).add(requirement)
+    if c['outcome']['source_id'] != U:
+        used.setdefault(c['outcome']['source_id'], set()).add('separate_outcome')
+    return [(sid, sources[sid], s.latest('source', sid)['version'], sorted(requirements))
+            for sid, requirements in sorted(used.items())
+            if sources[sid] != s.latest('source', sid)['version']]
+
+
+def checklist(s, cid, version=None, rules=RULES_V002):
     c = s.version('candidate', cid, version)
     if c is None:raise ValueError(f'unknown candidate {cid} v{version}')
     b = {k: [] for k in R.M_REQUIREMENTS}; gaps, h = [], []
@@ -85,6 +113,9 @@ def checklist(s, cid, version=None):
             if current != v:
                 req = 'distinctive_predictor' if rid.startswith('OBS-') else 'valid_join'
                 b[req].append(f'REFERENCE_REVISED_AFTER_FREEZE:{rid} v{v}->v{current}')
+        for sid, previous, current, requirements in (revised_sources(s, c) if rules != RULES_V001 else []):
+            for req in requirements:
+                b[req].append(f'SOURCE_REVISED_AFTER_FREEZE:{sid} v{previous}->v{current}')
 
     company = x['company']
     if R.named_only(company):b['financial_bridge'].append('COMPANY_NOT_IDENTIFIED')
@@ -92,6 +123,7 @@ def checklist(s, cid, version=None):
     if not any(r['status'] == 'VERIFIED' and company['id'] in (r['source_entity']['id'], r['target_entity']['id']) for r in rels):
         b['financial_bridge'].append('EXPOSURE_NOT_LINKED_BY_VERIFIED_RELATIONSHIP')
     if x['claim_basis'] != 'NOT_MONETARY' and x['gross'] == U and x['net'] == U:b['financial_bridge'].append('EXPOSURE_UNQUANTIFIED')
+    elif x['claim_basis'] == 'GROSS' and x['gross'] == U and rules != RULES_V001:b['financial_bridge'].append('GROSS_EXPOSURE_UNVERIFIED')
     if x['claim_basis'] == 'NET' and x['net'] == U:b['financial_bridge'].append('NET_EXPOSURE_UNVERIFIED')
     if x['materiality'] == U:b['financial_bridge'].append('MATERIALITY_UNSTATED')
     if c['public_time_route'] == U:b['public_time_route'].append('NO_PUBLIC_TIME_ROUTE')
