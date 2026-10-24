@@ -144,6 +144,7 @@
       "ReviewFindingTests.test_session_identifiers_must_be_present_and_match",
       "RunTests.test_policy_remote_settings_and_executable_change_stop_before_the_model",
       "RunTests.test_preflight_failures_close_the_attempt_without_a_model_call",
+      "RunTests.test_real_2_1_302_help_without_max_turns_still_runs_exactly_one_turn",
       "RunTests.test_second_run_is_refused_without_any_process",
       "RunTests.test_valid_run_invokes_once_imports_triages_and_reports",
       "StreamTests.test_deviations_stop_without_cards_or_retry",
@@ -278,6 +279,7 @@
       "BoundaryTests.test_api_key_login_and_unattested_billing_stop_before_dispatch",
       "BoundaryTests.test_authorisation_must_bind_the_exact_plan_and_one_owner",
       "BoundaryTests.test_codex_admin_commands_use_the_bounded_capture_and_every_stop_is_named",
+      "BoundaryTests.test_codex_login_is_read_from_stderr_and_ambiguous_results_fail_closed",
       "BoundaryTests.test_crash_leaves_a_truthful_partial_report_and_is_never_redispatched",
       "BoundaryTests.test_full_offline_run_uses_no_socket_process_or_written_secret",
       "BoundaryTests.test_generator_family_self_review_and_unsupported_routes_are_refused_at_plan",
@@ -1624,7 +1626,8 @@
     "reason": "Research OS pipeline V001 Codex administrative commands: real fixed local Python children (with a heartbeating grandchild) stand in for one Codex administrative command through the real bounded capture; a combined stdout/stderr flood and a hang stop the process tree before any critic process; temporary archives and fictional home. No CLI, model, network or account. Portable.",
     "declared_tests": [
       "CodexAdminProcessTests.test_combined_stdout_and_stderr_flood_stops_the_tree_during_capture",
-      "CodexAdminProcessTests.test_hung_command_is_stopped_at_the_administrative_timeout"
+      "CodexAdminProcessTests.test_hung_command_is_stopped_at_the_administrative_timeout",
+      "CodexAdminProcessTests.test_real_pipes_carry_a_stderr_login_result_through_the_preflight"
     ]
   },
   "tests/test_scout_exploratory_capture_process_assurance.py": {

@@ -67,9 +67,13 @@ class Base(T.Base):
         if mode == 'capture':raise X.CaptureFailed(args, ['stdout:READ:OSError'], 'PROCESS_TREE_STOPPED')
         if mode == 'hang':
             error = subprocess.TimeoutExpired(args, timeout); error.tree = 'PROCESS_TREE_STOPPED'; raise error
-        login = 'Logged in using an API key - sk-...\n' if mode == 'api_key_login' else self.admin_login
-        text = {'--version': 'codex-cli 0.164.0-alpha.11.1\n', 'login': login, 'exec': ' '.join(V.CODEX_FLAGS)}[args[0]]
-        stdout.write(text.encode('utf-8'))
+        if args[0] == 'login':  # codex 0.164 prints the login result on stderr, with stdout empty
+            out, err = {'api_key_login': ('', 'Logged in using an API key - sk-...\n'), 'login_on_stdout': (self.admin_login, ''),
+                        'login_conflict': ('Logged in using an API key - sk-...\n', 'Logged in using ChatGPT\n'),
+                        'login_duplicate': ('Logged in using ChatGPT', 'Logged in using ChatGPT\n'), 'not_logged_in': ('', 'Not logged in\n'),
+                        'login_silent': ('', ''), 'login_extra_line': ('', 'Logged in using ChatGPT\nUsing a custom endpoint\n')}.get(mode, ('', self.admin_login))
+            stdout.write(out.encode('utf-8')); stderr.write(err.encode('utf-8'))
+        else:stdout.write({'--version': 'codex-cli 0.164.0-alpha.11.1\n', 'exec': ' '.join(V.CODEX_FLAGS)}[args[0]].encode('utf-8'))
         if mode == 'unbounded':stderr.write(b'e' * limit)  # a runner that returned without enforcing: the combined check still stops
         return subprocess.CompletedProcess(args, 3 if mode == 'exit' else 0, None, None)
 
@@ -324,6 +328,23 @@ class BoundaryTests(Base):
                 [rec] = self.preflights()
                 self.assertEqual((rec['stop'], rec['administrative_launches'], rec['processes_started']), (stop, launches, started))
                 self.assertEqual(rep['accounting']['codex_preflight']['administrative_cli_launches'], {'at_least': launches, 'exact': launches})
+
+    def test_codex_login_is_read_from_stderr_and_ambiguous_results_fail_closed(self):
+        accepted = {None: 'stderr only (real 0.164 behaviour)', 'login_on_stdout': 'stdout only'}
+        refused = {'api_key_login': 'API-key login', 'login_conflict': 'API key on stdout, ChatGPT on stderr',
+                   'login_duplicate': 'ChatGPT on both channels', 'not_logged_in': 'not logged in', 'login_silent': 'no output',
+                   'login_extra_line': 'an extra line after the login line'}
+        for mode, name in {**accepted, **refused}.items():
+            with self.subTest(case=name):
+                self.tearDown(); self.setUp()
+                if mode:self.admin_mode['login'] = mode
+                self.execute(); rep = self.report()
+                faults = {tuple(self.critic(rep, i, 'SCIENTIFIC')['faults']) for i in self.ideas()}
+                if mode in accepted:
+                    self.assertEqual((faults, len(self.codex_calls)), ({()}, 2))
+                    self.assertEqual(self.preflights()[0]['auth'], 'CHATGPT_LOGIN')
+                else:
+                    self.assertEqual((faults, self.codex_calls), ({('PREFLIGHT_STOP:CODEX_NOT_CHATGPT_SUBSCRIPTION_LOGIN',)}, []))
 
     def test_status_and_report_accounting_never_report_zero_without_evidence(self):
         result = self.planned()

@@ -120,6 +120,7 @@ class GeminiTests(unittest.TestCase):
                  'function call': (gemini_body(parts=[{'functionCall': {'name': 'x'}}]), 200, 'PROHIBITED_OR_UNKNOWN_PART'),
                  'thought part': (gemini_body(parts=[{'text': 'hidden', 'thought': True}, {'text': REPLY}]), 200, 'PROHIBITED_OR_UNKNOWN_PART'),
                  'two candidates': (gemini_body(candidates=2), 200, 'NOT_EXACTLY_ONE_CANDIDATE'),
+                 'no candidate': (gemini_body(candidates=0), 200, 'NOT_EXACTLY_ONE_CANDIDATE'),
                  'other model': (gemini_body(model='gemini-3.8-flash'), 200, 'MODEL_MISMATCH_OR_UNKNOWN'),
                  'blocked': (gemini_body(extra={'promptFeedback': {'blockReason': 'SAFETY'}}), 200, 'PROMPT_BLOCKED'),
                  'usage unknown': (gemini_body(usage={}), 200, 'USAGE_UNKNOWN'),
@@ -137,7 +138,9 @@ class GeminiTests(unittest.TestCase):
 
     def test_request_shape_and_worst_case_bound(self):
         body = V.gemini_request('prompt', max_output_tokens=8192, thinking_level='high')
-        self.assertEqual(body['generationConfig'], {'candidateCount': 1, 'maxOutputTokens': 8192, 'thinkingConfig': {'thinkingLevel': 'high'}})
+        self.assertEqual(body['generationConfig'], {'maxOutputTokens': 8192, 'thinkingConfig': {'thinkingLevel': 'high'}})
+        self.assertNotIn('candidateCount', json.dumps(body))  # the Argon guide says remove it; unset defaults to one
+        self.assertEqual(body['contents'], [{'role': 'user', 'parts': [{'text': 'prompt'}]}])  # one user turn, the prompt only
         self.assertNotIn('tools', body); self.assertNotIn('systemInstruction', body)
         self.assertAlmostEqual(V.worst_case_cost(25000, 8192, PRICES), (25000 * 2 + 8192 * 10) / 1e6)
 
