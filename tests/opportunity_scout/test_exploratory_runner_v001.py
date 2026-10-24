@@ -421,6 +421,43 @@ class OutputLimitTests(Base):
         self.assertEqual((receipt['status'], receipt['error'], receipt['stdout_bytes']),
                          ('ERROR', 'RUN_STOP:RECORDING_SIZE_LIMIT:PROCESS_TREE_STOP_UNCONFIRMED', 10))
 
+    def test_stderr_sink_failure_fails_closed_even_with_a_valid_stream(self):
+        """The real capture() pumps over a fake Popen (no process): stdout carries a fully valid stream, the stderr
+        raw file refuses writes. The worker failure must reach the supervisor and nothing may be admitted."""
+        import hashlib, io
+        from unittest.mock import patch
+        class Proc:
+            pid, returncode = 4242, 0
+            def __init__(self, args, **kwargs):
+                session = args[args.index('--session-id') + 1]
+                self.stdout, self.stderr = io.BufferedReader(io.BytesIO(stream(session))), io.BufferedReader(io.BytesIO(b'fictional warning'))
+                self.stdin = io.BytesIO()
+            def poll(self):return 0
+            def wait(self, timeout=None):return 0
+            def kill(self):pass
+        class Refusing:
+            def __init__(self, real):self.real = real
+            def write(self, data):raise OSError(28, 'fictional: no space left on device')
+            def __getattr__(self, name):return getattr(self.real, name)
+        stops, fake = [], FakeCLI(self)
+        def runner(args, **kwargs):
+            if '--print' not in args:return fake(args, **kwargs)
+            fake.calls.append((list(args), kwargs))
+            return X.capture(args, **{**kwargs, 'stderr': Refusing(kwargs['stderr'])})
+        result = self.planned(); self.host.runner = runner
+        with patch.object(X.subprocess, 'Popen', Proc), patch.object(X, 'stop_tree', lambda proc: stops.append(proc.pid) or True), \
+                patch.object(X, 'review', side_effect=AssertionError('a failed capture must never be parsed')):
+            receipt = X.run(self.store, self.authorise(result), host=self.host)
+        self.assertEqual((receipt['status'], receipt['error'], receipt['cards']),
+                         ('ERROR', 'RUN_STOP:RAW_CAPTURE_WORKER_FAILED:stderr:WRITE:OSError:PROCESS_TREE_STOPPED', []))
+        self.assertEqual((stops, len(self.state().cards), self.state().attempts['ATT-0001']['result']['status']), ([4242], 0, 'ERROR'))
+        raw = self.store / 'exports/exploratory-ATT-0001-stdout.bin'  # bytes written before the failure are retained
+        self.assertEqual((receipt['stdout_bytes'], receipt['stdout_sha256']), (raw.stat().st_size, hashlib.sha256(raw.read_bytes()).hexdigest()))
+        self.assertEqual(receipt['stderr_bytes'], 0)
+        auth = sorted(self.base.glob('authorisation-*.json'))[-1]
+        with self.assertRaises(S.ScoutError):X.run(self.store, auth, host=self.host)  # consumed, never retried
+        self.assertEqual(fake.kinds().count('MODEL'), 1)
+
 
 class ProcessStartAccountingTests(Base):
     """A launch attempt is not a model invocation: receipt, effort record and status agree on what is evidenced."""

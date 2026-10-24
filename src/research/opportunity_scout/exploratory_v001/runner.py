@@ -57,6 +57,13 @@ MAX_STREAM_BYTES, MAX_ADMIN_BYTES, CHUNK = 8 * 1024 * 1024, 1024 * 1024, 64 * 10
 STOP_GRACE = 5
 
 
+class CaptureFailed(subprocess.SubprocessError):
+    """A pump thread could not read a pipe or write its sink; the process tree was stopped and nothing more kept."""
+    def __init__(self, cmd, failures, tree):
+        super().__init__(f'capture worker failed: {",".join(failures)} ({tree})')
+        self.cmd, self.failures, self.tree = cmd, failures, tree
+
+
 class OutputLimitExceeded(subprocess.SubprocessError):
     """Combined output passed its bound; the process tree was stopped (``tree`` says whether that was confirmed)."""
     def __init__(self, cmd, captured, tree):
@@ -85,7 +92,9 @@ def capture(args, *, stdout, stderr, limit, timeout, input=None, cwd=None, env=N
     """``subprocess.run`` with bounded capture. Both pipes are copied in CHUNK reads into the given binary sinks while
     counting; once the combined count passes ``limit`` nothing more is kept (later bytes are drained and discarded)
     and the process tree is stopped, as it is at the timeout. The stop is confirmed only when the kill succeeded, the
-    process exited and both pipes reached end of file (no descendant still holds them) within STOP_GRACE.
+    process exited and both pipes reached end of file (no descendant still holds them) within STOP_GRACE. A read or
+    sink failure in a pump thread is reported to this supervising thread: nothing more is kept on either channel, the
+    tree is stopped and ``CaptureFailed`` is raised, so the result is never returned as complete.
 
     ``on_start(pid)`` runs only once ``Popen`` has returned, so it is the evidence that a process exists; an
     ``OSError`` raised before it means the OS refused to create one. If it fails, the new process tree is stopped."""
@@ -96,35 +105,43 @@ def capture(args, *, stdout, stderr, limit, timeout, input=None, cwd=None, env=N
         try:on_start(proc.pid)
         except BaseException:
             stop_tree(proc); raise
-    lock, over, kept = threading.Lock(), threading.Event(), {'bytes': 0, 'open': True}
-    def pump(pipe, sink):
-        while chunk := pipe.read1(CHUNK):
-            with lock:
-                if kept['bytes'] > limit or not kept['open']:continue
-                sink.write(chunk); kept['bytes'] += len(chunk)
-                if kept['bytes'] > limit:over.set()
+    lock, halt, kept, failures, ended = threading.Lock(), threading.Event(), {'bytes': 0, 'open': True}, [], set()
+    def pump(name, pipe, sink):
+        try:
+            while chunk := pipe.read1(CHUNK):
+                with lock:
+                    if failures or kept['bytes'] > limit or not kept['open']:continue  # drained, never kept
+                    try:sink.write(chunk)
+                    except BaseException as error:failures.append(f'{name}:WRITE:{type(error).__name__}'); halt.set(); continue
+                    kept['bytes'] += len(chunk)
+                    if kept['bytes'] > limit:halt.set()
+            ended.add(name)
+        except BaseException as error:
+            with lock:failures.append(f'{name}:READ:{type(error).__name__}')
+            halt.set()
     def feed():
         try:proc.stdin.write(input)
         except OSError:pass  # the child stopped reading or was stopped
         try:proc.stdin.close()
         except OSError:pass
-    readers = [threading.Thread(target=pump, args=(proc.stdout, stdout), daemon=True),
-               threading.Thread(target=pump, args=(proc.stderr, stderr), daemon=True)]
+    readers = [threading.Thread(target=pump, args=('stdout', proc.stdout, stdout), daemon=True),
+               threading.Thread(target=pump, args=('stderr', proc.stderr, stderr), daemon=True)]
     workers = readers + ([threading.Thread(target=feed, daemon=True)] if input is not None else [])
     for w in workers:w.start()
     deadline = time.monotonic() + timeout
-    while not over.is_set() and time.monotonic() < deadline and (proc.poll() is None or any(r.is_alive() for r in readers)):
-        over.wait(0.05)
-    stopping = over.is_set() or proc.poll() is None or any(r.is_alive() for r in readers)
+    while not halt.is_set() and time.monotonic() < deadline and (proc.poll() is None or any(r.is_alive() for r in readers)):
+        halt.wait(0.05)
+    stopping = halt.is_set() or proc.poll() is None or any(r.is_alive() for r in readers)
     killed = stop_tree(proc) if stopping else True
     for w in workers:w.join(STOP_GRACE if stopping else None)
     with lock:kept['open'] = False  # a reader left behind by a surviving descendant never writes again
     try:proc.wait(STOP_GRACE)
     except subprocess.TimeoutExpired:killed = False
-    drained = not any(r.is_alive() for r in readers)
-    if drained:proc.stdout.close(); proc.stderr.close()
+    drained = ended == {'stdout', 'stderr'}  # both pipes reached end of file
+    if not any(r.is_alive() for r in readers):proc.stdout.close(); proc.stderr.close()
     tree = 'PROCESS_TREE_STOPPED' if killed and drained else 'PROCESS_TREE_STOP_UNCONFIRMED'
-    if over.is_set():raise OutputLimitExceeded(args, kept['bytes'], tree)
+    if failures:raise CaptureFailed(args, list(failures), tree)
+    if kept['bytes'] > limit:raise OutputLimitExceeded(args, kept['bytes'], tree)
     if stopping:
         expired = subprocess.TimeoutExpired(args, timeout); expired.tree = tree
         raise expired
@@ -279,6 +296,7 @@ def admin(host, exe, env, args):
         try:p = host.runner([str(exe), *args], env=env.copy(), cwd=cwd, stdout=out, stderr=err, limit=MAX_ADMIN_BYTES,
                             timeout=ADMIN_TIMEOUT, shell=False)
         except OutputLimitExceeded as error:raise S.ScoutError(f'ADMIN_OUTPUT_TOO_LARGE:{args[0]}:{error.tree}') from None
+        except CaptureFailed as error:raise S.ScoutError(f'ADMIN_CAPTURE_FAILED:{args[0]}:{error.tree}') from None
         except subprocess.TimeoutExpired as error:
             raise S.ScoutError(f'ADMIN_TIMEOUT:{args[0]}:{getattr(error, "tree", S.UNKNOWN)}') from None
     if p.returncode:raise S.ScoutError('ADMIN_COMMAND_FAILED:' + args[0])
@@ -291,7 +309,7 @@ def account(host, exe, env, auth_value, label):
     """Allowlisted auth categories only; raw auth output is never stored."""
     try:raw = admin(host, exe, env, ADMIN[2])
     except S.ScoutError as error:  # admin codes name only the command and stop status, never output
-        if str(error).startswith(('ADMIN_OUTPUT_TOO_LARGE:', 'ADMIN_TIMEOUT:')):raise S.ScoutError(f'{label}_{error}') from None
+        if str(error).startswith(('ADMIN_OUTPUT_TOO_LARGE:', 'ADMIN_TIMEOUT:', 'ADMIN_CAPTURE_FAILED:')):raise S.ScoutError(f'{label}_{error}') from None
         raise S.ScoutError(f'{label}_AUTH_STATUS_UNREADABLE') from error
     try:auth = S.json_loads(raw)
     except S.ScoutError as error:raise S.ScoutError(f'{label}_AUTH_STATUS_UNREADABLE') from error
@@ -502,6 +520,8 @@ def run(store, authorisation, *, host=None):
             timed_out, tree = True, getattr(error, 'tree', None)
         except OutputLimitExceeded as error:  # kept bytes are hashed below and never loaded or parsed
             stopped = 'RUN_STOP:RECORDING_SIZE_LIMIT:' + error.tree
+        except CaptureFailed as error:  # likewise: a worker failure is never read as a complete stream
+            stopped = 'RUN_STOP:RAW_CAPTURE_WORKER_FAILED:' + ','.join(error.failures) + ':' + error.tree
         except CLOSE as error:
             if start['process'] == S.UNKNOWN and isinstance(error, OSError):
                 start['process'] = 'START_ATTEMPTED'  # Popen raised before returning: the OS created no process

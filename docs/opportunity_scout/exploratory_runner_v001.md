@@ -161,10 +161,19 @@ stops the run.
   cards.
 - **Fail-closed on new stream forms.** An unfamiliar event kind from a future CLI version stops the run (and
   consumes the attempt) rather than being trusted.
-- **Timeout termination is parent-only.** On timeout, `subprocess.run` kills the CLI process, not any descendants it
-  may have started, and a descendant holding the inherited output handle could still write after the runner
-  finishes. The timed-out attempt is ERROR either way. There is no Windows job-object containment here (the N1
-  collector has that; this runner does not reuse it).
+- **Process-tree stop is best effort, and it is checked.** At the timeout, the output limit or a capture-worker
+  failure, the runner runs `taskkill /F /T /PID` (from System32) on Windows, or kills the CLI's own session group on
+  POSIX, and then kills the CLI process directly. `taskkill /T` finds descendants through parent process IDs, so a
+  descendant whose parent has already exited, or one that leaves the tree, can be missed. A POSIX descendant that
+  starts its own session escapes the group. There is no Windows job-object containment here (the N1 collector has
+  that; this runner does not reuse it). The stop is recorded as `PROCESS_TREE_STOPPED` only if the kill command
+  succeeded, the CLI exited and both pipes reached end of file within 5 s. Otherwise it is
+  `PROCESS_TREE_STOP_UNCONFIRMED`. End of file shows only that no process still holds the pipes, not that every
+  descendant has exited. After the stop, nothing more is written to the raw files. The attempt is ERROR either way.
+- **Capture-worker failures fail closed.** If a pump thread cannot read a pipe or write its raw file, it reports
+  this to the supervising thread. Nothing more is kept on either channel, the tree is stopped, and the run is ERROR
+  (`RUN_STOP:RAW_CAPTURE_WORKER_FAILED:<channel>:<READ|WRITE>:<exception>:<tree status>`) with no parsing and no
+  cards. Bytes already written stay on disk and are hashed in the receipt.
 - **Strictness can cost an attempt.** Requiring a rate-limit event and exactly one reported turn means a CLI build
   that omits either stops the run (and consumes the attempt) rather than passing it. This is intended.
 - **Critics are not called.** The runner produces the archive that `critic_v1 prepare` reads. Critic replies still

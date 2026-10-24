@@ -94,6 +94,7 @@
       "AuthorisationTests.test_refuses_incomplete_or_altered_authorisation_and_consumes_nothing",
       "BoundaryTests.test_cli_status_and_bad_plan_start_no_process",
       "BoundaryTests.test_runner_is_outside_the_frozen_v004_and_r3_closures",
+      "OutputLimitTests.test_stderr_sink_failure_fails_closed_even_with_a_valid_stream",
       "OutputLimitTests.test_unconfirmed_tree_stop_is_recorded_as_such",
       "PlanTests.test_frozen_addendum_matches_the_pilot_bytes",
       "PlanTests.test_plan_refuses_aliases_and_unbounded_limits",
