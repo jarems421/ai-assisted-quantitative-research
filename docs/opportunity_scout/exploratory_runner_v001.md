@@ -65,10 +65,16 @@ stops the run.
    denied, `--max-turns 1`, a fresh session ID, and a temporary working directory outside the repository. The
    payload is the archived prompt plus the frozen format-only addendum (SHA256 `360f9354…`, the bytes used in the
    pilot).
-5. **Raw stdout/stderr bytes are written before parsing.**
+5. **Raw capture straight to disk.** The CLI's stdout and stderr go directly into exclusive files in the archive, so
+   nothing is buffered in memory and the bytes exist before any parsing. Above 8 MiB combined, the stream is kept on
+   disk but never loaded or parsed (`RECORDING_SIZE_LIMIT`). That is an IO bound, not a token certificate.
+   Administrative command output is bounded at 1 MiB.
 6. **Fail-closed review.** The accepted event vocabulary is the one observed in a real 2.1.302 stream: `ui_invalidate`,
    `init`, `thinking_tokens`, `rate_limit_event`, assistant and result. The run stops on any of:
    - any other event, or a `user` event (an output-limit continuation appears as one);
+   - a system, rate-limit, assistant or result event whose `session_id` is **missing** or different;
+   - **no** `rate_limit_event` at all (absence is not evidence that overage was off);
+   - reported `num_turns` that is not exactly the integer 1 (missing, 0, several and boolean all fail);
    - more than one assistant message or request ID;
    - tool use;
    - `apiKeySource` other than `none`;
@@ -77,7 +83,8 @@ stops the run.
    - a non-`firstParty` provider;
    - a non-success terminal or a stop reason other than `end_turn`;
    - result text differing from the assembled text;
-   - unknown output usage.
+   - unknown output usage;
+   - a credential-like pattern anywhere in the raw stream.
 7. **Postflight**:
    - `auth status` categories unchanged;
    - executable hash unchanged (auto-update detection);
@@ -90,17 +97,47 @@ stops the run.
 
 - **Provider label.** The frozen provider enum has no automated-Claude label (`CLAUDE_CODE_SUBSCRIPTION` needs a V003
   comparison binding). Runs are recorded as `OPERATOR_ASSISTED`, with `parameters.transport =
-  SCOUT_EXPLORATORY_RUNNER_V001`. A proper label needs a new schema version.
+  SCOUT_EXPLORATORY_RUNNER_V001`. **`OPERATOR_ASSISTED` here does not mean a human copied the reply.** The CLI was
+  driven by this runner under owner authorisation. Read `parameters.transport` and `parameters.surface` before
+  interpreting the label, and never pool these runs with manual operator-assisted results without that
+  distinction. A proper label needs a new schema version.
+- **Account isolation is configuration-level, not proven separation.** The runner shows that:
+  - the child received only the research `CLAUDE_CONFIG_DIR` and no credential, endpoint or provider variables;
+  - the CLI reported a first-party claude.ai login of an authorised plan type in that directory, before and after
+    the call, with `apiKeySource: none`;
+  - development-account file metadata did not change.
+
+  It does not show which account the provider charged. It does not show that the CLI read nothing else under the
+  same Windows user (these are CLI restrictions, not OS isolation), or that the account behind the research
+  directory is the one the owner intends. That last point rests on the owner's attestation plus the optional pinned
+  fingerprint.
+- **Billing visibility is indirect.** The only billing-related evidence comes from CLI-reported stream metadata:
+  - `isUsingOverage: false` and `status: allowed` on every `rate_limit_event`, with at least one required;
+  - `overageStatus`;
+  - `provider: firstParty`.
+
+  These are the CLI's own statements, not an invoice or account statement. `total_cost_usd` (`costBasis: list`) is
+  a client list-price estimate, recorded as `..._not_a_charge`. The actual subscription charge, the
+  provider-request count and any server-side retries are UNKNOWN.
+- **Raw streams are sensitive.** The retained stdout contains the model's thinking text and answer, local paths
+  (the `init` event's working directory and PowerShell path, which can include the Windows user name), session and
+  request identifiers, plugin names and rate-limit window metadata. User messages are not echoed, because
+  `--replay-user-messages` is not used. It lives only in the git-ignored archive
+  (`.research/opportunity_scout/…`). Never commit, publish or upload it. The credential-pattern check is a
+  narrow regex (`sk-ant-`, `Bearer`, token/key JSON fields): a match stops the run but the bytes are **kept
+  unredacted** (raw is never repaired), and anything the regex does not recognise is not detected.
 - **Output budget versus thinking.** The batch output budget is at most 6,000 tokens (schema), Opus 5.5 thinking
   cannot be disabled, and thinking counts as output. Use `--effort low`. The per-request cap (default 16,000) is set
   above the budget deliberately, so the CLI does not auto-continue. An overrun is recorded honestly as ERROR, with no
   cards.
 - **Fail-closed on new stream forms.** An unfamiliar event kind from a future CLI version stops the run (and
   consumes the attempt) rather than being trusted.
-- **Account identity is categorical.** Config directory, auth method, subscription type and an optional fingerprint
-  of whatever identifying fields `auth status` exposes. Provider-side identity, the request count and billing remain
-  UNKNOWN. `total_cost_usd` is a client list-price estimate, never recorded as a charge.
-- **Not a sandbox.** These are CLI restrictions, not OS isolation.
+- **Timeout termination is parent-only.** On timeout, `subprocess.run` kills the CLI process, not any descendants it
+  may have started, and a descendant holding the inherited output handle could still write after the runner
+  finishes. The timed-out attempt is ERROR either way. There is no Windows job-object containment here (the N1
+  collector has that; this runner does not reuse it).
+- **Strictness can cost an attempt.** Requiring a rate-limit event and exactly one reported turn means a CLI build
+  that omits either stops the run (and consumes the attempt) rather than passing it. This is intended.
 - **Critics are not called.** The runner produces the archive that `critic_v1 prepare` reads. Critic replies still
   use the existing operator-attested `import-response` path, because `critic_v1` deliberately has no process code.
 

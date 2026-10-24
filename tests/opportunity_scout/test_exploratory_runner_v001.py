@@ -40,6 +40,15 @@ def stream(session, text=TEXT, *, model=MODEL, output_tokens=2500, extra=(), ini
     return ''.join(json.dumps(e) + '\n' for e in events).encode('utf-8')
 
 
+def mutated(change):
+    """A real-vocabulary stream with one deliberate change applied to its decoded events."""
+    def make(session):
+        events = [json.loads(line) for line in stream(session).decode('utf-8').splitlines()]
+        change(events, session)
+        return ''.join(json.dumps(e) + '\n' for e in events).encode('utf-8')
+    return make
+
+
 class FakeCLI:
     """Answers the three administrative commands and one print-mode call. Never starts a process."""
     def __init__(self, test, *, auth=None, auth_after=None, help_text=None, model_stream=None, timeout=False, on_model=None, code=0):
@@ -52,12 +61,13 @@ class FakeCLI:
 
     def __call__(self, args, **kwargs):
         self.calls.append((list(args), kwargs))
-        if '--print' in args:
+        if '--print' in args:  # the runner hands the CLI exclusive raw files; nothing is captured in memory
             session = args[args.index('--session-id') + 1]
             if self.on_model:self.on_model()
-            if self.timeout:raise subprocess.TimeoutExpired(args, 1, output=b'{"type":"system"', stderr=b'')
-            data = self.model_stream(session) if callable(self.model_stream) else stream(session)
-            return subprocess.CompletedProcess(args, self.code, data, b'')
+            if self.timeout:
+                kwargs['stdout'].write(b'{"type":"system"'); raise subprocess.TimeoutExpired(args, 1)
+            kwargs['stdout'].write(self.model_stream(session) if callable(self.model_stream) else stream(session))
+            return subprocess.CompletedProcess(args, self.code, None, None)
         if args[1:] == ['--version']:return subprocess.CompletedProcess(args, 0, '2.1.302 (Claude Code)\n', '')
         if args[1:] == ['--help']:return subprocess.CompletedProcess(args, 0, self.help, '')
         if args[1:] == ['auth', 'status', '--json']:
@@ -263,6 +273,69 @@ class StreamTests(Base):
         receipt = self.execute(FakeCLI(self, model_stream=lambda s: stream(s, output_tokens=7000)))
         self.assertEqual((receipt['status'], len(self.state().cards)), ('ERROR', 0))
         self.assertIn('output-token budget', self.state().attempts['ATT-0001']['result']['error'])
+
+
+class ReviewFindingTests(Base):
+    """Regressions for the independent review of 4509736: each gap must fail closed."""
+    def stopped(self, make, auth_changes=None):
+        receipt = self.execute(FakeCLI(self, model_stream=make), **(auth_changes or {}))
+        self.assertEqual((receipt['status'], len(self.state().cards)), ('ERROR', 0))
+        return receipt['error']
+
+    def test_missing_rate_limit_event_is_not_evidence_of_no_overage(self):
+        drop = mutated(lambda ev, s: ev.__setitem__(slice(None), [e for e in ev if e['type'] != 'rate_limit_event']))
+        self.assertIn('NON_OVERAGE_NOT_EVIDENCED', self.stopped(drop))
+
+    def test_reported_turn_count_must_be_exactly_one(self):
+        def turns(value):
+            def change(ev, s):
+                if value is None:del ev[-1]['num_turns']
+                else:ev[-1]['num_turns'] = value
+            return mutated(change)
+        for value in (None, 0, 2, True, '1'):
+            with self.subTest(num_turns=value):
+                self.fresh(); self.assertIn('TURN_COUNT_NOT_ONE', self.stopped(turns(value)))
+
+    def test_session_identifiers_must_be_present_and_match(self):
+        def strip(kind, value=None):
+            def change(ev, s):
+                for e in ev:
+                    if e['type'] == kind or (kind == 'init' and e.get('subtype') == 'init'):
+                        e.pop('session_id', None)
+                        if value is not None:e['session_id'] = value
+            return mutated(change)
+        cases = {'init missing': strip('init'), 'assistant missing': strip('assistant'), 'result missing': strip('result'),
+                 'rate event missing': strip('rate_limit_event'), 'assistant from another session': strip('assistant', 'other-session')}
+        for name, make in cases.items():
+            with self.subTest(case=name):
+                self.fresh(); self.assertIn('SESSION_ID_MISSING_OR_CHANGED', self.stopped(make))
+
+    def test_oversized_stream_is_preserved_but_never_parsed(self):
+        from unittest.mock import patch
+        with patch.object(X, 'MAX_STREAM_BYTES', 1000), patch.object(X, 'review', side_effect=AssertionError('must not parse')):
+            receipt = self.execute(FakeCLI(self))
+        self.assertEqual((receipt['status'], receipt['error']), ('ERROR', 'RUN_STOP:RECORDING_SIZE_LIMIT'))
+        raw = self.store / 'exports/exploratory-ATT-0001-stdout.bin'
+        self.assertGreater(raw.stat().st_size, 1000); self.assertEqual(receipt['stdout_bytes'], raw.stat().st_size)
+
+    def test_credential_like_raw_stream_stops_and_stays_private(self):
+        leak = mutated(lambda ev, s: ev[4]['message']['content'][0].__setitem__('thinking', 'fictional sk-ant-0000 in thinking'))
+        self.assertIn('CREDENTIAL_LIKE_PATTERN_IN_RAW_STREAM', self.stopped(leak))
+        self.assertIn(b'sk-ant-0000', (self.store / 'exports/exploratory-ATT-0001-stdout.bin').read_bytes())  # preserved, not repaired
+        self.assertNotIn('sk-ant-0000', json.dumps(json.loads((self.store / 'exports/exploratory-receipt-ATT-0001.json').read_text(encoding='utf-8'))))
+
+    def test_raw_capture_setup_failure_closes_the_attempt_without_a_model_call(self):
+        result = self.planned(); cli = FakeCLI(self); self.host.runner = cli
+        (self.store / 'exports/exploratory-ATT-0001-stderr.bin').write_bytes(b'')  # exclusive create must then fail
+        receipt = X.run(self.store, self.authorise(result), host=self.host)
+        self.assertEqual((receipt['status'], receipt['error'], receipt['model_invocations']), ('ERROR', 'RAW_CAPTURE_SETUP_FAILED', 0))
+        self.assertTrue(X.status(self.store)['receipt'])
+
+    def test_model_output_is_written_to_files_not_buffered(self):
+        cli = FakeCLI(self); self.execute(cli)
+        _, kwargs = next(c for c in cli.calls if '--print' in c[0])
+        self.assertNotIn('capture_output', kwargs)
+        for channel in ('stdout', 'stderr'):self.assertTrue(hasattr(kwargs[channel], 'fileno'))
 
 
 class BoundaryTests(unittest.TestCase):

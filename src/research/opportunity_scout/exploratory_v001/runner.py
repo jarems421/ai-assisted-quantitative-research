@@ -46,6 +46,10 @@ FORBIDDEN_ENV = ('ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN', 'CLAUDE_CODE_OAUTH
 IDENTITY_KEYS = ('email', 'emailAddress', 'orgId', 'organizationId', 'orgName', 'organizationName', 'accountUuid')
 DEVELOPMENT = ('.claude.json', '.claude/settings.json', '.claude/.credentials.json')
 SYSTEM_EVENTS = ('init', 'ui_invalidate', 'thinking_tokens')  # observed in a real 2.1.302 stream; others fail closed
+SESSION_EVENTS = ('system', 'rate_limit_event', 'assistant', 'result')
+# Capture goes straight to files, never into memory. Parsing is refused above this bound (an IO limit, not a token
+# certificate); a cap of 32,768 output tokens plus thinking estimates is far below it.
+MAX_STREAM_BYTES, MAX_ADMIN_BYTES = 8 * 1024 * 1024, 1024 * 1024
 
 
 @dataclass
@@ -194,6 +198,7 @@ def admin(host, exe, env, args):
         p = host.runner([str(exe), *args], env=env.copy(), cwd=cwd, capture_output=True, text=True, encoding='utf-8',
                         timeout=ADMIN_TIMEOUT, shell=False)
     if p.returncode:raise S.ScoutError('ADMIN_COMMAND_FAILED:' + args[0])
+    if len((p.stdout or '').encode('utf-8')) > MAX_ADMIN_BYTES:raise S.ScoutError('ADMIN_OUTPUT_TOO_LARGE:' + args[0])
     return p.stdout
 
 
@@ -232,6 +237,8 @@ def review(stdout, stderr, returncode, timed_out, model, session_id):
     faults, events = [], []
     def fault(code):
         if code not in faults:faults.append(code)
+    raw_text = stdout.decode('utf-8', errors='replace') + stderr.decode('utf-8', errors='replace')
+    if CS.safe_output(raw_text) != raw_text:fault('CREDENTIAL_LIKE_PATTERN_IN_RAW_STREAM')  # kept privately, never repaired
     try:
         text, err = stdout.decode('utf-8'), stderr.decode('utf-8', errors='replace')
         for line in text.splitlines():
@@ -254,8 +261,9 @@ def review(stdout, stderr, returncode, timed_out, model, session_id):
     if init.get('model') != model:fault('MODEL_MISMATCH')
     messages, requests, texts, overage = [], set(), [], []
     for e in events:
-        if e.get('session_id', session_id) != session_id:fault('SESSION_CHANGED')
         kind = e.get('type')
+        # An absent session identifier is never a match: every accepted event kind carried one in the real stream.
+        if kind in SESSION_EVENTS and e.get('session_id') != session_id:fault('SESSION_ID_MISSING_OR_CHANGED')
         if kind == 'system':
             if e.get('subtype') not in SYSTEM_EVENTS:fault('UNRECOGNISED_SYSTEM_EVENT')
         elif kind == 'rate_limit_event':
@@ -275,6 +283,10 @@ def review(stdout, stderr, returncode, timed_out, model, session_id):
         elif kind == 'user':fault('CONTINUATION_OR_TOOL_RESULT')  # an output-limit continuation appears as a synthetic user event
         elif kind != 'result':fault('UNRECOGNISED_EVENT')
     if len(messages) != 1 or len(requests) != 1:fault('NOT_EXACTLY_ONE_GENERATION')
+    # Absence of a rate-limit event is not evidence that overage was off: require at least one affirmative record.
+    if not overage:fault('NON_OVERAGE_NOT_EVIDENCED')
+    turns = result.get('num_turns')
+    if type(turns) is not int or turns != 1:fault('TURN_COUNT_NOT_ONE')  # missing, zero, several or boolean all fail
     assembly = ''.join(texts)
     termination = 'TIMEOUT' if timed_out else classify_terminal(events, returncode, err, timed_out)
     if termination != 'SUCCESS':fault(termination)
@@ -349,24 +361,38 @@ def run(store, authorisation, *, host=None):
         stopped = 'PREFLIGHT_STOP:' + (str(error) if isinstance(error, S.ScoutError) else type(error).__name__)
     if stopped is None:
         args = arguments(exe, p['model'], p['effort'], facts['session_id'])
-        out, err, code, timed_out = b'', b'', S.UNKNOWN, False
+        code, timed_out = S.UNKNOWN, False
+        # The CLI writes straight into exclusive raw files: bytes are durable before any parsing and never buffered.
+        targets = {c: unlinked(archive.path / 'exports' / f'exploratory-{aid}-{c}.bin') for c in ('stdout', 'stderr')}
+        handles = {}
         invoked, start = host.now(), host.monotonic()
         try:
+            for c, t in targets.items():handles[c] = t.open('xb')
             with tempfile.TemporaryDirectory(prefix='scout-explore-') as cwd:
                 if Path(cwd).resolve().is_relative_to(ROOT):raise S.ScoutError('CLI working directory must be outside the repository')
                 invocations = 1
-                proc = host.runner(args, input=payload(prompt), cwd=cwd, env=env.copy(), capture_output=True, timeout=p['timeout_seconds'], shell=False)
-                out, err, code = proc.stdout or b'', proc.stderr or b'', proc.returncode
-        except subprocess.TimeoutExpired as error:
-            out, err, timed_out = error.stdout or b'', error.stderr or b'', True
-        except OSError:
-            stopped = 'PROCESS_START_FAILED'
+                proc = host.runner(args, input=payload(prompt), cwd=cwd, env=env.copy(), stdout=handles['stdout'],
+                                   stderr=handles['stderr'], timeout=p['timeout_seconds'], shell=False)
+                code = proc.returncode
+        except subprocess.TimeoutExpired:
+            timed_out = True
+        except CLOSE as error:
+            stopped = ('RAW_CAPTURE_SETUP_FAILED' if len(handles) != len(targets) else  # no process was started
+                       'PROCESS_START_FAILED' if isinstance(error, OSError) else 'INVOCATION_SETUP_FAILED:' + type(error).__name__)
+        finally:
+            for h in handles.values():h.flush(); os.fsync(h.fileno()); h.close()
         completed, facts['wall_seconds'] = host.now(), round(host.monotonic() - start, 3)
-        for channel, data in (('stdout', out), ('stderr', err)):  # raw bytes before any parsing
-            target = unlinked(archive.path / 'exports' / f'exploratory-{aid}-{channel}.bin')
-            with target.open('xb') as handle:handle.write(data); handle.flush(); os.fsync(handle.fileno())
-            facts[f'{channel}_sha256'] = hashlib.sha256(data).hexdigest()
+        sizes = {c: t.stat().st_size for c, t in targets.items() if t.is_file()}
+        for c, t in targets.items():
+            if c not in sizes:continue
+            digest_ = hashlib.sha256()
+            with t.open('rb') as handle:
+                for chunk in iter(lambda: handle.read(1024 * 1024), b''):digest_.update(chunk)
+            facts[f'{c}_sha256'], facts[f'{c}_bytes'] = digest_.hexdigest(), sizes[c]
+        if stopped is None and sum(sizes.values()) > MAX_STREAM_BYTES:
+            stopped = 'RUN_STOP:RECORDING_SIZE_LIMIT'  # preserved on disk, never loaded or parsed
         if stopped is None:
+            out, err = targets['stdout'].read_bytes(), targets['stderr'].read_bytes()
             try:review_facts = review(out, err, code, timed_out, p['model'], facts['session_id'])
             except CLOSE:review_facts = {'faults': ['MALFORMED_STREAM_STRUCTURE'], 'text': ''}
             facts.update({k: review_facts[k] for k in ('tokens', 'visible_generations', 'cli_list_price_estimate_usd') if k in review_facts})
@@ -396,6 +422,8 @@ def run(store, authorisation, *, host=None):
                'preflight': {k: facts[k] for k in ('cli_version', 'help_sha256', 'account') if k in facts},
                'plan_sha256': p['plan_sha256'], 'authorisation_sha256': facts['authorisation_sha256'],
                'stdout_sha256': facts.get('stdout_sha256', S.UNKNOWN), 'stderr_sha256': facts.get('stderr_sha256', S.UNKNOWN),
+               'stdout_bytes': facts.get('stdout_bytes', S.UNKNOWN), 'stderr_bytes': facts.get('stderr_bytes', S.UNKNOWN),
+               'raw_stream_sensitivity': 'PRIVATE: contains model thinking, local paths and session metadata; never commit or publish',
                'actual_subscription_charge': S.UNKNOWN, 'routing_authority': 'NONE', 'retried': False}
     archive.export(f'exploratory-receipt-{aid}.json', receipt)
     return receipt
