@@ -42,6 +42,10 @@ codex exec --json --ephemeral --ignore-user-config --ignore-rules --skip-git-rep
   org/project variables never reach the child, so API-key billing can't silently replace the ChatGPT login.
 - **Preflight.** Executable hash unchanged; `codex-cli` version; `login status` exactly `Logged in using ChatGPT`;
   `exec --help` lists every flag used.
+  - Codex 0.164 prints the login result on **stderr**, with stdout empty. Each administrative command's text is
+    therefore its stdout, then its stderr on its own line.
+  - The login check needs exactly that one line across both channels. An API-key login, "not logged in", no
+    output, the line on both channels, or any extra line is a stop.
 - **Review of the JSONL stream:**
   - one `thread.started` with a thread ID, then exactly one turn, ending in `turn.completed` with integer usage;
   - only `agent_message` and `reasoning` items, with exactly one completed agent message. Every `item.completed`
@@ -73,9 +77,11 @@ codex exec --json --ephemeral --ignore-user-config --ignore-rules --skip-git-rep
 
 ## Gemini API adapter (economic)
 
-- **One request.** A single `POST …/v1beta/models/<model>:generateContent`: one user turn (the frozen prompt), one
-  candidate, `maxOutputTokens` bound, optional `thinkingConfig.thinkingLevel`, **no tools**, no system instruction.
-  No retries.
+- **One request.** A single `POST …/v1beta/models/<model>:generateContent`: one user turn (the frozen prompt),
+  `maxOutputTokens` bound, optional `thinkingConfig.thinkingLevel`, **no tools**, no system instruction. No retries.
+  - `candidateCount` is not sent. It defaults to 1 when unset, and the Gemini 4 Argon guide says to remove it.
+  - The review still requires exactly one candidate.
+  - For `gemini-4-argon`, non-streaming REST output is capped at 32,768 tokens, thinking included.
 - **Key handling.** The key is read from the owner-named environment variable only at dispatch, sent in the
   `x-goog-api-key` header, and never written or logged.
 - **No redirects.** urllib's default redirect handling copies custom headers, the key included, onto a follow-up

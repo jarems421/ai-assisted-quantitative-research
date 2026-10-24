@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 from src.research.discovery import demo, records as R
-from src.research.discovery.ledger import Ledger
+from src.research.discovery.ledger import Ledger, WriterLockNotReleased
 from src.research.discovery.report import compare, summary
 from src.research.discovery.review import checklist, source_next
 
@@ -79,6 +79,10 @@ def main(argv=None):
                 out = Path(a.out); out.mkdir(parents=True, exist_ok=True); text = demo.run(out)
                 (out / 'walkthrough.md').write_text(text, encoding='utf-8', newline='\n'); emit({'ledgers_and_walkthrough': str(out)})
             else:print(demo.generate())
+    except WriterLockNotReleased as error:
+        # Committed, not refused: report the event so the operator reconciles instead of retrying.
+        emit({'committed': error.seq, 'hash': error.hash, 'writer_lock_left': error.lock})
+        print(f'committed but not released: {error}', file=sys.stderr); raise SystemExit(3)
     except ValueError as error:
         print(f'refused: {error}', file=sys.stderr); raise SystemExit(2)
 

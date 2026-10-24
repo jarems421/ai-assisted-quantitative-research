@@ -260,8 +260,8 @@ Build issues surfaced (never auto-resolved): IDENTITY_QUESTION, UNKNOWN_TAG.
 
 | Build | Nodes | Edges | Digest |
 |---|---|---|---|
-| Campaigns A and C | 59 | 64 | `11c45352d708cd74` |
-| After campaign B becomes available | 71 | 79 | `ab032b59ba0b192e` |
+| Campaigns A and C | 59 | 64 | `327fbcab34989201` |
+| After campaign B becomes available | 71 | 79 | `b9ab87d4f0acc881` |
 
 - Existing campaign A nodes identical before and after: True.
 - New observation discoverable and useful: 1 suggestion(s); first match claim:DLC-GSYN-A/CAND-GA-1@1 (EXACT_ENTITY_ID).

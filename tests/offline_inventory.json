@@ -144,6 +144,7 @@
       "ReviewFindingTests.test_session_identifiers_must_be_present_and_match",
       "RunTests.test_policy_remote_settings_and_executable_change_stop_before_the_model",
       "RunTests.test_preflight_failures_close_the_attempt_without_a_model_call",
+      "RunTests.test_real_2_1_302_help_without_max_turns_still_runs_exactly_one_turn",
       "RunTests.test_second_run_is_refused_without_any_process",
       "RunTests.test_valid_run_invokes_once_imports_triages_and_reports",
       "StreamTests.test_deviations_stop_without_cards_or_retry",
@@ -278,6 +279,7 @@
       "BoundaryTests.test_api_key_login_and_unattested_billing_stop_before_dispatch",
       "BoundaryTests.test_authorisation_must_bind_the_exact_plan_and_one_owner",
       "BoundaryTests.test_codex_admin_commands_use_the_bounded_capture_and_every_stop_is_named",
+      "BoundaryTests.test_codex_login_is_read_from_stderr_and_ambiguous_results_fail_closed",
       "BoundaryTests.test_crash_leaves_a_truthful_partial_report_and_is_never_redispatched",
       "BoundaryTests.test_full_offline_run_uses_no_socket_process_or_written_secret",
       "BoundaryTests.test_generator_family_self_review_and_unsupported_routes_are_refused_at_plan",
@@ -634,6 +636,39 @@
     "runner": "public",
     "reason": "Existing public_checks: literal/synthetic fixtures, mocked transport where applicable, tracked contracts read-only and temporary fixture writes.",
     "declared_tests": [
+      "AnvilCrucibleBoundaryTests.test_current_campaign_authority_checks_existence_not_scope",
+      "AnvilCrucibleBoundaryTests.test_current_clean_m_checklist_does_not_establish_a_falsifiable_study",
+      "AnvilCrucibleBoundaryTests.test_current_common_trend_and_pseudoreplication_can_look_precise",
+      "AnvilCrucibleBoundaryTests.test_current_denominator_unknown_is_only_a_gap",
+      "AnvilCrucibleBoundaryTests.test_current_document_evidence_can_support_a_declared_field_reading",
+      "AnvilCrucibleBoundaryTests.test_current_duplicate_observations_and_pass_events_are_not_independent_claims",
+      "AnvilCrucibleBoundaryTests.test_current_first_public_certificate_does_not_bind_the_source_version",
+      "AnvilCrucibleBoundaryTests.test_current_human_identity_is_a_self_declared_kind",
+      "AnvilCrucibleBoundaryTests.test_current_nonempty_transformation_bypasses_unit_comparison",
+      "AnvilCrucibleBoundaryTests.test_current_not_required_join_can_hide_wrong_cohort_and_basis",
+      "AnvilCrucibleBoundaryTests.test_current_opaque_hash_does_not_verify_source_bytes",
+      "AnvilCrucibleBoundaryTests.test_current_outcome_evidence_swap_is_classed_as_clarification",
+      "AnvilCrucibleBoundaryTests.test_current_outcome_independence_unknown_is_not_a_blocker",
+      "AnvilCrucibleBoundaryTests.test_current_outcome_selection_history_is_not_sticky",
+      "AnvilCrucibleBoundaryTests.test_current_outcome_unit_mismatch_is_not_mechanically_detected",
+      "AnvilCrucibleBoundaryTests.test_current_renamed_copy_of_predictor_is_accepted_as_an_outcome",
+      "AnvilCrucibleBoundaryTests.test_current_unrelated_exposure_relationship_is_not_mechanically_detected",
+      "AnvilCrucibleBoundaryTests.test_current_untyped_review_reference_is_not_resolved",
+      "AnvilCrucibleBoundaryTests.test_current_valid_tail_removal_and_rehash_are_not_authenticated",
+      "AnvilCrucibleBoundaryTests.test_document_instructions_remain_data_and_assistants_cannot_decide",
+      "AnvilCrucibleBoundaryTests.test_nonfinite_measurements_cannot_enter_the_ledger",
+      "AnvilCrucibleBoundaryTests.test_older_review_cannot_pass_a_new_candidate_version",
+      "AnvilCrucibleBoundaryTests.test_post_outcome_and_purposive_flags_remain_visible_when_declared",
+      "AnvilCrucibleFixTests.test_concurrent_append_and_freeze_cannot_both_write_a_stale_head",
+      "AnvilCrucibleFixTests.test_failed_append_releases_writer_lock_without_changing_ledger",
+      "AnvilCrucibleFixTests.test_field_evidence_can_still_support_a_document_depth_claim",
+      "AnvilCrucibleFixTests.test_gross_claim_cannot_use_only_a_net_amount",
+      "AnvilCrucibleFixTests.test_outcome_source_is_also_checked_for_revisions",
+      "AnvilCrucibleFixTests.test_pre_freeze_and_unrelated_source_revisions_do_not_block",
+      "AnvilCrucibleFixTests.test_source_revision_invalidates_review_without_changing_frozen_bytes",
+      "AnvilCrucibleFixTests.test_stale_writer_lock_is_not_stolen",
+      "AnvilCrucibleFixTests.test_unterminated_event_is_refused_without_appending_or_repair",
+      "AnvilCrucibleWalkthroughTests.test_actual_forge_handoff_maps_manually_then_stops_before_level_a_execution",
       "DiscoveryLabTests.test_acquisition_needs_authority_and_respects_budget",
       "DiscoveryLabTests.test_aggregate_to_cohort_allocation_stays_unverified",
       "DiscoveryLabTests.test_all_methods_apply_identical_measurement_rules",
@@ -665,7 +700,14 @@
       "DiscoveryLabTests.test_source_passport_next_evidence_is_qualitative",
       "DiscoveryLabTests.test_synthetic_and_live_evidence_are_segregated",
       "DiscoveryLabTests.test_unknown_costs_remain_unknown",
-      "DiscoveryLabTests.test_unsupported_novelty_and_return_inspection_are_refused"
+      "DiscoveryLabTests.test_unsupported_novelty_and_return_inspection_are_refused",
+      "ReviewCorrectionTests.test_committed_append_with_unremovable_lock_reports_the_committed_event",
+      "ReviewCorrectionTests.test_interrupted_writer_leaves_lock_and_partial_bytes_for_reconciliation",
+      "ReviewCorrectionTests.test_invalid_append_with_unremovable_lock_keeps_the_validation_error",
+      "ReviewCorrectionTests.test_new_ledgers_record_v002_and_rules_never_move_backwards",
+      "ReviewCorrectionTests.test_v001_gross_claim_with_evidenced_review_replays_but_cannot_support_a_new_pass",
+      "ReviewCorrectionTests.test_v001_m_approval_is_never_promoted_to_a_v002_pass",
+      "ReviewCorrectionTests.test_v001_source_revision_with_not_evidenced_review_replays_but_new_review_is_blocked"
     ]
   },
   "tests/test_exp001.py": {
@@ -1624,7 +1666,8 @@
     "reason": "Research OS pipeline V001 Codex administrative commands: real fixed local Python children (with a heartbeating grandchild) stand in for one Codex administrative command through the real bounded capture; a combined stdout/stderr flood and a hang stop the process tree before any critic process; temporary archives and fictional home. No CLI, model, network or account. Portable.",
     "declared_tests": [
       "CodexAdminProcessTests.test_combined_stdout_and_stderr_flood_stops_the_tree_during_capture",
-      "CodexAdminProcessTests.test_hung_command_is_stopped_at_the_administrative_timeout"
+      "CodexAdminProcessTests.test_hung_command_is_stopped_at_the_administrative_timeout",
+      "CodexAdminProcessTests.test_real_pipes_carry_a_stderr_login_result_through_the_preflight"
     ]
   },
   "tests/test_scout_exploratory_capture_process_assurance.py": {
@@ -1811,7 +1854,8 @@
       "WorkflowNavigationTests.test_global_exp004_pause_is_read_and_preserved",
       "WorkflowNavigationTests.test_missing_replayed_state_is_insufficient_not_invented_from_model",
       "WorkflowNavigationTests.test_pinned_forge_or_memory_context_is_visible_but_cannot_grant_authority",
-      "WorkflowNavigationTests.test_superseded_candidate_version_is_refused"
+      "WorkflowNavigationTests.test_superseded_candidate_version_is_refused",
+      "WorkflowNavigationTests.test_v001_history_keeps_v002_blockers_despite_contrary_classifications"
     ]
   }
 }

@@ -164,9 +164,11 @@ def gemini_model(model):
 
 
 def gemini_request(prompt_text, *, max_output_tokens, thinking_level=None):
-    """One user turn, one candidate, no tools, no system instruction beyond the frozen critic prompt itself."""
+    """One user turn, no tools, no system instruction beyond the frozen critic prompt itself. ``candidateCount`` is not
+    sent: it defaults to 1 when unset (API reference) and the Gemini 4 Argon guide says to remove it. The review still
+    requires exactly one candidate."""
     if type(max_output_tokens) is not int or not 1000 <= max_output_tokens <= 65536:raise S.ScoutError('Gemini max_output_tokens is 1000..65536')
-    config = {'candidateCount': 1, 'maxOutputTokens': max_output_tokens}
+    config = {'maxOutputTokens': max_output_tokens}
     if thinking_level is not None:
         if thinking_level not in GEMINI_LEVELS:raise S.ScoutError(f'thinking level is one of {GEMINI_LEVELS}')
         config['thinkingConfig'] = {'thinkingLevel': thinking_level}

@@ -387,6 +387,35 @@ class WorkflowNavigationTests(unittest.TestCase):
         with self.assertRaisesRegex(K.NavigationError, 'STALE_OR_ALTERED_INPUT'):
             W.report(target)
 
+    def test_v001_history_keeps_v002_blockers_despite_contrary_classifications(self):
+        cases = (
+            ('gross_net_only_evidenced_review.jsonl', 'financial_bridge', 'GROSS_EXPOSURE_UNVERIFIED', 'exposure_unverified'),
+            ('source_revised_not_evidenced_review.jsonl', 'distinctive_predictor', 'SOURCE_REVISED_AFTER_FREEZE', 'predictor_missing'),
+        )
+        for name, requirement, blocker, effective in cases:
+            with self.subTest(name=name):
+                folder = self.root / name.removesuffix('.jsonl'); folder.mkdir()
+                source = N.ROOT / 'tests/fixtures/discovery_v001' / name
+                raw = source.read_bytes()
+                ledger_path = folder / name; ledger_path.write_bytes(raw)
+                state = N.Ledger(ledger_path).load()
+                self.assertEqual(state.rules, 'DISCOVERY_LAB_RULES_V001')
+                c = state.latest('candidate', 'CAND-T-1')
+                data = {'schema': K.INPUT, 'task': K.TASKS[2], 'data_classification': 'SYNTHETIC', 'subject': D.subject(),
+                        'context': {'ledger': {'base': 'INPUT', 'path': name, 'sha256': N.sha(raw)},
+                                    'candidate_id': c['id'], 'candidate_version': c['version'], 'experiment_id': None,
+                                    'stops': [], 'context_files': []}}
+                path = folder / 'input.json'; path.write_bytes(canonical(data))
+                bundle = N.derive(path)
+                script = {'CURRENT_STATE': {effective: 'no', 'human_judgment_missing': 'yes'}}
+                result = N.report(bundle, W.parse_saved(bundle, canonical(D.synthetic_response(bundle, script))))
+                blockers = result['deterministic']['checklist']['requirements'][requirement]['blockers']
+                self.assertTrue(any(blocker in value for value in blockers))
+                self.assertEqual(result['effective_bottleneck'], effective)
+                self.assertEqual(result['authorises'], [])
+                self.assertEqual(ledger_path.read_bytes(), raw)
+                self.assertEqual(source.read_bytes(), raw)
+
 
 class RetirementAndBoundaryTests(unittest.TestCase):
     def test_nonfrozen_legacy_api_rejects_real_batches_before_reading_a_response(self):

@@ -210,6 +210,19 @@ class RunTests(Base):
                 self.assertTrue(receipt['error'].startswith('PREFLIGHT_STOP:'))
                 self.assertEqual(self.state().efforts[-1]['invocation_status'], 'NOT_INVOKED')
 
+    def test_real_2_1_302_help_without_max_turns_still_runs_exactly_one_turn(self):
+        """The real 2.1.302 --help omits the documented --max-turns; every other runner flag must still be listed."""
+        cli = FakeCLI(self, help_text=' '.join(f for f in X.FLAGS if f != '--max-turns')); receipt = self.execute(cli)
+        self.assertEqual((receipt['status'], receipt['model_invocations']), ('VALID', 1))
+        args, kwargs = next(c for c in cli.calls if '--print' in c[0])
+        self.assertEqual((args[args.index('--max-turns') + 1], kwargs['env']['CLAUDE_CODE_MAX_TURNS']), ('1', '1'))
+        for absent in ('--tools', '--safe-mode', '--restricted', '--no-session-persistence'):
+            with self.subTest(absent=absent):
+                self.fresh()
+                cli = FakeCLI(self, help_text=' '.join(f for f in X.FLAGS if f not in ('--max-turns', absent))); receipt = self.execute(cli)
+                self.assertEqual((receipt['status'], receipt['model_invocations']), ('ERROR', 0))
+                self.assertIn('UNSUPPORTED_FLAGS:' + absent, receipt['error']); self.assertNotIn('MODEL', cli.kinds())
+
     def test_policy_remote_settings_and_executable_change_stop_before_the_model(self):
         def policy(config):raise S.ScoutError('managed policy present')
         cases = {'managed policy': lambda: setattr(self.host, 'policy_check', policy),
