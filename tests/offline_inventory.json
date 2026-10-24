@@ -1931,5 +1931,29 @@
       "NativeSignatureTests.test_disposable_signature_accepts_exact_review_and_refuses_forgery",
       "NativeSignatureTests.test_non_ascii_note_verifies_only_when_the_exact_signing_bytes_are_signed"
     ]
+  },
+  "tests/test_quarry_v1.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Offline supplied-file custody, negative outcomes, portable inspection exports and existing Jev synthetic ranking; temporary fictional sources only, no network, credentials, processes or human judgments.",
+    "declared_tests": [
+      "QuarryTests.test_acquisition_plan_is_disabled_and_exact_with_no_dispatcher",
+      "QuarryTests.test_binary_original_with_explicit_unverified_text_extraction",
+      "QuarryTests.test_escape_private_paths_and_network_paths_are_refused_before_read",
+      "QuarryTests.test_exact_excerpt_offsets_and_locations_required",
+      "QuarryTests.test_export_is_portable_and_originals_distinct_from_excerpts",
+      "QuarryTests.test_failed_import_is_partial_and_cannot_be_retried",
+      "QuarryTests.test_full_offline_flow_ranks_supplied_records_and_keeps_authority_pending",
+      "QuarryTests.test_missing_metadata_fails_before_claim_and_unknown_stays_unknown",
+      "QuarryTests.test_original_and_metadata_tamper_are_detected",
+      "QuarryTests.test_oversize_owner_file_is_refused_without_reading_payload",
+      "QuarryTests.test_preserved_original_and_unknown_authenticity",
+      "QuarryTests.test_resealed_restriction_removal_and_wrong_source_are_refused",
+      "QuarryTests.test_stopped_route_copy_remains_stopped_through_jev",
+      "QuarryTests.test_stops_and_restrictions_cannot_be_overridden_by_scope",
+      "QuarryTests.test_unavailable_is_negative_record_not_falsification",
+      "QuarryTests.test_unrelated_private_or_expanded_acquisition_routes_are_refused",
+      "QuarryTests.test_wrong_source_asset_and_hash_are_retained_but_not_exported"
+    ]
   }
 }
