@@ -1,4 +1,4 @@
-"""Post-generation Jev shadow review: import a saved response, build a label packet, compare. No hosted call, ever."""
+"""LEGACY_RETIRED — NOT ACTIVE. Historical Jev replay and independent human label packets; no hosted call."""
 from __future__ import annotations
 
 import argparse
@@ -25,7 +25,7 @@ def stores(values):
 def parser():
     p = argparse.ArgumentParser(description=__doc__, epilog=BANNER)
     sub = p.add_subparsers(dest='command', required=True)
-    x = sub.add_parser('import-response', help='import a saved Jev System One response file unchanged as a shadow record')
+    x = sub.add_parser('import-response', help='LEGACY_RETIRED: synthetic compatibility imports only; prospective shadow use disabled')
     x.add_argument('store'); x.add_argument('idea'); x.add_argument('response')
     x.add_argument('--version', type=int, required=True, help='the card version the request was frozen for')
     x.add_argument('--request-sha256', required=True, help='payload_sha256 printed by shadow-request for the request actually sent')
@@ -37,17 +37,20 @@ def parser():
     x = sub.add_parser('label-packet', help='non-comparative blinded packet for independent labels (no Jev output)')
     x.add_argument('--store', action='append', required=True, metavar='NAME=PATH'); x.add_argument('--salt-file', required=True)
     x.add_argument('--out', required=True, help='new folder for the packet and the private key')
-    x = sub.add_parser('compare', help='descriptive Jev comparison against independent labels (shadow only)')
+    x = sub.add_parser('compare', help='LEGACY_RETIRED: read-only historical comparison against independent labels')
     x.add_argument('--store', action='append', required=True, metavar='NAME=PATH'); x.add_argument('--packet', required=True)
     x.add_argument('--key', required=True); x.add_argument('--labels', help='JSON list of label records; omit to report what is missing')
     return p
 
 
 def dispatch(a):
+    if a.command == 'import-response' and not a.synthetic_fixture:
+        raise S.ScoutError('LEGACY_RETIRED — NOT ACTIVE: prospective Jev shadow imports are disabled; use Jev Navigation V001.')
     if a.command == 'compare':
         paths = store_paths(a.store)
         provenance = {k: [input_json(p) for p in sorted((Archive(v).path / 'exports').glob('jev-provenance-e*.json'))] for k, v in paths.items()}
-        return SR.compare(stores(a.store), input_json(a.packet), input_json(a.key), input_json(a.labels) if a.labels else [], provenance)
+        return {**SR.compare(stores(a.store), input_json(a.packet), input_json(a.key), input_json(a.labels) if a.labels else [], provenance),
+                'legacy_status': 'LEGACY_RETIRED — NOT ACTIVE', 'historical_replay_only': True}
     if a.command == 'label-packet':
         packet, key = SR.label_packet(stores(a.store), input_json(a.salt_file)['salt'])
         out = unlinked(a.out); out.mkdir(parents=True, exist_ok=False)

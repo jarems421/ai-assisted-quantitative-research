@@ -1,0 +1,17 @@
+{
+  "schema": "JEV_NAVIGATION_DESIGNER_LABELS_V001",
+  "basis": "Separate source-content judgments, not derived from scripted choices, probabilities or either ranking. Same-author public synthetic controls; not independent human anchors or a sealed holdout.",
+  "objective": "Inspect supplied passages bearing specifically on the F1 predictor, separate outcome, meaning/units, dated exposure or a discriminating falsifier. Shared keywords and other assets are not relevant originals.",
+  "labels": {
+    "A_MARKETING": {"relevance":"IRRELEVANT","important":false,"reason":"An advertisement restates query terms without a measurement."},
+    "B_ORDER": {"relevance":"RELEVANT","important":true,"reason":"The binding limit, facility, unit and effective date are supplied."},
+    "C_DELIVERIES": {"relevance":"RELEVANT","important":true,"reason":"A separate realised operating total has its own unit and denominator."},
+    "D_WRONG_ASSET": {"relevance":"IRRELEVANT","important":false,"reason":"F99 forecasts do not measure F1; scripted promotion is a deliberate error."},
+    "E_UNITS": {"relevance":"RELEVANT","important":true,"reason":"The appendix distinguishes scope and incompatible denominators."},
+    "F_CONTROL": {"relevance":"RELEVANT","important":false,"reason":"The control provides an explicit competing explanation/falsifier lead."},
+    "G_CONCESSION": {"relevance":"RELEVANT","important":true,"reason":"The concession supplies an actual dated operating relationship, not net loss."},
+    "H_AMBIGUOUS": {"relevance":"UNRESOLVED","important":false,"reason":"The fragment's measurement meaning cannot be established."},
+    "I_DENIAL": {"relevance":"IRRELEVANT","important":false,"reason":"The receipt preserves a stop but contains no original economic measurement."},
+    "J_BACKGROUND": {"relevance":"IRRELEVANT","important":false,"reason":"National context is not the specified facility measurement."}
+  }
+}
