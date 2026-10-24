@@ -391,10 +391,13 @@ class ReadinessTests(unittest.TestCase):
             first = rows['relationships'][0]
             first['target_entity'] = parent
             second = copy.deepcopy(first)
-            second.update(id='REL-T-2', source_entity=parent, target_entity=rows['candidate']['exposure']['company'])
+            second.update(id='REL-T-2', type='OWNERSHIP', source_entity=parent, target_entity=rows['candidate']['exposure']['company'])
+            second['scope'].update(asset='NOT_APPLICABLE', geography='NOT_APPLICABLE')
             rows['relationships'].append(second)
             rows['candidate']['exposure']['relationship_ids'].append(second['id'])
-        path, _, _ = make_packet(self.root / 'multihop', edit)
+        path, p, _ = make_packet(self.root / 'multihop', edit)
+        p['join']['path'][1]['scope_basis'] = 'ENTITY_WIDE_OWNERSHIP'
+        path.write_bytes(canonical(p))
         self.assertEqual(G.inspect(path)['status'], 'INDEPENDENT_REVIEW_REQUIRED', G.inspect(path))
 
     def test_correct_conversion_is_reproduced(self):
@@ -460,6 +463,15 @@ class ReadinessTests(unittest.TestCase):
         p['join']['path'][0]['traversal'] = 'REVERSE'
         path.write_bytes(canonical(p))
         self.assertEqual(G.inspect(path)['status'], 'INDEPENDENT_REVIEW_REQUIRED', G.inspect(path))
+
+    def test_retained_original_hash_does_not_require_an_external_archive(self):
+        self.p['evidence'][0]['archive'] = None
+        self.save()
+        self.assertEqual(G.inspect(self.path)['status'], 'INDEPENDENT_REVIEW_REQUIRED', G.inspect(self.path))
+
+    def test_entity_wide_claim_cannot_bypass_unrelated_asset_relationship(self):
+        self.p['join']['path'][0]['scope_basis'] = 'ENTITY_WIDE_OWNERSHIP'
+        self.refused('ENTITY_WIDE_OWNERSHIP_REQUIRED')
 
 
 class HistoricalCompatibilityTests(unittest.TestCase):

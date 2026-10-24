@@ -134,7 +134,7 @@ class Packet:
         evidence = unique(p['evidence'], 'evidence')
         for ev in evidence.values():
             raw = self.artifact(ev)
-            require(all(text(ev[k]) for k in ('original_locator', 'version', 'archive', 'location')), 'SOURCE_PROVENANCE_REQUIRED')
+            require(all(text(ev[k]) for k in ('original_locator', 'version', 'location')), 'SOURCE_PROVENANCE_REQUIRED')
             require(ev['complete'] is True and ev['kind'] == 'ORIGINAL', 'SOURCE_INCOMPLETE_OR_NONORIGINAL')
             require(ev['format'] in ('UTF8_TEXT', 'BINARY_HUMAN_LOCATION') and text(ev['passage']), 'SOURCE_FORMAT_OR_PASSAGE_REQUIRED')
             if ev['format'] == 'UTF8_TEXT':
@@ -316,8 +316,17 @@ class Packet:
             ev = evidence[edge['evidence_id']]
             require(any(e.get('sha256') == ev['sha256'] for e in rel['evidence']), 'JOIN_EVIDENCE_HASH_MISMATCH')
             require(edge['scope'] == scope, 'JOIN_SCOPE_MISMATCH')
-            for key in ('asset', 'geography'):
-                require(rel['scope'][key] == scope[key], 'JOIN_ASSET_OR_GEOGRAPHY_MISMATCH')
+            if edge.get('scope_basis') == 'ENTITY_WIDE_OWNERSHIP':
+                # A parent owns the subsidiary as a whole; the original need not
+                # enumerate every subsidiary asset. This is not an allocation.
+                require(rel['type'] == 'OWNERSHIP' and all(rel[k]['type'] in ('LEGAL_ENTITY', 'LISTED_COMPANY')
+                        for k in ('source_entity', 'target_entity')), 'ENTITY_WIDE_OWNERSHIP_REQUIRED')
+                for key in ('asset', 'geography'):
+                    require(rel['scope'][key] in (scope[key], 'NOT_APPLICABLE'), 'JOIN_ASSET_OR_GEOGRAPHY_MISMATCH')
+            else:
+                require(edge.get('scope_basis', 'EXACT_ASSET') == 'EXACT_ASSET', 'JOIN_SCOPE_BASIS_UNKNOWN')
+                for key in ('asset', 'geography'):
+                    require(rel['scope'][key] == scope[key], 'JOIN_ASSET_OR_GEOGRAPHY_MISMATCH')
             require(edge['allocation']['method'] in ('NONE_REQUIRED', 'DOCUMENTED'), 'ALLOCATION_ASSUMPTION')
             if c['exposure']['allocation_required'] or edge['allocation']['method'] == 'DOCUMENTED':
                 require(edge['allocation']['method'] == 'DOCUMENTED' and rel['quantity_transfer']['status'] == 'VERIFIED'
