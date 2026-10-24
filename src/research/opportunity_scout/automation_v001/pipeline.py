@@ -18,10 +18,12 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from fractions import Fraction
 import hashlib
+import http.client
 import json
 import math
 import os
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 import time
@@ -43,6 +45,9 @@ STAGES = ('GENERATION', 'CRITIC_PREPARATION', 'FIRST_PASS_CRITICS', 'RECOMMENDAT
 RETENTION = 'PRIVATE_LOCAL_RAW_IN_GIT_IGNORED_ARCHIVE'
 CRITIC_LIMIT = 8 * 1024 * 1024
 CLOSE = X.CLOSE
+# http.client protocol errors (IncompleteRead, BadStatusLine, ...) are not OSErrors; a Gemini send can raise them.
+TRANSPORT_ERRORS = CLOSE + (http.client.HTTPException,)
+TRANSPORT_CODE = re.compile(r'GEMINI_[A-Z_]+(?::HTTP_[0-9]{3})?')  # the transport's own fixed ScoutError codes
 
 
 @dataclass
@@ -175,21 +180,42 @@ def file_facts(path):
     return {'bytes': path.stat().st_size, 'sha256': h.hexdigest()}
 
 
+def preflight_id(role, p):
+    """A preflight covers exactly one resolved executable, its pinned hash and CODEX_HOME (the only inputs its
+    commands depend on); model and effort do not change it. A different identity never reuses another's result."""
+    return digest({'executable': role['executable'], 'executable_sha256': role['executable_sha256'], 'codex_home': p['codex_home']})[:16]
+
+
+def codex_preflight_once(run, rid, role, p, env, codex_state):
+    """Run, record and cache one executable's preflight before its first critic process. Until its record is written
+    the cached result is a stop, so an interrupted or unrecorded preflight never authorises a launch."""
+    key = preflight_id(role, p)
+    if key in codex_state:return codex_state[key]
+    codex_state[key] = {'stop': 'PREFLIGHT_NOT_RECORDED'}
+    identity = {'preflight_id': key, 'executable': role['executable'], 'executable_sha256': role['executable_sha256']}
+    tally = {'launches': 0, 'started': 0}
+    run.put(f'codex-preflight-claim-{key}', {**identity, 'request_id': rid, 'commands': ['--version', 'login status', 'exec --help'],
+                                             'claimed_at': run.host.now()})
+    admin = codex_admin(run.host, tally)
+    try:result = V.codex_preflight(lambda a: admin(role['executable'], env, a), role['executable_sha256'], CS.file_hash(Path(role['executable'])))
+    except CLOSE as error:result = {'stop': str(error) if isinstance(error, S.ScoutError) else type(error).__name__}
+    run.put(f'codex-preflight-record-{key}', {**identity, **result, 'administrative_launches': tally['launches'],
+                                              'processes_started': tally['started'], 'recorded_at': run.host.now()})
+    codex_state[key] = result
+    return result
+
+
 def dispatch_codex(run, rid, role, p, prompt, codex_state):
     """One codex exec process. Returns (reply bytes or None, facts)."""
     host = run.host
     env = V.codex_environment(host.environ, p['codex_home'])
-    if 'preflight' not in codex_state:
-        tally = {'launches': 0, 'started': 0}
-        run.put('codex-preflight-claim', {'request_id': rid, 'commands': ['--version', 'login status', 'exec --help'], 'claimed_at': host.now()})
-        admin = codex_admin(host, tally)
-        try:codex_state['preflight'] = V.codex_preflight(lambda a: admin(role['executable'], env, a), role['executable_sha256'], CS.file_hash(Path(role['executable'])))
-        except CLOSE as error:codex_state['preflight'] = {'stop': str(error) if isinstance(error, S.ScoutError) else type(error).__name__}
-        run.put('codex-preflight', {**codex_state['preflight'], 'administrative_launches': tally['launches'],
-                                    'processes_started': tally['started'], 'recorded_at': host.now()})
-    if 'stop' in codex_state['preflight']:return None, {'faults': ['PREFLIGHT_STOP:' + codex_state['preflight']['stop']], 'dispatched': False}
+    preflight = codex_preflight_once(run, rid, role, p, env, codex_state)
+    if 'stop' in preflight:return None, {'faults': ['PREFLIGHT_STOP:' + preflight['stop']], 'dispatched': False}
+    try:unchanged = CS.file_hash(Path(role['executable'])) == role['executable_sha256']  # a cached preflight never covers a changed binary
+    except CLOSE:unchanged = False
+    if not unchanged:return None, {'faults': ['EXECUTABLE_CHANGED_BEFORE_DISPATCH'], 'dispatched': False, 'preflight': preflight}
     targets = {c: run.raw(f'{rid}-{c}') for c in ('stdout', 'stderr')}
-    handles, facts, start = {}, {'preflight': codex_state['preflight'], 'dispatched': True}, {'process': 'NOT_STARTED'}
+    handles, facts, start = {}, {'preflight': preflight, 'dispatched': True}, {'process': 'NOT_STARTED'}
     code, timed_out, faults = S.UNKNOWN, False, []
     def started(pid):start['process'] = 'STARTED'; run.put(f'started-{rid}', {'request_id': rid, 'pid': pid, 'started_at': host.now()})
     clock = host.monotonic()
@@ -237,12 +263,19 @@ def dispatch_gemini(run, rid, role, prompt, budget, timeout):
     clock, target = host.monotonic(), run.raw(f'{rid}-response')
     spend = {'dispatched': True, 'worst_case_usd': reserve / 1e6, 'reservation_released': False}
     try:status, data = host.transport(url, {'Content-Type': 'application/json', 'x-goog-api-key': key}, body, timeout)
-    except CLOSE as error:
-        return None, {**spend, 'faults': ['TRANSPORT_FAILED:' + (str(error)[:200] if isinstance(error, S.ScoutError) else type(error).__name__)]}
+    except TRANSPORT_ERRORS as error:  # no response body is kept and the reservation stays; the request count is UNKNOWN
+        return None, {**spend, 'faults': [transport_fault(error)]}
     finally:key = None
     with target.open('xb') as f:f.write(data); f.flush(); os.fsync(f.fileno())
     reply, review = V.gemini_review(status, data, role['model'], role['prices'])
     return reply, {**spend, 'wall_seconds': round(host.monotonic() - clock, 3), 'raw': {'response': file_facts(target)}, **review}
+
+
+def transport_fault(error):
+    """Only the exception type, or one of the transport's own fixed codes, is recorded: exception text can carry
+    partial response bytes (``IncompleteRead.partial``) or other untrusted material."""
+    code = str(error) if isinstance(error, S.ScoutError) else ''
+    return 'TRANSPORT_FAILED:' + (code if TRANSPORT_CODE.fullmatch(code) else type(error).__name__)
 
 
 def critic_provenance(role, facts, owner, now):
@@ -409,11 +442,18 @@ def critic_accounting(ex, roles):
 
 
 def preflight_accounting(ex):
-    claimed, rec = (ex / 'pipeline-codex-preflight-claim.json').exists(), tolerant(ex / 'pipeline-codex-preflight.json')
-    if rec and all(type(rec.get(k)) is int for k in ('administrative_launches', 'processes_started')):
-        return {'administrative_cli_launches': count(rec['administrative_launches']), 'processes_started': count(rec['processes_started']),
-                'stop': rec.get('stop')}
-    return {'administrative_cli_launches': UNSEEN if claimed else ZERO, 'processes_started': UNSEEN if claimed else ZERO, 'stop': None}
+    """One row per claimed Codex preflight (one per executable identity); a claim without its record is UNKNOWN."""
+    rows = {}
+    for x in sorted(ex.glob('pipeline-codex-preflight-claim-*.json')):
+        key = x.name[len('pipeline-codex-preflight-claim-'):-5]
+        claim, rec = tolerant(x) or {}, tolerant(ex / f'pipeline-codex-preflight-record-{key}.json')
+        ok = isinstance(rec, dict) and all(type(rec.get(k)) is int for k in ('administrative_launches', 'processes_started'))
+        rows[key] = {'executable': (rec if ok else claim).get('executable', S.UNKNOWN), 'executable_sha256': (rec if ok else claim).get('executable_sha256', S.UNKNOWN),
+                     'recorded': ok, 'stop': rec.get('stop') if ok else None,
+                     'administrative_cli_launches': count(rec['administrative_launches']) if ok else UNSEEN,
+                     'processes_started': count(rec['processes_started']) if ok else UNSEEN}
+    return {'administrative_cli_launches': total([r['administrative_cli_launches'] for r in rows.values()]),
+            'processes_started': total([r['processes_started'] for r in rows.values()]), 'executables': rows}
 
 
 def accounting(store):

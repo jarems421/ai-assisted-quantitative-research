@@ -2,6 +2,9 @@
 Gemini transport and SYNTHETIC FIXTURE critic answers; the real archive, importer, Layer A, critic importer, policy
 and report run unchanged. No process, network, credential, real account directory or paid call is used."""
 import copy
+import email.message
+import http.client
+import io
 import json
 from pathlib import Path
 import socket
@@ -25,6 +28,7 @@ IDEA2['mechanism'] = {**IDEA2['mechanism'], 'family': 'LIABILITY_TRANSFER', 'tri
                       'consequence': 'Fictional warehouse operators shift towards contracted cold storage capacity.'}
 TEXT2 = json.dumps({'ideas': [T.IDEA, IDEA2]})
 KEY = 'AIzaFICTIONAL-test-key-never-sent'
+SECRET = 'FICTIONAL-PARTIAL-RESPONSE-BODY-never-persisted'
 PRICES = PV.PRICES
 
 
@@ -33,7 +37,7 @@ class Base(T.Base):
         super().setUp()
         self.codex = self.base / 'bin' / 'codex.exe'; self.codex.write_bytes(b'fictional codex bytes')
         self.specs, self.codex_calls, self.gemini_calls, self.admin_calls, self.admin_login = {}, [], [], [], 'Logged in using ChatGPT\n'
-        self.codex_mode, self.gemini_mode, self.admin_mode = {}, {}, {}
+        self.codex_mode, self.gemini_mode, self.admin_mode, self.events = {}, {}, {}, []
         self.scientific = {'provider': 'CODEX_CLI', 'family': 'openai', 'model': 'gpt-6-sol', 'effort': 'xhigh',
                            'accept_requested_identity': True, 'executable': str(self.codex)}
         self.economic = {'provider': 'GEMINI_API', 'family': 'google', 'model': 'gemini-4-argon', 'prices': PRICES,
@@ -51,28 +55,33 @@ class Base(T.Base):
         idea = P.Workspace(R.workspace_path(self.store)).manifest()['subjects'][request['subject_key']]['idea_id']
         return B.answer(request['critic'], request, self.specs.get((request['critic'], idea), {}))
 
-    def fake_admin(self, args, *, stdout, stderr, limit, timeout, cwd, on_start, input):
-        """Administrative commands arrive through the bounded capture path; ``admin_mode`` scripts its stops."""
-        self.admin_calls.append({'args': args, 'limit': limit, 'timeout': timeout, 'cwd': cwd, 'input': input})
-        mode = self.admin_mode.get(args[0])
+    def fake_admin(self, args, *, exe, stdout, stderr, limit, timeout, cwd, on_start, input):
+        """Administrative commands arrive through the bounded capture path; ``admin_mode`` scripts its stops, keyed by
+        command or by (executable, command)."""
+        self.admin_calls.append({'args': args, 'exe': exe, 'limit': limit, 'timeout': timeout, 'cwd': cwd, 'input': input})
+        self.events.append(('admin', exe))
+        mode = self.admin_mode.get((exe, args[0]), self.admin_mode.get(args[0]))
         if mode == 'refused':raise OSError('fictional launch refusal')  # Popen failed: no process exists
         on_start(9876)
         if mode == 'flood':raise X.OutputLimitExceeded(args, limit + 1, 'PROCESS_TREE_STOPPED')
         if mode == 'capture':raise X.CaptureFailed(args, ['stdout:READ:OSError'], 'PROCESS_TREE_STOPPED')
         if mode == 'hang':
             error = subprocess.TimeoutExpired(args, timeout); error.tree = 'PROCESS_TREE_STOPPED'; raise error
-        text = {'--version': 'codex-cli 0.164.0-alpha.11.1\n', 'login': self.admin_login, 'exec': ' '.join(V.CODEX_FLAGS)}[args[0]]
+        login = 'Logged in using an API key - sk-...\n' if mode == 'api_key_login' else self.admin_login
+        text = {'--version': 'codex-cli 0.164.0-alpha.11.1\n', 'login': login, 'exec': ' '.join(V.CODEX_FLAGS)}[args[0]]
         stdout.write(text.encode('utf-8'))
         if mode == 'unbounded':stderr.write(b'e' * limit)  # a runner that returned without enforcing: the combined check still stops
         return subprocess.CompletedProcess(args, 3 if mode == 'exit' else 0, None, None)
 
     def fake_codex(self, args, *, stdout, stderr, limit, timeout, cwd, env, shell, on_start, input=None):
-        if '--json' not in args:return self.fake_admin(args[1:], stdout=stdout, stderr=stderr, limit=limit, timeout=timeout, cwd=cwd,
-                                                        on_start=on_start, input=input)
-        self.codex_calls.append({'args': args, 'env': env, 'prompt': input})
+        if '--json' not in args:return self.fake_admin(args[1:], exe=args[0], stdout=stdout, stderr=stderr, limit=limit, timeout=timeout,
+                                                        cwd=cwd, on_start=on_start, input=input)
+        self.codex_calls.append({'args': args, 'exe': args[0], 'env': env, 'prompt': input})
+        self.events.append(('critic', args[0]))
         on_start(4321)
         mode = self.codex_mode
         if mode.get('crash'):raise KeyboardInterrupt('fictional crash after start')
+        if mode.get('replace_executable'):Path(args[0]).write_bytes(b'fictional codex bytes, silently updated')
         reply = self.answer(self.request_for(input)).decode('utf-8')
         items = mode.get('items') or [{'id': 'r', 'type': 'reasoning', 'text': 'fictional'}, {'id': 'm', 'type': 'agent_message', 'text': reply}]
         stdout.write(PV.codex_stream(items=items, model=mode.get('model'), usage=mode.get('usage')))
@@ -116,6 +125,19 @@ class Base(T.Base):
         return next(s for s in rep['subjects'].values() if s['idea_id'] == idea)['critics'][critic]
 
     def ideas(self):return list(Archive(self.store).load().cards)
+
+    def preflights(self):
+        return [json.loads(x.read_text(encoding='utf-8')) for x in sorted((self.store / 'exports').glob('pipeline-codex-preflight-record-*.json'))]
+
+    def persisted(self):
+        return [f for f in list((self.store / 'exports').iterdir()) + list(R.workspace_path(self.store).rglob('*')) if f.is_file()]
+
+    def both_codex(self, other=True):
+        """The economic critic also on Codex: a second, different executable, or the same one."""
+        exe = self.codex
+        if other:exe = self.base / 'bin' / 'codex-other.exe'; exe.write_bytes(b'other fictional codex bytes')
+        self.economic = {**self.scientific, 'executable': str(exe), 'model': 'gpt-6-astra'}
+        return str(exe.resolve())
 
 
 class EndToEndTests(Base):
@@ -285,7 +307,7 @@ class BoundaryTests(Base):
         for c in self.admin_calls:
             self.assertEqual((c['limit'], c['timeout'], c['input']), (X.MAX_ADMIN_BYTES, X.ADMIN_TIMEOUT, None))  # combined, no stdin
             self.assertFalse(Path(c['cwd']).resolve().is_relative_to(ROOT))
-        rec = json.loads((self.store / 'exports/pipeline-codex-preflight.json').read_text(encoding='utf-8'))
+        [rec] = self.preflights()
         self.assertEqual((rec['administrative_launches'], rec['processes_started'], rec['auth']), (3, 3, 'CHATGPT_LOGIN'))
         cases = {('--version', 'flood'): ('ADMIN_OUTPUT_TOO_LARGE:--version:PROCESS_TREE_STOPPED', 1, 1),
                  ('login', 'hang'): ('ADMIN_TIMEOUT:login:PROCESS_TREE_STOPPED', 2, 2),
@@ -299,7 +321,7 @@ class BoundaryTests(Base):
                 self.execute(); rep = self.report()
                 for idea in self.ideas():self.assertEqual(self.critic(rep, idea, 'SCIENTIFIC')['faults'], ['PREFLIGHT_STOP:' + stop])
                 self.assertEqual(self.codex_calls, [])  # no critic process after a stopped preflight
-                rec = json.loads((self.store / 'exports/pipeline-codex-preflight.json').read_text(encoding='utf-8'))
+                [rec] = self.preflights()
                 self.assertEqual((rec['stop'], rec['administrative_launches'], rec['processes_started']), (stop, launches, started))
                 self.assertEqual(rep['accounting']['codex_preflight']['administrative_cli_launches'], {'at_least': launches, 'exact': launches})
 
@@ -369,3 +391,111 @@ class BoundaryTests(Base):
         for f in list((self.store / 'exports').iterdir()) + list(R.workspace_path(self.store).rglob('*')):
             if f.is_file():self.assertNotIn(KEY.encode(), f.read_bytes(), f.name)
         self.assertEqual({c['headers']['x-goog-api-key'] for c in self.gemini_calls}, {KEY})
+
+
+class TruncatedOrigin(PV.FakeOrigins):
+    """The documented host answers 200 and then the body breaks off: reading it raises IncompleteRead."""
+    class Body(io.BytesIO):
+        def read(self, *args):raise http.client.IncompleteRead(SECRET.encode('utf-8'), 4096)
+
+    def https_open(self, req):
+        self.seen.append((V.GEMINI_HOST, {}))
+        from urllib.response import addinfourl
+        response = addinfourl(self.Body(), email.message.Message(), req.full_url, 200); response.msg = 'fixture'
+        return response
+
+
+class HardeningTests(Base):
+    """Uncaught HTTP protocol errors (Gemini) and preflight scope across Codex executables."""
+    def assert_nothing_sensitive_persisted(self):
+        for f in self.persisted():
+            data = f.read_bytes()
+            self.assertNotIn(KEY.encode(), data, f.name); self.assertNotIn(SECRET.encode(), data, f.name)
+
+    def test_http_protocol_errors_become_recorded_transport_faults(self):
+        cases = {'IncompleteRead': http.client.IncompleteRead((SECRET + KEY).encode('utf-8'), 4096),
+                 'HTTPException': http.client.HTTPException(SECRET + ' ' + KEY),
+                 'BadStatusLine': http.client.BadStatusLine(SECRET),
+                 'ScoutError': S.ScoutError(SECRET)}  # only the transport's own fixed codes are ever recorded verbatim
+        for name, error in cases.items():
+            with self.subTest(error=name):
+                self.tearDown(); self.setUp(); self.gemini_mode['error'] = error
+                receipt = self.execute()  # recorded, never an unhandled pipeline exception
+                rep = self.report()
+                self.assertEqual(receipt['outcome'], 'INCOMPLETE_CRITICS')
+                for idea in self.ideas():
+                    econ = self.critic(rep, idea, 'ECONOMIC')
+                    self.assertEqual((econ['outcome'], econ['status'], econ['faults']), ('PROVIDER_FAULT', None, ['TRANSPORT_FAILED:' + name]))
+                prompts = [c['body']['contents'][0]['parts'][0]['text'] for c in self.gemini_calls]
+                self.assertEqual((len(prompts), len(set(prompts))), (2, 2))  # one dispatch per request, never a second attempt
+                gemini = [r for r in rep['accounting']['critic_requests'].values() if r['provider'] == V.GEMINI]
+                self.assertEqual([r['provider_requests'] for r in gemini], [R.UNSEEN] * 2)  # sent maybe; no complete response
+                self.assertEqual((rep['spend']['cost_estimate_usd_documented_prices'], rep['spend']['actual_charges']), (S.UNKNOWN, S.UNKNOWN))
+                self.assertFalse(list((self.store / 'exports').glob('pipeline-*-response.bin')))  # no partial body kept as a reply
+                self.assert_nothing_sensitive_persisted()
+
+    def test_a_truncated_body_through_the_real_transport_keeps_the_reservation_and_is_never_retried(self):
+        origin = TruncatedOrigin(None)
+        self.pipe.transport = lambda url, headers, body, timeout: V.https_transport(url, headers, body, timeout, handlers=(origin,))
+        big = {**self.economic, 'max_output_tokens': 65536}  # worst case about 0.70 USD: a $1 cap holds one reservation
+        receipt = self.execute(economic=big, spend_cap_usd=1.0); rep = self.report()
+        self.assertEqual(receipt['outcome'], 'INCOMPLETE_CRITICS')
+        faults = sorted(self.critic(rep, i, 'ECONOMIC')['faults'] for i in self.ideas())
+        self.assertEqual(faults, [['SPEND_CAP_WOULD_BE_EXCEEDED'], ['TRANSPORT_FAILED:IncompleteRead']])
+        self.assertEqual(len(origin.seen), 1)  # the failed request is not resent; the next does not fit the cap
+        sent = next(json.loads(x.read_text(encoding='utf-8')) for x in sorted((self.store / 'exports').glob('pipeline-critic-*.json'))
+                    if json.loads(x.read_text(encoding='utf-8')).get('faults') == ['TRANSPORT_FAILED:IncompleteRead'])
+        self.assertEqual((sent['reservation_released'], sent['spend_reserved_worst_case_usd_total']), (False, sent['worst_case_usd']))
+        self.assertEqual((rep['spend']['worst_case_reserved_usd'], rep['spend']['reservations_released_usd']), (sent['worst_case_usd'], 0))
+        self.assert_nothing_sensitive_persisted()
+
+    def test_first_executable_passing_never_authorises_a_failing_second(self):
+        other = self.both_codex()
+        for mode, stop in (('api_key_login', 'CODEX_NOT_CHATGPT_SUBSCRIPTION_LOGIN'), ('exit', 'ADMIN_COMMAND_FAILED:login')):
+            with self.subTest(mode=mode):
+                self.tearDown(); self.setUp(); other = self.both_codex(); self.admin_mode[(other, 'login')] = mode
+                self.execute(); rep = self.report()
+                for idea in self.ideas():
+                    self.assertEqual(self.critic(rep, idea, 'ECONOMIC')['faults'], ['PREFLIGHT_STOP:' + stop])
+                    self.assertEqual(self.critic(rep, idea, 'SCIENTIFIC')['status'], 'VALID')
+                self.assertEqual(sorted({c['exe'] for c in self.codex_calls}), [str(self.codex.resolve())])  # the failed one never starts
+                self.assertEqual(len(self.codex_calls), 2)
+                rows = [r for r in rep['accounting']['critic_requests'].values() if r['critic'] == 'ECONOMIC']
+                self.assertEqual([r['model_cli_processes_started'] for r in rows], [R.ZERO] * 2)
+
+    def test_distinct_executables_each_pass_their_own_preflight_before_first_use(self):
+        other = self.both_codex(); first = str(self.codex.resolve())
+        self.execute(); rep = self.report()
+        for exe in (first, other):  # every preflight command of an executable precedes its first critic process
+            admin = [i for i, e in enumerate(self.events) if e == ('admin', exe)]
+            critic = [i for i, e in enumerate(self.events) if e == ('critic', exe)]
+            self.assertEqual((len(admin), len(critic)), (3, 2)); self.assertLess(max(admin), min(critic))
+        recs = self.preflights()
+        self.assertEqual(sorted((r['executable'], r['administrative_launches'], r['processes_started']) for r in recs),
+                         sorted([(first, 3, 3), (other, 3, 3)]))
+        self.assertEqual({r['executable_sha256'] for r in recs}, {R.CS.file_hash(Path(first)), R.CS.file_hash(Path(other))})
+        acc = rep['accounting']
+        self.assertEqual(acc['codex_preflight']['administrative_cli_launches'], {'at_least': 6, 'exact': 6})
+        gen = acc['generation']['administrative_cli_launches']['exact']
+        self.assertEqual(acc['totals']['administrative_cli_launches'], {'at_least': gen + 6, 'exact': gen + 6})
+        self.assertEqual({s for row in rep['subjects'].values() for s in (c['status'] for c in row['critics'].values())}, {'VALID'})
+
+    def test_identical_configuration_reuses_one_successful_preflight(self):
+        self.both_codex(other=False)
+        self.execute(); rep = self.report()
+        self.assertEqual((len(self.admin_calls), len(self.codex_calls), len(self.preflights())), (3, 4, 1))
+        self.assertEqual(rep['accounting']['codex_preflight']['administrative_cli_launches'], {'at_least': 3, 'exact': 3})
+        self.assertEqual({c['status'] for row in rep['subjects'].values() for c in row['critics'].values()}, {'VALID'})
+
+    def test_a_changed_executable_blocks_dispatch(self):
+        other = self.both_codex(); result = self.planned()
+        Path(other).write_bytes(b'tampered after the plan pinned its hash')
+        R.run(self.store, self.authorise(result), host=self.pipe); rep = self.report()
+        for idea in self.ideas():self.assertEqual(self.critic(rep, idea, 'ECONOMIC')['faults'], ['PREFLIGHT_STOP:CODEX_EXECUTABLE_CHANGED'])
+        self.assertNotIn(other, {c['exe'] for c in self.admin_calls + self.codex_calls})  # no command of any kind from it
+        self.tearDown(); self.setUp()
+        self.codex_mode['replace_executable'] = True  # the one Codex executable changes while its first critic runs
+        self.execute(); rep = self.report()
+        faults = sorted(self.critic(rep, i, 'SCIENTIFIC')['faults'][-1] for i in self.ideas())
+        self.assertEqual(faults, ['EXECUTABLE_CHANGED_BEFORE_DISPATCH', 'EXECUTABLE_CHANGED_DURING_RUN'])
+        self.assertEqual(len(self.codex_calls), 1)  # the cached preflight never launches a changed binary

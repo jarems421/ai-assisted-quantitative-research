@@ -177,8 +177,18 @@ is built, and every prompt is re-checked against its frozen `rendered_prompt_sha
   - stdout and stderr together are capped at 1 MiB **while capturing**, with a 30-second timeout;
   - past the cap, at the timeout or on a capture failure the process tree is stopped, and each is a named
     `PREFLIGHT_STOP` before any critic process;
-  - a claim file is written before the first launch, and `pipeline-codex-preflight.json` records the launches and
-    the confirmed starts.
+  - each distinct executable identity (resolved path, pinned SHA-256 and `CODEX_HOME`) gets its own preflight before
+    its first critic process. `pipeline-codex-preflight-claim-<id>.json` is written before the first launch, and
+    `pipeline-codex-preflight-record-<id>.json` records the launches and the confirmed starts;
+  - one executable passing never authorises another. Only roles with an identical identity reuse a result, and an
+    unrecorded or failed preflight is a stop for that executable;
+  - the pinned hash is rechecked before every critic launch, so a cached preflight never covers a changed binary
+    (`EXECUTABLE_CHANGED_BEFORE_DISPATCH`).
+- **HTTP protocol errors are faults.** `http.client` errors such as `IncompleteRead` or `BadStatusLine` are not
+  `OSError`s, and they become `TRANSPORT_FAILED:<type>` like any other failed send:
+  - no partial body is kept or imported, the reservation stays, and the request count is UNKNOWN;
+  - only the exception type, or one of the transport's own fixed `GEMINI_*` codes, is recorded. Exception text can
+    carry partial response bytes.
 - **Adversarial review is never dispatched.** A policy recommendation for it is recorded `PENDING_APPROVAL`.
 - **Unavailable roles stop honestly.** An unavailable role (`ANTIGRAVITY_CONSUMER`) is recorded
   `PROVIDER_UNAVAILABLE_OR_NOT_AUTHORISED` and the run ends `INCOMPLETE_CRITICS`. Nothing is substituted.
@@ -208,7 +218,7 @@ before the launch or request it names, so a missing marker establishes zero. Not
 | Measure | Evidence |
 |---|---|
 | Model CLI processes started | Generation `process_start`; `pipeline-started-<request>`, written by `on_start` once `Popen` returns. A dispatch without that marker is UNKNOWN |
-| Administrative CLI launches (send no prompt) | Generation receipt `administrative_commands_run`; the Codex preflight record. A claim without its record is UNKNOWN |
+| Administrative CLI launches (send no prompt) | Generation receipt `administrative_commands_run`; each Codex preflight record. A claim without its record is UNKNOWN |
 | Dispatches attempted | `exploratory-dispatch-*` and `pipeline-dispatch-<request>` |
 | Provider requests | Generation: a visible request ID means at least 1. Codex: a model-authored message means at least 1. Gemini: a recorded response is exactly 1 (no redirects or retries) |
 
@@ -251,6 +261,16 @@ transport and `SYNTHETIC FIXTURE` critic answers, with socket and process creati
 14. Accounting is exactly zero before a run. After the run there are three model CLI processes, five dispatches, and
     provider requests at least five with exact UNKNOWN. A crash keeps the started process counted and leaves its
     requests UNKNOWN.
+15. `IncompleteRead` (through the real transport, with a truncated body), `HTTPException`, `BadStatusLine` and an
+    untrusted `ScoutError` message each give a recorded `TRANSPORT_FAILED:<type>` fault:
+    - the run finishes, with one dispatch per request and none resent;
+    - the reservation stays, and the request count and estimate are UNKNOWN;
+    - neither the key nor the partial body appears in any written file.
+16. With both critics on Codex, the identity decides the preflight:
+    - an identical executable runs one preflight;
+    - two different executables each run their own three commands before their first critic process;
+    - a second executable with an API-key login or a failed command is stopped while the first's critics stay VALID;
+    - a binary changed after planning gets no command at all, and one changed during a run is never launched again.
 
 ## Blockers to one fully automated live run
 

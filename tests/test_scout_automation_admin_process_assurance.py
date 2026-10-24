@@ -2,7 +2,6 @@
 children standing in for the Codex CLI. No CLI, model, network, credential or account inspection. Separate from
 v004_checks, whose process guard intentionally refuses Popen. Every child floods or hangs, and gives up by itself
 after 30 seconds."""
-import json
 import time
 import unittest
 from unittest.mock import patch
@@ -28,7 +27,8 @@ class CodexAdminProcessTests(Base):
         started = time.monotonic()
         self.execute()
         self.elapsed = time.monotonic() - started
-        return json.loads((self.store / 'exports/pipeline-codex-preflight.json').read_text(encoding='utf-8'))
+        [record] = self.preflights()  # one Codex executable, so exactly one preflight record
+        return record
 
     def assert_stopped_before_any_critic_process(self, stop):
         rep = self.report()

@@ -291,7 +291,13 @@
       "EndToEndTests.test_invalid_reply_is_kept_and_provider_fault_is_never_imported",
       "EndToEndTests.test_model_fallback_is_a_fault_for_both_providers",
       "EndToEndTests.test_one_authorised_run_generates_critiques_recommends_and_reports",
-      "EndToEndTests.test_unobserved_identity_and_unknown_usage_are_not_promoted"
+      "EndToEndTests.test_unobserved_identity_and_unknown_usage_are_not_promoted",
+      "HardeningTests.test_a_changed_executable_blocks_dispatch",
+      "HardeningTests.test_a_truncated_body_through_the_real_transport_keeps_the_reservation_and_is_never_retried",
+      "HardeningTests.test_distinct_executables_each_pass_their_own_preflight_before_first_use",
+      "HardeningTests.test_first_executable_passing_never_authorises_a_failing_second",
+      "HardeningTests.test_http_protocol_errors_become_recorded_transport_faults",
+      "HardeningTests.test_identical_configuration_reuses_one_successful_preflight"
     ]
   },
   "tests/opportunity_scout/test_scout.py": {
