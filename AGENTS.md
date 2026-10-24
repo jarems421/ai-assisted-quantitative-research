@@ -1,5 +1,10 @@
 # Repository instructions
 
+## Anvil / Crucible prospective Level A integrity preflight V001 (2026-10-24)
+
+- `docs/strategy/level_a_integrity_hardening_v001.md`; `src/research/study_readiness_v1/` (`inspect|verify`) is additive and read-only. Never alter historical Discovery schemas/replay/derived classifications, Graph fixtures or frozen Scout closures to satisfy it. Legacy M/design-candidate labels alone do not establish new-profile readiness. No runner, source acquisition, model call or study activation follows.
+- `inspect` emits PENDING review fields and never readiness. A real signed review must be completed by the human after inspecting originals and the exact study; never draft VERIFIED human judgments, create real M/owner decisions, enrol/replace real trust, access personal signing keys or sign for an owner. Trust must be independently owner-controlled outside the packet/checkout, with signing capability unavailable to assistants. Synthetic keys/reviews are fixture-only and cannot approve LIVE packets. Key possession is not authenticated human identity or source truth. Operational adoption and real-study authorisation remain separate owner acts.
+
 ## Opportunity Scout exploratory FORGE runner V001: offline-tested, draft PR, not merged (2026-10-24)
 
 - `docs/opportunity_scout/exploratory_runner_v001.md`; code `src/research/opportunity_scout/exploratory_v001/` (`python -m src.research.opportunity_scout.exploratory_v001 plan|run|status`). One owner-authorised, seedless, memory-free FORGE generation per new exploratory archive through the Claude Code CLI. Separate from N1, frozen V004 and every scientific slot; no top-level Scout, `v004_r3`, N1, observer, `critic_v1` or `post_generation` file changes.

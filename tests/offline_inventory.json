@@ -1739,5 +1739,65 @@
       "SupportCaseTests.test_complete_population_failure_and_allowlist",
       "SupportCaseTests.test_hash_tampering_and_incomplete_pages_fail"
     ]
+  },
+  "tests/test_study_readiness.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Additive Level A readiness: synthetic exact-byte packets, adversarial mechanical refusals, explicitly mocked review stand-ins and read-only historical ledger replay.",
+    "declared_tests": [
+      "HistoricalCompatibilityTests.test_six_historical_ledgers_replay_185_events_with_identical_bytes",
+      "ReadinessTests.test_a_source_route_forecast_is_not_a_realized_outcome",
+      "ReadinessTests.test_assumed_allocation_is_blocked",
+      "ReadinessTests.test_binary_original_can_be_recorded_but_needs_signed_human_mapping",
+      "ReadinessTests.test_changed_forge_hypothesis_is_blocked",
+      "ReadinessTests.test_changed_origin_card_hash_is_blocked",
+      "ReadinessTests.test_changed_outcome_value_and_original_retain_revision_history",
+      "ReadinessTests.test_correct_conversion_is_reproduced",
+      "ReadinessTests.test_cross_dimension_conversion_is_blocked",
+      "ReadinessTests.test_current_owner_cannot_be_backfilled",
+      "ReadinessTests.test_declared_field_without_independent_mapping_cannot_advance",
+      "ReadinessTests.test_declared_history_stays_selected_after_flag_is_cleared",
+      "ReadinessTests.test_gross_scale_is_bound_to_an_original_value",
+      "ReadinessTests.test_inspect_cli_cannot_advance_or_execute",
+      "ReadinessTests.test_later_hold_cannot_reuse_prior_design_candidate",
+      "ReadinessTests.test_later_m_review_cannot_reuse_prior_pass",
+      "ReadinessTests.test_legitimate_multihop_relationship_passes_mechanical_preflight",
+      "ReadinessTests.test_malformed_and_escaping_inputs_fail_closed",
+      "ReadinessTests.test_material_outcome_revision_cannot_keep_untouched_label",
+      "ReadinessTests.test_missing_field_location_is_blocked",
+      "ReadinessTests.test_missing_units_denominator_and_scope_block",
+      "ReadinessTests.test_model_human_label_is_not_an_owner_review",
+      "ReadinessTests.test_new_network_or_spend_cannot_hide_in_approved_scope",
+      "ReadinessTests.test_old_certificate_cannot_bind_revised_content",
+      "ReadinessTests.test_outcome_reconstructed_from_predictor_is_blocked",
+      "ReadinessTests.test_packet_cannot_enrol_its_own_trust",
+      "ReadinessTests.test_population_baseline_and_uncertainty_are_required",
+      "ReadinessTests.test_prior_approval_invalid_after_any_design_change",
+      "ReadinessTests.test_renamed_measurement_cannot_hide_overlap",
+      "ReadinessTests.test_retrospective_cannot_claim_historically_actionable",
+      "ReadinessTests.test_reversed_documented_ownership_edge_is_supported",
+      "ReadinessTests.test_selected_sample_cannot_be_confirmatory",
+      "ReadinessTests.test_selection_history_cannot_be_omitted",
+      "ReadinessTests.test_source_bytes_changed_even_if_declared_original",
+      "ReadinessTests.test_synthetic_review_double_can_pass_without_claiming_identity_or_execution",
+      "ReadinessTests.test_synthetic_trust_cannot_approve_live_packet",
+      "ReadinessTests.test_transitive_circular_derivation_is_blocked",
+      "ReadinessTests.test_unrelated_asset_or_cohort_or_accounting_is_blocked",
+      "ReadinessTests.test_unrelated_existing_file_is_not_authority",
+      "ReadinessTests.test_unreproducible_transform_is_blocked",
+      "ReadinessTests.test_valid_retrospective_same_publisher_waits_for_independent_review",
+      "ReadinessTests.test_verified_but_unrelated_original_relationship_is_blocked",
+      "ReadinessTests.test_wrong_extracted_field_value_is_blocked",
+      "ReadinessTests.test_wrong_transform_result_is_blocked",
+      "ReadinessTests.test_wrong_unit_conversion_is_blocked"
+    ]
+  },
+  "tests/test_study_readiness_signature.py": {
+    "baseline_ci": true,
+    "runner": "public",
+    "reason": "Native OpenSSH signature verification using disposable SYNTHETIC keys in fixture scratch only; no account key, network, credential or real approval. Runs in guarded public suite on Windows and Linux, outside process-denying additional runner.",
+    "declared_tests": [
+      "NativeSignatureTests.test_disposable_signature_accepts_exact_review_and_refuses_forgery"
+    ]
   }
 }
