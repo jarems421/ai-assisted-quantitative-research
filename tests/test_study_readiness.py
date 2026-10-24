@@ -6,10 +6,11 @@ import json
 import tempfile
 import unittest
 from contextlib import redirect_stdout
-from pathlib import Path
+from pathlib import Path, PurePath, PurePosixPath, PureWindowsPath
 from unittest.mock import patch
 
 from src.research.discovery import demo as D
+from src.research.discovery import ledger as L
 from src.research.discovery.ledger import Ledger
 from src.research.spec import canonical, digest
 from src.research.study_readiness_v1 import gate as G, approval as A
@@ -40,7 +41,9 @@ def make_packet(folder, edit_records=None):
     from src.research.opportunity_scout import engine as E, workflow as W, fixtures as F
     from src.research.opportunity_scout.storage import Archive
     folder.mkdir(parents=True)
-    raw = canonical({'ceiling': 6, 'old_ceiling': 10, 'shipments': 61, 'prior_shipments': 80, 'gross': 40,
+    # Each reading carries the period printed beside it in the (fictional) original.
+    raw = canonical({'ceiling': {'value': 6, 'old_value': 10, 'period': {'start': '2000-03-01', 'end': '2000-03-31'}}, 'other_terminal': {'value': 9, 'period': {'start': '2000-03-01', 'end': '2000-03-31'}},
+                     'shipments': {'value': 61, 'prior_value': 80, 'period': {'start': '2000-01-01', 'end': '2000-03-31'}}, 'gross': 40,
                      'relationship': 'F-001 operated by ALPHA in synthetic port from 1990.'})
     (folder / 'original.json').write_bytes(raw)
     ev = evidence(raw)
@@ -79,11 +82,12 @@ def make_packet(folder, edit_records=None):
     (folder / 'handoff.json').write_bytes(handoff_raw)
     scope = {'asset': 'SYN_FACILITY:F-001', 'cohort': 'single facility', 'geography': 'synthetic port', 'accounting_basis': 'GROSS'}
     measurements = []
-    for mid, ob, location in [('X', pred, '/ceiling'), ('Y', out, '/shipments')]:
+    for mid, ob, record, period in [('X', pred, '/ceiling', {'start': '2000-03-01', 'end': '2000-03-31'}), ('Y', out, '/shipments', {'start': '2000-01-01', 'end': '2000-03-31'})]:
         measurements.append({'id': mid, 'observation_id': ob['id'], 'observation_version': 1, 'source_id': 'SRC-T', 'source_version': 1,
-            'evidence_id': 'E1', 'location': location, 'extraction': 'JSON_POINTER', 'value': ob['value'], 'units': ob['units'],
+            'evidence_id': 'E1', 'location': record + '/value', 'extraction': 'JSON_POINTER', 'value': ob['value'], 'units': ob['units'],
             'denominator': ob['denominator'], 'entity': ob['entity']['id'], 'scope': dict(scope), 'nature': 'REPORTED',
-            'period': {'start': '2000-03-01', 'end': '2000-03-31'}, 'public_time': {'status': 'RETROSPECTIVE_ONLY'}})
+            'period': period, 'period_location': {'start': record + '/period/start', 'end': record + '/period/end'},
+            'public_time': {'status': 'RETROSPECTIVE_ONLY'}})
     mapping = {}
     for path in ('/predictor/quantity', '/predictor/units', '/outcome/quantity', '/outcome/units', '/falsifier/observation', '/mechanism'):
         original = G.pointer(card['idea'], path)
@@ -192,7 +196,7 @@ class ReadinessTests(unittest.TestCase):
         signer.assert_not_called()
 
     def test_wrong_extracted_field_value_is_blocked(self):
-        self.p['measurements'][0]['location'] = '/shipments'
+        self.p['measurements'][0]['location'] = '/shipments/value'
         self.refused('SOURCE_TO_VALUE_MISMATCH')
 
     def test_source_bytes_changed_even_if_declared_original(self):
@@ -223,7 +227,7 @@ class ReadinessTests(unittest.TestCase):
         self.refused('CIRCULAR_CONSTRUCTION')
 
     def test_renamed_measurement_cannot_hide_overlap(self):
-        self.p['measurements'][1].update(evidence_id='E1', location='/ceiling', extraction='HUMAN_PASSAGE')
+        self.p['measurements'][1].update(evidence_id='E1', location='/ceiling/value', extraction='HUMAN_PASSAGE')
         self.refused('PREDICTOR_OUTCOME_OVERLAP')
 
     def test_wrong_unit_conversion_is_blocked(self):
@@ -251,6 +255,8 @@ class ReadinessTests(unittest.TestCase):
                 self.p['join']['path'][0]['scope'][key] = old
 
     def test_current_owner_cannot_be_backfilled(self):
+        # A human-read period is still checked against dated ownership.
+        self.p['measurements'][0].update(extraction='HUMAN_PASSAGE', location='Ceiling table, March 2000 row')
         self.p['measurements'][0]['period']['start'] = '1980-01-01'
         self.refused('HISTORICAL_OWNERSHIP_UNCOVERED')
 
@@ -277,7 +283,7 @@ class ReadinessTests(unittest.TestCase):
         self.refused('UNTOUCHED_HISTORY_LAUNDERING')
 
     def test_changed_outcome_value_and_original_retain_revision_history(self):
-        raw = canonical({'shipments': 62, 'note': 'SYNTHETIC revised outcome original.'})
+        raw = canonical({'shipments': {'value': 62, 'period': {'start': '2000-01-01', 'end': '2000-03-31'}}, 'note': 'SYNTHETIC revised outcome original.'})
         (self.path.parent / 'revised-outcome.json').write_bytes(raw)
         e = evidence(raw)
         ob = copy.deepcopy(self.ledger.load().latest('observation', 'OBS-T-OUT'))
@@ -457,7 +463,7 @@ class ReadinessTests(unittest.TestCase):
         self.assertFalse(result['ready'])
 
     def test_gross_scale_is_bound_to_an_original_value(self):
-        self.p['financial_crosswalk']['location'] = '/shipments'
+        self.p['financial_crosswalk']['location'] = '/shipments/value'
         self.refused('FINANCIAL_VALUE_MISMATCH')
 
     def test_reversed_documented_ownership_edge_is_supported(self):
@@ -478,6 +484,165 @@ class ReadinessTests(unittest.TestCase):
         self.p['join']['path'][0]['scope_basis'] = 'ENTITY_WIDE_OWNERSHIP'
         self.refused('ENTITY_WIDE_OWNERSHIP_REQUIRED')
 
+
+class ReviewCorrectionTests(unittest.TestCase):
+    """PR #31 review corrections. Mocked signers are labelled; no real trust, key or human review."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+
+    def packet(self, edit_records=None, name='packet'):
+        return make_packet(self.root / name, edit_records)
+
+    def inspect(self, path, p):
+        path.write_bytes(canonical(p))
+        return G.inspect(path)
+
+    def test_implementation_digest_is_identical_for_windows_and_linux_paths(self):
+        names = ('study_readiness_v1/gate.py', 'discovery/ledger.py', 'spec.py')
+        content = {name: ('# ' + name + '\n').encode() for name in names}
+        windows = [PureWindowsPath('C:/checkout/src/research', *n.split('/')) for n in names]
+        linux = [PurePosixPath('/checkout/src/research', *n.split('/')) for n in names]
+        read = lambda f: content[next(n for n in names if PurePath(f).as_posix().endswith('/' + n))]
+        self.assertEqual(G.implementation_digest(PureWindowsPath('C:/checkout/src/research'), windows, read),
+                         G.implementation_digest(PurePosixPath('/checkout/src/research'), linux, read))
+        # Path keys are portable, but bytes are not normalised: the repository checks out
+        # exact bytes everywhere (.gitattributes `* -text`), so a CRLF rewrite is a real change.
+        crlf = lambda f: read(f).replace(b'\n', b'\r\n')
+        self.assertNotEqual(G.implementation_digest(PurePosixPath('/checkout/src/research'), linux, read),
+                            G.implementation_digest(PurePosixPath('/checkout/src/research'), linux, crlf))
+
+    def test_narrowed_measurement_period_cannot_bypass_historical_ownership(self):
+        def late_owner(rows):
+            for ob in (rows['predictor'], rows['outcome']):
+                ob['clocks']['economic_occurrence']['value'] = '2000-03-25'
+            rows['relationships'][0]['period']['start'] = '2000-03-20'
+
+        path, p, _ = self.packet(late_owner)
+        self.assertIn('HISTORICAL_OWNERSHIP_UNCOVERED', self.inspect(path, p)['blocker'])  # periods read from the source
+        for m in p['measurements']:
+            m['period'] = {'start': '2000-03-25', 'end': '2000-03-25'}  # fabricated single day
+        self.assertIn('MEASUREMENT_PERIOD_NOT_SOURCE_GROUNDED', self.inspect(path, p)['blocker'])
+        raw = (path.parent / 'original.json').read_bytes()
+        outcome = copy.deepcopy(p['measurements'][1])
+        self.assertIn('MEASUREMENT_PERIOD_INCONSISTENT_WITH_UNITS', self.period_error(outcome, raw))  # a quarterly flow
+        outcome['units'] = 'tonnes/day'
+        self.assertIn('MEASUREMENT_PERIOD_NOT_SOURCE_GROUNDED', self.period_error(outcome, raw))
+
+    def period_error(self, item, raw):
+        with self.assertRaises(G.NotReady) as caught:
+            G.measurement_period(item, raw)
+        return str(caught.exception)
+
+    def test_period_must_be_a_field_of_the_measured_record(self):
+        path, p, _ = self.packet()
+        # Same dates, but printed for another record: not the period of this reading.
+        p['measurements'][0]['period_location'] = {'start': '/other_terminal/period/start', 'end': '/other_terminal/period/end'}
+        self.assertIn('MEASUREMENT_PERIOD_NOT_SOURCE_GROUNDED', self.inspect(path, p)['blocker'])
+        p['measurements'][0].pop('period_location')
+        self.assertIn('MEASUREMENT_PERIOD_LOCATION', self.inspect(path, p)['blocker'])
+
+    def test_human_read_period_is_bounded_by_units_and_left_for_signed_inspection(self):
+        path, p, _ = self.packet()
+        outcome = p['measurements'][1]
+        outcome.update(extraction='HUMAN_PASSAGE', location='Shipments table, Q1 2000 row')
+        outcome.pop('period_location')
+        result = self.inspect(path, p)
+        self.assertEqual(result['status'], 'INDEPENDENT_REVIEW_REQUIRED', result)
+        self.assertEqual(result['review_payload']['measurement_periods']['Y'],
+                         {'start': '2000-01-01', 'end': '2000-03-31', 'basis': 'HUMAN_SOURCE_INSPECTION_REQUIRED'})
+        self.assertEqual(result['review_payload']['measurement_periods']['X']['basis'], 'SOURCE_FIELDS')
+        outcome['period'] = {'start': '2000-03-01', 'end': '2000-03-01'}
+        self.assertIn('MEASUREMENT_PERIOD_INCONSISTENT_WITH_UNITS', self.inspect(path, p)['blocker'])
+
+    def test_v001_discovery_approvals_are_not_promoted_into_readiness(self):
+        with patch.object(L, 'RULES', L.V.RULES_V001):
+            path, p, _ = self.packet()
+        self.assertIn('M_REVIEW_PREDATES_DISCOVERY_LAB_RULES_V002', self.inspect(path, p)['blocker'])
+
+    def test_signing_bytes_escape_non_ascii_exactly_as_verify_checks(self):
+        path, _, _ = self.packet()
+        payload = G.Packet(path).check()
+        payload['owner_principal'] = 'SYNTHETIC_OWNER'
+        payload['reviews']['source_meaning']['note'] = 'Quarter row read \u2014 \u201cshipments\u201d, SYNTHETIC only.'
+        review = self.root / 'review.json'
+        review.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding='utf-8')  # pretty, UTF-8
+        out = self.root / 'review.signing-bytes'
+        with redirect_stdout(io.StringIO()) as printed:
+            self.assertEqual(main(['signing-bytes', str(review), str(out)]), 0)
+        raw = out.read_bytes()
+        self.assertEqual(raw, canonical(payload))
+        self.assertIn(b'\\u2014', raw)
+        self.assertTrue(raw.isascii())
+        self.assertNotEqual(raw, json.dumps(payload, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8'))
+        self.assertEqual(json.loads(printed.getvalue())['sha256'], G.sha(raw))
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(main(['signing-bytes', str(review), str(out)]), 2)  # never overwrites
+        self.assertEqual(out.read_bytes(), raw)
+
+    def test_verified_output_keeps_the_fixture_class(self):
+        path, _, _ = self.packet()
+        payload = G.Packet(path).check()
+        statuses = {}
+        for fixture in ('SYNTHETIC', 'RETROSPECTIVE_INSPECTED', 'LIVE'):
+            expected = dict(payload, fixture=fixture)
+            approval = dict(copy.deepcopy(expected), owner_principal='SYNTHETIC_OWNER')
+            for item in approval['reviews'].values():
+                item.update(status='VERIFIED', evidence_ids=['E1'], note='SYNTHETIC test double; no human judgment.')
+            review = self.root / f'review-{fixture}.json'
+            review.write_bytes(canonical(approval))
+            trust = self.root / f'trust-{fixture}.json'
+            trust.write_bytes(canonical({'schema': 'LEVEL_A_OWNER_TRUST_V001', 'fixture': fixture, 'principal': 'SYNTHETIC_OWNER',
+                                         'allowed_signers': str(self.root / 'allowed_signers'), 'allowed_signers_sha256': '0' * 64}))
+            # MOCKED verifier and packet fixture: tests output labelling only, never real approval.
+            with patch.object(G.Packet, 'check', return_value=expected), patch.object(A, 'verify_signature'):
+                result = A.verify(path, review, 'none', trust_path=trust)
+            self.assertEqual((result['fixture'], result['live_research_readiness']), (fixture, fixture == 'LIVE'), result)
+            statuses[fixture] = result['status']
+        self.assertEqual(statuses, {'SYNTHETIC': 'SYNTHETIC_READY', 'RETROSPECTIVE_INSPECTED': 'OWNER_REVIEWED_RETROSPECTIVE_LEVEL_A_PREFLIGHT',
+                                    'LIVE': 'OWNER_REVIEWED_LEVEL_A_PREFLIGHT'})
+
+    def test_wrong_json_shapes_are_blocked_not_tracebacks(self):
+        path, p, _ = self.packet()
+        for edit, code in ((lambda q: q.update(design=['x']), 'STUDY_DESIGN'),
+                           (lambda q: q['design'].update(uncertainty_plan='plan'), 'UNCERTAINTY_PLAN'),
+                           (lambda q: q['join'].update(path=['REL-T-1']), 'JOIN_PATH'),
+                           (lambda q: q.update(measurements=['X']), 'measurements'),
+                           (lambda q: q.update(owner_scope=[]), 'OWNER_SCOPE')):
+            q = copy.deepcopy(p)
+            edit(q)
+            result = self.inspect(path, q)
+            self.assertEqual(result['status'], 'BLOCKED', result)
+            self.assertIn(code, result['blocker'])
+        path.write_bytes(b'[]')
+        self.assertIn('PACKET', G.inspect(path)['blocker'])
+        path.write_bytes(canonical(p))
+        payload = G.Packet(path).check()
+        payload['owner_principal'] = 'SYNTHETIC_OWNER'
+        trust = self.root / 'trust.json'
+        trust.write_bytes(canonical({'schema': 'LEVEL_A_OWNER_TRUST_V001', 'fixture': 'SYNTHETIC', 'principal': 'SYNTHETIC_OWNER',
+                                     'allowed_signers': str(self.root / 'allowed_signers'), 'allowed_signers_sha256': '0' * 64}))
+        review = self.root / 'review.json'
+        for reviews, code in ((list(G.CHECKS), 'REVIEWS'), ({k: 'VERIFIED' for k in G.CHECKS}, 'REVIEW:')):
+            review.write_bytes(canonical(dict(payload, reviews=reviews)))
+            with patch.object(A, 'verify_signature') as signer:
+                result = A.verify(path, review, 'none', trust_path=trust)
+            self.assertIn(code, result['blocker'])
+            signer.assert_not_called()
+
+    def test_financial_value_must_match_type_as_well_as_value(self):
+        path, p, _ = self.packet()
+        p['financial_crosswalk']['value'] = 40.0  # source holds the integer 40
+        self.assertIn('FINANCIAL_VALUE_MISMATCH', self.inspect(path, p)['blocker'])
+
+    def test_json_pointer_array_indices_follow_rfc_6901(self):
+        doc = {'rows': [10, 11, 12]}
+        self.assertEqual(G.pointer(doc, '/rows/2'), 12)
+        for bad in ('/rows/-1', '/rows/01', '/rows/+1', '/rows/1_0', '/rows/ 1'):
+            with self.assertRaisesRegex(G.NotReady, 'invalid array index'):
+                G.pointer(doc, bad)
 
 class HistoricalCompatibilityTests(unittest.TestCase):
     def test_six_historical_ledgers_replay_185_events_with_identical_bytes(self):

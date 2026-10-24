@@ -1799,7 +1799,17 @@
       "ReadinessTests.test_verified_but_unrelated_original_relationship_is_blocked",
       "ReadinessTests.test_wrong_extracted_field_value_is_blocked",
       "ReadinessTests.test_wrong_transform_result_is_blocked",
-      "ReadinessTests.test_wrong_unit_conversion_is_blocked"
+      "ReadinessTests.test_wrong_unit_conversion_is_blocked",
+      "ReviewCorrectionTests.test_financial_value_must_match_type_as_well_as_value",
+      "ReviewCorrectionTests.test_human_read_period_is_bounded_by_units_and_left_for_signed_inspection",
+      "ReviewCorrectionTests.test_implementation_digest_is_identical_for_windows_and_linux_paths",
+      "ReviewCorrectionTests.test_json_pointer_array_indices_follow_rfc_6901",
+      "ReviewCorrectionTests.test_narrowed_measurement_period_cannot_bypass_historical_ownership",
+      "ReviewCorrectionTests.test_period_must_be_a_field_of_the_measured_record",
+      "ReviewCorrectionTests.test_signing_bytes_escape_non_ascii_exactly_as_verify_checks",
+      "ReviewCorrectionTests.test_v001_discovery_approvals_are_not_promoted_into_readiness",
+      "ReviewCorrectionTests.test_verified_output_keeps_the_fixture_class",
+      "ReviewCorrectionTests.test_wrong_json_shapes_are_blocked_not_tracebacks"
     ]
   },
   "tests/test_study_readiness_signature.py": {
@@ -1807,7 +1817,8 @@
     "runner": "public",
     "reason": "Native OpenSSH signature verification using disposable SYNTHETIC keys in fixture scratch only; no account key, network, credential or real approval. Runs in guarded public suite on Windows and Linux, outside process-denying additional runner.",
     "declared_tests": [
-      "NativeSignatureTests.test_disposable_signature_accepts_exact_review_and_refuses_forgery"
+      "NativeSignatureTests.test_disposable_signature_accepts_exact_review_and_refuses_forgery",
+      "NativeSignatureTests.test_non_ascii_note_verifies_only_when_the_exact_signing_bytes_are_signed"
     ]
   }
 }

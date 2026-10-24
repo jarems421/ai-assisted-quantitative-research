@@ -11,10 +11,18 @@ import subprocess
 from pathlib import Path
 
 from src.research.spec import canonical
-from .gate import CHECKS, Packet, NotReady, read_json, require, sha, text
+from .gate import CHECKS, Packet, obj, read_json, require, sha, text
 
 NAMESPACE = 'research-os-level-a-v001'
 TRUST = Path.home() / '.research-os' / 'level-a-trust.json'
+# The fixture class always survives into the result: retrospective work never reads as live readiness.
+STATUS = {'SYNTHETIC': 'SYNTHETIC_READY', 'RETROSPECTIVE_INSPECTED': 'OWNER_REVIEWED_RETROSPECTIVE_LEVEL_A_PREFLIGHT',
+          'LIVE': 'OWNER_REVIEWED_LEVEL_A_PREFLIGHT'}
+
+
+def signing_bytes(review_path):
+    """The exact bytes verify() checks: sorted-key compact JSON, non-ASCII as \\uXXXX escapes."""
+    return canonical(obj(read_json(Path(review_path).read_bytes()), 'REVIEW'))
 
 
 def verify_signature(payload, signature, trust):
@@ -36,7 +44,7 @@ def verify(packet_path, approval_path, signature_path, *, trust_path=None):
         expected = packet.check()
         trust_file = Path(trust_path) if trust_path is not None else TRUST
         require(not trust_file.resolve().is_relative_to(packet.root), 'TRUST: must be independently enrolled outside packet')
-        trust = read_json(trust_file.read_bytes())
+        trust = obj(read_json(trust_file.read_bytes()), 'OWNER_TRUST')
         require(trust['schema'] == 'LEVEL_A_OWNER_TRUST_V001' and text(trust['principal']), 'OWNER_TRUST_REQUIRED')
         require(trust['fixture'] == expected['fixture'], 'TRUST_FIXTURE_MISMATCH')
         require(not Path(trust['allowed_signers']).resolve().is_relative_to(packet.root), 'TRUST: signers must be outside packet')
@@ -44,19 +52,19 @@ def verify(packet_path, approval_path, signature_path, *, trust_path=None):
             checkout = Path(__file__).resolve().parents[3]
             require(not trust_file.resolve().is_relative_to(checkout)
                     and not Path(trust['allowed_signers']).resolve().is_relative_to(checkout), 'TRUST: outside checkout required')
-        approval = read_json(Path(approval_path).read_bytes())
+        approval = obj(read_json(Path(approval_path).read_bytes()), 'REVIEW')
         require(set(approval) == set(expected) | {'owner_principal'}, 'REVIEW_FIELDS_INVALID')
         require(approval['owner_principal'] == trust['principal'], 'OWNER_PRINCIPAL_MISMATCH')
         require({k: v for k, v in approval.items() if k not in ('reviews', 'owner_principal')}
                 == {k: v for k, v in expected.items() if k != 'reviews'}, 'REVIEW_SCOPE_OR_INPUT_CHANGED')
-        require(set(approval['reviews']) == set(CHECKS), 'INDEPENDENT_REVIEW_INCOMPLETE')
+        require(set(obj(approval['reviews'], 'REVIEWS')) == set(CHECKS), 'INDEPENDENT_REVIEW_INCOMPLETE')
         all_evidence = sorted(e['id'] for e in packet.p['evidence'])
         for key, review in approval['reviews'].items():
-            require(set(review) == {'status', 'evidence_ids', 'note'} and review['status'] == 'VERIFIED'
+            require(set(obj(review, f'REVIEW:{key}')) == {'status', 'evidence_ids', 'note'} and review['status'] == 'VERIFIED'
                     and review['evidence_ids'] == all_evidence and text(review['note']), f'INDEPENDENT_REVIEW_REQUIRED:{key}')
         verify_signature(approval, signature_path, trust)
-        return {'status': 'SYNTHETIC_READY' if expected['fixture'] == 'SYNTHETIC' else 'OWNER_REVIEWED_LEVEL_A_PREFLIGHT',
-                'ready': True, 'authorises': [], 'design_sha256': expected['design_sha256'],
+        return {'status': STATUS[expected['fixture']], 'fixture': expected['fixture'],
+                'live_research_readiness': expected['fixture'] == 'LIVE', 'ready': True, 'authorises': [], 'design_sha256': expected['design_sha256'],
                 'scope_sha256': expected['owner_scope_sha256'], 'signature_verified': True,
                 'human_identity_authenticated': False, 'source_meaning_certified_by_software': False}
     except (ValueError, KeyError, TypeError, OSError, IndexError, RecursionError, subprocess.SubprocessError) as error:

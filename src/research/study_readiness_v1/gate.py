@@ -10,9 +10,9 @@ import hashlib
 import json
 from datetime import date
 from decimal import Decimal
-from pathlib import Path
+from pathlib import Path, PurePath
 
-from src.research.discovery.ledger import Ledger
+from src.research.discovery.ledger import RULES as DISCOVERY_RULES, Ledger, admitted_key
 from src.research.discovery.review import checklist
 from src.research.spec import canonical, digest
 
@@ -25,6 +25,8 @@ DESIGN_TEXT = ('question', 'falsifier', 'eligible_population', 'observation_unit
                'missingness', 'duplicates', 'dependence', 'uncertainty', 'inference',
                'analysis_family', 'stopping_rule')
 SCOPE_KEYS = ('asset', 'cohort', 'geography', 'accounting_basis')
+# A flow reported per quarter or year covers that whole reporting period (fiscal periods allowed).
+PERIOD_DAYS = {'quarter': (84, 98), 'year': (364, 371)}
 # Narrow dimensional conversions. A new conversion needs a new reviewed profile.
 UNITS = {'kg/day': ('mass/day', Decimal('1')), 'tonnes/day': ('mass/day', Decimal('1000')),
          'kg/quarter': ('mass/quarter', Decimal('1')), 'tonnes/quarter': ('mass/quarter', Decimal('1000')),
@@ -48,9 +50,15 @@ def sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
+def obj(value, label):
+    """Malformed JSON shapes are refusals, not tracebacks; other programming errors still raise."""
+    require(isinstance(value, dict), f'{label}: JSON object required')
+    return value
+
+
 def unique(rows, label):
     require(isinstance(rows, list) and rows, f'{label}: nonempty list required')
-    result = {r['id']: r for r in rows}
+    result = {obj(r, label)['id']: r for r in rows}
     require(len(result) == len(rows), f'{label}: duplicate identifiers')
     return result
 
@@ -62,12 +70,43 @@ def number(value):
     return result
 
 
-def pointer(obj, path):
+def pointer(doc, path):
     require(isinstance(path, str) and path.startswith('/'), 'SOURCE_LOCATION: JSON pointer required')
     for part in path[1:].split('/'):
         part = part.replace('~1', '/').replace('~0', '~')
-        obj = obj[int(part)] if isinstance(obj, list) else obj[part]
-    return obj
+        if isinstance(doc, list):
+            # RFC 6901 array index: no sign, padding or underscores.
+            require(part == '0' or (part.isdigit() and part.isascii() and part[0] != '0'), 'SOURCE_LOCATION: invalid array index')
+            doc = doc[int(part)]
+        else:
+            doc = doc[part]
+    return doc
+
+
+def implementation_digest(base, files, read=lambda f: Path(f).read_bytes()):
+    """POSIX path keys so Windows and Linux agree; file bytes are hashed exactly (``* -text``)."""
+    return digest({(f if isinstance(f, PurePath) else Path(f)).relative_to(base).as_posix(): sha(read(f)) for f in files})
+
+
+def measurement_period(item, raw):
+    """Return the period and its basis. A declared interval alone is never verified."""
+    period = obj(item['period'], 'MEASUREMENT_PERIOD')
+    start, end = date.fromisoformat(period['start']), date.fromisoformat(period['end'])
+    require(start <= end, 'MEASUREMENT_PERIOD_INVALID')
+    per = item['units'].rsplit('/', 1)[-1] if '/' in item['units'] else None
+    if per in PERIOD_DAYS:
+        low, high = PERIOD_DAYS[per]
+        require(low <= (end - start).days + 1 <= high, 'MEASUREMENT_PERIOD_INCONSISTENT_WITH_UNITS')
+    if item['extraction'] != 'JSON_POINTER':
+        return start, end, 'HUMAN_SOURCE_INSPECTION_REQUIRED'
+    where = obj(item.get('period_location'), 'MEASUREMENT_PERIOD_LOCATION')
+    parent = item['location'].rsplit('/', 1)[0] + '/'
+    for key, declared in (('start', period['start']), ('end', period['end'])):
+        # The period must be a field of the same source record as the value it qualifies.
+        require(isinstance(where.get(key), str) and where[key].startswith(parent), 'MEASUREMENT_PERIOD_NOT_SOURCE_GROUNDED')
+        found = pointer(read_json(raw), where[key])
+        require(isinstance(found, str) and found == declared, 'MEASUREMENT_PERIOD_NOT_SOURCE_GROUNDED')
+    return start, end, 'SOURCE_FIELDS'
 
 
 def read_json(raw):
@@ -86,7 +125,7 @@ class Packet:
         self.path = Path(path).resolve()
         self.root = self.path.parent
         self.manifest_raw = self.path.read_bytes()
-        self.p = read_json(self.manifest_raw)
+        self.p = obj(read_json(self.manifest_raw), 'PACKET')
         self.inputs = {}
         self.cache = {}
 
@@ -121,12 +160,15 @@ class Packet:
         m = next((r for r in s.reviews if r['id'] == p['m_review_id']), None)
         require(m is not None and m['kind'] == 'M' and m['candidate_id'] == cid and m['version'] == version
                 and all(j['judgment'] == 'EVIDENCED' for j in m['judgments'].values()), 'M_REVIEW_REQUIRED')
+        # Approvals admitted under older Discovery rules never saw the newer blockers.
+        require(s.admitted[admitted_key('review', m)] == DISCOVERY_RULES, f'M_REVIEW_PREDATES_{DISCOVERY_RULES}')
         require(m['reviewer']['kind'] == ('SYNTHETIC_FIXTURE' if s.fixture == 'SYNTHETIC' else 'HUMAN'), 'M_REVIEW_KIND')
         require(m == [r for r in s.reviews if r['kind'] == 'M' and r['candidate_id'] == cid and r['version'] == version][-1],
                 'M_REVIEW_SUPERSEDED')
         for decision in ('M_PASSED', 'LEVEL_A_DESIGN_CANDIDATE'):
             require(any(r['candidate_id'] == cid and r['version'] == version and r['decision'] == decision
-                        for r in s.dispositions), f'DISPOSITION_REQUIRED:{decision}')
+                        and s.admitted[admitted_key('disposition', r)] == DISCOVERY_RULES
+                        for r in s.dispositions), f'DISPOSITION_REQUIRED:{decision} under {DISCOVERY_RULES}')
         require([r for r in s.dispositions if r['candidate_id'] == cid and r['version'] == version][-1]['decision']
                 == 'LEVEL_A_DESIGN_CANDIDATE', 'DISPOSITION_SUPERSEDED')
 
@@ -142,7 +184,7 @@ class Packet:
                 require(ev['passage'] in raw.decode('utf-8'), 'SOURCE_PASSAGE_NOT_FOUND')
 
         measures = unique(p['measurements'], 'measurements')
-        observations = {}
+        observations, periods = {}, {}
         for mid, item in measures.items():
             ob = s.version('observation', item['observation_id'], item['observation_version'])
             require(ob is not None and ob == s.latest('observation', ob['id']), 'OBSERVATION_CHANGED')
@@ -156,15 +198,16 @@ class Packet:
             require(item['nature'] in ('MEASURED', 'REPORTED', 'ESTIMATED', 'FORECAST', 'CONDITIONAL'), 'MEASUREMENT_NATURE_REQUIRED')
             require(all(text(item[k]) for k in ('units', 'denominator', 'entity')), 'MEASUREMENT_SCOPE_REQUIRED')
             require(all(text(item['scope'][k]) for k in SCOPE_KEYS), 'MEASUREMENT_SCOPE_REQUIRED')
-            start, end = date.fromisoformat(item['period']['start']), date.fromisoformat(item['period']['end'])
-            occurred = date.fromisoformat(ob['clocks']['economic_occurrence']['value'][:10])
-            require(start <= occurred <= end, 'MEASUREMENT_PERIOD_MISMATCH')
             if item['extraction'] == 'JSON_POINTER':
                 require(ev['format'] == 'UTF8_TEXT', 'BINARY_EXTRACTION_REQUIRES_HUMAN_REVIEW')
                 extracted = pointer(read_json(self.cache[ev['file']]), item['location'])
                 require(type(extracted) == type(item['value']) and extracted == item['value'], 'SOURCE_TO_VALUE_MISMATCH')
             else:
                 require(item['extraction'] == 'HUMAN_PASSAGE' and text(item['location']), 'EXTRACTION_PROFILE_UNKNOWN')
+            start, end, basis = measurement_period(item, self.cache[ev['file']])
+            periods[mid] = {'start': item['period']['start'], 'end': item['period']['end'], 'basis': basis}
+            occurred = date.fromisoformat(ob['clocks']['economic_occurrence']['value'][:10])
+            require(start <= occurred <= end, 'MEASUREMENT_PERIOD_MISMATCH')
             number(item['value'])
             public = item['public_time']
             require(public['status'] in ('RETROSPECTIVE_ONLY', 'EXACT_VERSION_CERTIFIED'), 'PUBLIC_VERSION_STATUS_REQUIRED')
@@ -230,7 +273,7 @@ class Packet:
         require(all(measures[i]['nature'] in ('MEASURED', 'REPORTED') for i in out[2]), 'OUTCOME_NOT_REALIZED')
         require(pred[2] | out[2] == measures.keys(), 'UNUSED_MEASUREMENT')
         require(c['outcome']['source_id'] in {measures[i]['source_id'] for i in out[2]}, 'OUTCOME_SOURCE_MAPPING_MISMATCH')
-        financial = p['financial_crosswalk']
+        financial = obj(p['financial_crosswalk'], 'FINANCIAL_CROSSWALK')
         number(financial['value'])
         require(financial['basis'] == c['exposure']['claim_basis'] and financial['basis'] in ('GROSS', 'NET'), 'FINANCIAL_BASIS_UNSUPPORTED')
         amount = c['exposure']['gross' if financial['basis'] == 'GROSS' else 'net']
@@ -238,17 +281,19 @@ class Packet:
                 and text(financial['denominator']) and text(financial['meaning']) and financial['scope'] == p['join']['scope'], 'FINANCIAL_CROSSWALK_MISMATCH')
         ev = evidence[financial['evidence_id']]
         if financial['extraction'] == 'JSON_POINTER':
-            require(ev['format'] == 'UTF8_TEXT' and pointer(read_json(self.cache[ev['file']]), financial['location']) == financial['value'], 'FINANCIAL_VALUE_MISMATCH')
+            require(ev['format'] == 'UTF8_TEXT', 'BINARY_EXTRACTION_REQUIRES_HUMAN_REVIEW')
+            found = pointer(read_json(self.cache[ev['file']]), financial['location'])
+            require(type(found) == type(financial['value']) and found == financial['value'], 'FINANCIAL_VALUE_MISMATCH')  # True != 1, 40.0 != 40
         else:
             require(financial['extraction'] == 'HUMAN_PASSAGE' and text(financial['location']), 'FINANCIAL_LOCATION_REQUIRED')
         for mid in pred[2]:
             self.join(s, c, measures[mid], [measures[i] for i in out[2]], evidence)
-        design = p['design']
+        design = obj(p['design'], 'STUDY_DESIGN')
         require(all(text(design.get(k)) for k in DESIGN_TEXT), 'STUDY_DESIGN_INCOMPLETE')
         require(design['mode'] in ('EXPLORATORY', 'CONFIRMATORY'), 'STUDY_MODE_REQUIRED')
         require(design['predictor_root'] == p['predictor_root'] and design['outcome_root'] == p['outcome_root'], 'DESIGN_MAPPING_MISMATCH')
         require(design['historically_actionable'] is False and design['causal_claim'] is False, 'LEVEL_B_OR_CAUSAL_PROFILE_REQUIRED')
-        inference = design['uncertainty_plan']
+        inference = obj(design['uncertainty_plan'], 'UNCERTAINTY_PLAN')
         require(inference['method'] in ('DESCRIPTIVE_ONLY', 'CLUSTER_BOOTSTRAP', 'BLOCK_BOOTSTRAP', 'EXACT_RANDOMIZATION', 'ANALYTIC')
                 and all(text(inference[k]) for k in ('estimand', 'independent_unit', 'dependence_handling', 'adequacy_check', 'multiplicity', 'limitations'))
                 and inference['failure_action'] == 'DESCRIPTIVE_ONLY_OR_STOP', 'UNCERTAINTY_PLAN_INCOMPLETE')
@@ -257,7 +302,7 @@ class Packet:
         require(not history['not_untouched'] or design['evaluation'] == 'RETROSPECTIVE_SELECTED', 'UNTOUCHED_HISTORY_LAUNDERING')
         require(design['evaluation'] in ('RETROSPECTIVE_SELECTED', 'PROSPECTIVE_UNTOUCHED'), 'EVALUATION_LABEL_REQUIRED')
         require(design['mode'] != 'CONFIRMATORY' or not history['not_untouched'], 'CONFIRMATORY_SELECTED_HISTORY')
-        scope = p['owner_scope']
+        scope = obj(p['owner_scope'], 'OWNER_SCOPE')
         require(scope['action'] == 'LOCAL_LEVEL_A_ANALYSIS' and scope['network_requests'] == 0 and scope['model_calls'] == 0
                 and scope['spend'] == 0 and text(scope['limits']) and scope['evidence_ids'] == sorted(evidence), 'OWNER_SCOPE_INVALID')
         require(ledger.path.read_bytes() == ledger_raw, 'INPUT_CHANGED:ledger during assessment')
@@ -267,11 +312,12 @@ class Packet:
         return {'schema': REVIEW_SCHEMA, 'fixture': s.fixture, 'manifest_sha256': sha(self.manifest_raw),
                 'inputs': dict(sorted(self.inputs.items())), 'candidate': p['candidate'], 'ledger_head': p['ledger_head'],
                 'design_sha256': digest(design), 'owner_scope_sha256': digest(scope), 'm_review_sha256': digest(m),
-                'implementation_sha256': digest({str(f.relative_to(implementation.parent)): sha(f.read_bytes()) for f in files}),
+                'implementation_sha256': implementation_digest(implementation.parent, files),
+                'measurement_periods': dict(sorted(periods.items())),
                 'reviews': {key: {'status': 'PENDING', 'evidence_ids': [], 'note': ''} for key in CHECKS}}
 
     def origin(self, c):
-        origin = self.p['origin']
+        origin = obj(self.p['origin'], 'FORGE_ORIGIN')
         handoff = read_json(self.artifact(origin['handoff']))
         card = handoff['opportunity_card']
         require(handoff['schema'] == 'DISCOVERY_LAB_STARTING_PROPOSAL_V001' and card['lane'] == 'FORGE', 'FORGE_HANDOFF_REQUIRED')
@@ -291,7 +337,7 @@ class Packet:
         require(text(origin['mechanism_mapping']), 'FORGE_MECHANISM_MAPPING_REQUIRED')
 
     def join(self, s, c, pred, outcomes, evidence):
-        join = self.p['join']
+        join = obj(self.p['join'], 'JOIN')
         scope = pred['scope']
         require(join['scope'] == scope and all(o['scope'] == scope for o in outcomes), 'JOIN_SCOPE_MISMATCH')
         current = pred['entity']
@@ -300,6 +346,7 @@ class Packet:
         start = min(date.fromisoformat(t) for t in [pred['period']['start']] + [o['period']['start'] for o in outcomes])
         end = max(date.fromisoformat(t) for t in [pred['period']['end']] + [o['period']['end'] for o in outcomes])
         for edge in join['path']:
+            obj(edge, 'JOIN_PATH')
             rel = s.latest('relationship', edge['relationship_id'])
             require(rel is not None and rel['status'] == 'VERIFIED' and rel['basis'] == 'DOCUMENTED', 'JOIN_RELATIONSHIP_UNVERIFIED')
             traversal = edge.get('traversal', 'FORWARD')
