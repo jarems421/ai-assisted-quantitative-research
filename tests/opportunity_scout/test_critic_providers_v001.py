@@ -1,7 +1,12 @@
 """Critic provider adapters V001: offline only. Fictional Codex JSONL streams and Gemini responses in each provider's
 own documented vocabulary; no process, network, credential or real account directory is touched."""
+import email.message
+import io
 import json
 import unittest
+import urllib.parse
+import urllib.request
+import urllib.response
 
 from src.research.opportunity_scout import schema as S
 from src.research.opportunity_scout.automation_v001 import providers as V
@@ -55,6 +60,7 @@ class CodexTests(unittest.TestCase):
             'mcp call': ([{'id': 'i', 'type': 'mcp_tool_call'}, msg], {}, 'PROHIBITED_OR_UNKNOWN_ITEM:mcp_tool_call'),
             'plan': ([{'id': 'i', 'type': 'todo_list'}, msg], {}, 'PROHIBITED_OR_UNKNOWN_ITEM:todo_list'),
             'two messages': ([msg, {**msg, 'id': 'item_10'}], {}, 'NOT_EXACTLY_ONE_AGENT_MESSAGE'),
+            'same message ID completed twice': ([msg, {**msg, 'text': 'replacement'}], {}, 'DUPLICATE_ITEM_COMPLETION'),
             'no message': ([{'id': 'i', 'type': 'reasoning', 'text': 'x'}], {}, 'NOT_EXACTLY_ONE_AGENT_MESSAGE'),
             'second turn': (None, {'extra': [{'type': 'turn.started'}]}, 'NOT_EXACTLY_ONE_TURN'),
             'failed turn': (None, {'terminal': 'turn.failed'}, 'PROVIDER_ERROR_EVENT'),
@@ -65,6 +71,15 @@ class CodexTests(unittest.TestCase):
             with self.subTest(case=name):
                 reply, facts = self.review(codex_stream(items=items, **kw), accept_requested_identity=True)
                 self.assertIsNone(reply); self.assertIn(code, facts['faults'])
+
+    def test_duplicate_completion_of_one_agent_message_id_never_passes(self):
+        first = {'id': 'item_1', 'type': 'agent_message', 'text': REPLY}
+        for second in (first, {**first, 'text': 'a different final text'}):
+            with self.subTest(same_text=second is first):
+                reply, facts = self.review(codex_stream(items=[first, second], model=MODEL), accept_requested_identity=True)
+                self.assertIsNone(reply)
+                self.assertTrue({'DUPLICATE_ITEM_COMPLETION', 'NOT_EXACTLY_ONE_AGENT_MESSAGE'} <= set(facts['faults']))
+                self.assertEqual(facts['agent_messages'], 2)
 
     def test_process_outcomes_and_raw_secrets_fail_closed(self):
         for kw, code in (({'timed_out': True}, 'TIMEOUT'), ({'code': 1}, 'NONZERO_EXIT')):
@@ -125,6 +140,67 @@ class GeminiTests(unittest.TestCase):
         self.assertEqual(body['generationConfig'], {'candidateCount': 1, 'maxOutputTokens': 8192, 'thinkingConfig': {'thinkingLevel': 'high'}})
         self.assertNotIn('tools', body); self.assertNotIn('systemInstruction', body)
         self.assertAlmostEqual(V.worst_case_cost(25000, 8192, PRICES), (25000 * 2 + 8192 * 10) / 1e6)
+
+
+ATTACKER = 'https://attacker.invalid/collect'
+KEY = 'AIzaFICTIONAL-redirect-test-key'
+
+
+class FakeOrigins(urllib.request.HTTPSHandler):
+    """Offline origin simulator: no socket. The documented host answers ``code`` (a redirect to another origin unless
+    None); every other origin answers 200. Records each request's host and headers."""
+    def __init__(self, code=302, location=ATTACKER):
+        super().__init__()
+        self.code, self.location, self.seen = code, location, []
+
+    def https_open(self, req):
+        host = urllib.parse.urlsplit(req.full_url).hostname
+        self.seen.append((host, {k.lower(): v for k, v in req.header_items()}))
+        headers = email.message.Message()
+        if host == V.GEMINI_HOST and self.code:headers['Location'] = self.location; code, body = self.code, b''
+        else:code, body = 200, gemini_body()
+        response = urllib.response.addinfourl(io.BytesIO(body), headers, req.full_url, code)
+        response.msg = 'fixture'
+        return response
+
+
+class TransportTests(unittest.TestCase):
+    URL = V.GEMINI_ENDPOINT.format(model='gemini-4-argon')
+
+    def send(self, origins, url=None):
+        return V.https_transport(url or self.URL, {'Content-Type': 'application/json', 'x-goog-api-key': KEY}, b'{}', 5, handlers=(origins,))
+
+    def test_plain_urllib_would_forward_the_key_to_a_cross_origin_redirect(self):
+        """Control: shows the threat is real, so the refusal below is meaningful."""
+        origins = FakeOrigins()
+        request = urllib.request.Request(self.URL, data=b'{}', headers={'x-goog-api-key': KEY}, method='POST')
+        with urllib.request.build_opener(origins).open(request, timeout=5) as response:self.assertEqual(response.status, 200)
+        self.assertEqual([h for h, _ in origins.seen], [V.GEMINI_HOST, 'attacker.invalid'])
+        self.assertEqual(origins.seen[1][1].get('x-goog-api-key'), KEY)
+
+    def test_every_redirect_is_refused_before_any_cross_origin_request(self):
+        for code in (301, 302, 303, 307, 308):
+            with self.subTest(code=code):
+                origins = FakeOrigins(code)
+                with self.assertRaises(S.ScoutError) as caught:self.send(origins)
+                self.assertEqual(str(caught.exception), f'GEMINI_REDIRECT_REFUSED:HTTP_{code}')
+                self.assertEqual([h for h, _ in origins.seen], [V.GEMINI_HOST])  # attacker.invalid never contacted
+                self.assertFalse(any(KEY in str(headers) for host, headers in origins.seen if host != V.GEMINI_HOST))
+        origins = FakeOrigins(302, location='https://generativelanguage.googleapis.com/v1beta/other')
+        with self.assertRaises(S.ScoutError):self.send(origins)  # same-origin redirects are refused too
+        self.assertEqual(len(origins.seen), 1)
+
+    def test_only_the_documented_https_host_is_sent_the_key(self):
+        for url in (ATTACKER, 'http://generativelanguage.googleapis.com/v1beta/models/x:generateContent',
+                    'https://generativelanguage.googleapis.com.attacker.invalid/x', 'https://user@generativelanguage.googleapis.com/x',
+                    'https://generativelanguage.googleapis.com:8443/x'):
+            with self.subTest(url=url):
+                origins = FakeOrigins(None)
+                with self.assertRaises(S.ScoutError):self.send(origins, url)
+                self.assertEqual(origins.seen, [])
+        origins = FakeOrigins(None)
+        self.assertEqual(self.send(origins), (200, gemini_body()))
+        self.assertEqual(len(origins.seen), 1)
 
 
 class RoleTests(unittest.TestCase):

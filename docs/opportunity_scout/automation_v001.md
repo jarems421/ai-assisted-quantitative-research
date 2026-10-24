@@ -44,7 +44,9 @@ codex exec --json --ephemeral --ignore-user-config --ignore-rules --skip-git-rep
   `exec --help` lists every flag used.
 - **Review of the JSONL stream:**
   - one `thread.started` with a thread ID, then exactly one turn, ending in `turn.completed` with integer usage;
-  - only `agent_message` and `reasoning` items, with exactly one completed agent message;
+  - only `agent_message` and `reasoning` items, with exactly one completed agent message. Every `item.completed`
+    event is counted, so a second completion of the same item ID is `DUPLICATE_ITEM_COMPLETION` and never collapses
+    into one message;
   - any command, file-change, MCP, web-search, plan or unknown item, any `turn.failed`/`error` or unknown event, a
     non-zero exit or a timeout is a fault.
 
@@ -76,6 +78,10 @@ codex exec --json --ephemeral --ignore-user-config --ignore-rules --skip-git-rep
   No retries.
 - **Key handling.** The key is read from the owner-named environment variable only at dispatch, sent in the
   `x-goog-api-key` header, and never written or logged.
+- **No redirects.** urllib's default redirect handling copies custom headers, the key included, onto a follow-up
+  request to any origin. The transport sends only to `https://generativelanguage.googleapis.com` (default port, no
+  user info) and refuses **every** redirect (`GEMINI_REDIRECT_REFUSED:HTTP_3xx`) before any follow-up request exists.
+  An offline origin simulator tests this, with a control showing plain urllib would forward the key.
 - **Spend cap.** Before dispatch, a conservative worst-case cost (prompt bytes ≥ input tokens, plus the full output
   cap at documented prices) must fit the remaining owner spend cap. After the response, an estimate from the
   reported usage is recorded **as an estimate, never a charge**.
