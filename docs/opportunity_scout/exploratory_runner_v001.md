@@ -69,6 +69,10 @@ stops the run.
    nothing is buffered in memory and the bytes exist before any parsing. Above 8 MiB combined, the stream is kept on
    disk but never loaded or parsed (`RECORDING_SIZE_LIMIT`). That is an IO bound, not a token certificate.
    Administrative command output is bounded at 1 MiB.
+   After the process ends, each raw file is flushed, fsynced and closed; every step is attempted once on every
+   file. Any failure makes the attempt ERROR (`RAW_CAPTURE_FINALISE_FAILED:<channel>:<step>:<exception>`), and the
+   possibly partial bytes are hashed but never parsed. The model is never invoked again. If the receipt itself cannot
+   be written, `run` raises `INTERRUPTED`, the claim stays and `status` reports the attempt as interrupted.
 6. **Fail-closed review.** The accepted event vocabulary is the one observed in a real 2.1.302 stream: `ui_invalidate`,
    `init`, `thinking_tokens`, `rate_limit_event`, assistant and result. The run stops on any of:
    - any other event, or a `user` event (an output-limit continuation appears as one);

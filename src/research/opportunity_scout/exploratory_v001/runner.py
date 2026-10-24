@@ -14,11 +14,14 @@ from __future__ import annotations
 from dataclasses import dataclass, field, replace
 from datetime import datetime
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
+import signal
 import subprocess
 import tempfile
+import threading
 import time
 from typing import Callable
 import uuid
@@ -47,16 +50,83 @@ IDENTITY_KEYS = ('email', 'emailAddress', 'orgId', 'organizationId', 'orgName', 
 DEVELOPMENT = ('.claude.json', '.claude/settings.json', '.claude/.credentials.json')
 SYSTEM_EVENTS = ('init', 'ui_invalidate', 'thinking_tokens')  # observed in a real 2.1.302 stream; others fail closed
 SESSION_EVENTS = ('system', 'rate_limit_event', 'assistant', 'result')
-# Capture goes straight to files, never into memory. Parsing is refused above this bound (an IO limit, not a token
-# certificate); a cap of 32,768 output tokens plus thinking estimates is far below it.
-MAX_STREAM_BYTES, MAX_ADMIN_BYTES = 8 * 1024 * 1024, 1024 * 1024
+# Capture goes straight to files, never into memory, and is enforced while it happens: the process tree is stopped
+# once combined stdout+stderr pass the bound (an IO limit, not a token certificate); a cap of 32,768 output tokens
+# plus thinking estimates is far below it. At most one CHUNK per channel beyond the bound is ever kept.
+MAX_STREAM_BYTES, MAX_ADMIN_BYTES, CHUNK = 8 * 1024 * 1024, 1024 * 1024, 64 * 1024
+STOP_GRACE = 5
+
+
+class OutputLimitExceeded(subprocess.SubprocessError):
+    """Combined output passed its bound; the process tree was stopped (``tree`` says whether that was confirmed)."""
+    def __init__(self, cmd, captured, tree):
+        super().__init__(f'output passed its limit after {captured} bytes ({tree})')
+        self.cmd, self.captured, self.tree = cmd, captured, tree
+
+
+def stop_tree(proc):
+    """Kill the CLI and its descendants: ``taskkill /T`` from System32 on Windows, the CLI's own session elsewhere."""
+    try:
+        if os.name == 'nt':
+            taskkill = Path(os.environ.get('SystemRoot', r'C:\Windows')) / 'System32' / 'taskkill.exe'
+            subprocess.run([str(taskkill), '/F', '/T', '/PID', str(proc.pid)], stdin=subprocess.DEVNULL,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=STOP_GRACE, check=True)
+        else:
+            os.killpg(proc.pid, signal.SIGKILL)
+        killed = True
+    except (OSError, subprocess.SubprocessError):
+        killed = False
+    try:proc.kill()
+    except OSError:pass
+    return killed
+
+
+def capture(args, *, stdout, stderr, limit, timeout, input=None, cwd=None, env=None, shell=False):
+    """``subprocess.run`` with bounded capture. Both pipes are copied in CHUNK reads into the given binary sinks while
+    counting; once the combined count passes ``limit`` nothing more is kept (later bytes are drained and discarded)
+    and the process tree is stopped, as it is at the timeout. The stop is confirmed only when the kill succeeded, the
+    process exited and both pipes reached end of file (no descendant still holds them) within STOP_GRACE."""
+    if shell:raise ValueError('shell is never used')
+    proc = subprocess.Popen(args, stdin=subprocess.DEVNULL if input is None else subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, cwd=cwd, env=env, shell=False, start_new_session=os.name != 'nt')
+    lock, over, kept = threading.Lock(), threading.Event(), {'bytes': 0, 'open': True}
+    def pump(pipe, sink):
+        while chunk := pipe.read1(CHUNK):
+            with lock:
+                if kept['bytes'] > limit or not kept['open']:continue
+                sink.write(chunk); kept['bytes'] += len(chunk)
+                if kept['bytes'] > limit:over.set()
+    def feed():
+        try:proc.stdin.write(input); proc.stdin.close()
+        except OSError:pass
+    readers = [threading.Thread(target=pump, args=(proc.stdout, stdout), daemon=True),
+               threading.Thread(target=pump, args=(proc.stderr, stderr), daemon=True)]
+    workers = readers + ([threading.Thread(target=feed, daemon=True)] if input is not None else [])
+    for w in workers:w.start()
+    deadline = time.monotonic() + timeout
+    while not over.is_set() and time.monotonic() < deadline and (proc.poll() is None or any(r.is_alive() for r in readers)):
+        over.wait(0.05)
+    stopping = over.is_set() or proc.poll() is None or any(r.is_alive() for r in readers)
+    killed = stop_tree(proc) if stopping else True
+    for w in workers:w.join(STOP_GRACE if stopping else None)
+    with lock:kept['open'] = False  # a reader left behind by a surviving descendant never writes again
+    try:proc.wait(STOP_GRACE)
+    except subprocess.TimeoutExpired:killed = False
+    drained = not any(r.is_alive() for r in readers)
+    if drained:proc.stdout.close(); proc.stderr.close()
+    tree = 'PROCESS_TREE_STOPPED' if killed and drained else 'PROCESS_TREE_STOP_UNCONFIRMED'
+    if over.is_set():raise OutputLimitExceeded(args, kept['bytes'], tree)
+    if stopping:
+        expired = subprocess.TimeoutExpired(args, timeout); expired.tree = tree
+        raise expired
+    return subprocess.CompletedProcess(args, proc.returncode, None, None)
 
 
 @dataclass
 class Host:
     """Everything the runner touches outside the archive, injectable for offline tests."""
     home: Path = field(default_factory=Path.home)
-    runner: Callable = subprocess.run
+    runner: Callable = capture
     environ: dict = field(default_factory=lambda: dict(os.environ))
     policy_check: Callable = CS.reject_managed_policy
     now: Callable = S.utc_now
@@ -193,18 +263,28 @@ def fingerprint(auth):
 
 
 def admin(host, exe, env, args):
+    """Bounded in memory while captured (1 MiB combined plus at most a chunk per channel); never stored."""
+    out, err = io.BytesIO(), io.BytesIO()
     with tempfile.TemporaryDirectory(prefix='scout-explore-admin-') as cwd:
         if Path(cwd).resolve().is_relative_to(ROOT):raise S.ScoutError('CLI working directory must be outside the repository')
-        p = host.runner([str(exe), *args], env=env.copy(), cwd=cwd, capture_output=True, text=True, encoding='utf-8',
-                        timeout=ADMIN_TIMEOUT, shell=False)
+        try:p = host.runner([str(exe), *args], env=env.copy(), cwd=cwd, stdout=out, stderr=err, limit=MAX_ADMIN_BYTES,
+                            timeout=ADMIN_TIMEOUT, shell=False)
+        except OutputLimitExceeded as error:raise S.ScoutError(f'ADMIN_OUTPUT_TOO_LARGE:{args[0]}:{error.tree}') from None
+        except subprocess.TimeoutExpired as error:
+            raise S.ScoutError(f'ADMIN_TIMEOUT:{args[0]}:{getattr(error, "tree", S.UNKNOWN)}') from None
     if p.returncode:raise S.ScoutError('ADMIN_COMMAND_FAILED:' + args[0])
-    if len((p.stdout or '').encode('utf-8')) > MAX_ADMIN_BYTES:raise S.ScoutError('ADMIN_OUTPUT_TOO_LARGE:' + args[0])
-    return p.stdout
+    if out.tell() + err.tell() > MAX_ADMIN_BYTES:raise S.ScoutError('ADMIN_OUTPUT_TOO_LARGE:' + args[0])
+    # Decoded as text mode did (strict UTF-8, universal newlines), so help hashes are unchanged.
+    return out.getvalue().decode('utf-8').replace('\r\n', '\n').replace('\r', '\n')
 
 
 def account(host, exe, env, auth_value, label):
     """Allowlisted auth categories only; raw auth output is never stored."""
-    try:auth = S.json_loads(admin(host, exe, env, ADMIN[2]))
+    try:raw = admin(host, exe, env, ADMIN[2])
+    except S.ScoutError as error:  # admin codes name only the command and stop status, never output
+        if str(error).startswith(('ADMIN_OUTPUT_TOO_LARGE:', 'ADMIN_TIMEOUT:')):raise S.ScoutError(f'{label}_{error}') from None
+        raise S.ScoutError(f'{label}_AUTH_STATUS_UNREADABLE') from error
+    try:auth = S.json_loads(raw)
     except S.ScoutError as error:raise S.ScoutError(f'{label}_AUTH_STATUS_UNREADABLE') from error
     categories = {k: auth.get(k, S.UNKNOWN) for k in ('loggedIn', 'authMethod', 'apiProvider', 'subscriptionType', 'configDirectory')}
     if categories['loggedIn'] is not True or categories['authMethod'] != 'claude.ai' or categories['apiProvider'] != 'firstParty':
@@ -336,6 +416,17 @@ def provenance(p, auth_value, facts, *, invoked, completed, model, error=None):
 CLOSE = (S.ScoutError, OSError, subprocess.SubprocessError, ValueError, TypeError, KeyError, AttributeError, IndexError, RecursionError)
 
 
+def seal(handles):
+    """Flush, fsync and close every raw handle. Each step is attempted exactly once, a failure never skips the
+    remaining steps or handles, and every failure is named: this runs in a ``finally`` and must never raise."""
+    failures = []
+    for c, h in handles.items():
+        for step, act in (('FLUSH', h.flush), ('FSYNC', lambda: os.fsync(h.fileno())), ('CLOSE', h.close)):
+            try:act()
+            except Exception as error:failures.append(f'{c}:{step}:{type(error).__name__}')
+    return failures
+
+
 def run(store, authorisation, *, host=None):
     """Execute the one authorised generation. Every outcome is final and recorded; nothing is retried."""
     host = host or Host()
@@ -361,8 +452,9 @@ def run(store, authorisation, *, host=None):
         stopped = 'PREFLIGHT_STOP:' + (str(error) if isinstance(error, S.ScoutError) else type(error).__name__)
     if stopped is None:
         args = arguments(exe, p['model'], p['effort'], facts['session_id'])
-        code, timed_out = S.UNKNOWN, False
+        code, timed_out, tree = S.UNKNOWN, False, None
         # The CLI writes straight into exclusive raw files: bytes are durable before any parsing and never buffered.
+        # The size bound is enforced during capture: past it the process tree is stopped and nothing more is kept.
         targets = {c: unlinked(archive.path / 'exports' / f'exploratory-{aid}-{c}.bin') for c in ('stdout', 'stderr')}
         handles = {}
         invoked, start = host.now(), host.monotonic()
@@ -372,15 +464,19 @@ def run(store, authorisation, *, host=None):
                 if Path(cwd).resolve().is_relative_to(ROOT):raise S.ScoutError('CLI working directory must be outside the repository')
                 invocations = 1
                 proc = host.runner(args, input=payload(prompt), cwd=cwd, env=env.copy(), stdout=handles['stdout'],
-                                   stderr=handles['stderr'], timeout=p['timeout_seconds'], shell=False)
+                                   stderr=handles['stderr'], limit=MAX_STREAM_BYTES, timeout=p['timeout_seconds'], shell=False)
                 code = proc.returncode
-        except subprocess.TimeoutExpired:
-            timed_out = True
+        except subprocess.TimeoutExpired as error:
+            timed_out, tree = True, getattr(error, 'tree', None)
+        except OutputLimitExceeded as error:  # kept bytes are hashed below and never loaded or parsed
+            stopped = 'RUN_STOP:RECORDING_SIZE_LIMIT:' + error.tree
         except CLOSE as error:
             stopped = ('RAW_CAPTURE_SETUP_FAILED' if len(handles) != len(targets) else  # no process was started
                        'PROCESS_START_FAILED' if isinstance(error, OSError) else 'INVOCATION_SETUP_FAILED:' + type(error).__name__)
         finally:
-            for h in handles.values():h.flush(); os.fsync(h.fileno()); h.close()
+            sealed = seal(handles)
+        if sealed:  # bytes may be partial or not durable: never parsed, whatever the process reported
+            stopped = ';'.join(x for x in (stopped, 'TIMEOUT' if timed_out else None, 'RAW_CAPTURE_FINALISE_FAILED:' + ','.join(sealed)) if x)
         completed, facts['wall_seconds'] = host.now(), round(host.monotonic() - start, 3)
         sizes = {c: t.stat().st_size for c, t in targets.items() if t.is_file()}
         for c, t in targets.items():
@@ -389,7 +485,7 @@ def run(store, authorisation, *, host=None):
             with t.open('rb') as handle:
                 for chunk in iter(lambda: handle.read(1024 * 1024), b''):digest_.update(chunk)
             facts[f'{c}_sha256'], facts[f'{c}_bytes'] = digest_.hexdigest(), sizes[c]
-        if stopped is None and sum(sizes.values()) > MAX_STREAM_BYTES:
+        if stopped is None and sum(sizes.values()) > MAX_STREAM_BYTES:  # backstop for a runner that did not enforce it
             stopped = 'RUN_STOP:RECORDING_SIZE_LIMIT'  # preserved on disk, never loaded or parsed
         if stopped is None:
             out, err = targets['stdout'].read_bytes(), targets['stderr'].read_bytes()
@@ -403,7 +499,7 @@ def run(store, authorisation, *, host=None):
             if CS.file_hash(exe) != p['binary_sha256']:post.append('EXECUTABLE_CHANGED_DURING_RUN')
             if account_files(host) != before:post.append('DEVELOPMENT_ACCOUNT_METADATA_CHANGED')
             if (host.config / 'remote-settings.json').exists():post.append('SERVER_MANAGED_SETTINGS_CACHE_APPEARED')
-            faults = review_facts['faults'] + post
+            faults = review_facts['faults'] + post + (['PROCESS_TREE_STOP_UNCONFIRMED'] if tree == 'PROCESS_TREE_STOP_UNCONFIRMED' else [])
             if faults:stopped = 'RUN_STOP:' + ','.join(faults)
     error = stopped[:4000] if stopped else None
     model = p['model'] if not review_facts or 'MODEL_MISMATCH' not in review_facts['faults'] else 'UNKNOWN_OR_MISMATCHED (requested ' + p['model'] + ')'
@@ -425,7 +521,10 @@ def run(store, authorisation, *, host=None):
                'stdout_bytes': facts.get('stdout_bytes', S.UNKNOWN), 'stderr_bytes': facts.get('stderr_bytes', S.UNKNOWN),
                'raw_stream_sensitivity': 'PRIVATE: contains model thinking, local paths and session metadata; never commit or publish',
                'actual_subscription_charge': S.UNKNOWN, 'routing_authority': 'NONE', 'retried': False}
-    archive.export(f'exploratory-receipt-{aid}.json', receipt)
+    try:archive.export(f'exploratory-receipt-{aid}.json', receipt)
+    except CLOSE as problem:  # the claim stays and status reports the attempt interrupted; it is never re-run
+        raise S.ScoutError(f'INTERRUPTED: receipt not written ({type(problem).__name__}); attempt {aid} recorded {status}, '
+                           'claim retained and never re-run') from problem
     return receipt
 
 

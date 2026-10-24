@@ -68,13 +68,14 @@ class FakeCLI:
                 kwargs['stdout'].write(b'{"type":"system"'); raise subprocess.TimeoutExpired(args, 1)
             kwargs['stdout'].write(self.model_stream(session) if callable(self.model_stream) else stream(session))
             return subprocess.CompletedProcess(args, self.code, None, None)
-        if args[1:] == ['--version']:return subprocess.CompletedProcess(args, 0, '2.1.302 (Claude Code)\n', '')
-        if args[1:] == ['--help']:return subprocess.CompletedProcess(args, 0, self.help, '')
-        if args[1:] == ['auth', 'status', '--json']:
+        if args[1:] == ['--version']:text = '2.1.302 (Claude Code)\n'
+        elif args[1:] == ['--help']:text = self.help
+        elif args[1:] == ['auth', 'status', '--json']:
             self.auth_calls += 1
-            value = self.auth if self.auth_calls == 1 or self.auth_after is None else {**self.auth, **self.auth_after}
-            return subprocess.CompletedProcess(args, 0, json.dumps(value), '')
-        raise AssertionError('unexpected command ' + repr(args))
+            text = json.dumps(self.auth if self.auth_calls == 1 or self.auth_after is None else {**self.auth, **self.auth_after})
+        else:raise AssertionError('unexpected command ' + repr(args))
+        kwargs['stdout'].write(text.encode('utf-8'))  # administrative output also goes to the runner's bounded sinks
+        return subprocess.CompletedProcess(args, 0, None, None)
 
     def kinds(self):
         return ['MODEL' if '--print' in a else 'ADMIN' for a, _ in self.calls]
@@ -336,6 +337,75 @@ class ReviewFindingTests(Base):
         _, kwargs = next(c for c in cli.calls if '--print' in c[0])
         self.assertNotIn('capture_output', kwargs)
         for channel in ('stdout', 'stderr'):self.assertTrue(hasattr(kwargs[channel], 'fileno'))
+
+
+class Faulty:
+    """A raw handle whose flush or close raises once (fault injection); writes still reach the real file."""
+    def __init__(self, real, steps):self.real, self.steps = real, steps
+    def write(self, data):return self.real.write(data)
+    def fileno(self):return self.real.fileno()
+    def flush(self):
+        if 'flush' in self.steps:raise OSError(28, 'fictional: no space left on device')
+        self.real.flush()
+    def close(self):
+        self.real.close()  # the real descriptor is released, then the injected failure is reported
+        if 'close' in self.steps:raise OSError(5, 'fictional: input/output error')
+
+
+class RawCaptureFinaliseTests(Base):
+    """Flush, fsync and close of the raw stdout file can fail after the one model invocation."""
+    def finalise(self, *steps, receipt_fails=False):
+        from unittest.mock import patch
+        real_unlinked, real_fsync, opened = X.unlinked, X.os.fsync, {}
+        class FaultyPath(type(Path())):
+            def open(self, mode='r', *a, **k):
+                real = super().open(mode, *a, **k)
+                if 'x' not in mode or not self.name.endswith('-stdout.bin'):return real
+                opened['stdout'] = real; return Faulty(real, steps)
+        def fsync(fd):
+            if 'fsync' in steps and 'stdout' in opened and not opened['stdout'].closed and fd == opened['stdout'].fileno():
+                raise OSError(5, 'fictional: fsync failed')
+            return real_fsync(fd)
+        real_export = Archive.export
+        def export(archive, name, value):
+            if receipt_fails and name.startswith('exploratory-receipt-'):raise OSError(28, 'fictional: no space left on device')
+            return real_export(archive, name, value)
+        cli = FakeCLI(self)
+        with patch.object(X, 'unlinked', lambda path: FaultyPath(real_unlinked(path))), patch.object(X.os, 'fsync', fsync),                 patch.object(X, 'review', side_effect=AssertionError('unverified raw output must never be parsed')),                 patch.object(Archive, 'export', export):
+            try:return self.execute(cli), cli
+            except S.ScoutError as error:return error, cli
+
+    def assert_closed_error(self, receipt, cli, expected):
+        self.assertEqual(cli.kinds().count('MODEL'), 1)  # never redispatched after a capture failure
+        self.assertEqual((receipt['status'], receipt['model_invocations'], receipt['retried'], receipt['cards']), ('ERROR', 1, False, []))
+        self.assertEqual(receipt['error'], 'RAW_CAPTURE_FINALISE_FAILED:' + expected)
+        state = self.state()
+        self.assertEqual((state.attempts['ATT-0001']['result']['status'], len(state.cards)), ('ERROR', 0))
+        self.assertEqual(state.efforts[-1]['invocation_status'], 'INVOKED')
+        self.assertEqual(receipt['stdout_bytes'], (self.store / 'exports/exploratory-ATT-0001-stdout.bin').stat().st_size)
+        st = X.status(self.store); self.assertEqual((st['claimed'], st['receipt'], st['interrupted']), (True, True, False))
+
+    def test_flush_failure_records_error_without_parsing(self):
+        self.assert_closed_error(*self.finalise('flush'), 'stdout:FLUSH:OSError')
+
+    def test_fsync_failure_records_error_without_parsing(self):
+        self.assert_closed_error(*self.finalise('fsync'), 'stdout:FSYNC:OSError')
+
+    def test_close_failure_records_error_without_parsing(self):
+        self.assert_closed_error(*self.finalise('close'), 'stdout:CLOSE:OSError')
+
+    def test_every_step_is_attempted_once_and_all_failures_are_named(self):
+        self.assert_closed_error(*self.finalise('flush', 'fsync', 'close'), 'stdout:FLUSH:OSError,stdout:FSYNC:OSError,stdout:CLOSE:OSError')
+
+    def test_unwritable_receipt_keeps_the_claim_and_reports_interrupted(self):
+        error, cli = self.finalise('fsync', receipt_fails=True)
+        self.assertIsInstance(error, S.ScoutError); self.assertTrue(str(error).startswith('INTERRUPTED: receipt not written'))
+        self.assertEqual(cli.kinds().count('MODEL'), 1)
+        st = X.status(self.store)
+        self.assertEqual((st['claimed'], st['receipt'], st['interrupted'], st['attempts'], st['cards']), (True, False, True, {'ATT-0001': 'ERROR'}, []))
+        auth = sorted(self.base.glob('authorisation-*.json'))[-1]
+        with self.assertRaises(S.ScoutError):X.run(self.store, auth, host=self.host)  # an interrupted claim is never resumed
+        self.assertEqual(cli.kinds().count('MODEL'), 1)
 
 
 class BoundaryTests(unittest.TestCase):
