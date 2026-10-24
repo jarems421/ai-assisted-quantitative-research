@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import copy
 import json
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -277,15 +278,19 @@ class Ledger:
     @classmethod
     def create(cls, path, campaign, clock=utc_now):
         ledger = cls(path, clock)
-        if ledger.path.exists():raise LedgerError(f'{ledger.path} already exists; ledgers are never overwritten')
         derived = check('campaign', campaign, State())
-        ledger._write(State(), 'campaign', campaign, derived, mode='xb')
+        with ledger._writer():
+            if ledger.path.exists():raise LedgerError(f'{ledger.path} already exists; ledgers are never overwritten')
+            ledger._write(State(), 'campaign', campaign, derived, mode='xb')
         return ledger
 
     def load(self):
         """Verify the hash chain and replay every event through the append-time rules."""
         s, prev = State(), GENESIS
-        for n, line in enumerate(self.path.read_bytes().splitlines()):
+        raw = self.path.read_bytes()
+        if raw and not raw.endswith(b'\n'):
+            raise LedgerError(f'{self.path.name}: missing final newline; retain the incomplete ledger, do not append or repair it')
+        for n, line in enumerate(raw.splitlines()):
             event = json.loads(line); stored = event.pop('hash', None)
             if event.get('seq') != n or event.get('prev') != prev or digest(event) != stored:
                 raise LedgerError(f'{self.path.name}: hash chain broken at event {n}; the ledger was edited or truncated')
@@ -297,15 +302,33 @@ class Ledger:
         return s
 
     def append(self, kind, record):
-        s = self.load(); record = copy.deepcopy(record)
-        derived = check(kind, record, s)
-        return self._write(s, kind, record, derived)
+        with self._writer():
+            s = self.load(); record = copy.deepcopy(record)
+            derived = check(kind, record, s)
+            return self._write(s, kind, record, derived)
 
     def freeze(self, cid, version=None):
-        s = self.load(); latest = s.latest('candidate', cid)
-        if latest is None:raise LedgerError(f'unknown candidate {cid}')
-        record = {'candidate_id': cid, 'version': latest['version'] if version is None else version}
-        return self._write(s, 'freeze', record, check('freeze', record, s))
+        with self._writer():
+            s = self.load(); latest = s.latest('candidate', cid)
+            if latest is None:raise LedgerError(f'unknown candidate {cid}')
+            record = {'candidate_id': cid, 'version': latest['version'] if version is None else version}
+            return self._write(s, 'freeze', record, check('freeze', record, s))
+
+    @contextmanager
+    def _writer(self):
+        """Exclude cooperating writers; an interrupted claim needs explicit operator reconciliation."""
+        target = self.path.resolve()
+        lock = target.with_name(target.name + '.writer.lock')
+        lock.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            handle = lock.open('xb')
+        except FileExistsError as error:
+            raise LedgerError(f'{self.path.name}: writer lock exists; another writer or an interrupted claim must be reconciled') from error
+        try:
+            with handle:
+                yield
+        finally:
+            lock.unlink()
 
     def _write(self, s, kind, record, derived, mode='ab'):
         event = {'seq': len(s.events), 'type': kind, 'recorded_at_utc': self.clock(), 'record': record, 'derived': derived,
