@@ -30,5 +30,7 @@ jobs:
         run: python -m unittest tests.test_scout_v004_process_assurance tests.test_scout_v004_r3_process_assurance -v
       - name: Verify exploratory runner bounded capture stops local Python process trees
         run: python -m unittest tests.test_scout_exploratory_capture_process_assurance -v
+      - name: Verify pipeline Codex administrative commands stop local Python process trees
+        run: python -m unittest tests.test_scout_automation_admin_process_assurance -v
       - name: Verify N1 byte capture with fixed harmless local Python subprocess fixtures
         run: python -m unittest tests.test_scout_n1_collector_process_assurance -v

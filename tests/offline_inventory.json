@@ -272,16 +272,20 @@
   "tests/opportunity_scout/test_research_pipeline_v001.py": {
     "baseline_ci": true,
     "runner": "scout",
-    "reason": "Research OS pipeline V001: offline end-to-end with fake Claude CLI, fake Codex JSONL, fake Gemini transport and SYNTHETIC FIXTURE critic answers in temporary directories; socket and process creation denied; no credential or account directory.",
+    "reason": "Research OS pipeline V001: offline end-to-end with fake Claude CLI, fake Codex JSONL and administrative commands through the bounded admin path, fake Gemini transport (and an in-process fake HTTPS origin handler) and SYNTHETIC FIXTURE critic answers in temporary directories; socket and process creation denied; no credential or account directory.",
     "declared_tests": [
+      "BoundaryTests.test_a_redirect_never_carries_the_key_off_the_documented_host",
       "BoundaryTests.test_api_key_login_and_unattested_billing_stop_before_dispatch",
       "BoundaryTests.test_authorisation_must_bind_the_exact_plan_and_one_owner",
+      "BoundaryTests.test_codex_admin_commands_use_the_bounded_capture_and_every_stop_is_named",
       "BoundaryTests.test_crash_leaves_a_truthful_partial_report_and_is_never_redispatched",
       "BoundaryTests.test_full_offline_run_uses_no_socket_process_or_written_secret",
       "BoundaryTests.test_generator_family_self_review_and_unsupported_routes_are_refused_at_plan",
       "BoundaryTests.test_plan_status_and_report_start_nothing_and_frozen_boundaries_hold",
+      "BoundaryTests.test_status_and_report_accounting_never_report_zero_without_evidence",
       "BoundaryTests.test_timeout_and_transport_failure_are_final",
       "BoundaryTests.test_unavailable_provider_and_authentication_failure_are_reported_never_substituted",
+      "BoundaryTests.test_worst_case_reservations_are_never_released_for_estimates_missing_usage_or_failures",
       "EndToEndTests.test_disagreement_is_recommended_for_revision_and_adversarial_stays_pending",
       "EndToEndTests.test_each_critic_receives_only_its_own_frozen_blinded_request",
       "EndToEndTests.test_invalid_reply_is_kept_and_provider_fault_is_never_imported",
@@ -1606,6 +1610,15 @@
       "QueueAssuranceTests.test_shutdown_unsubscribe_failure_retains_events_and_cannot_end",
       "QueueAssuranceTests.test_shutdown_write_failure_retains_events_and_cannot_end",
       "QueueAssuranceTests.test_v004_virtual_heartbeat_deadlines_and_exact_ack_burst"
+    ]
+  },
+  "tests/test_scout_automation_admin_process_assurance.py": {
+    "baseline_ci": true,
+    "runner": "process",
+    "reason": "Research OS pipeline V001 Codex administrative commands: real fixed local Python children (with a heartbeating grandchild) stand in for one Codex administrative command through the real bounded capture; a combined stdout/stderr flood and a hang stop the process tree before any critic process; temporary archives and fictional home. No CLI, model, network or account. Portable.",
+    "declared_tests": [
+      "CodexAdminProcessTests.test_combined_stdout_and_stderr_flood_stops_the_tree_during_capture",
+      "CodexAdminProcessTests.test_hung_command_is_stopped_at_the_administrative_timeout"
     ]
   },
   "tests/test_scout_exploratory_capture_process_assurance.py": {

@@ -108,7 +108,8 @@ spoofing or browser automation exists anywhere in this package.
 > - That proves no provider compatibility, research accuracy or permission to use any hosted account.
 
 Code: `src/research/opportunity_scout/automation_v001/pipeline.py` and `__main__.py`.
-Tests: `tests/opportunity_scout/test_research_pipeline_v001.py`.
+Tests: `tests/opportunity_scout/test_research_pipeline_v001.py`, plus real local Python children in
+`tests/test_scout_automation_admin_process_assurance.py` (CI on both platforms).
 
 The pipeline coordinates existing components. It adds no generation, rubric, archive or policy logic:
 
@@ -167,6 +168,17 @@ is built, and every prompt is re-checked against its frozen `rendered_prompt_sha
 - **Faults are never imported.** A provider fault means the reply is not imported. Its raw bytes are kept beside the
   ledger record, and the request stays unanswered, so the policy gives ESCALATE. Invalid replies are imported unchanged
   and stay INVALID.
+- **Spend reservations are never released.** Each Gemini request reserves its full worst-case cost (exact whole
+  micro-USD, rounded up; the cap is rounded down) before its dispatch record exists. The cumulative reservation never
+  goes down: not for a lower usage estimate, missing usage, a transport failure, a refused redirect or a crash.
+  Estimates are recorded beside it, never subtracted. The cap therefore bounds the sum of worst cases.
+- **Bounded Codex administrative commands.** `--version`, `login status` and `exec --help` run only through the
+  merged runner's `admin` and `capture`:
+  - stdout and stderr together are capped at 1 MiB **while capturing**, with a 30-second timeout;
+  - past the cap, at the timeout or on a capture failure the process tree is stopped, and each is a named
+    `PREFLIGHT_STOP` before any critic process;
+  - a claim file is written before the first launch, and `pipeline-codex-preflight.json` records the launches and
+    the confirmed starts.
 - **Adversarial review is never dispatched.** A policy recommendation for it is recorded `PENDING_APPROVAL`.
 - **Unavailable roles stop honestly.** An unavailable role (`ANTIGRAVITY_CONSUMER`) is recorded
   `PROVIDER_UNAVAILABLE_OR_NOT_AUTHORISED` and the run ends `INCOMPLETE_CRITICS`. Nothing is substituted.
@@ -183,9 +195,27 @@ is built, and every prompt is re-checked against its frozen `rendered_prompt_sha
 - unknown dimensions and unresolved assumptions;
 - the deterministic recommendation and adversarial status;
 - each critic's provider, model, identity basis, faults, usage and cost estimate;
+- the accounting below, and the Gemini reservations and estimate total;
 - missing or interrupted stages.
 
 There is no composite score. Actual charges are UNKNOWN.
+
+## Status and accounting
+
+`status` and the report count from recorded files only. Each count is `{at_least, exact}`. Every marker is written
+before the launch or request it names, so a missing marker establishes zero. Nothing else does.
+
+| Measure | Evidence |
+|---|---|
+| Model CLI processes started | Generation `process_start`; `pipeline-started-<request>`, written by `on_start` once `Popen` returns. A dispatch without that marker is UNKNOWN |
+| Administrative CLI launches (send no prompt) | Generation receipt `administrative_commands_run`; the Codex preflight record. A claim without its record is UNKNOWN |
+| Dispatches attempted | `exploratory-dispatch-*` and `pipeline-dispatch-<request>` |
+| Provider requests | Generation: a visible request ID means at least 1. Codex: a model-authored message means at least 1. Gemini: a recorded response is exactly 1 (no redirects or retries) |
+
+**Unknowns:**
+- A started CLI process is never counted as one provider request, so Claude and Codex request counts stay `exact:
+  UNKNOWN`.
+- A dispatched Gemini request with no recorded response (transport failure, refused redirect or crash) is UNKNOWN.
 
 ## Offline demonstration (what the tests prove)
 
@@ -203,13 +233,24 @@ transport and `SYNTHETIC FIXTURE` critic answers, with socket and process creati
 5. A Codex API-key login stops before dispatch. A Gemini authorisation without the auto-reload attestation is refused,
    and a spend cap below the worst case means no request is sent.
 6. An unavailable Antigravity role, HTTP 401 and an absent key are each reported, with nothing substituted.
-7. A timeout or transport failure is final.
+7. A timeout or transport failure is final, and a failed send counts as UNKNOWN, never zero.
 8. A crash after a process starts leaves a truthful partial report, and the duplicate run is refused, with no second
    dispatch.
 9. Altered authorisations (assistant owner, other generation owner, adversarial, two attempts, other model) are
    refused before any process. Plan, status and report start nothing. The new package is outside the frozen V004 and
    R3 closures.
 10. The API key reaches only the transport header. It never appears in any written file.
+11. Through the real transport and an offline origin simulator, a redirect from the documented host is refused, with
+    no follow-up request, so `attacker.invalid` never receives the key.
+12. Reservations are never released. With one reservation held, a second request that no longer fits is refused,
+    whether the first had a low estimate, missing usage or a transport failure.
+13. Codex administrative commands get the 1 MiB combined limit, the 30-second timeout and no stdin. Each of these
+    stops the preflight by name before any critic process: overflow, timeout, capture failure, non-zero exit, a
+    runner returning oversized output, and a refused launch. With real children, a combined stdout/stderr flood (each
+    channel under 1 MiB) and a hang are stopped together with their process trees.
+14. Accounting is exactly zero before a run. After the run there are three model CLI processes, five dispatches, and
+    provider requests at least five with exact UNKNOWN. A crash keeps the started process counted and leaves its
+    requests UNKNOWN.
 
 ## Blockers to one fully automated live run
 

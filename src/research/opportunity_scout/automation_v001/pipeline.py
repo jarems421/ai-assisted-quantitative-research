@@ -16,13 +16,16 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
+from fractions import Fraction
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
 import tempfile
 import time
+from types import SimpleNamespace
 from typing import Callable
 
 from src.research.spec import canonical, digest
@@ -46,20 +49,30 @@ CLOSE = X.CLOSE
 class Host:
     """Everything outside the archive and workspace, injectable for offline tests."""
     generation: X.Host = field(default_factory=X.Host)
-    codex_runner: Callable = X.capture          # bounded capture with process-tree stop (merged PR #26)
-    codex_admin: Callable = None               # (executable, env, args) -> stdout text; default runs it locally
+    codex_runner: Callable = X.capture          # bounded capture with process-tree stop (merged PR #26), every Codex process
     transport: Callable = V.https_transport   # Gemini HTTPS POST
     environ: dict = field(default_factory=lambda: dict(os.environ))
     now: Callable = S.utc_now
     monotonic: Callable = time.monotonic
 
 
-def default_admin(executable, env, args):
-    with tempfile.TemporaryDirectory(prefix='scout-codex-admin-') as cwd:
-        p = subprocess.run([str(executable), *args], env=env, cwd=cwd, capture_output=True, text=True, encoding='utf-8',
-                           timeout=X.ADMIN_TIMEOUT, shell=False, stdin=subprocess.DEVNULL)
-    if p.returncode or len((p.stdout or '').encode('utf-8')) > X.MAX_ADMIN_BYTES:raise S.ScoutError('CODEX_ADMIN_COMMAND_FAILED:' + args[0])
-    return p.stdout
+def codex_admin(host, tally):
+    """Codex administrative commands through the merged runner's bounded ``admin``: stdout and stderr together are
+    limited to MAX_ADMIN_BYTES while capturing, and the process tree is stopped past the limit, at ADMIN_TIMEOUT or on
+    a capture failure, each a named stop. Every launch and every confirmed start (``on_start``) is counted."""
+    def runner(args, **kwargs):
+        tally['launches'] += 1
+        def started(pid):tally['started'] += 1
+        return host.codex_runner(args, on_start=started, **kwargs)
+    bounded = SimpleNamespace(runner=runner)
+    return lambda executable, env, args: X.admin(bounded, executable, env, args)
+
+
+def reservation_micro_usd(prompt_bytes, max_output_tokens, prices):
+    """The worst-case bound in whole micro-USD, computed exactly and rounded up, so cumulative reservations never
+    drift below the true bound. Prices are per 1M tokens, so tokens x price is already micro-USD."""
+    return math.ceil(Fraction(prompt_bytes) * Fraction(prices['input_usd_per_million'])
+                     + Fraction(max_output_tokens) * Fraction(prices['output_usd_per_million']))
 
 
 def workspace_path(store):
@@ -167,9 +180,13 @@ def dispatch_codex(run, rid, role, p, prompt, codex_state):
     host = run.host
     env = V.codex_environment(host.environ, p['codex_home'])
     if 'preflight' not in codex_state:
-        admin = host.codex_admin or default_admin
+        tally = {'launches': 0, 'started': 0}
+        run.put('codex-preflight-claim', {'request_id': rid, 'commands': ['--version', 'login status', 'exec --help'], 'claimed_at': host.now()})
+        admin = codex_admin(host, tally)
         try:codex_state['preflight'] = V.codex_preflight(lambda a: admin(role['executable'], env, a), role['executable_sha256'], CS.file_hash(Path(role['executable'])))
         except CLOSE as error:codex_state['preflight'] = {'stop': str(error) if isinstance(error, S.ScoutError) else type(error).__name__}
+        run.put('codex-preflight', {**codex_state['preflight'], 'administrative_launches': tally['launches'],
+                                    'processes_started': tally['started'], 'recorded_at': host.now()})
     if 'stop' in codex_state['preflight']:return None, {'faults': ['PREFLIGHT_STOP:' + codex_state['preflight']['stop']], 'dispatched': False}
     targets = {c: run.raw(f'{rid}-{c}') for c in ('stdout', 'stderr')}
     handles, facts, start = {}, {'preflight': codex_state['preflight'], 'dispatched': True}, {'process': 'NOT_STARTED'}
@@ -202,26 +219,30 @@ def dispatch_codex(run, rid, role, p, prompt, codex_state):
 
 
 def dispatch_gemini(run, rid, role, prompt, budget, timeout):
+    """One generateContent request. Its full worst-case cost is reserved against the owner cap before sending and is
+    never released: not for a lower usage estimate, missing usage, a transport failure, a refused redirect or a
+    crash. A usage estimate is recorded beside the reservation and never subtracted from it."""
     host = run.host
     key = host.environ.get(role['api_key_env'])
     if not key:return None, {'faults': ['API_KEY_ABSENT'], 'dispatched': False}
-    bound = V.worst_case_cost(len(prompt), role['max_output_tokens'], role['prices'])
-    if bound > budget['remaining']:return None, {'faults': ['SPEND_CAP_WOULD_BE_EXCEEDED'], 'dispatched': False, 'worst_case_usd': bound}
+    reserve = reservation_micro_usd(len(prompt), role['max_output_tokens'], role['prices'])
+    if budget['reserved_micro_usd'] + reserve > budget['cap_micro_usd']:
+        return None, {'faults': ['SPEND_CAP_WOULD_BE_EXCEEDED'], 'dispatched': False, 'worst_case_usd': reserve / 1e6}
     body = json.dumps(V.gemini_request(prompt.decode('utf-8'), max_output_tokens=role['max_output_tokens'],
                                        thinking_level=role.get('thinking_level'))).encode('utf-8')
     url = V.GEMINI_ENDPOINT.format(model=role['model'])
-    run.put(f'dispatch-{rid}', {'request_id': rid, 'dispatched_at': host.now(), 'worst_case_usd': bound})
-    budget['remaining'] -= bound  # reserved before sending; replaced by the estimate afterwards if one exists
+    budget['reserved_micro_usd'] += reserve  # consumed before the dispatch record or the request exists; never released
+    run.put(f'dispatch-{rid}', {'request_id': rid, 'dispatched_at': host.now(), 'worst_case_micro_usd': reserve,
+                                'reserved_micro_usd_total': budget['reserved_micro_usd']})
     clock, target = host.monotonic(), run.raw(f'{rid}-response')
+    spend = {'dispatched': True, 'worst_case_usd': reserve / 1e6, 'reservation_released': False}
     try:status, data = host.transport(url, {'Content-Type': 'application/json', 'x-goog-api-key': key}, body, timeout)
-    except CLOSE as error:return None, {'faults': ['TRANSPORT_FAILED:' + type(error).__name__], 'dispatched': True, 'worst_case_usd': bound}
+    except CLOSE as error:
+        return None, {**spend, 'faults': ['TRANSPORT_FAILED:' + (str(error)[:200] if isinstance(error, S.ScoutError) else type(error).__name__)]}
     finally:key = None
     with target.open('xb') as f:f.write(data); f.flush(); os.fsync(f.fileno())
     reply, review = V.gemini_review(status, data, role['model'], role['prices'])
-    estimate = review['cost_estimate_usd_documented_prices']
-    if estimate != S.UNKNOWN:budget['remaining'] += bound - estimate
-    return reply, {'dispatched': True, 'worst_case_usd': bound, 'wall_seconds': round(host.monotonic() - clock, 3),
-                   'raw': {'response': file_facts(target)}, **review}
+    return reply, {**spend, 'wall_seconds': round(host.monotonic() - clock, 3), 'raw': {'response': file_facts(target)}, **review}
 
 
 def critic_provenance(role, facts, owner, now):
@@ -268,7 +289,8 @@ def run(store, authorisation, *, host=None):
     if sum(len(x) for x in requests.values()) > p['critic_requests_maximum']:
         r.stage('FIRST_PASS_CRITICS', 'NOT_RUN', reason='MORE_REQUESTS_THAN_AUTHORISED'); return finish(r, p, auth_sha, 'REQUEST_CEILING')
     # Stage 3: one independent dispatch per frozen first-pass request, in a fixed order; critics never see each other.
-    budget, codex_state, outcomes = {'remaining': float(p['spend_cap_usd'])}, {}, {}
+    budget = {'cap_micro_usd': math.floor(Fraction(p['spend_cap_usd']) * 10 ** 6), 'reserved_micro_usd': 0}
+    codex_state, outcomes = {}, {}
     for key, pair in requests.items():
         for critic in ROLES:
             rid, role = pair[critic], p['roles'][critic]
@@ -290,7 +312,8 @@ def run(store, authorisation, *, host=None):
                                    refusals=attempt['refusals'])
             outcomes[rid] = outcome
             r.put(f'critic-{rid}', {'request_id': rid, 'critic': critic, 'subject_key': key, 'role': {k: role.get(k) for k in ('provider', 'model', 'family')},
-                                    'remaining_spend_cap_usd': round(budget['remaining'], 6), **outcome})
+                                    'spend_reserved_worst_case_usd_total': budget['reserved_micro_usd'] / 1e6,
+                                    'spend_unreserved_usd': (budget['cap_micro_usd'] - budget['reserved_micro_usd']) / 1e6, **outcome})
     imported = sum(o['outcome'] == 'IMPORTED' and o.get('status') == 'VALID' for o in outcomes.values())
     r.stage('FIRST_PASS_CRITICS', 'COMPLETE' if imported == len(outcomes) else 'INCOMPLETE', valid=imported, requests=len(outcomes),
             unavailable_roles=unavailable)
@@ -326,6 +349,88 @@ def stage_status(store_path, name):
     return s['status'] if s else 'NOT_RECORDED'
 
 
+# Accounting from recorded files only. Every count is {'at_least': n, 'exact': n or UNKNOWN}; exact zero needs
+# evidence (each marker is written before the launch or request it names, so its absence establishes zero). A CLI
+# process is never counted as one provider request: Codex and Claude CLI request counts stay UNKNOWN once started.
+ZERO = {'at_least': 0, 'exact': 0}
+UNSEEN = {'at_least': 0, 'exact': S.UNKNOWN}
+MEASURES = ('model_cli_processes_started', 'administrative_cli_launches', 'dispatches_attempted', 'provider_requests')
+
+
+def count(at_least, exact=None):
+    return {'at_least': at_least, 'exact': at_least if exact is None else exact}
+
+
+def total(parts):
+    exact = [x['exact'] for x in parts]
+    return {'at_least': sum(x['at_least'] for x in parts), 'exact': S.UNKNOWN if S.UNKNOWN in exact else sum(exact)}
+
+
+def generation_accounting(store):
+    g, ex = X.status(store), Archive(store).path / 'exports'
+    receipt = next((read(x) for x in sorted(ex.glob('exploratory-receipt-*.json'))), None)
+    admin = count(receipt['administrative_commands_run']) if receipt and type(receipt.get('administrative_commands_run')) is int \
+        else UNSEEN if g['claimed'] else ZERO
+    return {'process_start': g['process_start'], 'invocation_status': g['invocation_status'],
+            'model_cli_processes_started': {'STARTED': count(1), 'NOT_STARTED': ZERO, 'START_ATTEMPTED': ZERO}.get(g['process_start'], UNSEEN),
+            'administrative_cli_launches': admin,
+            'dispatches_attempted': count(1) if any(n.startswith('exploratory-dispatch-') for n in g['exports']) else ZERO,
+            # A visible request ID shows at least one provider request; the CLI's own request count is never visible.
+            'provider_requests': {'NOT_INVOKED': ZERO, 'INVOKED': count(1, S.UNKNOWN)}.get(g['invocation_status'], UNSEEN)}
+
+
+def tolerant(path):
+    """A record that a crash may have left partial (exports are not written atomically): None if absent or unreadable."""
+    try:return read(path)
+    except CLOSE:return None
+
+
+def critic_accounting(ex, roles):
+    claims = {x.name[len('pipeline-claim-'):-5] for x in ex.glob('pipeline-claim-CRQ-*.json')}
+    rows = {}
+    for rid in sorted(claims | {x.name[len('pipeline-dispatch-'):-5] for x in ex.glob('pipeline-dispatch-*.json')}):
+        claim = tolerant(ex / f'pipeline-claim-{rid}.json') or {}
+        provider = (roles.get(claim.get('critic')) or {}).get('provider', S.UNKNOWN)
+        dispatched = (ex / f'pipeline-dispatch-{rid}.json').exists()
+        record = tolerant(ex / f'pipeline-critic-{rid}.json')
+        row = {'critic': claim.get('critic', S.UNKNOWN), 'provider': provider, 'claimed': rid in claims, 'outcome_recorded': record is not None,
+               'dispatches_attempted': count(int(dispatched)), 'model_cli_processes_started': ZERO, 'provider_requests': ZERO}
+        if provider == V.CODEX:
+            started = (ex / f'pipeline-started-{rid}.json').exists()
+            row['model_cli_processes_started'] = count(1) if started else UNSEEN if dispatched else ZERO
+            message = started and isinstance(record, dict) and type(record.get('agent_messages')) is int and record['agent_messages'] >= 1
+            row['provider_requests'] = count(int(message), S.UNKNOWN) if dispatched else ZERO  # a model-authored message shows at least one
+        elif provider == V.GEMINI:  # no redirects or retries: a recorded response is exactly one HTTP request
+            row['provider_requests'] = (count(1) if (ex / f'pipeline-{rid}-response.bin').exists() else UNSEEN) if dispatched else ZERO
+        elif dispatched or row['claimed']:
+            row.update(model_cli_processes_started=UNSEEN, provider_requests=UNSEEN)  # unreadable claim: nothing established
+        rows[rid] = row
+    return rows
+
+
+def preflight_accounting(ex):
+    claimed, rec = (ex / 'pipeline-codex-preflight-claim.json').exists(), tolerant(ex / 'pipeline-codex-preflight.json')
+    if rec and all(type(rec.get(k)) is int for k in ('administrative_launches', 'processes_started')):
+        return {'administrative_cli_launches': count(rec['administrative_launches']), 'processes_started': count(rec['processes_started']),
+                'stop': rec.get('stop')}
+    return {'administrative_cli_launches': UNSEEN if claimed else ZERO, 'processes_started': UNSEEN if claimed else ZERO, 'stop': None}
+
+
+def accounting(store):
+    """CLI processes started, launches, dispatches and provider requests, each from evidence; never inferred zero."""
+    archive = Archive(store); ex = archive.path / 'exports'
+    p = read(ex / 'pipeline-plan.json') or {}
+    gen, critics, pre = generation_accounting(store), critic_accounting(ex, p.get('roles', {})), preflight_accounting(ex)
+    parts = {'model_cli_processes_started': [gen['model_cli_processes_started']] + [r['model_cli_processes_started'] for r in critics.values()],
+             'administrative_cli_launches': [gen['administrative_cli_launches'], pre['administrative_cli_launches']],
+             'dispatches_attempted': [gen['dispatches_attempted']] + [r['dispatches_attempted'] for r in critics.values()],
+             'provider_requests': [gen['provider_requests']] + [r['provider_requests'] for r in critics.values()]}
+    return {'totals': {m: total(parts[m]) for m in MEASURES}, 'generation': gen, 'codex_preflight': pre, 'critic_requests': critics,
+            'note': 'Counts come from recorded files only; exact zero only where the absence of a pre-launch marker '
+                    'establishes it. A started CLI process is not one provider request; their number stays UNKNOWN. '
+                    'Administrative launches send no prompt. Charges are never inferred.'}
+
+
 def status(store):
     """Files only: never invokes a model or a CLI."""
     archive = Archive(store); ex = archive.path / 'exports'
@@ -335,9 +440,26 @@ def status(store):
             'interrupted': claimed and receipt is None, 'outcome': receipt['outcome'] if receipt else ('NOT_STARTED' if not claimed else 'INTERRUPTED'),
             'stages': {s: stage_status(archive.path, s) for s in STAGES},
             'critic_claims': sum(n.startswith('pipeline-claim-CRQ-') for n in names),
-            'critic_records': sum(n.startswith('pipeline-critic-') for n in names), 'model_calls_made_by_status': 0,
+            'critic_records': sum(n.startswith('pipeline-critic-') for n in names), 'accounting': accounting(store),
             'note': 'A claimed run is never resumed. An interrupted claim without a critic record means that request was '
                     'claimed but its outcome is unknown; it is never re-dispatched.'}
+
+
+def spend(ex, p):
+    """Gemini reservations from the dispatch records (never released) and the estimate total (UNKNOWN unless every
+    dispatched request has one). Actual charges are never inferred."""
+    reserved, estimates, unreadable = 0, [], False
+    for x in sorted(ex.glob('pipeline-dispatch-*.json')):
+        d = tolerant(x)
+        if d is None:unreadable = True; continue
+        if type(d.get('worst_case_micro_usd')) is int:
+            reserved += d['worst_case_micro_usd']
+            rec = tolerant(ex / f"pipeline-critic-{d.get('request_id')}.json") or {}
+            estimates.append(rec.get('cost_estimate_usd_documented_prices', S.UNKNOWN))
+    known = not unreadable and all(type(e) in (int, float) for e in estimates)
+    return {'cap_usd': p.get('spend_cap_usd'), 'gemini_requests_reserved': S.UNKNOWN if unreadable else len(estimates),
+            'worst_case_reserved_usd': S.UNKNOWN if unreadable else reserved / 1e6, 'reservations_released_usd': 0,
+            'cost_estimate_usd_documented_prices': round(sum(estimates), 6) if known else S.UNKNOWN, 'actual_charges': S.UNKNOWN}
 
 
 def build(store):
@@ -382,7 +504,7 @@ def build(store):
             'generation': {'status': attempt.get('result', {}).get('status', 'PENDING'), 'model': attempt.get('requested_model'),
                            'error': attempt.get('result', {}).get('error'), 'receipt': {k: gen_receipt.get(k) for k in
                            ('process_start', 'provider_request', 'model_invocations', 'administrative_commands_run', 'review')} if gen_receipt else None},
-            'cards': cards, 'subjects': subjects, 'recommendation_file': rec_file,
+            'cards': cards, 'subjects': subjects, 'recommendation_file': rec_file, 'accounting': accounting(store), 'spend': spend(ex, p),
             'roles': {k: {x: r.get(x) for x in ('provider', 'model', 'family', 'effort', 'accept_requested_identity')} for k, r in p.get('roles', {}).items()},
             'spend_cap_usd': p.get('spend_cap_usd'), 'actual_charges': S.UNKNOWN,
             'limits': ['AI recommendations are advisory: no Scout routing, READY, investment validation, causal claim or trading authority.',
@@ -419,5 +541,11 @@ def markdown(rep):
             out.append(f"- {c}: {info['outcome']} / {info['status']} · {info['model']} · identity {info['model_identity_basis']}"
                        + (f" · faults {info['faults']}" if info['faults'] else '') + f" · cost estimate {info['cost_estimate_usd']}")
         out += ['', f"Falsifier: {card.get('falsifier', {}).get('observation', '')}", '']
+    out += ['## Accounting', '', '| Measure | At least | Exact |', '|---|---|---|']
+    out += [f"| {m.replace('_', ' ')} | {v['at_least']} | {v['exact']} |" for m, v in rep['accounting']['totals'].items()]
+    sp = rep['spend']
+    out += ['', f"Gemini worst-case reserved {sp['worst_case_reserved_usd']} USD over {sp['gemini_requests_reserved']} request(s), "
+            f"never released; documented-price estimate {sp['cost_estimate_usd_documented_prices']} USD.",
+            '', f"_{rep['accounting']['note']}_", '']
     out += ['## Limits', ''] + [f'- {x}' for x in rep['limits']] + [f"- Spend cap {rep['spend_cap_usd']} USD; actual charges {rep['actual_charges']}."]
     return '\n'.join(out) + '\n'
