@@ -64,13 +64,22 @@ class Host:
 def codex_admin(host, tally):
     """Codex administrative commands through the merged runner's bounded ``admin``: stdout and stderr together are
     limited to MAX_ADMIN_BYTES while capturing, and the process tree is stopped past the limit, at ADMIN_TIMEOUT or on
-    a capture failure, each a named stop. Every launch and every confirmed start (``on_start``) is counted."""
-    def runner(args, **kwargs):
-        tally['launches'] += 1
-        def started(pid):tally['started'] += 1
-        return host.codex_runner(args, on_start=started, **kwargs)
-    bounded = SimpleNamespace(runner=runner)
-    return lambda executable, env, args: X.admin(bounded, executable, env, args)
+    a capture failure, each a named stop. Every launch and every confirmed start (``on_start``) is counted.
+
+    Codex prints some results on stderr (0.164 writes ``login status`` there, with stdout empty), so the text returned
+    is stdout, then stderr on its own line, each strictly decoded. The preflight's exact line checks then reject
+    output on both channels, duplicates or any extra line, so a conflicting or ambiguous result fails closed."""
+    def command(executable, env, args):
+        sinks = {}
+        def runner(argv, **kwargs):
+            tally['launches'] += 1
+            sinks['stderr'] = kwargs['stderr']
+            def started(pid):tally['started'] += 1
+            return host.codex_runner(argv, on_start=started, **kwargs)
+        out = X.admin(SimpleNamespace(runner=runner), executable, env, args)
+        err = sinks['stderr'].getvalue().decode('utf-8').replace('\r\n', '\n').replace('\r', '\n')
+        return out + ('\n' if out and err and not out.endswith('\n') else '') + err
+    return command
 
 
 def reservation_micro_usd(prompt_bytes, max_output_tokens, prices):

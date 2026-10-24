@@ -1,11 +1,12 @@
 """Research OS pipeline V001: Codex administrative commands through the real bounded capture, with fixed local Python
 children standing in for the Codex CLI. No CLI, model, network, credential or account inspection. Separate from
-v004_checks, whose process guard intentionally refuses Popen. Every child floods or hangs, and gives up by itself
-after 30 seconds."""
+v004_checks, whose process guard intentionally refuses Popen. Each child floods, hangs or prints one fixed fixture
+answer, and gives up by itself after 30 seconds."""
 import time
 import unittest
 from unittest.mock import patch
 
+from src.research.opportunity_scout.automation_v001 import providers as V
 from src.research.opportunity_scout.exploratory_v001 import runner as X
 from tests.opportunity_scout.test_research_pipeline_v001 import Base
 from tests.test_scout_exploratory_capture_process_assurance import HANG, child
@@ -47,6 +48,22 @@ class CodexAdminProcessTests(Base):
         self.assertGreater(out + err, X.MAX_ADMIN_BYTES); self.assertLessEqual(out + err, X.MAX_ADMIN_BYTES + 2 * X.CHUNK)
         self.assertTrue(0 < out < X.MAX_ADMIN_BYTES and 0 < err < X.MAX_ADMIN_BYTES)  # the bound is combined, not per channel
         self.assert_stopped_before_any_critic_process(rec['stop'])
+
+    def test_real_pipes_carry_a_stderr_login_result_through_the_preflight(self):
+        """Real children answer as codex 0.164 does: version and help on stdout, the login result on stderr only."""
+        answers = {'--version': 'import sys;sys.stdout.write("codex-cli 0.164.0-fixture\\n")',
+                   'login': 'import sys;sys.stderr.write("Logged in using ChatGPT\\n")',
+                   'exec': 'import sys;sys.stdout.write(sys.argv[1])'}
+        def runner(args, **kwargs):
+            if '--json' in args:return self.fake_codex(args, **kwargs)
+            command = child(answers[args[1]]) + ([' '.join(V.CODEX_FLAGS)] if args[1] == 'exec' else [])
+            return X.capture(command, **{**kwargs, 'env': None})
+        self.pipe.codex_runner = runner
+        self.execute()
+        [record] = self.preflights()
+        self.assertEqual((record['auth'], record['cli_version'], record['administrative_launches'], record['processes_started']),
+                         ('CHATGPT_LOGIN', 'codex-cli 0.164.0-fixture', 3, 3))
+        self.assertEqual(len(self.codex_calls), 2)  # both scientific critics dispatched after the real-pipe preflight
 
     def test_hung_command_is_stopped_at_the_administrative_timeout(self):
         with patch.object(X, 'ADMIN_TIMEOUT', 1):rec = self.run_admin_child(HANG)

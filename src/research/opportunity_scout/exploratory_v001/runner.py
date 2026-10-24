@@ -196,6 +196,11 @@ def arguments(executable, model, effort, session_id):
 
 
 FLAGS = sorted({a for a in arguments('x', 'm', 'low', 's') if a.startswith('--')})
+# Documented in the official CLI reference but not listed by `--help` (2.1.302 omits it; the reference says `--help`
+# does not list every flag, and 2.1.302 parses it as a known option). It is still always passed, CLAUDE_CODE_MAX_TURNS
+# stays 1 and the review still requires exactly one reported turn; if a CLI rejected it, it would exit at option
+# parsing, before any request, and the attempt would close as ERROR. Every other flag must appear in `--help`.
+UNLISTED_DOCUMENTED_FLAGS = ('--max-turns',)
 
 
 def bindings(plan):
@@ -334,7 +339,7 @@ def preflight(host, p, auth_value, exe, env):
     if controls(env) != p['controls']:raise S.ScoutError('CHILD_ENVIRONMENT_CONTROLS_CHANGED')
     version = admin(host, exe, env, ADMIN[0]).strip()
     help_text = admin(host, exe, env, ADMIN[1])
-    missing = [f for f in FLAGS if f not in help_text]
+    missing = [f for f in FLAGS if f not in help_text and f not in UNLISTED_DOCUMENTED_FLAGS]
     if missing:raise S.ScoutError('UNSUPPORTED_FLAGS:' + ','.join(missing))
     return {'cli_version': version, 'help_sha256': S.hash_text(help_text), 'account': account(host, exe, env, auth_value, 'PREFLIGHT')}
 

@@ -54,7 +54,9 @@ stops the run.
    - no server-managed settings cache;
    - managed-policy check passes;
    - executable hash and child controls unchanged;
-   - `--version`, and `--help` lists every flag used;
+   - `--version`, and `--help` lists every flag used. The one exception is `--max-turns`: it is documented in the
+     official CLI reference, but 2.1.302 `--help` does not list it, and the reference notes that `--help` omits some
+     flags. It is still always passed, with `CLAUDE_CODE_MAX_TURNS=1` and the one-turn stream check unchanged;
    - `auth status --json` shows `authMethod=claude.ai`, `apiProvider=firstParty`, an authorised subscription
      type, and `configDirectory` equal to the research directory.
 
