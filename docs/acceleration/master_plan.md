@@ -1,5 +1,7 @@
 # Research OS: governing roadmap
 
+**2026-10-24 prospective Jev direction:** Jev is [Research Navigation Intelligence](../jev_navigation_v001.md), with an offline Evidence Prospector, Armoury/Graph memory navigation and advisory workflow navigation. The Quarry remains an optional future acquisition capability; V001 reads only supplied, pinned records. Jev is no longer planned as a shadow critic, scientific screener or calibration competitor to Sol/Argon. [Legacy retirement and frozen compatibility](../jev_navigation_v001/legacy_retirement.md) supersedes the old Jev-role proposals only; human critic calibration and all existing research gates/stops remain authoritative. No Jev deployment, source acquisition or research activation is authorised.
+
 **2026-10-21 Graph pilot stopped at packet freeze:** the pilot was [activated](../strategy/owner_graph_pilot_2026-10-21.md) under the owner's route amendment. Its [packet freezes](../strategy/graph_pilot_packet_freeze_report.md) used 4 source starts:
 - P1 did not form (ECHO documentation; PHMSA blocked);
 - P2 did not form (the first selected 8-K has no material-contract exhibit);

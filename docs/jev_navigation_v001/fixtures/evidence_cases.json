@@ -1,0 +1,17 @@
+{
+  "schema": "JEV_NAVIGATION_SYNTHETIC_CASES_V001",
+  "fixture": "SYNTHETIC_NOT_REAL_EVIDENCE",
+  "inspection_budget": 3,
+  "documents": [
+    {"id":"A_MARKETING","title":"Terminal loading capacity shipments predictor outcome research","text":"Our terminal loading capacity shipments research connects predictor outcome economic units, historical versions and listed-company exposure. This advertisement provides no original field or facility-specific operating record.","availability":"SUPPLIED_EXCERPT"},
+    {"id":"B_ORDER","title":"F1 binding order N7","text":"Order N7: berth F1 may load at most six tonnes per day from 2000-03-01, reduced from ten. This is a binding permitted limit, not realised deliveries. Register revision v1 records the order.","availability":"SUPPLIED_COPY"},
+    {"id":"C_DELIVERIES","title":"F1 separate operating log","text":"The operator's independently recorded operating log reports berth F1 deliveries of 61 tonnes for the next quarter. The denominator is one berth-quarter. No permit formula was used to construct this realised total.","availability":"SUPPLIED_COPY"},
+    {"id":"D_WRONG_ASSET","title":"Terminal loading capacity shipments annual estimate","text":"Terminal loading capacity shipments at berth F99 are forecasts from a consultant. This is a different asset from F1; no F1 predictor or independently recorded outcome is supplied.","availability":"SUPPLIED_EXCERPT"},
+    {"id":"E_UNITS","title":"N7 metrology appendix","text":"N7's term tonne means 1000 kilograms. Its daily maximum applies to F1 alone, not combined port capacity or spare capacity. Calendar-day and berth-quarter denominators must not be substituted for one another.","availability":"SUPPLIED_COPY"},
+    {"id":"F_CONTROL","title":"Unchanged-permit control berth","text":"A separately retained control log shows berth F2 had unchanged permission but the same proportional decline in actual deliveries as F1. A shared demand change could contradict an attribution to the F1 order.","availability":"SUPPLIED_COPY"},
+    {"id":"G_CONCESSION","title":"Dated operating concession","text":"A signed 1999-2001 concession identifies F1's operator and listed parent, including which entity retains operating revenue. It supplies a dated historical relationship; it does not quantify retained net loss.","availability":"SUPPLIED_COPY"},
+    {"id":"H_AMBIGUOUS","title":"Unexplained ship column","text":"A fragment reads F1 ship 61. The field could mean orders, deliveries or vessels. There are no units, period or publication records. Its relevance to the specified measurement is unresolved.","availability":"SUPPLIED_EXCERPT"},
+    {"id":"I_DENIAL","title":"Stopped register route receipt","text":"A prior authorised attempt received HTTP 403. No original register body was retained from this route. The recorded host-level stop remains; do not probe another URL or retry.","availability":"STOPPED"},
+    {"id":"J_BACKGROUND","title":"National terminal loading capacity and shipments outlook","text":"National terminal loading capacity and shipments are discussed as a broad industry outlook. It supplies neither the F1 permit nor its original outcome, units, dated ownership or financial allocation.","availability":"SUPPLIED_EXCERPT"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "JEV_NAVIGATION_SCRIPTED_CHOICES_V001",
+  "basis": "Manually scripted synthetic classification responses, including a deliberate wrong-asset promotion and abstention; never Jev output or human approval.",
+  "evidence": {
+    "A_MARKETING":{"background":"yes"},
+    "B_ORDER":{"predictor":"yes","units":"yes","relationship":"yes","public_version":"unsure"},
+    "C_DELIVERIES":{"outcome":"yes","units":"yes","relationship":"yes"},
+    "D_WRONG_ASSET":{"predictor":"yes"},
+    "E_UNITS":{"units":"yes"},
+    "F_CONTROL":{"falsifier":"yes"},
+    "G_CONCESSION":{"relationship":"yes","exposure":"yes"},
+    "H_AMBIGUOUS":{"predictor":"unsure","outcome":"unsure","units":"unsure","relationship":"unsure","exposure":"unsure","public_version":"unsure","falsifier":"unsure","background":"unsure"},
+    "I_DENIAL":{"background":"yes"},
+    "J_BACKGROUND":{"background":"yes"}
+  },
+  "memory": {"HIST-SH09":{"mechanism":"yes","source_lead":"yes","blocker_lesson":"yes","falsification_lesson":"no"}},
+  "workflow": {"CURRENT_STATE":{"competing_explanation":"yes","explicit_stop":"no"}}
+}

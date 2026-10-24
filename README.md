@@ -48,6 +48,8 @@ flowchart TB
 
 **The Armoury** preserves hypotheses, sources, failures and lessons across every stage. This conceptual funnel has human-controlled handoffs; it is not an operational end-to-end pipeline. Source-first investigations can return hypotheses to The Forge. The Battle initially means separately authorised paper research.
 
+[Jev Research Navigation](docs/jev_navigation_v001.md) helps inspect supplied evidence, retrieve Armoury lessons and identify existing blockers. It is an offline, read-only navigation layer; its former shadow-critic role is retired. The Quarry remains an optional future source of authorised candidate records. Jev neither acquires sources nor advances research.
+
 ## What exists today
 
 Checked against `main` and GitHub on **24 October 2026**. Software tests establish behaviour, not scientific validity or investment value.

@@ -62,8 +62,9 @@ def parser():
     x = sub.add_parser('adversarial', help='freeze one selective adversarial request for a subject')
     x.add_argument('workspace'); x.add_argument('subject'); x.add_argument('--reason', choices=Q.SELECTION, required=True); x.add_argument('--note', default='')
     x = sub.add_parser('recommend', help='write the next deterministic recommendation file'); x.add_argument('workspace')
-    x = sub.add_parser('jev-compare', help='shadow-only comparison of archived Jev answers with the critics')
+    x = sub.add_parser('jev-compare', help='LEGACY_RETIRED: archived Jev/critic comparison, explicit historical replay only')
     x.add_argument('workspace'); x.add_argument('--store', action='append', required=True, metavar='NAME=PATH')
+    x.add_argument('--legacy-replay', action='store_true', help='acknowledge historical replay only; never a candidate future Jev role')
     x = sub.add_parser('anchor-packet', help='blinded packet for independent human anchors (no AI or Jev output)')
     x.add_argument('workspace'); x.add_argument('--salt-file', required=True); x.add_argument('--out', required=True)
     x = sub.add_parser('evaluate', help='calibration report; with anchors, against independent human labels')
@@ -86,6 +87,8 @@ def number(value):
 
 
 def dispatch(a):
+    if a.command == 'jev-compare' and not a.legacy_replay:
+        raise S.ScoutError('LEGACY_RETIRED — NOT ACTIVE: Jev is research navigation, not a Forge critic. Historical comparison requires --legacy-replay.')
     if a.command == 'schema':return {'schema': K.OUTPUT if a.kind == 'output' else V.ANCHOR}
     if a.command == 'sample-size':
         return {'target': a.target, 'failures_allowed': a.failures, 'required_independent_cases': V.required_n(a.target, .05, a.failures),
@@ -130,7 +133,8 @@ def dispatch(a):
         paths = store_paths(a.store)
         provenance = {k: [input_json(f) for f in sorted((Archive(v).path / 'exports').glob('jev-provenance-e*.json'))] for k, v in paths.items()}
         report = J.compare(ws, {k: Archive(v).load() for k, v in paths.items()}, provenance)
-        return {'file': str(numbered(ws, 'jev', 'JEV', report)), **{k: report[k] for k in ('subjects_compared', 'missing', 'interpretation')}}
+        return {'file': str(numbered(ws, 'jev', 'JEV', report)), **{k: report[k] for k in ('subjects_compared', 'missing', 'interpretation')},
+                'legacy_status': 'LEGACY_RETIRED — NOT ACTIVE', 'historical_replay_only': True, 'authorises': []}
     if a.command == 'anchor-packet':
         packet, key = V.anchor_packet(ws, input_json(a.salt_file)['salt'])
         out = unlinked(a.out); out.mkdir(parents=True, exist_ok=False)

@@ -236,6 +236,9 @@ def import_response(archive, idea_id, version, request_sha256, response_path, by
                     currency=S.UNKNOWN, transport='IMPORTED_NOT_CALLED', now=None):
     """Import a saved response file unchanged and write its provenance record (write-once, operator attestation)."""
     from ..storage import input_json, unlinked
+    # Prospective retirement only: validators, historical replay and human labels stay intact.
+    if transport != 'SYNTHETIC_FIXTURE' or archive.load().batch['fixture'] != 'SYNTHETIC':
+        raise S.ScoutError('LEGACY_RETIRED — NOT ACTIVE: new Jev shadow imports are disabled; synthetic compatibility fixtures only. Use Jev Navigation V001.')
     if not isinstance(by, str) or not by.strip() or ASSISTANT.search(by):raise S.ScoutError('the attestation is a named human operator, not an assistant or model')
     response = input_json(response_path); raw = unlinked(response_path).read_bytes()  # bytes hashed as stored; the file is never written
     if digest(S.json_loads(raw.decode('utf-8'))) != digest(response):raise S.ScoutError('the response file changed while it was being read')
