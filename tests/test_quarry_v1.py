@@ -137,6 +137,21 @@ class QuarryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'byte range'):
             E.export(self.custody, self.root / 'inspection.json', self.root / 'subject.json', self.root / 'export')
 
+    def test_human_passport_and_manifest_membership_are_rederived(self):
+        out = self.handoff()
+        human = io.json_file(out / 'human-inspection.json')
+        human['source_passport']['locator'] = 'https://wrong.example.org/unrelated'
+        (out / 'human-inspection.json').write_bytes(canonical(human))
+        manifest = io.json_file(out / 'manifest.json')
+        manifest['files']['human-inspection.json'] = io.sha(io.read(out / 'human-inspection.json'))
+        (out / 'manifest.json').write_bytes(canonical(manifest))
+        with self.assertRaisesRegex(ValueError, 'passport metadata changed'):
+            E.validate_export(out)
+        del manifest['files']['human-inspection.json']
+        (out / 'manifest.json').write_bytes(canonical(manifest))
+        with self.assertRaisesRegex(ValueError, 'export files'):
+            E.validate_export(out)
+
     def test_binary_original_with_explicit_unverified_text_extraction(self):
         (self.root / 'binary.pdf').write_bytes(b'%PDF-fixture-not-real\x00\xff')
         self.ingest('binary.pdf')
