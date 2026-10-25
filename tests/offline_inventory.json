@@ -319,6 +319,21 @@
       "HardeningTests.test_identical_configuration_reuses_one_successful_preflight"
     ]
   },
+  "tests/opportunity_scout/test_scan_v001.py": {
+    "baseline_ci": true,
+    "runner": "scout",
+    "reason": "Opportunity Scout scan V001 operator command: offline, reusing the pipeline fixtures (fake Claude CLI with administrative commands, fake Codex JSONL and bounded admin path, fake Gemini transport, SYNTHETIC FIXTURE critic answers) in temporary directories; socket and process creation denied; no credential, account directory or real archive. Development-account file changes are simulated inside the temporary home.",
+    "declared_tests": [
+      "ScanTests.test_blockers_stop_before_anything_is_claimed",
+      "ScanTests.test_check_starts_only_administrative_commands_and_summarises_the_exact_plan",
+      "ScanTests.test_configuration_holds_no_secret_and_needs_a_named_human",
+      "ScanTests.test_confirmed_run_authorises_with_the_owner_and_actual_time_then_runs_once",
+      "ScanTests.test_each_scan_gets_a_new_plan_and_never_overwrites",
+      "ScanTests.test_existing_plan_like_pilot_002_runs_unchanged",
+      "ScanTests.test_generation_budget_risk_is_reported_and_frozen_boundaries_hold",
+      "ScanTests.test_wrong_or_missing_confirmation_starts_nothing"
+    ]
+  },
   "tests/opportunity_scout/test_scout.py": {
     "baseline_ci": true,
     "runner": "scout",
