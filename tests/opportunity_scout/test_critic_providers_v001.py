@@ -8,8 +8,9 @@ import urllib.parse
 import urllib.request
 import urllib.response
 
-from src.research.opportunity_scout import schema as S
-from src.research.opportunity_scout.automation_v001 import providers as V
+from src.research.opportunity_scout import claude_subscription as CS, schema as S
+from src.research.opportunity_scout.automation_v001 import credentials as CR, providers as V
+from src.research.opportunity_scout.storage import ROOT
 
 REPLY = 'Preface.\n\n```json\n{"schema": "SCOUT_CRITIC_OUTPUT_V002"}\n```\n'
 MODEL = 'gpt-6-sol'
@@ -216,3 +217,70 @@ class RoleTests(unittest.TestCase):
                {**gemini, 'prices': {}}, {**gemini, 'api_key_env': 'AIza-not-a-variable-name'}, {'provider': 'BROWSER'}]
         for role in bad:
             with self.subTest(role=role), self.assertRaises(S.ScoutError):V.validate_role(role)
+
+
+# Fictional credential shapes, assembled at runtime so no key-shaped literal is committed.
+FAKE_JWT = '.'.join(['eyJhbGciOiJIUzI1NiJ9', 'eyJzdWIiOiJmaWN0aW9uYWwifQ', 'FICTIONALsignature'])
+FAKE_GOOGLE = 'AIza' + 'FICTIONALfictional_key-' + 'x' * 12
+FAKE_OPENAI = 'sk-' + 'proj-' + 'FICTIONALfictionalFICTIONAL'
+PROSE = ('The cost bearer remains the contractor.', 'An identifiable economic bearer exists that could in principle be linked.',
+         'No bearer of the consequence could be linked to any investable exposure.', 'The risk-bearer counter-intuitively shifts.',
+         'The economic bearer UNKNOWN in the card.', 'BEARER OF RISK: the processor', 'the final\tbearer\nremains unclear',
+         'Bearers of cost vary.', 'Authorization: the owner must approve it.', 'Authorisation: PENDING_APPROVAL.')
+
+
+class CredentialScreenTests(unittest.TestCase):
+    """Screen V002 (Forge Pilot 001 correction): ordinary prose about economic bearers passes; credentials still fail."""
+    def gemini(self, text):return V.gemini_review(200, gemini_body(text=REPLY + text), 'gemini-4-argon', PRICES)
+
+    def test_economic_bearer_prose_and_the_frozen_rubrics_pass_where_v001_rejected_them(self):
+        rubrics = [p.read_text(encoding='utf-8') for p in sorted((ROOT / 'src/research/opportunity_scout/critic_v1/resources').glob('*.md'))]
+        self.assertTrue(any(CS.safe_output(r) != r for r in rubrics))  # the V001 defect: the frozen economic rubric itself matched
+        for text in PROSE + tuple(rubrics):
+            with self.subTest(text=text[:40]):
+                self.assertEqual(CR.screen(text), [])
+                reply, facts = self.gemini(text)
+                self.assertEqual((facts['faults'], facts['credential_screen']), ([], {'version': CR.VERSION, 'categories': []}))
+                self.assertIsNotNone(reply)
+
+    def test_token_shaped_bearer_values_are_credentials_without_requiring_digits(self):
+        cases = ['Bearer abcDEFghiJKL', 'bearer FICTIONALtokenValue', 'BEARER ' + FAKE_JWT, 'Bearer  \tZmljdGlvbmFsLXRva2Vu==',
+                 'bearer\nxyzzyplughfictionalwordtoken', 'Bearer abc123', 'Bearer "QuotedFICTIONALtoken"', 'bearer `ya29.FICTIONAL`',
+                 'the cost-bearer ab/cd+ef', 'BeArEr Abcdefghijklmnopqrstuvwxyz']
+        for text in cases:
+            with self.subTest(text=text):
+                self.assertIn('BEARER_TOKEN', CR.screen(text))
+                reply, facts = self.gemini(text)
+                self.assertIsNone(reply); self.assertIn('CREDENTIAL_LIKE_PATTERN_IN_RAW_RESPONSE', facts['faults'])
+        self.assertFalse(any(c.isdigit() for c in cases[0] + cases[1]))  # flagged without any digit
+
+    def test_authorization_headers_json_credential_keys_and_provider_key_shapes_are_credentials(self):
+        cases = {'Authorization: Basic RklDVElPTkFMOmZpY3Rpb25hbA==': 'AUTHORIZATION_HEADER',
+                 'proxy-authorization:Token FICTIONALtoken42': 'AUTHORIZATION_HEADER',
+                 'AUTHORIZATION: abcDEFfictional': 'AUTHORIZATION_HEADER',
+                 'Authorization: Bearer ' + FAKE_JWT: 'BEARER_TOKEN',
+                 '{"access_token": "x"}': 'CREDENTIAL_JSON_KEY', '{"API_KEY" : 1}': 'CREDENTIAL_JSON_KEY',
+                 '"x-goog-api-key":"y"': 'CREDENTIAL_JSON_KEY', '"Authorization": "z"': 'CREDENTIAL_JSON_KEY',
+                 'token sk-ant-fictional': 'ANTHROPIC_KEY_PREFIX', 'SK-ANT-FICTIONAL': 'ANTHROPIC_KEY_PREFIX',
+                 'key ' + FAKE_OPENAI: 'OPENAI_STYLE_KEY', 'key=' + FAKE_GOOGLE: 'GOOGLE_API_KEY'}
+        for text, label in cases.items():
+            with self.subTest(label=label, text=text[:30]):
+                self.assertIn(label, CR.screen(text))
+                self.assertIn('CREDENTIAL_LIKE_PATTERN_IN_RAW_RESPONSE', self.gemini(text)[1]['faults'])
+        for text in ('a task-based desk review', 'the AIza prefix alone', 'Authorization: Basic', 'the "authorisation": field'):
+            with self.subTest(benign=text):self.assertEqual(CR.screen(text), [])
+
+    def test_json_escaped_values_are_screened_decoded_and_records_never_hold_a_value(self):
+        escaped = gemini_body(text=REPLY + 'Echoed config {"api_key": "FICTIONALvalue"}')
+        self.assertNotIn(b'"api_key":', escaped)  # only its JSON-escaped form is in the raw body
+        reply, facts = V.gemini_review(200, escaped, 'gemini-4-argon', PRICES)
+        self.assertIsNone(reply); self.assertEqual(facts['credential_screen']['categories'], ['CREDENTIAL_JSON_KEY'])
+        secret = 'FICTIONALtokenNeverRecorded'
+        for facts in (self.gemini('Bearer ' + secret)[1],
+                      V.codex_review(codex_stream(items=[{'id': 'm', 'type': 'agent_message', 'text': REPLY + 'Bearer ' + secret}]),
+                                     b'', 0, False, MODEL, accept_requested_identity=True)[1]):
+            self.assertEqual(facts['credential_screen'], {'version': CR.VERSION, 'categories': ['BEARER_TOKEN']})
+            self.assertNotIn(secret, json.dumps(facts))
+        deep = ('[' * 5000) + (']' * 5000)  # nesting beyond the JSON parser's limit is screened raw, never a crash
+        self.assertEqual(CR.screen(deep), [])
+        self.assertEqual(CR.screen(json.dumps({'a': [[[{'b': 'Bearer ' + secret}]]]})), ['BEARER_TOKEN'])
