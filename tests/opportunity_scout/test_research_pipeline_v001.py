@@ -8,6 +8,7 @@ import http.client
 import io
 import json
 from pathlib import Path
+import shutil
 import socket
 import subprocess
 import unittest
@@ -429,8 +430,12 @@ class FinalisationTests(Base):
         self.assertEqual((receipt['schema'], receipt['stages']['REPORT']), (R.RECEIPT_V, 'COMPLETE'))
         self.assertEqual({saved['outcome'], st['outcome'], R.markdown_outcome(ex / 'pipeline-report.md')}, {receipt['outcome']})
         self.assertEqual(saved['stages'], receipt['stages']); self.assertEqual(st['stages'], receipt['stages'])
-        self.assertEqual(st['finalisation'], {'state': 'BOUND', 'report_files': 'PRESENT', 'saved_report_outcome': receipt['outcome'],
-                                              'markdown_outcome': receipt['outcome'], 'receipt_outcome': receipt['outcome'], 'consistent': True})
+        f = st['finalisation']
+        self.assertEqual({k: f[k] for k in ('state', 'receipt', 'report_files', 'saved_report_outcome', 'markdown_outcome', 'receipt_outcome', 'consistent')},
+                         {'state': 'VERIFIED', 'receipt': 'PRESENT', 'report_files': 'PRESENT', 'saved_report_outcome': receipt['outcome'],
+                          'markdown_outcome': receipt['outcome'], 'receipt_outcome': receipt['outcome'], 'consistent': True})
+        self.assertEqual(set(f['checks'].values()), {'MATCH'})
+        self.assertTrue({*R.REPORT_FILES, 'pipeline-execution.json', 'REPORT stage hashes', *(f'stage {s}' for s in R.STAGES)} <= set(f['checks']))
         self.assertEqual(receipt['report_sha256'], {n: R.file_facts(ex / n)['sha256'] for n in R.REPORT_FILES})
         self.assertEqual(R.build(self.store), saved)  # the live read-only report renders exactly the committed one
         self.assertEqual(R.markdown(R.build(self.store)), md)
@@ -479,6 +484,52 @@ class FinalisationTests(Base):
                 self.assertEqual(R.build(self.store)['outcome'], R.UNFINISHED)
                 self.assertIn(R.COMMIT_RULE, json.loads((ex / 'pipeline-report.json').read_text(encoding='utf-8'))['commit_rule'])
                 with self.assertRaises(S.ScoutError):R.run(self.store, auth, host=self.pipe)  # never resumed
+
+    def test_every_receipt_bound_artifact_is_verified_and_no_change_or_absence_reads_as_consistent(self):
+        receipt = self.execute(); self.assert_finalised(receipt)
+        source = self.store
+        def rewrite_json(rel, change):
+            def apply(ex):
+                v = json.loads((ex / rel).read_text(encoding='utf-8')); change(v)
+                (ex / rel).write_text(json.dumps(v), encoding='utf-8')
+            return apply
+        def append(rel):return lambda ex: (ex / rel).write_bytes((ex / rel).read_bytes() + b' ')
+        def remove(rel):return lambda ex: (ex / rel).unlink()
+        def corrupt(rel):return lambda ex: (ex / rel).write_bytes(b'{not json')
+        stage = 'pipeline-stage-REPORT.json'
+        cases = {  # mutation -> (state, the check that must name it)
+            'report JSON changed': (append('pipeline-report.json'), 'MISMATCH', 'pipeline-report.json'),
+            'report JSON removed': (remove('pipeline-report.json'), 'UNVERIFIED', 'pipeline-report.json'),
+            'report Markdown changed': (append('pipeline-report.md'), 'MISMATCH', 'pipeline-report.md'),
+            'report Markdown removed': (remove('pipeline-report.md'), 'UNVERIFIED', 'pipeline-report.md'),
+            'execution record changed': (append('pipeline-execution.json'), 'MISMATCH', 'pipeline-execution.json'),
+            'execution record removed': (remove('pipeline-execution.json'), 'UNVERIFIED', 'pipeline-execution.json'),
+            'receipt execution hash changed': (rewrite_json('pipeline-receipt.json', lambda v: v.update(execution_sha256='0' * 64)), 'MISMATCH', 'pipeline-execution.json'),
+            'receipt execution hash missing': (rewrite_json('pipeline-receipt.json', lambda v: v.pop('execution_sha256')), 'MISMATCH', 'pipeline-execution.json'),
+            'REPORT stage hash changed': (rewrite_json(stage, lambda v: v['sha256'].update({'pipeline-report.md': '0' * 64})), 'MISMATCH', 'REPORT stage hashes'),
+            'REPORT stage removed': (remove(stage), 'UNVERIFIED', 'REPORT stage hashes'),
+            'REPORT stage unreadable': (corrupt(stage), 'UNVERIFIED', 'REPORT stage hashes'),
+            'stage status changed': (rewrite_json('pipeline-stage-FIRST_PASS_CRITICS.json', lambda v: v.update(status='INCOMPLETE')), 'MISMATCH', 'stage FIRST_PASS_CRITICS'),
+            'stage record removed': (remove('pipeline-stage-RECOMMENDATION.json'), 'UNVERIFIED', 'stage RECOMMENDATION'),
+            'stage record unreadable': (corrupt('pipeline-stage-GENERATION.json'), 'UNVERIFIED', 'stage GENERATION'),
+            'receipt stage contradicts records': (rewrite_json('pipeline-receipt.json', lambda v: v['stages'].update(RECOMMENDATION='ERROR')), 'MISMATCH', 'stage RECOMMENDATION'),
+            'receipt stage set changed': (rewrite_json('pipeline-receipt.json', lambda v: v['stages'].pop('REPORT')), 'MISMATCH', 'receipt stage set'),
+            'receipt report binding changed': (rewrite_json('pipeline-receipt.json', lambda v: v['report_sha256'].update({'pipeline-report.json': 'x'})), 'MISMATCH', 'pipeline-report.json'),
+            'receipt unreadable': (corrupt('pipeline-receipt.json'), 'UNVERIFIED', 'receipt'),
+        }
+        for name, (mutate, state, check) in cases.items():
+            with self.subTest(mutation=name):
+                self.store = self.base / ('fixture-' + name.replace(' ', '-'))
+                shutil.copytree(source, self.store)  # an isolated synthetic copy; the source run is never touched
+                ex = self.store / 'exports'; mutate(ex)
+                before = {p.name: p.read_bytes() for p in ex.iterdir()}
+                st = R.status(self.store)
+                f = st['finalisation']
+                self.assertEqual((f['state'], f['consistent']), (state, False))
+                self.assertNotEqual(f['checks'][check], 'MATCH')  # the changed or missing artifact is named
+                self.assertTrue(st['finished'])  # the receipt file exists: finished, but not verified
+                self.assertEqual({p.name: p.read_bytes() for p in ex.iterdir()}, before)  # read-only: nothing repaired
+        self.store = source; self.assert_finalised(receipt)  # the unmutated run still verifies
 
     def test_a_v001_receipt_and_report_are_read_as_legacy_and_never_rewritten(self):
         self.execute(); ex = self.store / 'exports'

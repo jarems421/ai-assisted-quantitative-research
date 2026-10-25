@@ -277,7 +277,7 @@
   "tests/opportunity_scout/test_research_pipeline_v001.py": {
     "baseline_ci": true,
     "runner": "scout",
-    "reason": "Research OS pipeline V001: offline end-to-end with fake Claude CLI, fake Codex JSONL and administrative commands through the bounded admin path, fake Gemini transport (and an in-process fake HTTPS origin handler) and SYNTHETIC FIXTURE critic answers in temporary directories; socket and process creation denied; no credential or account directory. Finalisation V002 tests crash only through patched in-process record writes; execution provenance reads fictional .git metadata files under a temporary directory and the checkout's own metadata, never launching git.",
+    "reason": "Research OS pipeline V001: offline end-to-end with fake Claude CLI, fake Codex JSONL and administrative commands through the bounded admin path, fake Gemini transport (and an in-process fake HTTPS origin handler) and SYNTHETIC FIXTURE critic answers in temporary directories; socket and process creation denied; no credential or account directory. Finalisation V002 tests crash only through patched in-process record writes; execution provenance reads fictional .git metadata files under a temporary directory and the checkout's own metadata, never launching git. Finalisation verification tests mutate copies of a synthetic run under the temporary directory only.",
     "declared_tests": [
       "BoundaryTests.test_a_redirect_never_carries_the_key_off_the_documented_host",
       "BoundaryTests.test_api_key_login_and_unattested_billing_stop_before_dispatch",
@@ -301,6 +301,7 @@
       "FinalisationTests.test_a_v001_receipt_and_report_are_read_as_legacy_and_never_rewritten",
       "FinalisationTests.test_complete_run_report_files_receipt_and_status_agree",
       "FinalisationTests.test_economic_bearer_prose_critique_is_imported_end_to_end",
+      "FinalisationTests.test_every_receipt_bound_artifact_is_verified_and_no_change_or_absence_reads_as_consistent",
       "FinalisationTests.test_execution_provenance_is_recorded_from_files_before_any_process_and_bound_by_the_receipt",
       "FinalisationTests.test_generation_failure_is_finalised_with_the_same_outcome_everywhere",
       "FinalisationTests.test_git_revision_is_read_from_metadata_files_and_unknown_is_never_inferred",

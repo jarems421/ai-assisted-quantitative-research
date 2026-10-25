@@ -506,11 +506,14 @@ def accounting(store):
 def status(store):
     """Files only: never invokes a model or a CLI."""
     archive = Archive(store); ex = archive.path / 'exports'
-    claimed, receipt = (ex / 'pipeline-claim.json').is_file(), read(ex / 'pipeline-receipt.json')
+    claimed, finished = (ex / 'pipeline-claim.json').is_file(), (ex / 'pipeline-receipt.json').is_file()
+    receipt = tolerant(ex / 'pipeline-receipt.json')  # a finished run whose receipt is unreadable is reported, never a crash
     names = sorted(x.name for x in ex.glob('pipeline-*')) if ex.is_dir() else []
-    return {'planned': (ex / 'pipeline-plan.json').is_file(), 'claimed': claimed, 'finished': receipt is not None,
-            'interrupted': claimed and receipt is None, 'outcome': receipt['outcome'] if receipt else ('NOT_STARTED' if not claimed else 'INTERRUPTED'),
-            'stages': {s: stage_status(archive.path, s) for s in STAGES},
+    outcome = (receipt.get('outcome', S.UNKNOWN) if isinstance(receipt, dict) else 'RECEIPT_UNREADABLE') if finished \
+        else ('NOT_STARTED' if not claimed else 'INTERRUPTED')
+    return {'planned': (ex / 'pipeline-plan.json').is_file(), 'claimed': claimed, 'finished': finished,
+            'interrupted': claimed and not finished, 'outcome': outcome,
+            'stages': {s: recorded_stage(ex, s)[0] for s in STAGES},
             'critic_claims': sum(n.startswith('pipeline-claim-CRQ-') for n in names),
             'critic_records': sum(n.startswith('pipeline-critic-') for n in names), 'accounting': accounting(store),
             'finalisation': finalisation(ex, receipt), 'execution': execution_summary(ex),
@@ -526,21 +529,62 @@ def markdown_outcome(path):
     return m.group(1) if m else None
 
 
+def recorded_stage(ex, name):
+    """(status, record) of one persisted stage: NOT_RECORDED when absent, UNREADABLE when it cannot be read."""
+    path = ex / f'pipeline-stage-{name}.json'
+    if not path.is_file():return 'NOT_RECORDED', None
+    rec = tolerant(path)
+    return (rec['status'], rec) if isinstance(rec, dict) and isinstance(rec.get('status'), str) else ('UNREADABLE', None)
+
+
+def hash_check(path, expected):
+    """MATCH, MISMATCH (changed, or the binding itself is malformed), ABSENT or UNREADABLE."""
+    if not path.is_file():return 'ABSENT'
+    try:actual = file_facts(path)['sha256']
+    except OSError:return 'UNREADABLE'
+    return 'MATCH' if isinstance(expected, str) and E.HEX.fullmatch(expected) and actual == expected else 'MISMATCH'
+
+
 def finalisation(ex, receipt):
-    """Whether the saved report files are committed by the receipt and agree with it. Read-only; nothing is repaired.
-    BOUND/MISMATCH need a V002 receipt; a V001 receipt binds no report (LEGACY_RECEIPT_UNBOUND), and V001 reports
-    were rendered before their receipt, so they disagree with it (Forge Pilot 001)."""
+    """Read-only verification of a finished run against everything its receipt binds; nothing is repaired.
+
+    A V002 receipt binds both report files, ``pipeline-execution.json``, the REPORT stage's hash record and every
+    stage status. Each is checked separately (MATCH, MISMATCH, ABSENT or UNREADABLE), and so is the saved report's
+    own outcome and stages. VERIFIED needs every check to MATCH; any MISMATCH is MISMATCH; otherwise UNVERIFIED.
+    Only VERIFIED is consistent: a receipt that merely exists is a finished run, not a verified one. A V001 receipt
+    binds nothing (LEGACY_RECEIPT_UNBOUND, never consistent; Forge Pilot 001's report also disagrees with it)."""
     present = [n for n in REPORT_FILES if (ex / n).is_file()]
-    if receipt is None:return {'state': 'NOT_FINALISED', 'report_files': 'UNCOMMITTED' if present else 'ABSENT', 'consistent': False}
+    files = 'PRESENT' if len(present) == len(REPORT_FILES) else 'INCOMPLETE'
+    if not (ex / 'pipeline-receipt.json').is_file():
+        return {'state': 'NOT_FINALISED', 'report_files': 'UNCOMMITTED' if present else 'ABSENT', 'consistent': False}
+    if not isinstance(receipt, dict):
+        return {'state': 'UNVERIFIED', 'receipt': 'UNREADABLE', 'report_files': files, 'checks': {'receipt': 'UNREADABLE'}, 'consistent': False}
+    saved, md = tolerant(ex / 'pipeline-report.json'), markdown_outcome(ex / 'pipeline-report.md')
+    summary = {'saved_report_outcome': saved.get('outcome', S.UNKNOWN) if isinstance(saved, dict) else S.UNKNOWN,
+               'markdown_outcome': md or S.UNKNOWN, 'receipt_outcome': receipt.get('outcome', S.UNKNOWN)}
     bound = receipt.get('report_sha256')
-    if isinstance(bound, dict):state = 'BOUND' if {n: file_facts(ex / n)['sha256'] for n in REPORT_FILES} == bound else 'MISMATCH'
-    else:state = 'LEGACY_RECEIPT_UNBOUND'
-    saved = tolerant(ex / 'pipeline-report.json') or {}
-    md = markdown_outcome(ex / 'pipeline-report.md')
-    agree = saved.get('outcome') == md == receipt.get('outcome') and saved.get('stages') == receipt.get('stages')
-    return {'state': state, 'report_files': 'PRESENT' if len(present) == len(REPORT_FILES) else 'INCOMPLETE',
-            'saved_report_outcome': saved.get('outcome', S.UNKNOWN), 'markdown_outcome': md or S.UNKNOWN,
-            'receipt_outcome': receipt.get('outcome', S.UNKNOWN), 'consistent': agree and state != 'MISMATCH'}
+    if not isinstance(bound, dict):
+        return {'state': 'LEGACY_RECEIPT_UNBOUND', 'receipt': 'PRESENT', 'report_files': files, **summary, 'consistent': False}
+    checks = {'receipt report binding': 'MATCH' if set(bound) == set(REPORT_FILES) else 'MISMATCH'}
+    checks.update({n: hash_check(ex / n, bound.get(n)) for n in REPORT_FILES})
+    checks['pipeline-execution.json'] = hash_check(ex / 'pipeline-execution.json', receipt.get('execution_sha256'))
+    status, rec = recorded_stage(ex, 'REPORT')
+    checks['REPORT stage hashes'] = ('ABSENT' if status == 'NOT_RECORDED' else status) if rec is None else \
+        'MATCH' if rec.get('sha256') == bound and rec.get('files') == list(REPORT_FILES) else 'MISMATCH'
+    stages = receipt.get('stages') if isinstance(receipt.get('stages'), dict) else {}
+    checks['receipt stage set'] = 'MATCH' if set(stages) == set(STAGES) else 'MISMATCH'
+    for s in STAGES:
+        status = recorded_stage(ex, s)[0]
+        checks[f'stage {s}'] = 'UNREADABLE' if status == 'UNREADABLE' else 'MATCH' if status == stages.get(s) else \
+            'ABSENT' if status == 'NOT_RECORDED' else 'MISMATCH'
+    if not isinstance(saved, dict) or md is None:
+        checks['saved report content'] = 'ABSENT' if len(present) < len(REPORT_FILES) else 'UNREADABLE'
+    else:
+        checks['saved report content'] = 'MATCH' if saved.get('outcome') == md == receipt.get('outcome') \
+            and saved.get('stages') == stages else 'MISMATCH'
+    values = set(checks.values())
+    state = 'VERIFIED' if values == {'MATCH'} else 'MISMATCH' if 'MISMATCH' in values else 'UNVERIFIED'
+    return {'state': state, 'receipt': 'PRESENT', 'report_files': files, 'checks': checks, **summary, 'consistent': state == 'VERIFIED'}
 
 
 def execution_summary(ex):

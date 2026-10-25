@@ -320,9 +320,24 @@ develop or test them.
 - *Order now.* The report files are written first, with the decided outcome. Then the REPORT stage is written with
   their hashes. Last comes the receipt, which binds both files and the execution record. The receipt is the commit
   marker, and each report states it is final only when the receipt binds it.
-- *Status.* `status.finalisation` reports one of: `BOUND`, `MISMATCH`, `NOT_FINALISED` (report files `UNCOMMITTED`
-  after a crash), or `LEGACY_RECEIPT_UNBOUND` (V001; Pilot 001 also shows `consistent: false`). After a finished V002
-  run, a live `report` equals the committed one.
+- *Verification.* `status.finalisation` re-checks, read-only, everything a V002 receipt binds:
+  - both report files' hashes;
+  - `pipeline-execution.json` against `execution_sha256`;
+  - the REPORT stage's hash record;
+  - every persisted stage status against the receipt;
+  - the saved report's own outcome and stages.
+
+  Each check is `MATCH`, `MISMATCH`, `ABSENT` or `UNREADABLE`. The state is:
+  - `VERIFIED` when all checks match;
+  - `MISMATCH` when any check is a mismatch;
+  - otherwise `UNVERIFIED` (including an unreadable receipt).
+
+  Only `VERIFIED` is `consistent: true`. A receipt that merely exists means the run finished, not that it is
+  verified. The other states are:
+  - `NOT_FINALISED`, after a crash (any report files are `UNCOMMITTED`);
+  - `LEGACY_RECEIPT_UNBOUND`, for a V001 run. Pilot 001 also shows `consistent: false`.
+
+  Nothing is repaired. After a finished V002 run, a live `report` equals the committed one.
 
 **Execution provenance V001** (`automation_v001/execution.py`).
 - *What is recorded.* `pipeline-execution.json` is written right after the claim and before any process. It holds:
