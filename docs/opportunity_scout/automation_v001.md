@@ -93,7 +93,8 @@ codex exec --json --ephemeral --ignore-user-config --ignore-rules --skip-git-rep
   reported usage is recorded **as an estimate, never a charge**.
 - **Review.** HTTP 200; one candidate with `finishReason: STOP`; text parts only (any function call, code, inline
   data or thought part is a fault); `modelVersion` equal to, or a dated version of, the requested model;
-  integer usage. A prompt block or HTTP 402/429 is a fault. A missing thinking count is UNKNOWN, never zero.
+  integer usage. A prompt block or HTTP 402/429 is a fault. A missing thinking count is UNKNOWN, never zero. The
+  raw body passes credential screen V002 (see Forge Pilot 001 corrections).
 - **Data use.** Paid-tier content is documented as not used to improve Google's products. Free-tier content is. The
   free-tier models are different Flash models, so they would be a substitution and are not offered.
 
@@ -291,3 +292,61 @@ transport and `SYNTHETIC FIXTURE` critic answers, with socket and process creati
    strict stream profile will first meet a real CLI on the first authorised run.
 4. **Owner approvals.** Hosted transmission of unpublished cards to OpenAI and Google, the spend cap, and the
    authorisation file itself.
+
+## Forge Pilot 001 corrections (prospective, 2026-10-25)
+
+Forge Pilot 001 (`.research/opportunity_scout/forge-live-pilot-001`, private) is complete and immutable. Its records,
+including the economic `PROVIDER_FAULT` for `CRQ-952b880443c8b5c3` and its V001 report, are never rewritten,
+regenerated or re-imported. The changes below apply only to runs made after them. No live model call was made to
+develop or test them.
+
+**Credential screen V002** (`automation_v001/credentials.py`; providers `SCOUT_CRITIC_PROVIDERS_V002`).
+- *Defect.* V001 adapters used `claude_subscription.safe_output`, whose `Bearer\s+\S+` fires on any word after
+  "bearer". The frozen economic rubric itself says "an identifiable economic bearer exists", so ordinary critique
+  prose was a credential fault. A local, value-free diagnostic located Pilot 001's single match in the reply's prose.
+- *Rule.* After "bearer" (any case) or an `Authorization:` header, a value in the RFC 6750 token alphabet is a
+  credential at 20+ characters, or at 6+ unless it is a plain word, hyphenated compound or all-capitals label. Digits
+  are not required. `sk-ant-` and the credential JSON keys are kept. OpenAI- and Google-shaped keys are added, and so
+  are `id_token`, `apikey`, `client_secret` and `x-goog-api-key`.
+- *Scope.* Raw bytes and every decoded JSON string are screened, so a JSON-escaped value is caught too.
+- *Records.* Every critic record carries `credential_screen: {version, categories}`. These are labels only, never a
+  value.
+- *Accepted gap.* A real 6–19 character token spelt like an ordinary word is not detected.
+- *Unchanged.* `safe_output` itself and the exploratory Claude runner are not changed (they are frozen closures).
+
+**Receipt and report V002** (`SCOUT_RESEARCH_PIPELINE_RECEIPT_V002` / `..._REPORT_V002`).
+- *Defect.* V001 `finish` rendered the report before writing the REPORT stage and receipt. Every finished V001
+  report therefore reads `INTERRUPTED_OR_NOT_FINISHED` with REPORT `NOT_RECORDED`.
+- *Order now.* The report files are written first, with the decided outcome. Then the REPORT stage is written with
+  their hashes. Last comes the receipt, which binds both files and the execution record. The receipt is the commit
+  marker, and each report states it is final only when the receipt binds it.
+- *Verification.* `status.finalisation` re-checks, read-only, everything a V002 receipt binds:
+  - both report files' hashes;
+  - `pipeline-execution.json` against `execution_sha256`;
+  - the REPORT stage's hash record;
+  - every persisted stage status against the receipt;
+  - the saved report's own outcome and stages.
+
+  Each check is `MATCH`, `MISMATCH`, `ABSENT` or `UNREADABLE`. The state is:
+  - `VERIFIED` when all checks match;
+  - `MISMATCH` when any check is a mismatch;
+  - otherwise `UNVERIFIED` (including an unreadable receipt).
+
+  Only `VERIFIED` is `consistent: true`. A receipt that merely exists means the run finished, not that it is
+  verified. The other states are:
+  - `NOT_FINALISED`, after a crash (any report files are `UNCOMMITTED`);
+  - `LEGACY_RECEIPT_UNBOUND`, for a V001 run. Pilot 001 also shows `consistent: false`.
+
+  Nothing is repaired. After a finished V002 run, a live `report` equals the committed one.
+
+**Execution provenance V001** (`automation_v001/execution.py`).
+- *What is recorded.* `pipeline-execution.json` is written right after the claim and before any process. It holds:
+  - HEAD, read from the `.git` / `gitdir` / `commondir` / ref / `packed-refs` files, with no git process launched;
+  - the CRLF-normalised hash of every file in the static `src.*` import closure of `automation_v001` (relative
+    imports included), with their digest;
+  - the Python runtime;
+  - the Scout batch `base_commit`, labelled as a historical constant, not the executing revision.
+- *Worktree cleanliness* is always `UNKNOWN`: establishing it needs the index and object store.
+- *Failures.* Unreadable metadata is `UNKNOWN` with a reason, and a failure never blocks a run.
+- *Unchanged.* Plans and authorisations, critic texts (still pinned by `critic_resources_sha256`) and every frozen
+  Scout contract are unchanged.
