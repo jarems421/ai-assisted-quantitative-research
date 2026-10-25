@@ -2007,5 +2007,68 @@
       "IntegrationTests.test_wrong_question_unknown_fields_and_invalid_usage_refused",
       "IntegrationTests.test_yes_no_unsure_and_tied_maximum_remain_distinct"
     ]
+  },
+  "tests/test_research_operator_v1.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Research OS operator V001 on SYNTHETIC fixtures: temporary Scout archives, fictional Quarry inputs, synthetic Discovery ledgers and crosswalk fixtures in the scratch directory; delegated components run in-process under the operator boundary. Covers stale handoffs, admission without a current handoff, original drift before continue, plan eligibility, command-argument limits, Forge-to-Anvil binding, preflight, implementation drift, changed inputs and boundary violations. Git metadata reads are patched; no network, process, model, credential, human judgment or private archive.",
+    "declared_tests": [
+      "OperatorTests.test_boundary_denies_network_processes_credentials_and_foreign_writes",
+      "OperatorTests.test_boundary_violation_leaves_a_truthful_readable_status",
+      "OperatorTests.test_changed_feasibility_refuses_the_old_export",
+      "OperatorTests.test_changed_original_critic_workspace_blocks_continue_before_research_stages",
+      "OperatorTests.test_changed_original_scout_ledger_blocks_continue_before_research_stages",
+      "OperatorTests.test_changed_run_artifact_fails_the_stage_without_crashing_the_invocation",
+      "OperatorTests.test_cli_plan_status_and_refusals",
+      "OperatorTests.test_complete_synthetic_chain_stops_at_human_gates",
+      "OperatorTests.test_continue_never_replays_one_shot_stages",
+      "OperatorTests.test_discovery_writes_are_limited_to_the_synthetic_preview",
+      "OperatorTests.test_draft_mapping_never_removes_a_mechanical_blocker",
+      "OperatorTests.test_failed_preflight_prevents_custody_and_every_research_stage",
+      "OperatorTests.test_implementation_drift_blocks_continue_until_explicit_acceptance",
+      "OperatorTests.test_input_changed_after_its_hash_was_recorded_is_never_consumed",
+      "OperatorTests.test_interrupted_one_shot_stage_is_never_retried",
+      "OperatorTests.test_journal_tamper_and_lock_are_refused",
+      "OperatorTests.test_missing_input_and_invalid_evidence_fabricate_nothing",
+      "OperatorTests.test_missing_referenced_run_artifact_fails_closed",
+      "OperatorTests.test_observation_first_preview_refusal_is_preserved",
+      "OperatorTests.test_only_permitted_component_commands_are_callable",
+      "OperatorTests.test_original_archive_unchanged_and_working_copy_byte_identical",
+      "OperatorTests.test_plan_lists_cards_when_no_idea_is_named",
+      "OperatorTests.test_plan_separates_a_recorded_ready_review_from_current_handoff_eligibility",
+      "OperatorTests.test_refused_handoff_is_preserved_without_any_human_record",
+      "OperatorTests.test_report_is_deterministic_from_retained_records",
+      "OperatorTests.test_stale_export_that_differs_from_current_authority_is_never_used",
+      "OperatorTests.test_supplied_ledger_needs_a_human_crosswalk_to_the_forge_card",
+      "OperatorTests.test_synthetic_approval_is_never_promoted_to_a_human_decision",
+      "OperatorTests.test_unready_card_never_links_a_supplied_ledger_even_with_a_valid_crosswalk",
+      "OperatorTests.test_unrelated_candidate_is_unlinked_and_a_wrong_crosswalk_is_refused",
+      "OperatorTests.test_withdrawn_ready_review_refuses_the_old_export"
+    ]
+  },
+  "tests/test_research_operator_v1_pilot001.py": {
+    "baseline_ci": false,
+    "runner": "excluded",
+    "reason": "Developer-local only: needs the private Forge Pilot 001 archive and critic workspace named by RESEARCH_OS_PILOT001_ARCHIVE (outside the checkout); the module skips without it. Read-and-hash only on the original, run workspace in a temporary directory; no network, process, model or human judgment.",
+    "declared_tests": [
+      "Pilot001HypothesisBTests.test_f1_copy_validates_as_hypothesis_b_v1",
+      "Pilot001HypothesisBTests.test_f1_criticism_is_reported_without_an_economic_judgment",
+      "Pilot001HypothesisBTests.test_f1d_legacy_pipeline_receipt_is_never_verified",
+      "Pilot001HypothesisBTests.test_f2_f3_v1_ready_refusal_is_preserved",
+      "Pilot001HypothesisBTests.test_g0_original_archive_and_critic_workspace_unchanged",
+      "Pilot001HypothesisBTests.test_meaningful_blocked_state_deterministic_report_and_no_replay",
+      "Pilot001HypothesisBTests.test_no_request_model_call_or_promotion",
+      "Pilot001HypothesisBTests.test_r1_r2_armoury_retrieval"
+    ]
+  },
+  "tests/test_research_operator_v1_links.py": {
+    "baseline_ci": false,
+    "runner": "public",
+    "reason": "Research OS operator V001 link adversarial cases: a junction (Windows) or symlink (POSIX) created inside a temporary run directory must stop preflight and never redirect a write. In the public runner because the restricted runner denies link creation itself. Synthetic fixtures only; no network, process, model or human judgment.",
+    "declared_tests": [
+      "LinkTests.test_boundary_resolves_links_before_allowing_a_write",
+      "LinkTests.test_link_added_after_a_run_blocks_continue_and_writes_nothing_through_it",
+      "LinkTests.test_preexisting_link_in_a_run_directory_stops_before_custody"
+    ]
   }
 }

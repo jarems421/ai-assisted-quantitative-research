@@ -1,0 +1,5 @@
+"""Research OS unified research coordinator V001: workflow automation over existing offline stages, never authority."""
+
+VERSION = 'RESEARCH_OS_OPERATOR_V001'
+PROFILE = 'FORGE_TO_ANVIL_OFFLINE_V001'
+BANNER = 'RESEARCH OS OPERATOR - WORKFLOW AUTOMATION ONLY - NO HUMAN JUDGMENT, ACQUISITION, MODEL CALL OR RESEARCH AUTHORITY'

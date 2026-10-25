@@ -133,6 +133,8 @@ python -m src.presentation.exp001 --check
 
 Public checks deny external network/private-data reads; EXP999 uses temporary fake transports. Rebuild this README, tables and figures with `python -m src.presentation.exp001` after editing [the template](src/presentation/README.template.md). Metrics remain generated from canonical records.
 
+The [Research OS operator](docs/research_operator_v001.md) runs the offline Forge → Quarry → Jev → Anvil → Armoury profile on one Forge archive and stops at each human or evidence gate (`python -m src.research.operator plan|run|continue|report`). `python -m src.research.operator demo` shows the whole chain on synthetic fixtures. It automates workflow only: no model calls, acquisition or approvals.
+
 The [offline CI inventory and safety review](docs/offline_ci_hardening.md) documents
 the Windows/Linux verification matrix, exact exclusions and reproducible commands.
 Run `python -m src.research.offline_checks` after installing
@@ -146,6 +148,7 @@ The full suite (`python -m unittest discover -s tests -v`) requires ignored orig
 | Location | Start here for |
 | --- | --- |
 | [Scout](src/research/opportunity_scout/) / [Discovery Lab](src/research/discovery/) / [Graph](src/research/graph/) | Hypothesis discovery, evidence records and derived research memory |
+| [Operator](src/research/operator/) | One offline coordinator that runs the existing stages in order and reports where research stops |
 | [Research controls](src/research/) / [contracts and ledger](src/research/phase3d/) | Specifications, gates, statistical feasibility and synthetic execution |
 | [Metrics](src/metrics/) / [legacy processing](src/nexus/) | Frozen definitions and EXP001 processing |
 | [Experiments](experiments/) / [reports](reports/) / [results](data/processed/) | Frozen artifacts, findings and public data |
