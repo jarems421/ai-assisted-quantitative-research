@@ -11,6 +11,7 @@ from src.research.spec import canonical, digest
 from src.research.jev_navigation_v1 import demo as J, workspace as N
 from src.research.quarry_v1 import io, demo as QD, evidence as Q
 from src.research.jev_navigation_integration_v1 import workspace as W, provider as P, demo as D, evaluation as V
+from src.research.jev_navigation_integration_v1 import quarry as C
 
 
 class IntegrationTests(unittest.TestCase):
@@ -266,6 +267,22 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(result['external_requests']['exact'], 0)
         self.assertFalse(result['ready'])
         self.assertFalse(result['accuracy_established'])
+        self.assertEqual(result['distinct_originals'], 2)
+        collection = C.validate(self.root / 'demo/collection')
+        self.assertEqual(len(collection['bundle']['request']['records']), 4)
+        original = self.root / 'demo/collection/packages/P01/source/original.bin'
+        original.write_bytes(b'changed second original')
+        with self.assertRaisesRegex(ValueError, 'TAMPERED'):
+            C.validate(self.root / 'demo/collection')
+
+    def test_quarry_collection_refuses_duplicate_ids_and_mixed_questions(self):
+        with self.assertRaisesRegex(ValueError, 'IDs must be distinct'):
+            C.compose([self.root / 'handoff', self.root / 'handoff'], self.root / 'bad-collection')
+        subject = io.json_file(self.root / 'subject.json'); subject['question'] = 'Another exact question'
+        (self.root / 'other-subject.json').write_bytes(canonical(subject))
+        Q.export(self.root / 'custody', self.root / 'inspection.json', self.root / 'other-subject.json', self.root / 'other-export')
+        with self.assertRaisesRegex(ValueError, 'same exact question'):
+            C.compose([self.root / 'handoff', self.root / 'other-export'], self.root / 'bad-question-collection')
 
     def test_memory_and_workflow_tasks_reuse_existing_contracts_and_stop_priority(self):
         for name, factory in [('memory', J.memory_input), ('workflow', J.workflow_input)]:

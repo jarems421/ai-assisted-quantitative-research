@@ -20,6 +20,15 @@ versions, stops, restrictions, question definitions, exact payload and implement
 Quarry citations/restrictions stay in the supplied records sent as state; Jev neither
 downloads nor certifies anything. Every report and inspection row has `authorises: []`.
 
+`compose-quarry <export-one> <export-two> ... --out <new-directory>` creates a portable
+bounded collection of explicitly named, validated Quarry exports. It copies every
+original/source package, namespaces artifact paths without changing quotes or hashes,
+and requires the same exact question/classification, distinct excerpt IDs and the
+existing 32-record/request-size bounds. Pass the collection's `input.json` to ordinary
+Jev preparation and its directory to `--quarry-export`. Every load re-derives the entire
+collection, including all citations, restrictions and per-original pending worksheets.
+No directory scan, download or implicit extra source enters the collection.
+
 ## Official API verification
 
 Public documentation was reviewed on 2026-10-25, without calling an authenticated
@@ -149,8 +158,8 @@ relabelled as an independent human holdout or established accuracy.
 
 ## Demonstrations and remaining owner actions
 
-The demo retains a fictional original, an F1 measurement lead, an F2 decoy and an
-ambiguous passage, then exercises the exact provider-shaped payload/raw response with
+The demo retains two separate fictional originals (an order and an independent shipment
+record), an F1 measurement lead, an F2 decoy and an ambiguous passage, then exercises the exact provider-shaped payload/raw response with
 an injected transport. It compares fixed inspection budgets to both baselines, keeps
 the whole queue and abstentions, and leaves the Anvil packet pending. Tests also cover
 contradictory workflow classifications: deterministic HOLD/stops always win. Nothing

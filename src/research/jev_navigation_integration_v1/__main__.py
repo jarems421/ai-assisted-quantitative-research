@@ -10,6 +10,7 @@ def main(argv=None):
     c = sub.add_parser('prepare'); c.add_argument('navigation_workspace'); c.add_argument('--model', required=True)
     c.add_argument('--quarry-export'); c.add_argument('--out', required=True)
     c = sub.add_parser('report'); c.add_argument('workspace')
+    c = sub.add_parser('compose-quarry'); c.add_argument('exports', nargs='+'); c.add_argument('--out', required=True)
     c = sub.add_parser('freeze-evaluation'); c.add_argument('workspace'); c.add_argument('registration')
     c = sub.add_parser('compare'); c.add_argument('workspace'); c.add_argument('labels'); c.add_argument('independence_record')
     c = sub.add_parser('demo'); c.add_argument('--out', required=True)
@@ -19,6 +20,10 @@ def main(argv=None):
             result = W.prepare(a.navigation_workspace, a.out, model=a.model, quarry_export=a.quarry_export)
         elif a.command == 'report':
             result = W.report(a.workspace)
+        elif a.command == 'compose-quarry':
+            from .quarry import compose
+            value = compose(a.exports, a.out)
+            result = {'input': str(value['input']), 'records': len(value['bundle']['request']['records']), 'authorises': []}
         elif a.command == 'freeze-evaluation':
             result = V.freeze(a.workspace, a.registration)
         elif a.command == 'compare':

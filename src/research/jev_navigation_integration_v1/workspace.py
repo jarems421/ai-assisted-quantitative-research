@@ -7,7 +7,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from src.research.spec import canonical, digest
 from src.research.jev_navigation_v1 import contracts as K, navigation as N, workspace as W
-from src.research.quarry_v1 import io, evidence as Q
+from src.research.quarry_v1 import io
+from . import quarry as Q
 from . import provider as P
 
 PLAN = 'JEV_PROVIDER_PLAN_V001'
@@ -38,7 +39,7 @@ def make_plan(navigation_workspace, target, model, quarry_export=None):
     K.need(not (nav / 'response.raw').exists(), 'use a fresh navigation request; historical responses are unchanged')
     quarry = None
     if quarry_export is not None:
-        checked = Q.validate_export(quarry_export)
+        checked = Q.validate(quarry_export)
         K.need(checked['bundle'] == bundle, 'Quarry export must be the exact navigation input')
         quarry = {'path': str(io.safe_path(quarry_export)), 'manifest_sha256': digest(checked['manifest'])}
     request = bundle['request']
