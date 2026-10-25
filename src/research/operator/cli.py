@@ -26,7 +26,7 @@ from . import BANNER, PROFILE, VERSION
 from .guard import offline
 from .journal import Journal, JournalError
 from .report import markdown, render
-from .runs import (DEFAULT_BASE, ROOT, SCOPE, Layout, OperatorError, check_base, create, current_stages, evidence_spec, invoke, ledger_spec,
+from .runs import (DEFAULT_BASE, ROOT, SCOPE, Layout, OperatorError, check_base, create, current_stages, drift, evidence_spec, invoke, ledger_spec,
                    locate, provenance, request_value, stage_state, tree)
 
 SUBJECTS = 'RESEARCH_OS_OPERATOR_SUBJECTS_V001'
@@ -42,7 +42,8 @@ PLAN = [('PREFLIGHT', 'CHECK', 'dependency and location checks'),
         ('JEV_MEMORY', 'ONE_SHOT', 'jev_navigation_v1 MEMORY_NAVIGATOR over the Graph memory catalogue (deterministic)'),
         ('ARMOURY_GRAPH', 'CHECK', 'graph same-gap per card requirement; graph search for explicit terms'),
         ('ANVIL_DRAFTS', 'CHECK', 'draft Discovery candidate and Source Passports with a field-level mapping audit'),
-        ('ANVIL_CHECKS', 'CHECK/ONE_SHOT', 'discovery validate/checklist/source, Jev WORKFLOW_NAVIGATOR, graph trace on a supplied ledger or a synthetic preview'),
+        ('ANVIL_CHECKS', 'CHECK/ONE_SHOT', 'discovery validate/checklist/source, Jev WORKFLOW_NAVIGATOR, graph trace: on a supplied ledger only with a '
+                                            'human crosswalk binding it to the card (else UNLINKED), or on a synthetic preview'),
         ('DOWNSTREAM', 'CHECK', 'records the NOT_AUTHORISED / NOT_IMPLEMENTED boundaries'),
         ('INTEGRITY', 'CHECK', 're-hash every original after each invocation')]
 
@@ -77,7 +78,7 @@ def resolve_request(a, base):
             raise OperatorError('--subject or --archive is required')
     evidence = evidence_spec(json.loads(Path(a.evidence).read_text(encoding='utf-8')), Path(a.evidence).absolute().parent) if a.evidence else None
     return {'archive': archive, 'idea_id': idea, 'critic_workspace': critic, 'evidence': evidence, 'search_terms': a.search or [],
-            'ledger': ledger_spec(a.ledger, a.candidate, a.candidate_version), 'subject_name': name}
+            'ledger': ledger_spec(a.ledger, a.candidate, a.candidate_version, a.crosswalk), 'subject_name': name}
 
 
 def doctor(base, self_test=True):
@@ -161,6 +162,8 @@ def status(layout):
     return {'schema': 'RESEARCH_OS_OPERATOR_STATUS_V001', 'run_id': layout.run_id, 'profile': events[0]['record']['profile'],
             'outcome': rep['outcome'], 'first_boundary': rep['first_boundary'], 'locked': (layout.run / 'journal.lock').exists(),
             'invocations': len(invocations), 'finished': bool(invocations) and invocations[-1]['finished'] is not None,
+            'implementation_drift': (lambda d: None if d is None else {'run_bound_to': d[0], 'current_code': d[1],
+                                     'continue': 'REFUSED_UNTIL_A_FRESH_RUN_OR_EXPLICIT_OWNER_ACCEPTANCE'})(drift(events)),
             'stages': {n: s['status'] for n, s in stages.items()}, 'journal_head': events[-1]['hash'], 'workspace': str(layout.run),
             'authorises': []}
 
@@ -180,12 +183,15 @@ def parser():
         x.add_argument('--search', action='append', help='explicit Armoury search term (repeatable)')
         x.add_argument('--ledger', help='an existing Discovery ledger to check read-only'); x.add_argument('--candidate')
         x.add_argument('--candidate-version', type=int)
+        x.add_argument('--crosswalk', help='human-authored RESEARCH_OS_OPERATOR_CROSSWALK_V001 binding the candidate to the Scout card')
     inputs(sub.add_parser('plan', help='permitted stages, inputs, limits and predicted blockers; starts nothing'))
     x = sub.add_parser('run', help='create a run and execute every eligible authorised local stage'); inputs(x)
     x.add_argument('--run-id', help='explicit OPR-... identifier (default: generated)')
     x = sub.add_parser('status', help='persisted state of a run'); x.add_argument('run_id')
     x = sub.add_parser('continue', help='resume orchestration with explicitly supplied inputs; never replays one-shot stages')
     x.add_argument('run_id'); inputs(x, subject=False)
+    x.add_argument('--accept-implementation-drift', metavar='DIGEST',
+                   help="owner's explicit acceptance of the current implementation digest for a run created under other code")
     x = sub.add_parser('report', help='the consolidated report, rendered from the run journal'); x.add_argument('run_id')
     x.add_argument('--json', action='store_true')
     x = sub.add_parser('demo', help='SYNTHETIC end-to-end demonstration in a new directory outside any Git checkout')
@@ -217,8 +223,9 @@ def main(argv=None):
             layout = locate(a.run_id, a.base)
             evidence = evidence_spec(json.loads(Path(a.evidence).read_text(encoding='utf-8')), Path(a.evidence).absolute().parent) if a.evidence else None
             supplied = {'evidence': evidence or {'routes': [], 'exports': []}, 'search_terms': a.search or [],
-                        'ledger': ledger_spec(a.ledger, a.candidate, a.candidate_version)}
-            rep, paths = invoke(layout, 'continue', supplied=supplied if (evidence or a.search or a.ledger) else None)
+                        'ledger': ledger_spec(a.ledger, a.candidate, a.candidate_version, a.crosswalk)}
+            rep, paths = invoke(layout, 'continue', supplied=supplied if (evidence or a.search or a.ledger) else None,
+                                accept_drift=a.accept_implementation_drift)
         elif a.command == 'status':
             emit(status(locate(a.run_id, a.base))); return 0
         else:

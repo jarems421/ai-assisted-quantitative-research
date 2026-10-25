@@ -3,7 +3,13 @@
 While ``offline(...)`` is active, a Python audit hook refuses network sockets, every form of process creation and
 writes outside the run's declared directories, and refuses opening account or credential paths. Delegated stages
 run in-process, so the same boundary covers them. Audit hooks cannot be removed: one hook is installed per process
-and is inert outside the context. This guards reviewed Python code; it is not a sandbox for hostile native code."""
+and is inert outside the context. Paths are checked after resolving links, so a link left inside a run directory
+cannot redirect a write elsewhere.
+
+Threat model: a trusted local filesystem and reviewed Python code. An audit hook is not an operating-system sandbox;
+native extensions, ctypes and another process changing the filesystem between check and use are outside it. The
+coordinator therefore also refuses links in its directories at preflight and re-hashes every original after each
+invocation."""
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -21,6 +27,17 @@ CREDENTIAL = {'.env', '.ssh', '.aws', '.azure', '.codex', '.config', '.netrc', '
 WRITE_FLAGS = os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC | os.O_APPEND
 
 
+def resolved(value):
+    """The final path with links and junctions resolved (a missing tail is kept); Windows extended prefixes removed."""
+    name = os.path.realpath(os.fsdecode(value))
+    if os.name == 'nt':
+        if name.startswith('\\\\?\\UNC\\'):
+            name = '\\\\' + name[8:]
+        elif name.startswith('\\\\?\\'):
+            name = name[4:]
+    return Path(name)
+
+
 class BoundaryViolation(BaseException):
     """Never caught as an application ValueError/OSError by delegated code."""
 
@@ -34,13 +51,15 @@ class Boundary:
         raise BoundaryViolation('Research OS operator boundary: ' + reason)
 
     def writable(self, value):
-        p = Path(os.fsdecode(value)).absolute()
-        return p == Path(os.devnull).absolute() or any(p.is_relative_to(r) for r in self.roots)
+        p = resolved(value)
+        return p == resolved(os.devnull) or any(p.is_relative_to(r) for r in self.roots)
 
     def check_path(self, value, write):
         if isinstance(value, int):
             return
-        parts = [x.lower() for x in Path(os.fsdecode(value)).absolute().parts]
+        # Reads are checked on the literal path (resolving every read is costly); writes on the resolved one as well.
+        paths = (Path(os.fsdecode(value)).absolute(), resolved(value)) if write else (Path(os.fsdecode(value)).absolute(),)
+        parts = [x.lower() for p in paths for x in p.parts]
         if any(x in CREDENTIAL or x.startswith(('.env.', '.claude.')) for x in parts):
             self.deny('account or credential path: ' + os.fsdecode(value))
         if write and not self.writable(value):
@@ -82,7 +101,7 @@ def offline(write_roots):
         sys.addaudithook(BOUNDARY.audit)
         _installed = True
     previous = sys.dont_write_bytecode
-    BOUNDARY.roots, BOUNDARY.denials = tuple(Path(r).absolute() for r in write_roots), []
+    BOUNDARY.roots, BOUNDARY.denials = tuple(resolved(r) for r in write_roots), []
     sys.dont_write_bytecode = True  # lazy imports must not write __pycache__ outside the run directories
     BOUNDARY.active = True
     try:

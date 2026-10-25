@@ -4,7 +4,12 @@ A stage is evaluated under a key derived from its inputs. A ONE_SHOT stage (cust
 prepare, synthetic preview ledger) is claimed in the journal before it acts and is never re-run for the same key:
 ``continue`` reuses its recorded result, and an unfinished claim stays INTERRUPTED for human reconciliation. A CHECK
 stage is read-only (or create-only into the run directory) and is re-evaluated only when its inputs change. New
-inputs produce new keys and new create-only output directories; nothing earlier is overwritten."""
+inputs produce new keys and new create-only output directories; nothing earlier is overwritten.
+
+Implementation drift fails closed. A run is bound to the implementation digest and contract versions recorded when
+it was created. ``continue`` under different code is refused unless the owner explicitly accepts that exact digest;
+acceptance is journalled, CHECK stages then re-run under the new code, and ONE_SHOT results are kept, never re-run.
+Old records are never migrated."""
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -18,7 +23,7 @@ import time
 from src.research.spec import canonical, digest
 from src.research.opportunity_scout.automation_v001 import execution as X
 from . import BANNER, PROFILE, VERSION, delegate as D
-from .guard import BoundaryViolation, offline
+from .guard import BoundaryViolation, offline, resolved
 from .journal import Journal, JournalError, utc_now
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -71,9 +76,30 @@ def tree(directory):
     return {'files': files, 'count': len(files), 'bytes': total, 'digest': digest(files)}
 
 
+def is_link(p):
+    return p.is_symlink() or (hasattr(p, 'is_junction') and p.is_junction())
+
+
+def links(paths, stop=None):
+    """Every symlink or junction at or below the given paths, and among their ancestors below ``stop``; missing paths skipped."""
+    found = []
+    for root in map(Path, paths):
+        above = [a for a in (root, *root.parents) if stop is None or Path(a).is_relative_to(stop) and Path(a) != Path(stop)]
+        found += [str(a) for a in above if a.exists() and is_link(a)]
+        if root.is_dir() and not is_link(root):
+            found += [str(x) for x in root.rglob('*') if is_link(x)]
+    return sorted(set(found))
+
+
+def overlaps(a, b):
+    a, b = resolved(a), resolved(b)
+    return a == b or a.is_relative_to(b) or b.is_relative_to(a)
+
+
 def implementation():
-    """Static src.* import closure of this package (CRLF normalised), as the pipeline's execution record does."""
+    """Static src.* import closure of this package and of every delegated command line (CRLF normalised)."""
     todo = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / 'src/research/operator').glob('*.py'))
+    todo += [f.relative_to(ROOT).as_posix() for entry, _ in D.ENTRY.values() for f in X.module_files(ROOT, entry)]
     files = {}
     while todo:
         rel = todo.pop()
@@ -84,13 +110,26 @@ def implementation():
         for name in X.imports(rel, data.decode('utf-8')):
             if name.split('.')[0] == 'src':
                 todo += [f.relative_to(ROOT).as_posix() for f in X.module_files(ROOT, name)]
-    return {'boundary': 'static src.* import closure of src/research/operator', 'files': len(files),
+    return {'boundary': 'static src.* import closure of src/research/operator and the delegated command lines', 'files': len(files),
             'digest': digest(dict(sorted(files.items())))}
 
 
 def provenance():
     return {'revision': X.revision(ROOT), 'worktree_clean': 'UNKNOWN', 'worktree_clean_reason': X.CLEAN_REASON,
-            'implementation': implementation(), 'python': platform.python_version()}
+            'implementation': implementation(), 'python': platform.python_version(),
+            'contract': {'operator_version': VERSION, 'profile': PROFILE}}
+
+
+def binding(execution):
+    """What a run's cached results depend on. Runs created before contracts were recorded never match."""
+    contract = execution.get('contract') or {}
+    return {'implementation': execution['implementation']['digest'], 'operator_version': contract.get('operator_version', 'UNRECORDED'),
+            'profile': contract.get('profile', 'UNRECORDED')}
+
+
+def bound(events):
+    accepted = [e['record']['to'] for e in events if e['type'] == 'DRIFT_ACCEPTED']
+    return accepted[-1] if accepted else binding(events[0]['record']['execution'])
 
 
 class Layout:
@@ -236,9 +275,10 @@ class Context:
         self.current, self.used, self.calls, self.call_log = {}, {}, None, []
         self.invocation_seq = sum(e['type'] == 'INVOCATION_STARTED' for e in events)
         self.execution, self.seq, self.stop = None, None, False
+        self.epoch = bound(events)
 
-    def call(self, module, argv):
-        result = D.call(module, argv)
+    def call(self, module, argv, preview=False):
+        result = D.preview(self.layout.artifacts, argv) if preview else D.call(module, argv, roots=self.layout.roots())
         index = len(self.calls)
         out = write_once(self.layout.artifacts / 'calls' / f'{self.seq:05d}-{index:02d}.json',
                          {'command': result['command'], 'json': result['json'], 'text': result['text'], 'stderr': result['stderr']})
@@ -264,7 +304,8 @@ def result(status, summary=None, *, research=(), software=(), next_actions=(), b
 def run_stage(ctx, name, kind, step):
     """step: (inputs, action) where action() returns a result, or (inputs, result) for a decision needing no action."""
     inputs, action = step
-    key = f'{name}@{digest(inputs)[:16]}'
+    # CHECK results are valid only under the code that produced them; ONE_SHOT results are never redone.
+    key = f"{name}@{digest(inputs if kind == 'ONE_SHOT' else {**inputs, 'binding': ctx.epoch})[:16]}"
     ctx.used[name] = key
     if key in ctx.results:
         ctx.current[name] = {**ctx.results[key], 'key': key}
@@ -306,15 +347,17 @@ def request_value(archive, idea_id, critic_workspace, evidence, search_terms, le
             'evidence': evidence or {'routes': [], 'exports': []}, 'search_terms': list(search_terms), 'ledger': ledger}
 
 
-def ledger_spec(path, candidate, version):
+def ledger_spec(path, candidate, version, crosswalk=None):
     if path is None:
-        if candidate or version:
-            raise OperatorError('--candidate needs --ledger')
+        if candidate or version or crosswalk:
+            raise OperatorError('--candidate and --crosswalk need --ledger')
         return None
     if not candidate or not re.fullmatch(r'CAND-[A-Za-z0-9_.-]+', candidate):
         raise OperatorError('--ledger needs --candidate CAND-...')
     p = unlinked(path)
-    return {'path': str(p), 'sha256': sha_file(p) if p.is_file() else 'MISSING', 'candidate_id': candidate, 'candidate_version': version}
+    c = unlinked(crosswalk) if crosswalk else None
+    return {'path': str(p), 'sha256': sha_file(p) if p.is_file() else 'MISSING', 'candidate_id': candidate, 'candidate_version': version,
+            'crosswalk': {'path': str(c), 'sha256': sha_file(c) if c.is_file() else 'MISSING'} if c else None}
 
 
 def create(request, *, base=DEFAULT_BASE, run_id=None, clock=utc_now):
@@ -323,6 +366,9 @@ def create(request, *, base=DEFAULT_BASE, run_id=None, clock=utc_now):
     if not RUN_ID.fullmatch(run_id):
         raise OperatorError('run IDs look like OPR-<letters, digits, hyphens>')
     layout = Layout(base, run_id)
+    archive = Path(request['archive'])
+    if any(overlaps(o, base) for o in (archive, request['critic_workspace'] or archive.parent / f'critic-v1-{archive.name}')):
+        raise OperatorError('the workspace base and an original archive overlap; originals are never written, so runs must live elsewhere')
     if any(p.exists() for p in layout.roots()):
         raise OperatorError(f'run {run_id} already exists; runs are never overwritten')
     for p in (layout.run, layout.scout.parent):
@@ -343,13 +389,30 @@ def locate(run_id, base=DEFAULT_BASE):
     return layout
 
 
-def invoke(layout, command, *, supplied=None, clock=utc_now):
+def drift(events):
+    """None when the current code matches the run's binding, else (bound, current)."""
+    now, then = binding(provenance()), bound(events)
+    return None if now == then else (then, now)
+
+
+def invoke(layout, command, *, supplied=None, clock=utc_now, accept_drift=None):
     """One run or continue invocation over the profile's stages, entirely inside the operator boundary."""
     from . import profile
     from .report import render, write
     journal = Journal(layout.run, clock)
     with journal.writer(), offline(layout.roots()) as boundary:
         events = journal.load()
+        changed = drift(events)
+        if changed and (command != 'continue' or accept_drift != changed[1]['implementation']):
+            raise OperatorError(f'implementation drift: run bound to {changed[0]}, current code is {changed[1]}. Nothing was run. '
+                                'Start a fresh run, or have the owner reconcile explicitly with '
+                                f"--accept-implementation-drift {changed[1]['implementation']} (CHECK stages then re-run; ONE_SHOT results are kept)")
+        if accept_drift and not changed:
+            raise OperatorError('--accept-implementation-drift was given, but the code matches the run; nothing to accept')
+        if changed:
+            journal.append('DRIFT_ACCEPTED', {'from': changed[0], 'to': changed[1], 'basis': 'EXPLICIT_OWNER_FLAG_ON_CONTINUE',
+                                              'one_shot_results': 'KEPT_NEVER_RERUN', 'check_results': 'REEVALUATED'})
+            events = journal.load()
         ctx = Context(journal, layout, events, clock)
         if supplied:
             ctx.append('INPUTS_SUPPLIED', supplied)
@@ -360,8 +423,9 @@ def invoke(layout, command, *, supplied=None, clock=utc_now):
         ctx.invocation_seq += 1
         t0 = time.perf_counter()
         for name, kind, plan in profile.stages(ctx):
-            if ctx.stop:
-                break
+            if ctx.stop and name != 'INTEGRITY':  # after a boundary violation only the read-only integrity check runs
+                run_stage(ctx, name, kind, ({'stopped': True}, result('SKIPPED', {'reason': 'invocation stopped after a boundary violation'})))
+                continue
             try:
                 step = plan(ctx)
             except BoundaryViolation as error:

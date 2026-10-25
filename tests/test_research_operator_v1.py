@@ -138,9 +138,10 @@ class OperatorTests(unittest.TestCase):
         copy_bytes = read_tree(layout.scout)
         self.more(layout)
         self.more(layout, self.evidence())  # the same inputs again
-        again = self.started(layout)
-        replayed = [k for k in again[len(keys):] if not k.startswith(('PREFLIGHT', 'INTEGRITY'))]
-        self.assertEqual(replayed, [])
+        later = [e['record'] for e in Journal(layout.run).load() if e['type'] == 'STAGE_STARTED'][len(keys):]
+        self.assertEqual([r['key'] for r in later if r['kind'] == 'ONE_SHOT'], [])
+        # Only per-invocation checks and one re-verification of the export written by the first invocation.
+        self.assertEqual({r['stage'] for r in later} - {'PREFLIGHT', 'INTEGRITY', 'FORGE_READINESS'}, set())
         self.assertEqual(sorted(p.name for p in layout.quarry.iterdir()), imports)
         self.assertEqual(read_tree(layout.scout), copy_bytes)
         one_shot = [k for k in keys if k.split('@')[0] in ('FORGE_CUSTODY', 'JEV_EVIDENCE', 'JEV_MEMORY') or k.startswith('QUARRY_')]
@@ -149,16 +150,16 @@ class OperatorTests(unittest.TestCase):
     def test_interrupted_one_shot_stage_is_never_retried(self):
         layout = runs.create(runs.request_value(self.f['archive'], self.f['ready_idea'], None, self.evidence(), [], None), base=self.f['base'], run_id='OPR-TEST-CRASH')
         real = D.call
-        def crash(module, argv):
+        def crash(module, argv, **kw):
             if argv[0] == 'import-file':
                 raise KeyboardInterrupt('simulated crash after the claim')
-            return real(module, argv)
+            return real(module, argv, **kw)
         with patch.object(D, 'call', crash), self.assertRaises(KeyboardInterrupt):
             runs.invoke(layout, 'run')
         self.assertEqual(cli.status(layout)['outcome'], 'INTERRUPTED')
         calls = []
-        def spy(module, argv):
-            calls.append([str(x) for x in argv]); return real(module, argv)
+        def spy(module, argv, **kw):
+            calls.append([str(x) for x in argv]); return real(module, argv, **kw)
         with patch.object(D, 'call', spy):
             rep = self.more(layout)
         imports = [c for c in calls if c[0] == 'import-file']
@@ -279,20 +280,244 @@ class OperatorTests(unittest.TestCase):
         with self.assertRaisesRegex(runs.OperatorError, 'already exists'):
             runs.create(runs.request_value(self.f['archive'], self.f['ready_idea'], None, None, [], None), base=self.f['base'], run_id='OPR-TEST')
 
-    def test_supplied_ledger_is_checked_on_a_pinned_copy_only(self):
+    # ---------------------------------------------------------------------------------- Forge-to-Anvil binding
+
+    def unrelated_ledger(self):
+        from src.research.discovery import records as R
+        from src.research.discovery.ledger import Ledger
+        campaign = {'id': 'DLC-UNRELATED', 'title': 'SYNTHETIC unrelated campaign', 'method': 'HYPOTHESIS_FIRST', 'fixture': 'SYNTHETIC',
+                    'question': 'An unrelated fictional question?', 'authority': 'SYNTHETIC', 'acquisition_authorized': False,
+                    'budget': {'analyst_hours': 0, 'source_starts': 0, 'external_bytes': 0}, 'notes': []}
+        cand = R.template('candidate')
+        cand.update(id='CAND-UNRELATED', method='HYPOTHESIS_FIRST', population='Unrelated fictional cohort', mechanism='Unrelated fictional mechanism',
+                    falsification='Unrelated fictional falsifier.')
+        cand['predictor']['quantity'], cand['outcome']['quantity'] = 'Unrelated fictional predictor', 'Unrelated fictional outcome'
+        path = self.root / 'inputs' / 'unrelated.jsonl'
+        Ledger.create(path, campaign).append('candidate', cand)
+        return path
+
+    def crosswalk(self, layout, name='crosswalk.json', **override):
+        template = json.loads(next(layout.artifacts.glob('anvil-ledger-*/crosswalk-template.json')).read_bytes())
+        value = {**template, 'mapping_status': 'HUMAN_REVIEWED_SAME_CLAIM', 'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'name': 'SYNTHETIC_REVIEWER'},
+                 'reviewed_at': F.MOMENT, 'notes': 'SYNTHETIC fixture binding; no real human judgment.', **override}
+        path = self.root / 'inputs' / name
+        path.write_bytes(canonical(value))
+        return path
+
+    def test_supplied_ledger_needs_a_human_crosswalk_to_the_forge_card(self):
         first, _ = self.start(evidence=self.evidence(), run_id='OPR-TEST-PREVIEW')
-        preview = next(first.artifacts.glob('anvil-preview-*')) / 'ledger.jsonl'
         ledger = self.root / 'inputs' / 'ledger.jsonl'
-        shutil.copyfile(preview, ledger)
-        before = ledger.read_bytes()
-        cid = 'CAND-' + self.f['ready_idea']
+        shutil.copyfile(next(first.artifacts.glob('anvil-preview-*')) / 'ledger.jsonl', ledger)
+        before, cid = ledger.read_bytes(), 'CAND-' + self.f['ready_idea']
         layout, _ = self.start(evidence=self.evidence(), run_id='OPR-TEST-LEDGER', ledger=runs.ledger_spec(ledger, cid, None))
         r = self.stages(layout)['ANVIL_CHECKS']
-        self.assertEqual(r['status'], 'BLOCKED')
-        self.assertEqual(r['summary']['label'], 'supplied (pinned copy)')
+        self.assertEqual((r['status'], r['summary']['link']), ('WAITING_FOR_HUMAN', 'UNLINKED'))
+        self.assertNotIn('checklist', r['summary'])
+        self.assertEqual(set(r['summary']['claim_text_comparison'].values()), {'IDENTICAL_TEXT'})
+        self.assertIn('Identical wording on every claim field is still not economic identity', r['research_findings'][0])
+        template = json.loads((layout.run / r['summary']['crosswalk_template']['path']).read_bytes())
+        self.assertEqual((template['mapping_status'], template['reviewer']), ('PENDING_HUMAN_REVIEW', {'kind': 'PENDING', 'name': 'PENDING'}))
+        rep = self.more(layout, ledger=runs.ledger_spec(ledger, cid, None, self.crosswalk(layout)))
+        r = self.stages(layout)['ANVIL_CHECKS']
+        self.assertEqual(r['status'], 'BLOCKED')  # checklist blockers, now presented as this card's continuation
+        self.assertEqual(r['summary']['link']['status'], 'SYNTHETIC_CROSSWALK_FIXTURE')
+        self.assertIn('NO_PREDICTOR_OBSERVATION', r['summary']['checklist']['distinctive_predictor']['blockers'])
         self.assertTrue(Path(r['summary']['ledger']).is_relative_to(layout.artifacts))
         self.assertEqual(ledger.read_bytes(), before)
-        self.assertEqual(self.stages(layout)['INTEGRITY']['summary']['checks']['supplied ledger'], 'UNCHANGED')
+        self.assertEqual(rep['integrity']['supplied ledger'], 'UNCHANGED')
+
+    def test_unrelated_candidate_is_unlinked_and_a_wrong_crosswalk_is_refused(self):
+        ledger = self.unrelated_ledger()
+        layout, _ = self.start(run_id='OPR-TEST-UNRELATED', ledger=runs.ledger_spec(ledger, 'CAND-UNRELATED', None))
+        r = self.stages(layout)['ANVIL_CHECKS']
+        self.assertEqual((r['status'], r['summary']['link']), ('WAITING_FOR_HUMAN', 'UNLINKED'))
+        self.assertEqual(set(r['summary']['claim_text_comparison'].values()), {'DIFFERENT_TEXT'})
+        self.assertNotIn('checklist', r['summary'])
+        cases = {'wrong-card': {'scout': {**r['summary']['binding']['scout'], 'card_sha256': '0' * 64}},
+                 'assistant': {'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'name': 'Claude'}},
+                 'human-in-synthetic': {'reviewer': {'kind': 'HUMAN', 'name': 'Fictional Person'}},
+                 'pending': {'mapping_status': 'PENDING_HUMAN_REVIEW'}}
+        for name, override in cases.items():
+            self.more(layout, ledger=runs.ledger_spec(ledger, 'CAND-UNRELATED', None, self.crosswalk(layout, name + '.json', **override)))
+            r = self.stages(layout)['ANVIL_CHECKS']
+            self.assertEqual((r['status'], r['summary']['link']), ('BLOCKED', 'CROSSWALK_INVALID'), name)
+            self.assertNotIn('checklist', r['summary'], name)
+
+    # ---------------------------------------------------------------------------------- stale Scout handoff
+
+    def append_to_copy(self, layout, kind, record):
+        Archive(layout.scout).append(kind, record, recorded_at='2026-10-22T00:00:00+00:00')
+
+    def ready_run(self, run_id):
+        layout, _ = self.start(run_id=run_id)
+        r = self.stages(layout)['FORGE_READINESS']
+        self.assertEqual(r['status'], 'COMPLETE')
+        export = layout.scout / 'exports' / f"{self.f['ready_idea']}-v1-handoff.json"
+        return layout, export, export.read_bytes()
+
+    def test_withdrawn_ready_review_refuses_the_old_export(self):
+        layout, export, saved = self.ready_run('OPR-TEST-WITHDRAWN')
+        self.append_to_copy(layout, 'review', {'readiness_version': 'SCOUT_READY_V002', 'idea_id': self.f['ready_idea'], 'version': 1,
+                                                'decision': 'HUMAN_REVIEW', 'reason_type': 'UNRESOLVED', 'reason': 'SYNTHETIC later review withdraws the earlier READY decision.',
+                                                'uncertainties': ['Fictional.'], 'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'id': 'SYNTHETIC_REVIEWER'},
+                                                'minutes': 'UNKNOWN', 'approved_handoff': False, 'reconsider_when': 'Never real.', 'authorises_acquisition': False})
+        rep = self.more(layout)
+        r = self.stages(layout)['FORGE_READINESS']
+        self.assertEqual(r['status'], 'WAITING_FOR_HUMAN')
+        self.assertTrue(r['summary']['stale_export'])
+        self.assertIn('no longer authorises it', ' '.join(r['research_findings']))
+        self.assertEqual(export.read_bytes(), saved)
+        self.assertEqual(self.stages(layout)['ANVIL_DRAFTS']['summary']['candidate']['status'], 'NOT_DRAFTED')
+        self.assertEqual(rep['first_boundary']['stage'], 'FORGE_READINESS')
+
+    def test_changed_feasibility_refuses_the_old_export(self):
+        layout, export, _ = self.ready_run('OPR-TEST-FEASIBILITY')
+        current = Archive(layout.scout).load().latest(self.f['ready_idea'])
+        self.append_to_copy(layout, 'feasibility', {**F.feasibility(current), 'conclusion': 'NOT_FEASIBLE',
+                                                     'assessment': 'SYNTHETIC later assessment: the fictional register is not feasible.'})
+        self.more(layout)
+        r = self.stages(layout)['FORGE_READINESS']
+        self.assertEqual((r['status'], r['summary']['handoff'], r['summary']['stale_export']), ('WAITING_FOR_HUMAN', 'REFUSED', True))
+        self.assertIn('READY needs an identifiable publisher URL', r['summary']['refusal'])
+
+    def test_stale_export_that_differs_from_current_authority_is_never_used(self):
+        layout, export, saved = self.ready_run('OPR-TEST-STALE')
+        current = Archive(layout.scout).load().latest(self.f['ready_idea'])
+        self.append_to_copy(layout, 'feasibility', {**F.feasibility(current), 'assessment': 'SYNTHETIC ONLY: a later and different assessment '
+                                                     'of the same fictional register, still researchable as a proposal.'})
+        self.more(layout)
+        r = self.stages(layout)['FORGE_READINESS']
+        self.assertEqual((r['status'], r['summary']['handoff']), ('BLOCKED', 'STALE_EXPORT'))
+        self.assertEqual(export.read_bytes(), saved)
+        self.assertEqual(self.stages(layout)['ANVIL_DRAFTS']['summary']['candidate']['status'], 'NOT_DRAFTED')
+        layout2, export2, _ = self.ready_run('OPR-TEST-EDITED')
+        self.more(layout2)
+        self.assertEqual(self.stages(layout2)['FORGE_READINESS']['summary']['handoff'], 'EXPORT_VERIFIED_AGAINST_CURRENT_STATE')
+        export2.write_bytes(export2.read_bytes().replace(b'"PROPOSAL_ONLY"', b'"PROPOSAL_ONLY" ', 1))  # an edited export
+        self.more(layout2)
+        self.assertEqual(self.stages(layout2)['FORGE_READINESS']['summary']['handoff'], 'STALE_EXPORT')
+
+    # ---------------------------------------------------------------------------------- command boundary
+
+    def test_discovery_writes_are_limited_to_the_synthetic_preview(self):
+        layout, _ = self.start(evidence=self.evidence(), run_id='OPR-TEST-PREVIEWONLY')
+        preview = next(layout.artifacts.glob('anvil-preview-*'))
+        ledger, record = preview / 'ledger.jsonl', preview / 'candidate.json'
+        foreign = self.unrelated_ledger()
+        (preview / 'live-campaign.json').write_bytes(canonical({**json.loads((preview / 'campaign.json').read_bytes()), 'fixture': 'LIVE'}))
+        other = layout.artifacts / 'elsewhere'; other.mkdir()
+        attempts = [(D.call, (profile.DISCOVERY, ['add', ledger, 'candidate', record])), (D.call, (profile.DISCOVERY, ['init', other / 'ledger.jsonl', record])),
+                    (D.call, (profile.DISCOVERY, ['add', ledger, 'review', record]))]
+        for kind in ('review', 'disposition', 'observation', 'relationship', 'effort', 'campaign', 'freeze'):
+            attempts.append((D.preview, (layout.artifacts, ['add', ledger, kind, record])))
+        attempts += [(D.preview, (layout.artifacts, ['add', foreign, 'candidate', record])),
+                     (D.preview, (layout.artifacts, ['init', other / 'ledger.jsonl', record])),
+                     (D.preview, (layout.artifacts, ['init', preview.parent / 'anvil-preview-new' / 'ledger.jsonl', preview / 'live-campaign.json'])),
+                     (D.preview, (layout.artifacts, ['init', ledger, preview / 'campaign.json'])),
+                     (D.preview, (layout.artifacts, ['add', ledger, 'candidate', foreign])),
+                     (D.preview, (layout.artifacts, ['add', ledger, 'candidate', record, '--extra'])),
+                     (D.preview, (self.root, ['add', ledger, 'candidate', record])),
+                     (D.call, (profile.QUARRY, ['import-file', 'r', 's', '--out', self.root / 'outside'], [layout.run])),
+                     (D.call, (profile.JEV, ['prepare', 'i', '--out', self.root / 'outside'], [layout.run])),
+                     (D.call, (profile.SCOUT, ['handoff', self.f['archive'], self.f['ready_idea']], [layout.run])),
+                     (D.call, (profile.JEV, ['prepare', 'i', '--out', layout.run / 'x'], None))]
+        with patch('src.research.discovery.cli.main', side_effect=AssertionError('reached Discovery')), \
+                patch('src.research.quarry_v1.__main__.main', side_effect=AssertionError('reached Quarry')):
+            for fn, args in attempts:
+                with self.assertRaises(D.NotPermitted, msg=repr(args)[:160]):
+                    fn(*args)
+        self.assertEqual(json.loads(foreign.read_bytes().splitlines()[0])['record']['id'], 'DLC-UNRELATED')
+
+    # ---------------------------------------------------------------------------------- preflight and drift
+
+    def test_failed_preflight_prevents_custody_and_every_research_stage(self):
+        for name, patcher in (('dependency', patch.object(profile, 'MODULES', profile.MODULES + ('src.research.no_such_module',))),
+                              ('missing required repository file', patch.object(profile, 'REQUIRED', profile.REQUIRED + ('docs/no_such_file.json',))),
+                              ('not git-ignored', patch.multiple(profile, ROOT=self.root, research_ignored=lambda: False))):
+            with patcher:
+                layout, rep = self.start(run_id='OPR-TEST-PRE-' + name.split()[0].upper().replace('-', ''))
+            s = self.stages(layout)
+            self.assertEqual(s['PREFLIGHT']['status'], 'FAILED', name)
+            self.assertTrue(any(name in f for f in s['PREFLIGHT']['software_findings']), name)
+            self.assertEqual(s['FORGE_CUSTODY']['status'], 'SKIPPED', name)
+            self.assertFalse(layout.scout.exists(), name)
+            self.assertEqual({s[n]['status'] for n in ('FORGE_RECORDS', 'JEV_MEMORY', 'ARMOURY_GRAPH', 'ANVIL_CHECKS')}, {'SKIPPED'}, name)
+            self.assertFalse([c for st in s.values() for c in st.get('calls') or []], name)
+            self.assertEqual((rep['outcome'], rep['first_boundary']['stage']), ('FAILED', 'PREFLIGHT'), name)
+        with self.assertRaisesRegex(runs.OperatorError, 'overlap'):
+            runs.create(runs.request_value(self.f['archive'], self.f['ready_idea'], None, None, [], None), base=self.f['archive'] / 'ws', run_id='OPR-TEST-INSIDE')
+        self.assertFalse((self.f['archive'] / 'ws').exists())
+
+    def test_implementation_drift_blocks_continue_until_explicit_acceptance(self):
+        layout, _ = self.start(evidence=self.evidence(), run_id='OPR-TEST-DRIFT')
+        journal = (layout.run / 'journal.jsonl').read_bytes()
+        keys = self.started(layout)
+        changed = {**runs.implementation(), 'digest': 'd' * 64}
+        with patch.object(runs, 'implementation', return_value=changed):
+            with self.assertRaisesRegex(runs.OperatorError, 'implementation drift'):
+                runs.invoke(layout, 'continue')
+            with self.assertRaisesRegex(runs.OperatorError, 'implementation drift'):
+                runs.invoke(layout, 'continue', accept_drift='e' * 64)
+            self.assertEqual((layout.run / 'journal.jsonl').read_bytes(), journal)  # refusals write nothing
+            self.assertEqual(cli.status(layout)['implementation_drift']['current_code']['implementation'], 'd' * 64)
+            runs.invoke(layout, 'continue', accept_drift='d' * 64)
+        events = Journal(layout.run).load()
+        self.assertEqual([e['record']['to']['implementation'] for e in events if e['type'] == 'DRIFT_ACCEPTED'], ['d' * 64])
+        rerun = {k.split('@')[0] for k in self.started(layout)[len(keys):]}
+        self.assertIn('FORGE_RECORDS', rerun)
+        self.assertFalse(rerun & {'FORGE_CUSTODY', 'QUARRY_IMPORT:R1', 'QUARRY_EXPORT:R1', 'JEV_EVIDENCE', 'JEV_MEMORY', 'ANVIL_CHECKS'})
+        self.assertEqual(self.stages(layout)['ANVIL_DRAFTS']['status'], 'WAITING_FOR_HUMAN')
+        with self.assertRaisesRegex(runs.OperatorError, 'implementation drift'):
+            runs.invoke(layout, 'continue')  # bound to the accepted digest now; the real code differs again
+        with self.assertRaisesRegex(runs.OperatorError, 'nothing to accept'):
+            runs.invoke(self.start(run_id='OPR-TEST-NODRIFT')[0], 'continue', accept_drift='d' * 64)
+
+    # ---------------------------------------------------------------------------------- adversarial inputs
+
+    def test_input_changed_after_its_hash_was_recorded_is_never_consumed(self):
+        spec = self.evidence()
+        original = self.root / 'inputs' / 'quarry' / 'original-R1.txt'
+        original.write_bytes(original.read_bytes() + b'appended later\n')
+        layout, rep = self.start(evidence=spec, run_id='OPR-TEST-TOCTOU')
+        s = self.stages(layout)
+        self.assertEqual(s['QUARRY_IMPORT:R1']['status'], 'BLOCKED')
+        self.assertEqual(s['QUARRY_IMPORT:R1']['summary']['changed_since_supplied'], ['original'])
+        self.assertFalse(any(p.name.startswith('R1-') for p in layout.quarry.iterdir()))
+        self.assertEqual(s['INTEGRITY']['summary']['checks']['R1 original'], 'CHANGED')
+        self.assertEqual(rep['outcome'], 'FAILED')
+        ledger = self.unrelated_ledger(); spec = runs.ledger_spec(ledger, 'CAND-UNRELATED', None)
+        with ledger.open('ab') as handle:
+            handle.write(b'{}\n')
+        layout, _ = self.start(run_id='OPR-TEST-TOCTOU-LEDGER', ledger=spec)
+        self.assertIn('changed or disappeared after being supplied', self.stages(layout)['ANVIL_CHECKS']['research_findings'][0])
+
+    def test_boundary_violation_leaves_a_truthful_readable_status(self):
+        escape = self.root / 'escape.json'
+        def hostile(argv):
+            escape.write_bytes(b'{}')
+        with patch('src.research.graph.cli.main', side_effect=hostile):
+            layout, rep = self.start(run_id='OPR-TEST-VIOLATION')
+        self.assertFalse(escape.exists())
+        s = self.stages(layout)
+        self.assertEqual(s['ARMOURY_GRAPH']['status'], 'FAILED')
+        self.assertIn('BOUNDARY_VIOLATION', s['ARMOURY_GRAPH']['software_findings'][0])
+        self.assertEqual({s[n]['status'] for n in ('ANVIL_DRAFTS', 'ANVIL_CHECKS', 'DOWNSTREAM')}, {'SKIPPED'})
+        self.assertEqual(s['INTEGRITY']['status'], 'COMPLETE')
+        self.assertEqual(rep['integrity']['original archive'], 'UNCHANGED')
+        self.assertEqual((rep['outcome'], rep['accounting']['boundary_denials']), ('FAILED', 1))
+        status = cli.status(layout)
+        self.assertEqual((status['outcome'], status['locked'], status['finished']), ('FAILED', False, True))
+
+    def test_missing_referenced_run_artifact_fails_closed(self):
+        layout, _ = self.start(run_id='OPR-TEST-MISSING-ARTIFACT')
+        ref = self.stages(layout)['FORGE_RECORDS']['summary']['card_artifact']
+        (layout.run / ref['path']).unlink()
+        rep = self.more(layout)
+        s = self.stages(layout)
+        self.assertEqual(s['ARMOURY_GRAPH']['status'], 'FAILED')
+        self.assertIn('COORDINATOR_FAULT', s['ARMOURY_GRAPH']['software_findings'][0])
+        self.assertEqual(rep['outcome'], 'FAILED')
+        self.assertTrue(cli.status(layout)['finished'])
 
     def test_only_permitted_component_commands_are_callable(self):
         for module, argv in ((profile.SCOUT, ['review', 'x', 'y']), (profile.SCOUT, ['revise', 'x', 'y']), (profile.SCOUT, ['feasibility', 'x', 'y']),

@@ -78,6 +78,8 @@ def render(events):
                              'implementation_digest': i['started']['record']['execution']['implementation']['digest'],
                              'finished_at': i['finished']['at'] if i['finished'] else None,
                              'elapsed_seconds': i['finished']['record']['elapsed_seconds'] if i['finished'] else None} for i in invocations],
+            'drift_acceptances': [{'at': e['at'], 'from': e['record']['from']['implementation'], 'to': e['record']['to']['implementation']}
+                                  for e in events if e['type'] == 'DRIFT_ACCEPTED'],
             'archived_run_accounting': pipeline.get('accounting_totals'), 'archived_actual_charges': 'UNKNOWN',
             'note': 'Archived counts are quoted from the earlier run records ({at_least, exact}); exact UNKNOWN stays UNKNOWN. No cost is inferred.'},
         'friction': {'commands_run_for_the_owner': len(calls), 'hand_authored_inputs_requested': sum(a.startswith(('OWNER', 'HUMAN')) for a in actions),
@@ -134,6 +136,8 @@ def markdown(rep):
             f"- Delegated commands run in-process for the owner: {a['delegated_commands']}; hand-authored inputs still requested: {f['hand_authored_inputs_requested']}."]
     out += [f"- Invocation `{i['command']}`: {i['started_at']} to {i['finished_at'] or 'NOT FINISHED'} ({i['elapsed_seconds']} s); "
             f"commit `{i['commit'][:12]}`, implementation `{i['implementation_digest'][:12]}`" for i in a['invocations']]
+    out += [f"- Implementation drift accepted by the owner at {d['at']}: `{d['from'][:12]}` to `{d['to'][:12]}`; CHECK stages re-ran, ONE_SHOT results kept."
+            for d in a['drift_acceptances']]
     if a['archived_run_accounting']:
         out.append('- Archived pipeline run (quoted, not re-measured): ' + ', '.join(f"{k} at least {v['at_least']}, exact {v['exact']}"
                                                                                      for k, v in a['archived_run_accounting'].items()) + f"; actual charges {a['archived_actual_charges']}.")

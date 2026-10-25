@@ -6,6 +6,7 @@ the action runs only when no result exists for those inputs, or ``(inputs, decis
 from __future__ import annotations
 
 from functools import partial
+import hashlib
 import importlib
 import json
 from pathlib import Path
@@ -14,21 +15,25 @@ from src.research.spec import canonical, digest
 from src.research.discovery.ledger import Ledger
 from src.research.graph import catalogue as C
 from src.research.jev_navigation_v1 import contracts as J
+from src.research.opportunity_scout import engine as E, schema as S
 from src.research.opportunity_scout.automation_v001.pipeline import workspace_path
 from src.research.opportunity_scout.critic_v1 import packages as P
+from src.research.opportunity_scout.post_generation.review import ASSISTANT
 from src.research.opportunity_scout.readiness import identifiable
+from src.research.opportunity_scout.storage import Archive
 from src.research.quarry_v1 import io as QIO
 from . import VERSION, adapters as A, delegate as D
-from .runs import ROOT, OperatorError, result, sha_file, tree, write_once
+from .runs import ROOT, OperatorError, links, overlaps, result, sha_file, tree, write_once
 
-SCOUT, CRITIC, PIPELINE = 'src.research.opportunity_scout', 'src.research.opportunity_scout.critic_v1', 'src.research.opportunity_scout.automation_v001'
-QUARRY, JEV, JEVI = 'src.research.quarry_v1', 'src.research.jev_navigation_v1', 'src.research.jev_navigation_integration_v1'
-DISCOVERY, GRAPH = 'src.research.discovery', 'src.research.graph'
+SCOUT, CRITIC, PIPELINE, QUARRY, JEV, JEVI, DISCOVERY, GRAPH = D.SCOUT, D.CRITIC, D.PIPELINE, D.QUARRY, D.JEV, D.JEVI, D.DISCOVERY, D.GRAPH
 MODULES = (SCOUT + '.cli', CRITIC + '.cli', PIPELINE + '.pipeline', QUARRY + '.evidence', JEV + '.navigation', JEVI + '.quarry',
            DISCOVERY + '.cli', GRAPH + '.cli', 'jsonschema')
 REQUIRED = ('docs/strategy/graph/research_memory_catalogue_v002.json', 'config/operational_pauses.json', '.gitignore')
 WAITING = ('WAITING_FOR_HUMAN', 'WAITING_FOR_EVIDENCE', 'BLOCKED', 'NOT_AUTHORISED', 'NOT_IMPLEMENTED')
 HANDOFF_FLAGS = ('creates_campaign', 'writes_ledger', 'certifies_M', 'certifies_H', 'acquisition_authorised', 'is_discovery_candidate_record')
+CROSSWALK = 'RESEARCH_OS_OPERATOR_CROSSWALK_V001'
+CROSSWALK_KEYS = {'schema', 'scout', 'discovery', 'mapping_status', 'reviewer', 'reviewed_at', 'notes'}
+MAPPINGS = ('HUMAN_REVIEWED_SAME_CLAIM', 'HUMAN_REVIEWED_REFORMULATION')
 
 
 def stages(ctx):
@@ -85,6 +90,15 @@ def load_artifact(ctx, ref):
     return json.loads(path.read_bytes())
 
 
+def unchanged(spec):
+    """True when a supplied file still has the hash recorded when it was supplied."""
+    return spec is None or (Path(spec['path']).is_file() and sha_file(spec['path']) == spec['sha256'])
+
+
+def research_ignored():
+    return '.research/' in (ROOT / '.gitignore').read_text(encoding='utf-8').split()
+
+
 def card(ctx):
     return load_artifact(ctx, ctx.current['FORGE_RECORDS']['summary']['card_artifact'])
 
@@ -106,18 +120,27 @@ def exports(ctx):
 # ------------------------------------------------------------------------------------------------- Forge
 
 def preflight(ctx):
-    inputs = {'implementation': ctx.execution['implementation']['digest'], 'python': ctx.execution['python'], 'base': str(ctx.layout.base)}
+    """A real prerequisite, re-checked every invocation: nothing is copied or delegated after a failure."""
+    inputs = {'implementation': ctx.execution['implementation']['digest'], 'python': ctx.execution['python'], 'base': str(ctx.layout.base),
+              'invocation': ctx.invocation_seq}
     def act():
         problems, modules = [], {}
         for m in MODULES:
             try:
                 importlib.import_module(m); modules[m] = 'IMPORTED'
             except Exception as error:  # dependency fault, recorded as a software blocker
-                modules[m] = 'FAILED'; problems.append(f'{m}: {type(error).__name__}: {error}')
+                modules[m] = 'FAILED'; problems.append(f'dependency {m}: {type(error).__name__}: {error}')
         problems += [f'missing required repository file {f}' for f in REQUIRED if not (ROOT / f).is_file()]
-        if ctx.layout.base.is_relative_to(ROOT) and '.research/' not in (ROOT / '.gitignore').read_text(encoding='utf-8').split():
-            problems.append('.research/ is not git-ignored; private run records could be committed')
-        return result('FAILED' if problems else 'COMPLETE', {'modules': modules, 'execution': ctx.execution}, software=problems)
+        if ctx.layout.base.is_relative_to(ROOT) and not research_ignored():
+            problems.append('unsafe output configuration: .research/ is not git-ignored, so private run records could be committed')
+        found = links([ctx.layout.base, *ctx.layout.roots()], stop=ctx.layout.base.parent)
+        if found:
+            problems.append(f'unsafe output configuration: links in the run directories are refused: {found}')
+        for name in ('archive', 'critic_workspace'):
+            if ctx.inputs[name] and overlaps(ctx.inputs[name], ctx.layout.base):
+                problems.append(f'unsafe output configuration: the {name} and the workspace base overlap')
+        return result('FAILED' if problems else 'COMPLETE', {'modules': modules, 'execution': ctx.execution}, software=problems,
+                      blockers=problems, next_actions=['Fix the listed software blockers, then continue; no archive copy or delegated stage ran.'] if problems else [])
     return inputs, act
 
 
@@ -128,6 +151,9 @@ def custody(ctx):
     basis = 'EXPLICIT' if explicit else 'SCOUT_SIBLING_CONVENTION' if critic.is_dir() else 'NONE_FOUND'
     critic = critic if basis != 'NONE_FOUND' else None
     inputs = {'archive': str(archive), 'critic_workspace': str(critic) if critic else None}
+    up = upstream(ctx, 'PREFLIGHT', inputs)
+    if up:
+        return up
     def copy(source, target, manifest):
         target.mkdir(parents=False, exist_ok=False)
         for rel, meta in manifest['files'].items():
@@ -270,19 +296,32 @@ def readiness(ctx):
     if up:
         return up
     rec = ctx.current['FORGE_RECORDS']['summary']
-    inputs = {'scout': sha_file(ctx.layout.scout / 'scout.jsonl'), 'card': rec['card_sha256']}
+    h = rec['hypothesis']
+    export = ctx.layout.scout / 'exports' / f"{h['idea_id']}-v{h['version']}-handoff.json"
+    # Any change to the Scout ledger or to an existing export re-runs this check against current authority.
+    inputs = {'scout': sha_file(ctx.layout.scout / 'scout.jsonl'), 'card': rec['card_sha256'], 'export': sha_file(export) if export.is_file() else None}
     def act():
         current, synth = card(ctx), synthetic(ctx)
         routes = [{'publisher': r['publisher'], 'locator': r['locator'], 'state': r['state'], 'identifiable': identifiable(r, synth)}
                   for r in current['idea']['source_routes']]
         name = f"{current['id']}-v{current['version']}-handoff.json"
         path = ctx.layout.scout / 'exports' / name
-        call = None
-        if not path.is_file():
-            call = ctx.call(SCOUT, ['handoff', ctx.layout.scout, current['id']])
-        if call is not None and not D.ok(call):
-            text = refused(call)
+        # Scout's own current-state authority (latest card, current review, feasibility and source stops), recomputed
+        # every time. An earlier export is evidence of nothing unless it equals this result byte for byte.
+        try:
+            authoritative, recomputed_refusal = E.handoff(Archive(ctx.layout.scout).load(), current['id']), None
+        except S.ScoutError as error:
+            authoritative, recomputed_refusal = None, str(error)
+        exported = path.is_file()
+        call = ctx.call(SCOUT, ['handoff', ctx.layout.scout, current['id']]) if authoritative is None or not exported else None
+        if authoritative is None:
+            if call is not None and D.ok(call):
+                return result('FAILED', {'handoff': 'INCONSISTENT'}, software=['Scout recomputation refused the handoff but the handoff command exported one; it is not trusted.'])
+            text = refused(call) if call is not None else 'Opportunity Scout: ' + recomputed_refusal
             research = [f'Scout handoff refused: "{text}"']
+            if exported:
+                research.append(f'An earlier export {name} exists, but the current Scout state no longer authorises it (a later review, feasibility '
+                                'record or stop); it is ignored and never used.')
             actions = []
             if not any(r['identifiable'] for r in routes):
                 research.append(f"Card v{current['version']} has no identifiable source route (locator: "
@@ -292,9 +331,16 @@ def readiness(ctx):
             actions.append('HUMAN: record a SCOUT_READY_V002 feasibility assessment of the exact next-step question for an identifiable route, '
                            f'then a READY review with approved_handoff true, using `python -m src.research.opportunity_scout feasibility|review "{ctx.layout.scout}" <file>`.')
             actions.append(f'Then: `python -m src.research.operator continue {ctx.layout.run_id}`. The operator never drafts or records these.')
-            return result('WAITING_FOR_HUMAN', {'handoff': 'REFUSED', 'refusal': text, 'routes': routes, 'reviews': rec['reviews']},
+            return result('WAITING_FOR_HUMAN', {'handoff': 'REFUSED', 'refusal': text, 'stale_export': exported, 'routes': routes, 'reviews': rec['reviews']},
                           research=research, next_actions=actions)
-        envelope = json.loads(path.read_bytes())
+        if call is not None and not D.ok(call):
+            return result('FAILED', {'handoff': 'INCONSISTENT'}, software=['Scout recomputation authorises the handoff but the handoff command refused: ' + refused(call)])
+        if path.read_bytes() != canonical(authoritative) + b'\n':
+            return result('BLOCKED', {'handoff': 'STALE_EXPORT', 'export': name, 'authoritative_sha256': digest(authoritative)},
+                          research=[f'The exported {name} differs from the handoff the current Scout state authorises (a later review, feasibility record '
+                                    'or stop changed it). Scout exports are create-only and cannot be replaced; the stale file is never used.'],
+                          next_actions=['HUMAN: reconcile the stale export with the later Scout records by hand, for example by recording a new card version.'])
+        envelope = authoritative
         problems = [] if envelope.get('schema') == 'DISCOVERY_LAB_STARTING_PROPOSAL_V001' and envelope.get('status') == 'PROPOSAL_ONLY' \
             and envelope.get('authorises') == [] and not any(envelope.get(f) for f in HANDOFF_FLAGS) else ['handoff envelope is not a proposal-only V001 envelope']
         if envelope.get('opportunity_card_sha256') != digest(current):
@@ -305,9 +351,10 @@ def readiness(ctx):
         if problems:
             return result('FAILED', {'handoff': 'INVALID'}, software=problems)
         approval = 'SYNTHETIC_FIXTURE_NOT_A_HUMAN_DECISION' if synth else 'HUMAN_READY_REVIEW_RECORDED_IN_SCOUT'
-        return result('COMPLETE', {'handoff': 'EXPORTED' if call else 'ALREADY_EXPORTED', 'approval_class': approval, 'routes': routes,
+        return result('COMPLETE', {'handoff': 'EXPORTED' if call else 'EXPORT_VERIFIED_AGAINST_CURRENT_STATE', 'approval_class': approval, 'routes': routes,
                                    'envelope': artifact(ctx, name, envelope), 'discovery_method_proposed': envelope['discovery_method_proposed']},
-                      research=[f"Scout handoff {name} exported (PROPOSAL_ONLY; approval class {approval}). It creates no campaign and authorises nothing."])
+                      research=[f"Scout handoff {name} matches the current Scout authority (PROPOSAL_ONLY; approval class {approval}). "
+                                'It creates no campaign and authorises nothing.'])
     return inputs, act
 
 
@@ -337,6 +384,11 @@ def quarry_import(route, ctx):
                                         'synthetic and real evidence are never mixed.'])
     out = ctx.layout.quarry / f'{label}-{digest(inputs)[:8]}-import'
     def act():
+        changed = [k for k in ('registry', 'supply', 'original') if not unchanged(route[k])]
+        if changed:
+            return result('BLOCKED', {'label': label, 'changed_since_supplied': changed},
+                          research=[f'Route {label}: {changed} changed or disappeared after being supplied; nothing was imported.'],
+                          next_actions=['OWNER: supply the inputs again; a file is never consumed under an earlier hash.'])
         argv = ['import-file', route['registry']['path'], route['supply']['path'], *(['--file', route['original']['path']] if route['original'] else []), '--out', out]
         r = ctx.call(QUARRY, argv)
         if not D.ok(r):
@@ -347,6 +399,10 @@ def quarry_import(route, ctx):
         if not D.ok(s):
             return result('FAILED', {'label': label, 'package': str(out)}, software=['A fresh Quarry package failed its own status check: ' + refused(s)])
         j = s['json']
+        changed = [k for k in ('registry', 'supply', 'original') if not unchanged(route[k])]
+        if changed or (route['original'] and j['original_sha256'] != route['original']['sha256']):
+            return result('BLOCKED', {'label': label, 'package': str(out), 'changed_during_import': changed or ['original']},
+                          research=[f'Route {label}: the retained package does not correspond to the supplied hashes; it is kept but never exported.'])
         return result('COMPLETE', {'label': label, 'package': str(out), 'receipt': {k: j[k] for k in ('status', 'original_sha256', 'bytes', 'identity_flags', 'authenticity', 'historical_availability')},
                                    'inspection_usable': j['inspection_usable'], 'negative_record_inspectable': j['negative_record_inspectable'],
                                    'inspection_scope': j['inspection_scope'], 'source_access': j['source_access']},
@@ -376,6 +432,8 @@ def quarry_export(route, ctx):
         return inputs, result('WAITING_FOR_EVIDENCE', {'label': label}, research=[f'Route {label}: a supplied inspection or extraction file was not found.'])
     out = ctx.layout.quarry / f'{label}-{digest(inputs)[:8]}-export'
     def act():
+        if not (unchanged(route['inspection']) and unchanged(route['extracted_file'])):
+            return result('BLOCKED', {'label': label}, research=[f'Route {label}: the inspection or extraction changed after being supplied; nothing was exported.'])
         argv = ['export', s['package'], route['inspection']['path'], ctx.layout.run / subject_ref['path'],
                 *(['--extracted-file', route['extracted_file']['path']] if route['extracted_file'] else []), '--out', out]
         r = ctx.call(QUARRY, argv)
@@ -569,7 +627,7 @@ def drafts(ctx):
     found = exports(ctx)
     fixture = 'SYNTHETIC' if synthetic(ctx) else 'LIVE'
     inputs = {'handoff': envelope['sha256'] if envelope else None, 'exports': [[label, sha] for label, _, sha in found], 'fixture': fixture}
-    fp = digest(inputs)[:8]
+    fp = digest({**inputs, 'binding': ctx.epoch})[:8]  # a re-evaluation under accepted new code writes new drafts
     def act():
         parts, research = {'candidate': None, 'source_passports': {}}, []
         if envelope:
@@ -625,7 +683,7 @@ def ledger_checks(ctx, ledger, candidate, version, classification, label):
                             'candidate_version': latest['version'], 'experiment_id': None, 'stops': [], 'context_files': []}}
     ref = write_once(ledger.parent / 'workflow-input.json', workflow)
     ws = ctx.layout.jev / f"workflow-{digest(workflow)[:8]}"
-    prep = ctx.call(JEV, ['prepare', ref, '--out', ws])
+    prep = ctx.call(JEV, ['prepare', ref, '--out', ws]) if not ws.exists() else {'fault': None, 'exit_code': 0}  # create-only; report re-verifies it
     if D.ok(prep):
         rep = ctx.call(JEV, ['report', ws])
         if D.ok(rep):
@@ -647,33 +705,113 @@ def ledger_checks(ctx, ledger, candidate, version, classification, label):
                                 'HUMAN: Measurement Gate M and H reviews and every disposition are human records only.'])
 
 
+def claim_comparison(current, candidate):
+    """Mechanical text comparison of claim-defining fields. Identical wording is never economic identity."""
+    i = current['idea']
+    pairs = {'predictor': (i['predictor']['quantity'], candidate['predictor']['quantity']), 'outcome': (i['outcome']['quantity'], candidate['outcome']['quantity']),
+             'population': (i['entity_class'], candidate['population']), 'mechanism': (A.mechanism_text(i['mechanism']), candidate['mechanism'])}
+    return {k: 'IDENTICAL_TEXT' if a == b else 'DIFFERENT_TEXT' for k, (a, b) in pairs.items()}
+
+
+def identity(ctx, ledger_sha, candidate):
+    current, ready = card(ctx), ctx.current.get('FORGE_READINESS') or {}
+    return {'scout': {'idea_id': current['id'], 'version': current['version'], 'card_sha256': digest(current),
+                      'handoff_sha256': ready['summary']['envelope']['sha256'] if ready.get('status') == 'COMPLETE' else None},
+            'discovery': {'ledger_sha256': ledger_sha, 'candidate_id': candidate['id'], 'candidate_version': candidate['version'],
+                          'candidate_sha256': digest(candidate)}}
+
+
+def crosswalk_problems(value, expected, synth):
+    """A human-authored binding is checked mechanically for identities and form; its judgment is the human's."""
+    if not isinstance(value, dict) or set(value) != CROSSWALK_KEYS or value.get('schema') != CROSSWALK:
+        return [f'not a {CROSSWALK} record with exactly the fields {sorted(CROSSWALK_KEYS)}']
+    problems = [f'{side} binding differs from this run: expected {expected[side]}' for side in ('scout', 'discovery') if value[side] != expected[side]]
+    if value['mapping_status'] not in MAPPINGS:
+        problems.append(f'mapping_status must be one of {MAPPINGS}')
+    reviewer = value['reviewer'] if isinstance(value['reviewer'], dict) else {}
+    if set(reviewer) != {'kind', 'name'} or reviewer.get('kind') != ('SYNTHETIC_FIXTURE' if synth else 'HUMAN'):
+        problems.append('a crosswalk is a human record (reviewer kind HUMAN; SYNTHETIC_FIXTURE only in synthetic runs)')
+    name = reviewer.get('name')
+    if not isinstance(name, str) or not name.strip() or name.strip().upper() == 'PENDING' or ASSISTANT.search(name):
+        problems.append('the reviewer must be a named person, never PENDING, an assistant or a model')
+    if not isinstance(value['reviewed_at'], str) or not value['reviewed_at'].strip() or value['reviewed_at'] == 'PENDING':
+        problems.append('reviewed_at is required')
+    return problems
+
+
+def supplied_checks(ctx, supplied):
+    cross, synth = supplied.get('crosswalk'), synthetic(ctx)
+    ready = ctx.current.get('FORGE_READINESS') or {}
+    inputs = {'ledger': supplied['sha256'], 'candidate': supplied['candidate_id'], 'version': supplied['candidate_version'],
+              'crosswalk': cross['sha256'] if cross else None, 'card': ctx.current['FORGE_RECORDS']['summary']['card_sha256'],
+              'handoff': ready['summary']['envelope']['sha256'] if ready.get('status') == 'COMPLETE' else None}
+    if supplied['sha256'] == 'MISSING' or (cross and cross['sha256'] == 'MISSING'):
+        return inputs, result('WAITING_FOR_EVIDENCE', research=['The supplied ledger or crosswalk file was not found.'])
+    fp = digest(inputs)[:8]
+    def act():
+        data = Path(supplied['path']).read_bytes() if Path(supplied['path']).is_file() else None
+        if data is None or hashlib.sha256(data).hexdigest() != supplied['sha256']:
+            return result('BLOCKED', {'link': 'NOT_EVALUATED'}, research=['The supplied ledger changed or disappeared after being supplied; it was not read.'])
+        copy = write_once(ctx.layout.artifacts / f'anvil-ledger-{fp}' / 'ledger.jsonl', data)
+        try:
+            state = Ledger(copy).load()
+        except ValueError as error:
+            return result('BLOCKED', {'link': 'NOT_EVALUATED'}, research=[f'Discovery refused the supplied ledger: {error}'])
+        if (state.fixture == 'SYNTHETIC') != synth:
+            return result('BLOCKED', {'link': 'NOT_EVALUATED'}, research=[f'Supplied ledger fixture {state.fixture} does not match this run; synthetic and real classes are never mixed.'])
+        cand = state.version('candidate', supplied['candidate_id'], supplied['candidate_version'])
+        if cand is None:
+            return result('BLOCKED', {'link': 'NOT_EVALUATED'}, research=[f"Candidate {supplied['candidate_id']} is not in the supplied ledger."])
+        expected, comparison = identity(ctx, supplied['sha256'], cand), claim_comparison(card(ctx), cand)
+        if not cross:
+            template = artifact(ctx, f'anvil-ledger-{fp}/crosswalk-template.json',
+                                {'schema': CROSSWALK, **expected, 'mapping_status': 'PENDING_HUMAN_REVIEW', 'reviewer': {'kind': 'PENDING', 'name': 'PENDING'},
+                                 'reviewed_at': 'PENDING', 'notes': 'PENDING'})
+            same = all(v == 'IDENTICAL_TEXT' for v in comparison.values())
+            return result('WAITING_FOR_HUMAN', {'link': 'UNLINKED', 'binding': expected, 'claim_text_comparison': comparison, 'crosswalk_template': template},
+                          research=[f"Supplied candidate {cand['id']} v{cand['version']} is UNLINKED to Scout card {expected['scout']['idea_id']} "
+                                    f"v{expected['scout']['version']}: no human crosswalk binds them, so its checklist is not presented as a continuation "
+                                    'of this Forge idea.' + (' Identical wording on every claim field is still not economic identity.' if same else '')],
+                          next_actions=['HUMAN: compare the card with the candidate. If they are the same claim or a reformulation, author a '
+                                        f'{CROSSWALK} record yourself (the template in the run artifacts holds only the mechanical identities), then '
+                                        f'`python -m src.research.operator continue {ctx.layout.run_id} --ledger <ledger> --candidate {cand["id"]} --crosswalk <file>`.'])
+        raw = Path(cross['path']).read_bytes() if Path(cross['path']).is_file() else None
+        if raw is None or hashlib.sha256(raw).hexdigest() != cross['sha256']:
+            return result('BLOCKED', {'link': 'NOT_EVALUATED'}, research=['The supplied crosswalk changed or disappeared after being supplied; it was not read.'])
+        try:
+            problems = crosswalk_problems(json.loads(raw), expected, synth)
+        except ValueError as error:
+            problems = [f'crosswalk is not valid JSON: {error}']
+        if problems:
+            return result('BLOCKED', {'link': 'CROSSWALK_INVALID', 'problems': problems, 'binding': expected},
+                          research=['The supplied crosswalk does not bind this Forge card to this candidate: ' + '; '.join(problems)])
+        r = ledger_checks(ctx, copy, cand['id'], supplied['candidate_version'], 'SYNTHETIC' if synth else 'LOCAL_PRIVATE', 'supplied (pinned copy)')
+        r['summary']['link'] = {'status': 'SYNTHETIC_CROSSWALK_FIXTURE' if synth else 'HUMAN_CROSSWALK_RECORDED', 'binding': expected,
+                                'mapping_status': json.loads(raw)['mapping_status'], 'crosswalk_sha256': cross['sha256'], 'claim_text_comparison': comparison,
+                                'meaning': 'A named human asserts the binding; the operator verified only identities, hashes and form.'}
+        return r
+    return inputs, act
+
+
 def anvil_checks(ctx):
     supplied = ctx.inputs['ledger']
-    if supplied:
-        inputs = {'ledger': supplied['sha256'], 'candidate': supplied['candidate_id'], 'version': supplied['candidate_version']}
-        up = upstream(ctx, 'FORGE_RECORDS', inputs)
-        if up:
-            return up
-        if supplied['sha256'] == 'MISSING':
-            return inputs, result('WAITING_FOR_EVIDENCE', research=[f"Supplied ledger not found: {supplied['path']}"])
-        def act():
-            copy = write_once(ctx.layout.artifacts / f"anvil-ledger-{digest(inputs)[:8]}" / 'ledger.jsonl', Path(supplied['path']).read_bytes())
-            fixture = json.loads(copy.read_bytes().splitlines()[0])['record']['fixture']
-            if (fixture == 'SYNTHETIC') != synthetic(ctx):
-                return result('BLOCKED', research=[f'Supplied ledger fixture {fixture} does not match this run; synthetic and real classes are never mixed.'])
-            return ledger_checks(ctx, copy, supplied['candidate_id'], supplied['candidate_version'], 'SYNTHETIC' if synthetic(ctx) else 'LOCAL_PRIVATE', 'supplied (pinned copy)')
-        return inputs, act
-    up = upstream(ctx, 'FORGE_RECORDS', {})
+    up = upstream(ctx, 'FORGE_RECORDS', {'ledger': supplied['sha256'] if supplied else None})
     if up:
         return up
+    if supplied:
+        return supplied_checks(ctx, supplied)
     d = ctx.current.get('ANVIL_DRAFTS') or {}
     cand = (d.get('summary') or {}).get('candidate') or {}
-    inputs = {'drafts': d.get('key'), 'synthetic': synthetic(ctx)}
+    summary = d.get('summary') or {}
+    # Content, never an upstream CHECK key: a re-evaluated but unchanged draft never re-runs this ONE_SHOT preview.
+    inputs = {'candidate': (cand.get('draft') or {}).get('sha256'), 'synthetic': synthetic(ctx), 'status': d.get('status'),
+              'sources': {k: v['draft']['sha256'] for k, v in sorted((summary.get('source_passports') or {}).items())}}
     if not synthetic(ctx):
-        return inputs, result('WAITING_FOR_HUMAN', {'ledger': None},
+        return inputs, result('WAITING_FOR_HUMAN', {'ledger': None, 'link': 'NO_LEDGER'},
                               research=['No Discovery ledger exists for this hypothesis. The operator never creates a LIVE campaign or appends records.'],
-                              next_actions=['OWNER: commit a campaign authority document; a human authors the campaign, source, observation and candidate records, '
-                                            f'then supply the ledger with `python -m src.research.operator continue {ctx.layout.run_id} --ledger <file> --candidate CAND-...`.'])
+                              next_actions=['OWNER: commit a campaign authority document; a human authors the campaign, source, observation and candidate records '
+                                            'and a crosswalk binding the candidate to this card, then supply them with '
+                                            f'`python -m src.research.operator continue {ctx.layout.run_id} --ledger <file> --candidate CAND-... --crosswalk <file>`.'])
     if not cand.get('draft') or cand['validation']['single_record_contract'] != 'VALID':
         return inputs, result('WAITING_FOR_HUMAN', {'ledger': None}, research=['No valid candidate draft to preview.'])
     def act():
@@ -687,11 +825,13 @@ def anvil_checks(ctx):
                 steps.append(['add', ledger, 'source', write_once(root / f'source-{label}.json', load_artifact(ctx, p['draft'])['record'])])
         steps.append(['add', ledger, 'candidate', write_once(root / 'candidate.json', draft['record'])])
         for argv in steps:
-            r = ctx.call(DISCOVERY, argv)
+            r = ctx.call(DISCOVERY, argv, preview=True)
             if not D.ok(r):
                 return result('BLOCKED', research=['Synthetic preview refused by Discovery: ' + refused(r)])
         r = ledger_checks(ctx, ledger, draft['record']['id'], None, 'SYNTHETIC', 'SYNTHETIC preview')
         r['summary']['preview'] = 'SYNTHETIC_FIXTURE_ONLY_NOT_RESEARCH_EVIDENCE'
+        r['summary']['link'] = {'status': 'MECHANICAL_DRAFT_FROM_HANDOFF', 'handoff_sha256': (ctx.current['FORGE_READINESS']['summary']['envelope'] or {}).get('sha256'),
+                                'card_sha256': ctx.current['FORGE_RECORDS']['summary']['card_sha256'], 'candidate_id': draft['record']['id']}
         return r
     return inputs, act
 
@@ -711,25 +851,27 @@ def downstream(ctx):
 
 
 def integrity(ctx):
+    """Read-only diagnostic, run every invocation (even after a failure or boundary violation)."""
     inputs = {'invocation': ctx.invocation_seq}
     def act():
         checks = {}
-        c = ctx.current.get('FORGE_CUSTODY') or ctx.results.get(ctx.used.get('FORGE_CUSTODY'), {})
-        s = c.get('summary') or {}
+        custody = next((r for k, r in ctx.results.items() if k.startswith('FORGE_CUSTODY@') and r['status'] == 'COMPLETE'), None)
+        s = (custody or {}).get('summary') or {}
         if s.get('original'):
             checks['original archive'] = 'UNCHANGED' if tree(s['original']['path'])['digest'] == s['original']['digest'] else 'CHANGED'
         if s.get('critic', {}).get('digest'):
             checks['original critic workspace'] = 'UNCHANGED' if tree(s['critic']['path'])['digest'] == s['critic']['digest'] else 'CHANGED'
         for route in ctx.inputs['routes']:
             for k in ('registry', 'supply', 'original', 'inspection', 'extracted_file'):
-                spec = route[k]
-                if spec and spec['sha256'] != 'MISSING':
-                    p = Path(spec['path'])
-                    checks[f"{route['label']} {k}"] = 'UNCHANGED' if p.is_file() and sha_file(p) == spec['sha256'] else 'CHANGED'
-        if ctx.inputs['ledger'] and ctx.inputs['ledger']['sha256'] != 'MISSING':
-            p = Path(ctx.inputs['ledger']['path'])
-            checks['supplied ledger'] = 'UNCHANGED' if p.is_file() and sha_file(p) == ctx.inputs['ledger']['sha256'] else 'CHANGED'
+                if route[k] and route[k]['sha256'] != 'MISSING':
+                    checks[f"{route['label']} {k}"] = 'UNCHANGED' if unchanged(route[k]) else 'CHANGED'
+        supplied = ctx.inputs['ledger']
+        for k, spec in (('supplied ledger', supplied), ('supplied crosswalk', (supplied or {}).get('crosswalk'))):
+            if spec and spec['sha256'] != 'MISSING':
+                checks[k] = 'UNCHANGED' if unchanged(spec) else 'CHANGED'
         changed = sorted(k for k, v in checks.items() if v != 'UNCHANGED')
-        return result('FAILED' if changed else 'COMPLETE', {'checks': checks},
+        return result('FAILED' if changed else 'COMPLETE', {'checks': checks, 'custody_recorded': custody is not None},
                       software=[f'Supplied original changed during the run: {changed}'] if changed else [])
     return inputs, act
+
+

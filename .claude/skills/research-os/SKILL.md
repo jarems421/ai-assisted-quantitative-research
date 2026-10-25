@@ -31,15 +31,19 @@ them for the owner. Documentation: `docs/research_operator_v001.md`.
 5. **Ask only for genuine owner inputs**: a decision (revise the card? authorise a campaign?), an owner-supplied
    original, or a human record the owner makes personally. Quote the exact command the report gives the owner.
 6. **Continue** when the user says the inputs exist: `python -m src.research.operator continue OPR-... [--evidence
-   <evidence.json>] [--ledger <ledger.jsonl> --candidate CAND-...] [--search <term>]`. It resumes orchestration only;
-   recorded one-shot stages are never replayed.
+   <evidence.json>] [--ledger <ledger.jsonl> --candidate CAND-... --crosswalk <crosswalk.json>] [--search <term>]`.
+   It resumes orchestration only; recorded one-shot stages are never replayed. A supplied candidate stays `UNLINKED`
+   until a human crosswalk binds it to the card. If `continue` is refused for **implementation drift**, explain it
+   and offer a fresh `run`; only the owner may choose `--accept-implementation-drift <digest>`. Never pass that flag
+   on your own initiative.
 7. **Re-read** at any time: `status OPR-...` or `report OPR-...` (`--json` for structure).
 
 ## Never
 
 - Author, draft or "help fill" any human or evidence record for the owner: Scout revision, feasibility or READY review;
   Quarry registry, supply or inspection excerpts; Discovery campaign, observation, candidate, M/H review or
-  disposition. If the owner wants one, they write it and run the command the report names.
+  disposition; or a Forge-to-Anvil crosswalk (including completing `crosswalk-template.json`). If the owner wants
+  one, they write it and run the command the report names.
 - Call component commands yourself to push a stage forward (for example `opportunity_scout review|revise|feasibility`,
   `discovery add|disposition`, `quarry_v1 import-file|export`, `jev_navigation_* import-response|prepare`,
   `automation_v001 run`, `exploratory_v001 run`, `critic_v1 import-response`) or start a Claude Code, Codex, Gemini or
