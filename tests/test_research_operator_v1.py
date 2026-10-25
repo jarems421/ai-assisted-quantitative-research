@@ -1,0 +1,370 @@
+"""Research OS operator V001 on SYNTHETIC fixtures only: temporary archives, fictional Quarry inputs, no network,
+process, model, credential or human judgment. Real Pilot 001 coverage is the separate local-only module."""
+import contextlib
+import copy
+import io
+import json
+import os
+import shutil
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+from src.research.spec import canonical, digest
+from src.research.opportunity_scout import fixtures as F
+from src.research.opportunity_scout.automation_v001 import execution as X
+from src.research.opportunity_scout.storage import Archive
+from src.research.operator import adapters as A, cli, delegate as D, demo, profile, report as RP, runs
+from src.research.operator.guard import Boundary, BoundaryViolation
+from src.research.operator.journal import Journal, JournalError
+
+REVISION = {'commit': 'UNKNOWN', 'ref': 'UNKNOWN', 'basis': 'TEST_FIXTURE', 'reason': 'git metadata is not read in tests'}
+
+
+def read_tree(path):
+    return {p.relative_to(path).as_posix(): p.read_bytes() for p in sorted(Path(path).rglob('*')) if p.is_file()}
+
+
+class OperatorTests(unittest.TestCase):
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory(); self.addCleanup(tmp.cleanup)
+        self.root = Path(tmp.name)
+        self.f = demo.fixtures(self.root)
+        p = patch.object(X, 'revision', return_value=REVISION); p.start(); self.addCleanup(p.stop)
+
+    def evidence(self, value=None, name='evidence.json'):
+        path = self.root / 'inputs' / 'quarry' / name
+        if value is not None:
+            path.write_bytes(canonical(value))
+        return runs.evidence_spec(json.loads(path.read_text(encoding='utf-8')), path.parent)
+
+    def start(self, idea=None, evidence=None, run_id='OPR-TEST', **kw):
+        request = runs.request_value(self.f['archive'], idea or self.f['ready_idea'], None, evidence, kw.get('search', []), kw.get('ledger'))
+        layout = runs.create(request, base=self.f['base'], run_id=run_id)
+        rep, _ = runs.invoke(layout, 'run')
+        return layout, rep
+
+    def more(self, layout, evidence=None, ledger=None):
+        supplied = {'evidence': evidence or {'routes': [], 'exports': []}, 'search_terms': [], 'ledger': ledger} if evidence or ledger else None
+        return runs.invoke(layout, 'continue', supplied=supplied)[0]
+
+    def stages(self, layout):
+        return runs.current_stages(Journal(layout.run).load())
+
+    def started(self, layout):
+        return [e['record']['key'] for e in Journal(layout.run).load() if e['type'] == 'STAGE_STARTED']
+
+    def test_refused_handoff_is_preserved_without_any_human_record(self):
+        before = read_tree(self.f['archive'])
+        layout, rep = self.start(self.f['unreviewed_idea'])
+        s = self.stages(layout)
+        self.assertEqual(s['FORGE_READINESS']['status'], 'WAITING_FOR_HUMAN')
+        self.assertEqual(s['FORGE_READINESS']['summary']['refusal'],
+                         'Opportunity Scout: handoff needs an explicit human READY review approving this exact version')
+        self.assertFalse(list((layout.scout / 'exports').glob('*handoff*')) if (layout.scout / 'exports').exists() else [])
+        self.assertEqual(s['ANVIL_DRAFTS']['summary']['candidate']['status'], 'NOT_DRAFTED')
+        self.assertEqual(rep['outcome'], 'STOPPED_AT_BOUNDARY')
+        self.assertEqual(rep['first_boundary']['stage'], 'FORGE_READINESS')
+        events = Archive(layout.scout).load().events
+        self.assertEqual([e['type'] for e in events], [e['type'] for e in Archive(self.f['archive']).load().events])
+        self.assertEqual(read_tree(self.f['archive']), before)
+        self.assertTrue(any(a.startswith('HUMAN') for a in rep['human_decisions']))
+        self.assertEqual(rep['authorises'], [])
+
+    def test_original_archive_unchanged_and_working_copy_byte_identical(self):
+        before = read_tree(self.f['archive'])
+        layout, rep = self.start(evidence=self.evidence())
+        self.assertEqual(read_tree(self.f['archive']), before)
+        self.assertEqual(read_tree(layout.scout)['scout.jsonl'], before['scout.jsonl'])
+        s = self.stages(layout)
+        self.assertTrue(s['FORGE_CUSTODY']['summary']['byte_identical'])
+        self.assertEqual(s['INTEGRITY']['summary']['checks']['original archive'], 'UNCHANGED')
+        self.assertEqual(rep['integrity']['original archive'], 'UNCHANGED')
+        for name in ('original-R1.txt', 'registry.json', 'inspection-R1.json'):
+            self.assertTrue((self.root / 'inputs' / 'quarry' / name).is_file())
+        self.assertTrue(all(Path(p).is_relative_to(self.f['base']) for p in layout.value().values()))
+
+    def test_complete_synthetic_chain_stops_at_human_gates(self):
+        layout, first = self.start()
+        self.assertEqual(first['first_boundary']['stage'], 'QUARRY_EVIDENCE')
+        self.assertEqual(first['first_boundary']['status'], 'WAITING_FOR_EVIDENCE')
+        rep = self.more(layout, self.evidence())
+        s = self.stages(layout)
+        for name in ('FORGE_READINESS', 'QUARRY_IMPORT:R1', 'QUARRY_EXPORT:R1', 'QUARRY_IMPORT:R2', 'QUARRY_EXPORT:R2', 'JEV_EVIDENCE', 'JEV_MEMORY', 'ARMOURY_GRAPH'):
+            self.assertEqual(s[name]['status'], 'COMPLETE', name)
+        self.assertEqual(s['ANVIL_DRAFTS']['status'], 'WAITING_FOR_HUMAN')
+        self.assertEqual(s['ANVIL_CHECKS']['status'], 'BLOCKED')
+        self.assertEqual(s['DOWNSTREAM']['status'], 'NOT_AUTHORISED')
+        self.assertEqual(rep['outcome'], 'STOPPED_AT_BOUNDARY')
+        self.assertNotIn(rep['outcome'], ('COMPLETE', 'SUCCESS'))
+        queue = s['JEV_EVIDENCE']['summary']['queue']
+        self.assertEqual({q['id']: q['availability'] for q in queue}, {'R1_ALLOCATION': 'SUPPLIED_COPY', 'R1_INVOICE': 'SUPPLIED_COPY', 'R2_UNAVAILABLE': 'STOPPED'})
+        self.assertEqual(s['JEV_EVIDENCE']['summary']['model_status'], 'NOT_IMPORTED_DETERMINISTIC_ONLY')
+        check = s['ANVIL_CHECKS']['summary']
+        self.assertEqual(check['preview'], 'SYNTHETIC_FIXTURE_ONLY_NOT_RESEARCH_EVIDENCE')
+        self.assertIn('NO_PREDICTOR_OBSERVATION', check['checklist']['distinctive_predictor']['blockers'])
+        self.assertIn('UNKNOWN_UNITS:predictor', check['checklist']['meaning_and_units']['blockers'])
+        self.assertIn('NO_INDEPENDENT_OUTCOME', check['checklist']['separate_outcome']['blockers'])
+        self.assertTrue(all(r['mechanical'] == 'BLOCKED' for r in check['checklist'].values()))
+        self.assertEqual(check['sources']['SRC-SYN-INVOICES'], 'STOP_ROUTE')
+        self.assertEqual(check['sources']['SRC-SYN-REGISTER'], 'OBTAIN_ONE_ORIGINAL_RECORD')
+        self.assertEqual(check['workflow']['model_can_override_deterministic'], False)
+        self.assertEqual(rep['accounting']['boundary_denials'], 0)
+        self.assertEqual(rep['accounting']['operator_model_or_provider_calls'], 0)
+
+    def test_synthetic_approval_is_never_promoted_to_a_human_decision(self):
+        layout, _ = self.start(evidence=self.evidence())
+        s = self.stages(layout)
+        self.assertEqual(s['FORGE_RECORDS']['summary']['fixture_class'], 'SYNTHETIC')
+        self.assertEqual(s['FORGE_READINESS']['summary']['approval_class'], 'SYNTHETIC_FIXTURE_NOT_A_HUMAN_DECISION')
+        drafts = s['ANVIL_DRAFTS']['summary']
+        draft = json.loads((layout.run / drafts['candidate']['draft']['path']).read_bytes())
+        self.assertEqual((draft['fixture'], draft['appended'], draft['authorises']), ('SYNTHETIC', False, []))
+        self.assertIn('SYNTHETIC FIXTURE RUN', RP.markdown(RP.render(Journal(layout.run).load())))
+        # The coordinator's own check: a non-human approval in a real-class archive is never READY.
+        layout2 = runs.create(runs.request_value(self.f['archive'], self.f['ready_idea'], None, None, [], None), base=self.f['base'], run_id='OPR-TEST-REAL')
+        real = lambda ctx: False
+        with patch.object(profile, 'synthetic', real):
+            runs.invoke(layout2, 'run')
+        r = self.stages(layout2)['FORGE_READINESS']
+        self.assertEqual(r['status'], 'FAILED')
+        self.assertIn("a non-human approval ['SYNTHETIC_FIXTURE'] in a real archive is never treated as READY", r['software_findings'])
+
+    def test_continue_never_replays_one_shot_stages(self):
+        layout, _ = self.start(evidence=self.evidence())
+        keys = self.started(layout)
+        imports = sorted(p.name for p in layout.quarry.iterdir())
+        copy_bytes = read_tree(layout.scout)
+        self.more(layout)
+        self.more(layout, self.evidence())  # the same inputs again
+        again = self.started(layout)
+        replayed = [k for k in again[len(keys):] if not k.startswith(('PREFLIGHT', 'INTEGRITY'))]
+        self.assertEqual(replayed, [])
+        self.assertEqual(sorted(p.name for p in layout.quarry.iterdir()), imports)
+        self.assertEqual(read_tree(layout.scout), copy_bytes)
+        one_shot = [k for k in keys if k.split('@')[0] in ('FORGE_CUSTODY', 'JEV_EVIDENCE', 'JEV_MEMORY') or k.startswith('QUARRY_')]
+        self.assertEqual(len(one_shot), len(set(one_shot)))
+
+    def test_interrupted_one_shot_stage_is_never_retried(self):
+        layout = runs.create(runs.request_value(self.f['archive'], self.f['ready_idea'], None, self.evidence(), [], None), base=self.f['base'], run_id='OPR-TEST-CRASH')
+        real = D.call
+        def crash(module, argv):
+            if argv[0] == 'import-file':
+                raise KeyboardInterrupt('simulated crash after the claim')
+            return real(module, argv)
+        with patch.object(D, 'call', crash), self.assertRaises(KeyboardInterrupt):
+            runs.invoke(layout, 'run')
+        self.assertEqual(cli.status(layout)['outcome'], 'INTERRUPTED')
+        calls = []
+        def spy(module, argv):
+            calls.append([str(x) for x in argv]); return real(module, argv)
+        with patch.object(D, 'call', spy):
+            rep = self.more(layout)
+        imports = [c for c in calls if c[0] == 'import-file']
+        self.assertEqual(len(imports), 1)  # R2's first import; R1's interrupted claim is never retried
+        self.assertTrue(imports[0][2].endswith('supply-R2.json'))
+        s = self.stages(layout)
+        self.assertEqual(s['QUARRY_IMPORT:R1']['status'], 'INTERRUPTED')
+        self.assertIn(s['QUARRY_EXPORT:R1']['status'], ('SKIPPED',))
+        self.assertEqual(rep['outcome'], 'INTERRUPTED')
+
+    def test_missing_input_and_invalid_evidence_fabricate_nothing(self):
+        bad = json.loads((self.root / 'inputs/quarry/evidence.json').read_text(encoding='utf-8'))
+        bad['routes'][0]['original'] = 'missing-original.txt'
+        layout, rep = self.start(evidence=self.evidence(bad, 'missing.json'), run_id='OPR-TEST-MISSING')
+        s = self.stages(layout)
+        self.assertEqual(s['QUARRY_IMPORT:R1']['status'], 'WAITING_FOR_EVIDENCE')
+        self.assertFalse(any(p.name.startswith('R1-') for p in layout.quarry.iterdir()))
+        self.assertNotIn('R1', s['ANVIL_DRAFTS']['summary']['source_passports'])
+        # Off-by-one excerpt: Quarry's own refusal is preserved and nothing is exported.
+        inspection = json.loads((self.root / 'inputs/quarry/inspection-R1.json').read_text(encoding='utf-8'))
+        inspection['excerpts'][0]['end_byte'] += 1
+        (self.root / 'inputs/quarry/inspection-R1-bad.json').write_bytes(canonical(inspection))
+        ev = json.loads((self.root / 'inputs/quarry/evidence.json').read_text(encoding='utf-8'))
+        ev['routes'][0]['inspection'] = 'inspection-R1-bad.json'
+        layout, rep = self.start(evidence=self.evidence(ev, 'bad-inspection.json'), run_id='OPR-TEST-BAD')
+        s = self.stages(layout)
+        self.assertEqual(s['QUARRY_EXPORT:R1']['status'], 'BLOCKED')
+        self.assertIn('excerpt must reproduce exact retained UTF-8 byte range', s['QUARRY_EXPORT:R1']['summary']['refusal'])
+        self.assertFalse(any(p.name.startswith('R1-') and p.name.endswith('-export') for p in layout.quarry.iterdir()))
+        self.assertEqual([q['id'] for q in s['JEV_EVIDENCE']['summary']['queue']], ['R2_UNAVAILABLE'])
+        # Wrong asset claim: identity flag blocks export.
+        supply = json.loads((self.root / 'inputs/quarry/supply-R1.json').read_text(encoding='utf-8'))
+        (self.root / 'inputs/quarry/supply-R1-wrong.json').write_bytes(canonical({**supply, 'asset_claim': 'another asset'}))
+        ev = json.loads((self.root / 'inputs/quarry/evidence.json').read_text(encoding='utf-8'))
+        ev['routes'] = [{**ev['routes'][0], 'supply': 'supply-R1-wrong.json'}]
+        layout, _ = self.start(evidence=self.evidence(ev, 'wrong.json'), run_id='OPR-TEST-WRONG')
+        s = self.stages(layout)
+        self.assertEqual(s['QUARRY_EXPORT:R1']['summary']['identity_flags'], ['WRONG_ASSET_CLAIM_MISMATCH'])
+        self.assertEqual(s['JEV_EVIDENCE']['status'], 'BLOCKED')
+        # Real-class evidence in a synthetic run is refused before custody.
+        (self.root / 'inputs/quarry/supply-R1-real.json').write_bytes(canonical({**supply, 'fixture': 'OWNER_SUPPLIED', 'data_classification': 'LOCAL_PRIVATE'}))
+        ev['routes'] = [{**ev['routes'][0], 'supply': 'supply-R1-real.json'}]
+        layout, _ = self.start(evidence=self.evidence(ev, 'real.json'), run_id='OPR-TEST-MIX')
+        self.assertEqual(self.stages(layout)['QUARRY_IMPORT:R1']['status'], 'BLOCKED')
+        self.assertFalse(layout.quarry.exists())
+        # Unknown idea: Forge records fail, everything downstream is skipped, nothing is drafted.
+        layout, rep = self.start('IDEA-doesnotexist', run_id='OPR-TEST-UNKNOWN')
+        s = self.stages(layout)
+        self.assertEqual(s['FORGE_RECORDS']['status'], 'FAILED')
+        self.assertEqual({s[n]['status'] for n in ('FORGE_READINESS', 'JEV_MEMORY', 'ANVIL_DRAFTS')}, {'SKIPPED'})
+        self.assertEqual(rep['outcome'], 'FAILED')
+
+    def test_observation_first_preview_refusal_is_preserved(self):
+        archive = Archive(self.f['archive'])
+        radar = archive.load().latest(self.f['unreviewed_idea'])
+        archive.append('feasibility', F.feasibility(radar), recorded_at=F.MOMENT)
+        review = {'readiness_version': 'SCOUT_READY_V002', 'idea_id': radar['id'], 'version': 1, 'decision': 'READY', 'reason_type': 'RESEARCHABLE',
+                  'reason': 'SYNTHETIC ONLY; no real human review.', 'uncertainties': ['Fictional.'], 'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'id': 'SYNTHETIC_REVIEWER'},
+                  'minutes': 'UNKNOWN', 'approved_handoff': True, 'reconsider_when': 'Never real.', 'authorises_acquisition': False}
+        archive.append('review', review, recorded_at=F.MOMENT)
+        layout, _ = self.start(self.f['unreviewed_idea'], run_id='OPR-TEST-RADAR')
+        r = self.stages(layout)['ANVIL_CHECKS']
+        self.assertEqual(r['status'], 'BLOCKED')
+        self.assertIn('OBSERVATION_FIRST must start from a recorded observation', r['research_findings'][0])
+
+    def test_draft_mapping_never_removes_a_mechanical_blocker(self):
+        layout, _ = self.start(evidence=self.evidence())
+        d = self.stages(layout)['ANVIL_DRAFTS']['summary']
+        cand = json.loads((layout.run / d['candidate']['draft']['path']).read_bytes())['record']
+        audit = json.loads((layout.run / d['candidate']['audit']['path']).read_bytes())
+        for path in (('predictor', 'units'), ('outcome', 'units'), ('outcome', 'route'), ('public_time_route',), ('horizon',), ('information_event', 'description')):
+            value = cand
+            for k in path:
+                value = value[k]
+            self.assertEqual(value, 'UNKNOWN', path)
+        self.assertTrue(cand['exposure']['allocation_required'])
+        self.assertEqual({j['status'] for j in cand['joins'].values()}, {'UNVERIFIED'})
+        self.assertEqual(cand['predictor']['observation_ids'], [])
+        rows = {r['field']: r for r in audit['rows']}
+        self.assertEqual(rows['predictor.units']['source_value'], 'inspection shifts')
+        self.assertEqual(rows['predictor.units']['class'], 'UNRESOLVED')
+        self.assertEqual(set(audit['counts']), set(A.CLASSES))
+        source = json.loads((layout.run / d['source_passports']['R1']['draft']['path']).read_bytes())['record']
+        self.assertEqual({q['depth'] for q in source['quantities']}, {'UNVERIFIED'})
+        self.assertEqual({q['units'] for q in source['quantities']}, {'UNKNOWN'})
+        self.assertEqual(source['quantities'][0]['evidence'][0]['depth'], 'UNVERIFIED')
+        stopped = json.loads((layout.run / d['source_passports']['R2']['draft']['path']).read_bytes())['record']
+        self.assertEqual(stopped['access']['status'], 'BLOCKED')
+        self.assertTrue(any(o.startswith('STOP SYN-STOP-1') for o in stopped['omissions']))
+        with self.assertRaisesRegex(ValueError, 'mapping drift'):
+            A.Audit('X', {}).copied('f', 's', 'a', 'b')
+
+    def test_report_is_deterministic_from_retained_records(self):
+        layout, rep = self.start(evidence=self.evidence())
+        events = Journal(layout.run).load()
+        self.assertEqual(canonical(RP.render(events)), canonical(RP.render(copy.deepcopy(events))))
+        self.assertEqual(canonical(rep), canonical(RP.render(events)))
+        moved = self.root / 'moved'
+        shutil.copytree(layout.run, moved)
+        self.assertEqual(RP.markdown(RP.render(Journal(moved).load())), RP.markdown(rep))
+        saved = layout.reports / f"report-{rep['journal_head'][:16]}.md"
+        self.assertEqual(saved.read_bytes(), RP.markdown(rep).encode('utf-8'))
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            cli.main(['--base', str(self.f['base']), 'report', layout.run_id, '--json'])
+        self.assertEqual(json.loads(out.getvalue())['journal_head'], rep['journal_head'])
+
+    def test_journal_tamper_and_lock_are_refused(self):
+        layout, _ = self.start()
+        (layout.run / 'journal.lock').write_bytes(b'')
+        with self.assertRaisesRegex(JournalError, 'run is locked'):
+            runs.invoke(layout, 'continue')
+        (layout.run / 'journal.lock').unlink()
+        raw = (layout.run / 'journal.jsonl').read_bytes()
+        (layout.run / 'journal.jsonl').write_bytes(raw.replace(b'"COMPLETE"', b'"FAILED"', 1))
+        with self.assertRaisesRegex(JournalError, 'chain broken'):
+            Journal(layout.run).load()
+        with self.assertRaisesRegex(runs.OperatorError, 'already exists'):
+            runs.create(runs.request_value(self.f['archive'], self.f['ready_idea'], None, None, [], None), base=self.f['base'], run_id='OPR-TEST')
+
+    def test_supplied_ledger_is_checked_on_a_pinned_copy_only(self):
+        first, _ = self.start(evidence=self.evidence(), run_id='OPR-TEST-PREVIEW')
+        preview = next(first.artifacts.glob('anvil-preview-*')) / 'ledger.jsonl'
+        ledger = self.root / 'inputs' / 'ledger.jsonl'
+        shutil.copyfile(preview, ledger)
+        before = ledger.read_bytes()
+        cid = 'CAND-' + self.f['ready_idea']
+        layout, _ = self.start(evidence=self.evidence(), run_id='OPR-TEST-LEDGER', ledger=runs.ledger_spec(ledger, cid, None))
+        r = self.stages(layout)['ANVIL_CHECKS']
+        self.assertEqual(r['status'], 'BLOCKED')
+        self.assertEqual(r['summary']['label'], 'supplied (pinned copy)')
+        self.assertTrue(Path(r['summary']['ledger']).is_relative_to(layout.artifacts))
+        self.assertEqual(ledger.read_bytes(), before)
+        self.assertEqual(self.stages(layout)['INTEGRITY']['summary']['checks']['supplied ledger'], 'UNCHANGED')
+
+    def test_only_permitted_component_commands_are_callable(self):
+        for module, argv in ((profile.SCOUT, ['review', 'x', 'y']), (profile.SCOUT, ['revise', 'x', 'y']), (profile.SCOUT, ['feasibility', 'x', 'y']),
+                             (profile.PIPELINE, ['run', 'x', '--authorisation', 'y']), (profile.CRITIC, ['import-response', 'w', 'r', 'f']),
+                             (profile.JEV, ['import-response', 'w', 'r']), (profile.JEVI, ['prepare', 'w']), (profile.QUARRY, ['plan-acquisition', 'r', 's']),
+                             (profile.DISCOVERY, ['disposition']), ('src.research.opportunity_scout.exploratory_v001', ['run'])):
+            with self.assertRaises(D.NotPermitted, msg=f'{module} {argv[0]}'):
+                D.call(module, argv)
+
+    def test_boundary_denies_network_processes_credentials_and_foreign_writes(self):
+        b = Boundary(); b.roots = (self.root.absolute() / 'run',); b.active = True
+        inside, outside = self.root / 'run' / 'x.json', self.root / 'elsewhere.json'
+        b.audit('open', (str(inside), 'xb', os.O_CREAT | os.O_EXCL | os.O_WRONLY))
+        b.audit('open', (str(outside), 'rb', os.O_RDONLY))
+        for event, args in (('socket.connect', (None, ('example.org', 443))), ('socket.getaddrinfo', ('example.org', 443, 0, 0, 0, 0)),
+                            ('subprocess.Popen', ('claude', ['claude'], None, None)), ('os.system', ('codex',)),
+                            ('open', (str(outside), 'wb', os.O_WRONLY | os.O_CREAT)), ('os.remove', (str(outside), None)),
+                            ('open', (str(self.root / '.env'), 'rb', os.O_RDONLY)), ('os.symlink', (str(inside), str(outside), None))):
+            with self.assertRaises(BoundaryViolation, msg=event):
+                b.audit(event, args)
+        b.active = False
+        b.audit('socket.connect', (None, None))  # inert outside the context
+        self.assertEqual(len(b.denials), 8)
+
+    def test_changed_run_artifact_fails_the_stage_without_crashing_the_invocation(self):
+        layout, _ = self.start()
+        ref = self.stages(layout)['FORGE_RECORDS']['summary']['card_artifact']
+        target = layout.run / ref['path']
+        target.write_bytes(target.read_bytes().replace(b'"version":1', b'"version":2', 1))
+        rep = self.more(layout)
+        s = self.stages(layout)
+        self.assertEqual(s['FORGE_RECORDS']['status'], 'COMPLETE')  # recorded result reused, never recomputed
+        self.assertEqual(s['ARMOURY_GRAPH']['status'], 'FAILED')
+        self.assertIn('run artifact changed since it was recorded', s['ARMOURY_GRAPH']['software_findings'][0])
+        self.assertEqual(rep['outcome'], 'FAILED')
+        self.assertTrue(cli.status(layout)['finished'])
+
+    def test_plan_lists_cards_when_no_idea_is_named(self):
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(cli.main(['--base', str(self.f['base']), 'plan', '--archive', str(self.f['archive'])]), 0)
+        plan = json.loads(out.getvalue())
+        self.assertIsNone(plan['selected'])
+        self.assertEqual({c['idea_id']: c['ready_review'] for c in plan['cards']}, {self.f['ready_idea']: True, self.f['unreviewed_idea']: False})
+
+    def test_cli_plan_status_and_refusals(self):
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = cli.main(['--base', str(self.f['base']), 'plan', '--archive', str(self.f['archive']), '--idea', self.f['unreviewed_idea']])
+        plan = json.loads(out.getvalue())
+        self.assertEqual(code, 0)
+        self.assertFalse(plan['selected']['ready_review'])
+        self.assertTrue(any('READY' in b for b in plan['predicted_blockers']))
+        self.assertFalse((self.f['base'] / 'operator-v1').exists())  # plan writes nothing to a run
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            self.assertEqual(cli.main(['--base', str(self.f['base']), 'status', 'OPR-NOPE']), 2)
+            self.assertEqual(cli.main(['--base', str(self.f['base']), 'run', '--subject', 'x', '--archive', 'y']), 2)
+        subjects = self.f['base'] / 'operator-v1' / 'subjects.json'
+        subjects.parent.mkdir(parents=True)
+        subjects.write_bytes(canonical({'schema': cli.SUBJECTS, 'subjects': {'demo-b': {'archive': str(self.f['archive']), 'idea_id': self.f['ready_idea']}}}))
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(cli.main(['--base', str(self.f['base']), 'run', '--subject', 'demo-b', '--run-id', 'OPR-TEST-CLI']), 0)
+        self.assertIn('# Research OS run report: OPR-TEST-CLI (STOPPED_AT_BOUNDARY)', out.getvalue())
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            cli.main(['--base', str(self.f['base']), 'status', 'OPR-TEST-CLI'])
+        status = json.loads(out.getvalue())
+        self.assertEqual((status['outcome'], status['locked'], status['finished']), ('STOPPED_AT_BOUNDARY', False, True))
+        self.assertEqual(cli.doctor(self.f['base'], self_test=False)['checks']['workspace_base'], str(self.f['base']))
+
+
+if __name__ == '__main__':
+    unittest.main()
