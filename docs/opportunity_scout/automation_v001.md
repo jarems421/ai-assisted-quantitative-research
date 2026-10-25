@@ -333,7 +333,10 @@ develop or test them.
   - otherwise `UNVERIFIED` (including an unreadable receipt).
 
   Only `VERIFIED` is `consistent: true`. A receipt that merely exists means the run finished, not that it is
-  verified. The other states are:
+  verified. The receipt `schema` alone decides how it is handled:
+  - V001 is always legacy, whatever fields it carries;
+  - a malformed V002 fails its checks and is never treated as legacy;
+  - any other schema is `UNVERIFIED`. The other states are:
   - `NOT_FINALISED`, after a crash (any report files are `UNCOMMITTED`);
   - `LEGACY_RECEIPT_UNBOUND`, for a V001 run. Pilot 001 also shows `consistent: false`.
 

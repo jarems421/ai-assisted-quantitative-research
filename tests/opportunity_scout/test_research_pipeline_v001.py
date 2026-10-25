@@ -531,6 +531,28 @@ class FinalisationTests(Base):
                 self.assertEqual({p.name: p.read_bytes() for p in ex.iterdir()}, before)  # read-only: nothing repaired
         self.store = source; self.assert_finalised(receipt)  # the unmutated run still verifies
 
+    def test_receipt_schema_alone_decides_legacy_or_v002_verification(self):
+        self.assert_finalised(self.execute())
+        source = self.store
+        receipt = json.loads((source / 'exports/pipeline-receipt.json').read_text(encoding='utf-8'))
+        cases = {  # receipt replacement -> (state, check that must not MATCH, or None)
+            'V001 carrying a valid V002 binding': ({**receipt, 'schema': R.LEGACY_RECEIPT_V}, 'LEGACY_RECEIPT_UNBOUND', None),
+            'V002 without its report binding': ({k: v for k, v in receipt.items() if k != 'report_sha256'}, 'MISMATCH', 'receipt report binding'),
+            'V002 with a malformed report binding': ({**receipt, 'report_sha256': 'not a mapping'}, 'MISMATCH', 'receipt report binding'),
+            'schema missing': ({k: v for k, v in receipt.items() if k != 'schema'}, 'UNVERIFIED', 'receipt schema'),
+            'unknown future schema': ({**receipt, 'schema': 'SCOUT_RESEARCH_PIPELINE_RECEIPT_V003'}, 'UNVERIFIED', 'receipt schema'),
+        }
+        for name, (value, state, check) in cases.items():
+            with self.subTest(case=name):
+                self.store = self.base / ('schema-' + name.replace(' ', '-'))
+                shutil.copytree(source, self.store)  # isolated synthetic copy
+                (self.store / 'exports/pipeline-receipt.json').write_text(json.dumps(value), encoding='utf-8')
+                f = R.status(self.store)['finalisation']
+                self.assertEqual((f['state'], f['consistent']), (state, False))
+                if check:self.assertNotEqual(f['checks'][check], 'MATCH')
+                else:self.assertNotIn('checks', f)  # legacy: no V002 verification is attempted or implied
+        self.store = source; self.assert_finalised(receipt)
+
     def test_a_v001_receipt_and_report_are_read_as_legacy_and_never_rewritten(self):
         self.execute(); ex = self.store / 'exports'
         for n in R.REPORT_FILES + ('pipeline-receipt.json', 'pipeline-execution.json'):(ex / n).unlink()  # fixture: a V001-shaped run
