@@ -47,17 +47,29 @@ def compare(workspace, labels_path, independence_record_path):
     K.need(claim['evaluation_sha256'] == io.sha(io.read(root / 'evaluation.json')), 'evaluation must be frozen in the pre-dispatch claim')
     K.need((registration['fixture'] == 'SYNTHETIC') == (claim['fixture'] == 'SYNTHETIC'), 'synthetic results cannot establish human-holdout effectiveness')
     labels = K.loads(labels_raw)
+    provider_status = result['provider']['status']
+    model_metrics_available = provider_status in ('SYNTHETIC_VALID', 'PROVIDER_VALID')
     comparisons = []
     for budget in registration['inspection_budgets']:
         comparison = at_budget(result, labels, budget)
-        comparison['navigation_classification'] = comparison.pop('scripted_classification')
+        ranking_metrics = comparison.pop('scripted_classification')
+        comparison['navigation_classification'] = ranking_metrics if model_metrics_available else None
+        comparison['model_metrics_status'] = 'VALID_CLASSIFICATIONS' if model_metrics_available else 'UNAVAILABLE_PROVIDER_ATTEMPT_UNUSABLE'
+        comparison['abstention_status'] = 'RECORDED_FROM_VALID_CLASSIFICATIONS' if model_metrics_available else 'UNKNOWN_NO_VALID_CLASSIFICATIONS'
+        if not model_metrics_available:
+            comparison['abstentions'] = None
         structured = at_budget({**result, 'baseline_order': registration['additional_baseline_order']}, labels, budget)
         comparison['additional_baseline'] = structured['baseline']
         comparison['interpretation'] = 'Synthetic software diagnostics, not Jev effectiveness.' if claim['fixture'] == 'SYNTHETIC' else 'Owner-supplied holdout labels and independence attestations; not authenticated human identity or established accuracy.'
+        if not model_metrics_available:
+            comparison['interpretation'] = 'Provider attempt unusable: model-assisted metrics and abstention rates are unavailable. Baseline metrics are diagnostics only; the failed attempt remains in this evaluation.'
         comparisons.append(comparison)
     citations_preserved = all(r['citation'] == next(original['citation'] for original in bundle['request']['records'] if original['id'] == r['id']) for r in result['inspection_queue'])
     stops_preserved = all(r['availability'] == next(original['availability'] for original in bundle['request']['records'] if original['id'] == r['id']) for r in result['inspection_queue'])
-    return {'schema': 'JEV_PROVIDER_EVALUATION_V001', 'comparisons': comparisons, 'fixture': registration['fixture'],
+    return {'schema': 'JEV_PROVIDER_EVALUATION_V002', 'comparisons': comparisons, 'fixture': registration['fixture'],
+            'model_metrics_available': model_metrics_available, 'retained_attempts': 1,
+            'usable_classification_attempts': int(model_metrics_available),
+            'unusable_provider_attempts': int(not model_metrics_available),
             'invalid_response_count': result['invalid_response_count'], 'provider_status': result['provider']['status'],
             'citation_and_stop_preservation': citations_preserved and stops_preserved,
             'additional_baseline': {'description': registration['additional_baseline_description'], 'order': registration['additional_baseline_order']},

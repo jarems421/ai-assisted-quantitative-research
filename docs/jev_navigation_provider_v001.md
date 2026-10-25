@@ -133,6 +133,32 @@ model string is provider-reported identity, not proof of runtime execution or ac
 
 ## Evaluation readiness
 
+Review correction: evaluations now use `JEV_PROVIDER_EVALUATION_V002`. Only valid
+provider classifications receive `navigation_classification` metrics. Invalid,
+interrupted, HTTP/transport-failed and refused attempts retain both baseline scores,
+but model metrics and abstention rates are explicitly unavailable (JSON null), never
+the deterministic fallback relabelled as Jev performance. Every failed attempt remains
+in the evaluation with an unusable-attempt count and its provider status. A valid
+all-abstaining response remains valid and records its abstentions.
+
+Result metadata is a whitelist: only the two reviewed version IDs and exact bounded
+integer token fields may leave raw capture. Input usage is bounded to 65,536; output
+usage to 2,147,483,647 as a reporting-format limit, not a verified generation budget.
+Malformed fields become UNKNOWN with fixed fault categories. Recognised provider
+identity may be retained on a model mismatch, while requested identity stays separate
+and `runtime_identity` always remains UNVERIFIED. Reports re-derive this boundary even
+for failed attempts. Raw bytes are unchanged and private; no untrusted nested JSON or
+arbitrary model string is copied into ordinary result/report metadata.
+
+The plan now records `transport_limits`: 30-second socket inactivity, one MiB retained
+response plus one overflow-marker byte, and **strict total wall deadline NOT_ENFORCED**.
+The timeout cannot bound a trickling peer across the whole connection, headers and
+body. A strict cross-platform total deadline requires a separately reviewed transport
+change; no watchdog/runner is added here. This is an accepted offline limitation and
+must be addressed prospectively before a live evaluation that needs that guarantee.
+`IncompleteRead.partial` bytes are retained privately before recording the fixed
+exception type; incomplete and oversize responses are never treated as valid answers.
+
 The [existing prospective protocol](jev_navigation_v001/evaluation_protocol.md) remains
 the evaluation authority. Independently assemble and label a private frozen holdout
 before viewing output; assistants must not supply human labels, reasons, exposure
@@ -157,6 +183,13 @@ records; the software does not certify them. Synthetic transport results cannot 
 relabelled as an independent human holdout or established accuracy.
 
 ## Demonstrations and remaining owner actions
+
+The final adverse demo keeps six inspection records from two retained originals and
+one unavailable-source receipt. A host-wide STOP remains attached to the negative
+record. A separately cited falsifier is deliberately missed by the scripted classifier
+and remains visible in the queue and missed-important diagnostics. All three human
+handoffs remain PENDING; only two packages contain original bytes. These are public
+designer controls, not independent labels or observed Jev performance.
 
 The demo retains two separate fictional originals (an order and an independent shipment
 record), an F1 measurement lead, an F2 decoy and an ambiguous passage, then exercises the exact provider-shaped payload/raw response with

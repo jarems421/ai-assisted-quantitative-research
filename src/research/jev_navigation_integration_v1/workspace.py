@@ -54,6 +54,9 @@ def make_plan(navigation_workspace, target, model, quarry_export=None):
             'payload_bytes': len(raw), 'policy_sha256': policy_hash(), 'endpoint': 'https://' + P.HOST + P.PATH,
             'request_ceiling': 1, 'reserved_micro_usd': P.RESERVATION_MICRO_USD, 'actual_cost': 'UNKNOWN',
             'provider_request_binding': 'LOCAL_CAPTURE_ONLY_NOT_PROVIDER_AUTHENTICATED',
+            'transport_limits': {'socket_inactivity_seconds': P.SOCKET_INACTIVITY_SECONDS,
+                                 'strict_total_wall_deadline': 'NOT_ENFORCED',
+                                 'response_byte_ceiling': P.MAX_RESPONSE, 'overflow_marker_bytes': 1},
             'enabled_by_default': False, 'authorises': []}
     return plan, raw, bundle
 
@@ -123,7 +126,7 @@ def dispatch(workspace, approval_path, account_evidence_path, *, enabled=False, 
     io.write(root / 'approval.json', approval)
     io.write(root / 'account-evidence.bin', evidence, raw=True)
     status, fault, response_status, count = 'INTERRUPTED_OR_UNKNOWN', None, None, 0
-    result = {'model_returned': 'UNKNOWN', 'usage': 'UNKNOWN', 'answers': None}
+    result = P.metadata(None)
     with (root / 'response.raw').open('xb') as handle:
         def emit(chunk):
             nonlocal count
@@ -156,10 +159,7 @@ def dispatch(workspace, approval_path, account_evidence_path, *, enabled=False, 
         else:
             try:
                 response = K.loads(raw)
-                if isinstance(response, dict):
-                    # Persist these exact parsed fields even if model/answers are refused.
-                    result['model_returned'] = response.get('model', 'UNKNOWN')
-                    result['usage'] = response.get('usage', 'UNKNOWN')
+                result = P.metadata(response)
                 P.answers(bundle['request'], response, plan['model'])
                 status = 'SYNTHETIC_VALID' if synthetic else 'PROVIDER_VALID'
             except (ValueError, TypeError, KeyError) as error:
@@ -168,6 +168,7 @@ def dispatch(workspace, approval_path, account_evidence_path, *, enabled=False, 
               'fixture': approval['fixture'], 'plan_sha256': digest(plan), 'payload_sha256': plan['payload_sha256'],
               'raw_sha256': io.sha(raw), 'raw_bytes': len(raw), 'model_requested': plan['model'],
               'model_returned': result['model_returned'], 'usage': result['usage'], 'actual_cost': 'UNKNOWN',
+              'metadata_faults': result['metadata_faults'], 'runtime_identity': result['runtime_identity'],
               'reserved_micro_usd': plan['reserved_micro_usd'], 'reservation_released': False,
               'provider_request_binding': plan['provider_request_binding'], 'authorises': []}
     io.write(root / 'result.json', record)
@@ -209,6 +210,15 @@ def report(workspace):
                                   'claim_sha256': digest(claim), 'authorises': []}, 'completion/result/claim binding changed')
             raw = io.read(root / 'response.raw', P.MAX_RESPONSE + 1)
             raw_hash = io.sha(raw)
+            # Failed attempts have the same reporting boundary as valid responses.
+            # Re-derive only whitelisted metadata; never echo arbitrary stored JSON.
+            reported_metadata = P.metadata(None)
+            if record['status'] in ('SYNTHETIC_VALID', 'PROVIDER_VALID', 'INVALID_RESPONSE'):
+                try:
+                    reported_metadata = P.metadata(K.loads(raw))
+                except (ValueError, TypeError):
+                    pass
+            K.need(all(record.get(k) == v for k, v in reported_metadata.items()), 'provider metadata inconsistent or unsafe')
             K.need(record['raw_sha256'] == raw_hash and record['raw_bytes'] == len(raw)
                    and record['plan_sha256'] == digest(plan) and record['payload_sha256'] == plan['payload_sha256'], 'result/raw/plan binding changed')
             claim = io.json_file(root / 'attempt.json')

@@ -37,6 +37,15 @@ class IntegrationTests(unittest.TestCase):
     def save_auth(self):
         self.auth.write_bytes(canonical(self.approval))
 
+    def fresh_provider(self, name):
+        self.ws = self.root / name
+        W.prepare(self.nav, self.ws, model='jev-1.14.0', quarry_export=self.root / 'handoff')
+        _, self.plan, self.payload, self.bundle = W.load(self.ws)
+        auth_root = self.root / (name + '-auth'); auth_root.mkdir()
+        self.approval = D.synthetic_approval(self.plan, auth_root)
+        self.auth = auth_root / 'approval.json'; self.save_auth()
+        self.evidence = auth_root / 'synthetic-account.txt'
+
     def dispatch(self, response=None, status=200, transport=None):
         raw = canonical(self.response if response is None else response)
         def fixture(payload, key, emit):
@@ -137,7 +146,8 @@ class IntegrationTests(unittest.TestCase):
         self.response['model'] = 'jev-latest'
         result = self.dispatch()
         self.assertEqual(result['status'], 'INVALID_RESPONSE')
-        self.assertEqual(result['model_returned'], 'jev-latest')
+        self.assertEqual(result['model_returned'], 'UNKNOWN')
+        self.assertEqual(result['runtime_identity'], 'UNVERIFIED')
         report = W.report(self.ws)
         self.assertEqual(report['invalid_response_count'], 1)
         self.assertEqual([r['id'] for r in report['inspection_queue']], report['baseline_order'])
@@ -242,6 +252,61 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(chunks, [b'denied'])
         conn.close.assert_called_once()
 
+    def test_incomplete_http_capture_retains_partial_bytes_privately(self):
+        response = Mock(status=200)
+        response.read.side_effect = http.client.IncompleteRead(b'SYNTHETIC_PARTIAL_BYTES', 100)
+        conn = Mock(); conn.getresponse.return_value = response
+        with patch.object(P.http.client, 'HTTPSConnection', return_value=conn):
+            result = self.dispatch(transport=P.capture)
+        self.assertEqual(result['status'], 'TRANSPORT_FAILED')
+        self.assertEqual(io.read(self.ws / 'response.raw'), b'SYNTHETIC_PARTIAL_BYTES')
+        self.assertEqual(result['usage'], 'UNKNOWN')
+        self.assertNotIn('SYNTHETIC_PARTIAL_BYTES', json.dumps(result))
+        conn.close.assert_called_once()
+
+    def test_provider_metadata_is_whitelisted_bounded_and_raw_is_unchanged(self):
+        marker = 'FICTIONAL_UNTRUSTED_VALUE_NOT_A_CREDENTIAL'
+        adversarial = [
+            ('model-object', 'model', {'nested': marker}),
+            ('model-token', 'model', 'Bearer ' + marker),
+            ('model-oversize', 'model', 'jev-' + 'x' * 5000),
+            ('usage-object', 'usage', {'input_tokens': {'token': marker}, 'output_tokens': 1}),
+            ('usage-extra', 'usage', {'input_tokens': 1, 'output_tokens': 1, 'token': marker}),
+            ('usage-bool', 'usage', {'input_tokens': True, 'output_tokens': 1}),
+            ('usage-float', 'usage', {'input_tokens': 1.0, 'output_tokens': 1}),
+            ('usage-negative', 'usage', {'input_tokens': -1, 'output_tokens': 1}),
+            ('usage-oversize', 'usage', {'input_tokens': 1, 'output_tokens': 2147483648})]
+        for name, field, value in adversarial:
+            with self.subTest(case=name):
+                self.fresh_provider(name)
+                response = copy.deepcopy(self.response); response[field] = value
+                result = self.dispatch(response=response)
+                self.assertEqual(result['status'], 'INVALID_RESPONSE')
+                self.assertEqual(result['model_returned'] if field == 'model' else result['usage'], 'UNKNOWN')
+                self.assertEqual(result['runtime_identity'], 'UNVERIFIED')
+                self.assertEqual(io.read(self.ws / 'response.raw'), canonical(response))
+                self.assertNotIn(marker, json.dumps(result))
+                self.assertNotIn(marker, json.dumps(W.report(self.ws)))
+
+    def test_invalid_reply_preserves_recognised_identity_without_claiming_runtime_identity(self):
+        response = copy.deepcopy(self.response); response['model'] = 'jev-1.13.0'
+        result = self.dispatch(response=response)
+        self.assertEqual(result['status'], 'INVALID_RESPONSE')
+        self.assertEqual(result['model_requested'], 'jev-1.14.0')
+        self.assertEqual(result['model_returned'], 'jev-1.13.0')
+        self.assertEqual(result['runtime_identity'], 'UNVERIFIED')
+        self.assertEqual(result['usage'], response['usage'])
+
+    def test_report_rejects_unsafe_metadata_even_with_an_updated_completion_hash(self):
+        response = copy.deepcopy(self.response); response['model'] = {'untrusted': 'FICTIONAL_MARKER'}
+        self.dispatch(response=response)
+        record = io.json_file(self.ws / 'result.json'); record['model_returned'] = response['model']
+        (self.ws / 'result.json').write_bytes(canonical(record))
+        completion = io.json_file(self.ws / 'completion.json'); completion['result_sha256'] = digest(record)
+        (self.ws / 'completion.json').write_bytes(canonical(completion))
+        with self.assertRaisesRegex(ValueError, '^provider metadata inconsistent or unsafe$'):
+            W.report(self.ws)
+
     def test_holdout_freezes_opaque_label_hashes_before_dispatch_and_reuses_budget_metrics(self):
         self.registration()
         frozen = V.freeze(self.ws, self.root / 'registration.json')
@@ -251,11 +316,62 @@ class IntegrationTests(unittest.TestCase):
         self.assertFalse(result['accuracy_established'])
         self.assertTrue(result['citation_and_stop_preservation'])
         self.assertEqual(result['comparisons'][0]['navigation_classification']['relevant_inspected'], ['B_F1_ORDER'])
+        self.assertTrue(result['model_metrics_available'])
+        self.assertEqual(result['usable_classification_attempts'], 1)
         with self.assertRaisesRegex(ValueError, 'precede'):
             V.freeze(self.ws, self.root / 'registration.json')
         (self.root / 'labels.json').write_bytes(b'{}')
         with self.assertRaisesRegex(ValueError, 'changed since freeze'):
             V.compare(self.ws, self.root / 'labels.json', self.root / 'independence.txt')
+
+    def test_unusable_attempts_never_receive_model_ranking_or_abstention_metrics(self):
+        for name, status in [('malformed', 'INVALID_RESPONSE'), ('model-mismatch', 'INVALID_RESPONSE'),
+                             ('http-failure', 'HTTP_FAILED'), ('interrupted', 'INTERRUPTED_OR_UNKNOWN'),
+                             ('transport-failure', 'TRANSPORT_FAILED'), ('refused', 'REFUSED_OR_OVERSIZE')]:
+            with self.subTest(case=name):
+                self.fresh_provider(name)
+                self.registration(); V.freeze(self.ws, self.root / 'registration.json')
+                if name == 'interrupted':
+                    def transport(payload, key, emit):
+                        emit(b'partial'); raise KeyboardInterrupt()
+                    with self.assertRaises(KeyboardInterrupt):
+                        self.dispatch(transport=transport)
+                elif name in ('transport-failure', 'refused'):
+                    def transport(payload, key, emit):
+                        emit(b'partial')
+                        if name == 'refused':
+                            raise ValueError('synthetic refusal')
+                        raise http.client.IncompleteRead(b'private partial')
+                    self.dispatch(transport=transport)
+                elif name == 'malformed':
+                    def transport(payload, key, emit):
+                        emit(b'{bad json'); return 200
+                    self.dispatch(transport=transport)
+                elif name == 'model-mismatch':
+                    response = copy.deepcopy(self.response); response['model'] = 'jev-1.13.0'
+                    self.dispatch(response=response)
+                else:
+                    self.dispatch(status=503)
+                result = V.compare(self.ws, self.root / 'labels.json', self.root / 'independence.txt')
+                self.assertEqual(result['provider_status'], status)
+                self.assertFalse(result['model_metrics_available'])
+                self.assertEqual((result['retained_attempts'], result['unusable_provider_attempts']), (1, 1))
+                for comparison in result['comparisons']:
+                    self.assertIsNone(comparison['navigation_classification'])
+                    self.assertIsNone(comparison['abstentions'])
+                    self.assertIsNotNone(comparison['baseline']['precision_at_budget'])
+                    self.assertIsNotNone(comparison['additional_baseline']['precision_at_budget'])
+                    self.assertEqual(comparison['model_metrics_status'], 'UNAVAILABLE_PROVIDER_ATTEMPT_UNUSABLE')
+        # Valid abstentions remain measurable classifications, even when order equals baseline.
+        self.fresh_provider('valid-abstaining')
+        self.registration(); V.freeze(self.ws, self.root / 'registration.json')
+        response = copy.deepcopy(self.response)
+        for answer in response['answers'].values():
+            answer.update(choice='unsure', probabilities={'yes': .1, 'no': .1, 'unsure': .8}, confidence=.7)
+        self.dispatch(response=response)
+        result = V.compare(self.ws, self.root / 'labels.json', self.root / 'independence.txt')
+        self.assertTrue(result['model_metrics_available'])
+        self.assertTrue(result['comparisons'][0]['abstentions'])
 
     def test_synthetic_evaluation_cannot_be_reported_as_independent_human_accuracy(self):
         self.registration(); V.freeze(self.ws, self.root / 'registration.json'); self.dispatch()
@@ -280,7 +396,16 @@ class IntegrationTests(unittest.TestCase):
         self.assertFalse(result['accuracy_established'])
         self.assertEqual(result['distinct_originals'], 2)
         collection = C.validate(self.root / 'demo/collection')
-        self.assertEqual(len(collection['bundle']['request']['records']), 4)
+        self.assertEqual(len(collection['bundle']['request']['records']), 6)
+        report = io.json_file(self.root / 'demo/report.json')
+        rows = {r['id']: r for r in report['inspection_queue']}
+        self.assertEqual(result['stopped_unavailable_records'], ['F_UNAVAILABLE_STOP'])
+        self.assertEqual(rows['E_FALSIFIER']['model_positive_categories'], [])
+        self.assertEqual(rows['F_UNAVAILABLE_STOP']['availability'], 'STOPPED')
+        self.assertIn('do not fetch', rows['F_UNAVAILABLE_STOP']['inspection_task'])
+        self.assertEqual(report['discarded_records'], [])
+        evaluation = io.json_file(self.root / 'demo/evaluation-report.json')
+        self.assertIn('E_FALSIFIER', evaluation['comparisons'][0]['navigation_classification']['missed_important'])
         original = self.root / 'demo/collection/packages/P01/source/original.bin'
         original.write_bytes(b'changed second original')
         with self.assertRaisesRegex(ValueError, 'TAMPERED'):
