@@ -88,6 +88,18 @@ offline profile does not establish an empirical outcome: `research_outcome` stay
 null. A successful invocation or human M decision is not an empirical finding.
 Human action groups are not an exhaustive count of individual records.
 
+Multiple independently attached native runs have no authoritative supersession
+relationship. Their individual validated stages, execution states, blockers and
+pending decisions are retained in `activities[].state` and the Markdown report.
+The branch has `stage: null`, `research_outcome: null` and
+`execution_state: AMBIGUOUS_NATIVE_REFERENCE`; its next action is to inspect the
+individual references. Attachment order, timestamps and apparent stage depth never
+choose a winner, even if summaries happen to agree. Activity IDs are sorted only
+for deterministic presentation. If any reference needs reconciliation, that
+integrity refusal takes precedence; the other activity states remain visible.
+Reconciliation observes native completions and does not resolve this ambiguity
+or replay work. Single-activity summaries retain their existing behavior.
+
 ## Budgets
 
 The optional integer micro-USD campaign allocation is informational in this

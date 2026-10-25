@@ -265,3 +265,51 @@ class CampaignTests(unittest.TestCase):
         after = read_tree(self.f['base'])
         self.assertEqual({k: v for k, v in before.items() if not k.startswith('campaign-v1/')},
                          {k: v for k, v in after.items() if not k.startswith('campaign-v1/')})
+
+    def test_multiple_completed_runs_are_ambiguous_independent_of_attachment_order(self):
+        old = self.layouts[0]
+        p = Path(self.f['evidence'])
+        evidence = runs.evidence_spec(json.loads(p.read_bytes()), p.parent)
+        other = runs.create(runs.request_value(self.f['archive'], self.ids[0], None, evidence, [], None),
+                            base=self.f['base'], run_id='OPR-SAME-CARD-EVIDENCE')
+        runs.invoke(other, 'run')
+        before = read_tree(self.f['base'])
+        views = []; campaigns = []
+        with patch.object(runs, 'invoke', side_effect=AssertionError('native replay')):
+            for index, order in enumerate(((('A-OLD', old), ('A-EVIDENCE', other)),
+                                           (('A-EVIDENCE', other), ('A-OLD', old)))):
+                campaign = C.create(self.f['base'], f'CMP-ORDER-{index}')
+                campaigns.append(campaign)
+                card = Archive(self.f['archive']).load().latest(self.ids[0])
+                campaign.add_branch('B0', self.f['archive'], card['id'], card['version'], digest(card))
+                for aid, layout in order:
+                    campaign.attach('B0', aid, layout.run)
+                views.append(campaign.status()['branches'][0])
+                self.assertEqual(campaign.reconcile(), {'A-EVIDENCE': 'UNCHANGED', 'A-OLD': 'UNCHANGED'})
+        self.assertEqual(views[0], views[1],
+                         f"Attachment order selected branch stages: {[v['stage'] for v in views]}")
+        row = views[0]
+        self.assertEqual(row['execution_state'], 'AMBIGUOUS_NATIVE_REFERENCE')
+        self.assertIsNone(row['stage']); self.assertIsNone(row['research_outcome'])
+        self.assertEqual({a['activity_id']: a['state']['stage'] for a in row['activities']},
+                         {'A-OLD': 'QUARRY_EVIDENCE', 'A-EVIDENCE': 'ANVIL_DRAFTS'})
+        for activity in row['activities']:
+            self.assertEqual(activity['state']['execution_state'], 'STOPPED_AT_BOUNDARY')
+            self.assertIsNone(activity['state']['research_outcome'])
+            self.assertTrue(activity['state']['blockers'])
+        rendered = C.markdown({'campaign_id': 'CMP-VIEW', 'journal_head': 'a' * 64,
+                               'journal_events': 1, 'branches': [row],
+                               'budgets': {'component_batches': []}})
+        for text in ('AMBIGUOUS_NATIVE_REFERENCE', 'A-OLD', 'A-EVIDENCE', 'QUARRY_EVIDENCE', 'ANVIL_DRAFTS'):
+            self.assertIn(text, rendered)
+        after = read_tree(self.f['base'])
+        self.assertEqual({k: v for k, v in before.items() if not k.startswith('campaign-v1/')},
+                         {k: v for k, v in after.items() if not k.startswith('campaign-v1/')})
+        # Integrity failures still take precedence, without hiding the other run.
+        artifact = next(old.artifacts.glob('card-*.json'))
+        artifact.write_bytes(artifact.read_bytes() + b' ')
+        invalid = [c.status()['branches'][0] for c in campaigns]
+        self.assertEqual(invalid[0], invalid[1])
+        self.assertEqual(invalid[0]['execution_state'], 'RECONCILIATION_REQUIRED')
+        self.assertEqual({a['activity_id']: a['state']['execution_state'] for a in invalid[0]['activities']},
+                         {'A-OLD': 'RECONCILIATION_REQUIRED', 'A-EVIDENCE': 'STOPPED_AT_BOUNDARY'})

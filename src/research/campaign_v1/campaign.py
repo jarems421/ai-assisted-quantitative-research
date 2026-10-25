@@ -137,7 +137,10 @@ class Campaign:
             row = {'branch_id': bid, 'hypothesis': {k: b[k] for k in ('archive', 'idea_id', 'version', 'card_sha256', 'fixture')},
                    'stage': 'FORGE', 'execution_state': 'WAITING_FOR_NATIVE_REFERENCE', 'research_outcome': None,
                    'blockers': [], 'pending_decisions': [],
-                   'activities': [{'activity_id': aid, **a['observation']} for aid, a in activities.items() if a['branch_id'] == bid],
+                   'activities': [{'activity_id': aid, **a['observation'],
+                                   'state': {'stage': None, 'execution_state': 'NOT_VALIDATED', 'research_outcome': None,
+                                             'blockers': [], 'pending_decisions': []}}
+                                  for aid, a in sorted(activities.items()) if a['branch_id'] == bid],
                    'next_eligible_action': 'ATTACH_COMPLETED_OFFLINE_RUN', 'authorises': []}
             batch = batches.setdefault(b['batch_id'], {'batch_id': b['batch_id'], 'batch_sha256': b['batch_sha256'], 'branches': [], 'archives': []})
             R.need(batch['batch_sha256'] == b['batch_sha256'], 'conflicting shared batch identity')
@@ -148,20 +151,35 @@ class Campaign:
                 current = N.branch_current(b)
                 row['scout_route'], row['scout_handoff_eligible'] = current['route'], current['handoff_eligible']
                 row['scout_reference_scope'] = 'REGISTERED_ORIGINAL_ARCHIVE; working-copy review state belongs to the native report'
-                for aid, a in activities.items():
-                    if a['branch_id'] != bid:
-                        continue
-                    old = a['observation']
-                    observed, rep = N.observe(old['run'], b, old)
-                    if observed != old:
-                        raise R.CampaignError('native run advanced; reconcile retained completion')
-                    boundary = rep['first_boundary']
-                    row.update(stage=boundary['stage'] if boundary else 'OFFLINE_BOUNDARY', execution_state=rep['outcome'],
-                               blockers=rep['research_blockers'] + rep['software_blockers'],
-                               pending_decisions=rep.get('human_action_groups', rep.get('human_decisions', [])),
-                               next_eligible_action='SUPPLY_NATIVE_INPUT_OR_REVIEW' if boundary else 'NO_AUTHORISED_DOWNSTREAM_ACTION')
-                    if old['binding'] != binding['native']:
-                        raise R.CampaignError('NATIVE_IMPLEMENTATION_CHANGED: retain original native records and use pinned interpreter')
+                for activity in row['activities']:
+                    state = activity['state']
+                    old = activities[activity['activity_id']]['observation']
+                    try:
+                        observed, rep = N.observe(activity['run'], b, old)
+                        if observed != old:
+                            raise R.CampaignError('native run advanced; reconcile retained completion')
+                        if activity['binding'] != binding['native']:
+                            raise R.CampaignError('NATIVE_IMPLEMENTATION_CHANGED: retain original native records and use pinned interpreter')
+                        boundary = rep['first_boundary']
+                        state.update(stage=boundary['stage'] if boundary else 'OFFLINE_BOUNDARY', execution_state=rep['outcome'],
+                                     blockers=rep['research_blockers'] + rep['software_blockers'],
+                                     pending_decisions=rep.get('human_action_groups', rep.get('human_decisions', [])),
+                                     next_eligible_action='SUPPLY_NATIVE_INPUT_OR_REVIEW' if boundary else 'NO_AUTHORISED_DOWNSTREAM_ACTION')
+                    except (ValueError, OSError, KeyError, TypeError) as error:
+                        state.update(execution_state='RECONCILIATION_REQUIRED', blockers=[str(error)],
+                                     next_eligible_action='RECONCILE_RETAINED_REFERENCE')
+                states = [a['state'] for a in row['activities']]
+                if len(states) == 1:
+                    row.update(states[0])
+                elif len(states) > 1:
+                    # Separate native runs have no admitted supersession relation.
+                    # Identifier sorting is presentation only, never authority or progress.
+                    invalid = any(s['execution_state'] == 'RECONCILIATION_REQUIRED' for s in states)
+                    row.update(stage=None, execution_state='RECONCILIATION_REQUIRED' if invalid else 'AMBIGUOUS_NATIVE_REFERENCE',
+                               blockers=sorted({x for s in states for x in s['blockers']}),
+                               pending_decisions=sorted({x for s in states for x in s['pending_decisions']}),
+                               next_eligible_action='RECONCILE_RETAINED_REFERENCE' if invalid else 'REVIEW_INDIVIDUAL_NATIVE_REFERENCES')
+                    row['blockers'].append('Multiple native runs are attached; no authoritative branch reference is established. Inspect individual activity states.')
             except (ValueError, OSError, KeyError, TypeError) as error:
                 row.update(execution_state='RECONCILIATION_REQUIRED', next_eligible_action='RECONCILE_RETAINED_REFERENCE')
                 row['blockers'].append(str(error))
@@ -187,12 +205,18 @@ def markdown(rep):
            '| Branch | Exact card | Stage | Execution state | Research outcome |', '|---|---|---|---|---|']
     for b in rep['branches']:
         h = b['hypothesis']
-        out.append(f"| {b['branch_id']} | {h['idea_id']} v{h['version']} | {b['stage']} | {b['execution_state']} | NOT_ESTABLISHED |")
+        out.append(f"| {b['branch_id']} | {h['idea_id']} v{h['version']} | {b['stage'] or 'UNDETERMINED'} | {b['execution_state']} | NOT_ESTABLISHED |")
     for b in rep['branches']:
         out += ['', f"## {b['branch_id']}", '', f"Card SHA-256: `{b['hypothesis']['card_sha256']}`.", '',
                 f"Next: {b['next_eligible_action']}.", '']
         out += [f'- Blocker: {x}' for x in b['blockers']]
         out += [f'- Pending human action group: {x}' for x in b['pending_decisions']]
+        if len(b['activities']) > 1:
+            for a in b['activities']:
+                s = a['state']
+                out += [f"- Activity {a['activity_id']} (`{a['run_id']}`): {s['stage'] or 'UNDETERMINED'} / {s['execution_state']}."]
+                out += [f"- {a['activity_id']} blocker: {x}" for x in s['blockers']]
+                out += [f"- {a['activity_id']} pending human action group: {x}" for x in s['pending_decisions']]
         out += ['- Provisional source investigation is not implemented or authorised; Scout READY is not fabricated.']
     out += ['', 'Campaign allocation and native component budgets remain separate. Shared Forge batches: '
             + str(len(rep['budgets']['component_batches'])) + '. Actual component charges: UNKNOWN.', '',
