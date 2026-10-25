@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Opportunity Scout scan V001: one operator command (2026-10-25)
+
+- `docs/opportunity_scout/scan_v001.md`; code `src/research/opportunity_scout/scan_v001/` (`python -m src.research.opportunity_scout.scan_v001 configure|scan`, optional `scout.ps1`; skill `.claude/skills/opportunity-scout/`). It only calls `automation_v001` plan/status/run and the runner's and pipeline's own preflight and authorisation checks; never add generation, rubric, provider, spend or policy logic to it, and never edit `exploratory_v001`, `critic_v1`, top-level Scout files or frozen texts for it.
+- A run needs the owner's confirmation of the exact plan hash (typed `RUN <prefix>` or `--confirm <hash>` the owner gave). Assistants never confirm on their own initiative, never re-run a claimed plan or plan a replacement after a failure, and never read or print the Gemini key (DPAPI store under `%LOCALAPPDATA%\ResearchOS\`; presence-only check). The scan configuration holds no secret.
+- Open Claude Code sessions are not a demonstrated conflict; the check blocks only when the runner's watched development-account files change during its quiet window. Existing plans (Pilot 002) run unchanged via `--archive`.
+
 ## Research OS operator V001: unified offline coordinator (2026-10-25)
 
 - To run, continue or report Research OS on a hypothesis, use `python -m src.research.operator plan|run|continue|status|report` (skill `.claude/skills/research-os/`, doc `docs/research_operator_v001.md`), not hand-assembled component commands. One profile, `FORGE_TO_ANVIL_OFFLINE_V001`. Workflow automation only: it records no human judgment, acquires nothing, calls no model or provider, opens no credential and promotes nothing; an audit-hook boundary and a command allowlist enforce this in code.
