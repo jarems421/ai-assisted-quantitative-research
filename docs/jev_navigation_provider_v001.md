@@ -135,6 +135,9 @@ request/record universe, fixed budgets and endpoints, and a separately supplied
 complete structured-search/analyst baseline ordering. It does not open the labels or
 put them in the payload. The existing keyword/Graph baseline is also retained. The
 registration must precede dispatch and its hash is included in the attempt claim.
+LIVE dispatch also requires this frozen registration to name an independently labelled
+human holdout and bind the exact request, record universe, baseline and budgets. A
+missing or synthetic registration is refused before credentials or a launch claim.
 
 `compare <workspace> <labels.json> <independence-record>` verifies those hashes and
 reuses `evaluation.at_budget` for precision, recall, false priorities, missed important

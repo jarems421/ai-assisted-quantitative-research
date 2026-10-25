@@ -109,6 +109,8 @@ def dispatch(workspace, approval_path, account_evidence_path, *, enabled=False, 
     root, plan, payload, bundle = load(workspace)
     synthetic = fixture_transport is not None
     approval, evidence, audit = approval_for(plan, approval_path, account_evidence_path, synthetic=synthetic)
+    if not synthetic:
+        require_live_evaluation(root, plan, bundle)
     K.need(not (root / 'attempt.json').exists(), 'attempt already claimed; never retry/resume')
     # A plan has one durable claim in the independently supplied audit root as well as its workspace.
     claim = {'schema': 'JEV_PROVIDER_ATTEMPT_V001', 'plan_sha256': digest(plan), 'approval_sha256': digest(approval),
@@ -170,6 +172,24 @@ def dispatch(workspace, approval_path, account_evidence_path, *, enabled=False, 
     io.write(root / 'completion.json', {'result_sha256': digest(record), 'raw_sha256': io.sha(raw),
                                        'claim_sha256': digest(claim), 'authorises': []})
     return record
+
+
+def require_live_evaluation(root, plan, bundle):
+    """Live navigation requires a prospectively frozen independently labelled evaluation.
+
+    This verifies registration consistency, never the truth of human independence.
+    Labels and the independent assembly record remain opaque, outside the payload.
+    """
+    from .evaluation import REGISTRATION
+    K.need((root / 'evaluation.json').is_file(), 'LIVE_EVALUATION_REQUIRED: freeze independently labelled holdout before activation')
+    frozen = io.json_file(root / 'evaluation.json')
+    registration = frozen['registration']
+    K.validate(REGISTRATION, registration)
+    K.need(registration['fixture'] == 'INDEPENDENT_HUMAN_HOLDOUT', 'synthetic evaluation cannot activate live navigation')
+    K.need(frozen['plan_sha256'] == digest(plan) and frozen['request_sha256'] == bundle['request_sha256']
+           and frozen['record_ids'] == sorted(r['id'] for r in bundle['request']['records']), 'live evaluation does not bind exact request/universe')
+    K.need(set(registration['additional_baseline_order']) == set(frozen['record_ids'])
+           and all(type(b) is int and b <= len(frozen['record_ids']) for b in registration['inspection_budgets']), 'live evaluation baseline/budget mismatch')
 
 
 def report(workspace):

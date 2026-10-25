@@ -253,6 +253,13 @@ class IntegrationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'pre-dispatch claim'):
             V.compare(self.ws, self.root / 'labels.json', self.root / 'independence.txt')
 
+    def test_live_evaluation_gate_refuses_missing_or_synthetic_holdout(self):
+        with self.assertRaisesRegex(ValueError, 'LIVE_EVALUATION_REQUIRED'):
+            W.require_live_evaluation(self.ws, self.plan, self.bundle)
+        self.registration(); V.freeze(self.ws, self.root / 'registration.json')
+        with self.assertRaisesRegex(ValueError, 'synthetic evaluation'):
+            W.require_live_evaluation(self.ws, self.plan, self.bundle)
+
     def test_complete_offline_demo_with_injected_provider_transport(self):
         result = D.run(self.root / 'demo')
         self.assertEqual(result['order'][0], 'B_F1_ORDER')

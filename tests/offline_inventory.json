@@ -1971,6 +1971,7 @@
       "IntegrationTests.test_holdout_freezes_opaque_label_hashes_before_dispatch_and_reuses_budget_metrics",
       "IntegrationTests.test_http_denial_redirect_and_invalid_json_remain_failures",
       "IntegrationTests.test_interruption_is_not_reported_as_success_and_never_resumed",
+      "IntegrationTests.test_live_evaluation_gate_refuses_missing_or_synthetic_holdout",
       "IntegrationTests.test_malformed_raw_is_preserved_without_repair",
       "IntegrationTests.test_memory_and_workflow_tasks_reuse_existing_contracts_and_stop_priority",
       "IntegrationTests.test_model_drift_is_retained_invalid_and_never_ranked",
