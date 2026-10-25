@@ -16,7 +16,7 @@ from src.research.opportunity_scout import fixtures as F
 from src.research.opportunity_scout.automation_v001 import execution as X
 from src.research.opportunity_scout.storage import Archive
 from src.research.operator import adapters as A, cli, delegate as D, demo, profile, report as RP, runs
-from src.research.operator.guard import Boundary, BoundaryViolation
+from src.research.operator.guard import Boundary, BoundaryViolation, resolved
 from src.research.operator.journal import Journal, JournalError
 
 REVISION = {'commit': 'UNKNOWN', 'ref': 'UNKNOWN', 'basis': 'TEST_FIXTURE', 'reason': 'git metadata is not read in tests'}
@@ -528,7 +528,7 @@ class OperatorTests(unittest.TestCase):
                 D.call(module, argv)
 
     def test_boundary_denies_network_processes_credentials_and_foreign_writes(self):
-        b = Boundary(); b.roots = (self.root.absolute() / 'run',); b.active = True
+        b = Boundary(); b.roots = (resolved(self.root / 'run'),); b.active = True  # the guard compares resolved paths (8.3 names expand)
         inside, outside = self.root / 'run' / 'x.json', self.root / 'elsewhere.json'
         b.audit('open', (str(inside), 'xb', os.O_CREAT | os.O_EXCL | os.O_WRONLY))
         b.audit('open', (str(outside), 'rb', os.O_RDONLY))
