@@ -87,9 +87,22 @@ def status(root):
     root = io.safe_path(root)
     if not (root / 'manifest.json').exists():
         K.need((root / 'claim.json').is_file(), 'not a Quarry import')
-        return {'status': 'PARTIAL_OR_INTERRUPTED', 'usable': False, 'authorises': []}
+        return {'status': 'PARTIAL_OR_INTERRUPTED', 'usable': False,
+                'usable_semantics': 'LEGACY_IDENTITY_CHECK_ONLY_NOT_ACCESS_PERMISSION',
+                'inspection_usable': False, 'inspection_scope': 'INCOMPLETE_IMPORT',
+                'negative_record_inspectable': False, 'source_access': 'UNKNOWN_INCOMPLETE_IMPORT',
+                'acquisition_permitted': False, 'acquisition_dispatcher': 'NOT_IMPLEMENTED', 'authorises': []}
     package = load(root)
-    return {**package['receipt'], 'usable': not package['receipt']['identity_flags']}
+    no_flags = not package['receipt']['identity_flags']
+    present = package['receipt']['original_sha256'] is not None
+    return {**package['receipt'], 'usable': no_flags,
+            'usable_semantics': 'LEGACY_IDENTITY_CHECK_ONLY_NOT_ACCESS_PERMISSION',
+            'inspection_usable': present and no_flags,
+            'inspection_scope': 'IDENTITY_RECONCILIATION_REQUIRED' if not no_flags else 'RETAINED_COPY_ONLY' if present else 'NEGATIVE_METADATA_ONLY',
+            'negative_record_inspectable': not present and no_flags,
+            'source_access': {'stops': package['route']['stops'], 'restrictions': package['route']['access_restrictions'],
+                              'historical_stops_reconciled': False},
+            'acquisition_permitted': False, 'acquisition_dispatcher': 'NOT_IMPLEMENTED'}
 
 
 def documents_for(package, inspection, text):
@@ -110,6 +123,7 @@ def documents_for(package, inspection, text):
 
 
 def human_inspection(package):
+    """Original V001 handoff constructor, retained for historical package validation."""
     route, supplied = package['route'], package['supply']
     return {'schema': 'QUARRY_HUMAN_INSPECTION_V001', 'fixture': supplied['fixture'],
                                           'source_passport': {'route_id': route['id'], 'route_version': route['version'], 'locator': route['locator'],
@@ -118,6 +132,25 @@ def human_inspection(package):
                                           'prospective_anvil': {'status': 'PENDING_HUMAN_INSPECTION', 'ready': False,
                                                                'required_next': 'Inspect originals, exact study, Discovery V002 M/dispositions and independent owner-controlled trust through study_readiness_v1. No study or human review is created here.'},
                                           'banner': BANNER, 'authorises': []}
+
+
+def human_inspection_v2(package, inspection, text):
+    """Explicit extraction scope; offsets verify supplied text, not a PDF-to-text claim."""
+    supplied, receipt = package['supply'], package['receipt']
+    return {**human_inspection(package), 'schema': 'QUARRY_HUMAN_INSPECTION_V002',
+            'evidence_inspection': {
+                'original': {'path': 'source/original.bin' if receipt['original_sha256'] else None,
+                             'sha256': receipt['original_sha256'] or 'UNKNOWN'},
+                'supplied_text': {'path': 'text.txt', 'sha256': io.sha(text)},
+                'mode': inspection['mode'], 'extraction_method_claim': inspection['extraction_method_claim'],
+                'source_location_claims': [{'id': e['id'], 'location': e['location'],
+                                           'start_byte': e['start_byte'], 'end_byte': e['end_byte']} for e in inspection['excerpts']],
+                'accuracy': 'NO_ORIGINAL_METADATA_ONLY' if not receipt['original_sha256'] else 'UNVERIFIED_AGAINST_ORIGINAL' if inspection['mode'] == 'SUPPLIED_EXTRACTION' else 'EXACT_UTF8_RANGES_ONLY',
+                'verified_scope': 'Excerpt byte ranges match retained text only; source meaning and measurement validity are not verified.',
+                'source_authenticity': 'UNKNOWN', 'historical_availability': 'UNKNOWN',
+                'coverage': supplied['coverage'], 'missing_fields': supplied['missing_fields'],
+                'limitations': supplied['limitations'], 'access_restrictions': package['route']['access_restrictions'],
+                'acquisition_permitted': False}}
 
 
 def export(package_path, inspection_path, subject_path, out, *, extracted_path=None):
@@ -160,7 +193,7 @@ def export(package_path, inspection_path, subject_path, out, *, extracted_path=N
     io.write(root / 'provenance.json', {'schema': 'QUARRY_HANDOFF_V001', 'route': route, 'supply': supplied, 'receipt': receipt,
                                      'source_manifest_sha256': digest(package['manifest']), 'extraction_sha256': io.sha(text),
                                      'inspection_sha256': digest(inspection), 'banner': BANNER, 'authorises': []})
-    io.write(root / 'human-inspection.json', human_inspection(package))
+    io.write(root / 'human-inspection.json', human_inspection_v2(package, inspection, text))
     # Existing Jev contract and citation loader, no duplicated navigation or policy logic.
     N.derive(root / 'input.json')
     return io.seal(root, files, EXPORT)
@@ -195,5 +228,6 @@ def validate_export(root):
     K.need(sorted(actual_docs, key=lambda d: d['id']) == expected_docs, 'source/citation/restriction binding changed')
     K.need(bundle['request']['data_classification'] == package['supply']['data_classification'], 'disclosure classification changed')
     human = io.json_file(root / 'human-inspection.json')
-    K.need(human == human_inspection(package), 'human inspection/passport metadata changed')
+    expected_human = human_inspection(package) if human.get('schema') == 'QUARRY_HUMAN_INSPECTION_V001' else human_inspection_v2(package, inspection, text)
+    K.need(human == expected_human, 'human inspection/passport metadata changed')
     return {'manifest': manifest, 'provenance': provenance, 'input': root / 'input.json', 'bundle': bundle, 'authorises': []}

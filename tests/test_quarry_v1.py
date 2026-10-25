@@ -38,6 +38,9 @@ class QuarryTests(unittest.TestCase):
         self.assertEqual(receipt['original_sha256'], io.sha(before))
         self.assertEqual(receipt['authenticity'], 'UNKNOWN')
         self.assertEqual(receipt['historical_availability'], 'UNKNOWN')
+        status = E.status(self.custody)
+        self.assertTrue(status['inspection_usable'])
+        self.assertFalse(status['acquisition_permitted'])
         (self.root / 'original.txt').write_bytes(b'owner later changed supplied path')
         self.assertEqual(E.load(self.custody)['receipt'], receipt)
         with self.assertRaises(ValueError):
@@ -59,6 +62,8 @@ class QuarryTests(unittest.TestCase):
         self.change('supply.json', self.supplied)
         receipt = self.ingest()
         self.assertEqual(receipt['identity_flags'], ['WRONG_SOURCE_CLAIM_MISMATCH', 'WRONG_ASSET_CLAIM_MISMATCH', 'WRONG_ORIGINAL_HASH'])
+        self.assertFalse(E.status(self.custody)['inspection_usable'])
+        self.assertEqual(E.status(self.custody)['inspection_scope'], 'IDENTITY_RECONCILIATION_REQUIRED')
         with self.assertRaisesRegex(ValueError, 'wrong or unknown'):
             E.export(self.custody, self.root / 'inspection.json', self.root / 'subject.json', self.root / 'bad')
 
@@ -84,6 +89,9 @@ class QuarryTests(unittest.TestCase):
         self.change('supply.json', self.supplied)
         self.ingest(None)
         self.assertEqual(E.status(self.custody)['status'], 'UNAVAILABLE')
+        self.assertFalse(E.status(self.custody)['inspection_usable'])
+        self.assertTrue(E.status(self.custody)['negative_record_inspectable'])
+        self.assertFalse(E.status(self.custody)['acquisition_permitted'])
         text = (self.supplied['title'] + '\nUNAVAILABLE\n' + '\n'.join(self.supplied['limitations'] + self.supplied['missing_fields'])).encode()
         inspection = {'schema': 'QUARRY_INSPECTION_V001', 'mode': 'ORIGINAL_UTF8', 'extraction_method_claim': 'negative metadata only',
                       'excerpts': [{'id': 'NEGATIVE', 'location': 'retained access limitation', 'start_byte': 0, 'end_byte': len(text), 'quote': text.decode()}]}
@@ -99,6 +107,10 @@ class QuarryTests(unittest.TestCase):
         self.change('registry.json', {'schema': 'QUARRY_ROUTE_REGISTRY_V001', 'routes': [self.route]})
         out = self.handoff()
         checked = E.validate_export(out)
+        status = E.status(self.custody)
+        self.assertTrue(status['inspection_usable'])
+        self.assertFalse(status['acquisition_permitted'])
+        self.assertEqual(status['source_access']['stops'], [stop])
         W.prepare(checked['input'], self.root / 'nav')
         report = W.report(self.root / 'nav')
         self.assertTrue(all(r['availability'] == 'STOPPED' for r in report['inspection_queue']))
@@ -157,11 +169,32 @@ class QuarryTests(unittest.TestCase):
         self.ingest('binary.pdf')
         inspection = io.json_file(self.root / 'inspection.json')
         inspection.update(mode='SUPPLIED_EXTRACTION', extraction_method_claim='owner supplied text, page claims unverified')
+        inspection['excerpts'][0]['location'] = 'page 7, table 3 (owner claim, not independently verified)'
         self.change('inspection.json', inspection)
         E.export(self.custody, self.root / 'inspection.json', self.root / 'subject.json', self.root / 'export', extracted_path=self.root / 'original.txt')
         value = E.validate_export(self.root / 'export')
         self.assertEqual(value['bundle']['request']['records'][0]['availability'], 'SUPPLIED_EXCERPT')
         self.assertEqual((self.root / 'export/source/original.bin').read_bytes(), b'%PDF-fixture-not-real\x00\xff')
+        handoff = io.json_file(self.root / 'export/human-inspection.json')
+        self.assertEqual(handoff['schema'], 'QUARRY_HUMAN_INSPECTION_V002')
+        info = handoff['evidence_inspection']
+        self.assertEqual(info['accuracy'], 'UNVERIFIED_AGAINST_ORIGINAL')
+        self.assertEqual(info['original']['sha256'], io.sha(b'%PDF-fixture-not-real\x00\xff'))
+        self.assertEqual(info['supplied_text']['sha256'], io.sha(io.read(self.root / 'original.txt')))
+        self.assertEqual(info['extraction_method_claim'], inspection['extraction_method_claim'])
+        self.assertEqual(info['source_authenticity'], 'UNKNOWN')
+        self.assertEqual(info['coverage'], self.supplied['coverage'])
+        self.assertEqual(info['source_location_claims'][0]['location'], inspection['excerpts'][0]['location'])
+
+    def test_historical_v001_handoff_is_still_valid_without_new_assurances(self):
+        out = self.handoff()
+        historical = E.human_inspection(E.load(out / 'source'))
+        (out / 'human-inspection.json').write_bytes(canonical(historical))
+        manifest = io.json_file(out / 'manifest.json')
+        manifest['files']['human-inspection.json'] = io.sha(io.read(out / 'human-inspection.json'))
+        (out / 'manifest.json').write_bytes(canonical(manifest))
+        E.validate_export(out)
+        self.assertNotIn('evidence_inspection', io.json_file(out / 'human-inspection.json'))
 
     def test_escape_private_paths_and_network_paths_are_refused_before_read(self):
         for name in ('../outside', 'C:/outside', '\\\\host\\share\\file'):
@@ -197,6 +230,8 @@ class QuarryTests(unittest.TestCase):
         self.assertEqual(value['status'], 'DISABLED_DESIGN_ONLY')
         self.assertEqual(value['external_requests_started'], 0)
         self.assertEqual(value['authorises'], [])
+        self.assertEqual(value['historical_stop_reconciliation'], 'NOT_PERFORMED_REQUIRED_BEFORE_FUTURE_ACTIVATION')
+        self.assertFalse(value['new_route_id_reopens_stopped_host'])
 
     def test_stops_and_restrictions_cannot_be_overridden_by_scope(self):
         self.route['access_restrictions'] = ['STOP pending exact source terms review']

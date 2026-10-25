@@ -95,6 +95,19 @@ They can yield an explicit negative inspection record, never a measurement. A st
 route can have an already supplied copy inspected, while retaining STOPPED in Jev.
 Unavailable evidence never means a false economic hypothesis.
 
+Status keeps the legacy `usable` boolean as an identity-flags check, explicitly labelled
+`LEGACY_IDENTITY_CHECK_ONLY_NOT_ACCESS_PERMISSION`. Use `inspection_usable` for a retained
+copy eligible for a cited handoff, and `negative_record_inspectable` for unavailable-source
+metadata. A stopped retained copy can have `inspection_usable: true`; `acquisition_permitted`
+is always false. Restrictions/stops are shown separately; historical stops are not reconciled.
+
+New human handoffs are `QUARRY_HUMAN_INSPECTION_V002`. The prominent `evidence_inspection`
+section includes original/text hashes, extraction mode/method and exact page/table/location
+claims, coverage/missing fields, restrictions, and UNKNOWN authenticity/availability.
+`SUPPLIED_EXTRACTION` is explicitly UNVERIFIED_AGAINST_ORIGINAL. Exact offsets only verify
+the supplied text: they do not verify a PDF extraction or measurement. Historical V001
+handoffs remain byte-preserved and loadable, without retroactively adding assurances.
+
 ## Future acquisition boundary
 
 `plan-acquisition registry.json scope.json` performs local scope checks only. There is
@@ -109,6 +122,11 @@ owner approval binding exact hashes and terms, global pre-dispatch reservations,
 destination-pinned public DNS/address checks, no proxies, bounded streamed capture,
 preserved outcomes, no retry/fallback/resume and a whole-scope stop on uncertainty.
 This design is intentionally non-executable; exact owner scope alone cannot enable it.
+Historical reconciliation is **not performed** by this planner. A future activation needs
+explicit inspection of Discovery ledgers, prior source/campaign decisions and private stop
+receipts outside the new registry. Host-wide and unclear-scope stops apply to equivalent
+routes: assigning a new route ID or URL cannot bypass an earlier denial. Preserve the
+reconciliation evidence and obtain separate owner scope before any future dispatch.
 No crawler, discovery expansion, login, CAPTCHA/paywall bypass or alternate denied
 route exists. Existing source acquisition implementations are not invoked.
 

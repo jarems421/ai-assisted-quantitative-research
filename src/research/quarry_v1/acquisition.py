@@ -45,6 +45,8 @@ def plan(registry_path, scope_path):
            and scope['per_response_byte_ceiling'] <= scope['total_byte_ceiling'], 'inconsistent ceilings')
     return {'schema': 'QUARRY_ACQUISITION_PLAN_V001', 'registry_sha256': digest(registry), 'scope': scope,
             'scope_sha256': digest(scope), 'status': 'DISABLED_DESIGN_ONLY', 'owner_approval': 'PENDING_NOT_AUTHORITY',
+            'historical_stop_reconciliation': 'NOT_PERFORMED_REQUIRED_BEFORE_FUTURE_ACTIVATION',
+            'new_route_id_reopens_stopped_host': False,
             'required_future_controls': ['Owner approval binds exact registry/scope hashes, human identity, timezone date and access terms.',
                 'Independently reconcile every persisted host/route stop, including unclear scopes as host-level; no stop override field.',
                 'Resolve DNS and pin public global destination IP for every connection; refuse private/reserved/link-local and DNS rebinding; no proxy.',
