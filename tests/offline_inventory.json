@@ -1957,6 +1957,7 @@
       "QuarryTests.test_export_is_portable_and_originals_distinct_from_excerpts",
       "QuarryTests.test_failed_import_is_partial_and_cannot_be_retried",
       "QuarryTests.test_full_offline_flow_ranks_supplied_records_and_keeps_authority_pending",
+      "QuarryTests.test_historical_v001_handoff_is_still_valid_without_new_assurances",
       "QuarryTests.test_human_passport_and_manifest_membership_are_rederived",
       "QuarryTests.test_missing_metadata_fails_before_claim_and_unknown_stays_unknown",
       "QuarryTests.test_original_and_metadata_tamper_are_detected",
