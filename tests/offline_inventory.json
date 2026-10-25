@@ -1977,6 +1977,7 @@
       "IntegrationTests.test_oversize_capture_is_preserved_bounded_and_unparsed",
       "IntegrationTests.test_payload_and_classification_authorisation_mismatch_fail_before_claim",
       "IntegrationTests.test_raw_response_provenance_ranking_and_pending_human_inspection",
+      "IntegrationTests.test_result_metadata_tampering_and_missing_completion_are_not_success",
       "IntegrationTests.test_single_attempt_global_claim_and_no_replacement",
       "IntegrationTests.test_synthetic_authority_cannot_activate_live_transport",
       "IntegrationTests.test_synthetic_evaluation_cannot_be_reported_as_independent_human_accuracy",

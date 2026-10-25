@@ -167,6 +167,8 @@ def dispatch(workspace, approval_path, account_evidence_path, *, enabled=False, 
               'reserved_micro_usd': plan['reserved_micro_usd'], 'reservation_released': False,
               'provider_request_binding': plan['provider_request_binding'], 'authorises': []}
     io.write(root / 'result.json', record)
+    io.write(root / 'completion.json', {'result_sha256': digest(record), 'raw_sha256': io.sha(raw),
+                                       'claim_sha256': digest(claim), 'authorises': []})
     return record
 
 
@@ -178,8 +180,11 @@ def report(workspace):
     state = 'NOT_DISPATCHED'
     if attempted:
         state = 'INTERRUPTED_OR_UNKNOWN'
-        if (root / 'result.json').exists():
+        if (root / 'completion.json').exists():
             record = io.json_file(root / 'result.json')
+            completion = io.json_file(root / 'completion.json')
+            K.need(completion == {'result_sha256': digest(record), 'raw_sha256': record['raw_sha256'],
+                                  'claim_sha256': digest(claim), 'authorises': []}, 'completion/result/claim binding changed')
             raw = io.read(root / 'response.raw', P.MAX_RESPONSE + 1)
             raw_hash = io.sha(raw)
             K.need(record['raw_sha256'] == raw_hash and record['raw_bytes'] == len(raw)

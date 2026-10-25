@@ -207,6 +207,17 @@ class IntegrationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'TAMPERED'):
             W.report(self.ws)
 
+    def test_result_metadata_tampering_and_missing_completion_are_not_success(self):
+        self.dispatch()
+        path = self.ws / 'result.json'; raw = io.read(path)
+        result = io.json_file(path); result['actual_cost'] = 0
+        path.write_bytes(canonical(result))
+        with self.assertRaisesRegex(ValueError, 'completion/result'):
+            W.report(self.ws)
+        path.write_bytes(raw)
+        (self.ws / 'completion.json').unlink()
+        self.assertEqual(W.report(self.ws)['provider']['status'], 'INTERRUPTED_OR_UNKNOWN')
+
     def test_direct_transport_uses_single_fixed_post_and_never_follows_redirects(self):
         response = Mock(status=302); response.read.side_effect = [b'denied', b'']
         conn = Mock(); conn.getresponse.return_value = response
