@@ -353,3 +353,19 @@ develop or test them.
 - *Failures.* Unreadable metadata is `UNKNOWN` with a reason, and a failure never blocks a run.
 - *Unchanged.* Plans and authorisations, critic texts (still pinned by `critic_resources_sha256`) and every frozen
   Scout contract are unchanged.
+
+**Post-audit archived workspace resolution (2026-10-25).** New plans record an absolute critic-workspace path.
+Read-only `report` no longer resolves old relative paths against the process working directory. For the pipeline's
+recorded sibling layout, it uses `critic-v1-<current-archive-name>` beside the current archive, including renamed
+copies and Windows/Linux transfers. Its critic manifest's RUN archive head must occur in the supplied archive's
+history. It never falls back to the original workspace if the copied sibling is missing. Copy both directories;
+an archive alone contains no critic response records.
+
+A legacy relative parent must match a suffix of the recorded absolute archive parent; any other relative anchor
+is ambiguous and refused. Explicit non-sibling absolute locations remain the source of truth, with no automatic
+relocation or foreign-drive substitution. Supporting arbitrary historical layouts would require an explicit
+mapping contract and is outside this maintenance patch. Saved plans/reports/receipts are never rewritten or
+re-finalised; V001 receipts remain unbound and every existing V002 receipt retains its byte/hash checks. This fixes
+read-only interpretation, not authorisation to re-run a historical pipeline. A corrected rendering can reveal
+subjects omitted by an earlier path-misresolved view; receipt verification still checks the saved bytes and
+never rebinds a newly rendered view.

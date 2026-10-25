@@ -2,6 +2,7 @@
 Gemini transport and SYNTHETIC FIXTURE critic answers; the real archive, importer, Layer A, critic importer, policy
 and report run unchanged. No process, network, credential, real account directory or paid call is used."""
 import copy
+import contextlib
 import email.message
 import hashlib
 import http.client
@@ -147,6 +148,54 @@ class Base(T.Base):
 
 
 class EndToEndTests(Base):
+    def test_renamed_copy_uses_legacy_sibling_workspace_independently_of_cwd(self):
+        self.execute()
+        expected = self.report()['subjects']
+        # Synthetic legacy representation only. Production historical plans/reports are never rewritten.
+        plan_file = self.store / 'exports/pipeline-plan.json'
+        plan = json.loads(plan_file.read_bytes())
+        plan['critic_workspace'] = R.workspace_path(self.store).name
+        plan_file.write_bytes(R.canonical(plan))
+        copied = self.base / 'copied' / 'renamed-archive'
+        shutil.copytree(self.store, copied)
+        copied_ws = R.workspace_path(copied)
+        shutil.copytree(R.workspace_path(self.store), copied_ws)
+        watched = [*self.persisted(), *copied.rglob('*'), *copied_ws.rglob('*')]
+        before = {p: p.read_bytes() for p in watched if p.is_file()}
+        for cwd in (self.base, copied.parent):
+            with contextlib.chdir(cwd):
+                self.assertEqual(R.build(copied)['subjects'], expected)
+        self.assertEqual({p: p.read_bytes() for p in before}, before)
+        # An absent copied workspace must not silently read the still-accessible original.
+        self.assertTrue(copied_ws.resolve().is_relative_to(self.base.resolve()))
+        shutil.rmtree(copied_ws)
+        self.assertEqual(R.build(copied)['subjects'], {})
+
+    def test_copied_workspace_must_bind_the_copied_archive_history(self):
+        self.execute()
+        manifest_file = R.workspace_path(self.store) / 'manifest.json'
+        manifest = json.loads(manifest_file.read_bytes())
+        manifest['archive_heads']['RUN'] = '0' * 64
+        manifest_file.write_bytes(R.canonical(manifest))
+        with self.assertRaisesRegex(S.ScoutError, 'does not bind this archive history'):
+            self.report()
+
+    def test_report_workspace_preserves_explicit_locations_and_refuses_unknown_legacy_anchor(self):
+        self.planned()
+        self.assertTrue(Path(json.loads((self.store / 'exports/pipeline-plan.json').read_bytes())['critic_workspace']).is_absolute())
+        self.assertEqual(R.report_workspace(self.store, {'archive': str(self.store), 'critic_workspace': str(self.base / 'explicit-critic')}), self.base / 'explicit-critic')
+        with self.assertRaisesRegex(S.ScoutError, 'anchor is ambiguous'):
+            R.report_workspace(self.store, {'archive': str(self.store), 'critic_workspace': 'unrelated/critic-v1-' + self.store.name})
+        self.assertIsNone(R.report_workspace(self.store, {}))
+        # No native access to a foreign drive: only decode its historical sibling relationship.
+        for archive, workspace in [(r'C:\old\.research\scout\forge', r'.research\scout\critic-v1-forge'),
+                                   (r'C:\old\.research\scout\forge', r'.RESEARCH\scout\critic-v1-forge'),
+                                   (r'C:\old\.research\scout\forge', r'C:\old\.research\scout\critic-v1-forge'),
+                                   ('/old/scout/forge', '/old/scout/critic-v1-forge')]:
+            self.assertEqual(R.report_workspace(self.store, {'archive': archive, 'critic_workspace': workspace}), R.workspace_path(self.store))
+        with self.assertRaisesRegex(S.ScoutError, 'anchor is ambiguous'):
+            R.report_workspace(self.store, {'archive': r'C:\old\forge', 'critic_workspace': r'C:critic-v1-forge'})
+
     def test_one_authorised_run_generates_critiques_recommends_and_reports(self):
         receipt = self.execute()
         self.assertEqual((receipt['outcome'], receipt['adversarial_dispatched'], receipt['retried']), ('COMPLETE', 0, False))

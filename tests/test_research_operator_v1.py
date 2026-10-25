@@ -2,6 +2,7 @@
 process, model, credential or human judgment. Real Pilot 001 coverage is the separate local-only module."""
 import contextlib
 import copy
+import hashlib
 import io
 import json
 import os
@@ -24,6 +25,20 @@ REVISION = {'commit': 'UNKNOWN', 'ref': 'UNKNOWN', 'basis': 'TEST_FIXTURE', 'rea
 
 def read_tree(path):
     return {p.relative_to(path).as_posix(): p.read_bytes() for p in sorted(Path(path).rglob('*')) if p.is_file()}
+
+
+def report_events():
+    """Fixed synthetic report input: repeated call, deferred gate and bundled human action."""
+    events = []
+    def add(kind, record):
+        events.append({'type': kind, 'record': record, 'seq': len(events), 'hash': str(len(events)) * 64, 'at': F.MOMENT})
+    add('RUN_CREATED', {'run_id': 'OPR-FIXED', 'profile': 'FORGE_TO_ANVIL_OFFLINE_V001', 'scope': {}})
+    add('INVOCATION_STARTED', {'command': 'run', 'execution': {'revision': {'commit': 'a' * 40}, 'implementation': {'digest': 'b' * 64}}})
+    result = runs.result('COMPLETE', research=['Synthetic memory only.'], next_actions=['HUMAN: inspect two separate fictional records.'])
+    add('STAGE_FINISHED', {'stage': 'JEV_MEMORY', 'key': 'memory', 'result': {**result, 'stage_kind': 'ONE_SHOT', 'calls': [{'command': 'jev report'}] * 2}})
+    add('STAGE_FINISHED', {'stage': 'QUARRY_EVIDENCE', 'key': 'quarry', 'result': {**runs.result('WAITING_FOR_EVIDENCE'), 'stage_kind': 'DECISION'}})
+    add('INVOCATION_FINISHED', {'stages': [('JEV_MEMORY', 'memory'), ('QUARRY_EVIDENCE', 'quarry')], 'boundary_denials': [], 'elapsed_seconds': 1})
+    return events
 
 
 class OperatorTests(unittest.TestCase):
@@ -69,7 +84,7 @@ class OperatorTests(unittest.TestCase):
         events = Archive(layout.scout).load().events
         self.assertEqual([e['type'] for e in events], [e['type'] for e in Archive(self.f['archive']).load().events])
         self.assertEqual(read_tree(self.f['archive']), before)
-        self.assertTrue(any(a.startswith('HUMAN') for a in rep['human_decisions']))
+        self.assertTrue(any(a.startswith('HUMAN') for a in rep['human_action_groups']))
         self.assertEqual(rep['authorises'], [])
 
     def test_original_archive_unchanged_and_working_copy_byte_identical(self):
@@ -260,12 +275,70 @@ class OperatorTests(unittest.TestCase):
         moved = self.root / 'moved'
         shutil.copytree(layout.run, moved)
         self.assertEqual(RP.markdown(RP.render(Journal(moved).load())), RP.markdown(rep))
-        saved = layout.reports / f"report-{rep['journal_head'][:16]}.md"
+        saved = layout.reports / f"report-{rep['journal_head'][:16]}-v002.md"
         self.assertEqual(saved.read_bytes(), RP.markdown(rep).encode('utf-8'))
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
             cli.main(['--base', str(self.f['base']), 'report', layout.run_id, '--json'])
         self.assertEqual(json.loads(out.getvalue())['journal_head'], rep['journal_head'])
+
+    def test_search_abstention_reaches_json_and_markdown_without_new_retrieval(self):
+        layout, rep = self.start(search=['refrigerant'])
+        search = self.stages(layout)['ARMOURY_GRAPH']['summary']['search']['refrigerant']
+        self.assertEqual(search['results'], 0)
+        self.assertEqual(rep['armoury_searches']['refrigerant'], search)
+        self.assertIn('NO_USEFUL_SUGGESTION', RP.markdown(rep))
+        self.assertTrue(any('Armoury search' in f and 'NO_USEFUL_SUGGESTION' in f for f in rep['research_findings']))
+        events = Journal(layout.run).load()
+        # An old journal already retained the summary: V002 is a read-only projection of those bytes.
+        self.assertEqual(rep, RP.render(copy.deepcopy(events)))
+
+    def test_invocations_groups_and_internal_gate_kinds_are_unambiguous(self):
+        layout, first = self.start()
+        unchanged = self.more(layout)
+        self.assertEqual(unchanged['accounting']['delegated_invocations'], first['accounting']['delegated_invocations'])
+        rep = runs.invoke(layout, 'continue', supplied={'evidence': {'routes': [], 'exports': []},
+                          'search_terms': ['SYNTHETIC-EMPTY-QUERY'], 'ledger': None})[0]
+        events = Journal(layout.run).load()
+        calls = [c for e in events if e['type'] == 'STAGE_FINISHED' for c in e['record']['result'].get('calls', [])]
+        self.assertEqual(rep['accounting']['delegated_invocations'], len(calls))
+        self.assertGreater(rep['accounting']['delegated_invocations'], first['accounting']['delegated_invocations'])
+        self.assertEqual(rep['accounting']['distinct_commands'], len({c['command'] for c in calls}))
+        self.assertLess(rep['accounting']['distinct_commands'], rep['accounting']['delegated_invocations'])
+        self.assertNotIn('human_decisions', rep)
+        self.assertNotIn('hand_authored_inputs_requested', rep['friction'])
+        self.assertEqual(rep['friction']['human_action_groups_requested'], len(rep['human_action_groups']))
+        md = RP.markdown(rep)
+        self.assertIn('Individual records have not been exhaustively counted', md)
+        self.assertIn('Internal no-action gate result; never a human judgment', md)
+        self.assertIn('Distinct delegated commands', md)
+
+    def test_legacy_report_bytes_and_saved_files_are_preserved(self):
+        legacy = RP.render(report_events(), schema=RP.LEGACY_REPORT)
+        self.assertEqual(hashlib.sha256(canonical(legacy)).hexdigest(), '76466a23426fd06fc8c0adefbf701eb840678d09c2b3956318efa784a12703c7')
+        self.assertEqual(hashlib.sha256(RP.markdown(legacy).encode()).hexdigest(), 'cb2b84839b0b511ac77b18b661e005d4340a21b5a03ecdae75b7540a345ef4b6')
+        layout, _ = self.start()
+        old_paths = RP.write(layout, legacy)
+        before = {p: p.read_bytes() for p in old_paths}
+        paths = RP.write(layout, RP.render(report_events()))
+        self.assertTrue(all('-v002.' in p.name for p in paths))
+        self.assertEqual({p: p.read_bytes() for p in old_paths}, before)
+
+    def test_legacy_scout_and_selected_subject_critic_v1_counts_stay_separate(self):
+        events = report_events()
+        summary = {'scout_legacy_critic_records': 0, 'criticism': {'subject': 'SYNTHETIC-B', 'requests': {
+            'SCIENTIFIC': {'attempts': ['VALID']}, 'ECONOMIC': {'attempts': []}}}}
+        events.insert(-1, {'type': 'STAGE_FINISHED', 'at': F.MOMENT, 'record': {'key': 'records',
+                          'result': runs.result('COMPLETE', summary)}})
+        events[-1]['record']['stages'].append(('FORGE_RECORDS', 'records'))
+        rep = RP.render(events)
+        self.assertEqual(rep['evidence']['scout_legacy_critic_records'], 0)
+        self.assertEqual(rep['evidence']['critic_v1'], summary['criticism'])
+        md = RP.markdown(rep)
+        self.assertIn('Legacy Scout critic records: 0', md)
+        self.assertIn('critic-v1 selected subject: SYNTHETIC-B', md)
+        self.assertIn('No imported attempt means no imported judgment', md)
+        self.assertEqual(rep['authorises'], [])
 
     def test_journal_tamper_and_lock_are_refused(self):
         layout, _ = self.start()

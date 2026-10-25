@@ -267,8 +267,8 @@ def pipeline_records(ctx, critic):
         out['report_outcome'], out['report_subjects'] = r['json']['outcome'], len(r['json']['subjects'])
         if critic.get('subject') and not r['json']['subjects']:
             plan = json.loads((ctx.layout.scout / 'exports' / 'pipeline-plan.json').read_bytes())
-            software.append(f"Pipeline report reads its plan's critic_workspace ({plan.get('critic_workspace')}) relative to the process "
-                            'directory, not the archive copy, so it lists no critic subjects; criticism was read from the copied workspace instead.')
+            software.append(f"Pipeline report has no critic subjects for its recorded workspace ({plan.get('critic_workspace')}); "
+                             'criticism was read from the copied workspace instead. No historical record was changed.')
     else:
         out['report_refusal'] = refused(r)
         software.append('Archived pipeline report refused on the copy: ' + out['report_refusal'])
@@ -311,7 +311,8 @@ def records(ctx):
         research = [f"Scout card {current['id']} v{current['version']} ({current['lane']}, route {view['current_route']}): {i['title']}.",
                     f"{len(reviews)} human/fixture review(s), {len([f for f in view['feasibility'] if f['version'] == current['version']])} feasibility "
                     f"record(s) and {len(view['criticism'])} Scout critic record(s) for this version.", *critic_findings]
-        return result('COMPLETE', {'fixture_class': fixture, 'archive': {'events': v['json']['events'], 'head': v['json']['head']},
+        return result('COMPLETE', {'fixture_class': fixture, 'scout_legacy_critic_records': len(view['criticism']),
+                                   'archive': {'events': v['json']['events'], 'head': v['json']['head']},
                                    'hypothesis': hypothesis, 'card_sha256': view['card_sha256'],
                                    'card_artifact': artifact(ctx, f"card-{current['id']}-v{current['version']}.json", current),
                                    'reviews': [{'decision': r['decision'], 'reviewer_kind': r['reviewer']['kind'], 'approved_handoff': r['approved_handoff']} for r in reviews],
