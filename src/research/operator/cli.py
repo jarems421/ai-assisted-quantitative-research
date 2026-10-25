@@ -20,6 +20,7 @@ from pathlib import Path
 import sys
 import tempfile
 
+from src.research.opportunity_scout import engine as SE, schema as SS
 from src.research.opportunity_scout.automation_v001.pipeline import workspace_path
 from src.research.opportunity_scout.readiness import identifiable
 from . import BANNER, PROFILE, VERSION
@@ -33,6 +34,7 @@ SUBJECTS = 'RESEARCH_OS_OPERATOR_SUBJECTS_V001'
 SKILL = ROOT / '.claude/skills/research-os/SKILL.md'
 PLAN = [('PREFLIGHT', 'CHECK', 'dependency and location checks'),
         ('FORGE_CUSTODY', 'ONE_SHOT', 'hash the original archive and critic workspace; byte-identical working copy'),
+        ('CUSTODY_CHECK', 'CHECK', 'every invocation: originals must still match their custody manifests before any dependent stage'),
         ('FORGE_RECORDS', 'CHECK', 'opportunity_scout validate/card; critic_v1 status; automation_v001 status/report (read-only)'),
         ('FORGE_READINESS', 'CHECK', 'opportunity_scout handoff on the copy: exports only after a human READY review'),
         ('QUARRY_IMPORT:<label>', 'ONE_SHOT', 'quarry_v1 import-file/status of owner-supplied originals'),
@@ -130,8 +132,13 @@ def plan(request, base):
     cards = []
     for iid, versions in state.cards.items():
         c = versions[-1]; review = state.current_review(c)
+        try:  # Scout's own current-state check (review, feasibility, source stops); read-only, decides nothing
+            SE.handoff(state, iid); eligible, refusal = True, None
+        except SS.ScoutError as error:
+            eligible, refusal = False, str(error)
         cards.append({'idea_id': iid, 'version': c['version'], 'title': c['idea']['title'], 'lane': c['lane'], 'route': state.route(c),
                       'ready_review': bool(review and review['decision'] == 'READY' and review['approved_handoff']),
+                      'handoff_eligible': eligible, 'handoff_refusal': refusal,
                       'identifiable_routes': sum(identifiable(r, synthetic) for r in c['idea']['source_routes'])})
     chosen = next((c for c in cards if c['idea_id'] == request['idea_id']), None)
     blockers = []
@@ -140,8 +147,8 @@ def plan(request, base):
     if chosen:
         if not chosen['identifiable_routes']:
             blockers.append('FORGE_READINESS: no identifiable source route, so READY is impossible without an owner revision (WAITING_FOR_HUMAN)')
-        if not chosen['ready_review']:
-            blockers.append('FORGE_READINESS: no human READY review for the current version (WAITING_FOR_HUMAN)')
+        if not chosen['handoff_eligible']:
+            blockers.append('FORGE_READINESS: Scout would refuse the handoff now: ' + chosen['handoff_refusal'] + ' (WAITING_FOR_HUMAN)')
         if not (request['evidence'] or {}).get('routes') and not (request['evidence'] or {}).get('exports'):
             blockers.append('QUARRY_EVIDENCE / JEV_EVIDENCE: no owner-supplied Quarry inputs (WAITING_FOR_EVIDENCE)')
         if not request['ledger'] and not synthetic:
@@ -152,7 +159,9 @@ def plan(request, base):
             'critic_workspace': str(critic) if critic.is_dir() else None, 'cards': cards,
             'selected': chosen, 'stages': [{'stage': s, 'kind': k, 'delegates': d} for s, k, d in PLAN],
             'limits': SCOPE, 'predicted_blockers': blockers, 'layout': Layout(check_base(base), 'OPR-<new>').value(),
-            'note': 'A plan predicts; only run records what happened. Choose --idea from cards when none is selected.', 'authorises': []}
+            'note': 'A plan predicts; only run records what happened. ready_review is a recorded current READY review; handoff_eligible '
+                    'is whether Scout would export the handoff now (review, feasibility and source stops). Choose --idea from cards '
+                    'when none is selected.', 'authorises': []}
 
 
 def status(layout):

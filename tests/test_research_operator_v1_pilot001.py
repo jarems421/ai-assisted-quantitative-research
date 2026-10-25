@@ -43,6 +43,7 @@ class Pilot001HypothesisBTests(unittest.TestCase):
         self.assertEqual([t['digest'] for t in self.before], [t['digest'] for t in self.after])
         self.assertTrue(self.stages['FORGE_CUSTODY']['summary']['byte_identical'])
         self.assertEqual(set(self.stages['INTEGRITY']['summary']['checks'].values()), {'UNCHANGED'})
+        self.assertEqual({r['state'] for r in self.stages['CUSTODY_CHECK']['summary'].values()}, {'UNCHANGED'})
 
     def test_f1_copy_validates_as_hypothesis_b_v1(self):
         r = self.stages['FORGE_RECORDS']['summary']
@@ -93,7 +94,7 @@ class Pilot001HypothesisBTests(unittest.TestCase):
         events = Journal(self.layout.run).load()
         self.assertEqual(canonical(RP.render(events)), canonical(self.second))
         later = [e['record']['key'] for e in events if e['type'] == 'STAGE_STARTED'][len(self.keys):]
-        self.assertTrue(all(k.startswith(('PREFLIGHT', 'INTEGRITY')) for k in later), later)
+        self.assertTrue(all(k.startswith(('PREFLIGHT', 'CUSTODY_CHECK', 'INTEGRITY')) for k in later), later)
 
 
 if __name__ == '__main__':

@@ -141,7 +141,7 @@ class OperatorTests(unittest.TestCase):
         later = [e['record'] for e in Journal(layout.run).load() if e['type'] == 'STAGE_STARTED'][len(keys):]
         self.assertEqual([r['key'] for r in later if r['kind'] == 'ONE_SHOT'], [])
         # Only per-invocation checks and one re-verification of the export written by the first invocation.
-        self.assertEqual({r['stage'] for r in later} - {'PREFLIGHT', 'INTEGRITY', 'FORGE_READINESS'}, set())
+        self.assertEqual({r['stage'] for r in later} - {'PREFLIGHT', 'CUSTODY_CHECK', 'INTEGRITY', 'FORGE_READINESS'}, set())
         self.assertEqual(sorted(p.name for p in layout.quarry.iterdir()), imports)
         self.assertEqual(read_tree(layout.scout), copy_bytes)
         one_shot = [k for k in keys if k.split('@')[0] in ('FORGE_CUSTODY', 'JEV_EVIDENCE', 'JEV_MEMORY') or k.startswith('QUARRY_')]
@@ -342,6 +342,82 @@ class OperatorTests(unittest.TestCase):
             r = self.stages(layout)['ANVIL_CHECKS']
             self.assertEqual((r['status'], r['summary']['link']), ('BLOCKED', 'CROSSWALK_INVALID'), name)
             self.assertNotIn('checklist', r['summary'], name)
+
+    def test_unready_card_never_links_a_supplied_ledger_even_with_a_valid_crosswalk(self):
+        ledger = self.unrelated_ledger()
+        from src.research.discovery.ledger import Ledger
+        cand = Ledger(ledger).load().latest('candidate', 'CAND-UNRELATED')
+        current = Archive(self.f['archive']).load().latest(self.f['unreviewed_idea'])
+        value = {'schema': profile.CROSSWALK,
+                 'scout': {'idea_id': current['id'], 'version': current['version'], 'card_sha256': digest(current), 'handoff_sha256': None},
+                 'discovery': {'ledger_sha256': runs.sha_file(ledger), 'candidate_id': cand['id'], 'candidate_version': cand['version'],
+                               'candidate_sha256': digest(cand)},
+                 'mapping_status': 'HUMAN_REVIEWED_REFORMULATION', 'reviewer': {'kind': 'SYNTHETIC_FIXTURE', 'name': 'SYNTHETIC_REVIEWER'},
+                 'reviewed_at': F.MOMENT, 'notes': 'SYNTHETIC structurally valid crosswalk with a null handoff binding.'}
+        crosswalk = self.root / 'inputs' / 'null-handoff-crosswalk.json'
+        crosswalk.write_bytes(canonical(value))
+        layout, rep = self.start(self.f['unreviewed_idea'], run_id='OPR-TEST-UNREADY-LINK', ledger=runs.ledger_spec(ledger, cand['id'], None, crosswalk))
+        s = self.stages(layout)
+        self.assertEqual(s['FORGE_READINESS']['status'], 'WAITING_FOR_HUMAN')
+        r = s['ANVIL_CHECKS']
+        self.assertEqual((r['status'], r['summary']['link']), ('WAITING_FOR_HUMAN', 'UNLINKED_NO_CURRENT_HANDOFF'))
+        self.assertNotIn('checklist', r['summary'])
+        self.assertFalse(list(layout.artifacts.glob('anvil-ledger-*/crosswalk-template.json')))
+        self.assertFalse((layout.scout / 'exports').exists() and list((layout.scout / 'exports').glob('*handoff*')))
+        self.assertEqual(rep['first_boundary']['stage'], 'FORGE_READINESS')
+
+    # ---------------------------------------------------------------------------------- original drift before continue
+
+    def custody_drift(self, mutate, run_id):
+        critic = self.f['archive'].parent / f"critic-v1-{self.f['archive'].name}"
+        critic.mkdir(exist_ok=True)
+        (critic / 'notes.json').write_bytes(b'{"synthetic": true}\n')
+        layout, _ = self.start(run_id=run_id)
+        recorded = self.stages(layout)['FORGE_CUSTODY']['summary']
+        keys, copy_before = self.started(layout), read_tree(layout.scout)
+        mutate(critic)
+        rep = self.more(layout)
+        s = self.stages(layout)
+        check = s['CUSTODY_CHECK']
+        self.assertEqual(check['status'], 'FAILED')
+        self.assertEqual({s[n]['status'] for n in ('FORGE_RECORDS', 'FORGE_READINESS', 'JEV_MEMORY', 'ARMOURY_GRAPH', 'ANVIL_DRAFTS', 'ANVIL_CHECKS')}, {'SKIPPED'})
+        later = [e['record'] for e in Journal(layout.run).load() if e['type'] == 'STAGE_STARTED'][len(keys):]
+        self.assertEqual({r['stage'] for r in later}, {'PREFLIGHT', 'CUSTODY_CHECK', 'INTEGRITY'})  # nothing recopied or replayed
+        self.assertEqual(read_tree(layout.scout), copy_before)
+        self.assertEqual(rep['outcome'], 'FAILED')
+        self.assertEqual(rep['first_boundary']['stage'], 'CUSTODY_CHECK')
+        return check['summary'], recorded
+
+    def test_changed_original_scout_ledger_blocks_continue_before_research_stages(self):
+        archive = self.f['archive']
+        summary, recorded = self.custody_drift(lambda critic: (archive / 'scout.jsonl').write_bytes((archive / 'scout.jsonl').read_bytes() + b'\n'),
+                                               'OPR-TEST-ORIGINAL-DRIFT')
+        self.assertEqual(summary['archive']['recorded_digest'], recorded['original']['digest'])
+        self.assertNotEqual(summary['archive']['current_digest'], recorded['original']['digest'])
+        self.assertEqual(summary['critic_workspace']['state'], 'UNCHANGED')
+
+    def test_changed_original_critic_workspace_blocks_continue_before_research_stages(self):
+        summary, recorded = self.custody_drift(lambda critic: (critic / 'notes.json').write_bytes(b'{"synthetic": false}\n'), 'OPR-TEST-CRITIC-DRIFT')
+        self.assertEqual(summary['archive']['state'], 'UNCHANGED')
+        self.assertEqual(summary['critic_workspace']['recorded_digest'], recorded['critic']['digest'])
+        self.assertEqual(summary['critic_workspace']['state'], 'CHANGED')
+
+    def test_plan_separates_a_recorded_ready_review_from_current_handoff_eligibility(self):
+        archive = Archive(self.f['archive'])
+        current = archive.load().latest(self.f['ready_idea'])
+        def plan():
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.assertEqual(cli.main(['--base', str(self.f['base']), 'plan', '--archive', str(self.f['archive'])]), 0)
+            return {c['idea_id']: c for c in json.loads(out.getvalue())['cards']}
+        cards = plan()
+        self.assertEqual((cards[self.f['ready_idea']]['ready_review'], cards[self.f['ready_idea']]['handoff_eligible']), (True, True))
+        self.assertEqual((cards[self.f['unreviewed_idea']]['ready_review'], cards[self.f['unreviewed_idea']]['handoff_eligible']), (False, False))
+        archive.append('feasibility', {**F.feasibility(current), 'conclusion': 'NOT_FEASIBLE', 'assessment': 'SYNTHETIC later assessment: not feasible.'},
+                       recorded_at='2026-10-22T00:00:00+00:00')
+        card = plan()[self.f['ready_idea']]
+        self.assertEqual((card['ready_review'], card['handoff_eligible']), (True, False))  # an obsolete READY flag is not eligibility
+        self.assertIn('READY needs an identifiable publisher URL', card['handoff_refusal'])
 
     # ---------------------------------------------------------------------------------- stale Scout handoff
 

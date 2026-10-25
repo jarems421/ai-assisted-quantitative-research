@@ -39,6 +39,7 @@ MAPPINGS = ('HUMAN_REVIEWED_SAME_CLAIM', 'HUMAN_REVIEWED_REFORMULATION')
 def stages(ctx):
     yield 'PREFLIGHT', 'CHECK', preflight
     yield 'FORGE_CUSTODY', 'ONE_SHOT', custody
+    yield 'CUSTODY_CHECK', 'CHECK', custody_check
     yield 'FORGE_RECORDS', 'CHECK', records
     yield 'FORGE_READINESS', 'CHECK', readiness
     for route in ctx.inputs['routes']:
@@ -189,6 +190,34 @@ def custody(ctx):
     return inputs, act
 
 
+def drift_state(path, recorded):
+    try:
+        current = tree(path)['digest']
+    except (OperatorError, OSError) as error:
+        current = f'UNREADABLE: {error}'
+    return {'path': path, 'recorded_digest': recorded, 'current_digest': current, 'state': 'UNCHANGED' if current == recorded else 'CHANGED'}
+
+
+def custody_check(ctx):
+    """Every invocation, before any dependent stage: the originals must still match their retained custody manifests.
+    A change blocks the run; the working copy is never recopied and recorded one-shot stages are never re-run."""
+    inputs = {'invocation': ctx.invocation_seq}
+    up = upstream(ctx, 'FORGE_CUSTODY', inputs)
+    if up:
+        return up
+    s = ctx.current['FORGE_CUSTODY']['summary']
+    def act():
+        rows = {'archive': drift_state(s['original']['path'], s['original']['digest'])}
+        if s['critic'].get('digest'):
+            rows['critic_workspace'] = drift_state(s['critic']['path'], s['critic']['digest'])
+        changed = [k for k, v in rows.items() if v['state'] != 'UNCHANGED']
+        found = [f"Original {k} changed since custody: recorded digest {rows[k]['recorded_digest']}, current {rows[k]['current_digest']}." for k in changed]
+        return result('FAILED' if changed else 'COMPLETE', rows, software=found, blockers=found,
+                      next_actions=['Reconcile the change to the original by hand, or start a fresh run. The working copy is never recopied, '
+                                    'and recorded one-shot stages are never re-run.'] if changed else [])
+    return inputs, act
+
+
 def critic_records(ctx, idea):
     """Advisory criticism recorded for this idea: request statuses, pipeline outcomes and the latest recommendation."""
     if not ctx.layout.critic.is_dir():
@@ -247,7 +276,7 @@ def pipeline_records(ctx, critic):
 
 
 def records(ctx):
-    up = upstream(ctx, 'FORGE_CUSTODY', {})
+    up = upstream(ctx, 'CUSTODY_CHECK', {})
     if up:
         return up
     critic_manifest = ctx.layout.critic / 'manifest.json'
@@ -726,6 +755,8 @@ def crosswalk_problems(value, expected, synth):
     if not isinstance(value, dict) or set(value) != CROSSWALK_KEYS or value.get('schema') != CROSSWALK:
         return [f'not a {CROSSWALK} record with exactly the fields {sorted(CROSSWALK_KEYS)}']
     problems = [f'{side} binding differs from this run: expected {expected[side]}' for side in ('scout', 'discovery') if value[side] != expected[side]]
+    if not (isinstance(value['scout'], dict) and value['scout'].get('handoff_sha256') and expected['scout']['handoff_sha256']):
+        problems.append('a crosswalk must bind a current Scout handoff (handoff_sha256), never null')
     if value['mapping_status'] not in MAPPINGS:
         problems.append(f'mapping_status must be one of {MAPPINGS}')
     reviewer = value['reviewer'] if isinstance(value['reviewer'], dict) else {}
@@ -745,6 +776,12 @@ def supplied_checks(ctx, supplied):
     inputs = {'ledger': supplied['sha256'], 'candidate': supplied['candidate_id'], 'version': supplied['candidate_version'],
               'crosswalk': cross['sha256'] if cross else None, 'card': ctx.current['FORGE_RECORDS']['summary']['card_sha256'],
               'handoff': ready['summary']['envelope']['sha256'] if ready.get('status') == 'COMPLETE' else None}
+    if ready.get('status') != 'COMPLETE':
+        status = ready.get('status', 'NOT_RUN')
+        return inputs, result('WAITING_FOR_HUMAN', {'link': 'UNLINKED_NO_CURRENT_HANDOFF', 'readiness': status},
+                              research=[f'A supplied Discovery candidate is never admitted as a continuation of this Forge idea without a currently '
+                                        f'valid Scout handoff; FORGE_READINESS is {status}. The ledger was not linked and no crosswalk was evaluated.'],
+                              next_actions=['Pass the Scout READY gate first (see FORGE_READINESS); a crosswalk must then bind the exported handoff by hash.'])
     if supplied['sha256'] == 'MISSING' or (cross and cross['sha256'] == 'MISSING'):
         return inputs, result('WAITING_FOR_EVIDENCE', research=['The supplied ledger or crosswalk file was not found.'])
     fp = digest(inputs)[:8]

@@ -96,6 +96,9 @@ def overlaps(a, b):
     return a == b or a.is_relative_to(b) or b.is_relative_to(a)
 
 
+_IMPORTS = {}  # (path, content hash) -> parsed import names; the digest itself is always taken from current bytes
+
+
 def implementation():
     """Static src.* import closure of this package and of every delegated command line (CRLF normalised)."""
     todo = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / 'src/research/operator').glob('*.py'))
@@ -107,7 +110,9 @@ def implementation():
             continue
         data = (ROOT / rel).read_bytes()
         files[rel] = hashlib.sha256(data.replace(b'\r\n', b'\n')).hexdigest()
-        for name in X.imports(rel, data.decode('utf-8')):
+        if (rel, files[rel]) not in _IMPORTS:
+            _IMPORTS[(rel, files[rel])] = list(X.imports(rel, data.decode('utf-8')))
+        for name in _IMPORTS[(rel, files[rel])]:
             if name.split('.')[0] == 'src':
                 todo += [f.relative_to(ROOT).as_posix() for f in X.module_files(ROOT, name)]
     return {'boundary': 'static src.* import closure of src/research/operator and the delegated command lines', 'files': len(files),
@@ -389,9 +394,9 @@ def locate(run_id, base=DEFAULT_BASE):
     return layout
 
 
-def drift(events):
+def drift(events, current=None):
     """None when the current code matches the run's binding, else (bound, current)."""
-    now, then = binding(provenance()), bound(events)
+    now, then = binding(current or provenance()), bound(events)
     return None if now == then else (then, now)
 
 
@@ -402,7 +407,8 @@ def invoke(layout, command, *, supplied=None, clock=utc_now, accept_drift=None):
     journal = Journal(layout.run, clock)
     with journal.writer(), offline(layout.roots()) as boundary:
         events = journal.load()
-        changed = drift(events)
+        execution = provenance()  # once per invocation: the drift check and the execution record use the same reading
+        changed = drift(events, execution)
         if changed and (command != 'continue' or accept_drift != changed[1]['implementation']):
             raise OperatorError(f'implementation drift: run bound to {changed[0]}, current code is {changed[1]}. Nothing was run. '
                                 'Start a fresh run, or have the owner reconcile explicitly with '
@@ -417,7 +423,7 @@ def invoke(layout, command, *, supplied=None, clock=utc_now, accept_drift=None):
         if supplied:
             ctx.append('INPUTS_SUPPLIED', supplied)
             ctx.inputs = effective_inputs(ctx.events)
-        ctx.execution = provenance()
+        ctx.execution = execution
         start = ctx.append('INVOCATION_STARTED', {'command': command, 'invocation': ctx.invocation_seq + 1, 'operator_version': VERSION,
                                                   'execution': ctx.execution})
         ctx.invocation_seq += 1

@@ -15,7 +15,7 @@ Claude Code; the project skill `.claude/skills/research-os/` only calls it.
 |---|---|
 | `doctor` | Dependencies, required files, `.research/` ignore rule, git revision (read from metadata files) and a network/write boundary self-test |
 | `subjects` | Named subjects from the private, git-ignored `.research/operator-v1/subjects.json` |
-| `plan --subject NAME` or `--archive DIR [--idea IDEA-…]` | Lists the archive's cards, the stages, limits and predicted blockers. Reads a temporary copy of the Scout ledger; writes nothing to a run |
+| `plan --subject NAME` or `--archive DIR [--idea IDEA-…]` | Lists the archive's cards, the stages, limits and predicted blockers. `ready_review` is a recorded current READY review; `handoff_eligible` is whether Scout's own check would export the handoff now. Reads a temporary copy of the Scout ledger; writes nothing to a run |
 | `run …` | Creates run `OPR-…` and executes every eligible stage, then prints the consolidated report |
 | `continue OPR-… [--evidence F] [--ledger L --candidate CAND-… --crosswalk X] [--search T]` | Resumes orchestration with newly supplied inputs; never replays a one-shot stage. Refused after implementation drift unless the owner adds `--accept-implementation-drift <digest>` |
 | `status OPR-…` / `report OPR-… [--json]` | Read the run's journal; write nothing |
@@ -36,6 +36,7 @@ python -m src.research.operator report OPR-20261025T120000Z-a1b2c3
 |---|---|---|---|
 | `PREFLIGHT` | CHECK, every invocation | imports, required files, `.research/` ignore rule, links in the run directories, archive/workspace overlap | any check fails: custody and every delegated stage are SKIPPED |
 | `FORGE_CUSTODY` | ONE_SHOT | hash the original archive and its critic workspace; byte-identical working copy | the archive is not Scout's, or holds a writer lock |
+| `CUSTODY_CHECK` | CHECK, every invocation | re-hash the originals against their custody manifests | an original changed: FAILED with recorded and current digests; every dependent stage is SKIPPED, nothing is recopied |
 | `FORGE_RECORDS` | CHECK | `opportunity_scout validate`/`card`, `critic_v1 status`, `automation_v001 status`/`report` | the archive or idea is refused |
 | `FORGE_READINESS` | CHECK | Scout's own `engine.handoff` on the copy's current state, then `opportunity_scout handoff` | no current human READY review (WAITING_FOR_HUMAN), or an export that differs from current authority (BLOCKED) |
 | `QUARRY_IMPORT:<label>` | ONE_SHOT | `quarry_v1 import-file`/`status` on owner-supplied files | files missing, classes mixed, or Quarry refuses |
@@ -83,6 +84,8 @@ gates.
   change. New inputs produce new create-only output directories; nothing earlier is overwritten.
 - One invocation holds `journal.lock`. A lock left by a crash is never removed automatically.
 - Reports are rendered from the journal alone, so the same records always give the same report.
+- Every invocation re-hashes the original archive and critic workspace (CUSTODY_CHECK) before any dependent stage; the
+  final INTEGRITY check still guards against changes during execution.
 - After a boundary violation, the invocation stops: later stages are recorded SKIPPED, and only the read-only
   INTEGRITY check still runs, so status and report remain truthful.
 
@@ -139,13 +142,15 @@ any other ledger, before Discovery is reached.
 ## Binding a Discovery candidate to the Forge card
 
 A real run's checks need a ledger the owner's campaign created, supplied with `--ledger` and `--candidate`. The
-operator checks a pinned copy read-only, but only when a **human crosswalk** (`--crosswalk`) binds that candidate to
-the selected card. Without one, the stage is WAITING_FOR_HUMAN with link `UNLINKED`. The candidate's checklist is
+operator checks a pinned copy read-only, but only when the card's Scout handoff is currently valid (FORGE_READINESS
+COMPLETE) and a **human crosswalk** (`--crosswalk`) binds that candidate to the card and that handoff. Without a current
+handoff the link is `UNLINKED_NO_CURRENT_HANDOFF` and no crosswalk is evaluated; without a crosswalk it is `UNLINKED`.
+In both cases the stage is WAITING_FOR_HUMAN. The candidate's checklist is
 then not presented as a continuation of the Forge idea, even when every claim field has identical wording.
 
 ```json
 {"schema": "RESEARCH_OS_OPERATOR_CROSSWALK_V001",
- "scout": {"idea_id": "IDEA-…", "version": 1, "card_sha256": "…", "handoff_sha256": "… or null"},
+ "scout": {"idea_id": "IDEA-…", "version": 1, "card_sha256": "…", "handoff_sha256": "… (never null)"},
  "discovery": {"ledger_sha256": "…", "candidate_id": "CAND-…", "candidate_version": 1, "candidate_sha256": "…"},
  "mapping_status": "HUMAN_REVIEWED_SAME_CLAIM | HUMAN_REVIEWED_REFORMULATION",
  "reviewer": {"kind": "HUMAN", "name": "<the reviewer>"}, "reviewed_at": "…", "notes": "…"}

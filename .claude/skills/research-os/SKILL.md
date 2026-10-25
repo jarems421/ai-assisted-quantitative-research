@@ -18,7 +18,9 @@ them for the owner. Documentation: `docs/research_operator_v001.md`.
    - `python -m src.research.operator subjects` lists named subjects from the private
      `.research/operator-v1/subjects.json` (for example `hypothesis-b`).
    - Given an archive path: `python -m src.research.operator plan --archive <dir>` lists its cards. "Latest approved"
-     means `ready_review: true`; if no card has one, say so instead of choosing for the owner.
+     means `handoff_eligible: true` (Scout would export the handoff now). `ready_review: true` alone is only a
+     recorded READY decision that a later feasibility record or stop may have overtaken. If no card is eligible, say
+     so instead of choosing for the owner.
    - If the subject is still ambiguous, ask one question. Never guess an archive path.
 2. **Plan**: `python -m src.research.operator plan --subject <name>` (or `--archive <dir> --idea IDEA-...`). Mention
    the predicted blockers in one or two lines.
