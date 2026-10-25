@@ -1,0 +1,29 @@
+{
+  "schema": "TYPESAFE_NAVIGATION_CONTRACT_REVIEW_V001",
+  "reviewed_on": "2026-10-25",
+  "review_kind": "PUBLIC_DOCUMENTATION_ONLY_NOT_ACCOUNT_VERIFICATION",
+  "sources": [
+    "https://docs.typesafe.ai/api/system-one",
+    "https://docs.typesafe.ai/primitives/choice",
+    "https://docs.typesafe.ai/confidence",
+    "https://docs.typesafe.ai/models",
+    "https://docs.typesafe.ai/api/list-models"
+  ],
+  "method": "POST",
+  "endpoint": "https://api.typesafe.ai/v1/systemone",
+  "request_fields": ["model", "state", "questions"],
+  "choice_question_fields": ["type", "instructions", "criteria"],
+  "response_fields": ["model", "answers", "usage"],
+  "choice_answer_fields": ["type", "choice", "probabilities", "confidence"],
+  "reviewed_models": ["jev-1.13.0", "jev-1.14.0"],
+  "documented_default_request_context": "64k",
+  "documented_default_question_context": "32k",
+  "reservation_input_token_upper_bound": 65536,
+  "documented_usd_per_billion_input_tokens": 42,
+  "documented_output_billing": "FREE",
+  "account_version_availability": "UNKNOWN_REQUIRES_SEPARATE_VERIFICATION",
+  "account_enforceable_hard_spend_limit": "UNKNOWN_REQUIRES_INDEPENDENT_EVIDENCE_OR_STAY_BLOCKED",
+  "provider_authenticated_payload_binding": "NOT_DOCUMENTED_NOT_ASSUMED",
+  "actual_cost": "UNKNOWN",
+  "authorises": []
+}

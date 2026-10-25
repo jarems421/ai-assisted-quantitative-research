@@ -1971,5 +1971,41 @@
       "QuarryTests.test_unrelated_private_or_expanded_acquisition_routes_are_refused",
       "QuarryTests.test_wrong_source_asset_and_hash_are_retained_but_not_exported"
     ]
+  },
+  "tests/test_jev_navigation_integration_v1.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Disabled provider gates and injected TypeSafe-shaped synthetic transport only; portable Quarry provenance, retained failures, stop precedence and frozen holdout diagnostics. Temporary synthetic account evidence; no real credential, account, HTTP, human label or scientific action.",
+    "declared_tests": [
+      "IntegrationTests.test_account_evidence_and_freshness_required",
+      "IntegrationTests.test_changed_payload_raw_and_quarry_package_are_detected",
+      "IntegrationTests.test_complete_offline_demo_with_injected_provider_transport",
+      "IntegrationTests.test_direct_transport_uses_single_fixed_post_and_never_follows_redirects",
+      "IntegrationTests.test_disabled_before_credentials_account_or_network",
+      "IntegrationTests.test_exact_official_payload_questions_and_source_versions",
+      "IntegrationTests.test_holdout_freezes_opaque_label_hashes_before_dispatch_and_reuses_budget_metrics",
+      "IntegrationTests.test_http_denial_redirect_and_invalid_json_remain_failures",
+      "IntegrationTests.test_incomplete_http_capture_retains_partial_bytes_privately",
+      "IntegrationTests.test_interruption_is_not_reported_as_success_and_never_resumed",
+      "IntegrationTests.test_invalid_reply_preserves_recognised_identity_without_claiming_runtime_identity",
+      "IntegrationTests.test_live_evaluation_gate_refuses_missing_or_synthetic_holdout",
+      "IntegrationTests.test_malformed_raw_is_preserved_without_repair",
+      "IntegrationTests.test_memory_and_workflow_tasks_reuse_existing_contracts_and_stop_priority",
+      "IntegrationTests.test_model_drift_is_retained_invalid_and_never_ranked",
+      "IntegrationTests.test_oversize_capture_is_preserved_bounded_and_unparsed",
+      "IntegrationTests.test_payload_and_classification_authorisation_mismatch_fail_before_claim",
+      "IntegrationTests.test_provider_metadata_is_whitelisted_bounded_and_raw_is_unchanged",
+      "IntegrationTests.test_quarry_collection_refuses_duplicate_ids_and_mixed_questions",
+      "IntegrationTests.test_raw_response_provenance_ranking_and_pending_human_inspection",
+      "IntegrationTests.test_report_rejects_unsafe_metadata_even_with_an_updated_completion_hash",
+      "IntegrationTests.test_result_metadata_tampering_and_missing_completion_are_not_success",
+      "IntegrationTests.test_single_attempt_global_claim_and_no_replacement",
+      "IntegrationTests.test_synthetic_authority_cannot_activate_live_transport",
+      "IntegrationTests.test_synthetic_evaluation_cannot_be_reported_as_independent_human_accuracy",
+      "IntegrationTests.test_transport_failure_retains_partial_bytes_without_exception_text_or_retry",
+      "IntegrationTests.test_unusable_attempts_never_receive_model_ranking_or_abstention_metrics",
+      "IntegrationTests.test_wrong_question_unknown_fields_and_invalid_usage_refused",
+      "IntegrationTests.test_yes_no_unsure_and_tied_maximum_remain_distinct"
+    ]
   }
 }
