@@ -69,7 +69,7 @@ Each run has a unique ID and a private workspace under the ignored `.research/`:
 |---|---|
 | `.research/operator-v1/<RUN>/journal.jsonl` | hash-chained events: request, scope, code revision and implementation digest per invocation, stage claims and results |
 | `…/<RUN>/artifacts/` | card copy, Jev inputs, drafts and audits, synthetic preview ledgers, and every delegated command's output |
-| `…/<RUN>/reports/report-<head>.json` / `.md` | the consolidated report for that journal head |
+| `…/<RUN>/reports/report-<head>-v002.json` / `.md` | corrected consolidated report for that journal head; saved V001 files keep their original names |
 | `.research/opportunity_scout/<run>-forge`, `critic-v1-<run>-forge` | working copies of the archive and critic workspace |
 | `.research/quarry-v1-<run>/`, `jev-provider-v1-<run>/`, `jev-navigation-v1-<run>/` | component outputs, in the locations their own guards require |
 
@@ -83,7 +83,7 @@ gates.
 - A **CHECK** stage is read-only (or create-only into the run directory) and is re-evaluated only when its inputs
   change. New inputs produce new create-only output directories; nothing earlier is overwritten.
 - One invocation holds `journal.lock`. A lock left by a crash is never removed automatically.
-- Reports are rendered from the journal alone, so the same records always give the same report.
+- Reports are rendered from the journal alone, so the same records and report schema always give the same report.
 - Every invocation re-hashes the original archive and critic workspace (CUSTODY_CHECK) before any dependent stage; the
   final INTEGRITY check still guards against changes during execution.
 - After a boundary violation, the invocation stops: later stages are recorded SKIPPED, and only the read-only
@@ -214,15 +214,42 @@ The local Pilot 001 test checks the cross-stage protocol's G0, F1.a–d, F2/F3 a
 - the run makes zero requests;
 - the report is deterministic and `continue` replays nothing.
 
-## Known limits (V001)
+## Post-audit reporting corrections (2026-10-25)
+
+The workflow/profile and research gates remain V001. The corrected derived report schema is
+`RESEARCH_OS_OPERATOR_REPORT_V002`; new saved reports use `report-<head>-v002` to avoid replacing V001 files.
+Read-only `report` renders V002, including from an older journal's retained summaries. The Python renderer's
+`render(events, schema=LEGACY_REPORT)` and `markdown` retain byte-reproducible V001 output. Neither renderer
+repairs history. Existing runs still refuse continuation after implementation drift without the owner's explicit
+acceptance; reporting corrections do not bypass that rule.
+
+- Armoury search findings include each retained result/refusal and explicit abstentions such as
+  `NO_USEFUL_SUGGESTION`. An empty search never establishes economic falsification.
+- Accounting distinguishes **total delegated invocations** over all retained stage executions from **distinct
+  command strings**. Repeated Jev reports count twice. Stage rows continue to show calls in their latest result.
+- `CHECK` and `ONE_SHOT` describe internal execution/cache policies. `DECISION` means an internal no-action gate
+  result, never a human judgment, READY approval or research decision.
+- Legacy Scout critic-record counts and selected-subject critic-v1 results are separately labelled. An absent
+  imported response is no imported judgment; VALID means response-contract validity, not empirical validation.
+  Old journals without the structured legacy count display UNKNOWN rather than infer it from prose.
+- **Human action groups** count distinct OWNER/HUMAN instruction strings. A group may require multiple conditional
+  records or files. Individual records have **not been exhaustively counted**; the count estimates neither files
+  nor human time. Human content is never authored by the coordinator.
+
+Archived pipeline reporting now resolves the recorded sibling workspace from the archive location, including
+renamed copies, and requires its manifest's RUN head to belong to that archive's history. Copy the critic workspace
+beside the copied archive as `critic-v1-<copied-archive-name>`. There is no fallback to the original workspace when
+the copied sibling is absent. This is a read-only association check, not a new evidence or research approval.
+
+## Known limits (V001 workflow)
 
 - One profile. Real runs stop at the Scout READY gate until the owner revises the card and a human records READY;
   Hypothesis B v1 has a prose source locator, so READY is impossible without a revision.
 - No acquisition dispatcher, PDF/OCR extraction, Level A runner or automatic Armoury ingestion. These are reported
   as NOT_IMPLEMENTED.
-- The archived pipeline report resolves its plan's relative critic-workspace path against the process directory, so
-  it shows no critic subjects for a copied archive. The operator reads criticism from the copied workspace instead
-  and reports the discrepancy.
+- A historical relative critic path outside the recorded conventional sibling layout has no reliable anchor and
+  is refused rather than guessed. An explicit non-sibling absolute path remains authoritative; it cannot be
+  automatically relocated across platforms. Historical plans, saved reports and receipts are never rewritten.
 - `worktree_clean` stays UNKNOWN: no git process is launched.
 - Accepted residual limits:
   - The audit hook is not an OS sandbox, and reads are checked on the literal path.

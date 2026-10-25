@@ -26,7 +26,7 @@ import http.client
 import json
 import math
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
 import subprocess
 import tempfile
@@ -106,6 +106,35 @@ def workspace_path(store):
     return store.parent / f'critic-v1-{store.name}'
 
 
+def report_workspace(store, plan):
+    """Resolve recorded locations without CWD or rewriting a plan. Relocate only the pipeline's sibling layout.
+
+    Legacy plans recorded a CWD-relative workspace beside an absolute archive. Its parent must be a suffix of
+    the recorded archive parent; otherwise its original anchor is unknown and must not be guessed. Pure paths
+    also allow a Windows archive and its sibling to be inspected after copying them to Linux (and vice versa).
+    """
+    if not plan.get('critic_workspace'):
+        return None
+    recorded = str(plan.get('archive', ''))
+    kind = PureWindowsPath if PureWindowsPath(recorded).drive or '\\' in recorded else PurePosixPath
+    archive, saved = kind(recorded), kind(plan['critic_workspace'])
+    if not archive.is_absolute():
+        raise S.ScoutError('critic workspace has no absolute recorded archive anchor')
+    sibling = archive.parent / f'critic-v1-{archive.name}'
+    if not saved.is_absolute():
+        parent = saved.parent.parts
+        if (saved.drive or saved.name != sibling.name or '..' in saved.parts
+                or (parent and kind(*archive.parent.parts[-len(parent):]) != saved.parent)):
+            raise S.ScoutError('legacy critic workspace anchor is ambiguous; historical plan is not rewritten')
+        saved = sibling
+    if saved == sibling:
+        return workspace_path(store)  # includes renamed copies; never fall back to the original workspace
+    target = Path(str(saved))  # a non-conventional explicit absolute location remains authoritative
+    if not target.is_absolute():
+        raise S.ScoutError('non-sibling critic workspace is not portable to this platform')
+    return target
+
+
 def complete_role(role):
     """Fill the executable hash for a Codex role from its path; validate every role."""
     role = dict(role)
@@ -123,7 +152,7 @@ def plan(store, *, title, generator, scientific, economic, spend_cap_usd, codex_
     if type(critic_timeout_seconds) is not int or not 30 <= critic_timeout_seconds <= 1800:raise S.ScoutError('critic timeout is 30..1800 seconds')
     if type(spend_cap_usd) not in (int, float) or spend_cap_usd < 0 or spend_cap_usd > 50:raise S.ScoutError('spend cap is 0..50 USD')
     if any(r['provider'] == V.CODEX for r in roles.values()) and not codex_home:raise S.ScoutError('name CODEX_HOME explicitly (e.g. the user ~/.codex)')
-    ws = workspace_path(store)
+    ws = workspace_path(Path(store).absolute())
     if ws.exists():raise S.ScoutError('the critic workspace path already exists; a run needs new directories')
     gen = X.plan(store, title=title, host=host.generation, **generator)
     archive = Archive(store)
@@ -629,10 +658,12 @@ def build(store, *, final=None):
     attempt = next(iter(state.attempts.values()), {})
     critic = {x.name[len('pipeline-critic-'):-5]: read(x) for x in sorted(ex.glob('pipeline-critic-*.json'))}
     claims = {x.name[len('pipeline-claim-'):-5] for x in ex.glob('pipeline-claim-CRQ-*.json')}
-    ws_path = Path(p.get('critic_workspace', '')) if p else None
+    ws_path = report_workspace(archive.path, p)
     subjects, rec_file = {}, None
     if ws_path and (ws_path / 'manifest.json').is_file():
         ws = P.Workspace(ws_path); manifest = ws.manifest()
+        if manifest.get('archive_heads', {}).get('RUN') not in {e['hash'] for e in state.events}:
+            raise S.ScoutError('critic workspace does not bind this archive history')
         attempts = {a['attempt']: a for a in ws.attempts()}
         recs = ws.files('recommendations'); rec = ws.read(recs[-1]) if recs else None; rec_file = recs[-1] if recs else None
         for key, e in sorted(manifest['subjects'].items()):
