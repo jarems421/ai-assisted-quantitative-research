@@ -109,6 +109,17 @@ def documents_for(package, inspection, text):
     return documents
 
 
+def human_inspection(package):
+    route, supplied = package['route'], package['supply']
+    return {'schema': 'QUARRY_HUMAN_INSPECTION_V001', 'fixture': supplied['fixture'],
+                                          'source_passport': {'route_id': route['id'], 'route_version': route['version'], 'locator': route['locator'],
+                                                              'publisher': route['publisher'], 'access_restrictions': route['access_restrictions'],
+                                                              'missing_fields': supplied['missing_fields'], 'stops': route['stops']},
+                                          'prospective_anvil': {'status': 'PENDING_HUMAN_INSPECTION', 'ready': False,
+                                                               'required_next': 'Inspect originals, exact study, Discovery V002 M/dispositions and independent owner-controlled trust through study_readiness_v1. No study or human review is created here.'},
+                                          'banner': BANNER, 'authorises': []}
+
+
 def export(package_path, inspection_path, subject_path, out, *, extracted_path=None):
     package = load(package_path)
     route, supplied, receipt = (package[k] for k in ('route', 'supply', 'receipt'))
@@ -149,13 +160,7 @@ def export(package_path, inspection_path, subject_path, out, *, extracted_path=N
     io.write(root / 'provenance.json', {'schema': 'QUARRY_HANDOFF_V001', 'route': route, 'supply': supplied, 'receipt': receipt,
                                      'source_manifest_sha256': digest(package['manifest']), 'extraction_sha256': io.sha(text),
                                      'inspection_sha256': digest(inspection), 'banner': BANNER, 'authorises': []})
-    io.write(root / 'human-inspection.json', {'schema': 'QUARRY_HUMAN_INSPECTION_V001', 'fixture': supplied['fixture'],
-                                          'source_passport': {'route_id': route['id'], 'route_version': route['version'], 'locator': route['locator'],
-                                                              'publisher': route['publisher'], 'access_restrictions': route['access_restrictions'],
-                                                              'missing_fields': supplied['missing_fields'], 'stops': route['stops']},
-                                          'prospective_anvil': {'status': 'PENDING_HUMAN_INSPECTION', 'ready': False,
-                                                               'required_next': 'Inspect originals, exact study, Discovery V002 M/dispositions and independent owner-controlled trust through study_readiness_v1. No study or human review is created here.'},
-                                          'banner': BANNER, 'authorises': []})
+    io.write(root / 'human-inspection.json', human_inspection(package))
     # Existing Jev contract and citation loader, no duplicated navigation or policy logic.
     N.derive(root / 'input.json')
     return io.seal(root, files, EXPORT)
@@ -165,6 +170,9 @@ def validate_export(root):
     root = io.safe_path(root)
     manifest = io.verify_seal(root, EXPORT)
     package = load(root / 'source')
+    expected_files = {'claim.json', 'inspection.json', 'text.txt', 'provenance.json', 'input.json', 'human-inspection.json', 'source/manifest.json'} | {'source/' + name for name in package['manifest']['files']}
+    K.need(set(manifest['files']) == expected_files, 'incomplete or unexpected export files')
+    K.need(io.json_file(root / 'claim.json') == {'schema': 'QUARRY_EXPORT_CLAIM_V001', 'package_sha256': digest(package['manifest']), 'authorises': []}, 'export claim mismatch')
     provenance = io.json_file(root / 'provenance.json')
     K.need(provenance == {'schema': 'QUARRY_HANDOFF_V001', 'route': package['route'], 'supply': package['supply'], 'receipt': package['receipt'],
                          'source_manifest_sha256': digest(package['manifest']), 'extraction_sha256': io.sha(io.read(root / 'text.txt')),
@@ -174,6 +182,10 @@ def validate_export(root):
     text = io.read(root / 'text.txt')
     if inspection['mode'] == 'ORIGINAL_UTF8' and package['receipt']['original_sha256']:
         K.need(text == io.read(root / 'source/original.bin'), 'original/excerpt separation violated')
+    if package['receipt']['original_sha256'] is None:
+        supplied = package['supply']
+        negative_text = (supplied['title'] + '\nUNAVAILABLE\n' + '\n'.join(supplied['limitations'] + supplied['missing_fields'])).encode('utf-8')
+        K.need(inspection['mode'] == 'ORIGINAL_UTF8' and text == negative_text, 'unavailable metadata cannot be invented evidence')
     for e in inspection['excerpts']:
         K.need(text[e['start_byte']:e['end_byte']] == e['quote'].encode(), 'excerpt offsets changed')
     bundle = N.derive(root / 'input.json')
@@ -183,6 +195,5 @@ def validate_export(root):
     K.need(sorted(actual_docs, key=lambda d: d['id']) == expected_docs, 'source/citation/restriction binding changed')
     K.need(bundle['request']['data_classification'] == package['supply']['data_classification'], 'disclosure classification changed')
     human = io.json_file(root / 'human-inspection.json')
-    K.need(human['prospective_anvil']['status'] == 'PENDING_HUMAN_INSPECTION' and human['prospective_anvil']['ready'] is False
-           and human['authorises'] == [], 'human authority cannot be supplied by Quarry')
+    K.need(human == human_inspection(package), 'human inspection/passport metadata changed')
     return {'manifest': manifest, 'provenance': provenance, 'input': root / 'input.json', 'bundle': bundle, 'authorises': []}
