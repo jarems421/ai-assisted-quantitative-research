@@ -12,14 +12,17 @@ Tests: `tests/opportunity_scout/test_scan_v001.py` (offline, pipeline fixtures).
 ```powershell
 # Once: settings copied from a reviewed plan (no secrets), and the Gemini key stored DPAPI-encrypted for this Windows user
 python -m src.research.opportunity_scout.scan_v001 configure --owner "<your name>" --from-plan .research/opportunity_scout/forge-live-pilot-002 --prices-valid-until 2026-11-30
-.\src\research\opportunity_scout\scan_v001\scout.ps1 -SetGeminiKey
+powershell -NoProfile -ExecutionPolicy Bypass -File .\src\research\opportunity_scout\scan_v001\scout.ps1 -SetGeminiKey
 
 # Every scan: one command (plans a new archive, checks it, asks you to type RUN <hash prefix>, runs once)
-.\src\research\opportunity_scout\scan_v001\scout.ps1 -Count 2 -Budget 1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\src\research\opportunity_scout\scan_v001\scout.ps1 -Count 2 -Budget 1
 
 # An existing unclaimed plan (for example Pilot 002) instead of a new one
-.\src\research\opportunity_scout\scan_v001\scout.ps1 -Archive .research/opportunity_scout/forge-live-pilot-002
+powershell -NoProfile -ExecutionPolicy Bypass -File .\src\research\opportunity_scout\scan_v001\scout.ps1 -Archive .research/opportunity_scout/forge-live-pilot-002
 ```
+
+Run these from the repository root. Windows' default execution policy (Restricted) refuses `.\scout.ps1`;
+`-ExecutionPolicy Bypass -File` applies only to that one process and changes no system setting.
 
 `-PlanOnly` stops after the checks and summary. `-Confirm <full plan sha256>` confirms non-interactively; use it only
 with a hash the owner has explicitly confirmed (this is how Claude Code operates a scan, see the
