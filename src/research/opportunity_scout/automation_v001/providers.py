@@ -3,7 +3,9 @@
 Each provider has its own environment, preflight and fail-closed response review; no Claude stream assumption is
 reused. An adapter never repairs, retries, continues, falls back or substitutes a model. It returns the reply bytes
 unchanged plus allowlisted facts; the AI Critic V1 importer (unchanged) then judges the reply. Faults mean the reply
-is never imported. Nothing here runs on import, and offline tests inject every process and transport.
+is never imported. Every raw stream or body passes the credential screen (``credentials``, V002 since Forge Pilot 001;
+its version and category labels are recorded, never a value). Nothing here runs on import, and offline tests inject
+every process and transport.
 
 * CODEX_CLI (OpenAI Codex CLI ``codex exec``): ChatGPT-login subscription only; API-key variables never reach it.
   Read-only sandbox, ephemeral session, user config and rules ignored, web search disabled; any command, file,
@@ -22,10 +24,11 @@ import math
 import re
 
 from src.research.spec import digest
-from .. import claude_subscription as CS, schema as S
+from .. import schema as S
 from ..v004_runtime import OS_ENV
+from . import credentials as CR
 
-VERSION = 'SCOUT_CRITIC_PROVIDERS_V001'
+VERSION = 'SCOUT_CRITIC_PROVIDERS_V002'  # V002: credential screen V002 replaces safe_output (Forge Pilot 001 correction)
 CODEX, GEMINI, ANTIGRAVITY = 'CODEX_CLI', 'GEMINI_API', 'ANTIGRAVITY_CONSUMER'
 PROVIDERS = (CODEX, GEMINI, ANTIGRAVITY)
 UNAVAILABLE = 'PROVIDER_UNAVAILABLE_OR_NOT_AUTHORISED'
@@ -41,9 +44,11 @@ def fault_list():
     return faults, fault
 
 
-def credential_like(*blobs):
-    text = ''.join(b.decode('utf-8', errors='replace') if isinstance(b, bytes) else b for b in blobs)
-    return CS.safe_output(text) != text
+def credential_screen(fault, code, *blobs):
+    """Screen V002 over the raw bytes; a hit is a fault. The record carries the version and labels, never a value."""
+    found = CR.screen(*blobs)
+    if found:fault(code)
+    return {'version': CR.VERSION, 'categories': found}
 
 
 # ----------------------------------------------------------------------------------------------- Codex CLI
@@ -98,7 +103,7 @@ def codex_preflight(run_admin, executable_sha256, actual_sha256):
 def codex_review(stdout, stderr, returncode, timed_out, model, *, accept_requested_identity=False):
     """Review one ``codex exec --json`` JSONL stream. Returns (reply bytes or None, facts)."""
     faults, fault = fault_list()
-    if credential_like(stdout, stderr):fault('CREDENTIAL_LIKE_PATTERN_IN_RAW_STREAM')
+    screened = credential_screen(fault, 'CREDENTIAL_LIKE_PATTERN_IN_RAW_STREAM', stdout, stderr)
     events = []
     try:
         for line in stdout.decode('utf-8').splitlines():
@@ -147,7 +152,8 @@ def codex_review(stdout, stderr, returncode, timed_out, model, *, accept_request
              'models_reported': sorted(models), 'thread_id_sha256': digest(events[0].get('thread_id')) if events and kinds[0] == 'thread.started' else S.UNKNOWN,
              'usage': {k: usage.get(k, S.UNKNOWN) for k in keys}, 'agent_messages': len(messages),
              'events': len(events), 'billing_path': 'CHATGPT_SUBSCRIPTION', 'charge': S.UNKNOWN,
-             'underlying_provider_requests': S.UNKNOWN, 'reply_sha256': S.hash_text(text) if text else S.UNKNOWN}
+             'underlying_provider_requests': S.UNKNOWN, 'reply_sha256': S.hash_text(text) if text else S.UNKNOWN,
+             'credential_screen': screened}
     return (reply if not faults else None), facts
 
 
@@ -184,7 +190,7 @@ def worst_case_cost(prompt_bytes, max_output_tokens, prices):
 def gemini_review(status, body, model, prices):
     """Review one generateContent response. Returns (reply bytes or None, facts)."""
     faults, fault = fault_list()
-    if credential_like(body):fault('CREDENTIAL_LIKE_PATTERN_IN_RAW_RESPONSE')
+    screened = credential_screen(fault, 'CREDENTIAL_LIKE_PATTERN_IN_RAW_RESPONSE', body)
     if status != 200:fault(f'HTTP_{status}')
     try:value = S.json_loads(body.decode('utf-8'))
     except (UnicodeError, S.ScoutError):value = None; fault('INVALID_RESPONSE_ENVELOPE')
@@ -220,7 +226,8 @@ def gemini_review(status, body, model, prices):
              'model_identity_basis': 'OBSERVED_IN_RESPONSE' if 'MODEL_MISMATCH_OR_UNKNOWN' not in faults else S.UNKNOWN,
              'response_id_sha256': digest(value['responseId']) if isinstance(value.get('responseId'), str) else S.UNKNOWN,
              'usage': usage, 'billing_path': 'GEMINI_API_PAID', 'cost_estimate_usd_documented_prices': estimate,
-             'charge': S.UNKNOWN, 'underlying_provider_requests': 1, 'reply_sha256': S.hash_text(text) if text else S.UNKNOWN}
+             'charge': S.UNKNOWN, 'underlying_provider_requests': 1, 'reply_sha256': S.hash_text(text) if text else S.UNKNOWN,
+             'credential_screen': screened}
     return (reply if not faults else None), facts
 
 

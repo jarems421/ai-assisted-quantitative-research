@@ -3,6 +3,7 @@ Gemini transport and SYNTHETIC FIXTURE critic answers; the real archive, importe
 and report run unchanged. No process, network, credential, real account directory or paid call is used."""
 import copy
 import email.message
+import hashlib
 import http.client
 import io
 import json
@@ -97,7 +98,7 @@ class Base(T.Base):
         mode = self.gemini_mode
         if mode.get('error'):raise mode['error']
         prompt = self.gemini_calls[-1]['body']['contents'][0]['parts'][0]['text'].encode('utf-8')
-        text = mode.get('text') or self.answer(self.request_for(prompt)).decode('utf-8')
+        text = mode.get('text') or mode.get('prefix', '') + self.answer(self.request_for(prompt)).decode('utf-8')
         return mode.get('status', 200), PV.gemini_body(text=text, model=mode.get('model', 'gemini-4-argon-001'), usage=mode.get('usage'))
 
     # ---- helpers ------------------------------------------------------------------------------------------
@@ -412,6 +413,140 @@ class BoundaryTests(Base):
         for f in list((self.store / 'exports').iterdir()) + list(R.workspace_path(self.store).rglob('*')):
             if f.is_file():self.assertNotIn(KEY.encode(), f.read_bytes(), f.name)
         self.assertEqual({c['headers']['x-goog-api-key'] for c in self.gemini_calls}, {KEY})
+
+
+class FinalisationTests(Base):
+    """Receipt/report V002 (Forge Pilot 001 corrections): finalisation order, execution provenance, credential screen."""
+    def fresh(self, name, **cli):
+        self.store = self.base / name
+        self.host.runner = T.FakeCLI(self, **{'model_stream': lambda s: T.stream(s, TEXT2), **cli})
+
+    def assert_finalised(self, receipt):
+        ex = self.store / 'exports'
+        saved = json.loads((ex / 'pipeline-report.json').read_text(encoding='utf-8'))
+        md = (ex / 'pipeline-report.md').read_text(encoding='utf-8')
+        st = R.status(self.store)
+        self.assertEqual((receipt['schema'], receipt['stages']['REPORT']), (R.RECEIPT_V, 'COMPLETE'))
+        self.assertEqual({saved['outcome'], st['outcome'], R.markdown_outcome(ex / 'pipeline-report.md')}, {receipt['outcome']})
+        self.assertEqual(saved['stages'], receipt['stages']); self.assertEqual(st['stages'], receipt['stages'])
+        self.assertEqual(st['finalisation'], {'state': 'BOUND', 'report_files': 'PRESENT', 'saved_report_outcome': receipt['outcome'],
+                                              'markdown_outcome': receipt['outcome'], 'receipt_outcome': receipt['outcome'], 'consistent': True})
+        self.assertEqual(receipt['report_sha256'], {n: R.file_facts(ex / n)['sha256'] for n in R.REPORT_FILES})
+        self.assertEqual(R.build(self.store), saved)  # the live read-only report renders exactly the committed one
+        self.assertEqual(R.markdown(R.build(self.store)), md)
+        self.assertNotIn(R.UNFINISHED, md); self.assertIn(R.COMMIT_RULE, md)
+
+    def test_complete_run_report_files_receipt_and_status_agree(self):
+        receipt = self.execute()
+        self.assertEqual(receipt['outcome'], 'COMPLETE')
+        self.assert_finalised(receipt)
+
+    def test_incomplete_critics_run_is_finalised_with_the_same_outcome_everywhere(self):
+        self.gemini_mode['prefix'] = 'Bearer FICTIONALtokenValue\n\n'  # a token-shaped value: still a provider fault under V002
+        receipt = self.execute()
+        self.assertEqual(receipt['outcome'], 'INCOMPLETE_CRITICS')
+        self.assert_finalised(receipt)
+        econ = {self.critic(self.report(), i, 'ECONOMIC')['faults'][0] for i in self.ideas()}
+        self.assertEqual(econ, {'CREDENTIAL_LIKE_PATTERN_IN_RAW_RESPONSE'})
+
+    def test_generation_failure_is_finalised_with_the_same_outcome_everywhere(self):
+        self.host.runner = T.FakeCLI(self, model_stream=lambda s: T.stream(s, 'not a JSON idea batch'))
+        receipt = self.execute()
+        self.assertIn(receipt['outcome'], ('NO_ADMITTED_CARDS', 'GENERATION_FAILED'))
+        self.assertNotEqual(receipt['stages']['GENERATION'], 'VALID')
+        self.assertEqual([receipt['stages'][s] for s in R.STAGES[1:4]], ['NOT_RECORDED'] * 3)
+        self.assertEqual((self.codex_calls, self.gemini_calls), ([], []))
+        self.assert_finalised(receipt)
+
+    def test_interrupted_finalisation_is_never_reported_as_finished(self):
+        original = R.Run.put
+        for point, (name, after) in {'after report JSON': ('report', True), 'after Markdown': ('stage-REPORT', False),
+                                     'after REPORT stage': ('receipt', False)}.items():
+            with self.subTest(point=point):
+                self.fresh('archive-' + name)
+                def put(run, n, value, name=name, after=after):
+                    if n == name and not after:raise KeyboardInterrupt('fictional crash during finalisation')
+                    path = original(run, n, value)
+                    if n == name:raise KeyboardInterrupt('fictional crash during finalisation')
+                    return path
+                result = self.planned(); auth = self.authorise(result)
+                with patch.object(R.Run, 'put', put), self.assertRaises(KeyboardInterrupt):R.run(self.store, auth, host=self.pipe)
+                ex = self.store / 'exports'
+                self.assertFalse((ex / 'pipeline-receipt.json').exists())
+                st = R.status(self.store)
+                self.assertEqual((st['interrupted'], st['finished'], st['outcome']), (True, False, 'INTERRUPTED'))
+                self.assertEqual(st['finalisation'], {'state': 'NOT_FINALISED', 'report_files': 'UNCOMMITTED', 'consistent': False})
+                self.assertEqual(R.build(self.store)['outcome'], R.UNFINISHED)
+                self.assertIn(R.COMMIT_RULE, json.loads((ex / 'pipeline-report.json').read_text(encoding='utf-8'))['commit_rule'])
+                with self.assertRaises(S.ScoutError):R.run(self.store, auth, host=self.pipe)  # never resumed
+
+    def test_a_v001_receipt_and_report_are_read_as_legacy_and_never_rewritten(self):
+        self.execute(); ex = self.store / 'exports'
+        for n in R.REPORT_FILES + ('pipeline-receipt.json', 'pipeline-execution.json'):(ex / n).unlink()  # fixture: a V001-shaped run
+        legacy = {'schema': 'SCOUT_RESEARCH_PIPELINE_RECEIPT_V001', 'outcome': 'INCOMPLETE_CRITICS', 'stages': {s: 'COMPLETE' for s in R.STAGES}}
+        (ex / 'pipeline-receipt.json').write_text(json.dumps(legacy), encoding='utf-8')
+        (ex / 'pipeline-report.json').write_text(json.dumps({'outcome': R.UNFINISHED, 'stages': {}}), encoding='utf-8')
+        (ex / 'pipeline-report.md').write_text(f'# Research OS run report ({R.UNFINISHED})\n', encoding='utf-8')
+        before = {n: (ex / n).read_bytes() for n in R.REPORT_FILES}
+        st = R.status(self.store)
+        self.assertEqual((st['outcome'], st['execution']), ('INCOMPLETE_CRITICS', 'NOT_RECORDED'))
+        self.assertEqual({k: st['finalisation'][k] for k in ('state', 'saved_report_outcome', 'consistent')},
+                         {'state': 'LEGACY_RECEIPT_UNBOUND', 'saved_report_outcome': R.UNFINISHED, 'consistent': False})
+        self.assertEqual(R.build(self.store)['outcome'], 'INCOMPLETE_CRITICS')
+        self.assertEqual({n: (ex / n).read_bytes() for n in R.REPORT_FILES}, before)  # read-only
+
+    def test_execution_provenance_is_recorded_from_files_before_any_process_and_bound_by_the_receipt(self):
+        cli, seen = self.host.runner, []
+        def first(args, **kw):seen.append((self.store / 'exports/pipeline-execution.json').is_file()); return cli(args, **kw)
+        self.host.runner = first
+        def deny(*a, **k):raise AssertionError('provenance never launches a process')
+        with patch.object(subprocess, 'Popen', deny):receipt = self.execute()
+        self.assertTrue(seen and all(seen))  # written before the first administrative or model command
+        ex = self.store / 'exports'; e = json.loads((ex / 'pipeline-execution.json').read_text(encoding='utf-8'))
+        self.assertEqual(receipt['execution_sha256'], R.file_facts(ex / 'pipeline-execution.json')['sha256'])
+        self.assertEqual((e['schema'], e['worktree_clean']), (R.E.VERSION, S.UNKNOWN))
+        self.assertEqual(e['scout_batch_base_commit']['meaning'], R.E.BASE_MEANING)
+        commit = e['revision']['commit']
+        self.assertTrue(commit == S.UNKNOWN or R.E.HEX.fullmatch(commit))
+        files = e['implementation']['files']
+        for rel in ('automation_v001/pipeline.py', 'automation_v001/credentials.py', 'critic_v1/policy.py', 'exploratory_v001/runner.py'):
+            path = 'src/research/opportunity_scout/' + rel
+            self.assertEqual(files[path], hashlib.sha256((ROOT / path).read_bytes().replace(b'\r\n', b'\n')).hexdigest())
+        self.assertEqual(R.status(self.store)['execution']['implementation_digest'], e['implementation']['digest'])
+        self.assertIn('## Executing code', (ex / 'pipeline-report.md').read_text(encoding='utf-8'))
+
+    def test_git_revision_is_read_from_metadata_files_and_unknown_is_never_inferred(self):
+        sha, other = 'a' * 40, 'b' * 40
+        def repo(name, files):
+            root = self.base / 'git' / name
+            for rel, text in files.items():(root / rel).parent.mkdir(parents=True, exist_ok=True); (root / rel).write_text(text, encoding='utf-8')
+            return root
+        common = repo('common', {'.git/HEAD': 'ref: refs/heads/main\n', '.git/packed-refs': f'# pack-refs\n{other} refs/heads/other\n{sha} refs/heads/main\n',
+                                 '.git/worktrees/w/HEAD': 'ref: refs/heads/other\n', '.git/worktrees/w/commondir': '../..\n'})
+        worktree = repo('worktree', {'.git': f'gitdir: {common / ".git/worktrees/w"}\n'})
+        cases = {'packed ref': (common, sha, 'refs/heads/main'), 'worktree through commondir': (worktree, other, 'refs/heads/other'),
+                 'loose ref': (repo('loose', {'.git/HEAD': 'ref: refs/heads/x\n', '.git/refs/heads/x': sha + '\n'}), sha, 'refs/heads/x'),
+                 'detached': (repo('detached', {'.git/HEAD': other + '\n'}), other, 'DETACHED')}
+        for name, (root, commit, ref) in cases.items():
+            with self.subTest(case=name):self.assertEqual({k: R.E.revision(root)[k] for k in ('commit', 'ref')}, {'commit': commit, 'ref': ref})
+        unknown = {'NO_GIT_METADATA': self.base / 'git' / 'none', 'UNRECOGNISED_GIT_FILE': repo('file', {'.git': 'not a pointer\n'}),
+                   'UNRECOGNISED_HEAD': repo('escape', {'.git/HEAD': 'ref: refs/../../secret\n'}),
+                   'REF_NOT_RESOLVED': repo('missing', {'.git/HEAD': 'ref: refs/heads/gone\n'}),
+                   'GIT_METADATA_UNREADABLE': repo('dangling', {'.git': 'gitdir: does/not/exist\n'})}
+        for reason, root in unknown.items():
+            with self.subTest(reason=reason):
+                r = R.E.revision(root)
+                self.assertEqual((r['commit'], r['reason']), (S.UNKNOWN, reason))
+
+    def test_economic_bearer_prose_critique_is_imported_end_to_end(self):
+        self.gemini_mode['prefix'] = 'The cost bearer remains the contractor; an identifiable economic bearer exists.\n\n'
+        receipt = self.execute()
+        self.assertEqual(receipt['outcome'], 'COMPLETE')
+        for i in self.ideas():
+            econ = self.critic(self.report(), i, 'ECONOMIC')
+            self.assertEqual((econ['outcome'], econ['status'], econ['faults']), ('IMPORTED', 'VALID', []))
+        records = [json.loads(x.read_text(encoding='utf-8')) for x in (self.store / 'exports').glob('pipeline-critic-*.json')]
+        self.assertEqual({r['credential_screen']['version'] for r in records}, {V.CR.VERSION})
 
 
 class TruncatedOrigin(PV.FakeOrigins):

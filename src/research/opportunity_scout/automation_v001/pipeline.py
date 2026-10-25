@@ -11,7 +11,11 @@ generation, rubric, archive or policy logic of its own:
 One attempt per request is enforced here by an exclusive claim before dispatch, stricter than the critic contract's
 two. A whole run is claimed before any process starts and is never resumed: a crash leaves a truthful partial
 record and ``report`` renders it. Adversarial criticism is never dispatched by V001; a policy recommendation for it
-is recorded PENDING_APPROVAL. Nothing here changes Scout routing."""
+is recorded PENDING_APPROVAL. Nothing here changes Scout routing.
+
+Receipt and report V002 (Forge Pilot 001 corrections): the claim is followed by ``pipeline-execution.json`` (executing
+revision and implementation; ``execution``), and finalisation writes the report files, then the REPORT stage, then
+the receipt, which binds them all by hash and is the commit marker (``finish``). V001 records are read unchanged."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -36,12 +40,18 @@ from ..critic_v1 import packages as P, policy as Q, rubric as K
 from ..exploratory_v001 import runner as X
 from ..post_generation.review import ASSISTANT
 from ..storage import Archive, ROOT, input_json, unlinked
-from . import providers as V
+from . import execution as E, providers as V
 
 VERSION = 'SCOUT_RESEARCH_PIPELINE_V001'
-PLAN_V, AUTH_V, RECEIPT_V, REPORT_V = (VERSION.replace('V001', s) for s in ('PLAN_V001', 'AUTHORISATION_V001', 'RECEIPT_V001', 'REPORT_V001'))
+PLAN_V, AUTH_V = (VERSION.replace('V001', s) for s in ('PLAN_V001', 'AUTHORISATION_V001'))
+# V002: receipt binds the report files and the execution record; report carries the commit rule and provenance.
+RECEIPT_V, REPORT_V = 'SCOUT_RESEARCH_PIPELINE_RECEIPT_V002', 'SCOUT_RESEARCH_PIPELINE_REPORT_V002'
 ROLES = ('SCIENTIFIC', 'ECONOMIC')
 STAGES = ('GENERATION', 'CRITIC_PREPARATION', 'FIRST_PASS_CRITICS', 'RECOMMENDATION', 'REPORT')
+REPORT_FILES = ('pipeline-report.json', 'pipeline-report.md')
+UNFINISHED = 'INTERRUPTED_OR_NOT_FINISHED'
+COMMIT_RULE = ('Final only when pipeline-receipt.json (receipt V002) exists and binds this file by SHA-256; '
+               'otherwise the run was interrupted during finalisation.')
 RETENTION = 'PRIVATE_LOCAL_RAW_IN_GIT_IGNORED_ARCHIVE'
 CRITIC_LIMIT = 8 * 1024 * 1024
 CLOSE = X.CLOSE
@@ -59,6 +69,7 @@ class Host:
     environ: dict = field(default_factory=lambda: dict(os.environ))
     now: Callable = S.utc_now
     monotonic: Callable = time.monotonic
+    root: Path = ROOT                         # checkout whose revision and implementation are recorded (files only)
 
 
 def codex_admin(host, tally):
@@ -309,6 +320,8 @@ def run(store, authorisation, *, host=None):
     if (archive.path / 'exports' / 'pipeline-claim.json').exists():raise S.ScoutError('this pipeline run was already claimed; it is never resumed or re-run')
     r = Run(archive, host)
     r.put('claim', {'schema': VERSION, 'plan_sha256': p['plan_sha256'], 'authorisation_sha256': auth_sha, 'claimed_at': host.now()})
+    batch = next((e['record'] for e in archive.load().events if e['type'] == 'batch'), {})
+    r.put('execution', E.record(host.root, batch.get('base_commit', S.UNKNOWN), host.now()))  # files only, before any process
     owner = value['owner'].strip()
     # Stage 1: generation through the merged exploratory runner, with the nested owner authorisation.
     path = r.put('generation-authorisation', value['generation'])
@@ -368,13 +381,23 @@ def run(store, authorisation, *, host=None):
 
 
 def finish(r, p, auth_sha, outcome):
-    rep = build(r.archive.path)
+    """Finalisation V002. Every record is write-once, so the order makes a crash truthful: the report files are
+    rendered with the decided outcome and the REPORT stage as it is about to be recorded; then the REPORT stage with
+    their hashes; then the receipt, which binds the report files and the execution record and is the commit marker.
+    Until the receipt exists, ``status`` and a live ``report`` say the run was interrupted, any report file already
+    written is UNCOMMITTED, and its own text says it is final only once the receipt binds it. (V001 rendered the report
+    before the stage and receipt existed, so every finished V001 report read INTERRUPTED_OR_NOT_FINISHED.)"""
+    ex = r.archive.path / 'exports'
+    stages = {**{s: stage_status(r.archive.path, s) for s in STAGES}, 'REPORT': 'COMPLETE'}
+    rep = build(r.archive.path, final={'outcome': outcome, 'stages': stages})
     r.put('report', rep)
-    target = unlinked(r.archive.path / 'exports' / 'pipeline-report.md')
+    target = unlinked(ex / 'pipeline-report.md')
     with target.open('x', encoding='utf-8', newline='\n') as f:f.write(markdown(rep))
-    r.stage('REPORT', 'COMPLETE', files=['pipeline-report.json', 'pipeline-report.md'])
+    hashes = {n: file_facts(ex / n)['sha256'] for n in REPORT_FILES}
+    r.stage('REPORT', 'COMPLETE', files=list(REPORT_FILES), sha256=hashes)
     receipt = {'schema': RECEIPT_V, 'outcome': outcome, 'plan_sha256': p['plan_sha256'], 'authorisation_sha256': auth_sha,
-               'stages': {s: stage_status(r.archive.path, s) for s in STAGES}, 'retried': False, 'resumed': False,
+               'stages': {s: stage_status(r.archive.path, s) for s in STAGES}, 'report_sha256': hashes,
+               'execution_sha256': file_facts(ex / 'pipeline-execution.json')['sha256'], 'retried': False, 'resumed': False,
                'routing_authority': 'NONE', 'adversarial_dispatched': 0, 'completed_at': r.host.now()}
     r.put('receipt', receipt)
     return receipt
@@ -490,8 +513,42 @@ def status(store):
             'stages': {s: stage_status(archive.path, s) for s in STAGES},
             'critic_claims': sum(n.startswith('pipeline-claim-CRQ-') for n in names),
             'critic_records': sum(n.startswith('pipeline-critic-') for n in names), 'accounting': accounting(store),
+            'finalisation': finalisation(ex, receipt), 'execution': execution_summary(ex),
             'note': 'A claimed run is never resumed. An interrupted claim without a critic record means that request was '
                     'claimed but its outcome is unknown; it is never re-dispatched.'}
+
+
+def markdown_outcome(path):
+    """The outcome named in a saved Markdown report's first line, or None."""
+    try:first = path.read_text(encoding='utf-8').splitlines()[0]
+    except (OSError, UnicodeError, IndexError):return None
+    m = re.fullmatch(r'# Research OS run report \((.+)\)', first)
+    return m.group(1) if m else None
+
+
+def finalisation(ex, receipt):
+    """Whether the saved report files are committed by the receipt and agree with it. Read-only; nothing is repaired.
+    BOUND/MISMATCH need a V002 receipt; a V001 receipt binds no report (LEGACY_RECEIPT_UNBOUND), and V001 reports
+    were rendered before their receipt, so they disagree with it (Forge Pilot 001)."""
+    present = [n for n in REPORT_FILES if (ex / n).is_file()]
+    if receipt is None:return {'state': 'NOT_FINALISED', 'report_files': 'UNCOMMITTED' if present else 'ABSENT', 'consistent': False}
+    bound = receipt.get('report_sha256')
+    if isinstance(bound, dict):state = 'BOUND' if {n: file_facts(ex / n)['sha256'] for n in REPORT_FILES} == bound else 'MISMATCH'
+    else:state = 'LEGACY_RECEIPT_UNBOUND'
+    saved = tolerant(ex / 'pipeline-report.json') or {}
+    md = markdown_outcome(ex / 'pipeline-report.md')
+    agree = saved.get('outcome') == md == receipt.get('outcome') and saved.get('stages') == receipt.get('stages')
+    return {'state': state, 'report_files': 'PRESENT' if len(present) == len(REPORT_FILES) else 'INCOMPLETE',
+            'saved_report_outcome': saved.get('outcome', S.UNKNOWN), 'markdown_outcome': md or S.UNKNOWN,
+            'receipt_outcome': receipt.get('outcome', S.UNKNOWN), 'consistent': agree and state != 'MISMATCH'}
+
+
+def execution_summary(ex):
+    e = tolerant(ex / 'pipeline-execution.json')
+    if not isinstance(e, dict):return 'NOT_RECORDED'  # every V001 run, including Forge Pilot 001
+    return {'schema': e.get('schema'), 'commit': e.get('revision', {}).get('commit', S.UNKNOWN), 'ref': e.get('revision', {}).get('ref', S.UNKNOWN),
+            'worktree_clean': e.get('worktree_clean', S.UNKNOWN), 'implementation_digest': e.get('implementation', {}).get('digest', S.UNKNOWN),
+            'scout_batch_base_commit': e.get('scout_batch_base_commit', S.UNKNOWN)}
 
 
 def spend(ex, p):
@@ -511,8 +568,9 @@ def spend(ex, p):
             'cost_estimate_usd_documented_prices': round(sum(estimates), 6) if known else S.UNKNOWN, 'actual_charges': S.UNKNOWN}
 
 
-def build(store):
-    """Consolidated report from the recorded files only. Missing pieces are reported, never inferred."""
+def build(store, *, final=None):
+    """Consolidated report from the recorded files only. Missing pieces are reported, never inferred. ``final`` is used
+    only by ``finish``: the decided outcome and stages the receipt is about to commit (see its docstring)."""
     archive = Archive(store); ex = archive.path / 'exports'; state = archive.load()
     p = read(ex / 'pipeline-plan.json') or {}
     gen_receipt = next((read(x) for x in sorted(ex.glob('exploratory-receipt-*.json'))), None)
@@ -548,8 +606,9 @@ def build(store):
     cards = {iid: {'title': v[-1]['idea']['title'], 'route': state.route(v[-1]), 'falsifier': v[-1]['idea']['falsifier'],
                    'next_step': v[-1]['idea']['next_step'], 'main_uncertainty': v[-1]['idea']['main_uncertainty']} for iid, v in state.cards.items()}
     return {'schema': REPORT_V, 'archive_head': state.events[-1]['hash'] if state.events else None,
-            'stages': {s: stage_status(archive.path, s) for s in STAGES},
-            'outcome': (read(ex / 'pipeline-receipt.json') or {}).get('outcome', 'INTERRUPTED_OR_NOT_FINISHED'),
+            'stages': final['stages'] if final else {s: stage_status(archive.path, s) for s in STAGES},
+            'outcome': final['outcome'] if final else (read(ex / 'pipeline-receipt.json') or {}).get('outcome', UNFINISHED),
+            'commit_rule': COMMIT_RULE, 'execution': execution_summary(ex),
             'generation': {'status': attempt.get('result', {}).get('status', 'PENDING'), 'model': attempt.get('requested_model'),
                            'error': attempt.get('result', {}).get('error'), 'receipt': {k: gen_receipt.get(k) for k in
                            ('process_start', 'provider_request', 'model_invocations', 'administrative_commands_run', 'review')} if gen_receipt else None},
@@ -564,7 +623,8 @@ def build(store):
 
 def markdown(rep):
     out = [f"# Research OS run report ({rep['outcome']})", '',
-           '> Advisory AI criticism only. No Scout routing, READY approval, investment validation or trading authority.', '',
+           '> Advisory AI criticism only. No Scout routing, READY approval, investment validation or trading authority.',
+           f"> {rep['commit_rule']}", '',
            '| Stage | Status |', '|---|---|'] + [f'| {s} | {v} |' for s, v in rep['stages'].items()]
     g = rep['generation']
     out += ['', f"**Generation:** {g['status']} ({g['model']})" + (f"; error: `{g['error'][:300]}`" if g.get('error') else ''), '']
@@ -596,5 +656,13 @@ def markdown(rep):
     out += ['', f"Gemini worst-case reserved {sp['worst_case_reserved_usd']} USD over {sp['gemini_requests_reserved']} request(s), "
             f"never released; documented-price estimate {sp['cost_estimate_usd_documented_prices']} USD.",
             '', f"_{rep['accounting']['note']}_", '']
+    x = rep['execution']
+    out += ['## Executing code', '']
+    if isinstance(x, dict):
+        out += [f"- Revision {x['commit']} ({x['ref']}); worktree clean: {x['worktree_clean']}.",
+                f"- Implementation digest {x['implementation_digest']} (static import closure of automation_v001).",
+                f"- Scout batch base_commit {x['scout_batch_base_commit'].get('value') if isinstance(x['scout_batch_base_commit'], dict) else x['scout_batch_base_commit']}"
+                ' is a historical Scout constant, not the executing revision.', '']
+    else:out += [f'- {x}: no execution record (pipeline runs before receipt V002).', '']
     out += ['## Limits', ''] + [f'- {x}' for x in rep['limits']] + [f"- Spend cap {rep['spend_cap_usd']} USD; actual charges {rep['actual_charges']}."]
     return '\n'.join(out) + '\n'
