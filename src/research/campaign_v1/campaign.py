@@ -147,6 +147,7 @@ class Campaign:
             try:
                 current = N.branch_current(b)
                 row['scout_route'], row['scout_handoff_eligible'] = current['route'], current['handoff_eligible']
+                row['scout_reference_scope'] = 'REGISTERED_ORIGINAL_ARCHIVE; working-copy review state belongs to the native report'
                 for aid, a in activities.items():
                     if a['branch_id'] != bid:
                         continue

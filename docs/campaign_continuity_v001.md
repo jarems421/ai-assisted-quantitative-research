@@ -42,6 +42,11 @@ positive version and canonical card SHA-256, plus the admitted Scout journal
 prefix. Current Scout state is replayed using Scout itself. Revised card versions
 require separate branches and never inherit approvals. A later review/stop makes
 an old native Scout view stale, even if the card bytes have not changed.
+Original custody hashes and working-copy journal heads are checked separately:
+native human reviews may advance the working copy without mutating its original.
+They must be re-evaluated by the native operator before campaign reconciliation.
+`scout_route` and `scout_handoff_eligible` explicitly describe the registered
+original; working-copy review progress is represented by validated native stages.
 
 Events are `CREATED`, `BRANCH_ADDED`, `ACTIVITY_ATTACHED`, `ACTIVITY_OBSERVED`.
 They carry sequence, timestamp, previous hash and canonical event hash; writes are

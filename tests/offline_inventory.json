@@ -2108,6 +2108,7 @@
       "CampaignTests.test_interrupted_campaign_observation_reconstructs_without_native_replay",
       "CampaignTests.test_native_code_change_is_not_accepted_as_a_new_observation",
       "CampaignTests.test_native_report_and_journal_tamper_never_become_valid_activity",
+      "CampaignTests.test_native_working_copy_review_can_advance_without_changing_original",
       "CampaignTests.test_path_escape_and_invalid_campaign_location_refused",
       "CampaignTests.test_stale_artifact_isolated_from_other_branch",
       "CampaignTests.test_status_final_are_deterministic_and_read_only_without_native_operations",

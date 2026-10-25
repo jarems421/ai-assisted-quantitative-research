@@ -16,6 +16,7 @@ from src.research.operator import demo, runs, report
 from src.research.operator.journal import Journal
 from src.research.opportunity_scout.automation_v001 import execution as X
 from src.research.opportunity_scout.storage import Archive
+from src.research.opportunity_scout import fixtures as F
 from src.research.spec import canonical, digest
 from tests.test_research_operator_v1 import REVISION, read_tree
 
@@ -228,3 +229,22 @@ class CampaignTests(unittest.TestCase):
         self.assertEqual(row['execution_state'], 'RECONCILIATION_REQUIRED')
         self.assertTrue(any('STALE_NATIVE_SCOUT_RECORDS' in b for b in row['blockers']))
         self.assertIsNone(row['research_outcome'])
+
+    def test_native_working_copy_review_can_advance_without_changing_original(self):
+        self.attach(); layout = self.layouts[1]
+        original = read_tree(self.f['archive'])
+        work = Archive(layout.scout); card = work.load().latest(self.ids[1])
+        # Native-owned SYNTHETIC records only. Campaign never authors reviews.
+        work.append('feasibility', F.feasibility(card), recorded_at=F.MOMENT)
+        review = copy.deepcopy(work.load().reviews[0]); review['idea_id'] = card['id']
+        work.append('review', review, recorded_at=F.MOMENT)
+        self.assertEqual(self.c.status()['branches'][1]['execution_state'], 'RECONCILIATION_REQUIRED')
+        runs.invoke(layout, 'continue')
+        native_before = read_tree(layout.run)
+        self.assertEqual(self.c.reconcile('B1'), {'A1': 'OBSERVED_EXISTING_COMPLETION'})
+        row = self.c.status()['branches'][1]
+        self.assertEqual(row['stage'], 'QUARRY_EVIDENCE')
+        self.assertEqual(row['execution_state'], 'STOPPED_AT_BOUNDARY')
+        self.assertFalse(row['scout_handoff_eligible'])  # explicitly the original
+        self.assertEqual(read_tree(self.f['archive']), original)
+        self.assertEqual(read_tree(layout.run), native_before)

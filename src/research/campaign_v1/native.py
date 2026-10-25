@@ -95,10 +95,21 @@ def observe(root, branch, previous=None):
     h = rec.get('hypothesis') or {}
     need(h.get('idea_id') == branch['idea_id'] and h.get('version') == branch['version']
          and rec.get('card_sha256') == branch['card_sha256'], 'native card identity mismatch')
-    need((rec.get('archive') or {}).get('head') == branch_current(branch)['scout_head'],
-         'STALE_NATIVE_SCOUT_RECORDS: current Scout records supersede this native view; no approval inherited')
     need((stages.get('INTEGRITY', {}).get('status') == 'COMPLETE'), 'native integrity check incomplete')
     refs = artifact_refs(events, root)
+    custody = stages['FORGE_CUSTODY']['summary']
+    manifest = loads(read(root / custody['manifest']['path']))
+    need(sha(read(Path(branch['archive']) / 'scout.jsonl')) == manifest['archive']['files']['scout.jsonl']['sha256'],
+         'STALE_NATIVE_SCOUT_RECORDS: original Scout records changed after native custody; no approval inherited')
+    # Human records may legitimately advance the working copy, independently of
+    # its immutable original. Require native re-evaluation, never compare heads
+    # across those different archives or infer that either grants authority.
+    work = path(custody['copy']['path'])
+    need(not (work / '.append.lock').exists(), 'native Scout working copy locked')
+    work_raw = read(work / 'scout.jsonl')
+    work_state = Archive(work).load()
+    need(work_raw == read(work / 'scout.jsonl') and (rec.get('archive') or {}).get('head') == work_state.events[-1]['hash'],
+         'STALE_NATIVE_WORKING_COPY: Scout working copy needs native re-evaluation')
     head = events[-1]['hash']
     candidates = [root / 'reports' / f'report-{head[:16]}{suffix}.json' for suffix in ('-v002', '')]
     saved = next((p for p in candidates if p.is_file()), None)
