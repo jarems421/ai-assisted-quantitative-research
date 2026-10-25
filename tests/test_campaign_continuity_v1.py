@@ -248,3 +248,20 @@ class CampaignTests(unittest.TestCase):
         self.assertFalse(row['scout_handoff_eligible'])  # explicitly the original
         self.assertEqual(read_tree(self.f['archive']), original)
         self.assertEqual(read_tree(layout.run), native_before)
+
+    def test_completed_quarry_jev_continuation_is_referenced_without_native_replay(self):
+        self.attach(); layout = self.layouts[0]
+        p = Path(self.f['evidence'])
+        evidence = runs.evidence_spec(json.loads(p.read_bytes()), p.parent)
+        runs.invoke(layout, 'continue', supplied={'evidence': evidence, 'search_terms': [], 'ledger': None})
+        before = read_tree(self.f['base'])
+        result = self.c.reconcile('B0')
+        self.assertEqual(result, {'A0': 'OBSERVED_EXISTING_COMPLETION'})
+        row = self.c.status()['branches'][0]
+        self.assertEqual(row['stage'], 'ANVIL_DRAFTS')
+        self.assertEqual(row['execution_state'], 'STOPPED_AT_BOUNDARY')
+        self.assertIsNone(row['research_outcome'])
+        # Only campaign observations change; native operator/Quarry/Jev trees do not.
+        after = read_tree(self.f['base'])
+        self.assertEqual({k: v for k, v in before.items() if not k.startswith('campaign-v1/')},
+                         {k: v for k, v in after.items() if not k.startswith('campaign-v1/')})
