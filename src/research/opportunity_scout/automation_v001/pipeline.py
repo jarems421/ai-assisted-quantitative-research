@@ -46,6 +46,7 @@ VERSION = 'SCOUT_RESEARCH_PIPELINE_V001'
 PLAN_V, AUTH_V = (VERSION.replace('V001', s) for s in ('PLAN_V001', 'AUTHORISATION_V001'))
 # V002: receipt binds the report files and the execution record; report carries the commit rule and provenance.
 RECEIPT_V, REPORT_V = 'SCOUT_RESEARCH_PIPELINE_RECEIPT_V002', 'SCOUT_RESEARCH_PIPELINE_REPORT_V002'
+LEGACY_RECEIPT_V = 'SCOUT_RESEARCH_PIPELINE_RECEIPT_V001'  # read only (Forge Pilot 001); never written again
 ROLES = ('SCIENTIFIC', 'ECONOMIC')
 STAGES = ('GENERATION', 'CRITIC_PREPARATION', 'FIRST_PASS_CRITICS', 'RECOMMENDATION', 'REPORT')
 REPORT_FILES = ('pipeline-report.json', 'pipeline-report.md')
@@ -551,8 +552,10 @@ def finalisation(ex, receipt):
     A V002 receipt binds both report files, ``pipeline-execution.json``, the REPORT stage's hash record and every
     stage status. Each is checked separately (MATCH, MISMATCH, ABSENT or UNREADABLE), and so is the saved report's
     own outcome and stages. VERIFIED needs every check to MATCH; any MISMATCH is MISMATCH; otherwise UNVERIFIED.
-    Only VERIFIED is consistent: a receipt that merely exists is a finished run, not a verified one. A V001 receipt
-    binds nothing (LEGACY_RECEIPT_UNBOUND, never consistent; Forge Pilot 001's report also disagrees with it)."""
+    Only VERIFIED is consistent: a receipt that merely exists is a finished run, not a verified one. The receipt's
+    ``schema`` alone decides the handling: a V001 receipt binds nothing (LEGACY_RECEIPT_UNBOUND, never consistent,
+    whatever fields it carries; Forge Pilot 001's report also disagrees with it), a malformed V002 receipt fails its
+    checks and is never read as legacy, and any other schema is UNVERIFIED."""
     present = [n for n in REPORT_FILES if (ex / n).is_file()]
     files = 'PRESENT' if len(present) == len(REPORT_FILES) else 'INCOMPLETE'
     if not (ex / 'pipeline-receipt.json').is_file():
@@ -562,9 +565,14 @@ def finalisation(ex, receipt):
     saved, md = tolerant(ex / 'pipeline-report.json'), markdown_outcome(ex / 'pipeline-report.md')
     summary = {'saved_report_outcome': saved.get('outcome', S.UNKNOWN) if isinstance(saved, dict) else S.UNKNOWN,
                'markdown_outcome': md or S.UNKNOWN, 'receipt_outcome': receipt.get('outcome', S.UNKNOWN)}
-    bound = receipt.get('report_sha256')
-    if not isinstance(bound, dict):
+    schema = receipt.get('schema')
+    if schema == LEGACY_RECEIPT_V:  # by schema alone: a binding field in a V001 receipt is never trusted
         return {'state': 'LEGACY_RECEIPT_UNBOUND', 'receipt': 'PRESENT', 'report_files': files, **summary, 'consistent': False}
+    if schema != RECEIPT_V:
+        return {'state': 'UNVERIFIED', 'receipt': 'PRESENT', 'report_files': files, 'checks': {'receipt schema': 'UNRECOGNISED'},
+                **summary, 'consistent': False}
+    bound = receipt.get('report_sha256')  # a V002 receipt without a valid binding is a MISMATCH, never legacy
+    bound = bound if isinstance(bound, dict) else {}
     checks = {'receipt report binding': 'MATCH' if set(bound) == set(REPORT_FILES) else 'MISMATCH'}
     checks.update({n: hash_check(ex / n, bound.get(n)) for n in REPORT_FILES})
     checks['pipeline-execution.json'] = hash_check(ex / 'pipeline-execution.json', receipt.get('execution_sha256'))

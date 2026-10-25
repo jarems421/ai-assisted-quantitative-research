@@ -307,6 +307,7 @@
       "FinalisationTests.test_git_revision_is_read_from_metadata_files_and_unknown_is_never_inferred",
       "FinalisationTests.test_incomplete_critics_run_is_finalised_with_the_same_outcome_everywhere",
       "FinalisationTests.test_interrupted_finalisation_is_never_reported_as_finished",
+      "FinalisationTests.test_receipt_schema_alone_decides_legacy_or_v002_verification",
       "HardeningTests.test_a_changed_executable_blocks_dispatch",
       "HardeningTests.test_a_truncated_body_through_the_real_transport_keeps_the_reservation_and_is_never_retried",
       "HardeningTests.test_distinct_executables_each_pass_their_own_preflight_before_first_use",
