@@ -141,7 +141,8 @@ def dispatch(workspace, approval_path, account_evidence_path, *, enabled=False, 
                 key = os.environ.get(credential_env)
                 K.need(isinstance(key, str) and key and '\r' not in key and '\n' not in key, 'provider credential unavailable')
             io.write(root / 'dispatch-started.json', {'fixture': approval['fixture'], 'authorises': []})
-            response_status = (fixture_transport or P.capture)(payload, key, emit)
+            transport = fixture_transport if synthetic else P.capture
+            response_status = transport(payload, key, emit)
             K.need(type(response_status) is int, 'HTTP status required')
             status = 'RAW_CAPTURED'
         except (http.client.HTTPException, OSError, ValueError, TypeError) as error:

@@ -99,6 +99,17 @@ class IntegrationTests(unittest.TestCase):
         with patch.object(P, 'capture', side_effect=AssertionError('network forbidden')):
             with self.assertRaisesRegex(ValueError, 'synthetic approval'):
                 W.dispatch(self.ws, self.auth, self.evidence, enabled=True)
+        raw = canonical(self.response)
+        class FalseValuedFixture:
+            def __bool__(self):
+                return False
+            def __call__(self, payload, key, emit):
+                emit(raw)
+                return 200
+        with patch.object(P, 'capture', side_effect=AssertionError('network forbidden')) as live:
+            result = W.dispatch(self.ws, self.auth, self.evidence, enabled=True, fixture_transport=FalseValuedFixture())
+            self.assertEqual(result['status'], 'SYNTHETIC_VALID')
+            live.assert_not_called()
 
     def test_payload_and_classification_authorisation_mismatch_fail_before_claim(self):
         for field, value in [('payload_sha256', '0' * 64), ('plan_sha256', '0' * 64), ('allowed_data_classification', 'LOCAL_PRIVATE'),
