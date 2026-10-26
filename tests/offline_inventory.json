@@ -2121,6 +2121,26 @@
       "LinkTests.test_preexisting_link_in_a_run_directory_stops_before_custody"
     ]
   },
+  "tests/test_campaign_evidence_v1.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Campaign evidence companion V001: fictional native Source Retrieval records with injected transport, native synthetic offline operator stages and temporary standalone archives. No source/provider dispatch in production/rehearsal; tests deny network/process and probe the existing audit boundary. No real human scope, review, approval or private record. Covers immutable references, negative/finalised outcomes, custody seam, checklist blockers, stale/tampered records, ambiguity and branch isolation.",
+    "declared_tests": [
+      "CampaignEvidenceTests.test_changed_native_completion_and_ambiguous_runs_remain_unresolved",
+      "CampaignEvidenceTests.test_duplicate_attempt_and_activity_conflicts_refused",
+      "CampaignEvidenceTests.test_interrupted_attempt_needs_native_verified_finalisation",
+      "CampaignEvidenceTests.test_legacy_bindings_companion_tamper_truncation_and_stale_lock",
+      "CampaignEvidenceTests.test_native_quarry_jev_and_discovery_reused_without_fake_source_link",
+      "CampaignEvidenceTests.test_negative_and_uncertain_statuses_are_not_collapsed",
+      "CampaignEvidenceTests.test_operator_human_wait_and_missing_ready_never_create_candidate",
+      "CampaignEvidenceTests.test_rehearsal_refusal_and_native_anvil_preview_are_explicit",
+      "CampaignEvidenceTests.test_source_result_receipt_body_and_journal_tampering_isolated",
+      "CampaignEvidenceTests.test_stale_card_and_code_refuse_mutation_without_rewriting_native_history",
+      "CampaignEvidenceTests.test_status_cli_and_refusals_are_deterministic_read_only_and_guarded",
+      "CampaignEvidenceTests.test_valid_native_reference_idempotent_and_campaign_bytes_unchanged",
+      "CampaignEvidenceTests.test_wrong_campaign_branch_card_version_and_archive_are_refused"
+    ]
+  },
   "tests/test_campaign_continuity_v1.py": {
     "baseline_ci": false,
     "runner": "additional",
