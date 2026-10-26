@@ -13,10 +13,40 @@ BANNER = 'SUPPLIED COPY / INSPECTION ONLY — AUTHENTICITY, M AND READINESS NOT 
 
 
 def import_file(registry_path, supply_path, original_path, out):
-    registry = K.registry(io.json_file(registry_path))
     supplied = K.supply(io.json_file(supply_path))
+    K.need(supplied['schema'] != K.SUPPLY_V002, 'QUARRY_SUPPLY_V002 enters Quarry only through source custody '
+           '(python -m src.research.source_custody_v1 import), which verifies the native retrieval records')
+    return _import(registry_path, supplied, original_path, out, {})
+
+
+def import_retrieved(registry_path, supply_path, original_path, out, retained, *, source_base):
+    """The only V002 creation API. Native verification at creation, not just portable consistency.
+
+    It re-runs Source Retrieval's verification of the named attempt under source_base (through the custody
+    bridge's read-only preflight) and requires the retained receipt, result and original to be byte-identical
+    to the native records. A later load can re-check only the portable consistency of what was retained.
+    Within trusted Python this is a procedural boundary: code that rewrites a whole native attempt directory,
+    or calls _import directly, is outside it.
+    """
+    supplied = K.supply(io.json_file(supply_path))
+    K.need(supplied['schema'] == K.SUPPLY_V002, 'import_retrieved accepts only QUARRY_SUPPLY_V002')
+    raw = io.read(original_path)
+    K.retained(supplied, retained, io.sha(raw), len(raw))
+    from src.research.source_custody_v1 import custody  # Native verification lives with the custody bridge.
+    r = supplied['system_retrieval']
+    native = custody.preflight(source_base, r['attempt_id'], r['requested_url'])
+    K.need((native['receipt_raw'], native['result_raw'], native['body'], native['registry_raw'], native['route']['id'], native['route']['version'])
+           == (retained['retrieval-receipt.json'], retained['retrieval-result.json'], raw, io.read(registry_path),
+               supplied['route_id'], supplied['route_version']),
+           'NATIVE_MISMATCH: retained records or registry differ from the verified native Source Retrieval records')
+    return _import(registry_path, supplied, original_path, out, retained)
+
+
+def _import(registry_path, supplied, original_path, out, retained):
+    registry = K.registry(io.json_file(registry_path))
     route = next((r for r in registry['routes'] if r['id'] == supplied['route_id']), None)
     K.need(route is not None and route['version'] == supplied['route_version'], 'wrong source route/version')
+    K.binding(route, supplied)
     K.need((original_path is None) == (supplied['coverage'] == 'UNAVAILABLE'), 'unavailable source must have no original; other imports require a file')
     # Validate paths and metadata first. A failure after the claim leaves an explicit interrupted state.
     if original_path is not None:
@@ -35,6 +65,9 @@ def import_file(registry_path, supply_path, original_path, out):
             io.write(root / 'original.bin', raw, raw=True)
             names.append('original.bin')
             original_hash, size = io.sha(raw), len(raw)
+        for name in sorted(retained):
+            io.write(root / name, retained[name], raw=True)
+            names.append(name)
         flags = identification(route, supplied, original_hash)
         receipt = {'schema': 'QUARRY_RECEIPT_V001', 'status': 'UNAVAILABLE' if original_path is None else 'RETAINED_COPY',
                    'original_sha256': original_hash, 'bytes': size, 'identity_flags': flags,
@@ -69,11 +102,15 @@ def load(root):
     supplied = K.supply(io.json_file(root / 'supply.json'))
     route = next(r for r in registry['routes'] if r['id'] == supplied['route_id'])
     K.need(route['version'] == supplied['route_version'], 'source version changed')
+    K.binding(route, supplied)
     receipt = io.json_file(root / 'receipt.json')
     original_hash = io.sha(io.read(root / 'original.bin')) if 'original.bin' in manifest['files'] else None
-    expected_names = {'claim.json', 'registry.json', 'supply.json', 'receipt.json'} | ({'original.bin'} if original_hash else set())
+    retained = set(K.RETAINED) if supplied['schema'] == K.SUPPLY_V002 else set()
+    expected_names = {'claim.json', 'registry.json', 'supply.json', 'receipt.json'} | ({'original.bin'} if original_hash else set()) | retained
     K.need(set(manifest['files']) == expected_names, 'incomplete or unexpected package files')
     K.need((supplied['coverage'] == 'UNAVAILABLE') == (original_hash is None), 'original presence mismatch')
+    if retained:
+        K.retained(supplied, {n: io.read(root / n) for n in K.RETAINED}, original_hash, len(io.read(root / 'original.bin')))
     K.need(receipt == {'schema': 'QUARRY_RECEIPT_V001', 'status': 'UNAVAILABLE' if original_hash is None else 'RETAINED_COPY',
                        'original_sha256': original_hash, 'bytes': len(io.read(root / 'original.bin')) if original_hash else 0,
                        'identity_flags': identification(route, supplied, original_hash), 'authenticity': 'UNKNOWN',
