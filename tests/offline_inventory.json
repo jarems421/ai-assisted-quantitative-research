@@ -1864,6 +1864,31 @@
       "ReconciliationTests.test_index_selects_only_primary_and_instance_and_rejects_escape"
     ]
   },
+  "tests/test_source_search_v1.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Source-search offline V001: in-memory fictional Codex JSONL, Responses snapshots and supplied baseline outputs only. Per-test filesystem-open, socket/DNS, shell and subprocess denial, plus the restricted runner audit hook. No provider SDK, source retrieval, credential, native dispatch or human record. Parser and candidate validation with exact hashes, invalid/negative retention and provenance distinctions.",
+    "declared_tests": [
+      "SourceSearchTests.test_baseline_capture_is_distinct_and_supplied_data_never_implies_retrieval",
+      "SourceSearchTests.test_capture_and_event_bounds_retain_exact_oversize_and_partial_artifacts",
+      "SourceSearchTests.test_dedup_groups_retain_every_url_requirement_and_publisher_assertion",
+      "SourceSearchTests.test_fabricated_url_and_secondary_claim_never_become_verified",
+      "SourceSearchTests.test_field_locations_are_caller_bound_not_a_new_shared_wire_schema",
+      "SourceSearchTests.test_injection_text_remains_data_and_cannot_create_tool_or_metadata",
+      "SourceSearchTests.test_interruption_duplicate_turns_and_unfinished_items_are_not_complete",
+      "SourceSearchTests.test_malformed_duplicate_key_nonfinite_and_untrusted_json_not_repaired",
+      "SourceSearchTests.test_missing_url_invalid_requirements_and_publisher_host_mismatch",
+      "SourceSearchTests.test_negative_and_uncertain_results_preserve_raw_bytes",
+      "SourceSearchTests.test_output_must_match_exact_final_provider_text",
+      "SourceSearchTests.test_provider_urls_actions_and_missing_source_metadata_are_not_invented",
+      "SourceSearchTests.test_requested_observed_and_model_asserted_identity_stay_separate",
+      "SourceSearchTests.test_responses_refusal_incomplete_unknown_tools_and_bad_usage_are_rejected",
+      "SourceSearchTests.test_responses_snapshot_sources_citations_usage_and_identity",
+      "SourceSearchTests.test_unexpected_tool_events_are_rejected_even_if_output_looks_valid",
+      "SourceSearchTests.test_urls_refuse_credentials_private_literals_controls_and_wrong_domains",
+      "SourceSearchTests.test_valid_capture_identity_provenance_and_exact_artifact_hashes"
+    ]
+  },
   "tests/test_source_first.py": {
     "baseline_ci": true,
     "runner": "public",
