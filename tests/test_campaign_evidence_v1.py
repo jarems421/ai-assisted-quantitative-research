@@ -260,6 +260,12 @@ class CampaignEvidenceTests(unittest.TestCase):
         self.source(); self.e.attach('B0', 'S1', self.s.base, 'A1')
         before = read_tree(self.f['base'])
         self.assertEqual(self.e.checkpoint(), self.e.checkpoint())
+        decorated = self.e.checkpoint()
+        decorated['branches'][0]['source_to_quarry']['dispatch_eligible'] = True
+        decorated['branches'][0]['source_to_quarry']['missing'].clear()
+        fresh = self.e.checkpoint()['branches'][0]['source_to_quarry']
+        self.assertFalse(fresh['dispatch_eligible'])
+        self.assertTrue(fresh['missing'])
         with redirect_stdout(io.StringIO()) as output:
             self.assertEqual(main(['--base', str(self.f['base']), 'checkpoint', self.c.root.name]), 0)
         self.assertEqual(json.loads(output.getvalue())['authorises'], [])

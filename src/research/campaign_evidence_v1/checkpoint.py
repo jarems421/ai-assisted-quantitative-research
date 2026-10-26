@@ -1,5 +1,6 @@
 """Read-only Anvil view; all scientific checks remain native and independently gated."""
 from pathlib import Path
+from copy import deepcopy
 
 from src.research.campaign_v1 import native as N, records as R
 from src.research.operator import runs
@@ -109,7 +110,7 @@ def render(companion, campaign):
         out.append({'branch_id': bid, 'campaign_state': row, 'source_activities': sources, 'operator_checkpoints': operators,
                     'proposed_sources': 'NOT_REGISTERED_BY_THIS_COMPANION; original request descriptor remains disabled',
                     'source_authority': 'NO_CAMPAIGN_AUTHORITY_INFERRED; consult native scope/attempt records',
-                    'pending_native_gates': needs, 'source_to_quarry': SEAM, 'research_outcome': None,
+                    'pending_native_gates': needs, 'source_to_quarry': deepcopy(SEAM), 'research_outcome': None,
                     'next': 'RECONCILE_RETAINED_REFERENCES' if changed or any(r['integrity'] == 'RECONCILIATION_REQUIRED'
                             for r in sources + operators) else 'REVIEW_NATIVE_BLOCKERS_AND_MISSING_CUSTODY_SEAM', 'authorises': []})
     return {'schema': VERSION + '_ANVIL_CHECKPOINT', 'campaign': manifest['campaign'],
