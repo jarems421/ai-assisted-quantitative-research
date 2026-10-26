@@ -67,12 +67,20 @@ def classify(raw, label, evidence):
                                 'MACHINE_RECORD', label, evidence) for h in hosts]
 
 
+PATTERN = '*stop*.json'
+
+
+def scan(directory):
+    root = Q.safe_path(directory)
+    C.need(root.is_dir(), 'stop directory not found')
+    return sorted(p for p in root.rglob(PATTERN) if p.is_file())
+
+
 def build(inputs=(), base=None, *, attestation=None, previous=None, from_dirs=(), clock=S.now):
     files = [Path(p) for p in inputs]
-    for directory in from_dirs:
-        root = Q.safe_path(directory)
-        C.need(root.is_dir(), 'stop directory not found')
-        files += sorted(p for p in root.rglob('*stop*.json') if p.is_file())
+    dirs = [str(Q.safe_path(d)) for d in from_dirs]
+    for directory in dirs:
+        files += scan(directory)
     C.need(files or attestation, 'no stop records or attestation supplied')
     entries, records, seen = {}, [], set()
     previous_sha = None
@@ -119,7 +127,8 @@ def build(inputs=(), base=None, *, attestation=None, previous=None, from_dirs=()
             entries[e['stop_id']] = e
     unresolved = [r['sha256'] for r in records if r['resolution'] == 'UNRESOLVED']
     snapshot = {'schema': C.SNAPSHOT, 'status': 'COMPLETE' if attestation and not unresolved else 'ATTESTATION_REQUIRED',
-                'built_at': clock(), 'inputs': records, 'unresolved_inputs': unresolved, 'attestation_sha256': attestation_sha,
+                'built_at': clock(), 'sources': {'from_dirs': dirs, 'pattern': PATTERN},
+                'inputs': records, 'unresolved_inputs': unresolved, 'attestation_sha256': attestation_sha,
                 'attested_by': attester, 'previous_snapshot_sha256': previous_sha,
                 'entries': sorted(entries.values(), key=lambda e: e['stop_id']), 'rule': RULE, 'authorises': []}
     path = S.records(base) / 'stops' / 'snapshots' / (digest(snapshot)[:24] + '.json')
@@ -135,7 +144,24 @@ def snapshot(ref):
     C.need(isinstance(value, dict) and value.get('schema') == C.SNAPSHOT and isinstance(value.get('entries'), list), 'stop snapshot required')
     C.need(value.get('status') == 'COMPLETE' and value.get('attestation_sha256') and not value.get('unresolved_inputs'),
            'STOP_ATTESTATION_MISSING: the stop snapshot lacks a complete named-human attestation')
+    fresh(value)
     return raw, value
+
+
+def fresh(value):
+    """Software-enforced freshness of the snapshot's own declared inputs at run time.
+
+    Every recorded input must still exist unchanged, and no new stop record may have appeared in a declared
+    directory. Stops recorded elsewhere, or known only from reports, rest on the human attestation.
+    """
+    known = {r['sha256'] for r in value['inputs']}
+    for record in value['inputs']:
+        path = Path(record['label'])
+        C.need(path.is_file() and S.sha(S.read(path)) == record['sha256'],
+               f"STOP_SNAPSHOT_STALE: stop record {record['label']} is missing or changed; rebuild and re-attest")
+    for directory in value.get('sources', {}).get('from_dirs', []):
+        for path in scan(directory):
+            C.need(S.sha(S.read(path)) in known, f'STOP_SNAPSHOT_STALE: new stop record {path}; rebuild and re-attest')
 
 
 def register(base, clock=S.now):
@@ -146,16 +172,26 @@ def findings(base):
     return [e['record'] for e in register(base).load() if e['type'] == 'STOP_FOUND']
 
 
-def record(journal, scope, host, route, reason, attempt_id, receipt_sha256, observed_at):
-    finding = {'schema': C.FINDING, **entry(scope, host, route, reason, 'NEW_FINDING', 'receipt', receipt_sha256),
-               'observed_at': observed_at, 'attempt_id': attempt_id, 'receipt_sha256': receipt_sha256}
-    journal.append('STOP_FOUND', finding)
-    return finding
+def finding(scope, host, route, reason, label, evidence):
+    """The deterministic core of a new stop finding: the same evidence always gives the same stop id."""
+    return entry(scope, host, route, reason, 'NEW_FINDING', label, evidence)
+
+
+def record(journal, core, attempt_id, observed_at):
+    value = {'schema': C.FINDING, **core, 'observed_at': observed_at, 'attempt_id': attempt_id}
+    journal.append('STOP_FOUND', value)
+    return value
+
+
+def ensure(journal, core, attempt_id, clock):
+    """Record a finding unless the register already holds that stop id (repeated reconciliation adds nothing)."""
+    existing = {f['stop_id']: f for f in [e['record'] for e in journal.load() if e['type'] == 'STOP_FOUND']}
+    return existing.get(core['stop_id']) or record(journal, core, attempt_id, clock())
 
 
 def blocking(url, host, entries):
-    host = host.lower()
+    host, key = host.lower(), C.dispatch_key(url)
     for e in entries:
-        if (e['scope'] == 'HOST' and e['host'] == host) or (e['scope'] == 'ROUTE' and e['route'] and url.startswith(e['route'])):
+        if (e['scope'] == 'HOST' and e['host'] == host) or (e['scope'] == 'ROUTE' and e['route'] and C.dispatch_key(e['route']) == key):
             return e
     return None

@@ -129,7 +129,7 @@ Public checks deny external network/private-data reads; EXP999 uses temporary fa
 
 The [Research OS operator](docs/research_operator_v001.md) runs the offline Forge → Quarry → Jev → Anvil → Armoury profile on one Forge archive and stops at each human or evidence gate (`python -m src.research.operator plan|run|continue|report`). `python -m src.research.operator demo` shows the whole chain on synthetic fixtures. It automates workflow only: no model calls, acquisition or approvals.
 
-[Source Retrieval V001](docs/source_retrieval_v001.md) is the first original-evidence acquisition component: one owner-authorised, exact-URL HTTPS retrieval attempt per request, with receipts, stop reconciliation and an immutable result for the campaign controller. It is tested offline only; no live retrieval has been authorised.
+[Source Retrieval V001](docs/source_retrieval_v001.md) is the first original-evidence acquisition component: one owner-authorised, exact-URL HTTPS retrieval attempt per request, with receipts, stop reconciliation and an immutable result for the campaign controller. It is tested offline and against a loopback-only TLS server; no live retrieval has been authorised.
 
 @@CHECKS@@
 

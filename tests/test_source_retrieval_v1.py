@@ -14,7 +14,7 @@ from contextlib import redirect_stdout
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
-from src.research.spec import canonical
+from src.research.spec import canonical, digest
 from src.research.source_v1 import __main__ as CLI, contracts as C, retrieve as R, stops as T, store as S, transport as N
 
 HOST = 'documents.example.org'
@@ -289,8 +289,8 @@ class SourceRetrievalTests(unittest.TestCase):
         result = self.dispatch(self.request(), t)
         self.assertEqual(result['status'], 'PARTIAL')
         receipt = json.loads((self.attempt() / 'receipts' / '002.json').read_bytes())
-        self.assertEqual((receipt['termination'], receipt['failure'], receipt['bytes_received'], receipt['body_path']),
-                         ('SIZE_STOP', 'DECLARED_LENGTH_EXCEEDS_CEILING', 0, None))
+        self.assertEqual((receipt['termination'], receipt['stopped_by'], receipt['bytes_received'], receipt['body_path']),
+                         ('SIZE_STOP', 'DECLARED_SIZE', 0, None))
         self.assertEqual(t.objects[1].reads, 0)  # Metadata-only stop: no body byte read.
         self.base = self.root / 'records-streamed'
         self.build()
@@ -366,8 +366,7 @@ class SourceRetrievalTests(unittest.TestCase):
         self.assertEqual([(f['scope'], f['reason']) for f in result['stop_findings']], [('HOST', 'INTERRUPTED_REQUEST')])
         self.assertEqual(R.status(self.base, 'A1')['state'], 'UNKNOWN')
         self.assertTrue((self.attempt() / 'attempt.lock').exists())  # Never removed by software.
-        with self.assertRaisesRegex(ValueError, 'already has a result'):
-            R.finalise_interrupted(self.base, 'A1', no_attempt_running=True)
+        self.assertEqual(R.finalise_interrupted(self.base, 'A1', no_attempt_running=True), result)  # Idempotent.
 
     def test_altered_receipts_bodies_results_and_journals_are_detected(self):
         self.dispatch(self.request(), self.transport())
@@ -493,6 +492,220 @@ class SourceRetrievalTests(unittest.TestCase):
         self.build()
         result = self.dispatch(self.request(), self.transport({ROBOTS: big_robots}))
         self.assertEqual((result['status'], result['reason']), ('STOPPED', 'ROBOTS_UNRESOLVED'))
+
+    # ---- PR #44 review: reproductions -------------------------------------------------------------------
+    def rechain(self, path, mutate):
+        """Rewrite a journal consistently, as someone with filesystem access could."""
+        events = [json.loads(line) for line in path.read_bytes().splitlines()]
+        mutate(events)
+        previous, out = S.GENESIS, b''
+        for seq, e in enumerate(events):
+            core = {'seq': seq, 'type': e['type'], 'at': e['at'], 'previous': previous, 'record': e['record']}
+            previous = digest(core)
+            out += canonical({**core, 'hash': previous}) + b'\n'
+        path.write_bytes(out)
+
+    def forge_result(self, change):
+        a = self.attempt()
+        result = json.loads((a / 'result.json').read_bytes())
+        change(result)
+        data = canonical(result) + b'\n'
+        (a / 'result.json').write_bytes(data)
+        def anchor(events):
+            events[-1]['record']['result_sha256'] = S.sha(data)
+        self.rechain(a / 'journal.jsonl', anchor)
+
+    def interrupt(self, responses=None):
+        t = self.transport(responses or {URL1: {'body': b'i' * 5000, 'chunk': 1000, 'interrupt_after': 2000}})
+        with self.assertRaises(KeyboardInterrupt):
+            self.dispatch(self.request(), t)
+        return t
+
+    def test_review_1_finalised_interrupted_result_is_bound_by_a_finalisation_record(self):
+        self.interrupt()
+        R.finalise_interrupted(self.base, 'A1', no_attempt_running=True, clock=self.clock.now)
+        a = self.attempt()
+        self.assertTrue((a / 'finalisation.json').exists())
+        original = (a / 'result.json').read_bytes()
+        for name, change in (('status', lambda r: r.update(status='COMPLETE')),
+                             ('consumption', lambda r: r['consumption']['bytes'].update(exact=5000)),
+                             ('retained', lambda r: r['retained'].pop()),
+                             ('handoff', lambda r: r['custody_handoff'].append({'receipt_sha256': r['receipts'][0]}))):
+            with self.subTest(name):
+                value = json.loads(original)
+                change(value)
+                (a / 'result.json').write_bytes(canonical(value) + b'\n')
+                self.assertEqual(R.status(self.base, 'A1')['state'], 'INCONSISTENT')
+        (a / 'result.json').write_bytes(original)
+        self.assertEqual(R.status(self.base, 'A1')['state'], 'UNKNOWN')
+        body = a / 'raw' / '002.body'
+        body.write_bytes(body.read_bytes() + b'!')
+        self.assertEqual(R.status(self.base, 'A1')['state'], 'INCONSISTENT')
+
+    def test_review_2_stop_finding_lost_in_a_crash_is_reconstructed_from_receipts(self):
+        real = T.record
+        calls = []
+        def crash(*args, **kwargs):
+            calls.append(args)
+            raise KeyboardInterrupt
+        with patch.object(T, 'record', side_effect=crash):
+            self.interrupt({URL1: {'status': 403, 'body': b'denied'}})
+        self.assertEqual(T.findings(self.base), [])  # The 403 receipt exists; its stop was never recorded.
+        t = self.transport()
+        with patch.object(T, 'record', side_effect=lambda *a, **k: (_ for _ in ()).throw(KeyboardInterrupt)):
+            with self.assertRaises(KeyboardInterrupt):  # A crash during reconciliation itself.
+                R.finalise_interrupted(self.base, 'A1', no_attempt_running=True, clock=self.clock.now)
+        result = R.finalise_interrupted(self.base, 'A1', no_attempt_running=True, clock=self.clock.now)
+        self.assertEqual([(f['scope'], f['host'], f['reason']) for f in result['stop_findings']], [('HOST', HOST, 'ACCESS_DENIED')])
+        again = R.finalise_interrupted(self.base, 'A1', no_attempt_running=True, clock=self.clock.now)  # Idempotent.
+        self.assertEqual(again, result)
+        self.assertEqual(len(T.findings(self.base)), 1)
+        self.assertEqual((t.resolved, t.opened), ([], []))
+        for lock in (self.attempt() / 'attempt.lock', S.records(self.base) / 'dispatch.lock'):
+            lock.unlink()  # The owner's manual step after reconciliation.
+        later = self.transport()
+        self.assert_not_started(self.dispatch(self.request('A2'), later), 'STOPPED_SOURCE', later)
+        self.base = self.root / 'records-robots'
+        self.build()
+        with patch.object(T, 'record', side_effect=crash):
+            self.interrupt({ROBOTS: {'body': b'User-agent: *\nDisallow: /orders/1.pdf\n'}})
+        result = R.finalise_interrupted(self.base, 'A1', no_attempt_running=True, clock=self.clock.now)
+        self.assertEqual([(f['scope'], f['route'], f['reason']) for f in result['stop_findings']], [('ROUTE', URL1, 'ROBOTS_DISALLOWED')])
+
+    def test_review_3_only_verified_complete_200_responses_become_complete_originals(self):
+        cases = [
+            ('206', {'status': 206, 'body': b'part'}, 'STOPPED', 'UNEXPECTED_RESPONSE', None),
+            ('204', {'status': 204, 'body': b''}, 'STOPPED', 'UNEXPECTED_RESPONSE', None),
+            ('gzip', {'body': b'\x1f\x8b gz', 'headers': [('Content-Encoding', 'gzip')]}, 'STOPPED', 'UNEXPECTED_ENCODING', None),
+            ('unframed', {'body': b'close-delimited', 'declared': False}, 'PARTIAL', 'UNVERIFIED_LENGTH', 'UNVERIFIED'),
+            ('chunked', {'body': b'chunked body', 'declared': False, 'headers': [('Transfer-Encoding', 'chunked')]}, 'COMPLETE', 'COMPLETE', 'COMPLETE'),
+            ('te and length', {'body': b'x' * 10, 'headers': [('Transfer-Encoding', 'chunked')]}, 'STOPPED', 'FRAMING_CONFLICT', None),
+            ('two lengths', {'body': b'x' * 10, 'headers': [('Content-Length', '9')]}, 'STOPPED', 'FRAMING_CONFLICT', None),
+            ('bad length', {'body': b'x' * 10, 'declared': False, 'headers': [('Content-Length', '1e3')]}, 'STOPPED', 'FRAMING_CONFLICT', None),
+            ('overlong body', {'body': b'x' * 40, 'length': 10}, 'STOPPED', 'FRAMING_CONFLICT', None)]
+        for i, (name, spec, status, termination, coverage) in enumerate(cases):
+            with self.subTest(name):
+                self.base = self.root / f'records-{i}'
+                self.build()
+                result = self.dispatch(self.request(), self.transport({URL1: spec}))
+                receipt = json.loads((self.attempt() / 'receipts' / '002.json').read_bytes())
+                self.assertEqual((result['status'], receipt['termination']), (status, termination))
+                first = [h for h in result['custody_handoff'] if h['requested_url'] == URL1]
+                self.assertEqual(first[0]['coverage'] if first else None, coverage)
+                self.assertEqual(receipt['complete'], termination == 'COMPLETE')
+                self.assertEqual(R.status(self.base, 'A1')['state'], status)
+
+    def test_review_4_equivalent_urls_cannot_be_dispatched_twice(self):
+        for i, pair in enumerate(((URL1, URL1 + '?'), (f'https://{HOST}', f'https://{HOST}/'),
+                                  (URL1, URL1.replace('1.pdf', '%31.pdf')))):
+            with self.subTest(pair=pair):
+                self.base = self.root / f'records-dup-{i}'
+                self.urls = list(pair)
+                self.build()
+                t = self.transport({u: {'body': b'same'} for u in pair})
+                with self.assertRaisesRegex(ValueError, 'same request'):
+                    self.dispatch(self.request(), t)
+                self.assertEqual((t.resolved, t.opened), ([], []))
+                self.assertFalse(self.attempt().exists())
+        self.urls = [URL1, URL2]
+        self.build()
+        registry = json.loads(Path(self.registry['path']).read_bytes())
+        registry['routes'].append({**registry['routes'][0], 'id': 'R0-COPY'})
+        self.registry = self.put('registry.json', registry)
+        quarry = json.loads(Path(self.quarry['path']).read_bytes())
+        quarry['route_ids'].append('R0-COPY')
+        self.quarry = self.put('quarry-scope.json', quarry)
+        scope = json.loads(Path(self.scope['path']).read_bytes())
+        scope.update(quarry_registry=self.registry, quarry_scope=self.quarry)
+        self.scope = self.put('scope.json', scope)
+        t = self.transport()
+        self.assert_not_started(self.dispatch(self.request('A9'), t), 'ROUTE_AMBIGUOUS', t)
+
+    def test_review_5_pre_claim_failures_are_distinct_from_refusals_and_claims(self):
+        with patch.object(R, 'authorise', side_effect=OSError('disk full')), self.assertRaises(OSError):
+            self.dispatch(self.request(), self.transport())
+        status = R.status(self.base, 'A1')
+        self.assertEqual(status['state'], 'PRECLAIM_INCOMPLETE')
+        self.assertEqual(status['dispatch_lock']['attempt_id'], 'A1')  # Kept as evidence, never removed silently.
+        with self.assertRaisesRegex(ValueError, 'DISPATCH_LOCKED'):
+            self.dispatch(self.request('A2'), self.transport())
+        result = R.finalise_interrupted(self.base, 'A1', no_attempt_running=True, clock=self.clock.now)
+        self.assertEqual((result['status'], result['interrupted'], result['reason'].split(':')[0]),
+                         ('NOT_STARTED', True, 'PRECLAIM_INCOMPLETE'))
+        self.assertEqual(R.status(self.base, 'A1')['state'], 'NOT_STARTED')
+        self.assertFalse(any(e['type'] == 'ATTEMPT_RESERVED' for e in self.ledger()))
+
+    def test_review_6_forged_but_rechained_results_and_receipts_fail_closed(self):
+        self.dispatch(self.request(), self.transport({URL1: {'body': b'x' * 300000, 'declared': False, 'chunk': 65536}}))
+        self.assertEqual(R.status(self.base, 'A1')['state'], 'PARTIAL')
+        a = self.attempt()
+        pristine = {p: p.read_bytes() for p in a.rglob('*') if p.is_file()}
+        def restore():
+            for p, data in pristine.items():
+                p.write_bytes(data)
+        forgeries = {
+            'handoff upgraded': lambda r: (r.update(status='COMPLETE'), r['custody_handoff'][0].update(coverage='COMPLETE')),
+            'handoff bytes': lambda r: r['custody_handoff'][0].update(bytes=1),
+            'handoff route': lambda r: r['custody_handoff'][0].update(quarry_route_id='R1'),
+            'handoff without receipt': lambda r: r['custody_handoff'][0].update(receipt_sha256='f' * 64),
+            'status': lambda r: r.update(status='COMPLETE'),
+            'consumption': lambda r: r['consumption']['bytes'].update(exact=1, at_least=1),
+            'unexpected field': lambda r: r.update(extra=True),
+            'stop findings': lambda r: r['stop_findings'].append({'stop_id': 'STP-forged'})}
+        for name, change in forgeries.items():
+            with self.subTest(name):
+                try:
+                    self.forge_result(change)
+                    self.assertEqual(R.status(self.base, 'A1')['state'], 'INCONSISTENT')
+                finally:
+                    restore()
+        self.assertEqual(R.status(self.base, 'A1')['state'], 'PARTIAL')
+        receipt_path = a / 'receipts' / '002.json'
+        receipt = json.loads(receipt_path.read_bytes())
+        receipt.update(termination='COMPLETE', complete=True, coverage='COMPLETE')
+        data = canonical(receipt) + b'\n'
+        receipt_path.write_bytes(data)
+        old = S.sha(pristine[receipt_path])
+        def swap(events):
+            for e in events:
+                if e['type'] == 'REQUEST_FINISHED' and e['record']['receipt_sha256'] == old:
+                    e['record']['receipt_sha256'] = S.sha(data)
+        self.rechain(a / 'journal.jsonl', swap)
+        self.forge_result(lambda r: (r.update(receipts=[S.sha(data) if x == old else x for x in r['receipts']]),
+                                     [h.update(receipt_sha256=S.sha(data), coverage='COMPLETE') for h in r['custody_handoff'] if h['receipt_sha256'] == old],
+                                     [x.update(receipt_sha256=S.sha(data), coverage='COMPLETE') for x in r['retained'] if x['receipt_sha256'] == old]))
+        status = R.status(self.base, 'A1')
+        self.assertEqual(status['state'], 'INCONSISTENT')
+        self.assertTrue(any('RECEIPT_INCONSISTENT' in p for p in status['problems']), status['problems'])
+        restore()
+        receipt = json.loads(receipt_path.read_bytes())
+        receipt['interpretation'] = 'complete original'  # An unexpected field, consistently rechained.
+        data = canonical(receipt) + b'\n'
+        receipt_path.write_bytes(data)
+        self.rechain(a / 'journal.jsonl', swap)
+        status = R.status(self.base, 'A1')
+        self.assertTrue(any('RECEIPT_MALFORMED' in p for p in status['problems']), status['problems'])
+
+    def test_review_7_route_stops_are_exact_and_stale_snapshots_are_refused(self):
+        record = {'status': 'STOPPED', 'reason': 'route closed; no host named'}
+        self.build(stop_records=[record], resolutions=[{'input_sha256': S.sha(canonical(record)), 'hosts': [],
+                                                        'routes': [f'https://{HOST}/orders/1'], 'task_scoped_reason': None}])
+        result = self.dispatch(self.request(), self.transport())
+        self.assertEqual(result['status'], 'COMPLETE')  # https://host/orders/1 does not stop .../orders/1.pdf
+        stops_dir = self.root / 'stop-dir'
+        stops_dir.mkdir()
+        (stops_dir / 'final_stop.json').write_bytes(canonical({'status': 'STOPPED', 'url': 'https://stopped.example.net/x'}))
+        self.base = self.root / 'records-fresh'
+        snap = T.build([], self.base, from_dirs=[stops_dir], attestation=self.put('att.json', {
+            'schema': C.ATTESTATION, 'attested_by': OWNER, 'attested_at': '2026-10-26T08:00:00+00:00',
+            'inputs': [S.sha((stops_dir / 'final_stop.json').read_bytes())], 'resolutions': [], 'documented_stops': [],
+            'statement': 'I reviewed the listed stop records and the reports available to me. Unclear scopes are recorded host-level.'})['path'],
+            clock=self.clock.now)
+        self.snapshot = {'path': snap['path'], 'sha256': snap['sha256']}
+        (stops_dir / 'new' ).mkdir()
+        (stops_dir / 'new' / 'publication_stop.json').write_bytes(canonical({'status': 403, 'url': f'https://{HOST}/x'}))
+        t = self.transport()
+        self.assert_not_started(self.dispatch(self.request('F1'), t), 'STOP_SNAPSHOT_STALE', t)
 
     def test_robots_crawl_delay_paces_within_the_wall_budget(self):
         result = self.dispatch(self.request(), self.transport({ROBOTS: {'body': b'User-agent: *\nCrawl-delay: 5\n'}}))

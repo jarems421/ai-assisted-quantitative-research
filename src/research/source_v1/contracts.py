@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import re
 from datetime import datetime
+from urllib.parse import urlsplit
 from src.research.jev_navigation_v1.contracts import TEXT, HASH, LABEL, obj, array, validate, loads
 from src.research.quarry_v1.acquisition import public_locator
 
@@ -13,10 +14,15 @@ SNAPSHOT = 'SOURCE_STOP_SNAPSHOT_V001'
 FINDING = 'SOURCE_STOP_FINDING_V001'
 RECEIPT = 'SOURCE_RETRIEVAL_RECEIPT_V001'
 RESULT = 'SOURCE_ACTIVITY_RESULT_V001'
+FINALISATION = 'SOURCE_ATTEMPT_FINALISATION_V001'
 STATUS = 'SOURCE_ATTEMPT_STATUS_V001'
 STATUSES = ('NOT_STARTED', 'COMPLETE', 'PARTIAL', 'UNAVAILABLE', 'STOPPED', 'UNKNOWN')
-TERMINATIONS = ('COMPLETE', 'SIZE_STOP', 'TIME_STOP', 'REDIRECT_REFUSED', 'ACCESS_DENIED', 'RATE_LIMITED', 'NOT_FOUND',
-                'UNEXPECTED_RESPONSE', 'DNS_FAILED', 'ADDRESS_REFUSED', 'TRANSPORT_FAILED')
+TERMINATIONS = ('COMPLETE', 'UNVERIFIED_LENGTH', 'SIZE_STOP', 'TIME_STOP', 'REDIRECT_REFUSED', 'ACCESS_DENIED', 'RATE_LIMITED',
+                'NOT_FOUND', 'UNEXPECTED_RESPONSE', 'UNEXPECTED_ENCODING', 'FRAMING_CONFLICT', 'DNS_FAILED', 'ADDRESS_REFUSED',
+                'TRANSPORT_FAILED')
+# Coverage of the requested representation: only a verified, fully framed 200 body is COMPLETE.
+COVERAGES = ('COMPLETE', 'UNVERIFIED', 'PREFIX', 'NONE')
+UNRESERVED = re.compile(r'%(2[DdEe]|3[0-9]|[46][1-9A-Fa-f]|[57][0-9Aa]|5[Ff]|7[Ee])')
 OPERATION = 'RETRIEVE_EXACT_URL'
 ROBOTS_POLICY = 'ROBOTS_TXT_REQUIRED'
 # Same names refused for human attestations elsewhere (graph pilot, exploratory runner).
@@ -65,6 +71,30 @@ ATTESTATION_SCHEMA = obj({
     'statement': {'const': 'I reviewed the listed stop records and the reports available to me. Unclear scopes are recorded host-level.'}})
 
 
+NONE_OR_HASH = {'anyOf': [HASH, {'type': 'null'}]}
+NONE_OR_INT = {'anyOf': [{'type': 'integer', 'minimum': 0}, {'type': 'null'}]}
+RECEIPT_SCHEMA = obj({
+    'schema': {'const': RECEIPT}, 'attempt_id': IDENT, 'request_index': {'type': 'integer', 'minimum': 1, 'maximum': 32},
+    'role': {'enum': ['ROBOTS', 'TARGET']}, 'requested_url': TEXT, 'host': TEXT, 'tier': {'const': 'A'},
+    'stage': {'enum': ['DNS', 'ADDRESS', 'CONNECT', 'RESPONSE']},
+    'resolved_addresses': {'type': 'array', 'items': {'type': 'string', 'maxLength': 64}, 'maxItems': 16},
+    'connected_address': {'anyOf': [{'type': 'string', 'maxLength': 64}, {'type': 'null'}]},
+    'started_at': TEXT, 'finished_at': TEXT, 'http_status': {'anyOf': [{'type': 'integer', 'minimum': 100, 'maximum': 999}, {'type': 'null'}]},
+    'headers_sha256': NONE_OR_HASH, 'headers_selected': {'type': 'object', 'additionalProperties': {'type': 'string', 'maxLength': 2048}, 'maxProperties': 8},
+    'framing': {'enum': ['CONTENT_LENGTH', 'CHUNKED', 'CLOSE_DELIMITED', 'CONFLICT', None]},
+    'content_encoding': {'anyOf': [{'type': 'string', 'maxLength': 256}, {'type': 'null'}]},
+    'declared_length': NONE_OR_INT, 'bytes_received': {'type': 'integer', 'minimum': 0, 'maximum': MAX_BYTES},
+    'body_sha256': NONE_OR_HASH, 'body_path': NONE_OR_TEXT, 'stopped_by': {'enum': ['SIZE', 'DECLARED_SIZE', 'TIME', None]},
+    'failure': {'anyOf': [LABEL, {'type': 'null'}]}, 'termination': {'enum': list(TERMINATIONS)}, 'complete': {'type': 'boolean'},
+    'coverage': {'enum': list(COVERAGES)}, 'max_bytes': {'type': 'integer', 'minimum': 0, 'maximum': MAX_BYTES},
+    'limitations': {'type': 'array', 'items': TEXT, 'maxItems': 8}, 'implementation_sha256': HASH})
+FINALISATION_SCHEMA = obj({
+    'schema': {'const': FINALISATION}, 'attempt_id': IDENT, 'kind': {'enum': ['INTERRUPTED', 'PRECLAIM_INCOMPLETE']},
+    'result_sha256': HASH, 'request_sha256': HASH, 'journal_sha256': HASH, 'journal_bytes': {'type': 'integer', 'minimum': 0},
+    'journal_events': {'type': 'integer', 'minimum': 0}, 'journal_head': NONE_OR_HASH, 'incomplete_tail_bytes': {'type': 'integer', 'minimum': 0},
+    'finalised_at': TEXT, 'authorises': EMPTY})
+
+
 class SourceError(ValueError):
     pass
 
@@ -98,12 +128,34 @@ def request(value):
     tier = value['authority']['tier_a']
     hosts = {host_of(u) for u in tier['exact_urls']}
     need(hosts == set(tier['hosts']), 'tier A hosts must be exactly the hosts of the exact URLs')
-    need(not any(u == f'https://{host_of(u)}/robots.txt' for u in tier['exact_urls']), 'robots.txt is checked automatically, never a target')
+    keys = [dispatch_key(u) for u in tier['exact_urls']]
+    need(len(set(keys)) == len(keys), 'two exact URLs make the same request; each URL is dispatched at most once')
+    need(not any(k == dispatch_key(f'https://{host_of(u)}/robots.txt') for k, u in zip(keys, tier['exact_urls'])),
+         'robots.txt is checked automatically, never a target')
     r = value['resources']['reservation']
     need(r['per_response_bytes'] <= r['total_bytes'], 'per-response ceiling exceeds the total byte reservation')
     # One robots.txt request per host precedes that host's first target.
     need(r['requests'] >= len(tier['exact_urls']) + len(hosts), 'reservation must cover every exact URL plus one robots.txt per host')
     return value
+
+
+def target(url):
+    """The request-target actually sent: path (or /) plus any non-empty query."""
+    p = urlsplit(url)
+    return (p.path or '/') + ('?' + p.query if p.query else '')
+
+
+def dispatch_key(url):
+    """Identity of the request a URL produces, for duplicate and route-stop matching.
+
+    Dot segments are refused (servers may resolve them); escapes of unreserved characters are decoded and the
+    remaining escapes upper-cased, so spellings of one request compare equal.
+    """
+    host = host_of(url)
+    path = urlsplit(url).path
+    need(not any(s in ('.', '..') for s in path.split('/')), 'dot segments are refused in exact URLs')
+    normal = UNRESERVED.sub(lambda m: chr(int(m.group(1), 16)), target(url))
+    return host + re.sub(r'%[0-9a-fA-F]{2}', lambda m: m.group(0).upper(), normal)
 
 
 def hostname(value):
@@ -128,11 +180,12 @@ def attestation(value):
         for host in r['hosts']:
             hostname(host)
         for route in r['routes']:
-            host_of(route)
+            dispatch_key(route)
     for d in value['documented_stops']:
         hostname(d['host'])
         if d['route']:
             need(host_of(d['route']) == d['host'], 'documented route must belong to its host')
+            dispatch_key(d['route'])
     return value
 
 

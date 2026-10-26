@@ -2096,7 +2096,7 @@
   "tests/test_source_retrieval_v1.py": {
     "baseline_ci": false,
     "runner": "additional",
-    "reason": "Source Retrieval V001 on fictional hosts with injected fake transports, a fake clock and temporary records; socket, DNS and process creation denied (also patched in each test). Covers private and non-public addresses, refused redirects, DNS failures, stopped hosts and routes, 401/403/429/404/5xx, oversized and partial transfers, time and byte budgets, duplicate and concurrent attempts, interruption with record-only finalisation, altered receipts/bodies/results/journals, scope violations, Quarry route stops, cumulative scope reservations, robots.txt policy and Crawl-delay and named-human stop attestation. No real retrieval, owner scope or attestation exists.",
+    "reason": "Source Retrieval V001 on fictional hosts with injected fake transports, a fake clock and temporary records; socket, DNS and process creation denied (also patched in each test). Covers private and non-public addresses, refused redirects, DNS failures, stopped hosts and routes, 401/403/429/404/5xx, oversized and partial transfers, time and byte budgets, duplicate and concurrent attempts, interruption with record-only finalisation, altered receipts/bodies/results/journals, scope violations, Quarry route stops, cumulative scope reservations, robots.txt policy and Crawl-delay and named-human stop attestation. No real retrieval, owner scope or attestation exists. PR #44 review regressions: finalised-result binding, stops lost in a crash reconstructed idempotently, non-200/encoded/unframed/conflicting responses never COMPLETE, equivalent URLs and ambiguous routes, pre-claim failure states, consistently re-chained forgeries, exact route stops and stale snapshots.",
     "declared_tests": [
       "SourceRetrievalTests.test_403_and_429_create_host_stops_and_end_the_attempt",
       "SourceRetrievalTests.test_404_is_unavailable_with_a_route_stop",
@@ -2113,12 +2113,31 @@
       "SourceRetrievalTests.test_private_and_non_public_addresses_are_refused_before_any_connection",
       "SourceRetrievalTests.test_quarry_route_stops_and_cumulative_scope_reservations_hold",
       "SourceRetrievalTests.test_redirects_are_refused_never_followed",
+      "SourceRetrievalTests.test_review_1_finalised_interrupted_result_is_bound_by_a_finalisation_record",
+      "SourceRetrievalTests.test_review_2_stop_finding_lost_in_a_crash_is_reconstructed_from_receipts",
+      "SourceRetrievalTests.test_review_3_only_verified_complete_200_responses_become_complete_originals",
+      "SourceRetrievalTests.test_review_4_equivalent_urls_cannot_be_dispatched_twice",
+      "SourceRetrievalTests.test_review_5_pre_claim_failures_are_distinct_from_refusals_and_claims",
+      "SourceRetrievalTests.test_review_6_forged_but_rechained_results_and_receipts_fail_closed",
+      "SourceRetrievalTests.test_review_7_route_stops_are_exact_and_stale_snapshots_are_refused",
       "SourceRetrievalTests.test_robots_crawl_delay_paces_within_the_wall_budget",
       "SourceRetrievalTests.test_robots_policy_is_checked_before_targets",
       "SourceRetrievalTests.test_scope_violations_are_refused_before_claim",
       "SourceRetrievalTests.test_stop_snapshot_requires_named_human_attestation_and_is_additive",
       "SourceRetrievalTests.test_stopped_hosts_and_routes_refuse_before_claim",
       "SourceRetrievalTests.test_time_ceiling_and_byte_budget_are_enforced"
+    ]
+  },
+  "tests/test_source_retrieval_transport_v1.py": {
+    "baseline_ci": false,
+    "runner": "process",
+    "reason": "Source Retrieval V001 real HttpsTransport and fetch against a loopback-only local TLS server (127.0.0.1, ephemeral port) with fictional offline-test certificates; DNS denied and every connection asserted to target loopback. Opens sockets, so it runs as its own explicit CI step on Windows and Linux, not under the restricted runner. No external host or source URL is contacted.",
+    "declared_tests": [
+      "TransportTests.test_byte_ceiling_stops_a_real_stream",
+      "TransportTests.test_chunked_unframed_and_partial_transfers",
+      "TransportTests.test_non_200_success_unexpected_encoding_conflicts_and_redirects",
+      "TransportTests.test_request_framing_and_framed_complete_response",
+      "TransportTests.test_tls_hostname_and_certificate_are_verified"
     ]
   }
 }
