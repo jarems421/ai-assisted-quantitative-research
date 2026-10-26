@@ -88,7 +88,7 @@ class CodexJSONL:
                  'INCOMPLETE_OR_MULTIPLE_TURNS')
             token(rows[0].get('thread_id'))
             for i, row in enumerate(rows):
-                kind = row['type']
+                kind = row.get('type')
                 need(kind in ('thread.started', 'turn.started', 'item.started', 'item.updated',
                               'item.completed', 'turn.completed'), 'UNEXPECTED_EVENT')
                 # Root event metadata only. Never inspect model identity inside message JSON.

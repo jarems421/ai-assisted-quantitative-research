@@ -166,6 +166,50 @@ class SourceSearchTests(unittest.TestCase):
         rows = codex(out); rows.insert(2, {'type': 'error', 'message': 'fictional failure'})
         self.assertIn('UNEXPECTED_EVENT', self.review(output=out, rows=rows).faults)
 
+    def test_missing_or_malformed_event_type_returns_fault_and_retains_artifacts(self):
+        out = encoded({'fictional': [proposal()]})
+        for envelope in [{}, *({'type': value} for value in (None, '', 7, True, [], {}, 'unknown'))]:
+            rows = codex(out)
+            rows.insert(2, envelope)
+            raw = jsonl(rows)
+            with self.subTest(envelope=envelope):
+                r = self.review(output=out, rows=rows)
+                self.assertFalse(r.valid)
+                self.assertFalse(r.observation.complete)
+                self.assertEqual(r.observation.faults, ('UNEXPECTED_EVENT',))
+                self.assertEqual(r.artifacts.events, raw)
+                self.assertEqual(r.artifacts.output, out)
+                self.assertEqual(r.artifacts.input, b'fictional input')
+                for key, digest in r.artifacts.hashes:
+                    self.assertEqual(digest, hashlib.sha256(getattr(r.artifacts, key)).hexdigest())
+
+    def test_missing_or_malformed_envelope_fields_fail_closed(self):
+        out = encoded({'fictional': [proposal()]})
+        cases = [(2, value, 'INVALID_OBJECT') for value in (None, [], 'not an object', 7)]
+        cases += [(0, {'type': 'thread.started'}, 'INVALID_IDENTIFIER'),
+                  (0, {'type': 'thread.started', 'thread_id': []}, 'INVALID_IDENTIFIER'),
+                  (2, {'type': 'item.completed'}, 'INVALID_OBJECT'),
+                  (2, {'type': 'item.completed', 'item': []}, 'INVALID_OBJECT'),
+                  (2, {'type': 'item.completed', 'item': {}}, 'INVALID_IDENTIFIER'),
+                  (2, {'type': 'item.completed', 'item': {'id': 's1'}}, 'UNEXPECTED_TOOL_ITEM'),
+                  (2, {'type': 'item.completed', 'item': {'id': 's1', 'type': {}}}, 'UNEXPECTED_TOOL_ITEM'),
+                  (-1, {'type': 'turn.completed'}, 'INVALID_OBJECT'),
+                  (-1, {'type': 'turn.completed', 'usage': []}, 'INVALID_OBJECT'),
+                  (-1, {'type': 'turn.completed', 'usage': {}}, 'INVALID_USAGE')]
+        for index, envelope, fault in cases:
+            rows = codex(out); rows[index] = envelope
+            with self.subTest(index=index, envelope=envelope):
+                r = self.review(output=out, rows=rows)
+                self.assertFalse(r.valid)
+                self.assertFalse(r.observation.complete)
+                self.assertEqual(r.observation.faults, (fault,))
+                self.assertEqual(r.artifacts.events, jsonl(rows))
+
+    def test_programmer_key_errors_are_not_swallowed(self):
+        with patch('src.research.source_search_v1.providers.search', side_effect=KeyError('programmer bug')):
+            with self.assertRaisesRegex(KeyError, 'programmer bug'):
+                self.review()
+
     def test_interruption_duplicate_turns_and_unfinished_items_are_not_complete(self):
         out = encoded({'fictional': [proposal()]})
         fixtures = [codex(out)[:-1], codex(out) + codex(out)]

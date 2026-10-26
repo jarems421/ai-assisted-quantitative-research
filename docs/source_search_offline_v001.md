@@ -38,8 +38,9 @@ Three capture profiles share this boundary:
 Provider `models`, `usage`, queries, source URLs and citation locations are
 **observed fields in supplied bytes**. They are not independently authenticated
 execution evidence. Model identity asserted inside the final message cannot
-populate provider identity. Missing observed identity remains explicitly UNKNOWN;
-a mismatch is a fault. Missing search events remains unobserved, never a claimed
+populate provider identity. Missing observed identity remains explicitly UNKNOWN
+and does not establish runtime qualification; a mismatch is a fault.
+Missing search events remains unobserved, never a claimed
 zero provider-request count. Citations do not count as search calls. Underlying
 request counts, subscription usage and financial charges are not inferred.
 
@@ -55,9 +56,11 @@ unexpected tools are faults. JSON is never repaired or executed.
 URLs must be credential-free HTTPS DNS locators with no IP literal, local suffix,
 control characters or nonstandard port. Validation performs no DNS resolution,
 GET, terms check, publisher authentication or source-stop reconciliation. Public
-syntax is not proof of a public IP, existing document or usable dataset. Optional
+syntax is not proof of a public IP, existing document or usable dataset. Passing
+candidate URL syntax validation is not equivalent to Quarry route admissibility;
+Quarry's native registry, scope and stop checks still apply. Optional
 domain filtering checks returned metadata and candidate hosts at label boundaries;
-it is a post-capture filter, not authority to contact any host.
+it is a post-capture filter and never authorises retrieval or contact with any host.
 
 Every model candidate stays `MODEL_PROPOSED_SOURCE`; baseline candidates stay
 `BASELINE_PROPOSED_SOURCE`. An ORIGINAL claim remains an assertion. SECONDARY and
@@ -72,7 +75,7 @@ port and empty path). Each occurrence retains its exact URL, field pointers,
 requirements, publisher claim and observed event locations, including conflicting
 claims. Paths, query strings and fragments are not silently collapsed.
 
-`Review.valid` means format validation passed, **not** that identity is known,
+`Review.valid` means **structural capture validation only**, not that identity is known,
 search ran, candidates are useful or scientific requirements are satisfied. Read
 `uncertainties` too. No scientific outcome, READY, human record or research gate
 is emitted. A valid empty list is not proof of exhaustive search.
@@ -114,6 +117,7 @@ The future binding must define exact candidate/negative-result fields and
 exhaustive enumeration, retained artifact references, requested/observed model
 identity, scope/transmission/budget/stops and native receipt mappings. Callers must
 not omit inconvenient candidates by selecting only favourable field locations.
+Caller-selected candidate locations cannot establish exhaustive enumeration.
 This utility cannot establish enumeration completeness without the shared schema.
 An INCUBATE card can be a future provisionally authorised subject; this library
 neither requires nor creates Scout READY and never bypasses downstream gates.
