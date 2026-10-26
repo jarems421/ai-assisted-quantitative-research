@@ -1,5 +1,11 @@
 # Repository instructions
 
+## Source Retrieval V001: one bounded exact-URL retrieval attempt (2026-10-26)
+
+- `docs/source_retrieval_v001.md`; code `src/research/source_v1/` (`python -m src.research.source_v1 implementation|stops-snapshot|check|run|status|result|finalise-interrupted`). A bounded campaign activity, not a coordinator: it never schedules, retries, resumes, searches, calls a model, extracts content or calls the campaign, operator, Quarry, Jev or Anvil. Quarry and Scout contracts stay unchanged; Quarry's own `plan()` enforces its V001 restrictions.
+- `run` dispatches only under a named human's `SOURCE_RETRIEVAL_SCOPE_V001` (binding card, implementation hash, Quarry files, validity, cumulative ceilings) and a `COMPLETE` stop snapshot with a named human's `SOURCE_STOP_ATTESTATION_V001`. Never author, draft or complete an owner scope or stop attestation, run `run` without the owner's explicit instruction for that exact request, or remove `dispatch.lock`/`attempt.lock`; interruption is reconciled by the owner (`finalise-interrupted`, record-only), never retried.
+- Stops are only added, never removed by software; unclear scope is host-level; 401/403/429/5xx, non-public addresses and transport uncertainty create host stops, redirects/404 route stops. Results keep NOT_STARTED, COMPLETE, PARTIAL, UNAVAILABLE, STOPPED and UNKNOWN distinct, `exactly_once: false`, `authorises: []`. Retained bytes and records live in ignored `.research/source-v1/`; never commit them. No live retrieval is authorised by this code, its tests or a merge.
+
 ## Opportunity Scout scan V001: one operator command (2026-10-25)
 
 - `docs/opportunity_scout/scan_v001.md`; code `src/research/opportunity_scout/scan_v001/` (`python -m src.research.opportunity_scout.scan_v001 configure|scan`, optional `scout.ps1`; skill `.claude/skills/opportunity-scout/`). It only calls `automation_v001` plan/status/run and the runner's and pipeline's own preflight and authorisation checks; never add generation, rubric, provider, spend or policy logic to it, and never edit `exploratory_v001`, `critic_v1`, top-level Scout files or frozen texts for it.

@@ -2092,5 +2092,33 @@
       "LinkTests.test_link_added_after_a_run_blocks_continue_and_writes_nothing_through_it",
       "LinkTests.test_preexisting_link_in_a_run_directory_stops_before_custody"
     ]
+  },
+  "tests/test_source_retrieval_v1.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Source Retrieval V001 on fictional hosts with injected fake transports, a fake clock and temporary records; socket, DNS and process creation denied (also patched in each test). Covers private and non-public addresses, refused redirects, DNS failures, stopped hosts and routes, 401/403/429/404/5xx, oversized and partial transfers, time and byte budgets, duplicate and concurrent attempts, interruption with record-only finalisation, altered receipts/bodies/results/journals, scope violations, Quarry route stops, cumulative scope reservations, robots.txt policy and Crawl-delay and named-human stop attestation. No real retrieval, owner scope or attestation exists.",
+    "declared_tests": [
+      "SourceRetrievalTests.test_403_and_429_create_host_stops_and_end_the_attempt",
+      "SourceRetrievalTests.test_404_is_unavailable_with_a_route_stop",
+      "SourceRetrievalTests.test_altered_receipts_bodies_results_and_journals_are_detected",
+      "SourceRetrievalTests.test_campaign_interface_fields_and_component_boundaries",
+      "SourceRetrievalTests.test_check_is_read_only_and_cli_reports_without_dispatch",
+      "SourceRetrievalTests.test_complete_attempt_retains_original_bytes_with_receipts_and_custody_handoff",
+      "SourceRetrievalTests.test_dns_failure_stops_without_connection_or_stop_finding",
+      "SourceRetrievalTests.test_duplicate_attempts_and_concurrent_dispatch_are_refused",
+      "SourceRetrievalTests.test_interrupted_attempt_keeps_locks_and_finalises_record_only",
+      "SourceRetrievalTests.test_oversized_responses_stop_at_the_ceiling",
+      "SourceRetrievalTests.test_partial_transfer_is_unknown_and_stops_the_host",
+      "SourceRetrievalTests.test_pinned_https_connection_uses_validated_address_and_url_host",
+      "SourceRetrievalTests.test_private_and_non_public_addresses_are_refused_before_any_connection",
+      "SourceRetrievalTests.test_quarry_route_stops_and_cumulative_scope_reservations_hold",
+      "SourceRetrievalTests.test_redirects_are_refused_never_followed",
+      "SourceRetrievalTests.test_robots_crawl_delay_paces_within_the_wall_budget",
+      "SourceRetrievalTests.test_robots_policy_is_checked_before_targets",
+      "SourceRetrievalTests.test_scope_violations_are_refused_before_claim",
+      "SourceRetrievalTests.test_stop_snapshot_requires_named_human_attestation_and_is_additive",
+      "SourceRetrievalTests.test_stopped_hosts_and_routes_refuse_before_claim",
+      "SourceRetrievalTests.test_time_ceiling_and_byte_budget_are_enforced"
+    ]
   }
 }
