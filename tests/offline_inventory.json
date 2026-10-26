@@ -2093,6 +2093,31 @@
       "LinkTests.test_preexisting_link_in_a_run_directory_stops_before_custody"
     ]
   },
+  "tests/test_campaign_continuity_v1.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Campaign continuity V001 on temporary synthetic Scout/operator records only. No native replay, provider, network, process or credential access; tests deny external effects, preserve references and cover interrupted observation, drift and branch isolation.",
+    "declared_tests": [
+      "CampaignTests.test_campaign_chain_truncation_manifest_tamper_and_stale_lock_refused",
+      "CampaignTests.test_card_hash_version_and_native_branch_must_match",
+      "CampaignTests.test_changed_code_keeps_reports_readable_but_refuses_mutation",
+      "CampaignTests.test_completed_quarry_jev_continuation_is_referenced_without_native_replay",
+      "CampaignTests.test_current_scout_stop_overrides_an_old_ready_native_report",
+      "CampaignTests.test_duplicate_activity_and_branch_conflicts_do_not_append_or_reexecute",
+      "CampaignTests.test_guard_blocks_network_process_and_foreign_writes",
+      "CampaignTests.test_incubate_provisional_boundary_does_not_require_or_create_ready",
+      "CampaignTests.test_interrupted_campaign_observation_reconstructs_without_native_replay",
+      "CampaignTests.test_multiple_completed_runs_are_ambiguous_independent_of_attachment_order",
+      "CampaignTests.test_native_code_change_is_not_accepted_as_a_new_observation",
+      "CampaignTests.test_native_report_and_journal_tamper_never_become_valid_activity",
+      "CampaignTests.test_native_working_copy_review_can_advance_without_changing_original",
+      "CampaignTests.test_path_escape_and_invalid_campaign_location_refused",
+      "CampaignTests.test_stale_artifact_isolated_from_other_branch",
+      "CampaignTests.test_status_final_are_deterministic_and_read_only_without_native_operations",
+      "CampaignTests.test_two_branches_exact_identity_and_distinct_blockers_no_science_inferred",
+      "CampaignTests.test_unfinished_native_invocation_and_missing_receipt_are_not_replayed"
+    ]
+  },
   "tests/test_source_retrieval_v1.py": {
     "baseline_ci": false,
     "runner": "additional",
