@@ -2121,7 +2121,7 @@
   "tests/test_source_retrieval_v1.py": {
     "baseline_ci": false,
     "runner": "additional",
-    "reason": "Source Retrieval V001 on fictional hosts with injected fake transports, a fake clock and temporary records; socket, DNS and process creation denied (also patched in each test). Covers private and non-public addresses, refused redirects, DNS failures, stopped hosts and routes, 401/403/429/404/5xx, oversized and partial transfers, time and byte budgets, duplicate and concurrent attempts, interruption with record-only finalisation, altered receipts/bodies/results/journals, scope violations, Quarry route stops, cumulative scope reservations, robots.txt policy and Crawl-delay and named-human stop attestation. No real retrieval, owner scope or attestation exists. PR #44 review regressions: finalised-result binding, stops lost in a crash reconstructed idempotently, non-200/encoded/unframed/conflicting responses never COMPLETE, equivalent URLs and ambiguous routes, pre-claim failure states, consistently re-chained forgeries, exact route stops and stale snapshots.",
+    "reason": "Source Retrieval V001 on fictional hosts with injected fake transports, a fake clock and temporary records; socket, DNS and process creation denied (also patched in each test). Covers private and non-public addresses, refused redirects, DNS failures, stopped hosts and routes, 401/403/429/404/5xx, oversized and partial transfers, time and byte budgets, duplicate and concurrent attempts, interruption with record-only finalisation, altered receipts/bodies/results/journals, scope violations, Quarry route stops, cumulative scope reservations, robots.txt policy and Crawl-delay and named-human stop attestation. No real retrieval, owner scope or attestation exists. PR #44 review regressions: finalised-result binding, stops lost in a crash reconstructed idempotently, non-200/encoded/unframed/conflicting responses never COMPLETE, equivalent URLs and ambiguous routes, pre-claim failure states, consistently re-chained forgeries, exact route stops and stale snapshots. Final edge cases: every DNS answer validated before truncation (forbidden, oversized and malformed answers never connect); no request or connection after the wall budget or request deadline has expired, including an overrunning pacing sleep and slow DNS.",
     "declared_tests": [
       "SourceRetrievalTests.test_403_and_429_create_host_stops_and_end_the_attempt",
       "SourceRetrievalTests.test_404_is_unavailable_with_a_route_stop",
@@ -2131,6 +2131,8 @@
       "SourceRetrievalTests.test_complete_attempt_retains_original_bytes_with_receipts_and_custody_handoff",
       "SourceRetrievalTests.test_dns_failure_stops_without_connection_or_stop_finding",
       "SourceRetrievalTests.test_duplicate_attempts_and_concurrent_dispatch_are_refused",
+      "SourceRetrievalTests.test_final_1_every_dns_answer_is_validated_before_any_truncation",
+      "SourceRetrievalTests.test_final_2_no_request_or_connection_starts_after_the_time_has_expired",
       "SourceRetrievalTests.test_interrupted_attempt_keeps_locks_and_finalises_record_only",
       "SourceRetrievalTests.test_oversized_responses_stop_at_the_ceiling",
       "SourceRetrievalTests.test_partial_transfer_is_unknown_and_stops_the_host",

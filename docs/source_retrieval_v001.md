@@ -56,7 +56,7 @@ Get the implementation hash an owner scope must bind with `python -m src.researc
    - Pace globally from the last dispatch in the ledger, honouring a robots.txt `Crawl-delay`. A delay that cannot fit the wall budget stops the attempt (BUDGET) without sleeping.
    - Check the budget.
    - Journal `REQUEST_CLAIMED` and ledger `REQUEST_DISPATCHING`.
-   - Resolve DNS. Refuse the host if any answer is not a public global unicast address.
+   - Resolve DNS. Every address in the answer is validated before anything is truncated. A non-public address anywhere refuses the host. A malformed answer, or one with more than 16 addresses, refuses the request. If the request's time expired during resolution, no connection is made.
    - Connect only to the pinned first address, with the URL host for SNI and certificate checks.
    - GET with no redirects, identity encoding and no proxy or credentials.
    - Stream to an exclusive raw file within the byte and time ceilings.
@@ -76,8 +76,9 @@ Get the implementation hash an owner scope must bind with `python -m src.researc
 | 429 | RATE_LIMITED | NONE | STOPPED, end | host |
 | 404, 410 | NOT_FOUND | NONE | UNAVAILABLE, end | route |
 | 204, 206 and every other status | UNEXPECTED_RESPONSE | NONE | STOPPED, end | host |
-| DNS failure or no address | DNS_FAILED | NONE | STOPPED, end | — |
-| Non-public address | ADDRESS_REFUSED | NONE | STOPPED, end | host |
+| DNS failure, no address, a malformed answer or more than 16 addresses | DNS_FAILED | NONE | STOPPED, end | — |
+| Request time expired during DNS resolution, before connecting | DEADLINE_EXCEEDED | NONE | STOPPED, end | — |
+| A non-public address anywhere in the answer | ADDRESS_REFUSED | NONE | STOPPED, end | host |
 | Connection, TLS or read failure, or fewer bytes than declared | TRANSPORT_FAILED | PREFIX or NONE | UNKNOWN, end | host |
 
 - **Custody handoff.** Only `200` target bodies with bytes, ending COMPLETE, UNVERIFIED_LENGTH, SIZE_STOP or TIME_STOP, go into the custody handoff, with their coverage. A known partial body is never labelled COMPLETE. Error bodies are kept in `raw/` as evidence with coverage NONE.
@@ -134,8 +135,8 @@ The campaign decides whether a new attempt, with a new id and reservation, is ap
 | Limit | Enforcement |
 |---|---|
 | Request count, total and per-response bytes, scope attempt and cumulative ceilings | Strict: checked before each request; byte reads are capped |
-| Wall-clock budget before a request, `Crawl-delay` against the budget | Strict: an attempt never starts a request or sleep it cannot fit |
-| Per-request time ceiling | Soft: checked between reads; one blocking read can overrun by up to the socket timeout |
+| Wall-clock budget before a request, `Crawl-delay` against the budget | Strict: an attempt never starts a request or sleep it cannot fit, and rechecks after a pacing sleep, so an overrunning sleep never leads to a request |
+| Per-request time ceiling | Soft: it includes DNS resolution and is checked before connecting and between reads. A resolver call or one blocking read can overrun by up to its own duration or the socket timeout |
 | Global pacing interval | Strict within one records base: measured from the ledger's last dispatch. Not coordinated across separate bases or machines |
 | Searches, model calls, metered spend | Zero by construction: no such operation exists |
 

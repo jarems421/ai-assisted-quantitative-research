@@ -73,6 +73,7 @@ class FakeTransport:
 
     def resolve(self, host):
         self.resolved.append(host)
+        self.clock.mono += getattr(self, 'dns_seconds', 0)  # A slow resolver.
         value = self.dns.get(host, [PUBLIC])
         if isinstance(value, BaseException):
             raise value
@@ -706,6 +707,54 @@ class SourceRetrievalTests(unittest.TestCase):
         (stops_dir / 'new' / 'publication_stop.json').write_bytes(canonical({'status': 403, 'url': f'https://{HOST}/x'}))
         t = self.transport()
         self.assert_not_started(self.dispatch(self.request('F1'), t), 'STOP_SNAPSHOT_STALE', t)
+
+    # ---- PR #44 final edge cases ---------------------------------------------------------------------------
+    def test_final_1_every_dns_answer_is_validated_before_any_truncation(self):
+        publics = [f'93.184.216.{i}' for i in range(1, 17)]
+        cases = [('16 public then private', publics + ['10.0.0.1'], 'ADDRESS_REFUSED'),
+                 ('private hidden past 16', publics[:8] + ['127.0.0.1'] + publics[8:], 'ADDRESS_REFUSED'),
+                 ('oversized all public', publics + ['93.184.216.200'], 'DNS_FAILED'),
+                 ('non-string entry', [PUBLIC, 1234], 'DNS_FAILED'),
+                 ('overlong entry', [PUBLIC, '9' * 100], 'DNS_FAILED'),
+                 ('not a list', {'a': PUBLIC}, 'DNS_FAILED')]
+        for i, (name, answer, termination) in enumerate(cases):
+            with self.subTest(name):
+                self.base = self.root / f'records-dns-{i}'
+                self.build()
+                t = self.transport(dns={HOST: answer})
+                result = self.dispatch(self.request(), t)
+                receipt = json.loads((self.attempt() / 'receipts' / '001.json').read_bytes())
+                self.assertEqual(t.opened, [])  # Never connects after a forbidden or malformed answer.
+                self.assertEqual((result['status'], receipt['termination'], receipt['connected_address']), ('STOPPED', termination, None))
+                self.assertEqual(R.status(self.base, 'A1')['state'], 'STOPPED')
+        self.base = self.root / 'records-dns-16'
+        self.build()
+        t = self.transport(dns={HOST: publics})
+        self.assertEqual(self.dispatch(self.request(), t)['status'], 'COMPLETE')  # Sixteen public answers are accepted.
+        self.assertTrue(all(o[2] == publics[0] for o in t.opened))
+
+    def test_final_2_no_request_or_connection_starts_after_the_time_has_expired(self):
+        overshoot = Clock()
+        overshoot.sleep = lambda seconds: Clock.sleep(overshoot, seconds + 1000)  # Asked for ~2 s, slept far past the 600 s budget.
+        self.clock = overshoot
+        t = self.transport()
+        result = self.dispatch(self.request(), t)
+        self.assertEqual([o[0] for o in t.opened], [ROBOTS])
+        self.assertEqual((result['status'], result['reason'], result['not_attempted']), ('STOPPED', 'BUDGET', [URL1, URL2]))
+        self.assertEqual(result['consumption']['requests'], {'at_least': 1, 'exact': 1})
+        events = [e['type'] for e in S.Journal(self.attempt() / 'journal.jsonl').load()]
+        self.assertEqual(events.count('REQUEST_CLAIMED'), 1)
+        self.assertIn('BUDGET_EXHAUSTED', events)
+        self.assertEqual(R.status(self.base, 'A1')['state'], 'STOPPED')
+        self.base, self.clock = self.root / 'records-slow-dns', Clock()
+        self.build()
+        t = self.transport()
+        t.dns_seconds = 30  # Longer than the 10 s request timeout.
+        result = self.dispatch(self.request(), t)
+        receipt = json.loads((self.attempt() / 'receipts' / '001.json').read_bytes())
+        self.assertEqual((t.opened, receipt['termination'], receipt['connected_address']), ([], 'DEADLINE_EXCEEDED', None))
+        self.assertEqual((result['status'], result['reason'], result['stop_findings']), ('STOPPED', 'ROBOTS_DEADLINE_EXCEEDED', []))
+        self.assertEqual(R.status(self.base, 'A1')['state'], 'STOPPED')
 
     def test_robots_crawl_delay_paces_within_the_wall_budget(self):
         result = self.dispatch(self.request(), self.transport({ROBOTS: {'body': b'User-agent: *\nCrawl-delay: 5\n'}}))

@@ -25,6 +25,7 @@ from . import contracts as C, store as S, stops as T
 from .transport import ROBOTS_AGENT, HttpsTransport
 
 CHUNK = 64 * 1024
+MAX_ANSWERS = 16
 ROBOTS_MAX = 512 * 1024
 HEADERS = ('content-type', 'content-length', 'content-encoding', 'transfer-encoding', 'last-modified', 'etag', 'date', 'location')
 LIMITATIONS = ['Bytes are the representation served at retrieval time; historical publication and earlier versions are UNKNOWN.',
@@ -43,6 +44,7 @@ OUTCOMES = {'COMPLETE': (None, None, False), 'UNVERIFIED_LENGTH': ('PARTIAL', No
             'RATE_LIMITED': ('STOPPED', 'HOST', True), 'NOT_FOUND': ('UNAVAILABLE', 'ROUTE', True),
             'UNEXPECTED_RESPONSE': ('STOPPED', 'HOST', True), 'UNEXPECTED_ENCODING': ('STOPPED', 'ROUTE', True),
             'FRAMING_CONFLICT': ('STOPPED', 'HOST', True), 'DNS_FAILED': ('STOPPED', None, True),
+            'DEADLINE_EXCEEDED': ('STOPPED', None, True),
             'ADDRESS_REFUSED': ('STOPPED', 'HOST', True), 'TRANSPORT_FAILED': ('UNKNOWN', 'HOST', True)}
 CUSTODY = ('COMPLETE', 'UNVERIFIED_LENGTH', 'SIZE_STOP', 'TIME_STOP')
 INTERRUPTED = 'INTERRUPTED: finalised record-only by the owner; nothing was re-sent'
@@ -90,6 +92,8 @@ def framing(headers):
 def terminate(r):
     """Termination recomputed from a receipt's recorded facts. Only a fully framed 200 is COMPLETE."""
     stage, status = r['stage'], r['http_status']
+    if stage == 'DNS' and r['failure'] == 'DEADLINE_EXCEEDED':
+        return 'DEADLINE_EXCEEDED'
     if stage != 'RESPONSE':
         return {'DNS': 'DNS_FAILED', 'ADDRESS': 'ADDRESS_REFUSED', 'CONNECT': 'TRANSPORT_FAILED'}[stage]
     if status is None:
@@ -418,6 +422,10 @@ def retrieve(request, ctx, attempt, journal, ledger, register, transport, clock,
         T.ensure(register, core, attempt_id, clock)
         journal.append('STOP_FOUND', {'stop_id': core['stop_id'], 'reason': core['reason']})
 
+    def exhausted(requests, received, elapsed, wait):
+        journal.append('BUDGET_EXHAUSTED', {'requests': requests, 'bytes': received, 'wall_seconds': round(elapsed, 3),
+                                            'required_wait_seconds': round(wait, 3)})
+
     for role, url, host in steps(request):
         if role == 'TARGET' and not rules[host].can_fetch(ROBOTS_AGENT, url):
             journal.append('ROBOTS_DISALLOWED', {'url': url, 'host': host, 'robots_receipt_sha256': robots_sha[host]})
@@ -427,12 +435,12 @@ def retrieve(request, ctx, attempt, journal, ledger, register, transport, clock,
         wait = pause(ledger, max(float(q['minimum_interval_seconds']), float(delay or 0)), clock)
         elapsed, remaining = ticks() - start, r['total_bytes'] - used
         if index >= r['requests'] or remaining <= 0 or elapsed + wait >= r['wall_seconds']:
-            journal.append('BUDGET_EXHAUSTED', {'requests': index, 'bytes': used, 'wall_seconds': round(elapsed, 3),
-                                                'required_wait_seconds': round(wait, 3)})
-            return
+            return exhausted(index, used, elapsed, wait)
         if wait:
             sleep(wait)
-        elapsed = ticks() - start
+            elapsed = ticks() - start
+            if elapsed >= r['wall_seconds']:  # The sleep overran: never start a request once the budget has expired.
+                return exhausted(index, used, elapsed, wait)
         index += 1
         cap = min(r['per_response_bytes'], remaining, ROBOTS_MAX if role == 'ROBOTS' else r['per_response_bytes'])
         journal.append('REQUEST_CLAIMED', {'index': index, 'role': role, 'url': url, 'host': host})
@@ -463,21 +471,27 @@ def fetch(transport, attempt, attempt_id, index, role, url, host, cap, deadline,
         r.update(failure=failure, finished_at=clock())
         return classify(r)
 
+    began = ticks()  # The request deadline includes DNS resolution.
     try:
-        addresses = transport.resolve(host)
+        answers = transport.resolve(host)
     except Exception as error:  # Exception text is never recorded, only its type.
         return done(type(error).__name__)
-    addresses = [str(a)[:64] for a in addresses][:16] if isinstance(addresses, (list, tuple)) else []
-    if not addresses:
+    if not isinstance(answers, (list, tuple)) or not all(isinstance(a, str) and 0 < len(a) <= 64 for a in answers):
+        return done('MALFORMED_DNS_ANSWER')
+    if not answers:
         return done('NO_ADDRESS')
-    r['resolved_addresses'] = addresses
-    if not all(public(a) for a in addresses):  # Any non-public answer refuses the host (rebinding defence).
-        r['stage'] = 'ADDRESS'
+    # Every answer is validated before anything is truncated: a forbidden one anywhere refuses the host.
+    forbidden = [a for a in answers if not public(a)]
+    if forbidden:
+        r['stage'], r['resolved_addresses'] = 'ADDRESS', (forbidden[:1] + [a for a in answers if a != forbidden[0]])[:MAX_ANSWERS]
         return done('NON_PUBLIC_ADDRESS')
-    r['stage'], r['connected_address'] = 'CONNECT', addresses[0]
-    began = ticks()
+    if len(answers) > MAX_ANSWERS:
+        return done('OVERSIZED_DNS_ANSWER')
+    if ticks() - began >= deadline:  # Slow resolution: never connect once the request's time has expired.
+        return done('DEADLINE_EXCEEDED')
+    r['stage'], r['resolved_addresses'], r['connected_address'] = 'CONNECT', list(answers), answers[0]
     try:
-        response = transport.open(url, host, addresses[0], max(1, math.ceil(deadline)))
+        response = transport.open(url, host, answers[0], max(1, math.ceil(deadline - (ticks() - began))))
     except Exception as error:
         return done(type(error).__name__)
     try:
