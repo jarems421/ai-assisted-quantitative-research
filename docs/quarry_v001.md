@@ -53,6 +53,9 @@ claim for human inspection. There is no silent PDF parser, OCR, model or measure
 extraction. Individual originals are limited to 16 MiB; Jev text to 4 MiB; existing
 32-record/256-KiB Jev limits also apply. Nothing is truncated.
 
+System-retrieved originals use `QUARRY_SUPPLY_V002` through Source Custody V001
+(`docs/source_custody_v001.md`); V001 supplies are validated unchanged.
+
 `registry.json` uses `QUARRY_ROUTE_REGISTRY_V001`; `supply.json` uses
 `QUARRY_SUPPLY_V001`. All fields in `quarry_v1/contracts.py` are required; put UNKNOWN
 in an unknown textual claim. Each proposed route records stable ID/version, exact
