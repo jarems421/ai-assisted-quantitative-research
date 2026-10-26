@@ -13,8 +13,23 @@ BANNER = 'SUPPLIED COPY / INSPECTION ONLY — AUTHENTICITY, M AND READINESS NOT 
 
 
 def import_file(registry_path, supply_path, original_path, out):
-    registry = K.registry(io.json_file(registry_path))
     supplied = K.supply(io.json_file(supply_path))
+    K.need(supplied['schema'] != K.SUPPLY_V002, 'QUARRY_SUPPLY_V002 enters Quarry only through source custody '
+           '(python -m src.research.source_custody_v1 import), which verifies the native retrieval records')
+    return _import(registry_path, supplied, original_path, out, {})
+
+
+def import_retrieved(registry_path, supply_path, original_path, out, retained):
+    """V002 only, called by the source custody bridge after Source Retrieval's own verification."""
+    supplied = K.supply(io.json_file(supply_path))
+    K.need(supplied['schema'] == K.SUPPLY_V002, 'import_retrieved accepts only QUARRY_SUPPLY_V002')
+    raw = io.read(original_path)
+    K.retained(supplied, retained, io.sha(raw), len(raw))
+    return _import(registry_path, supplied, original_path, out, retained)
+
+
+def _import(registry_path, supplied, original_path, out, retained):
+    registry = K.registry(io.json_file(registry_path))
     route = next((r for r in registry['routes'] if r['id'] == supplied['route_id']), None)
     K.need(route is not None and route['version'] == supplied['route_version'], 'wrong source route/version')
     K.binding(route, supplied)
@@ -36,6 +51,9 @@ def import_file(registry_path, supply_path, original_path, out):
             io.write(root / 'original.bin', raw, raw=True)
             names.append('original.bin')
             original_hash, size = io.sha(raw), len(raw)
+        for name in sorted(retained):
+            io.write(root / name, retained[name], raw=True)
+            names.append(name)
         flags = identification(route, supplied, original_hash)
         receipt = {'schema': 'QUARRY_RECEIPT_V001', 'status': 'UNAVAILABLE' if original_path is None else 'RETAINED_COPY',
                    'original_sha256': original_hash, 'bytes': size, 'identity_flags': flags,
@@ -73,9 +91,12 @@ def load(root):
     K.binding(route, supplied)
     receipt = io.json_file(root / 'receipt.json')
     original_hash = io.sha(io.read(root / 'original.bin')) if 'original.bin' in manifest['files'] else None
-    expected_names = {'claim.json', 'registry.json', 'supply.json', 'receipt.json'} | ({'original.bin'} if original_hash else set())
+    retained = set(K.RETAINED) if supplied['schema'] == K.SUPPLY_V002 else set()
+    expected_names = {'claim.json', 'registry.json', 'supply.json', 'receipt.json'} | ({'original.bin'} if original_hash else set()) | retained
     K.need(set(manifest['files']) == expected_names, 'incomplete or unexpected package files')
     K.need((supplied['coverage'] == 'UNAVAILABLE') == (original_hash is None), 'original presence mismatch')
+    if retained:
+        K.retained(supplied, {n: io.read(root / n) for n in K.RETAINED}, original_hash, len(io.read(root / 'original.bin')))
     K.need(receipt == {'schema': 'QUARRY_RECEIPT_V001', 'status': 'UNAVAILABLE' if original_hash is None else 'RETAINED_COPY',
                        'original_sha256': original_hash, 'bytes': len(io.read(root / 'original.bin')) if original_hash else 0,
                        'identity_flags': identification(route, supplied, original_hash), 'authenticity': 'UNKNOWN',

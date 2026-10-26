@@ -16,6 +16,8 @@ from src.research.source_v1 import contracts as C, retrieve as R, store as S
 
 CLAIMS = 'QUARRY_RETRIEVAL_CLAIMS_V001'
 MARKER = 'SOURCE_CUSTODY_CLAIM_V001'
+COMPLETION = 'SOURCE_CUSTODY_COMPLETION_V001'
+MARKER_FIELDS = {'schema', 'receipt_sha256', 'attempt_id', 'url', 'supply_sha256', 'claims_sha256', 'package', 'claimed_at', 'authorises'}
 STATEMENT = 'I inspected the retained bytes of this receipt. These are my claims about them, not verified facts.'
 CLAIMS_SCHEMA = obj({
     'schema': {'const': CLAIMS}, 'attested_by': TEXT, 'attested_at': TEXT,
@@ -74,7 +76,10 @@ def preflight(base, attempt_id, url):
     need(len(routes) == 1 and routes[0]['id'] == handoff['quarry_route_id'], 'ROUTE_MISMATCH: no single approved Quarry route for this URL')
     body = S.read(attempt / receipt['body_path'])
     need(S.sha(body) == receipt['body_sha256'] and len(body) == receipt['bytes_received'], 'BODY_MISMATCH: retained body differs from its receipt')
-    return {'attempt_id': attempt_id, 'url': url, 'result_sha256': S.sha(S.read(attempt / 'result.json')),
+    result_raw = S.read(attempt / 'result.json')
+    receipt_raw = S.read(attempt / 'receipts' / f"{int(receipt['request_index']):03d}.json")
+    need(S.sha(receipt_raw) == handoff['receipt_sha256'], 'RECEIPT_MISMATCH: receipt bytes differ from the handoff')
+    return {'attempt_id': attempt_id, 'url': url, 'result_sha256': S.sha(result_raw), 'result_raw': result_raw, 'receipt_raw': receipt_raw,
             'request_sha256': result['request_sha256'], 'receipt_sha256': handoff['receipt_sha256'], 'receipt': receipt,
             'route': routes[0], 'registry_raw': raws['quarry_registry'], 'body': body}
 
@@ -86,6 +91,7 @@ def fingerprint(ctx):
 
 def claims(path, ctx):
     raw, value = S.load(path, 'retrieval claims')
+    ctx['claims_raw'] = raw
     try:
         validate(CLAIMS_SCHEMA, value)
     except ValueError as error:
@@ -126,10 +132,12 @@ def import_receipt(base, attempt_id, url, claims_path, out, clock=S.now):
     need(not target.exists(), 'OUTPUT_EXISTS: custody output is create-only')
     marker = custody_root(base) / 'receipts' / f"{ctx['receipt_sha256']}.json"
     if marker.exists():
-        prior = C.parse(S.read(marker), 'custody claim')
-        same = prior.get('supply_sha256') == digest(value)
+        prior = status(base, ctx['receipt_sha256'])
+        need(prior['state'] == 'CUSTODY_COMPLETE', f"CUSTODY_INCOMPLETE: a custody claim for this receipt is {prior['state']}; "
+             'reconcile it by hand. It is never retried, replaced or removed by software')
+        same = prior['custody_claim']['supply_sha256'] == digest(value)
         need(False, ('REUSED_CUSTODY: this receipt is already in custody at ' if same else
-                     'INCONSISTENT_DUPLICATE: this receipt is already in custody with a different supply at ') + str(prior.get('package')))
+                     'INCONSISTENT_DUPLICATE: this receipt is already in custody with a different supply at ') + prior['custody_claim']['package'])
     with tempfile.TemporaryDirectory(prefix='source-custody-') as tmp:
         stage = Path(tmp)
         QIO.write(stage / 'registry.json', ctx['registry_raw'], raw=True)
@@ -137,23 +145,52 @@ def import_receipt(base, attempt_id, url, claims_path, out, clock=S.now):
         QIO.write(stage / 'original.bin', ctx['body'], raw=True)  # The verified bytes, not a re-read of the source file.
         need(fingerprint(preflight(base, attempt_id, url)) == fingerprint(ctx),
              'SOURCE_CHANGED_AFTER_PREFLIGHT: source records changed while preparing custody; nothing was imported')
-        S.write_new(marker, {'schema': MARKER, 'receipt_sha256': ctx['receipt_sha256'], 'attempt_id': attempt_id, 'url': url,
-                             'supply_sha256': digest(value), 'claims_sha256': claims_sha, 'package': str(target),
-                             'claimed_at': clock(), 'authorises': []})
-        receipt = E.import_file(stage / 'registry.json', stage / 'supply.json', stage / 'original.bin', target)
+        marker_sha = S.write_new(marker, {'schema': MARKER, 'receipt_sha256': ctx['receipt_sha256'], 'attempt_id': attempt_id, 'url': url,
+                                          'supply_sha256': digest(value), 'claims_sha256': claims_sha, 'package': str(target),
+                                          'claimed_at': clock(), 'authorises': []})
+        retained = dict(zip(K.RETAINED, (ctx['receipt_raw'], ctx['result_raw'], ctx['claims_raw'])))
+        receipt = E.import_retrieved(stage / 'registry.json', stage / 'supply.json', stage / 'original.bin', target, retained)
+    # Written only after the package is sealed: binds the exact claim bytes and the package manifest.
+    S.write_new(completion_path(base, ctx['receipt_sha256']), {
+        'schema': COMPLETION, 'receipt_sha256': ctx['receipt_sha256'], 'custody_claim_sha256': marker_sha,
+        'package_manifest_sha256': digest(E.load(target)['manifest']), 'completed_at': clock(), 'authorises': []})
     return {'package': str(target), 'quarry_receipt': receipt, 'supply_sha256': digest(value), 'custody_claim': str(marker),
             'coverage': value['coverage'], 'external_requests_started': 0, 'authorises': []}
 
 
+def completion_path(base, receipt_sha256):
+    return custody_root(base) / 'receipts' / f'{receipt_sha256}.completed.json'
+
+
 def status(base, receipt_sha256):
-    """Read-only: the custody claim for a receipt, and whether its package completed and still verifies."""
+    """Read-only. CUSTODY_COMPLETE only when the claim, its completion record and the sealed package all agree.
+
+    Otherwise CLAIM_WITHOUT_PACKAGE, PACKAGE_INCOMPLETE or COMPLETION_MISSING (an interrupted import), or
+    INCONSISTENT. Nothing is removed, repaired or retried.
+    """
     marker = custody_root(base) / 'receipts' / f'{receipt_sha256}.json'
     need(marker.is_file(), 'no custody claim for this receipt')
-    claim = C.parse(S.read(marker), 'custody claim')
-    package = Path(claim['package'])
+    raw = S.read(marker)
+    claim = C.parse(raw, 'custody claim')
+    report = {'custody_claim': claim, 'state': 'INCONSISTENT', 'consistent': False, 'problems': [], 'authorises': []}
     try:
-        state = E.status(package)
-        consistent = state.get('status') != 'PARTIAL_OR_INTERRUPTED' and digest(E.load(package)['supply']) == claim['supply_sha256']
-    except (OSError, ValueError) as error:
-        state, consistent = {'status': 'MISSING_OR_INCONSISTENT', 'fault_type': type(error).__name__}, False
-    return {'custody_claim': claim, 'package_status': state, 'consistent': consistent, 'authorises': []}
+        need(isinstance(claim, dict) and set(claim) == MARKER_FIELDS and claim['schema'] == MARKER and claim['authorises'] == []
+             and claim['receipt_sha256'] == receipt_sha256, 'custody claim fields changed')
+        package, done = Path(claim['package']), completion_path(base, receipt_sha256)
+        if not done.exists():
+            report['state'] = ('CLAIM_WITHOUT_PACKAGE' if not package.exists() else
+                               'PACKAGE_INCOMPLETE' if E.status(package)['status'] == 'PARTIAL_OR_INTERRUPTED' else 'COMPLETION_MISSING')
+            return report
+        completion = C.parse(S.read(done), 'custody completion')
+        loaded = E.load(package)
+        r = loaded['supply']['system_retrieval']
+        need(completion == {**completion, 'schema': COMPLETION, 'receipt_sha256': receipt_sha256, 'custody_claim_sha256': S.sha(raw),
+                            'package_manifest_sha256': digest(loaded['manifest']), 'authorises': []},
+             'completion record differs from the custody claim or package')
+        need((r['attempt_id'], r['receipt_sha256'], r['requested_url'], r['claims_sha256'], digest(loaded['supply']))
+             == (claim['attempt_id'], receipt_sha256, claim['url'], claim['claims_sha256'], claim['supply_sha256']),
+             'package differs from the custody claim')
+        report.update(state='CUSTODY_COMPLETE', consistent=True, package_status=E.status(package))
+    except (OSError, ValueError, KeyError, TypeError, StopIteration) as error:
+        report['problems'].append(f'{type(error).__name__}: {error}')
+    return report

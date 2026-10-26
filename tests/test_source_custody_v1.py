@@ -194,12 +194,13 @@ class CustodyTests(unittest.TestCase):
         registry = json.loads(ctx['registry_raw'])
         for name, supply, routes, message in (
                 ('version', {**value, 'route_version': '2'}, registry, 'route/version'),
-                ('route', {**value, 'route_id': 'R1'}, registry, 'route locator'),
+                ('route', {**value, 'route_id': 'R1'}, registry, 'route locator|retained receipt, result or claims'),
                 ('url', value, {**registry, 'routes': [{**registry['routes'][0], 'locator': SR.URL2}, registry['routes'][1]]}, 'route locator')):
             with self.subTest(name):
+                retained = dict(zip(K.RETAINED, (ctx['receipt_raw'], ctx['result_raw'], Path(claims).read_bytes())))
                 with self.assertRaisesRegex(ValueError, message):
-                    E.import_file(self.put('r.json', routes)['path'], self.put('s.json', supply)['path'],
-                                  self.put('o.bin', TEXT)['path'], self.root / f'direct-{name}')
+                    E.import_retrieved(self.put('r.json', routes)['path'], self.put('s.json', supply)['path'],
+                                       self.put('o.bin', TEXT)['path'], self.root / f'direct-{name}', retained)
 
     def test_custody_output_is_create_only_and_one_package_per_receipt(self):
         self.retrieve()
@@ -244,6 +245,103 @@ class CustodyTests(unittest.TestCase):
                              ('V002 needs a binding', {'schema': 'QUARRY_SUPPLY_V002', 'fixture': 'SYSTEM_RETRIEVED'})):
             with self.subTest(name), self.assertRaises(ValueError):
                 K.supply({**supplied, **change})
+
+    # ---- PR #46 review reproductions -----------------------------------------------------------------------
+    def forged_supply(self, body):
+        """A self-consistent V002 supply whose receipt, result and claims hashes name no native record."""
+        retrieval = {'source_component': 'SOURCE_RETRIEVAL_V001', 'attempt_id': 'FORGED', 'request_sha256': 'a' * 64,
+                     'result_sha256': 'b' * 64, 'receipt_sha256': 'c' * 64, 'requested_url': SR.URL1, 'http_status': 200,
+                     'termination': 'COMPLETE', 'transfer_coverage': 'COMPLETE', 'body_sha256': S.sha(body), 'body_bytes': len(body),
+                     'started_at': '2026-10-26T12:00:00+00:00', 'finished_at': '2026-10-26T12:00:01+00:00',
+                     'implementation_sha256': 'd' * 64, 'claims_sha256': 'e' * 64, 'publication_authenticity': 'UNKNOWN',
+                     'dataset_completeness': 'UNKNOWN', 'scientific_meaning': 'NOT_ESTABLISHED'}
+        return {'schema': K.SUPPLY_V002, 'route_id': 'R0', 'route_version': '1', 'fixture': 'SYSTEM_RETRIEVED',
+                'data_classification': 'SYNTHETIC', 'title': 'Forged', 'source_identity_claim': 'doc-0', 'asset_claim': 'F1',
+                'source_version_claim': 'x', 'retrieved_at_claim': retrieval['finished_at'],
+                'retrieval_method_claim': K.RETRIEVAL_METHOD + retrieval['receipt_sha256'], 'historical_availability_claim': 'UNKNOWN',
+                'expected_original_sha256': S.sha(body), 'coverage': 'COMPLETE_CLAIMED',
+                'limitations': K.transfer_limitations(retrieval), 'missing_fields': [], 'system_retrieval': retrieval}
+
+    def test_review_1_direct_quarry_import_cannot_claim_system_retrieved_custody(self):
+        registry = self.put('forged-registry.json', json.loads(Path(self.registry['path']).read_bytes()))['path']
+        supply = self.put('forged-supply.json', self.forged_supply(TEXT))['path']
+        original = self.put('forged.txt', TEXT)['path']
+        with self.assertRaisesRegex(ValueError, 'source custody'):
+            E.import_file(registry, supply, original, self.root / 'forged-package')
+        out = []
+        with patch('builtins.print', side_effect=lambda text: out.append(text)):
+            from src.research.quarry_v1 import __main__ as QCLI
+            self.assertNotEqual(QCLI.main(['import-file', registry, supply, '--file', original, '--out', str(self.root / 'forged-cli')]), 0)
+        self.assertFalse((self.root / 'forged-package').exists() or (self.root / 'forged-cli').exists())
+        invented = {name: b'{}' for name in K.RETAINED}  # Made-up native records do not match the supply binding.
+        with self.assertRaisesRegex(ValueError, 'retained native records differ'):
+            E.import_retrieved(registry, supply, original, self.root / 'forged-direct', invented)
+        self.assertFalse((self.root / 'forged-direct').exists())
+        # A legitimate package keeps its retained native records and stays portable.
+        self.retrieve()
+        package = Path(self.custody()['package'])
+        moved = self.root / 'moved-package'
+        moved.mkdir()
+        for p in package.iterdir():
+            (moved / p.name).write_bytes(p.read_bytes())
+        self.assertEqual(E.load(moved)['supply']['fixture'], 'SYSTEM_RETRIEVED')
+        self.export(moved)
+        E.validate_export(self.root / 'export')
+
+    def test_review_2_custody_status_detects_marker_changes_and_incomplete_imports(self):
+        self.retrieve()
+        out = self.custody()
+        marker = Path(out['custody_claim'])
+        receipt = marker.stem
+        self.assertEqual(X.status(self.base, receipt)['state'], 'CUSTODY_COMPLETE')
+        original = marker.read_bytes()
+        for field, value in (('attempt_id', 'A9'), ('receipt_sha256', 'f' * 64), ('url', SR.URL2), ('claims_sha256', 'e' * 64),
+                             ('supply_sha256', 'd' * 64), ('package', str(self.root / 'elsewhere')), ('schema', 'OTHER')):
+            with self.subTest(field):
+                changed = json.loads(original)
+                changed[field] = value
+                marker.write_bytes(canonical(changed) + b'\n')
+                state = X.status(self.base, receipt)
+                self.assertEqual((state['state'], state['consistent']), ('INCONSISTENT', False))
+        marker.write_bytes(original)
+        self.assertEqual(X.status(self.base, receipt)['state'], 'CUSTODY_COMPLETE')
+        # Interruption after the create-only claim: before, and during, package creation.
+        for i, (target, state) in enumerate((('src.research.quarry_v1.io.new_directory', 'CLAIM_WITHOUT_PACKAGE'),
+                                             ('src.research.quarry_v1.io.seal', 'PACKAGE_INCOMPLETE'))):
+            with self.subTest(state):
+                self.base = self.root / f'records-int-{i}'
+                self.build()
+                self.retrieve()
+                claims = self.claims()
+                with patch(target, side_effect=OSError('interrupted')), self.assertRaises(OSError):
+                    self.custody(name=f'int-{i}', claims=claims)
+                receipt = X.preflight(self.base, 'A1', SR.URL1)['receipt_sha256']
+                report = X.status(self.base, receipt)
+                self.assertEqual((report['state'], report['consistent']), (state, False))
+                with self.assertRaisesRegex(ValueError, 'CUSTODY_INCOMPLETE'):  # Never retried or replaced.
+                    self.custody(name=f'int-{i}-again', claims=claims)
+                self.assertTrue((X.custody_root(self.base) / 'receipts' / f'{receipt}.json').exists())
+
+    def test_review_3_exact_claims_record_survives_in_package_and_export(self):
+        self.retrieve()
+        claims = self.claims()
+        out = self.custody(claims=claims)
+        retained = Path(out['package']) / 'retrieval-claims.json'
+        self.assertEqual(retained.read_bytes(), Path(claims).read_bytes())
+        self.export(out['package'])
+        self.assertEqual((self.root / 'export' / 'source' / 'retrieval-claims.json').read_bytes(), Path(claims).read_bytes())
+        E.validate_export(self.root / 'export')
+        package = E.load(out['package'])
+        self.assertEqual(package['supply']['system_retrieval']['claims_sha256'], S.sha(retained.read_bytes()))
+        # Edited claims, even with a re-sealed manifest, no longer match the supply's binding.
+        root = Path(out['package'])
+        edited = json.loads(retained.read_bytes()); edited['asset_claim'] = 'F2'
+        retained.write_bytes(canonical(edited))
+        manifest = json.loads((root / 'manifest.json').read_bytes())
+        manifest['files']['retrieval-claims.json'] = S.sha(retained.read_bytes())
+        (root / 'manifest.json').write_bytes(canonical(manifest))
+        with self.assertRaisesRegex(ValueError, 'retained native records differ'):
+            E.load(root)
 
     def test_cli_reports_preflight_and_refusals_without_network(self):
         self.retrieve()

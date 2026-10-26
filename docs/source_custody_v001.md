@@ -27,7 +27,7 @@ Only `200` target bodies ending COMPLETE, UNVERIFIED_LENGTH, SIZE_STOP or TIME_S
 
 ### Quarry V001
 
-- `import-file registry supply --file original --out`: creates a create-only package (`claim.json`, `registry.json`, `supply.json`, `original.bin`, `receipt.json`, sealed `manifest.json`). It validates the supply with `contracts.supply`, flags identity mismatches and hashes the original.
+- `import-file registry supply --file original --out`: creates a create-only package (`claim.json`, `registry.json`, `supply.json`, `original.bin`, `receipt.json`, sealed `manifest.json`). V002 supplies are refused here (see below). It validates the supply with `contracts.supply`, flags identity mismatches and hashes the original.
 - `status`, `export package inspection subject [--extracted-file] --out`, `validate-export`: export requires no identity flags, reproduces exact UTF-8 excerpt ranges (from the original, or from an explicitly supplied extraction for binary originals) and emits the existing Jev `JEV_NAVIGATION_INPUT_V001`.
 
 ## `QUARRY_SUPPLY_V002`
@@ -48,6 +48,14 @@ V002 adds exactly one supply kind, `SYSTEM_RETRIEVED`. Every V001 field keeps it
 
 - **V001 is unchanged.** Records without `"schema": "QUARRY_SUPPLY_V002"` are validated by the unchanged V001 schema, so V001 can never claim `SYSTEM_RETRIEVED` or carry `system_retrieval`. OWNER_SUPPLIED and SYNTHETIC records are never reinterpreted.
 - **Route binding.** On import and on every load, a V002 supply's route locator must equal `system_retrieval.requested_url` (`contracts.binding`). Route id and version are checked as for V001.
+- **Only the bridge creates V002 packages.** Quarry's ordinary `import_file` and `import-file` command refuse a V002 supply. A V002 package is created only through `evidence.import_retrieved`, which the custody bridge calls after Source Retrieval's own verification.
+- **Retained native records.** A V002 package keeps the exact bytes of three native records: `retrieval-receipt.json` (the Source Retrieval receipt), `retrieval-result.json` (the attempt result) and `retrieval-claims.json` (the human claims record). They are sealed in the package manifest and copied into every export under `source/`. On import and on every load, Quarry checks `contracts.retained`:
+  - the three records' hashes match the supply binding;
+  - the receipt is a 200 TARGET receipt for that URL, termination, coverage, times and implementation, with the retained original's hash and size;
+  - the result is a finished, non-interrupted attempt that lists the receipt and the exact custody-handoff entry, including the route id;
+  - the claims record names the same attempt, receipt and body, and its claim fields match the supply.
+
+  A later reviewer can therefore inspect the exact claims record and the receipt evidence without the original Source Retrieval directory. These consistency checks are not a re-run of the journal verification, which needs the attempt directory, and a named record still does not authenticate its author.
 - **Package files are unchanged.** The package receipt (`QUARRY_RECEIPT_V001`), export, handoff (`QUARRY_HANDOFF_V001`), Jev input and validation are the same code paths. V002 provenance travels in `supply.json` and the export's `provenance.json`, and the transfer facts reach Jev through `limitations`. Jev's `availability` stays `SUPPLIED_COPY`, because the Jev contract has no retrieval value and was not changed.
 - **Data classification.** `data_classification` comes from the human claims. V002 does not tie SYNTHETIC to the fixture kind, because receipts do not record whether a real or injected transport produced them (see open questions).
 
@@ -85,9 +93,19 @@ python -m src.research.jev_navigation_v1 prepare .research/quarry-v1-<handoff>/i
 4. **Stage and re-check:** the verified bytes (not a re-read of the source file), the registry copy and the supply are staged in a temporary directory, and the preflight is run again. Any change since the first preflight refuses with nothing imported.
 5. **Claim and import:**
    - A create-only custody claim `<base>/source-custody-v1/receipts/<receipt>.json` is written.
-   - Quarry's unchanged `import_file` then creates the package; output directories are create-only.
-   - A receipt enters custody at most once: reusing it reports `REUSED_CUSTODY`, and reusing it with different claims `INCONSISTENT_DUPLICATE`.
-   - A crash after the claim leaves Quarry's explicit PARTIAL_OR_INTERRUPTED package and the claim as evidence; `status` reports it as inconsistent.
+   - Quarry's `import_retrieved` then creates the package with the retained native records; output directories are create-only.
+   - Only after the package is sealed, a create-only completion record `<receipt>.completed.json` binds the exact claim bytes and the package manifest.
+   - A receipt enters custody at most once: reusing it reports `REUSED_CUSTODY`, and reusing it with different claims `INCONSISTENT_DUPLICATE`. A claim without a confirmed package refuses any further import with `CUSTODY_INCOMPLETE`; it is never retried, replaced or removed by software.
+
+`status <receipt>` is read-only:
+
+| State | Meaning |
+|---|---|
+| `CUSTODY_COMPLETE` | The claim, its completion record and the sealed package all agree: attempt, receipt, URL, claims hash, supply hash and package |
+| `CLAIM_WITHOUT_PACKAGE` | Interrupted after the claim, before Quarry created the package directory |
+| `PACKAGE_INCOMPLETE` | Interrupted during package creation (Quarry PARTIAL_OR_INTERRUPTED) |
+| `COMPLETION_MISSING` | A package exists but no completion record confirms it |
+| `INCONSISTENT` | Any claim field, the completion record or the package differs |
 
 | Refusal | When |
 |---|---|
@@ -99,7 +117,8 @@ python -m src.research.jev_navigation_v1 prepare .research/quarry-v1-<handoff>/i
 | `SCOPE_MISMATCH`, `ROUTE_MISMATCH` | Input copies differ from the owner scope, or the URL does not map to one approved route |
 | `CLAIMS_INVALID`, `CLAIMS_MISMATCH` | Malformed claims, an assistant or placeholder attester, or claims for another attempt, receipt or body |
 | `SOURCE_CHANGED_AFTER_PREFLIGHT` | Source records changed between the two preflights |
-| `OUTPUT_EXISTS`, `REUSED_CUSTODY`, `INCONSISTENT_DUPLICATE` | Create-only output and one custody per receipt |
+| `OUTPUT_EXISTS`, `REUSED_CUSTODY`, `INCONSISTENT_DUPLICATE`, `CUSTODY_INCOMPLETE` | Create-only output, one custody per receipt, no retry of an unconfirmed claim |
+| Direct `quarry_v1 import-file` of a V002 supply | Refused: V002 provenance is established only through the bridge |
 
 ## Jev handoff, proved on synthetic fixtures
 

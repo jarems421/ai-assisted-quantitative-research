@@ -89,6 +89,46 @@ def supply_v2(value):
     return value
 
 
+# The exact native records a SYSTEM_RETRIEVED package retains, so a later reviewer can check its provenance
+# without the original Source Retrieval directory. Quarry checks their consistency; only the custody bridge,
+# which runs Source Retrieval's own verification, creates them.
+RETAINED = ('retrieval-receipt.json', 'retrieval-result.json', 'retrieval-claims.json')
+CLAIM_FIELDS = ('title', 'source_identity_claim', 'asset_claim', 'source_version_claim', 'historical_availability_claim',
+                'data_classification', 'missing_fields')
+
+
+def retained(value, files, original_sha256, size):
+    """Check retained receipt, result and claims bytes against a V002 supply and the retained original."""
+    import hashlib
+    from src.research.jev_navigation_v1.contracts import loads
+    r = value['system_retrieval']
+    need(set(files) == set(RETAINED), 'SYSTEM_RETRIEVED custody needs its retained receipt, result and claims records')
+    sha = {name: hashlib.sha256(files[name]).hexdigest() for name in RETAINED}
+    need((sha['retrieval-receipt.json'], sha['retrieval-result.json'], sha['retrieval-claims.json'])
+         == (r['receipt_sha256'], r['result_sha256'], r['claims_sha256']), 'retained native records differ from the supply binding')
+    try:
+        receipt, result, claims = (loads(files[name]) for name in RETAINED)
+        handoff = {'receipt_sha256': r['receipt_sha256'], 'requested_url': r['requested_url'], 'quarry_route_id': value['route_id'],
+                   'body_path': receipt['body_path'], 'body_sha256': r['body_sha256'], 'bytes': r['body_bytes'], 'coverage': r['transfer_coverage']}
+        ok = (receipt['schema'] == 'SOURCE_RETRIEVAL_RECEIPT_V001' and receipt['role'] == 'TARGET'
+              and (receipt['attempt_id'], receipt['requested_url'], receipt['http_status'], receipt['termination'], receipt['coverage'],
+                   receipt['body_sha256'], receipt['bytes_received'], receipt['started_at'], receipt['finished_at'], receipt['implementation_sha256'])
+              == (r['attempt_id'], r['requested_url'], 200, r['termination'], r['transfer_coverage'], original_sha256, size,
+                  r['started_at'], r['finished_at'], r['implementation_sha256'])
+              and r['body_sha256'] == original_sha256 and r['body_bytes'] == size
+              and result['schema'] == 'SOURCE_ACTIVITY_RESULT_V001' and result['attempt_id'] == r['attempt_id']
+              and result['request_sha256'] == r['request_sha256'] and result['interrupted'] is False
+              and result['status'] in ('COMPLETE', 'PARTIAL', 'STOPPED', 'UNAVAILABLE')
+              and r['receipt_sha256'] in result['receipts'] and handoff in result['custody_handoff']
+              and claims['schema'] == 'QUARRY_RETRIEVAL_CLAIMS_V001' and isinstance(claims['attested_by'], str)
+              and (claims['attempt_id'], claims['receipt_sha256'], claims['body_sha256']) == (r['attempt_id'], r['receipt_sha256'], original_sha256)
+              and all(claims[k] == value[k] for k in CLAIM_FIELDS)
+              and all(line in value['limitations'] for line in claims['limitations']))
+    except (KeyError, TypeError, ValueError):
+        ok = False
+    need(ok, 'retained receipt, result or claims do not support this SYSTEM_RETRIEVED supply')
+
+
 def binding(route, value):
     """A SYSTEM_RETRIEVED supply belongs only to the route whose exact locator was retrieved."""
     if value['schema'] == SUPPLY_V002:
