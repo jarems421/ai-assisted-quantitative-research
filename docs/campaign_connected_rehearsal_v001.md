@@ -5,12 +5,12 @@ scientific gate, scheduler, acquisition permission or source-discovery request s
 The existing `campaign_evidence_v1 rehearse` and its foundation-only outcome remain
 unchanged. This is a distinct rehearsal with actual native custody completion.
 
-**Integration dependency:** Source Custody PR #46 is required. Development was checked
-provisionally against `92435f16bf4060eaff56c6cb5592eb4523c46948`; it was draft and
-unmerged at that inspection. Provisional checks are not final combined-main validation.
-Missing custody refuses the command before creating a rehearsal. The connected test
-class has an explicit dependency skip until that implementation is present; a final
-combined-main result requires every connected test to run, without that skip.
+**Integration base:** Source Custody PR #46 merged into main at
+`2329502099621ca3722f0dc9f1426149d1e4ba89`. This branch incorporates that actual merge.
+Native custody is mandatory: missing custody refuses the command before creating a
+rehearsal and causes the connected tests to fail. There is no dependency-based test
+skip, and the restricted runner's no-skip rule is unchanged. Earlier provisional
+rehearsals remain separate historical artifacts; they are not silently upgraded.
 
 ## One command, one fictional original
 
@@ -110,8 +110,9 @@ V002 retain their old implementation bindings and are never silently upgraded.
 
 Before the first real owner-authorised investigation:
 
-1. Merge/freeze the native custody dependency and validate this integration against
-   actual combined main, including Windows/Linux CI at the exact PR head.
+1. Review and merge this integration after validation against the actual merged
+   custody implementation, including Windows/Linux CI at the exact PR head. Adopt
+   the reviewed implementation bindings separately from any research authority.
 2. Select the exact real card/version and decisive question. Obtain the owner's real
    bounded exact-URL scope, fresh implementation binding, component reservation and
    human-attested historical stop reconciliation. The synthetic fixtures supply none.

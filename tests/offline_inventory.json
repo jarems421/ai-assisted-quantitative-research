@@ -2124,7 +2124,7 @@
   "tests/test_campaign_connected_v1.py": {
     "baseline_ci": false,
     "runner": "additional",
-    "reason": "Connected campaign rehearsal on fictional standalone archives only: native Source Retrieval with injected in-memory transport, native custody completion, Quarry export, deterministic Jev and existing operator/Discovery blockers. Denies real network/process/transport; no real approval, acquisition, provider or research. Explicit dependency skip until native custody is integrated; final combined-main checks require no skips. Covers exact lineage, missing completion, changed packages, wrong export, incomplete retrieval, code drift, no replay and READY/branch gates.",
+    "reason": "Connected campaign rehearsal on fictional standalone archives only: native Source Retrieval with injected in-memory transport, native custody completion, Quarry export, deterministic Jev and existing operator/Discovery blockers. Denies real network/process/transport; no real approval, acquisition, provider or research. Native custody is mandatory; no dependency skip or relaxation of the restricted runner. Covers exact lineage, missing completion, changed packages, wrong export, incomplete retrieval, code drift, no replay and READY/branch gates.",
     "declared_tests": [
       "ConnectedTests.test_another_valid_export_cannot_replace_native_operator_input",
       "ConnectedTests.test_changed_code_and_native_reference_require_reconciliation",

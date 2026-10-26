@@ -1,6 +1,5 @@
 """Connected fictional chain only. Native components, fake transport and denied external effects."""
 from contextlib import contextmanager, redirect_stdout
-import importlib.util
 import io
 import json
 from pathlib import Path
@@ -38,9 +37,6 @@ def altered(path, content):
         path.write_bytes(original)
 
 
-# Before PR #46 merges, main has no custody implementation. This is a visible
-# dependency skip, never end-to-end evidence. Combined-main CI must run every test.
-@unittest.skipUnless(importlib.util.find_spec('src.research.source_custody_v1'), 'native custody PR #46 not integrated')
 class ConnectedTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
