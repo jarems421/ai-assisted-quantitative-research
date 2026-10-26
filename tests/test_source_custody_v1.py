@@ -195,7 +195,7 @@ class CustodyTests(unittest.TestCase):
         for name, supply, routes, message in (
                 ('version', {**value, 'route_version': '2'}, registry, 'route/version|NATIVE_MISMATCH'),
                 ('route', {**value, 'route_id': 'R1'}, registry, 'route locator|retained receipt, result or claims'),
-                ('url', value, {**registry, 'routes': [{**registry['routes'][0], 'locator': SR.URL2}, registry['routes'][1]]}, 'route locator')):
+                ('url', value, {**registry, 'routes': [{**registry['routes'][0], 'locator': SR.URL2}, registry['routes'][1]]}, 'route locator|NATIVE_MISMATCH')):
             with self.subTest(name):
                 retained = dict(zip(K.RETAINED, (ctx['receipt_raw'], ctx['result_raw'], Path(claims).read_bytes())))
                 with self.assertRaisesRegex(ValueError, message):
@@ -399,6 +399,33 @@ class CustodyTests(unittest.TestCase):
                 (_, supply, _), retained = self.invented(**change)
                 with self.assertRaisesRegex(ValueError, 'claims'):
                     K.retained(json.loads(Path(supply).read_bytes()), retained, S.sha(TEXT), len(TEXT))
+
+    def test_final_imported_registry_must_be_the_native_approved_registry(self):
+        self.retrieve()
+        claims = self.claims()
+        ctx = X.preflight(self.base, 'A1', SR.URL1)
+        ctx['claims_raw'] = Path(claims).read_bytes()
+        value = X.supply(ctx, S.sha(ctx['claims_raw']), json.loads(ctx['claims_raw']))
+        supply, original = self.put('reg-supply.json', value)['path'], self.put('reg-original.txt', TEXT)['path']
+        retained = dict(zip(K.RETAINED, (ctx['receipt_raw'], ctx['result_raw'], ctx['claims_raw'])))
+        approved = json.loads(ctx['registry_raw'])
+        stop = {'id': 'S-ADDED', 'scope': 'host', 'reason': 'fictional', 'citation': 'fictional', 'citation_sha256': 'UNKNOWN'}
+        for name, change in (('restrictions', {'access_restrictions': []}), ('restrictions added', {'access_restrictions': ['owner-only']}),
+                             ('stops', {'stops': [stop]}), ('expected fields', {'expected_fields': ['something else']})):
+            with self.subTest(name):
+                registry = json.loads(ctx['registry_raw'])
+                registry['routes'][0].update(change)  # Same route id, version and exact URL.
+                self.assertEqual((registry['routes'][0]['id'], registry['routes'][0]['version'], registry['routes'][0]['locator']),
+                                 (approved['routes'][0]['id'], approved['routes'][0]['version'], SR.URL1))
+                if registry == approved:
+                    registry['routes'][0]['question'] = 'changed question'
+                path = self.put(f'reg-{len(name)}.json', registry)['path']
+                with self.assertRaisesRegex(ValueError, 'NATIVE_MISMATCH'):
+                    E.import_retrieved(path, supply, original, self.root / f'reg-{len(name)}', retained, source_base=self.base)
+                self.assertFalse((self.root / f'reg-{len(name)}').exists())
+        exact = self.put('reg-exact.json', ctx['registry_raw'])['path']  # The exact approved bytes are accepted.
+        E.import_retrieved(exact, supply, original, self.root / 'reg-exact', retained, source_base=self.base)
+        self.assertEqual(E.load(self.root / 'reg-exact')['route'], approved['routes'][0])
 
     def test_cli_reports_preflight_and_refusals_without_network(self):
         self.retrieve()

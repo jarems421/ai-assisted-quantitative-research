@@ -35,9 +35,10 @@ def import_retrieved(registry_path, supply_path, original_path, out, retained, *
     from src.research.source_custody_v1 import custody  # Native verification lives with the custody bridge.
     r = supplied['system_retrieval']
     native = custody.preflight(source_base, r['attempt_id'], r['requested_url'])
-    K.need((native['receipt_raw'], native['result_raw'], native['body'], native['route']['id'], native['route']['version'])
-           == (retained['retrieval-receipt.json'], retained['retrieval-result.json'], raw, supplied['route_id'], supplied['route_version']),
-           'NATIVE_MISMATCH: retained records differ from the verified native Source Retrieval records')
+    K.need((native['receipt_raw'], native['result_raw'], native['body'], native['registry_raw'], native['route']['id'], native['route']['version'])
+           == (retained['retrieval-receipt.json'], retained['retrieval-result.json'], raw, io.read(registry_path),
+               supplied['route_id'], supplied['route_version']),
+           'NATIVE_MISMATCH: retained records or registry differ from the verified native Source Retrieval records')
     return _import(registry_path, supplied, original_path, out, retained)
 
 
