@@ -11,6 +11,7 @@ from unittest.mock import patch
 from src.research.campaign_connected_v1 import lineage as L, fixtures as F, rehearsal as D
 from src.research.campaign_connected_v1.__main__ import main
 from src.research.campaign_v1 import campaign as C, records as R
+from src.research.discovery.ledger import Ledger
 from src.research.operator import adapters, runs
 from src.research.operator.journal import Journal
 from src.research.operator.guard import offline
@@ -83,6 +84,14 @@ class ConnectedTests(unittest.TestCase):
         self.assertEqual(native['discovery']['fixture'], 'SYNTHETIC')
         self.assertFalse(native['discovery']['software_certifies_M'])
         self.assertTrue(all(r['human_judgment'] == 'NOT_REVIEWED' for r in native['discovery']['requirements'].values()))
+        state = Ledger(native['stages']['ANVIL_CHECKS']['summary']['ledger']).load()
+        passport = state.latest('source', adapters.source_id('SYN-REGISTER'))
+        pointers = [e for q in passport['quantities'] for e in q['evidence']]
+        self.assertTrue(pointers)
+        for evidence in pointers:
+            self.assertEqual((evidence['sha256'], evidence['archive'], evidence['depth']),
+                             (report['receipt']['body_sha256'], 'quarry-export-manifest:' + report['quarry_export_manifest']['sha256'],
+                              'UNVERIFIED'))
         self.assertIn('independent invoice totals', report['missing_fields'])
         self.assertEqual(report['authorises'], [])
 
