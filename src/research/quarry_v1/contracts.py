@@ -93,6 +93,27 @@ def supply_v2(value):
 # without the original Source Retrieval directory. Quarry checks their consistency; only the custody bridge,
 # which runs Source Retrieval's own verification, creates them.
 RETAINED = ('retrieval-receipt.json', 'retrieval-result.json', 'retrieval-claims.json')
+# The human claims record retained in a V002 package. A named record is a claim, never authentication.
+CLAIMS = 'QUARRY_RETRIEVAL_CLAIMS_V001'
+CLAIMS_STATEMENT = 'I inspected the retained bytes of this receipt. These are my claims about them, not verified facts.'
+CLAIMS_SCHEMA = obj({
+    'schema': {'const': CLAIMS}, 'attested_by': TEXT, 'attested_at': TEXT,
+    'attempt_id': LABEL, 'receipt_sha256': HASH, 'body_sha256': HASH,
+    'title': TEXT, 'source_identity_claim': TEXT, 'asset_claim': TEXT, 'source_version_claim': TEXT,
+    'historical_availability_claim': TEXT, 'data_classification': {'enum': ['SYNTHETIC', 'PUBLIC_REPOSITORY', 'LOCAL_PRIVATE']},
+    'limitations': array(TEXT), 'missing_fields': array(TEXT), 'statement': {'const': CLAIMS_STATEMENT}})
+
+
+def claims_record(value):
+    """Schema, named-human field (assistant and placeholder names refused) and timezone; not identity proof."""
+    from src.research.source_v1.contracts import human, moment
+    try:
+        validate(CLAIMS_SCHEMA, value)
+        human(value['attested_by'], 'claims attester')
+        moment(value['attested_at'], 'attested_at')
+    except (KeyError, TypeError, ValueError) as error:
+        need(False, 'retained claims record invalid: ' + str(error))
+    return value
 CLAIM_FIELDS = ('title', 'source_identity_claim', 'asset_claim', 'source_version_claim', 'historical_availability_claim',
                 'data_classification', 'missing_fields')
 
@@ -107,6 +128,10 @@ def retained(value, files, original_sha256, size):
     need((sha['retrieval-receipt.json'], sha['retrieval-result.json'], sha['retrieval-claims.json'])
          == (r['receipt_sha256'], r['result_sha256'], r['claims_sha256']), 'retained native records differ from the supply binding')
     try:
+        claims_record(loads(files['retrieval-claims.json']))
+    except ValueError as error:
+        need(False, str(error))
+    try:
         receipt, result, claims = (loads(files[name]) for name in RETAINED)
         handoff = {'receipt_sha256': r['receipt_sha256'], 'requested_url': r['requested_url'], 'quarry_route_id': value['route_id'],
                    'body_path': receipt['body_path'], 'body_sha256': r['body_sha256'], 'bytes': r['body_bytes'], 'coverage': r['transfer_coverage']}
@@ -120,7 +145,7 @@ def retained(value, files, original_sha256, size):
               and result['request_sha256'] == r['request_sha256'] and result['interrupted'] is False
               and result['status'] in ('COMPLETE', 'PARTIAL', 'STOPPED', 'UNAVAILABLE')
               and r['receipt_sha256'] in result['receipts'] and handoff in result['custody_handoff']
-              and claims['schema'] == 'QUARRY_RETRIEVAL_CLAIMS_V001' and isinstance(claims['attested_by'], str)
+              and claims['schema'] == CLAIMS
               and (claims['attempt_id'], claims['receipt_sha256'], claims['body_sha256']) == (r['attempt_id'], r['receipt_sha256'], original_sha256)
               and all(claims[k] == value[k] for k in CLAIM_FIELDS)
               and all(line in value['limitations'] for line in claims['limitations']))

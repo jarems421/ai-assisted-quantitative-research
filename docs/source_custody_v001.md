@@ -48,14 +48,31 @@ V002 adds exactly one supply kind, `SYSTEM_RETRIEVED`. Every V001 field keeps it
 
 - **V001 is unchanged.** Records without `"schema": "QUARRY_SUPPLY_V002"` are validated by the unchanged V001 schema, so V001 can never claim `SYSTEM_RETRIEVED` or carry `system_retrieval`. OWNER_SUPPLIED and SYNTHETIC records are never reinterpreted.
 - **Route binding.** On import and on every load, a V002 supply's route locator must equal `system_retrieval.requested_url` (`contracts.binding`). Route id and version are checked as for V001.
-- **Only the bridge creates V002 packages.** Quarry's ordinary `import_file` and `import-file` command refuse a V002 supply. A V002 package is created only through `evidence.import_retrieved`, which the custody bridge calls after Source Retrieval's own verification.
+- **Only the bridge creates V002 packages.** Quarry's ordinary `import_file` and `import-file` command refuse a V002 supply. The only V002 creation API is `evidence.import_retrieved(..., source_base=...)`. It re-runs Source Retrieval's native verification of the named attempt under `source_base`, through the bridge's read-only preflight. It then requires the retained receipt, result and original to be byte-identical to the native records, and the route and version to match (`NATIVE_MISMATCH` otherwise).
 - **Retained native records.** A V002 package keeps the exact bytes of three native records: `retrieval-receipt.json` (the Source Retrieval receipt), `retrieval-result.json` (the attempt result) and `retrieval-claims.json` (the human claims record). They are sealed in the package manifest and copied into every export under `source/`. On import and on every load, Quarry checks `contracts.retained`:
   - the three records' hashes match the supply binding;
   - the receipt is a 200 TARGET receipt for that URL, termination, coverage, times and implementation, with the retained original's hash and size;
   - the result is a finished, non-interrupted attempt that lists the receipt and the exact custody-handoff entry, including the route id;
   - the claims record names the same attempt, receipt and body, and its claim fields match the supply.
 
-  A later reviewer can therefore inspect the exact claims record and the receipt evidence without the original Source Retrieval directory. These consistency checks are not a re-run of the journal verification, which needs the attempt directory, and a named record still does not authenticate its author.
+  - the claims record passes the full `QUARRY_RETRIEVAL_CLAIMS_V001` schema, with a named-human field (assistant and placeholder names refused) and a timestamp with a UTC offset.
+
+  A later reviewer can therefore inspect the exact claims record and the receipt evidence without the original Source Retrieval directory.
+
+**Two kinds of verification**
+
+| | At creation (`import_retrieved`) | Portable (every `load`, export and validation) |
+|---|---|---|
+| What runs | Source Retrieval's native verification of the attempt directory, plus byte equality with the retained records | Consistency of the retained receipt, result, claims, supply and original |
+| What it establishes | The package's records are those of a verified native attempt on this machine | The records support each other and the supply; nothing about whether a native attempt existed |
+| Needs | The Source Retrieval records base | Only the package |
+
+**Procedural boundary and remaining misuse risk.** Within trusted Python this boundary prevents accidental bypass; it cannot prevent deliberate bypass:
+
+- A fully self-consistent invented record set (correct hashes, matching result handoff and claims) passes the portable check. This is demonstrated by `test_final_invented_native_records_cannot_create_v002_custody`, which also shows that such a set cannot pass `import_retrieved`.
+- Code that calls the private `evidence._import` directly, or that fabricates an entire native attempt directory (journal, receipts, inputs, snapshot) consistently, can still produce a package that loads.
+- A V002 package received from elsewhere therefore shows consistency, not that native verification happened. Establishing that requires re-running verification against the original attempt directory, or trusting the machine and process that created it.
+- No record authenticates a human's identity.
 - **Package files are unchanged.** The package receipt (`QUARRY_RECEIPT_V001`), export, handoff (`QUARRY_HANDOFF_V001`), Jev input and validation are the same code paths. V002 provenance travels in `supply.json` and the export's `provenance.json`, and the transfer facts reach Jev through `limitations`. Jev's `availability` stays `SUPPLIED_COPY`, because the Jev contract has no retrieval value and was not changed.
 - **Data classification.** `data_classification` comes from the human claims. V002 does not tie SYNTHETIC to the fixture kind, because receipts do not record whether a real or injected transport produced them (see open questions).
 

@@ -19,12 +19,25 @@ def import_file(registry_path, supply_path, original_path, out):
     return _import(registry_path, supplied, original_path, out, {})
 
 
-def import_retrieved(registry_path, supply_path, original_path, out, retained):
-    """V002 only, called by the source custody bridge after Source Retrieval's own verification."""
+def import_retrieved(registry_path, supply_path, original_path, out, retained, *, source_base):
+    """The only V002 creation API. Native verification at creation, not just portable consistency.
+
+    It re-runs Source Retrieval's verification of the named attempt under source_base (through the custody
+    bridge's read-only preflight) and requires the retained receipt, result and original to be byte-identical
+    to the native records. A later load can re-check only the portable consistency of what was retained.
+    Within trusted Python this is a procedural boundary: code that rewrites a whole native attempt directory,
+    or calls _import directly, is outside it.
+    """
     supplied = K.supply(io.json_file(supply_path))
     K.need(supplied['schema'] == K.SUPPLY_V002, 'import_retrieved accepts only QUARRY_SUPPLY_V002')
     raw = io.read(original_path)
     K.retained(supplied, retained, io.sha(raw), len(raw))
+    from src.research.source_custody_v1 import custody  # Native verification lives with the custody bridge.
+    r = supplied['system_retrieval']
+    native = custody.preflight(source_base, r['attempt_id'], r['requested_url'])
+    K.need((native['receipt_raw'], native['result_raw'], native['body'], native['route']['id'], native['route']['version'])
+           == (retained['retrieval-receipt.json'], retained['retrieval-result.json'], raw, supplied['route_id'], supplied['route_version']),
+           'NATIVE_MISMATCH: retained records differ from the verified native Source Retrieval records')
     return _import(registry_path, supplied, original_path, out, retained)
 
 

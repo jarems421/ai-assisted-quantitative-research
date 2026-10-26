@@ -193,14 +193,14 @@ class CustodyTests(unittest.TestCase):
         value = X.supply(ctx, S.sha(Path(claims).read_bytes()), json.loads(Path(claims).read_bytes()))
         registry = json.loads(ctx['registry_raw'])
         for name, supply, routes, message in (
-                ('version', {**value, 'route_version': '2'}, registry, 'route/version'),
+                ('version', {**value, 'route_version': '2'}, registry, 'route/version|NATIVE_MISMATCH'),
                 ('route', {**value, 'route_id': 'R1'}, registry, 'route locator|retained receipt, result or claims'),
                 ('url', value, {**registry, 'routes': [{**registry['routes'][0], 'locator': SR.URL2}, registry['routes'][1]]}, 'route locator')):
             with self.subTest(name):
                 retained = dict(zip(K.RETAINED, (ctx['receipt_raw'], ctx['result_raw'], Path(claims).read_bytes())))
                 with self.assertRaisesRegex(ValueError, message):
                     E.import_retrieved(self.put('r.json', routes)['path'], self.put('s.json', supply)['path'],
-                                       self.put('o.bin', TEXT)['path'], self.root / f'direct-{name}', retained)
+                                       self.put('o.bin', TEXT)['path'], self.root / f'direct-{name}', retained, source_base=self.base)
 
     def test_custody_output_is_create_only_and_one_package_per_receipt(self):
         self.retrieve()
@@ -275,7 +275,7 @@ class CustodyTests(unittest.TestCase):
         self.assertFalse((self.root / 'forged-package').exists() or (self.root / 'forged-cli').exists())
         invented = {name: b'{}' for name in K.RETAINED}  # Made-up native records do not match the supply binding.
         with self.assertRaisesRegex(ValueError, 'retained native records differ'):
-            E.import_retrieved(registry, supply, original, self.root / 'forged-direct', invented)
+            E.import_retrieved(registry, supply, original, self.root / 'forged-direct', invented, source_base=self.base)
         self.assertFalse((self.root / 'forged-direct').exists())
         # A legitimate package keeps its retained native records and stays portable.
         self.retrieve()
@@ -342,6 +342,63 @@ class CustodyTests(unittest.TestCase):
         (root / 'manifest.json').write_bytes(canonical(manifest))
         with self.assertRaisesRegex(ValueError, 'retained native records differ'):
             E.load(root)
+
+    # ---- PR #46 final trust boundary ----------------------------------------------------------------------
+    def invented(self, body=TEXT, attempt='INVENTED', **claims_changes):
+        """A fully self-consistent native-looking record set with correct hashes, but no native attempt."""
+        receipt = {'schema': 'SOURCE_RETRIEVAL_RECEIPT_V001', 'attempt_id': attempt, 'request_index': 2, 'role': 'TARGET',
+                   'requested_url': SR.URL1, 'host': SR.HOST, 'http_status': 200, 'termination': 'COMPLETE', 'coverage': 'COMPLETE',
+                   'body_path': 'raw/002.body', 'body_sha256': S.sha(body), 'bytes_received': len(body),
+                   'started_at': '2026-10-26T12:00:00+00:00', 'finished_at': '2026-10-26T12:00:01+00:00', 'implementation_sha256': 'd' * 64}
+        receipt_raw = canonical(receipt) + b'\n'
+        handoff = {'receipt_sha256': S.sha(receipt_raw), 'requested_url': SR.URL1, 'quarry_route_id': 'R0', 'body_path': 'raw/002.body',
+                   'body_sha256': S.sha(body), 'bytes': len(body), 'coverage': 'COMPLETE'}
+        result_raw = canonical({'schema': 'SOURCE_ACTIVITY_RESULT_V001', 'attempt_id': attempt, 'request_sha256': 'a' * 64, 'status': 'COMPLETE',
+                                'interrupted': False, 'receipts': [S.sha(receipt_raw)], 'custody_handoff': [handoff]}) + b'\n'
+        claims = {'schema': X.CLAIMS, 'attested_by': SR.OWNER, 'attested_at': '2026-10-26T13:00:00+00:00', 'attempt_id': attempt,
+                  'receipt_sha256': S.sha(receipt_raw), 'body_sha256': S.sha(body), 'title': 'Invented', 'source_identity_claim': 'doc-0',
+                  'asset_claim': 'F1', 'source_version_claim': 'x', 'historical_availability_claim': 'UNKNOWN', 'data_classification': 'SYNTHETIC',
+                  'limitations': [], 'missing_fields': [], 'statement': X.STATEMENT, **claims_changes}
+        claims_raw = canonical(claims) + b'\n'
+        retrieval = {'source_component': 'SOURCE_RETRIEVAL_V001', 'attempt_id': attempt, 'request_sha256': 'a' * 64,
+                     'result_sha256': S.sha(result_raw), 'receipt_sha256': S.sha(receipt_raw), 'requested_url': SR.URL1, 'http_status': 200,
+                     'termination': 'COMPLETE', 'transfer_coverage': 'COMPLETE', 'body_sha256': S.sha(body), 'body_bytes': len(body),
+                     'started_at': receipt['started_at'], 'finished_at': receipt['finished_at'], 'implementation_sha256': 'd' * 64,
+                     'claims_sha256': S.sha(claims_raw), 'publication_authenticity': 'UNKNOWN', 'dataset_completeness': 'UNKNOWN',
+                     'scientific_meaning': 'NOT_ESTABLISHED'}
+        supply = {'schema': K.SUPPLY_V002, 'route_id': 'R0', 'route_version': '1', 'fixture': 'SYSTEM_RETRIEVED',
+                  'data_classification': claims['data_classification'], 'title': claims['title'], 'source_identity_claim': 'doc-0',
+                  'asset_claim': 'F1', 'source_version_claim': 'x', 'retrieved_at_claim': receipt['finished_at'],
+                  'retrieval_method_claim': K.RETRIEVAL_METHOD + S.sha(receipt_raw), 'historical_availability_claim': 'UNKNOWN',
+                  'expected_original_sha256': S.sha(body), 'coverage': 'COMPLETE_CLAIMED', 'limitations': K.transfer_limitations(retrieval),
+                  'missing_fields': [], 'system_retrieval': retrieval}
+        paths = (self.put('inv-registry.json', json.loads(Path(self.registry['path']).read_bytes()))['path'],
+                 self.put('inv-supply.json', supply)['path'], self.put('inv-original.txt', body)['path'])
+        return paths, dict(zip(K.RETAINED, (receipt_raw, result_raw, claims_raw)))
+
+    def test_final_invented_native_records_cannot_create_v002_custody(self):
+        (registry, supply, original), retained = self.invented()
+        K.retained(json.loads(Path(supply).read_bytes()), retained, S.sha(TEXT), len(TEXT))  # Portable consistency alone passes.
+        with self.assertRaisesRegex(ValueError, 'SOURCE_INCONSISTENT|SOURCE_NOT|unknown attempt'):
+            E.import_retrieved(registry, supply, original, self.root / 'invented', retained, source_base=self.base)
+        self.assertFalse((self.root / 'invented').exists())
+        with self.assertRaises(TypeError):  # Creation cannot be requested without naming the native records to verify.
+            E.import_retrieved(registry, supply, original, self.root / 'invented', retained)
+        # A real attempt with the same id: the invented records still differ from its native bytes.
+        self.retrieve()
+        (registry, supply, original), retained = self.invented(attempt='A1')
+        with self.assertRaisesRegex(ValueError, 'NATIVE_MISMATCH'):
+            E.import_retrieved(registry, supply, original, self.root / 'invented-a1', retained, source_base=self.base)
+        self.assertFalse((self.root / 'invented-a1').exists())
+
+    def test_final_portable_claims_are_schema_and_field_validated(self):
+        for name, change in (('assistant attester', {'attested_by': 'Claude (assistant)'}), ('placeholder attester', {'attested_by': 'UNKNOWN'}),
+                             ('no timezone', {'attested_at': '2026-10-26T13:00:00'}), ('wrong statement', {'statement': 'verified facts'}),
+                             ('extra field', {'verified': True})):
+            with self.subTest(name):
+                (_, supply, _), retained = self.invented(**change)
+                with self.assertRaisesRegex(ValueError, 'claims'):
+                    K.retained(json.loads(Path(supply).read_bytes()), retained, S.sha(TEXT), len(TEXT))
 
     def test_cli_reports_preflight_and_refusals_without_network(self):
         self.retrieve()

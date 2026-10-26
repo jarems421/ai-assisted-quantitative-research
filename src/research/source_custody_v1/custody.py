@@ -10,21 +10,14 @@ from __future__ import annotations
 import tempfile
 from pathlib import Path
 from src.research.spec import digest
-from src.research.jev_navigation_v1.contracts import TEXT, HASH, LABEL, obj, array, validate
 from src.research.quarry_v1 import contracts as K, evidence as E, io as QIO
 from src.research.source_v1 import contracts as C, retrieve as R, store as S
 
-CLAIMS = 'QUARRY_RETRIEVAL_CLAIMS_V001'
+CLAIMS = K.CLAIMS
 MARKER = 'SOURCE_CUSTODY_CLAIM_V001'
 COMPLETION = 'SOURCE_CUSTODY_COMPLETION_V001'
 MARKER_FIELDS = {'schema', 'receipt_sha256', 'attempt_id', 'url', 'supply_sha256', 'claims_sha256', 'package', 'claimed_at', 'authorises'}
-STATEMENT = 'I inspected the retained bytes of this receipt. These are my claims about them, not verified facts.'
-CLAIMS_SCHEMA = obj({
-    'schema': {'const': CLAIMS}, 'attested_by': TEXT, 'attested_at': TEXT,
-    'attempt_id': LABEL, 'receipt_sha256': HASH, 'body_sha256': HASH,
-    'title': TEXT, 'source_identity_claim': TEXT, 'asset_claim': TEXT, 'source_version_claim': TEXT,
-    'historical_availability_claim': TEXT, 'data_classification': {'enum': ['SYNTHETIC', 'PUBLIC_REPOSITORY', 'LOCAL_PRIVATE']},
-    'limitations': array(TEXT), 'missing_fields': array(TEXT), 'statement': {'const': STATEMENT}})
+STATEMENT = K.CLAIMS_STATEMENT
 
 
 class CustodyError(ValueError):
@@ -93,11 +86,9 @@ def claims(path, ctx):
     raw, value = S.load(path, 'retrieval claims')
     ctx['claims_raw'] = raw
     try:
-        validate(CLAIMS_SCHEMA, value)
+        K.claims_record(value)
     except ValueError as error:
         raise CustodyError('CLAIMS_INVALID: ' + str(error)) from error
-    C.human(value['attested_by'], 'claims attester')
-    C.moment(value['attested_at'], 'attested_at')
     need((value['attempt_id'], value['receipt_sha256'], value['body_sha256']) == (ctx['attempt_id'], ctx['receipt_sha256'], ctx['receipt']['body_sha256']),
          'CLAIMS_MISMATCH: the claims name a different attempt, receipt or body')
     return S.sha(raw), value
@@ -149,7 +140,8 @@ def import_receipt(base, attempt_id, url, claims_path, out, clock=S.now):
                                           'supply_sha256': digest(value), 'claims_sha256': claims_sha, 'package': str(target),
                                           'claimed_at': clock(), 'authorises': []})
         retained = dict(zip(K.RETAINED, (ctx['receipt_raw'], ctx['result_raw'], ctx['claims_raw'])))
-        receipt = E.import_retrieved(stage / 'registry.json', stage / 'supply.json', stage / 'original.bin', target, retained)
+        receipt = E.import_retrieved(stage / 'registry.json', stage / 'supply.json', stage / 'original.bin', target, retained,
+                                     source_base=base)
     # Written only after the package is sealed: binds the exact claim bytes and the package manifest.
     S.write_new(completion_path(base, ctx['receipt_sha256']), {
         'schema': COMPLETION, 'receipt_sha256': ctx['receipt_sha256'], 'custody_claim_sha256': marker_sha,
