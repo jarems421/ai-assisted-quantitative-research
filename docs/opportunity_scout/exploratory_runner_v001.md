@@ -143,7 +143,7 @@ stops the run.
   directory is the one the owner intends. That last point rests on the owner's attestation plus the optional pinned
   fingerprint.
 - **Billing visibility is indirect.** The only billing-related evidence comes from CLI-reported stream metadata:
-  - `isUsingOverage: false` and `status: allowed` on every `rate_limit_event`, with at least one required;
+  - `isUsingOverage: false` and `status: allowed` on every `rate_limit_event`, with at least one required (V001; stream review V002 also accepts `allowed_warning`, see below);
   - `overageStatus`;
   - `provider: firstParty`.
 
@@ -180,6 +180,33 @@ stops the run.
   that omits either stops the run (and consumes the attempt) rather than passing it. This is intended.
 - **Critics are not called.** The runner produces the archive that `critic_v1 prepare` reads. Critic replies still
   use the existing operator-attested `import-response` path, because `critic_v1` deliberately has no process code.
+
+## Stream review V002: `allowed_warning` without overage (2026-10-26)
+
+Campaign 30 scan 01 (`scout-scan-campaign30-01`) made one served, non-overage generation. Its only rate-limit event
+reported `status: allowed_warning`, `isUsingOverage: false`, `overageStatus: rejected` and `rateLimitType: seven_day`.
+The V001 review accepted only `status: allowed`, so it recorded `OVERAGE_OR_RATE_LIMIT` and admitted no cards. That
+attempt is consumed and is not re-run; its receipt keeps the V001 result.
+
+`SCOUT_EXPLORATORY_STREAM_REVIEW_V002` changes one condition. A `rate_limit_event` passes only when:
+- `rate_limit_info` is an object;
+- `isUsingOverage` is exactly `false`;
+- `status` is `allowed` or `allowed_warning`.
+
+Everything else still fails closed:
+- `rejected`, any other or unknown status;
+- a missing status or overage flag, or a non-boolean flag;
+- any event using overage, even alongside a warning event;
+- no rate-limit event at all (`NON_OVERAGE_NOT_EVIDENCED`).
+
+The review runs only at `run` time. No earlier receipt is re-reviewed or reinterpreted.
+
+Receipts written by this version record `review.stream_review` and `review.rate_limit_states`. The second is a list of
+`{status, window}` per event: plain lowercase labels only, anything else `UNKNOWN`, and no other stream content.
+
+The runner, plan, authorisation and receipt schemas are unchanged (`SCOUT_EXPLORATORY_RUNNER_V001`, plan V001). A plan
+binds the prompt, payload, model, effort, limits, executable hash, configuration directory and controls, not the
+review code. Unclaimed plans therefore stay valid, and the receipt shows which review applied.
 
 ## Status
 

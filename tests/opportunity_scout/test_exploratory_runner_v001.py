@@ -4,6 +4,7 @@ No process, network, credential or real home directory is touched."""
 import copy
 import json
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 import unittest
@@ -351,6 +352,62 @@ class ReviewFindingTests(Base):
         _, kwargs = next(c for c in cli.calls if '--print' in c[0])
         self.assertNotIn('capture_output', kwargs)
         for channel in ('stdout', 'stderr'):self.assertTrue(hasattr(kwargs[channel], 'fileno'))
+
+
+class RateLimitReviewV002Tests(Base):
+    """Stream review V002: 'allowed_warning' is accepted only without overage; everything else still fails closed."""
+    def receipt(self, make):
+        return self.execute(FakeCLI(self, model_stream=make))
+
+    def test_allowed_warning_without_overage_is_accepted_and_recorded(self):
+        # The exact combination observed in campaign 30 scan 01.
+        receipt = self.receipt(lambda s: stream(s, rate={'status': 'allowed_warning', 'rateLimitType': 'seven_day'}))
+        self.assertEqual((receipt['status'], len(self.state().cards)), ('VALID', 1))
+        self.assertEqual(receipt['review']['stream_review'], X.STREAM_REVIEW)
+        self.assertEqual(receipt['review']['rate_limit_states'], [{'status': 'allowed_warning', 'window': 'seven_day'}])
+        self.assertEqual(receipt['review']['overage_status'], ['rejected'])
+
+    def test_allowed_is_still_accepted_and_recorded(self):
+        receipt = self.receipt(lambda s: stream(s))
+        self.assertEqual(receipt['status'], 'VALID')
+        self.assertEqual(receipt['review']['rate_limit_states'], [{'status': 'allowed', 'window': 'UNKNOWN'}])
+
+    def test_overage_rejection_missing_and_unknown_states_fail_closed(self):
+        def without(key):
+            return mutated(lambda ev, s: next(e for e in ev if e['type'] == 'rate_limit_event')['rate_limit_info'].pop(key))
+        cases = {
+            'warning with overage': lambda s: stream(s, rate={'status': 'allowed_warning', 'isUsingOverage': True}),
+            'allowed with overage': lambda s: stream(s, rate={'isUsingOverage': True}),
+            'rejected': lambda s: stream(s, rate={'status': 'rejected'}),
+            'unknown status': lambda s: stream(s, rate={'status': 'allowed_soon'}),
+            'status not a plain label': lambda s: stream(s, rate={'status': 'Allowed Warning'}),
+            'overage flag not a boolean': lambda s: stream(s, rate={'status': 'allowed_warning', 'isUsingOverage': 'false'}),
+            'overage flag null': lambda s: stream(s, rate={'isUsingOverage': None}),
+            'status missing': without('status'),
+            'overage flag missing': without('isUsingOverage'),
+            'info not an object': mutated(lambda ev, s: next(e for e in ev if e['type'] == 'rate_limit_event').__setitem__('rate_limit_info', 'allowed')),
+        }
+        for name, make in cases.items():
+            with self.subTest(case=name):
+                self.fresh()
+                receipt = self.receipt(make)
+                self.assertEqual((receipt['status'], len(self.state().cards)), ('ERROR', 0))
+                self.assertIn('OVERAGE_OR_RATE_LIMIT', receipt['error'])
+                for state in receipt['review']['rate_limit_states']:
+                    self.assertTrue(all(v == 'UNKNOWN' or re.fullmatch(r'[a-z_]{1,40}', v) for v in state.values()))
+
+    def test_absent_rate_limit_event_still_fails_closed(self):
+        drop = mutated(lambda ev, s: ev.__setitem__(slice(None), [e for e in ev if e['type'] != 'rate_limit_event']))
+        receipt = self.receipt(drop)
+        self.assertEqual((receipt['status'], len(self.state().cards)), ('ERROR', 0))
+        self.assertIn('NON_OVERAGE_NOT_EVIDENCED', receipt['error'])
+        self.assertEqual(receipt['review']['rate_limit_states'], [])
+
+    def test_one_warning_event_cannot_mask_a_later_overage_event(self):
+        later = {'type': 'rate_limit_event', 'rate_limit_info': {'status': 'allowed', 'isUsingOverage': True, 'overageStatus': 'allowed'}}
+        receipt = self.receipt(lambda s: stream(s, rate={'status': 'allowed_warning'}, extra=[{**later, 'session_id': s}]))
+        self.assertEqual((receipt['status'], len(self.state().cards)), ('ERROR', 0))
+        self.assertIn('OVERAGE_OR_RATE_LIMIT', receipt['error'])
 
 
 class Faulty:

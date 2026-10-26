@@ -18,6 +18,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import signal
 import subprocess
 import tempfile
@@ -50,6 +51,11 @@ IDENTITY_KEYS = ('email', 'emailAddress', 'orgId', 'organizationId', 'orgName', 
 DEVELOPMENT = ('.claude.json', '.claude/settings.json', '.claude/.credentials.json')
 SYSTEM_EVENTS = ('init', 'ui_invalidate', 'thinking_tokens')  # observed in a real 2.1.302 stream; others fail closed
 SESSION_EVENTS = ('system', 'rate_limit_event', 'assistant', 'result')
+# Rate-limit review V002 (2026-10-26): V001 accepted only status 'allowed'. Campaign 30 scan 01 showed a served,
+# non-overage request reported as 'allowed_warning' (seven-day window). V002 also accepts that status, and only with
+# isUsingOverage exactly False; every other status, a missing field or overage still fails closed.
+STREAM_REVIEW = 'SCOUT_EXPLORATORY_STREAM_REVIEW_V002'
+RATE_LIMIT_STATUSES = ('allowed', 'allowed_warning')
 # Capture goes straight to files, never into memory, and is enforced while it happens: the process tree is stopped
 # once combined stdout+stderr pass the bound (an IO limit, not a token certificate); a cap of 32,768 output tokens
 # plus thinking estimates is far below it. At most one CHUNK per channel beyond the bound is ever kept.
@@ -371,7 +377,7 @@ def review(stdout, stderr, returncode, timed_out, model, session_id):
         fault('ENVIRONMENT_NOT_ESTABLISHED')
     if init.get('apiKeySource') != 'none':fault('API_KEY_SOURCE_NOT_NONE')
     if init.get('model') != model:fault('MODEL_MISMATCH')
-    messages, requests, texts, overage = [], set(), [], []
+    messages, requests, texts, overage, limits = [], set(), [], [], []
     for e in events:
         kind = e.get('type')
         # An absent session identifier is never a match: every accepted event kind carried one in the real stream.
@@ -380,8 +386,13 @@ def review(stdout, stderr, returncode, timed_out, model, session_id):
             if e.get('subtype') not in SYSTEM_EVENTS:fault('UNRECOGNISED_SYSTEM_EVENT')
         elif kind == 'rate_limit_event':
             info = e.get('rate_limit_info')
-            if not isinstance(info, dict) or info.get('isUsingOverage') is not False or info.get('status') != 'allowed':fault('OVERAGE_OR_RATE_LIMIT')
+            if not isinstance(info, dict) or info.get('isUsingOverage') is not False or info.get('status') not in RATE_LIMIT_STATUSES:
+                fault('OVERAGE_OR_RATE_LIMIT')
             overage.append(info.get('overageStatus', S.UNKNOWN) if isinstance(info, dict) else S.UNKNOWN)
+            # Metadata only: the reported status and window, each kept only when it is a short plain label.
+            limits.append({k: (v if isinstance(v, str) and re.fullmatch(r'[a-z_]{1,40}', v) else S.UNKNOWN)
+                           for k, v in (('status', info.get('status')), ('window', info.get('rateLimitType')))} if isinstance(info, dict)
+                          else {'status': S.UNKNOWN, 'window': S.UNKNOWN})
         elif kind == 'assistant':
             msg = e.get('message')
             if not isinstance(msg, dict) or not isinstance(msg.get('id'), str) or not isinstance(e.get('request_id'), str):
@@ -423,6 +434,7 @@ def review(stdout, stderr, returncode, timed_out, model, session_id):
             'tokens': tokens, 'thinking_tokens': details.get('thinking_tokens', S.UNKNOWN), 'visible_generations': len(messages),
             'visible_request_ids': len(requests), 'reported_turns': result.get('num_turns', S.UNKNOWN),
             'cli_version_init': init.get('claude_code_version', S.UNKNOWN), 'overage_status': sorted(set(overage)),
+            'stream_review': STREAM_REVIEW, 'rate_limit_states': limits,
             'cli_list_price_estimate_usd': result.get('total_cost_usd', S.UNKNOWN), 'underlying_provider_requests': S.UNKNOWN}
 
 
