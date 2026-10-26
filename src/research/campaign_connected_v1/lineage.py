@@ -73,7 +73,9 @@ def inspect(selection):
         status = x.status(ref['source_base'], ctx['receipt_sha256'])
         R.need(status['state'] == 'CUSTODY_COMPLETE' and status['consistent'], 'NATIVE_CUSTODY_COMPLETION_REQUIRED')
         package, export = R.path(selection['package']), R.path(selection['export'])
-        R.need(R.path(status['custody_claim']['package']) == package, 'custody claim names another package')
+        # Native Quarry resolves Windows 8.3 aliases. Compare actual file identity
+        # after both paths pass the existing no-link/no-network/traversal checks.
+        R.need(R.path(status['custody_claim']['package']).samefile(package), 'custody claim names another package')
         stored = Q.load(package)
         # Quarry serialises its registry canonically; source inputs preserve original
         # bytes (including a possible final newline). Compare the validated JSON value
@@ -109,13 +111,13 @@ def inspect(selection):
         exports = [s['summary'] for n, s in view['stages'].items() if n.startswith('QUARRY_EXPORT:') and s['status'] == 'COMPLETE']
         # One export makes lineage of this rehearsal unambiguous. Multi-export collections
         # require a future explicitly reviewed binding rather than an inferred membership.
-        R.need(len(exports) == 1 and R.path(exports[0]['export']) == export
+        R.need(len(exports) == 1 and R.path(exports[0]['export']).samefile(export)
                and exports[0]['manifest_sha256'] == file_ref(export / 'manifest.json')['sha256'],
                'operator did not consume this exact single export')
         jev = view['stages'].get('JEV_EVIDENCE', {})
         R.need(jev.get('status') == 'COMPLETE', 'native Jev evidence stage incomplete')
         _, bundle = J.load(jev['summary']['workspace'])
-        R.need(R.path(bundle['input_file']) == export / 'input.json', 'Jev consumed another evidence input')
+        R.need(R.path(bundle['input_file']).samefile(export / 'input.json'), 'Jev consumed another evidence input')
         R.need(jev['summary']['model_status'] == 'NOT_IMPORTED_DETERMINISTIC_ONLY', 'hosted/model result outside scope')
         claim = x.custody_root(ref['source_base']) / 'receipts' / (ctx['receipt_sha256'] + '.json')
         completion = x.completion_path(ref['source_base'], ctx['receipt_sha256'])

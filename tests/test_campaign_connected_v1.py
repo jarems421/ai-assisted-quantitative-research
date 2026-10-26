@@ -2,6 +2,7 @@
 from contextlib import contextmanager, redirect_stdout
 import io
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -22,6 +23,24 @@ from src.research.source_v1 import retrieve as SR
 
 def denied(*args, **kwargs):
     raise AssertionError('synthetic chain attempted real network/process/model transport')
+
+
+def fixture_alias(path):
+    """Read only the owned scratch directory's Windows 8.3 spelling, if available."""
+    if os.name != 'nt':
+        return path
+    import ctypes
+    from ctypes import wintypes
+    getshort = ctypes.WinDLL('kernel32', use_last_error=True).GetShortPathNameW
+    getshort.argtypes = [wintypes.LPCWSTR, wintypes.LPWSTR, wintypes.DWORD]
+    getshort.restype = wintypes.DWORD
+    buffer = ctypes.create_unicode_buffer(32768)
+    if not getshort(str(path), buffer, len(buffer)):
+        raise ctypes.WinError(ctypes.get_last_error())
+    alias = Path(buffer.value)
+    if not alias.samefile(path):
+        raise AssertionError('scratch alias differs from the owned directory')
+    return alias
 
 
 @contextmanager
@@ -46,8 +65,10 @@ class ConnectedTests(unittest.TestCase):
         p = patch.object(X, 'revision', return_value={'commit': 'UNKNOWN', 'ref': 'UNKNOWN', 'basis': 'TEST_FIXTURE',
                                                      'reason': 'git metadata is not read in tests'})
         p.start(); cls.addClassCleanup(p.stop)
-        tmp = tempfile.TemporaryDirectory(); cls.addClassCleanup(tmp.cleanup)
-        cls.root = Path(tmp.name)
+        tmp = tempfile.TemporaryDirectory(prefix='campaign-connected-'); cls.addClassCleanup(tmp.cleanup)
+        # Native Quarry canonicalises this path. Exercise the same alias mismatch
+        # seen under Windows CI, without creating links or changing the filesystem.
+        cls.root = fixture_alias(Path(tmp.name))
         cls.out = cls.root / 'connected'
         buf = io.StringIO()
         with redirect_stdout(buf):

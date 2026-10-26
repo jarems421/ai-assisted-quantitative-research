@@ -85,6 +85,14 @@ The integration compares validated registry values, retains the Source input's e
 byte hash separately, and binds Quarry's own manifest. It never rewrites either copy
 or treats different serialisation as changed source authority.
 
+Windows can name the same directory through an 8.3 alias while native Quarry records
+its resolved long name. Package, consumed-export and Jev-input path comparisons use
+filesystem identity after the existing traversal, network-path and link checks.
+Hashes and native completion remain mandatory; matching bytes in a different
+directory cannot substitute for the actual consumed export. The Windows regression
+uses `GetShortPathNameW` only on its owned fixture directory; no account inspection,
+link creation or filesystem configuration change is involved.
+
 The connected path currently requires a COMPLETE attempt and COMPLETE target transfer.
 Native custody's separate support for retaining some partial/negative outcomes is
 unchanged. Those outcomes remain native records and companion references; this command
