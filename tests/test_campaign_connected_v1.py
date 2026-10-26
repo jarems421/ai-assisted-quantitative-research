@@ -63,6 +63,9 @@ class ConnectedTests(unittest.TestCase):
         self.assertEqual((self.summary['model_calls'], self.summary['fake_transport_requests']), (0, 2))
         self.assertEqual(self.summary['anvil_status'], 'BLOCKED')
         self.assertEqual((self.out / 'custody' / 'original.bin').read_bytes(), F.TEXT)
+        staging = list((self.out / 'native-scratch').iterdir())
+        self.assertEqual(len(staging), 1)
+        self.assertEqual((staging[0] / 'original.bin').read_bytes(), F.TEXT)
         self.assertEqual(report['receipt']['body_sha256'], L.N.sha(F.TEXT))
         ref = report['source_reference']
         native_registry = Path(ref['source_base']) / 'source-v1' / 'attempts' / ref['attempt_id'] / 'inputs' / 'quarry-registry.json'

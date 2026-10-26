@@ -32,17 +32,19 @@ def rehearse(out):
     with offline([out]):
         ctx = x.preflight(base, result['attempt_id'], F.URL)
         claims = F.claims(out / 'inputs', ctx, x)
-        # The native bridge uses tempfile for its internal staging. Route that scratch
-        # into this rehearsal's allowed root; never widen the guard to all system TEMP.
+        # Keep the native bridge's staging inside this rehearsal. Retain it as a
+        # diagnostic fixture: Linux TemporaryDirectory cleanup uses fd-relative
+        # unlink, which the unchanged operator guard deliberately cannot admit.
+        # Do not relax that guard or permit writes across system TEMP.
         # This serial fixture command is not a concurrent campaign service.
         scratch = out / 'native-scratch'
         scratch.mkdir()
-        previous_tempdir = tempfile.tempdir
+        temporary_directory = tempfile.TemporaryDirectory
         try:
-            tempfile.tempdir = str(scratch)
+            tempfile.TemporaryDirectory = lambda **kw: temporary_directory(dir=str(scratch), delete=False, **kw)
             x.import_receipt(base, result['attempt_id'], F.URL, claims, out / 'custody', clock=clock.now)
         finally:
-            tempfile.tempdir = previous_tempdir
+            tempfile.TemporaryDirectory = temporary_directory
         subject = F.put(out / 'inputs', 'subject.json', adapters.subject(card)[0])['path']
         Q.export(out / 'custody', F.inspection(out / 'inputs'), subject, out / 'export')
         evidence = runs.evidence_spec({'schema': 'RESEARCH_OS_OPERATOR_EVIDENCE_V001', 'routes': [],

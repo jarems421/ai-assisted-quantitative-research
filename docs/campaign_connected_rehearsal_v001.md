@@ -31,8 +31,13 @@ It then uses the native custody import, verifies its completion, exports those s
 bytes through Quarry, and supplies **that export** to the existing offline operator.
 The operator performs deterministic Jev navigation and its existing Discovery preview
 checklist. All phases run under the existing audit boundary. Native custody's temporary
-staging is routed within the rehearsal root rather than permitting writes across TEMP;
-this fixture command is serial and is not safe for concurrent use in one interpreter.
+staging is retained under `native-scratch/` as diagnostic fixture bytes. The serial
+rehearsal temporarily supplies `TemporaryDirectory(dir=that_root, delete=False)` to
+the unmodified bridge, restoring the constructor immediately afterward. Retention
+avoids Linux fd-relative temporary cleanup, which the unchanged operator guard cannot
+resolve; it never permits writes across system TEMP or disables a guard. Native
+custody, claims and completion semantics are unchanged. This fixture command is not
+safe for concurrent use in one interpreter.
 
 `connected-checkpoint/checkpoint.json` contains the reconstructed lineage, native
 operator completion and checklist. `seal.json` pins its exact byte SHA-256. `verify`
