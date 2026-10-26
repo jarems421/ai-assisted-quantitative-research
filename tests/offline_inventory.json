@@ -2194,5 +2194,23 @@
       "TransportTests.test_request_framing_and_framed_complete_response",
       "TransportTests.test_tls_hostname_and_certificate_are_verified"
     ]
+  },
+  "tests/test_source_custody_v1.py": {
+    "baseline_ci": false,
+    "runner": "additional",
+    "reason": "Source Custody V001 and QUARRY_SUPPLY_V002 on fictional hosts: Source Retrieval fixtures with injected fake transports and fictional owner, attester and claims records in temporary directories; socket, DNS and process creation denied. Covers retrieval to Quarry package to export to existing Jev workspace, PDF extraction requirement, byte ranges, partial/unverified coverage, failed/robots responses, interrupted/not-started/unanchored attempts, altered records, identity/route/URL mismatches, create-only single custody, change after preflight and unchanged V001 contracts.",
+    "declared_tests": [
+      "CustodyTests.test_altered_receipts_bodies_scopes_and_mismatched_identity_are_refused",
+      "CustodyTests.test_cli_reports_preflight_and_refusals_without_network",
+      "CustodyTests.test_custody_output_is_create_only_and_one_package_per_receipt",
+      "CustodyTests.test_existing_v001_supplies_imports_and_exports_are_unchanged",
+      "CustodyTests.test_failed_denied_and_robots_responses_never_become_documents",
+      "CustodyTests.test_incorrect_extraction_byte_ranges_are_refused",
+      "CustodyTests.test_interrupted_not_started_unanchored_and_inconsistent_attempts_are_refused",
+      "CustodyTests.test_partial_and_unverified_transfers_keep_their_limits",
+      "CustodyTests.test_pdf_bytes_need_an_explicitly_supplied_extraction",
+      "CustodyTests.test_source_changed_after_preflight_imports_nothing",
+      "CustodyTests.test_verified_target_becomes_quarry_package_export_and_jev_input"
+    ]
   }
 }

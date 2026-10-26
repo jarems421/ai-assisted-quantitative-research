@@ -15,7 +15,7 @@ Code: `src/research/source_v1/`. Design baseline: the Source Discovery V1.1 adde
 |---|---|
 | Campaign controller (Campaign Continuity V001) | Writes the request, decides whether to run it, attaches the result and chooses what happens next |
 | Source Retrieval | One attempt: checks, claims, retrieval, receipts, stop findings, the result |
-| Quarry | Custody of retained originals later, through a custody step the campaign schedules (SUPPLY V002 is not part of this milestone) |
+| Quarry | Custody of retained originals through Source Custody V001 (`docs/source_custody_v001.md`, `QUARRY_SUPPLY_V002`), a step the campaign schedules |
 | Named humans | The owner scope, the stop attestation, reconciling interruptions and removing locks |
 
 Source Retrieval never calls the campaign, the operator, Quarry, Jev or Anvil.

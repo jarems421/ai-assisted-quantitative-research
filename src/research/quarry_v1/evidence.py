@@ -17,6 +17,7 @@ def import_file(registry_path, supply_path, original_path, out):
     supplied = K.supply(io.json_file(supply_path))
     route = next((r for r in registry['routes'] if r['id'] == supplied['route_id']), None)
     K.need(route is not None and route['version'] == supplied['route_version'], 'wrong source route/version')
+    K.binding(route, supplied)
     K.need((original_path is None) == (supplied['coverage'] == 'UNAVAILABLE'), 'unavailable source must have no original; other imports require a file')
     # Validate paths and metadata first. A failure after the claim leaves an explicit interrupted state.
     if original_path is not None:
@@ -69,6 +70,7 @@ def load(root):
     supplied = K.supply(io.json_file(root / 'supply.json'))
     route = next(r for r in registry['routes'] if r['id'] == supplied['route_id'])
     K.need(route['version'] == supplied['route_version'], 'source version changed')
+    K.binding(route, supplied)
     receipt = io.json_file(root / 'receipt.json')
     original_hash = io.sha(io.read(root / 'original.bin')) if 'original.bin' in manifest['files'] else None
     expected_names = {'claim.json', 'registry.json', 'supply.json', 'receipt.json'} | ({'original.bin'} if original_hash else set())
