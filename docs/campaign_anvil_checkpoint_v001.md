@@ -73,8 +73,10 @@ Historical unbound/pre-claim results lacking an implementation identity are
 refused rather than assigned the current identity.
 
 Activity IDs must be distinct from original campaign operator activity IDs.
-Attempt and request IDs cannot be attached twice under new activity IDs or copied
-bases. Exact reattachment adds nothing. Changed native bytes or code are refused;
+Attempt IDs cannot be attached twice under new activity IDs or copied bases.
+Distinct, separately authorised attempts may share a logical request ID; recording
+them creates no retry authority or execution. Exact reattachment adds nothing.
+Changed native bytes or code are refused;
 old events remain retained. Other branches continue to report independently.
 If original Campaign V001 later introduces a colliding operator activity ID, the
 checkpoint flags the collision; it never rewrites either ledger.
@@ -174,6 +176,15 @@ prove that lineage. Once agreed, the existing operator accepts verified exports
 through `RESEARCH_OS_OPERATOR_EVIDENCE_V001.exports` (label + path); this PR neither
 calls the new bridge nor changes its interface. Missing/incomplete custody remains
 explicit and no downstream source handoff can be inferred.
+
+During this implementation, draft [PR #46](https://github.com/jarems421/ai-assisted-quantitative-research/pull/46)
+published `docs/source_custody_v001.md` and the shared-interface export (reviewed
+read-only at `126abb0899dd95a4fb10313c1d3cf0e3154a5e7a`). It proposes the native
+`source_custody_v1 preflight/import/status` interface, human retrieval claims and
+SUPPLY V002 provenance in the existing export. That draft is not a dependency of
+this PR. Remaining integration is to reconcile/adopt its verified custody status
+and `system_retrieval` lineage with these exact source references and the native
+operator export input. No claims record is authored or draft schema reimplemented.
 
 ## Verification
 

@@ -133,11 +133,12 @@ class CampaignEvidenceTests(unittest.TestCase):
         for status in ('NOT_STARTED', 'STOPPED', 'UNAVAILABLE', 'PARTIAL', 'UNKNOWN'):
             self.s.base = self.s.root / status
             self.s.scope_changes.pop('valid_until', None)
-            self.source(status, attempt=status)
+            self.source(status, attempt=status, change=lambda r: r.update(request_id='REQ-LOGICAL'))
             self.e.attach('B0', status, self.s.base, status)
         rows = self.e.checkpoint()['branches'][0]['source_activities']
         self.assertEqual({r['status'] for r in rows}, {'NOT_STARTED', 'STOPPED', 'UNAVAILABLE', 'PARTIAL', 'UNKNOWN'})
         self.assertTrue(all(r['integrity'] == 'VERIFIED_NATIVE_RESULT' for r in rows))
+        self.assertEqual({r['reference']['request_id'] for r in rows}, {'REQ-LOGICAL'})
 
     def test_interrupted_attempt_needs_native_verified_finalisation(self):
         self.source('INTERRUPTED')

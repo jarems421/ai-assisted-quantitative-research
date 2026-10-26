@@ -124,7 +124,7 @@ class Companion:
             aid, ref = R.identifier(r['activity_id']), r['reference']
             R.need(aid not in attached and ref['schema'] == REFERENCE and ref['campaign_id'] == a['campaign_id']
                    and ref['branch_id'] in branches and ref['authorises'] == [], 'invalid source attachment')
-            R.need(not any(x['attempt_id'] == ref['attempt_id'] or x['request_id'] == ref['request_id']
+            R.need(not any(x['attempt_id'] == ref['attempt_id']
                            for x in attached.values()), 'duplicate native source identity')
             attached[aid] = ref
         if mutable:
@@ -144,8 +144,8 @@ class Companion:
                 R.need(attached[activity_id] == ref, 'source activity identity/content conflict')
                 return False
             R.need(len(attached) < 128, 'source reference ceiling reached')
-            R.need(not any(x['attempt_id'] == ref['attempt_id'] or x['request_id'] == ref['request_id']
-                           for x in attached.values()), 'source attempt/request already attached')
+            R.need(not any(x['attempt_id'] == ref['attempt_id']
+                           for x in attached.values()), 'source attempt already attached')
             self.journal.append('SOURCE_ATTACHED', {'activity_id': activity_id, 'reference': ref})
         return True
 
