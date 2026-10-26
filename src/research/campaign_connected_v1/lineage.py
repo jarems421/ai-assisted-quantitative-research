@@ -75,7 +75,11 @@ def inspect(selection):
         package, export = R.path(selection['package']), R.path(selection['export'])
         R.need(R.path(status['custody_claim']['package']) == package, 'custody claim names another package')
         stored = Q.load(package)
-        R.need(stored['route'] == ctx['route'] and (package / 'registry.json').read_bytes() == ctx['registry_raw'],
+        # Quarry serialises its registry canonically; source inputs preserve original
+        # bytes (including a possible final newline). Compare the validated JSON value
+        # here and retain the native raw input hash separately, never rewrite either.
+        R.need(stored['route'] == ctx['route']
+               and R.loads(R.read(package / 'registry.json')) == R.loads(ctx['registry_raw']),
                'custody registry differs from native approved source scope')
         retrieval = stored['supply']['system_retrieval']
         R.need(retrieval['transfer_coverage'] == 'COMPLETE' and stored['supply']['coverage'] == 'COMPLETE_CLAIMED',
@@ -121,7 +125,8 @@ def inspect(selection):
                 'branch_summary_authority': 'UNCHANGED; this checkpoint selects an activity, never a winning branch run',
                 'campaign': manifest['campaign'], 'campaign_journal_head': campaign['journal_head'],
                 'companion_journal_head': events[-1]['hash'], 'hypothesis': ref['hypothesis'],
-                'source_reference': ref, 'source_consumption': result['consumption'],
+                'source_reference': ref, 'native_registry_sha256': N.sha(ctx['registry_raw']),
+                'source_consumption': result['consumption'],
                 'receipt': {'sha256': ctx['receipt_sha256'], 'body_sha256': N.sha(ctx['body']), 'body_bytes': len(ctx['body']),
                             'coverage': receipt['coverage'], 'limitations': receipt['limitations']},
                 'custody': {'claim': file_ref(claim), 'completion': file_ref(completion),

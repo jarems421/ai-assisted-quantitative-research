@@ -6,7 +6,7 @@ The existing `campaign_evidence_v1 rehearse` and its foundation-only outcome rem
 unchanged. This is a distinct rehearsal with actual native custody completion.
 
 **Integration dependency:** Source Custody PR #46 is required. Development was checked
-provisionally against `f19c19818681c4decea5d883fa2fa5e3104a3e1d`; it was draft and
+provisionally against `92435f16bf4060eaff56c6cb5592eb4523c46948`; it was draft and
 unmerged at that inspection. Provisional checks are not final combined-main validation.
 Missing custody refuses the command before creating a rehearsal. The connected test
 class has an explicit dependency skip until that implementation is present; a final
@@ -74,6 +74,11 @@ branch summaries remain ambiguous. There is no timestamp or stage-order selectio
 | Custody → export | Native package/export validation; exported portable package equals the completed package (excluding its storage root); original body, retained provenance, supply and manifest agree; exact operator-derived Scout subject |
 | Export → operator/Jev | Explicit completed operator reference for this branch; exactly one complete export with the same path and manifest byte hash; native Jev workspace re-derives from that exact export input; deterministic-only, no imported response |
 | Operator → Anvil | Reuse `campaign_evidence_v1.checkpoint.operator_view`: exact native completion/report, admitted preview ledger hash, workflow bundle, replayed Discovery checklist and human blockers |
+
+Quarry stores canonical registry JSON while Source preserves its original input bytes.
+The integration compares validated registry values, retains the Source input's exact
+byte hash separately, and binds Quarry's own manifest. It never rewrites either copy
+or treats different serialisation as changed source authority.
 
 The connected path currently requires a COMPLETE attempt and COMPLETE target transfer.
 Native custody's separate support for retaining some partial/negative outcomes is

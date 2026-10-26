@@ -67,6 +67,11 @@ class ConnectedTests(unittest.TestCase):
         self.assertEqual(self.summary['anvil_status'], 'BLOCKED')
         self.assertEqual((self.out / 'custody' / 'original.bin').read_bytes(), F.TEXT)
         self.assertEqual(report['receipt']['body_sha256'], L.N.sha(F.TEXT))
+        ref = report['source_reference']
+        native_registry = Path(ref['source_base']) / 'source-v1' / 'attempts' / ref['attempt_id'] / 'inputs' / 'quarry-registry.json'
+        self.assertEqual(report['native_registry_sha256'], L.N.sha(native_registry.read_bytes()))
+        self.assertNotEqual(native_registry.read_bytes(), (self.out / 'custody' / 'registry.json').read_bytes())
+        self.assertEqual(json.loads(native_registry.read_bytes()), json.loads((self.out / 'custody' / 'registry.json').read_bytes()))
         self.assertEqual(report['receipt']['coverage'], 'COMPLETE')
         self.assertEqual(report['source_consumption']['requests'], {'at_least': 2, 'exact': 2})
         self.assertEqual(report['publication_authenticity'], 'UNKNOWN')
